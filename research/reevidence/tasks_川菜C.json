@@ -1,0 +1,314 @@
+[
+  {
+    "id": 619,
+    "name": "贾温柔迷踪菜",
+    "district": "静安区",
+    "address": "静安区万航渡路393弄2号1楼",
+    "price": 99,
+    "evlen": 119,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 620,
+    "name": "刘栋梁大排档(大学路店)",
+    "district": "杨浦区",
+    "address": "杨浦区大学路246号",
+    "price": 111,
+    "evlen": 72,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 621,
+    "name": "袍哥川小馆·肥肠鸡(天钥桥路店)",
+    "district": "徐汇区",
+    "address": "徐汇区天钥桥路366号-3号",
+    "price": 74,
+    "evlen": 113,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 622,
+    "name": "沪小川肥肠烤鱼泡椒牛蛙(定西路店)",
+    "district": "长宁区",
+    "address": "长宁区定西路809号",
+    "price": 104,
+    "evlen": 79,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 623,
+    "name": "本来川菜(中骏广场店)",
+    "district": "闵行区",
+    "address": "闵行区申长路1688弄2号中骏广场2期F1层",
+    "price": 77,
+    "evlen": 43,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 624,
+    "name": "成都鱼庄·石锅烤鱼(华发路店)",
+    "district": "徐汇区",
+    "address": "徐汇区华发路35号(龙吴路徐浦大桥)",
+    "price": 65,
+    "evlen": 94,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 625,
+    "name": "老吴家川菜(昭化路店)",
+    "district": "长宁区",
+    "address": "长宁区昭化路120号",
+    "price": 94,
+    "evlen": 75,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 626,
+    "name": "火辣土菜馆(浦东大道店)",
+    "district": "浦东新区",
+    "address": "浦东新区福山路2号(浦东大道地铁站7b口步行390米)",
+    "price": 50,
+    "evlen": 71,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 627,
+    "name": "友谊川味馆(苍梧路店)",
+    "district": "徐汇区",
+    "address": "徐汇区苍梧路14-24号",
+    "price": 65,
+    "evlen": 44,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 628,
+    "name": "三木川菜",
+    "district": "浦东新区",
+    "address": "浦东新区上南路周浦万达广场附近",
+    "price": 70,
+    "evlen": 75,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 629,
+    "name": "民间川菜(尚大国际店)",
+    "district": "宝山区",
+    "address": "宝山区沪太路3100号尚大国际",
+    "price": 60,
+    "evlen": 74,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 630,
+    "name": "Pepper Tree花椒树",
+    "district": "徐汇区",
+    "address": "徐汇区襄阳北路108号101会所C单元(淮海中路1010号嘉华中心1层)",
+    "price": 357,
+    "evlen": 121,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 631,
+    "name": "井庭xNEW ARC·锅(BFC外滩金融中心店)",
+    "district": "黄浦区",
+    "address": "黄浦区中山东二路600号BFC外滩金融中心F1",
+    "price": 500,
+    "evlen": 96,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 632,
+    "name": "蜀宴赋·上海(华东首店)",
+    "district": "浦东新区",
+    "address": "浦东新区金桥路535号EKA天物38幢1层",
+    "price": 300,
+    "evlen": 95,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 633,
+    "name": "板前川菜(静安寺小巷)",
+    "district": "静安区",
+    "address": "静安区新闸路附近(静安寺与南京西路之间，具体需预约告知)",
+    "price": 300,
+    "evlen": 98,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 634,
+    "name": "椿庐ChunLounge(凯德晶萃店)",
+    "district": "黄浦区",
+    "address": "黄浦区徐家汇路268号LU·ONE凯德晶萃广场F7层",
+    "price": 303,
+    "evlen": 79,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 635,
+    "name": "金孔雀(国金中心店)",
+    "district": "浦东新区",
+    "address": "浦东新区世纪大道8号上海国金中心D座地下一层LG1-18室",
+    "price": 165,
+    "evlen": 82,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 636,
+    "name": "翠蝶川菜(BFC外滩金融中心店)",
+    "district": "黄浦区",
+    "address": "黄浦区中山东二路600号BFC外滩金融中心南区B105c单元",
+    "price": 151,
+    "evlen": 85,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 638,
+    "name": "孔雀川菜(港汇恒隆广场店)",
+    "district": "徐汇区",
+    "address": "徐汇区虹桥路1号港汇恒隆广场南座5楼507(徐家汇地铁站)",
+    "price": 160,
+    "evlen": 75,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 639,
+    "name": "翠蝶川菜(北外滩来福士店)",
+    "district": "虹口区",
+    "address": "虹口区东大名路999号北外滩来福士广场3层",
+    "price": 121,
+    "evlen": 52,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 640,
+    "name": "翠蝶川菜(One ITC店)",
+    "district": "徐汇区",
+    "address": "徐汇区华山路1901号One ITC LG2层",
+    "price": 117,
+    "evlen": 60,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 641,
+    "name": "映水芙蓉(白玉兰广场店)",
+    "district": "虹口区",
+    "address": "虹口区东长治路588号上海白玉兰广场购物中心",
+    "price": 150,
+    "evlen": 72,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 642,
+    "name": "蜀当家·盐帮川菜(上海首店)",
+    "district": "浦东新区",
+    "address": "浦东新区(具体地址待查)",
+    "price": 100,
+    "evlen": 62,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 643,
+    "name": "柴门饭儿(陆家嘴中心店)",
+    "district": "浦东新区",
+    "address": "浦东新区浦东南路899号陆家嘴中心L+Mall L811",
+    "price": 120,
+    "evlen": 90,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  }
+]

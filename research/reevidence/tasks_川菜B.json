@@ -1,0 +1,340 @@
+[
+  {
+    "id": 589,
+    "name": "有滋有味·农家川菜(北外滩店)",
+    "district": "虹口区",
+    "address": "上海市虹口区长阳路255号裙房1层",
+    "price": 79,
+    "evlen": 37,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 590,
+    "name": "阳哥儿·重庆芋儿肥肠鸡(元善里店)",
+    "district": "静安区",
+    "address": "上海市静安区万航渡路242号(武定路地铁站2号口步行340米)",
+    "price": 95,
+    "evlen": 39,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 591,
+    "name": "重记袍哥·肥肠芋儿鸡(天津路店)",
+    "district": "黄浦区",
+    "address": "上海市黄浦区南京东路300号恒基名人购物中心F1",
+    "price": 100,
+    "evlen": 43,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 592,
+    "name": "破店小酒馆(昌里三钢里店)",
+    "district": "浦东新区",
+    "address": "上海市浦东新区昌里路三钢里",
+    "price": 90,
+    "evlen": 57,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 593,
+    "name": "老吴川菜馆",
+    "district": "长宁区",
+    "address": "上海市长宁区昭化路120号",
+    "price": 96,
+    "evlen": 74,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 594,
+    "name": "竹屋川菜",
+    "district": "黄浦区",
+    "address": "上海市黄浦区淮海中路99号大上海时代广场地下1层",
+    "price": 122,
+    "evlen": 64,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 595,
+    "name": "椒点·川粤精品",
+    "district": "徐汇区",
+    "address": "上海市徐汇区天钥桥路333号",
+    "price": 147,
+    "evlen": 64,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 596,
+    "name": "Spicy Gangster不问江湖",
+    "district": "静安区",
+    "address": "上海市静安区延平路98-1号",
+    "price": 211,
+    "evlen": 42,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 597,
+    "name": "椿庐(凯德晶萃店)",
+    "district": "黄浦区",
+    "address": "上海市黄浦区马当路凯德晶萃广场7楼",
+    "price": 300,
+    "evlen": 69,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 599,
+    "name": "兴蜀府·臻味(正大广场店)",
+    "district": "浦东新区",
+    "address": "浦东新区陆家嘴西路168号正大广场4F",
+    "price": 278,
+    "evlen": 56,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 600,
+    "name": "巴国布衣(世博店)",
+    "district": "浦东新区",
+    "address": "浦东新区上南路168号世博源1区1层110号",
+    "price": 122,
+    "evlen": 53,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 602,
+    "name": "三木川菜(真如古镇店)",
+    "district": "普陀区",
+    "address": "普陀区兰溪路201号",
+    "price": 80,
+    "evlen": 74,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 604,
+    "name": "渝利火锅(96广场店)",
+    "district": "浦东新区",
+    "address": "浦东新区东方路796号96广场2楼233-235号铺",
+    "price": 146,
+    "evlen": 46,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 605,
+    "name": "淑芬串串公司(定西路中山公园店)",
+    "district": "长宁区",
+    "address": "长宁区定西路1216号",
+    "price": 105,
+    "evlen": 46,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 606,
+    "name": "红料理",
+    "district": "黄浦区",
+    "address": "黄浦区南京西路388号仙乐斯广场4层401单元",
+    "price": 120,
+    "evlen": 40,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 607,
+    "name": "十八梯邓凳面(愚园路店)",
+    "district": "静安区",
+    "address": "静安区愚园路318号(静安寺地铁站1号口步行340米)",
+    "price": 19,
+    "evlen": 86,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 608,
+    "name": "程胖妹面庄(原高胖妹面庄)",
+    "district": "闵行区",
+    "address": "闵行区合川路3125号",
+    "price": 28,
+    "evlen": 46,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 609,
+    "name": "开县徐妈串串火锅馆(人民广场店)",
+    "district": "黄浦区",
+    "address": "黄浦区天津路513-1号(人民广场地铁站19号口步行450米)",
+    "price": 87,
+    "evlen": 58,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 610,
+    "name": "江边城外烤全鱼(百联中环店)",
+    "district": "普陀区",
+    "address": "普陀区真光路1288号百联中环购物广场A区4层L420",
+    "price": 97,
+    "evlen": 46,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 611,
+    "name": "桂釜山城重庆小面(武宁路店)",
+    "district": "静安区",
+    "address": "静安区南汇路74号(桂釜山城南汇路店)",
+    "price": 25,
+    "evlen": 34,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 612,
+    "name": "恒香渝重庆小面(长阳路店)",
+    "district": "杨浦区",
+    "address": "杨浦区长白新村街道延吉东路133-1号(恒香渝延东小区店)",
+    "price": 25,
+    "evlen": 39,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 613,
+    "name": "山城印象重庆小面(灵山路店)",
+    "district": "浦东新区",
+    "address": "浦东新区灵山路",
+    "price": 22,
+    "evlen": 56,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 614,
+    "name": "我们屋头串串(老闵行)",
+    "district": "闵行区",
+    "address": "闵行区老闵行",
+    "price": 80,
+    "evlen": 62,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 615,
+    "name": "巴山蜀水刘家厨",
+    "district": "青浦区",
+    "address": "青浦区新风路160号新角里广场F1层",
+    "price": 60,
+    "evlen": 60,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 616,
+    "name": "弄堂川菜",
+    "district": "黄浦区",
+    "address": "黄浦区贵州路204号(近牛庄路)",
+    "price": 73,
+    "evlen": 88,
+    "phone": true,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  },
+  {
+    "id": 618,
+    "name": "对酒当歌·地道川菜(南京东路店)",
+    "district": "黄浦区",
+    "address": "黄浦区山东中路311号(南京东路地铁站3号口步行60米)",
+    "price": 87,
+    "evlen": 66,
+    "phone": false,
+    "roots": [
+      "川菜"
+    ],
+    "cuisine_root": "川菜"
+  }
+]

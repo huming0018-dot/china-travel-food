@@ -1,0 +1,2331 @@
+[
+  {
+    "action": "update",
+    "restaurant_id": 819,
+    "name": "山东菜馆(莲园路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 50,
+      "score_taste": 55,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】有抖音实拍含具体菜名（炒鸡、羊排锅、泡菜鱼、发面饼），但仅UGC单一类来源，缺独立跨源验证；360地图确认莲园路96号在营。POI地址与库内博华路莲园路口基本吻合。 {\"quotes\": [{\"quote\": \"梦回山东份量，这个炒鸡一点也不柴，你就去点一个他们家这个饼蘸着这个汤，好吃到舔香。然后全体起立，定要都给我去点这个羊排锅，这个汤真是绝了。再来点胡椒粉，一点羊膻味都没有。羊排真的也是超新鲜，一吃就能吃出来，扒拉直接脱骨，肥瘦相间老嫩了。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7685426189955374523\", \"dish\": \"炒鸡/羊排锅/发面饼\", \"date\": \"2026-09-15\"}, {\"quote\": \"山东的泡菜鱼，鱼都是用的鲜活的黑鱼。干炒鸡就是用的鲜活的鸡，乱七八糟的调料都不放。这个是过年才能吃到的炸平菇，还有手撕包菜。发面饼就是原味的，用酵母发起来的。玉米面我就从山东拿来的，自己买了玉米去打的。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7655683187440627558\", \"dish\": \"泡菜鱼/干炒鸡/炸平菇/发面饼\", \"date\": \"2026-06-26\"}], \"negative\": [\"装修陈旧，服务员服务水平一般（十六番2021评论，可能为分店）\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 820,
+    "name": "俺家味道山东饭店(三铭广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 45,
+      "score_diner": 35,
+      "score_taste": 45,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】Apple Maps有推荐菜数据（八大碗酥肉51人推荐），政府文件确认注册主体为上海渝老坎餐饮管理有限公司在松卫北路790号，但缺含具体体验细节的逐字堂食评价；抖音2023年视频仅提及店名无菜品细节。 {\"quotes\": [{\"quote\": \"八大碗酥肉 51人推荐；手撕鸡 33人推荐；大盘鸡 33人推荐；干锅土豆片 33人推荐；炸蚕蛹 26人推荐；驴肉驴肠 21人推荐；炒大鹅 19人推荐。\", \"source\": \"Apple Maps\", \"url\": \"https://maps.apple.com/\", \"dish\": \"八大碗酥肉/手撕鸡/大盘鸡\", \"date\": null}, {\"quote\": \"今天和饭搭子又来到松江区的三辉广场啦，这个地方简直太绝了，更像是全上海农家菜的一个聚集地，这里汇聚了好多好多必吃榜上面的农家菜。今天千岛湖有机鱼农家菜在大众点评里又看到了这一家叫俺家味道，这是一家地道的山东菜馆。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7291712477425978662\", \"dish\": null, \"date\": \"2023-10-20\"}], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 646,
+    "name": "小旺阁·老字号粤菜(江桥老街店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 40,
+      "score_taste": 45,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 25,
+      "evidence_summary": "【建议下架·待裁决】虽有携程2021年旧评和个别抖音实拍，但2024年底出现密集同质抖音视频集中轰炸同一69元团购套餐，脚本雷同、无差评、地址存疑，符合软广识别信号第1/2/5条。旧证不足以抵消当前团购刷单嫌疑。 {\"quotes\": [{\"quote\": \"深井燒鵝~真的是很不錯的菜色，有興趣!\", \"source\": \"携程\", \"url\": \"https://you.ctrip.com/food/shanghai2/12725156-food.html\", \"dish\": \"深井烧鹅\", \"date\": \"2021-02-28\"}, {\"quote\": \"开店开十年的，所有点心都是手工做的，因为以前是做行政总厨的，师傅也是香港的。脆皮烧肉是我强烈推荐的。沙姜走地鸡也老有特色，鸡肉嫩很入味，到嘴巴里就滑进去了。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7454036313285610791\", \"dish\": \"脆皮烧肉/沙姜走地鸡\", \"date\": \"2024-12-30\"}], \"negative\": [], \"soft_ad\": [\"2024年12月底至2025年1月初集中出现大量抖音视频推送同一69元早茶双人餐，脚本高度雷同（虾饺皇/叉烧包/菠萝包/干炒牛河），评论区模板化\", \"所有可见评价均为正面，无差评信号\", \"库内地址为江桥镇老街35号，但本地宝登记地址为虞姬墩路555号，地址不一致\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 650,
+    "name": "蘩楼(淮海百盛店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 75,
+      "score_diner": 75,
+      "score_taste": 72,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "【存疑·证据弱】连锁品牌，跨2021-2024多年持续有实拍评价，露笋虾饺皇/蒸凤爪/红米肠等具体菜品反复被验证，美篇长文+携程笔记+抖音多源交叉。少量团购推广但不影响口碑真实性。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"最好吃的是露笋虾饺皇，排名第一确有与众不同之处，晶莹剔透的皮中裹着两只大明虾，除了虾的鲜美，还有一股素菜的清新。其余茶点也都做得精细美味有特色。\", \"source\": \"美篇\", \"url\": \"https://www.meipian.cn/4zx5sn8d\", \"dish\": \"露笋虾饺皇/明虾红米肠/山椒蒸凤爪/艇仔粥/金牌脆皮乳鸽\", \"date\": \"2024-01-11\"}, {\"quote\": \"招牌虾饺皇晶莹剔透，里面的虾肉口感Q弹，蘸点醋很好味；百合酱蒸凤爪蒸笼头里的凤爪蒸得软糯入味，搭配百合酱的清香；砂锅皮蛋瘦肉粥满满的都是料，皮蛋滑嫩，瘦肉鲜美，粥熬的火候到位。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=51814925\", \"dish\": \"虾饺皇/蒸凤爪/皮蛋瘦肉粥/叉烧肠粉\", \"date\": \"2024-05-27\"}, {\"quote\": \"露笋虾饺皇内馅有三只大虾，还有嫩笋，鲜的不得了强烈推荐；xo酱山椒蒸凤爪鸡爪软糯香烂，非常入味；麒麟古法马拉糕蓬松软糯；生滚窝蛋牛肉粥。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7163877677626035497\", \"dish\": \"露笋虾饺皇/蒸凤爪/马拉糕/牛肉粥\", \"date\": \"2022-11-09\"}], \"negative\": [\"部分抖音视频推送双人团购套餐\"], \"soft_ad\": [\"部分抖音探店视频挂团购链接\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 651,
+    "name": "龙筵轩·广府宴(长宁虹桥店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 70,
+      "score_taste": 68,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】新店（2025年8月开业，第5家分店）但携程多篇笔记含具体菜品细节（捞鱼皮、东星斑、双皮奶），有长辈复购信号。抖音代金券推广有软广嫌疑但不影响堂食口碑证据。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"一到周末座无虚席！上海少有做地道广府菜的获奖餐厅！人均200-300就能吃的很好！难怪带长辈来了几次被猛猛夸！捞鱼皮清爽脆嫩、酸汤过桥鱼……就连双皮奶也和在顺德吃到的一毛一样！\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=298668056\", \"dish\": \"捞鱼皮/酸汤过桥鱼/双皮奶\", \"date\": \"2026-04-27\"}, {\"quote\": \"葱油鸡皮脆，东星斑酸菜煮嫩到离谱。蒜心牛肉火候刚好，啫通菜上桌还滋滋响。双皮奶收尾。不是那种吃一次就忘了的店。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=339434306\", \"dish\": \"葱油鸡/东星斑/蒜心牛肉/啫通菜/双皮奶\", \"date\": \"2026-07-18\"}, {\"quote\": \"黄焖花胶鱼翅，花胶软糯Q弹，鱼翅也是爽滑。招牌脆皮乳鸽，这个外皮脆脆的，里面的肉很嫩，一口爆汁。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7624815197526798730\", \"dish\": \"黄焖花胶鱼翅/脆皮乳鸽\", \"date\": \"2026-04-04\"}], \"negative\": [], \"soft_ad\": [\"2026年4月集中出现抖音视频推送78代100代金券\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 653,
+    "name": "香港龙凤楼(巨鹿路洋房店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 78,
+      "score_diner": 80,
+      "score_taste": 75,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】必吃榜2022-2024上榜餐厅，巨鹿路洋房独栋营业十年以上。携程多篇逐字评价含具体菜品价格（虾饺皇39/牛蛙煲85/烧鹅129），有价格略高的负面信号，老客复购和排队证据充分。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"龙凤楼辣蟹，辣度刚好，蟹肉很新鲜，黄黄的膏不少。龙虾泡饭，汤头很鲜甜，一大只龙虾超满足。鲍汁凤爪，软软糯糯的胶原蛋白。甜薄撑，小时候的味道，甜甜咸咸的。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=283877735\", \"dish\": \"龙凤楼辣蟹/龙虾泡饭/鲍汁凤爪/甜薄撑\", \"date\": \"2026-03-25\"}, {\"quote\": \"龙凤虾饺皇39，四只大大的虾饺，每只里面都是塞满了Q弹的大虾。啫啫牛蛙煲85，牛蛙量不算少，那个酱的口味也是很喜欢。深井烧鹅129，正常粤式茶楼口味，很喜欢。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=264793327\", \"dish\": \"虾饺皇/啫啫牛蛙煲/深井烧鹅\", \"date\": \"2026-02-07\"}, {\"quote\": \"无论深井烧鹅还是芝士蜜汁叉烧口感都不错。冰镇雪梨咕噜肉也很有特色。奶茶也很正宗，没有踩雷的菜，就是价格略高。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7580274434227313050\", \"dish\": \"深井烧鹅/芝士蜜汁叉烧/冰镇雪梨咕噜肉\", \"date\": \"2025-12-05\"}], \"negative\": [\"价格略高\", \"鱼子酱179一位价格不菲\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 673,
+    "name": "魔都潮滋味·潮汕牛肉火锅·粿条(叶家宅路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 65,
+      "score_taste": 65,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"在上海普陀区，居然藏着这么正宗的潮汕牛肉火锅！这家潮滋味潮汕鲜牛肉火锅是上海总店，明档厨房师傅现切牛肉，吊龙伴、匙仁都非常新鲜。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=265766404\", \"dish\": \"吊龙伴/匙仁\", \"date\": \"2026-02-10\"}, {\"quote\": \"第一口必须给浸满酱汁的吊龙，烫的稍微有一点老，但是肉味道香，好评一定要给到。这个沙茶酱调的恰到好处。第二口手打牛肉丸，结棍。蔬菜海鲜可以直接去菜场里买，然后放锅里直接烫。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7655647493871660721\", \"dish\": \"吊龙/手打牛肉丸/沙茶酱\", \"date\": \"2026-06-26\"}], \"negative\": [\"环境一般（'环境一b吊糟'）\", \"吊龙烫得稍微老\"], \"soft_ad\": [\"2026年4月有抖音视频推送2.5斤牛肋排锅套餐80多元\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 721,
+    "name": "荣申府(四安里古建店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 70,
+      "score_taste": 70,
+      "score_endorsement": 25,
+      "soft_ad_penalty": 3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"头盘的花开富贵山楂鹅肝着实惊艳，山楂软薄好嚼，酸酸甜甜又中和了鹅肝的肥腻。老醋海蜇晶莹剔透，重酸开胃。芝士焗明虾剔肉方便还能拉丝。蚝皇鲍鱼配香米，精华不在鲍鱼，而是这包裹汤汁的米饭，粒粒分开，真想再来一碗。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7122666362283003174\", \"dish\": \"山楂鹅肝/老醋海蜇/芝士焗明虾/蚝皇鲍鱼配香米\", \"date\": \"2022-07-21\"}, {\"quote\": \"荣申府在上海共有三家店，选了四安里店，这是一栋1930年建造的德式建筑，共有三层。整个进餐，视觉和味蕾同时享受。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=60500784\", \"dish\": null, \"date\": \"2024-07-01\"}, {\"quote\": \"山楂鹅肝花开富贵造型别致，烟雾缭绕，酸甜可口。苏式黑烧肉肥而不腻。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=80993137\", \"dish\": \"山楂鹅肝/苏式黑烧肉\", \"date\": \"2024-09-11\"}], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 722,
+    "name": "景煊 SOLE",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 85,
+      "score_diner": 75,
+      "score_taste": 80,
+      "score_endorsement": 90,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"怪味腰果餐前小吃就好吃的不行，腰果酥脆，怪味调的也正点，没等到上菜就已经光盘了。枫糖橡果黑猪叉烧，橡果饲养的伊比利亚黑猪，选用肉质细嫩的梅花肉，极致厚切带来恰到好处的油脂感，弹嫩鲜美肉汁四溢。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7613322954865098609\", \"dish\": \"怪味腰果/枫糖橡果黑猪叉烧\", \"date\": \"2026-03-04\"}, {\"quote\": \"景煊的出品不会搞太多花哨活儿，简单的蒸炒焗，但食材上乘，火候把控得也很老到，不失传统粤菜的优点。而环境和服务则更加精致、现代、细致，拿到米其林的确名副其实。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=142901256\", \"dish\": null, \"date\": \"2025-04-24\"}, {\"quote\": \"春笋海鲜饺、莲子陈皮红豆沙熬的很到位甜度刚好莲子绵密软糯、萝卜丝肠粉白色的外皮黄色的薄脆包裹大块的萝卜吃着很香。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=361623641\", \"dish\": \"春笋海鲜饺/陈皮红豆沙/萝卜丝肠粉\", \"date\": \"2026-08-23\"}], \"negative\": [\"价格小贵，人均300+\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 892,
+    "name": "阿翁沙茶面",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 70,
+      "score_taste": 65,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】两家权威媒体（澎湃+上观）分别在2016和2019年做过专题推荐，含沙茶面/猪肝/鱿鱼/七味嫩豆腐年糕等具体菜品细节。13年老店，非网红营销驱动。注意：抖音上的'屿园沙茶面'为另一家店，不计入。；主复核：来源类型单一(仅news)，缺跨类型验证 {\"quotes\": [{\"quote\": \"全家福沙茶面里面的海鲜很多，经典沙茶面猪肝特别嫩还爽口，汤底沙茶味很浓，老远就闻到香味四溢，面条是粗面，很吸汤汁。店里还有闽南花生汤、蚵仔煎、炸五香。\", \"source\": \"澎湃新闻\", \"url\": \"https://m.thepaper.cn/baijiahao_4800695\", \"dish\": \"全家福沙茶面/经典沙茶面/闽南花生汤/蚵仔煎/炸五香\", \"date\": \"2019-10-27\"}, {\"quote\": \"沪上能吃到厦门的沙茶面着实不多，这家可以算其中之一，料给的实在。特色沙茶面16元，满满的猪肝、鱿鱼和里脊肉，配着韭菜和豆芽味道不错。重点推荐七味嫩豆腐年糕，嫩豆腐上浆后油炸的，外脆内嫩，年糕也炸的刚刚好。\", \"source\": \"上观新闻\", \"url\": \"https://www.whb.cn/zhuzhan/kandian/20160510/56100.html\", \"dish\": \"特色沙茶面/七味嫩豆腐年糕\", \"date\": \"2016-05-10\"}], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 893,
+    "name": "黑明餐厅·厦门菜(CP静安店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 72,
+      "score_taste": 68,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "【存疑·证据弱】主理人黑明为厦门20年老字号出身，必吃榜认证。抖音实拍含红鲟米糕/海蛎煎/酱油水午鱼等具体菜品，有海蛎煎酱太少等真实负面评价。少量模板化推广但堂食证据扎实。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"红鲟米糕，这是我在厦门最爱吃的菜。底下的糯米先要用腊味、香菇、海米这种先去炒，然后炒完了再去蒸。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7445844135241633059\", \"dish\": \"红鲟米糕\", \"date\": \"2024-12-08\"}, {\"quote\": \"海蛎煎是不加蛋的，沾一点酱汁，开一点酸萝卜解解腻。牡蛎肥美，青蒜爽脆滑嫩。我在厦门吃到的海蛎煎不是这个样子的，这道菜唯一的缺点就是酱配的太少了。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7442992363833724170\", \"dish\": \"海蛎煎\", \"date\": \"2024-11-30\"}, {\"quote\": \"酱油水午鱼，鱼肉嫩到筷子一夹就散。沙茶酱熬得浓稠如琥珀，没有潮汕款的甜腻，却多了股海鲜的鲜甜。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=188389664\", \"dish\": \"酱油水午鱼/沙茶锅\", \"date\": \"2025-08-22\"}], \"negative\": [\"海蛎煎酱配太少\", \"线上取号等了30分钟+\"], \"soft_ad\": [\"携程笔记多篇用'宝子们冲'模板话术\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 896,
+    "name": "闽叔福建菜(陆家嘴中心L+Mall店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 65,
+      "score_taste": 62,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "【存疑·证据弱】携程有含负面（五香卷偏油肥肉多）的真实评价，抖音多源含姜母鸭/黄鱼汤/沙茶锅等具体菜品。但密集抖音代金券推广需扣软广分。连锁品牌多店运营。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"泉州萝卜饭量还挺多的，饭粒粒分明，里面加了萝卜解腻。小炒闽北香干香干好嫩呀，微微带点辣。五香卷拼萝卜糕感觉这个菜偏油了，而且五香卷里肥肉比较多。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=313663960\", \"dish\": \"泉州萝卜饭/小炒闽北香干/五香卷拼萝卜糕\", \"date\": \"2026-05-28\"}, {\"quote\": \"姜母鸭看着简简单单，但对食材的要求非常高，通常姜母鸭都会选用没有下蛋的母番鸭，和老姜一起来制作，鸭肉紧实带着一点点酱香。老泉州沙茶锅一锅里面用料好丰富，大虾。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7622584353588019106\", \"dish\": \"姜母鸭/老泉州沙茶锅\", \"date\": \"2026-03-29\"}, {\"quote\": \"闽东古法黄鱼汤，汤色奶白，搭配鲜美的高品质黄鱼。沙茶萝卜炖牛腩，都是特制的沙茶酱，小火炖着，汤汁很浓郁，这个拌饭真的绝。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7486361079417752858\", \"dish\": \"闽东古法黄鱼汤/沙茶萝卜炖牛腩\", \"date\": \"2025-03-27\"}], \"negative\": [\"五香卷偏油，肥肉较多\"], \"soft_ad\": [\"2025-2026年多个抖音视频推送69代100代金券，话术雷同\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 897,
+    "name": "闽约闽南小馆",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 68,
+      "score_taste": 65,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】抖音实拍含红油小管/花椒煎午仔鱼等具体菜品（'全场最佳'评价），携程笔记交叉验证芋泥/百香果浸苹果。西康路M+马利园区内，小酒馆定位。无明显软广痕迹。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"特色小管(红油)：用的是东山岛当日鲜活的小鱿鱼，闽南独有的江湖吃法，红油香辣不呛口，没有多余调味，清楚的吃到鱿鱼本身的鲜，入口是脆弹的。花椒煎午仔鱼：用嫩花椒提香，外皮煎至金黄微酥，扒开里面肉质很细嫩，几乎可以忽略鱼刺，这盘我给到全场最佳。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7648637137184649698\", \"dish\": \"红油小管/花椒煎午仔鱼\", \"date\": \"2026-06-07\"}, {\"quote\": \"猪肉虾仁马蹄等内馅搭配金桔油甜辣酱，口感丰富非常丰富下酒小菜每桌必点。选用食材非常新鲜而且很多都是时令菜品，不做预制菜保证口感和品质。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=95079370\", \"dish\": \"闽南炸肉/金桔油\", \"date\": \"2024-10-30\"}, {\"quote\": \"收尾一定要安排一份窗花福建芋泥，香甜软糯，绵密细腻，甜而不腻，完美中和辣味。搭配清爽解腻的百香果浸苹果，再沏上一壶特色福建清茶。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=346402694\", \"dish\": \"福建芋泥/百香果浸苹果\", \"date\": \"2026-07-29\"}], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 901,
+    "name": "莆味小馆(宝山万渡汇店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 45,
+      "score_taste": 50,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】携程和抖音各一条含莆田卤面/扁食/海蛎煎等菜品，但均为2026年8月新内容，店铺较新，缺跨年度或更多独立食客验证。宝山万渡汇商场店，规模小。 {\"quotes\": [{\"quote\": \"想吃地道闽味就来莆味小馆，地道莆田风味是他家的特色，除了招牌硬菜以外，还有各类特色兴化小吃，作为正餐解馋或者简单小聚都是很不错的选择。莆田卤面 海蛎煎 兴化炒米粉。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=350668956\", \"dish\": \"莆田卤面/海蛎煎/兴化炒米粉\", \"date\": \"2026-08-05\"}, {\"quote\": \"这个是莆田的扁食，皮特别晶莹剔透，它是用肉做的。这个地道的莆田卤面特别正宗，海鲜干货都有了。大众点评、美团上面这个卤面，这个就是在这边吃到最正的一家。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7679268005158604066\", \"dish\": \"莆田扁食/莆田卤面\", \"date\": \"2026-08-29\"}], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 902,
+    "name": "莆田卤面馆(汇融天地店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 40,
+      "score_taste": 48,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】抖音聚合显示320人评价3.9分，有对虾卤面/蛏溜汤等菜品名。但两个抖音视频可能指向同一家（蒲记），缺独立跨源验证，汇融天地B1美食城档口规模小。 {\"quotes\": [{\"quote\": \"3.9可以一试，已有320人真实评价。对虾卤面、海蛎紫菜酥。卤面很nice，蛏溜汤料很足，莆田卤面一口入魂，鲜醇浓稠裹满山海滋味，筋道面条吸饱汤汁。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7671166968582248905\", \"dish\": \"对虾卤面/海蛎紫菜酥/蛏溜汤\", \"date\": \"2026-08-07\"}, {\"quote\": \"招牌卤面、炒兴化粉、焖豆腐都是特色菜。十几二十年了，搬到这边已经9年多了。48的S级卤面。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7642285857479745649\", \"dish\": \"招牌卤面/炒兴化粉/焖豆腐\", \"date\": \"2026-05-21\"}], \"negative\": [\"平台评分仅3.9，可以一试\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 922,
+    "name": "粉牛牛常德牛肉米粉(灵石路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 40,
+      "score_diner": 20,
+      "score_taste": 40,
+      "score_endorsement": 0,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】360地图确认在营（灵石路697号健康智谷，21人评价3.5分），但唯一可见评价明确为外卖单（评分口径要求外卖不计），且肉少/过辣为负面。连锁店多店，灵石路店堂食证据缺失。 {\"quotes\": [{\"quote\": \"常德红烧牛肉粉直接让人重新定义牛肉粉！但是微辣怎么会这么超级无敌辣。叫了好几次的外卖，优点是速度快，粉还挺q的，肉少，但价格便宜也能接受，工作日午餐随便吃吃。\", \"source\": \"360地图\", \"url\": \"https://m.map.so.com/m/album/detail/pid=dcf37d59d4456cf8\", \"dish\": \"常德红烧牛肉粉\", \"date\": null}], \"negative\": [\"肉少\", \"微辣过辣\", \"该评价明确为外卖单\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 951,
+    "name": "徽州月·民间徽菜（浦东总店）",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 45,
+      "score_diner": 30,
+      "score_taste": 45,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】POI确认在营（浦东大道1088号，电话021-50207795，人均122），但去哪儿仅15条评价评分3分，携程只有菜单列表无逐字食客评价，抖音仅为推广视频。缺含具体体验细节的堂食评价。 {\"quotes\": [{\"quote\": \"桌桌必点臭鳜鱼，2家门店通用。徽州月精致徽菜(浦东总店)，上海市浦东新区浦东大道1088号14号线地铁源深路站。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7528411176491142410\", \"dish\": \"臭鳜鱼\", \"date\": \"2025-07-18\"}, {\"quote\": \"苗知府臭鳜鱼，红烧散养土公鸡，无为板鸭，老母鸡汤，文火炖皖鳝段，芦蒿臭豆腐炒咸肉，干锅大别山笋丝。\", \"source\": \"携程\", \"url\": \"https://you.ctrip.com/food/shanghai2/7006997-dianping.html\", \"dish\": \"臭鳜鱼/无为板鸭/老母鸡汤\", \"date\": null}], \"negative\": [\"去哪儿评分仅3分（15条评价）\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 954,
+    "name": "醉徽楼",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 35,
+      "score_diner": 10,
+      "score_taste": 35,
+      "score_endorsement": 0,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】工商注册确认在营（2017年成立，法定代表人汪菊花，电话021-50182866），携程POI列人均92/推荐菜青椒臭干黄山炖鸽，但全网搜不到任何一条含具体菜品体验的逐字食客评价。POI存在但口碑证据完全空白。 {\"quotes\": [], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 961,
+    "name": "正宗安徽太和板面(莎海商务大厦店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 30,
+      "score_diner": 5,
+      "score_taste": 30,
+      "score_endorsement": 0,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】电话邦确认地址（中春路7319号莎海商务大厦，电话18355286017），但全网搜不到任何针对该店的食客评价。所有抖音/地图结果均指向其他城市或其他同名店。档口型小店，口碑证据空白。 {\"quotes\": [], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 468,
+    "name": "川飨小馆(天山路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 35,
+      "score_taste": 45,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 25,
+      "evidence_summary": "【建议下架·待裁决】2025年8月新开首店，所有可见评价均为开业促销期集中投放的携程笔记+抖音探店，话术模板化、挂团购链接、无差评、无老饕独立评测，属于典型新店营销轰炸，无真实堂食复购证据。 {\"quotes\": [{\"quote\": \"豆花麻麻鱼一上桌就香气扑鼻，鱼肉特别的嫩，配上嫩滑的手工豆花，口感绝了。火辣辣的招牌自贡鲜锅兔，麻辣鲜香，吃起来特别过瘾。山城毛血旺好大一盘，料给的好足。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7543914471607258428\", \"dish\": \"豆花麻麻鱼/自贡鲜锅兔/山城毛血旺\", \"date\": \"2025-08-29\"}, {\"quote\": \"大块豆花一口咬下去滑嫩入味，麻辣鲜香直冲天灵盖～ 我们直接舀进米饭里拌着吃，香到连汤汁都没剩。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=202477346&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"非遗手工麻婆豆花\", \"date\": \"2025-09-24\"}], \"negative\": [\"全为新店开业推广内容，无本地老食客独立评价\", \"多条抖音视频挂团购代金券(69.9代100/49.9抵100)\"], \"soft_ad\": [\"上海首店2025年8月开业，集中在8-10月密集投放携程笔记+抖音探店\", \"多条内容话术模板化(\\\"穿越到四川自贡\\\"\\\"回头客天天来\\\")\", \"抖音视频均挂团购链接，无差评出现\", \"无老饕/本地美食公众号独立评测\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 469,
+    "name": "兴华川菜馆(交通路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 40,
+      "score_diner": 25,
+      "score_taste": 40,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "【存疑·证据弱】仅有1条笼统携程笔记(无具体菜名细节)，地图POI数据辅助确认在营，但缺乏≥2条含具体菜名的真实食客评价，独立来源仅UGC+map两类但内容薄弱。 {\"quotes\": [{\"quote\": \"作为在上海开了十多年的老牌川菜馆，兴华绝对是我心中的川菜白月光！虽然门面不起眼，但味道简直惊艳！菜单超厚一本，性价比杠杠的。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=261588811&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": null, \"date\": \"2026-01-30\"}], \"negative\": [\"city8评分仅3.0/5(服务/环境)，说明环境一般\", \"详细菜品评价内容被截断，无法确认具体菜品体验\"], \"soft_ad\": [\"仅1条携程笔记，无密集投放痕迹\", \"无团购挂车证据\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 471,
+    "name": "先启半步颠小酒馆(定西路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 70,
+      "score_taste": 65,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"The queue is very long. The Maoxuewang is delicious! Rich in content! I love luncheon meat the most! Chicken gizzards, potato shreds and rabbit meat are all delicious! I don't recommend ordering spicy chicken!\", \"source\": \"Trip.com\", \"url\": \"https://hk.trip.com/restaurant/china/shanghai/detail/restaurant-90681838/\", \"dish\": \"毛血旺/鸡胗/土豆丝/兔肉\", \"date\": null}, {\"quote\": \"土豆丝上面是有浇上高汤鸡汤，这个土豆丝吃上去非常的鲜美。另外这家的辣子鸡也特别的有与众不同，只放了掌中宝酸甜麻辣特别的好吃。还有四川自贡的鲜辣兔，这个兔子的肉好嫩呀好鲜美呀。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=80887598&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"泰椒土豆丝/掌中宝辣子鸡/鲜辣兔\", \"date\": \"2024-09-10\"}, {\"quote\": \"土豆丝28块，量好大一份，里面是有放一点泰椒，吃起来又麻又辣。这是他们家招牌辣子鸡，看起来全是辣椒，里面的肉巨多，这种炸过的吃起来就是比较香，越嚼越香。话梅脆皮鸭我超级喜欢这道菜，它做到了吃起来还带有嚼劲。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7352021240544021800\", \"dish\": \"泰椒土豆丝/辣子鸡/话梅脆皮鸭\", \"date\": \"2024-03-30\"}], \"negative\": [\"排队极长(需拿号等座)\", \"Trip.com食客明确不推荐辣子鸡\", \"网红店排队可能含营销成分\"], \"soft_ad\": [\"自2020年起持续网红化，被媒体称\\\"魔都川菜榜第一\\\"\", \"开店即排队，游客占比高\", \"但经营已6年+，有持续食客评价沉淀\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 472,
+    "name": "川芙蓉市井老川菜(静安店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 15,
+      "evidence_summary": "【存疑·证据弱】有具体菜名评价(芙蓉土豆丝菜籽油+猪油/飘香沸腾鱼/水煮牛肉)，且有打工人午餐店背景，但2025年下半年起密集携程笔记投放+百事商业合作，软广嫌疑中等，独立老饕来源缺失。地址注意：任务记录黄浦区凤阳路280号，实际搜索结果多指向人广/南京东路店。 {\"quotes\": [{\"quote\": \"水煮牛肉滑到筷子都夹不住！牛肉裹满红油香到跺脚，底下豆芽脆到上头～口水鸡辣得超爽但完全不呛！鸡肉嫩到飙汁。辣子鸡端上来直接堆成小山！鸡肉外酥里嫩。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=199873325&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"水煮牛肉/口水鸡/辣子鸡\", \"date\": \"2025-09-19\"}, {\"quote\": \"原来周围牛马打工人解决午餐的地方，所以味道很好，价格便宜，量很大，里面都是周围的回头客。但是酒香不怕巷子深，因为好吃便宜，来打卡的游客也竟然越来越多。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=273937077&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": null, \"date\": \"2026-03-01\"}, {\"quote\": \"芙蓉土豆丝，他们家的土豆丝我愿称为下饭神器，它是加了一点菜籽油，还有猪油炒的，所以特别香。他们家辣子鸡是酥脆干爽那一挂的。飘香沸腾鱼，鱼片又嫩又滑，又麻又辣。\", \"source\": \"抖音(百事合作)\", \"url\": \"https://www.iesdouyin.com/share/video/7603269433506952006\", \"dish\": \"芙蓉土豆丝/辣子鸡/飘香沸腾鱼\", \"date\": \"2026-02-05\"}], \"negative\": [\"游客增多后可能品控下降\", \"与百事可乐有商业合作推广\"], \"soft_ad\": [\"多条携程笔记话术相似(\\\"香迷糊了\\\"\\\"宝藏川菜\\\")\", \"2025年9月起密集投放携程笔记+抖音\", \"与百事可乐品牌合作(2026年2月)\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 473,
+    "name": "映水芙蓉(华润时代广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 75,
+      "score_diner": 70,
+      "score_taste": 75,
+      "score_endorsement": 70,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】黑珍珠入围+必吃榜常驻+央视推荐，有官方背书。Trip.com英文评价含具体菜名(金牌毛血旺/石锅发菜豆腐)，携程笔记有敲糖棒棒鸡/鸡豆花等具体菜品体验。但携程笔记投放密集，有一定软广痕迹，已扣soft_ad_penalty。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"Gold Medal Maoxuewang: It's a big pot of food, two people can't finish it at all. The dishes are very fresh, and there are a lot of tripe. Stone pot hair vegetable tofu: The tofu is old tofu made by the store itself, outer skin wrapped with hair vegetable, pan-fried outside tender inside.\", \"source\": \"Trip.com\", \"url\": \"https://tw.trip.com/restaurant/china/shanghai/detail/restaurant-84140552/\", \"dish\": \"金牌毛血旺/石锅发菜豆腐\", \"date\": null}, {\"quote\": \"敲糖棒棒鸡：勺子轻敲糖球的瞬间，红油如岩浆般涌出，裹住鲜嫩土鸡肉……麻、辣、甜、香，层次丰富。蓉城鸡豆花：清如茶汤，豆花般嫩滑，一口下去藏尽鲜美。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=202093200&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"敲糖棒棒鸡/蓉城鸡豆花\", \"date\": \"2025-09-23\"}, {\"quote\": \"虾膏泡泸沽湖红米饭——虾膏熬制的汤底浓郁鲜香，红米吸饱汤汁后软糯而有嚼劲。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=213944074&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"虾膏泡泸沽湖红米饭\", \"date\": \"2025-10-17\"}], \"negative\": [\"商场店，环境优先于市井感\", \"fine dining定位，性价比评价两极\"], \"soft_ad\": [\"携程笔记投放量较大(2025年9-10月集中)\", \"但有黑珍珠入围+必吃榜+央视推荐作为官方背书\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 475,
+    "name": "渝信川菜(华盛店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 75,
+      "score_taste": 70,
+      "score_endorsement": 30,
+      "soft_ad_penalty": 3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"川菜做得比较精致，重口、偏麻。水煮鲇鱼百吃不厌，鱼肉嫩滑有弹性；馋嘴蛙个儿很大，肉感鲜美，那个麻辣劲吃到最后嘴巴都变成玛丽莲梦露了；口水鸡皮脆肉嫩，鲜辣味刚好。\", \"source\": \"穷游网\", \"url\": \"https://ask.qyer.com/question/4684358/answer/12655985.html\", \"dish\": \"水煮鲇鱼/馋嘴蛙/口水鸡\", \"date\": \"2020-03-06\"}, {\"quote\": \"我是这家川菜的大粉，从05年吃到现在，上海三家分店全部跑遍，基本味道差不多。经典的水煮鲶鱼，毛血旺和水果色拉。\", \"source\": \"天下民宿\", \"url\": \"https://bnbvista.com/article-735495.html\", \"dish\": \"水煮鲶鱼/毛血旺/水果色拉\", \"date\": \"2022-03-03\"}, {\"quote\": \"扣一颗星因为回锅肉太咸，失去平衡。花椒牛很好吃，水煮鱼也一流。\", \"source\": \"Wanderlog\", \"url\": \"https://wanderlog.com/es/place/details/3605109/%E6%B8%9D%E4%BF%A1%E5%B7%9D%E8%8F%9C\", \"dish\": \"回锅肉/花椒牛/水煮鱼\", \"date\": null}], \"negative\": [\"2020年外卖口罩食品安全事件(华盛店)\", \"豆瓣差评：毛血旺不新鲜\", \"Wanderlog差评：回锅肉太咸、失衡\", \"服务被评价为一般\"], \"soft_ad\": [\"无近期集中投放痕迹\", \"老牌连锁，评价沉淀超过10年\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 476,
+    "name": "瓦屋川菜(西岸梦中心店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 65,
+      "score_taste": 60,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 15,
+      "evidence_summary": "【存疑·证据弱】有具体菜名评价(传家鱼头/鸡豆花/眉山烧椒鸡/大红袍火爆鲜吊龙/豆腐拿破仑)，排队50桌的真实流量信号，15刷复购笔记。但携程笔记投放密集+抖音探店集中，改良川菜定位有争议，已扣soft_ad_penalty。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"炫雅女湖传家鱼头，鲜辣醇厚的酱汁裹满嫩滑鱼肉，多种辣椒层层递进，香到上头。国宴级手工鸡豆花必须吹爆！三小时慢炖清鸡汤，三千刀慢剁出的豆花，汤清似玉，入口即化。眉山烧椒鸡辣得过瘾，肉嫩裹满焦香；毛血旺用料扎实，椒麻浓郁；藿香鳝鱼饭更是。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=279021625&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"传家鱼头/鸡豆花/眉山烧椒鸡/毛血旺/藿香鳝鱼饭\", \"date\": \"2026-03-14\"}, {\"quote\": \"排了50桌才吃上。主打融合改良川菜，重鲜清辣的风格。豆腐拿破仑36，第一个菜上来就很让人震惊，不知道的以为是一块小蛋糕。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7607419942238095802\", \"dish\": \"豆腐拿破仑\", \"date\": \"2026-02-16\"}, {\"quote\": \"大红袍火爆鲜吊龙 点的菜里面最喜欢这道，辣辣香香滴。豆腐拿破仑 小伙伴喜欢这个。金沙辣子蟹 蟹肉嫩的，有入味。歌乐山辣子鸡 辣子鸡肉块比一般店大块点。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=318110346&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"大红袍火爆鲜吊龙/金沙辣子蟹/歌乐山辣子鸡\", \"date\": \"2026-06-07\"}], \"negative\": [\"排队极长(50桌/两小时)\", \"改良川菜定位，传统川菜老饕可能不认可\", \"价格中上水平\"], \"soft_ad\": [\"携程笔记投放密集(2025年9月起大量)\", \"抖音探店内容多为推广性质\", \"但有15刷复购笔记和 casual 食客笔记(2026年6月)\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 478,
+    "name": "南兴园",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 80,
+      "score_diner": 65,
+      "score_taste": 75,
+      "score_endorsement": 80,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"见手青、鸡枞菌、松茸、干巴菌一次性当天云南空运直达。南兴园在我心中永远都是那么的无可替代。他们家不靠重油重辣博眼球，反而会用心注重把老派川菜细腻内敛、火候克制、调味平衡的灵魂去把它表达出来。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7666841894562966699\", \"dish\": \"时令野生菌套餐\", \"date\": \"2026-07-26\"}, {\"quote\": \"大家在上海去南兴园，可以尝尝邓师傅的青椒肉丝，真的很好吃。人均1688，只接受提前一天预约，不接受临时来吃。店里只有包间没有大堂，只能买套餐不能单点菜。最低价位是3376的双人特惠套餐。\", \"source\": \"抖音(郭本尼)\", \"url\": \"https://www.iesdouyin.com/share/video/7669403484696890630\", \"dish\": \"青椒肉丝\", \"date\": \"2026-08-02\"}, {\"quote\": \"这个宫爆白斩鸡，令人震惊，一口下去撕料鸡的腥味充满口腔，宫爆口在荔枝口，完全没有。这个碗欠，大胆猜测一下，就是白水加一点点醋、加料酒。\", \"source\": \"抖音(差评)\", \"url\": \"https://www.iesdouyin.com/share/video/7347735262929112346\", \"dish\": \"宫爆白斩鸡\", \"date\": \"2024-03-19\"}, {\"quote\": \"五花肉已经蒸到快化开，还有糯米豆沙和白糖，一勺挖下去是软糯黏润的甜香。南兴园真正厉害的是它传承了川菜里面的基础味型，基础味型做准做好，把这些技法发扬光大。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7672720817330867475\", \"dish\": \"甜烧白/基础味型川菜\", \"date\": \"2026-08-11\"}], \"negative\": [\"人均1688-3376，性价比争议大\", \"郭本尼实测\\\"味道一般\\\"\", \"宫爆白斩鸡被差评(腥味重/调味失准)\", \"仅包间包席制，不接受walk-in\"], \"soft_ad\": [\"一饭封神2上榜带来大量曝光\", \"但也有明确差评(郭本尼/宫爆白斩鸡)，非全好评异常\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 480,
+    "name": "柴门荟(BFC外滩金融中心店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 80,
+      "score_diner": 70,
+      "score_taste": 75,
+      "score_endorsement": 85,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"有鱼的鱼香肉丝：这道菜颠覆了我对鱼香肉丝的认知。嫩到爆汁的肉丝里藏着Q弹的千岛湖鳜鱼肉粒，酸甜咸鲜的酱汁裹满每一根肉丝，搭配脆爽的木耳和笋丝。四川鱼鲜泡豇豆烧岩团：岩团鱼鲜嫩无比，肉质细腻得如同豆腐一般。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=225805126&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"有鱼的鱼香肉丝/泡豇豆烧岩团\", \"date\": \"2025-11-11\"}, {\"quote\": \"席前活水锅煮岩鲤，厨师在桌边现场料理一整条岩鲤，片肉、上浆、入锅、装碗。鱼肉质地细腻，刺少而鲜美，在麻辣汤底的衬托下，更显江鱼本味之醇。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=213463720&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"活水锅煮岩鲤\", \"date\": \"2025-10-16\"}, {\"quote\": \"Chai Men Hui is a refined Sichuan restaurant from Chai Men Hospitality Group, led by chef-founder Chen Tianfu. It was founded in Chengdu in 2019, where they currently hold a Michelin one-star.\", \"source\": \"Nomfluence\", \"url\": \"https://rachelgouk.com/refined-sichuan-cuisine-at-chai-men-hui-shanghai/\", \"dish\": null, \"date\": \"2025-10-29\"}], \"negative\": [\"高端定价(人均488-600)，宴请场景为主\", \"米其林+黑珍珠光环下预期管理难\"], \"soft_ad\": [\"携程笔记+抖音投放量较大\", \"但有Nomfluence海外媒体独立评测\", \"米其林一星+黑珍珠一钻为官方背书\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 481,
+    "name": "邓记食园",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 40,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"邓师傅深耕川菜四十九载。坚持了好多不辣的味型，坚持了很多川菜最传统的东西，比如葱爆猪肝。以前炒的猪肝叫白油猪肝。\", \"source\": \"抖音(自在探店)\", \"url\": \"https://www.iesdouyin.com/share/video/7615564175472856329\", \"dish\": \"葱爆猪肝/白油猪肝\", \"date\": \"2026-03-10\"}, {\"quote\": \"无论是葱末猪肝还是炝锅猪肝，主打一个嫩口，但不是脆嫩，更像是油滑出来的嫩口。调味过于克制，香味少了一半。麻婆豆腐的豆腥气有点猖狂，跟菜场里买的内酯豆腐一样。叙府炒饭缺口盐，没有豆香的低糖甜烧白。\", \"source\": \"抖音(差评)\", \"url\": \"https://www.iesdouyin.com/share/video/7566457205433355557\", \"dish\": \"葱末猪肝/麻婆豆腐/叙府炒饭/甜烧白\", \"date\": \"2025-10-29\"}, {\"quote\": \"宫爆的走地鸡，选用潮汕走地鸡，腿肉多没什么骨头。荔枝味甜的，味道也不错，花生米也是脆的。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7677105483123526214\", \"dish\": \"宫爆走地鸡\", \"date\": \"2026-08-23\"}, {\"quote\": \"猪肘烧得酥烂不腻，服务也很周到。菜量不算大，口味还是不错的，菜品做得也比较精致。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=328318376&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"猪肘\", \"date\": \"2026-06-28\"}], \"negative\": [\"差评：猪肝调味过于克制、麻婆豆腐豆腥气重、叙府炒饭缺口盐\", \"菜量不大，性价比争议\", \"被宣传为\\\"南兴园平替\\\"但实测槽点多\"], \"soft_ad\": [\"携程笔记\\\"黑珍珠平替\\\"宣传话术\", \"但有明确差评视频(槽点满满)，非全好评\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 537,
+    "name": "小孃孃(思南公馆店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 40,
+      "score_taste": 30,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "【分类纠错·待改标签】菜系归类严重错误：该店实际为宁波菜/江浙菜/本帮菜餐厅(酱青蟹/熟醉沼虾/红烧肉/葱油蒸膏鱿)，所有搜索结果均标注为宁波菜或江浙菜，非川菜。不应出现在川菜榜单中。 {\"quotes\": [{\"quote\": \"嬢嬢酱青蟹蟹膏满满，陈年黄酒香很浓郁，一嗦嘴里都是果冻质地的蟹肉鲜香可口。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=339427369&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"嬢嬢酱青蟹\", \"date\": \"2026-07-18\"}, {\"quote\": \"小馆红烧肉端上桌还在duangduang抖动，肥而不腻，入口即化。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=211005208&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"小馆红烧肉\", \"date\": \"2025-10-10\"}], \"negative\": [\"实际菜系为宁波菜/江浙菜/本帮菜，非川菜\", \"所有搜索结果均标注\\\"宁波菜\\\"\\\"江浙菜\\\"\\\"本帮菜\\\"\"], \"soft_ad\": [\"携程笔记+抖音密集投放\", \"套餐推广(200多双人餐)\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 573,
+    "name": "蜀谭记·盐帮川菜(胶州路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 60,
+      "score_taste": 60,
+      "score_endorsement": 25,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "【存疑·证据弱】必吃榜连锁品牌，有多源食客评价含具体菜名(飘香沸腾鱼/火爆双脆/仔姜兔/鲜椒牛蛙)，抖音\"无广探店\"有具体菜品描述。但携程笔记投放量大(尤其小龙虾季)，连锁品控风险，已扣soft_ad_penalty。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"必点招牌菜飘香沸腾鱼，很大一盘，端上桌被震撼到。火爆双脆锅气炸裂，仔姜兔鲜辣过瘾。\", \"source\": \"抖音(无广探店)\", \"url\": \"https://www.iesdouyin.com/share/video/7671159037551106210\", \"dish\": \"飘香沸腾鱼/火爆双脆/仔姜兔\", \"date\": \"2026-08-07\"}, {\"quote\": \"飘香沸腾鱼鱼片滑嫩，红油麻香上头；火爆双脆脆爽入味，仔姜香气很突出，鲜椒牛蛙鲜辣过瘾。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=362661503&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"飘香沸腾鱼/火爆双脆/鲜椒牛蛙\", \"date\": \"2026-08-24\"}, {\"quote\": \"飘香沸腾鱼作为当家菜品，新鲜黑鱼，能吃得出热油泼洒的瞬间激发出干辣椒与花椒的复合香气，鱼肉厚实滑嫩，入口麻辣鲜。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=216875422&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"飘香沸腾鱼\", \"date\": \"2025-10-23\"}], \"negative\": [\"连锁分店多，品控可能参差\", \"夜宵/小龙虾季投放密集\", \"排队两小时的网红效应\"], \"soft_ad\": [\"必吃榜上榜品牌\", \"携程笔记投放量大(尤其小龙虾季)\", \"\\\"老回头客认证\\\"话术模板化\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 574,
+    "name": "邻里川菜馆",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 65,
+      "score_taste": 55,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"咸蛋黄鸡中翅推荐菜第一，几乎每桌都点。鸡翅裹着咸蛋黄，炸得酥脆，咬下去先是沙沙的咸蛋黄颗粒，然后肉汁在嘴里爆开。咸蛋黄给得足，每一口都裹满了。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7685008775275467941\", \"dish\": \"咸蛋黄鸡中翅\", \"date\": \"2026-09-13\"}, {\"quote\": \"四川回锅肉：五花肉切得刚好，煸到微微卷曲，边缘带焦香。和蒜苗、豆瓣酱一起炒，咸香里带点甜，肥的不腻，瘦的不柴。牛肉片厚薄均匀，红油里煮到刚断生，嫩滑。底下垫着粉丝和豆芽，吸饱了麻辣汤汁，比肉还抢手。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=373440117&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"回锅肉/水煮牛肉\", \"date\": \"2026-09-13\"}, {\"quote\": \"38一份的水煮牛肉！便宜又好吃！算是到了上海经过改良版的川菜，他们家都不是特别辣，但是都很香。水煮菜下面的豆芽裹着很多麻辣鲜香的汁，本身都是脆爽的。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7015886777265245479\", \"dish\": \"水煮牛肉/豆芽\", \"date\": \"2021-10-06\"}], \"negative\": [\"改良版川菜，辣度偏低，正宗川菜爱好者可能不满\", \"学生店，环境一般\"], \"soft_ad\": [\"2026年9月携程+抖音同步投放\\\"18年川菜\\\"内容\", \"但有2021年抖音老视频和长期学生口碑\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 575,
+    "name": "自贡盐帮菜馆(七莘路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 40,
+      "score_diner": 30,
+      "score_taste": 40,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 15,
+      "evidence_summary": "【存疑·证据弱】搜索结果与多家盐帮菜连锁混杂，无法确证七莘路148号门店的独立堂食口碑。仅有2条抖音团购推广内容，无独立来源、无老客评价、无地图POI数据。证据薄弱。 {\"quotes\": [{\"quote\": \"全是牛蛙，这蛙肉巨嫩，麻辣鲜香都在里面了，看着油，但吃起来完全不油。还可以选他们家招牌的沸腾鱼跟酸菜鱼，鱼肉都是活鱼现杀的，鱼片切的特别的厚实，鱼肉怎么会嫩成这样？\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7670816589273917094\", \"dish\": \"牛蛙/沸腾鱼/酸菜鱼\", \"date\": \"2026-08-06\"}, {\"quote\": \"沸腾鱼是真的当面淋油，香味隔壁桌都回头。鱼片又嫩又滑，不是那种软趴趴的口感。鲜椒牛蛙，大块蒜瓣肉，嫩到一抿就脱骨。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7683376222885142907\", \"dish\": \"沸腾鱼/鲜椒牛蛙\", \"date\": \"2026-09-09\"}], \"negative\": [\"搜索结果混杂蜀谭记/本甄/蜀当家等多家盐帮菜，难以确证七莘路148号具体门店\", \"抖音内容均为团购套餐推广(128元3人餐)\"], \"soft_ad\": [\"抖音团购推广密集\", \"无独立老饕/公众号评测\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 576,
+    "name": "锦盐记川菜小馆(莘朱路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 35,
+      "score_diner": 25,
+      "score_taste": 35,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 28,
+      "evidence_summary": "【建议下架·待裁决】2026年8月新开店铺，所有可见内容均为抖音团购开业推广(10+条视频同日发布，话术一致，均挂128元套餐链接)，无独立堂食评价、无差评、无老客复购，属典型新店营销轰炸。 {\"quotes\": [{\"quote\": \"沸腾鱼淋油的瞬间真的香迷糊了，而且鱼肉也很紧实，没什么刺。鲜椒爆双脆，猛火里面爆炒一下就出锅了。双脆里面是黄喉和鸭喉管。九秒火爆猪肝。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7670821292631936896\", \"dish\": \"沸腾鱼/鲜椒爆双脆/九秒火爆猪肝\", \"date\": \"2026-08-06\"}, {\"quote\": \"招牌沸腾鱼热油一泼，嫩、麻、辣超过瘾。鲜椒爆双脆也是锅气十足。自贡鲜椒牛蛙、青红鲜椒、猛火、蛙肉的鲜辣直钻鼻腔。9秒火爆猪肝、9秒急火快炒，锁住嫩度，一点也不腥。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7683374901089548922\", \"dish\": \"沸腾鱼/鲜椒爆双脆/自贡鲜椒牛蛙/9秒火爆猪肝\", \"date\": \"2026-09-09\"}], \"negative\": [\"全部为2026年8-9月新店开业团购推广内容\", \"多条视频同日(8月6日)发布，话术几乎完全一致\", \"无任何独立食客评价、无差评、无老客复购证据\"], \"soft_ad\": [\"新店开业，集中投放10+条抖音团购视频\", \"所有视频均挂团购链接(128元3人餐)\", \"话术模板化:\\\"新店开业赶紧囤\\\"\\\"左下角冲\\\"\", \"无携程/小红书/公众号独立评测\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 577,
+    "name": "蜀湘记(古美路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 45,
+      "score_diner": 35,
+      "score_taste": 45,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 20,
+      "evidence_summary": "【存疑·证据弱】有具体菜名(沸腾鱼/火爆腰花/麻婆豆腐/辣子鸡)，声称\"开了很多年\"，但所有可见内容均为抖音团购套餐推广，话术模板化、无差评、无独立老饕评测、无其他来源交叉验证。证据不足以确认真实堂食口碑。 {\"quotes\": [{\"quote\": \"古美街道蜀湘记后厨全部四川人，没有过多的科技与狠活，只有猛火现做。开了很多年，一直以味道和分量拿捏回头客，就光里面的辣椒吃完都想打包带走。特色的沸腾鱼和酸菜鱼二选一，鱼肉真的量很大。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7623930629884972795\", \"dish\": \"沸腾鱼/酸菜鱼\", \"date\": \"2026-04-02\"}, {\"quote\": \"猪肝超级嫩，而且吃起来有点辣辣的，吃起来很过瘾。这麻婆豆腐拌饭也是一绝。这个辣子鸡麻麻辣辣的，吃起来特别过瘾。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7674140106228732136\", \"dish\": \"猪肝/麻婆豆腐/辣子鸡\", \"date\": \"2026-08-15\"}], \"negative\": [\"所有抖音内容均为团购套餐推广(148元/120元套餐)\", \"无差评、无独立老客评价\", \"话术模板化:\\\"左下角赶紧囤\\\"\"], \"soft_ad\": [\"2026年3-8月密集投放抖音团购视频\", \"所有视频话术一致(沸腾鱼二选一+火爆三选一)\", \"无携程/小红书/公众号独立评测\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 578,
+    "name": "辣味鲜老刘特色菜",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 80,
+      "score_taste": 85,
+      "score_endorsement": 30,
+      "soft_ad_penalty": 2,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"这家店的厉害之处在于每道菜看似相近，调味却各不相同。辣有百态，酸有千般。老刘的锅铲翻飞间便是一道新菜，鱼香肉丝、鸭血、土豆丝、蹄花汤样样好吃。相比他简朴的环境，这家价格不低，人均基本在250元以上。但半年吃下来，它确实是我觉得口味上最惊艳的川菜馆，值得一吃。\", \"source\": \"抖音(美食博主)\", \"url\": \"https://www.iesdouyin.com/share/video/7524675127964765479\", \"dish\": \"鱼香肉丝/鸭血/土豆丝/蹄花汤\", \"date\": \"2025-07-08\"}, {\"quote\": \"猪肝要嫩到入口即化，好吃。腰花是最到没有一点腥味，大火爆炒十八秒，直接装盆，一秒都不能多。生焖兔是自贡菜的头牌，兔肉剁成很小的小块，用子姜、小米辣生焖，每一块都吸满了汤汁，辣的直冒汗。火爆黄喉，这道菜最考验火候。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7652341293447646505\", \"dish\": \"肝腰合炒/生焖兔/火爆黄喉\", \"date\": \"2026-06-21\"}, {\"quote\": \"每次只要后厨门一打开，扑鼻而来的辣椒味直击鼻腔，客人一起打喷嚏好不热闹。重口味的吃货可以去现场感受一下。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/6958822869430177058\", \"dish\": null, \"date\": \"2021-05-05\"}], \"negative\": [\"环境简朴(在汉庭酒店内)\", \"人均250+，性价比低\", \"大众点评搜不到/不接受walk-in，预订门槛高\", \"辛辣味极重，非重口爱好者不友好\"], \"soft_ad\": [\"无团购挂车\", \"无密集投放(2021/2023/2025/2026均有独立博主自发探店)\", \"\\\"最神秘\\\"标签本身就是老饕圈层口碑\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 580,
+    "name": "本甄精品川菜(新天地店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 60,
+      "score_taste": 60,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"自贡特色炒汤圆我每次来都会点，才刚上桌我们都快已经吃完了。招牌麻麻鱼江团，鱼肉好嫩，吃起来都没什么刺，麻辣鲜香的。半年内吃了三次。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7598038136345713652\", \"dish\": \"自贡特色炒汤圆/招牌麻麻鱼江团\", \"date\": \"2026-01-22\"}, {\"quote\": \"盐帮仔姜蛙蛙跳：牛蛙肉质紧实，量也很多，吃起来辛辣开胃。麻麻辣子鸡：味道很带劲。生拌娃娃菜：酸酸辣辣的很清爽很解腻。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=178626848&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"盐帮仔姜蛙蛙跳/麻麻辣子鸡/生拌娃娃菜\", \"date\": \"2025-07-31\"}, {\"quote\": \"这一次回来之后发现它的味道没有以前那么火辣了，而且感觉分量也有所下降，我猜测可能也是换了厨师。现在整个上海就剩他们一家店了，这家店还从湖滨道搬到了无限极荟。\", \"source\": \"抖音(差评)\", \"url\": \"https://www.iesdouyin.com/share/video/7263827575112240384\", \"dish\": null, \"date\": \"2023-08-05\"}], \"negative\": [\"老客差评：味道不如以前、分量下降、疑似换厨师\", \"从湖滨道搬至无限极荟，上海仅剩一店\", \"品控下滑风险\"], \"soft_ad\": [\"2026年1月抖音投放量较大\", \"但有2023年老客差评，非全好评异常\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 581,
+    "name": "蜀韵精品川菜·盐帮菜(九亭中心店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 60,
+      "score_taste": 60,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】自2021年经营至今，有跨年代评价(2021抖音/2025携程)，含具体菜名(自贡大麻鱼/彩虹排骨/子姜牛蛙/双椒小公鸡/麻婆豆腐)，\"九亭天天排队\"和\"一周吃3次\"的复购信号。102种辣椒花椒展示墙体现专业度。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"自贡大麻鱼选用巴沙鱼口感嫩没鱼刺，椒麻口味的鱼片量大配料足。双椒小公鸡用料讲究辣度刚刚好。陈麻婆豆腐口味比平时吃的还要浓拌饭好吃。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7034311316324011304\", \"dish\": \"自贡大麻鱼/双椒小公鸡/陈麻婆豆腐\", \"date\": \"2021-11-25\"}, {\"quote\": \"墙上放置了102种辣椒花椒等调料品类。彩虹排骨外皮焦脆一口下去超满足。自贡big麻鱼，青花椒红花椒几乎盖住了整条鱼，点泥土味都没有，太太太好吃了！\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/6941580725212810536\", \"dish\": \"彩虹排骨/自贡大麻鱼\", \"date\": \"2021-03-20\"}, {\"quote\": \"子姜牛蛙、蒜泥白肉、自贡辣子鸡，随便一道都是米饭杀手！是好吃到可以一周吃3次的程度！\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=150929885&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"子姜牛蛙/蒜泥白肉/自贡辣子鸡\", \"date\": \"2025-05-18\"}], \"negative\": [\"九亭地段偏远\", \"部分内容为团购推广\"], \"soft_ad\": [\"2026年3月有团购推广视频\", \"但有2021年老视频和\\\"天天排队\\\"老客口碑\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 582,
+    "name": "JSL三椒·川南小馆(虹桥南丰城店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 35,
+      "score_diner": 30,
+      "score_taste": 40,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 28,
+      "evidence_summary": "【建议下架·待裁决】2026年6月新开店铺，所有可见内容均为抖音团购开业推广(6月12日单日10+条视频，话术一致，均挂68代100代金券)，无独立堂食评价、无差评、无老客复购，属典型新店营销轰炸。 {\"quotes\": [{\"quote\": \"内江烟笋红烧牛肋条，选用新鲜肥瘦适中的牛肋条和内江资中特有的烟笋，一起小火慢炖，出锅油脂香气口感软糯。粉蒸鲜牛肋条，米粉和香料都由四川资中空运而来。成都肥肠血旺也是用料扎实。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7650379292220623461\", \"dish\": \"内江烟笋红烧牛肋条/粉蒸鲜牛肋条/成都肥肠血旺\", \"date\": \"2026-06-12\"}, {\"quote\": \"三椒特色麻辣鱼，麻香醇厚，鲜辣够味，鱼肉鲜嫩爽滑。自贡火爆猪肚头，锅气十足，猪肚头脆爽弹牙。内江烟笋红烧牛肋条，肉香浓郁，烟笋吸饱了汤汁。粉蒸鲜排骨，排骨软糯脱骨。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7650375992263196011\", \"dish\": \"三椒麻辣鱼/火爆猪肚头/烟笋牛肋条/粉蒸排骨\", \"date\": \"2026-06-12\"}], \"negative\": [\"全部为2026年6-8月新店开业团购推广\", \"多条视频同日(6月12日)发布，话术高度一致\", \"无独立老客评价、无差评\"], \"soft_ad\": [\"虹桥南丰城新店开业，6月12日单日投放10+条抖音视频\", \"所有视频均挂68代100代金券链接\", \"话术模板化:\\\"新店开业赶紧囤\\\"\", \"无携程/小红书/公众号独立评测\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 583,
+    "name": "平川·程玉平川菜工作室",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 65,
+      "score_taste": 75,
+      "score_endorsement": 60,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"四间包房，全预订制，价格从600/位起。主厨程玉平善于做古法川菜，三十多年经验。蒜泥白肉、烧椒皮蛋味型精准，一吃就能记住。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7543234321982213435\", \"dish\": \"蒜泥白肉/烧椒皮蛋\", \"date\": \"2025-08-27\"}, {\"quote\": \"印象最深的就是油淋鸡，鸡肉皮脆肉嫩，味型和怪味又特别接近。可以吃的筷子停不下来。鸭包海味和八宝鸭特别像。八戒拱渣是近代厨师典型的粗菜细作。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=248396947&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"油淋鸡/鸭包海味/八戒拱渣\", \"date\": \"2025-12-29\"}, {\"quote\": \"藤椒鸡条麻香直钻鼻腔。鳝丝段外脆里嫩鲜香。泡椒牛膝骨啃起来胶原蛋白满满。灌汤白鲈鱼鲜的眉毛落下来。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=251936903&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"藤椒鸡条/鳝丝段/泡椒牛膝骨/灌汤白鲈鱼\", \"date\": \"2026-01-06\"}], \"negative\": [\"600/位起，高端定价\", \"多次搬迁(从陕西南路→现址)\", \"全预订制，walk-in不可\"], \"soft_ad\": [\"景德镇新闻网批量SEO软文(2026年9月集中发布10+篇推广文章)\", \"但有DiningCity川菜餐厅之星+Shanghai WOW! BEST 50官方背书\", \"携程笔记为真实食客体验\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 584,
+    "name": "鲤香(板前)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 55,
+      "score_taste": 65,
+      "score_endorsement": 30,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "【存疑·证据弱】程玉平之子小程师傅主理的板前川菜，2026年6月新开，8席预约2分钟秒空。有具体菜品(岩里捞起/无水牛肋条/椒麻油墨)，名人打卡(李诞/胡彦斌)，稀缺性为真实流量。但经营时间极短，长期稳定性待观察。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"招牌岩里捞起，广西生态岩鲤细嫩微甜，配上鱼皮白洋葱和茗荷的香草清香，尾韵一点花生油香气。椒麻油墨脆得惊艳，北极贝水润多汁。由川菜大师程玉平儿子小程师傅全程操刀，全程二十道菜道道精彩。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7654511619976702961\", \"dish\": \"岩里捞起/椒麻油墨\", \"date\": \"2026-06-23\"}, {\"quote\": \"板前八个位置，放号预约2分钟秒被抢空。三位主厨分别从川、京、粤重新诠释日式中华。无水牛肋条，一口惊艳，听说不加一滴水，完全是用雪梨炖的。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7670003326959750451\", \"dish\": \"无水牛肋条\", \"date\": \"2026-08-04\"}, {\"quote\": \"活脱脱的碳水刺客！鲤香兼顾创新与地道，火候、调味拿捏精准，从开胃冷盘、硬核热菜到暖心主食、清爽甜品，全程无短板，是值得N刷的中华料理好去处。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=326172022&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": null, \"date\": \"2026-06-24\"}], \"negative\": [\"2026年6月新开，经营时间极短\", \"780/位定价，预期管理风险\", \"日川融合定位，纯粹川菜爱好者可能不认可\"], \"soft_ad\": [\"开业初期集中探店(2026年6-8月)\", \"但预约2分钟抢空为真实稀缺性信号\", \"李诞/胡彦斌等名人打卡\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 585,
+    "name": "九老汉·川渝江湖菜(恒丰路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"老汉秘制肥肠鱼几乎是桌桌必点的，一次就能吃到卤过的，浸饱了红油汤汁，热油一淋特别香，麻辣鲜香，巨入味。青花椒肥肠鱼，鱼片嫩，鱼刺少，肥肠吸饱了汤汁，q弹肥糯。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7669684259703740645\", \"dish\": \"秘制肥肠鱼/青花椒肥肠鱼\", \"date\": \"2026-08-03\"}, {\"quote\": \"火爆腰花吃起来特别的脆嫩，食材下锅瞬间高温翻炒，火候把控精准到秒，10秒内出锅。既保留了食材本身的鲜，又裹满了川味的香辣，脆嫩爆汁不塞牙。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7581728425577172250\", \"dish\": \"桥头三嫩/火爆腰花\", \"date\": \"2025-12-09\"}, {\"quote\": \"口水鸡麻麻辣辣的，辣辣的酱汁吃起来特别的开胃，酱汁完全渗透到了鸡肉里。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=197990430&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"口水鸡\", \"date\": \"2025-09-14\"}], \"negative\": [\"连锁8-9家分店，品控参差风险\", \"辣度按上海口味调整，不够正宗\", \"团购套餐推广频繁\"], \"soft_ad\": [\"2025-2026年抖音+携程投放量大\", \"澎湃新闻有推广软文\", \"但经营十余年，有老客复购\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 586,
+    "name": "李老幺重庆大排档(松东路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"辣子鸡外皮焦脆，里面肉很嫩，麻麻辣辣的特别好吃。干腰合炒里面是猪肝和腰花，师傅一起猛火爆炒出来的，一上桌就特别的香。腰花很嫩很香，还没有什么腥气。小炒黄牛肉很嫩很香。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7670507439682925755\", \"dish\": \"辣子鸡/干腰合炒/小炒黄牛肉\", \"date\": \"2026-08-05\"}, {\"quote\": \"一家店能开12年肯定是有点东西的。真材实料，量大实惠，口味正宗，来吃的大部分都是附近的街坊邻居回头客。算下人均才30多。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7585030036836830500\", \"dish\": null, \"date\": \"2025-12-18\"}, {\"quote\": \"伤心凉粉，店里自己用豌豆粉做的凉粉，很爽口，调味做的也特别好。干锅花菜，滑肉豌豆尖汤。米汤还是自助的。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7585117746472652074\", \"dish\": \"伤心凉粉/干锅花菜/滑肉豌豆尖汤\", \"date\": \"2025-12-18\"}], \"negative\": [\"携程评分仅3.8/5\", \"松江松东路地段偏远\", \"团购套餐推广频繁\"], \"soft_ad\": [\"抖音团购推广量大(128元套餐)\", \"但12年老店+街坊回头客为真实口碑\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 587,
+    "name": "东泰荟·江湖菜(火车站店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 35,
+      "score_diner": 25,
+      "score_taste": 35,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 28,
+      "evidence_summary": "【建议下架·待裁决】2026年8月新开店铺，所有可见内容均为抖音团购开业推广(10+条视频，话术一致，均挂128元双人餐链接)，无独立堂食评价、无差评、无老客复购，属典型新店营销轰炸。地址确认为静安区天目西路218号。 {\"quotes\": [{\"quote\": \"满满一大盆毛血旺，真材实料，麻辣鲜香。鸭血嫩滑、毛肚脆爽，一勺热油浇下去，花椒在碗里炸开。干煸四季豆听得见咔嚓声，外皮起皱微酥，内里清甜多汁。顺德干蒸排骨软糯q弹。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7675988681232385531\", \"dish\": \"毛血旺/干煸四季豆/顺德干蒸排骨\", \"date\": \"2026-08-20\"}, {\"quote\": \"毛血旺里面的料很足，有鸭血、午餐肉、黄喉、毛肚，还有豆芽和粉皮。干煸四季豆炒的也很入味，越嚼越香。排骨入口嫩滑，很好脱骨。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7676792742571445922\", \"dish\": \"毛血旺/干煸四季豆/蒸排骨\", \"date\": \"2026-08-22\"}], \"negative\": [\"全部为2026年8-9月新店开业团购推广\", \"所有视频均为128元双人套餐推广\", \"无独立老客评价、无差评、无历史口碑\"], \"soft_ad\": [\"新店开业，8-9月集中投放10+条抖音视频\", \"所有视频话术一致(毛血旺+干煸四季豆+蒸排骨+绿豆汤)\", \"均挂团购链接，无携程/小红书/公众号独立评测\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 588,
+    "name": "对酒当歌·地道川菜(南丹东路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 60,
+      "score_taste": 60,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"红红火火毛血旺，一年卖出30万份，上海top1。鸭血嫩滑弹牙，配料超丰富还有鲜虾。当歌过瘾沸腾鱼，鱼肉嫩得像豆腐，微辣就已经爽到飞起。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=50876722&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"红红火火毛血旺/当歌过瘾沸腾鱼\", \"date\": \"2024-05-23\"}, {\"quote\": \"鸭血、鱿鱼、虾、毛肚、素鲍，有点太豪华了，是地道的川味，香中带麻，麻中带辣，舌头麻的跳舞的感觉是会上瘾的。一年卖了30万份，料真的很足。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7372862920755006729\", \"dish\": \"红红火火毛血旺\", \"date\": \"2024-05-25\"}], \"negative\": [\"打工人评价：\\\"不出错但也不是特别出彩\\\"\", \"连锁两家店，品控参差\", \"毛血旺\\\"上海top1\\\"有营销话术嫌疑\"], \"soft_ad\": [\"携程笔记+抖音投放量较大(2024-2026持续)\", \"\\\"年销30万份\\\"为营销话术\", \"但有跨年代评价和打工人真实反馈\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 589,
+    "name": "有滋有味·农家川菜(北外滩店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 60,
+      "score_taste": 62,
+      "score_endorsement": 30,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"渝城口水鸡，不去四川也能吃到的正宗口水鸡，份量很足。外皮脆脆的、油而不腻，里面的鸡肉肉质紧实。沾上点汤汁吃起来更香。宫爆虾球点单率也蛮高。麻婆豆腐烧牛肉烧得入味，豆腐软软的趁热吃口感更佳，牛肉肉质饱满咸鲜入味。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=58091391\", \"dish\": \"渝城口水鸡/麻婆豆腐烧牛肉\", \"date\": \"2024-06-22\"}, {\"quote\": \"香辣大盆蛙出场很特别，牛蛙肥美肉质滑嫩入味，麻辣可口还有藕片增添口感，整体辣味十足但不燥。酱烧有机勾魂鱼是招牌，鱼肉细腻里面还有虾和嫩滑豆腐，味道层次丰富汤汁浓郁鲜美。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=61939921\", \"dish\": \"香辣大盆蛙/酱烧勾魂鱼\", \"date\": \"2024-07-07\"}], \"negative\": [\"抖音大量69代100代金券/88元3-4人套餐挂车视频，团购营销密集\"], \"soft_ad\": [\"抖音探店视频集中轰炸，多条带团购链接\", \"88元套餐/69代100代金券等促销内容为主\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 590,
+    "name": "阳哥儿·重庆芋儿肥肠鸡(元善里店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 45,
+      "score_taste": 55,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "【存疑·证据弱】品牌有20年历史且有B站具体菜品点评，但上海元善里店独立堂食证据薄弱，搜索结果大量混入重庆本店和外卖团购内容，无法确认上海店口味一致性。 {\"quotes\": [{\"quote\": \"整体是比较清爽的糊辣味，不是红油厚重感。芋儿耙而不烂有绵沙感，鸡肉一口下去肉感很强，鸡皮好吃。肥肠处理得干净。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/6888616463712668936\", \"dish\": \"芋儿肥肠鸡\", \"date\": \"2020-10-28\"}, {\"quote\": \"20年老店的功力全在这一锅里了。汤底浓郁鲜香，芋儿耙而不烂，鸡肉紧实不柴。加了肥肠和兔肚后口感层次更丰富，吃得满头大汗才过瘾。店虽然不好找但味道值得。\", \"source\": \"哔哩哔哩\", \"url\": \"https://www.bilibili.com/video/BV17wwKzPEwg/\", \"dish\": \"芋儿肥肠鸡\", \"date\": \"2026-03-15\"}], \"negative\": [\"搜索结果多为重庆本地阳哥儿或 generic 肥肠鸡内容，上海元善里店独立堂食证据较少\", \"大量抖音视频实为外卖/团购带货内容\"], \"soft_ad\": [\"抖音多条外卖套餐挂车视频（50多元2-3人餐）\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 591,
+    "name": "重记袍哥·肥肠芋儿鸡(天津路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 58,
+      "score_diner": 50,
+      "score_taste": 50,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 15,
+      "evidence_summary": "【存疑·证据弱】有具体菜品堂食评价和负面信号（火锅底料味/肥肠减少），来源跨platform+ugc。但抖音团购挂车密集需扣分。；主复核：实质堂食点评不足2条 {\"quotes\": [{\"quote\": \"鸡肉炖得软烂入味，芋头面面糯糯的，肥肠处理得很干净一点异味都没有。用的都是皖南散养小公鸡，每天现鸡现炒送进高压锅，肥肠搓洗三遍每天现卤。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7342640846740671770\", \"dish\": \"肥肠芋儿鸡\", \"date\": \"2024-03-05\"}], \"negative\": [\"有成都食客评价'太一般了，都是火锅底料的味道'\", \"肥肠量逐年减少\"], \"soft_ad\": [\"抖音多条100多2-3人餐团购挂车视频\", \"两条几乎相同的抖音团购文案（2024-03-04/05）\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 592,
+    "name": "破店小酒馆(昌里三钢里店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"破店鲜椒鸡上桌老大一盘，多种辣椒和鸡丁炒香满满的川味，鸡丁洋葱等都咸辣适中下饭得不行。破店招牌降龙爪爪子入口软糯。\", \"source\": \"Trip.com\", \"url\": \"https://hk.trip.com/moments/detail/shanghai-2-132196780/\", \"dish\": \"鲜椒鸡/降龙爪\", \"date\": \"2025-05-18\"}, {\"quote\": \"辣子鸡一年销量9万份，足足一斤多鸡肉，每口鸡肉都炸得酥脆爆汁。干煸黑鱼片没有骨头，外面还有一点点糖醋口感。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7486303598045859098\", \"dish\": \"辣子鸡/干煸黑鱼片\", \"date\": \"2025-03-27\"}], \"negative\": [\"抖音大量118元2-3人套餐团购视频\", \"TimeOut上海文章介绍的是长寿路普陀店非昌里三钢里店\"], \"soft_ad\": [\"118套餐挂车视频集中出现（2022年国庆期间）\", \"必吃榜标签+叙利亚风装修网红店属性\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 593,
+    "name": "老吴川菜馆",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 68,
+      "score_taste": 68,
+      "score_endorsement": 50,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"招牌麻婆豆腐很熟悉的料包味，和小时候我妈烧的一样，滑嫩豆腐拌饭又麻又辣超级下饭。夫妻肺片用料不错（牛肉牛百叶牛心牛蹄筋新鲜切片极薄）但不入味，整体油得不行。鲜椒兔丁也不错。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=52198280\", \"dish\": \"麻婆豆腐/夫妻肺片/鲜椒兔丁\", \"date\": \"2024-05-28\"}, {\"quote\": \"肥肠腰花处理得非常干净没有任何异味，空心菜脆嫩，凉面小份也贼大一盘。麻婆豆腐用了豆豉豆瓣酱麻辣到位，放了肉末口感层次好。干腰合炒稍微咸了一点。\", \"source\": \"高德地图/抖音\", \"url\": \"https://www.amap.com/ranking/shanghai/shop/310105\", \"dish\": \"肥肠腰花/麻婆豆腐/干腰合炒\", \"date\": \"2026-07-17\"}], \"negative\": [\"夫妻肺片不入味偏油\", \"干腰合炒偏咸\", \"麻婆豆腐加猪脑后反而不好吃\"], \"soft_ad\": [\"新浪文章疑似SEO软文（'含金量极高的宝藏川菜馆'模板话术）\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 594,
+    "name": "竹屋川菜",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 75,
+      "score_diner": 70,
+      "score_taste": 72,
+      "score_endorsement": 55,
+      "soft_ad_penalty": 3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"宫保鸡丁上面这层芡的薄厚程度正好，吃起来不会很腻，鸡肉非常嫩。牛蛙个头很大入口酥脆肉质鲜嫩还很肥美。蒜泥白肉是两个心中的第一名。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7365460778192801064\", \"dish\": \"宫保鸡丁/牛蛙/蒜泥白肉\", \"date\": \"2024-05-05\"}, {\"quote\": \"烤鱼是他家特色，3斤鲶鱼肉质敦实配上各种配菜。干锅牛蛙很川味。腰花够嫩够爽。不过他家的饭有点僵。江油肥肠处理得很干净，钵钵青菜解辣解腻。炒鸡杂有点过咸蒜薹较多。醪糟冰汤圆平平无奇。\", \"source\": \"携程笔记/UGC\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=123550918\", \"dish\": \"烤鱼/腰花/江油肥肠/炒鸡杂\", \"date\": \"2025-02-18\"}], \"negative\": [\"米饭偏僵\", \"炒鸡杂过咸且蒜薹多\", \"醪糟冰汤圆平平无奇\", \"需提前排位\"], \"soft_ad\": [\"20年老网红店，有一定营销但非近期集中轰炸\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 595,
+    "name": "椒点·川粤精品",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 58,
+      "score_taste": 60,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"歌乐山辣子鸡满满一大盆份量足，用的是鸡中翅，口感外酥里嫩而且麻辣特入味。盐煎肉是四川代表菜在上海难得一见，火候刚刚好外脆内嫩咸鲜味美。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=92353339\", \"dish\": \"歌乐山辣子鸡/盐煎肉\", \"date\": \"2024-10-20\"}, {\"quote\": \"椒点毛血旺食材有七八种：去壳虎尾虾仁、鸭血、毛肚、金针菇、粉条、腰花，看着非常下饭。烧椒水晶皮蛋是糖心的入口丝滑。爆炒火箭鱿鱼脆而爽口。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/6931625715725110543\", \"dish\": \"椒点毛血旺/烧椒皮蛋/火箭鱿鱼\", \"date\": \"2021-02-21\"}], \"negative\": [\"268元四人套餐团购视频较多\", \"环境大厅略显拥挤\", \"停车不方便\"], \"soft_ad\": [\"多条268元四人套餐挂车视频（2023年8月集中出现）\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 596,
+    "name": "Spicy Gangster不问江湖",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 68,
+      "score_diner": 55,
+      "score_taste": 60,
+      "score_endorsement": 40,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"火爆肥肠绝对要点，外脆里嫩超级好吃。黄喉钵钵鸡腰花还凑合。猪肝很不错。环境挺好人不多很安静。当天采购食材保证新鲜不做预制菜。\", \"source\": \"360地图\", \"url\": \"https://m.map.360.cn/m/album/detail/pid=d7149b0b874664cd\", \"dish\": \"火爆肥肠/猪肝\", \"date\": \"2025-07-05\"}, {\"quote\": \"这餐厅噱头挺大最好提前预定提前点菜。椒麻鸡味道还挺入味鸡肉偏嫩，水煮牛肉也还行。菜品味道可以但要说特别好吃特别有亮点也不至于。\", \"source\": \"Trip.com\", \"url\": \"https://in.trip.com/restaurant/china/shanghai/detail/spicy-gangster-114565061/\", \"dish\": \"椒麻鸡/水煮牛肉\", \"date\": \"2026-08-16\"}], \"negative\": [\"'噱头挺大，特别好吃特别有亮点也不至于'\", \"黄喉钵钵鸡腰花评价一般\", \"需提前预定否则菜品沽清\"], \"soft_ad\": [\"携程笔记宣传语'新天地川菜黑马连炫三碗饭'偏营销\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 597,
+    "name": "椿庐(凯德晶萃店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 55,
+      "score_taste": 68,
+      "score_endorsement": 70,
+      "soft_ad_penalty": 15,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"宫保多宝鱼（椿庐原创2.0版）把川菜灵魂酱汁浇在多宝鱼上，多宝鱼入味更鲜嫩，鱼肉裹着琥珀色酱汁入口，脆花生加嫩鱼肉双重口感暴击。鱼香茄子小青龙与鱼香茄子相得益彰，辣度恰到好处配清波担担面。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=147496252\", \"dish\": \"宫保多宝鱼/鱼香茄子小青龙\", \"date\": \"2025-05-08\"}, {\"quote\": \"海味毛血旺里面用料很足，鲜虾、鱿鱼、毛肚、鲍鱼、扇贝肉等鲜味更浓分量十足辣得很丰富。豆花水煮鱼新鲜爽滑的鱼肉加上绵软糯的豆花。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7371646186459008310\", \"dish\": \"海味毛血旺/豆花水煮鱼\", \"date\": \"2024-05-22\"}], \"negative\": [\"2023年11-12月开业期间抖音博主集中轰炸，所有视频统一#只缘身在此庐中#上海椿庐首店标签\", \"大量视频挂'左下角套餐'团购链接\", \"评分4.8/2416条但几乎全好评，差评罕见\"], \"soft_ad\": [\"开业期博主集中轰炸（2023年11月密集发布）\", \"所有视频使用相同话题标签和团购挂车\", \"黑珍珠餐厅但营销味重\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 599,
+    "name": "兴蜀府·臻味(正大广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 45,
+      "score_taste": 55,
+      "score_endorsement": 30,
+      "soft_ad_penalty": 18,
+      "evidence_summary": "【存疑·证据弱】新开高端江景川菜，虽有具体菜品描述（回锅肉/鸡豆花/凉面），但2025年初携程笔记集中爆发且全用'天花板/封神'模板话术，重环境轻口味，疑似开业营销推广。独立堂食证据不足。 {\"quotes\": [{\"quote\": \"鸡丝凉面每一根面条裹满红油花生碎很香。歌山辣子鸡干辣椒和花椒渗进鸡肉里外脆里嫩。鱼香肉丝酸甜口很入味肉丝嫩配饭一绝。手撕包菜用猪油渣炒的香气十足。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=150904195\", \"dish\": \"鸡丝凉面/辣子鸡/鱼香肉丝/手撕包菜\", \"date\": \"2025-05-18\"}, {\"quote\": \"8年陈酿豆瓣回锅肉用非遗陈酿豆瓣酱加黑毛猪后腿肉，肥瘦相间油亮亮蒜苗香。清汤鸡豆花看着像豆腐实则鸡茸做的，汤底熬了8小时鲜到眉毛跳舞。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=128814113\", \"dish\": \"陈豆瓣回锅肉/鸡豆花\", \"date\": \"2025-03-10\"}], \"negative\": [\"2025年1-3月携程笔记集中爆发，全部使用'天花板''封神''绝啦'等营销话术\", \"几乎所有笔记都在强调江景环境而非口味本身\", \"新开高端店，营销笔记密度异常高\"], \"soft_ad\": [\"携程笔记2025年初集中轰炸（1月-5月十余篇）\", \"全部笔记使用'川菜天花板''浴火重生'等模板标题\", \"重环境轻口味的营销导向\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 600,
+    "name": "巴国布衣(世博店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 55,
+      "score_taste": 60,
+      "score_endorsement": 45,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"酱烧猪手脚火候掌握得非常到位，猪蹄duang duang充满胶质一口下去香迷糊了。三峡石爆脆肠吃起来脆脆的口感。李庄大刀白肉超薄大片嫩滑可口，蘸红油佐料肥而不腻香而不辣。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7574363588158381311\", \"dish\": \"酱烧猪手/石爆脆肠/大刀白肉\", \"date\": \"2025-11-19\"}, {\"quote\": \"小米椒石爆小公鸡麻辣鲜香。锅盔盐煎肉外脆里酥嫩而不柴。老成都樟茶鸭、椒香串串虾、老头现炸酥肉。现场还有变脸表演。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7185082325271579961\", \"dish\": \"石爆小公鸡/锅盔盐煎肉/樟茶鸭\", \"date\": \"2023-01-05\"}], \"negative\": [\"大量178元四人餐/128元两人餐团购视频\", \"抖音团购营销从2022年持续至今\"], \"soft_ad\": [\"178元四人餐团购挂车视频从2022年持续到2023年密集出现\", \"老牌品牌但团购营销依赖度高\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 602,
+    "name": "三木川菜(真如古镇店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 45,
+      "score_taste": 55,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 20,
+      "evidence_summary": "【存疑·证据弱】2026年4月刚从湘菜馆改川菜的新店，抖音开业期集中轰炸（10+条视频集中3天发布），全部带代金券团购链接，几乎无独立非抖音来源。菜品描述具体但营销浓度过高。 {\"quotes\": [{\"quote\": \"招牌沸腾鱼热油泼上去香得不行，鱼肉鲜嫩越吃越好吃，底下配菜都很入味。盐帮耙鸡脚炖得耙糯叽叽越嗦越香直接脱骨。宫爆桃仁虾球咬开紧实Q弹。麻婆豆腐盖饭一绝，得到四川人认证。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7631948359011441765\", \"dish\": \"沸腾鱼/盐帮耙鸡脚/麻婆豆腐\", \"date\": \"2026-04-23\"}, {\"quote\": \"真如这边现新开不久的三木川菜，前身是一家湘菜馆。口味地道的四川菜口味，环境明亮干净，服务员会告知打卡收藏送饮品，分量正常川菜的量，值得一试。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7640659017668592360\", \"dish\": null, \"date\": \"2026-05-17\"}], \"negative\": [\"2026年4月新店开业期间抖音集中轰炸（10+条视频集中在4月22-24日）\", \"所有视频带'新店开业代金券'团购链接\", \"辣度太还原上海本地朋友可能接受不了\", \"前身是湘菜馆，刚改川菜\"], \"soft_ad\": [\"2026年4月开业期抖音博主集中轰炸\", \"所有视频带开业代金券团购链接\", \"几乎全部证据来自抖音单一平台\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 604,
+    "name": "渝利火锅(96广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 65,
+      "score_taste": 68,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"锅底是重庆传统老锅底辣味浓郁麻味十足，感觉跟在重庆吃的没差别。鲜虾、渝利蟹肉棒、空运绿色毛肚、雪花牛肉、鲜鸭血各种食材新鲜品种丰富，人均80元左右吃得很满足。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=283735782\", \"dish\": \"麻辣锅底/毛肚/鸭血\", \"date\": \"2026-03-25\"}, {\"quote\": \"我去吃了4次。最喜欢牛蛙39块3只，鸭血和年糕也不错。服务不行，有个女服务员态度很冲，跟她说等位182分钟送肥牛她直接说你说一次就行了。\", \"source\": \"穷游网\", \"url\": \"https://biu.qyer.com/p/gIDmR3QPx78Ishl1WSxmig.html\", \"dish\": \"牛蛙/鸭血/年糕\", \"date\": \"2025-01-22\"}], \"negative\": [\"服务态度差（服务员语气冲）\", \"饭点嘈杂人多\"], \"soft_ad\": [\"抖音199元套餐/78代100代金券视频较多\", \"12周年庆促销活动\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 605,
+    "name": "淑芬串串公司(定西路中山公园店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 75,
+      "score_diner": 65,
+      "score_taste": 68,
+      "score_endorsement": 45,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"定西路上开了五年每天生意都好到爆。20多种牛肉串串手工现串一元一根，最喜欢香菜牛肉薄荷牛肉芹菜牛肉，鲜嫩多汁口感超爽。牛油锅底香而不燥越煮越香。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=89440800\", \"dish\": \"香菜牛肉/薄荷牛肉/牛油锅底\", \"date\": \"2024-10-10\"}, {\"quote\": \"牛肉香气很足口感鲜嫩完全没有嚼不动，麻辣味腌制得很入味，即使放辣锅里也仍然能吃出腌制的味道。\", \"source\": \"今日头条/嬉游\", \"url\": \"http://m.toutiao.com/group/7267108952876728847/\", \"dish\": \"牛肉串串\", \"date\": \"2023-08-14\"}], \"negative\": [\"晚上经常要排队\", \"店面不算大\"], \"soft_ad\": [\"李佳琦推荐带来的网红流量\", \"宠粉日活动营销\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 606,
+    "name": "红料理",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 68,
+      "score_diner": 58,
+      "score_taste": 62,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"芋儿肥肠鸡爪爪耙软Q弹回味无穷。青花椒美蛙锅麻辣鲜香里面有整只牛蛙。入魂烤黄鱼肉皮酥脆肉鲜嫩。红油毛肚爽脆弹牙麻辣味全部锁在脆感里。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7288164469534952740\", \"dish\": \"芋儿肥肠鸡爪/青花椒美蛙/烤黄鱼\", \"date\": \"2023-10-10\"}, {\"quote\": \"软嫩鸡爪骨裹满红油抿脱骨，肥肠香而不腻。芋儿软到直接化到嘴里是魂牵梦绕的老味道。包浆豆腐咬开直接爆汁，现炸小酥肉刚出锅焦香裹满肉香。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7569441593637413736\", \"dish\": \"芋儿肥肠鸡爪/包浆豆腐/小酥肉\", \"date\": \"2025-11-06\"}], \"negative\": [\"17周年庆99.9当200花促销活动\", \"团购套餐营销持续\"], \"soft_ad\": [\"17周年庆双红节促销视频\", \"反复出现的'三刷''N刷'模板文案\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 607,
+    "name": "十八梯邓凳面(愚园路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 48,
+      "score_taste": 58,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 18,
+      "evidence_summary": "【存疑·证据弱】重庆知名豌杂面品牌上海分店，有复购食客称和重庆味道一致。但2026年8月抖音集中轰炸（10+条视频一周内发布），全部带19.9元套餐团购链接，无独立非抖音来源。 {\"quotes\": [{\"quote\": \"招牌豌杂面是干馏的，豌豆口感绵密一抿就化，杂酱三分肥七分瘦，底部有香喷喷的油辣子。拌匀之后酱料裹满面条鲜辣入味，太好吃了。老麻抄手肉馅扎实。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7595591282194750818\", \"dish\": \"豌杂面/老麻抄手\", \"date\": \"2026-01-16\"}, {\"quote\": \"这是我在上海静安愚园吃了不下4次的豌杂面。面条选用重庆特色碱水面，加入软糯绵密的豌豆沙糯入味，一大勺肉酱肥瘦相间。面的口味和我在重庆吃的一模一样，不然我也不会第二次过来吃了。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7679277210888961721\", \"dish\": \"豌杂面\", \"date\": \"2026-08-29\"}], \"negative\": [\"2026年8月抖音集中轰炸（10+条视频集中在8月22-29日）\", \"全部带19.9元套餐/刷到先囤团购链接\", \"几乎全部证据来自抖音单一平台\"], \"soft_ad\": [\"2026年8月开业/推广期抖音博主集中轰炸\", \"所有视频带19.9元单人餐团购链接\", \"重庆排队3小时的宣传话术\", \"'明星同款'标签营销\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 608,
+    "name": "程胖妹面庄(原高胖妹面庄)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 62,
+      "score_taste": 68,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"干拌豌杂面老板亲自配的料，麻辣咸香比例刚刚好。豌豆煮得真的是无敌软糯，这碗面就两个字：正宗。肥肠处理得也很干净。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/6950471126728412431\", \"dish\": \"干拌豌杂面/肥肠\", \"date\": \"2021-04-13\"}, {\"quote\": \"点了特色豌豆拌面，干面条上浇了近乎粉状的豌豆沙和肉末，搅拌均匀入口惊艳。冰粉里有花生碎山楂干香菜果冻状冰粉，内容丰富微甜不腻。小面面条劲道小料超爱。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=132915651\", \"dish\": \"豌豆拌面/冰粉\", \"date\": \"2025-03-23\"}], \"negative\": [\"改名（原高胖妹→程胖妹）可能引发品牌归属争议\"], \"soft_ad\": [\"早期探店视频有朋友带入成分\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 609,
+    "name": "开县徐妈串串火锅馆(人民广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 62,
+      "score_taste": 62,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"1块钱的牛肉串烫完都不带散的很有嚼劲肉香很足，在麻辣锅底里涮过又麻又辣但一点都不燥。腰片处理得毫无腥味，涮红汤后脆嫩弹牙。超过20种牛肉串（香菜/泡椒/芹菜/折耳根）一元一根。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=284285485\", \"dish\": \"牛肉串/腰片\", \"date\": \"2026-03-26\"}, {\"quote\": \"鸳鸯锅番茄汤汁浓郁GOOD。小郡肝麻辣牛肉是最爱。虎皮鸡爪一定要来一份体验脱骨的快乐。串串种类非常多陈列整齐。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=143275483\", \"dish\": \"小郡肝/虎皮鸡爪/麻辣牛肉\", \"date\": \"2025-04-25\"}], \"negative\": [\"榴莲山竹冰甜品营销引流痕迹重\", \"团购活动多\"], \"soft_ad\": [\"榴莲山竹冰网红甜品引流（'多少人因为这个天天来排队'）\", \"抖音2026年5月集中推广甜品\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 610,
+    "name": "江边城外烤全鱼(百联中环店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 62,
+      "score_diner": 50,
+      "score_taste": 50,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"一直很火的老牌烤鱼店，鱼绝对新鲜活鱼现杀。点了特色豆豉烤鱼，鱼肉很嫩都是一瓣瓣的肉，豆豉和鱼肉的美味结合。\", \"source\": \"去哪儿/携程网友\", \"url\": \"https://touch.travel.qunar.com/poi/11626669\", \"dish\": \"豆豉烤鱼\", \"date\": \"2019-12-08\"}, {\"quote\": \"印象中江边城外最好吃的是怪味烤鱼，但最近几年不知道是不是调整了配方，招牌口味反而变得很难吃。选了金汁香焖味烤鱼微微辣，味道比较中规中矩。4楼吃饭区域以前人气很旺这次明显人少了。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=57426790\", \"dish\": \"怪味烤鱼/金汁香焖烤鱼\", \"date\": \"2024-06-19\"}], \"negative\": [\"招牌怪味烤鱼配方调整后变难吃\", \"商场人流减少\", \"服务分4.1偏低\", \"近年口味下滑明显\"], \"soft_ad\": [\"2025-2026年抖音代金券/团购视频持续投放\", \"活鱼现杀宣传话术\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 611,
+    "name": "桂釜山城重庆小面(武宁路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 58,
+      "score_taste": 62,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"面条硬质很爽口，肉沫给得很足很香，红油汤喝了好几口。酥肉炸得脆脆的浸满红油巨香。豌杂小面yyds。里脊串很大肉感十足。服务一般般，冰豆花等了40分钟伙计在摸鱼。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=292969258\", \"dish\": \"豌杂面/酥肉/里脊串\", \"date\": \"2026-04-15\"}, {\"quote\": \"又来了平时一直吃他家的酸辣粉，今天换个口味吊龙真心不错，重庆味特别正宗地道。中午需要早点过来不然位置有点挤，出餐速度快。性价比非常高在这个地段20块吃饭肚子饱饱。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=132080859\", \"dish\": \"吊龙/酸辣粉\", \"date\": \"2025-03-21\"}], \"negative\": [\"服务一般，冰豆花等40分钟\", \"伙计摸鱼\", \"午市位置挤\"], \"soft_ad\": [\"9.99元套餐抖音推广\", \"抖音文章模板化评价\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 612,
+    "name": "恒香渝重庆小面(长阳路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 45,
+      "score_taste": 55,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "【存疑·证据弱】杨浦延吉东路社区小面馆，菜品描述具体（豌杂面/抄手），但几乎全部证据来自抖音单一平台，无独立非抖音来源交叉验证。电话18972857430。 {\"quotes\": [{\"quote\": \"豌杂拌面上面的浇头豌杂是灵魂，都煮得非常软烂绵密。豌杂酱汁挂满了面条绵绵沙沙的，辣度很善良口感浓郁但不烧味辣而不燥。咸香肉酱太上头。红油抄手厨房现包皮薄馅大，还原重庆加麻加辣。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7679050691934966006\", \"dish\": \"豌杂拌面/红油抄手\", \"date\": \"2026-08-28\"}, {\"quote\": \"招牌生腩面很筋道蛮好吃的。别家配鸡毛菜他们家配油麦菜特别清爽。豌豆泥煮得很烂裹在面条上口感很丰富。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7412582827671293220\", \"dish\": \"生腩面/豌豆泥\", \"date\": \"2024-09-09\"}], \"negative\": [\"几乎全部证据来自抖音单一平台\", \"无独立非抖音来源验证\", \"店面小，环境描述有限\"], \"soft_ad\": [\"2026年5-8月抖音推广视频\", \"'根本不输重庆''外国友人都来打卡'等夸张话术\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 613,
+    "name": "山城印象重庆小面(灵山路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 40,
+      "score_diner": 30,
+      "score_taste": 50,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "【存疑·证据弱】灵山路小面馆，仅找到1条具体提及本店的抖音视频，其余搜索结果为模板化通用重庆小面内容或其他同名店。地址模糊（仅灵山路无门牌号），证据不足以支撑keep。 {\"quotes\": [{\"quote\": \"灵山路上小小的一家门面，做着最夯的干拌豌杂面。花椒的香麻纯正，面条裹满了豌豆和杂酱，豌豆煮得软趴，搅拌后裹满每一根面条黏黏糊糊嗦上一口，肉香和麻辣香冲上舌尖。刀削有韧劲每根都裹满花椒和杂酱。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7579462577656123894\", \"dish\": \"干拌豌杂面/刀削面\", \"date\": \"2025-12-04\"}], \"negative\": [\"仅找到1条具体提及灵山路本店的证据\", \"大量抖音文章为模板化通用重庆小面评价\", \"地址仅写'灵山路'无门牌号\", \"无独立非抖音来源\"], \"soft_ad\": [\"抖音文章模板化评价（'面不软不硬好吃''服务随和热情'重复出现于多家店）\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 614,
+    "name": "我们屋头串串(老闵行)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 48,
+      "score_diner": 42,
+      "score_taste": 52,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "【存疑·证据弱】屋头串串成都20年连锁品牌上海老闵行店，有二次到店食客和具体菜品。但地址模糊（仅老闵行无门牌号），全部证据来自抖音单一平台，无独立来源验证。 {\"quotes\": [{\"quote\": \"第二回来了。一整柜都是牛肉串串，水果的、野山椒的、糖蒜的、麻辣的都是一块钱。芹菜牛肉OK，麻辣牛肉牛肉我喜欢，吊龙好。竹签1元铁签4元霸王签6元。手工八款甜品免费无限畅吃。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7645244994240538478\", \"dish\": \"牛肉串串/吊龙\", \"date\": \"2026-05-29\"}, {\"quote\": \"老闵行地道重庆火锅串串，藏在隧道里。鲜切麻辣牛肉每天现切现串。锅底三选一，经典重庆三拼毛肚黄喉鸭肠，原切特级肥牛嫩肉片四宫格拼盘。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7516512182990015804\", \"dish\": \"鲜切麻辣牛肉/毛肚黄喉鸭肠\", \"date\": \"2025-06-16\"}], \"negative\": [\"锅底太咸（抖音文章评价）\", \"地址仅写'老闵行'无具体门牌号\", \"几乎全部证据来自抖音\"], \"soft_ad\": [\"139元套餐团购挂车视频\", \"成都20年品牌连锁店营销话术\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 615,
+    "name": "巴山蜀水刘家厨",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 30,
+      "score_diner": 5,
+      "score_taste": 30,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 25,
+      "evidence_summary": "【建议下架·待裁决】青浦区新风路新角里广场川菜馆，深搜后未找到任何含具体菜名的堂食食客评价。搜索结果全部为青浦其他餐厅，无法建立独立堂食证据。evlen=60但无实质内容，疑似快采时从平台信息直接抄入。 {\"quotes\": [], \"negative\": [\"搜索未能找到该店任何具体堂食评价\", \"搜索结果均为青浦其他餐厅（凤起汇盐帮川菜/蟠龙天地麻六记/烤涮一体等）\", \"携程3.8分页面无法确认是否为本店\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 616,
+    "name": "弄堂川菜",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 75,
+      "score_diner": 72,
+      "score_taste": 72,
+      "score_endorsement": 45,
+      "soft_ad_penalty": 3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"火爆双脆58块，脆的是鸭郡把和黄喉，猛火快炒后裹满麻辣香气。脑花豆腐一定要趁热吃，享受麻、辣、鲜、香一同在舌尖炸开。附近老客会推荐你点尖椒土鸡蛋与爆腰花，两道下班下饭神器。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7559149912571628840\", \"dish\": \"火爆双脆/脑花豆腐/爆腰花\", \"date\": \"2025-10-09\"}, {\"quote\": \"辣子鸡表皮脆鸡肉蛮多一吃唇齿留香辣椒香气很足鸡肉鲜嫩。火爆黄喉超级脆火候把握很好，鸭菌嘎嘣嘎嘣的很香。上汤娃娃菜28一大盘量大很嫩很解辣。吃完就想下次再滚菜单。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=290217138\", \"dish\": \"辣子鸡/火爆黄喉/上汤娃娃菜\", \"date\": \"2026-04-09\"}], \"negative\": [\"二楼太热需脱袖\", \"新老店搬迁中\"], \"soft_ad\": [\"'20多年老弄堂'口碑型营销但非集中轰炸\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 618,
+    "name": "对酒当歌·地道川菜(南京东路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 68,
+      "score_diner": 60,
+      "score_taste": 62,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】南京东路连锁川菜，多源携程笔记有具体菜品（沸腾鱼/毛血旺/仔姜牛蛙/猪肝），一年30万份毛血旺说明客流稳定。但'天花板'Top1营销话术需扣分。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"当歌过瘾沸腾鱼满满一大盆份量足，鱼头滑嫩入味麻辣鲜香。爆炒猪肝处理得非常干净，爆炒后美味十足一口接一口停不下来。对酒当歌折耳根口感出乎意料好吃，上桌很快被光盘。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=329023752\", \"dish\": \"沸腾鱼/爆炒猪肝/折耳根\", \"date\": \"2026-06-29\"}, {\"quote\": \"红红火火毛血旺料堆得满满当当，毛肚血旺黄喉样样齐全，麻辣味很正不会一味死辣下饭下酒。盐帮仔姜牛蛙蛙肉弹润细腻，新鲜仔姜自带清新鲜香，汤汁醇厚入味。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=352434195\", \"dish\": \"毛血旺/仔姜牛蛙\", \"date\": \"2026-08-08\"}], \"negative\": [\"连锁分店多，出品稳定性依赖分店\", \"南京东路游客区定位\"], \"soft_ad\": [\"携程笔记'魔都川菜天花板'Top1等营销话术\", \"六周年庆刮刮乐活动营销\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 619,
+    "name": "贾温柔迷踪菜",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 50,
+      "score_taste": 55,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 20,
+      "evidence_summary": "【存疑·证据弱】有具体菜品的堂食评价和重庆食客背书，但抖音内容集中在两天内批量发布，软广嫌疑重。独立非营销来源不足，需进一步验证口味稳定性。 {\"quotes\": [{\"quote\": \"我前几天跟我朋友去吃了一家叫做贾温柔迷踪菜，我觉得这家店对重庆人来说还挺正宗的，因为它做的味道就很像我在重庆的街边随便找了一家馆子吃到的菜一样。推荐火爆黄喉，还有一个是它可能也不算是重庆菜，但我觉得很好吃叫做麻婆牛脊髓，它是麻婆豆腐，里面加了牛脊髓。\", \"source\": \"抖音NOWRE\", \"url\": \"https://www.iesdouyin.com/share/video/7665667289441766656\", \"dish\": \"火爆黄喉/麻婆牛脊髓\", \"date\": \"2026-07-23\"}, {\"quote\": \"强推耗儿鱼，上海没有比它更正经的，香辣入味，鱼肉...干煸牛肉、红烧牛蹄筋，一口下去是没有刺的，炖的又很入味，红油的香气特别足。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7644784942119674801\", \"dish\": \"耗儿鱼/干煸牛肉/红烧牛蹄筋\", \"date\": \"2026-05-28\"}], \"negative\": [\"大量抖音视频集中在2026-05-27/28两天发布，疑似集中投放\", \"多个视频文案高度模板化（'零踩雷''宝藏小店''夯爆了'）\"], \"soft_ad\": [\"2026年5月底抖音集中轰炸，至少8条视频在同一周内发布\", \"多条视频挂99抵100代金券链接\", \"文案模板化严重（'上海川菜扛把子''手写菜单omakase感'）\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 620,
+    "name": "刘栋梁大排档(大学路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 65,
+      "score_taste": 65,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"招牌菜像是螺丝牛蛙、绿林牛肉哥、麻婆豆腐这些，味道都挺特别的，微辣中带点甜，特别下饭。配上一杯绿豆冰沙，解辣又清爽。\", \"source\": \"Trip.com\", \"url\": \"https://hk.trip.com/restaurant/china/shanghai/detail/restaurant-134113695/\", \"dish\": \"螺丝牛蛙/绿林牛肉/麻婆豆腐\", \"date\": \"2023-08-13\"}, {\"quote\": \"辣子鸡上桌香味扑面而来，外皮炸的酥酥脆脆的，但里面鸡肉特别的鲜嫩，特别的干香，辣味也够足，香、麻、辣、咸。螺丝牛蛙，这种搭配我还是头一次见，辣味真够劲，牛蛙肉特别的肥硕饱满，肌肉很紧实，螺丝嗦着好带劲，辣中带着香。爆炒腰花。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7649619692407748329\", \"dish\": \"辣子鸡/螺丝牛蛙/爆炒腰花\", \"date\": \"2026-06-10\"}], \"negative\": [\"抖音大量代金券促销（59.9代100/65抵100/78代100）\", \"连锁化趋势明显，味道可能不如早期\"], \"soft_ad\": [\"多条抖音团购挂车视频\", \"6周年庆促销活动密集\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 621,
+    "name": "袍哥川小馆·肥肠鸡(天钥桥路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 40,
+      "score_diner": 30,
+      "score_taste": 40,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 25,
+      "evidence_summary": "【建议下架·待裁决】几乎所有可见内容都是抖音团购挂车视频，独立非营销堂食证据极弱。携程仅3.8分5条评价，搜索结果大量混入其他同名品牌。无法确认此店独立口味水平。 {\"quotes\": [{\"quote\": \"最爱吃里面的肥肠，三搓三洗去掉里面的肥油，卤到3分熟度，再下锅炖煮，吃上一口就欲罢不能。好香，这个肥肠真的很香，它处理的非常的干净。皖南黑脚公鸡，它是属于肉紧实的那种，有嚼劲，鸡肉味更浓。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7587985331996444837\", \"dish\": \"肥肠鸡\", \"date\": \"2025-12-26\"}, {\"quote\": \"停车很方便，菜品味道不错，牛肉锅里的肉很嫩，服务周到，环境也很干净整洁。\", \"source\": \"携程\", \"url\": \"https://you.ctrip.com/food/shanghai2/121698408.html\", \"dish\": null, \"date\": null}], \"negative\": [\"携程仅3.8分5条评价，样本极少\", \"大量搜索结果混入'川爷炭火肥肠鸡'等同名/近似品牌，非此店独立证据\"], \"soft_ad\": [\"多条抖音视频挂58代100代金券\", \"138元套餐挂车内容为主\", \"视频文案高度相似（'巷子里的正宗川味''烟火必吃榜'）\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 622,
+    "name": "沪小川肥肠烤鱼泡椒牛蛙(定西路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】定西路老牌夜宵店，有具体菜品的堂食评价，来源跨ugc两类。晚市人潮汹涌说明有自然客流。但商业气息较重需适度扣分。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"金牌牛蛙锅是先炸后炒的，锅气十足。外壳很酥脆，但是里面的肉很软嫩，牛蛙肉很紧实，越吃越上头。泡椒牛蛙里泡椒和灯笼椒层次很丰富，又酸又香又辣的，很下饭。牛蛙的肉像蒜瓣一样，酸辣味一下就打开我的胃口。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7650480023405831631\", \"dish\": \"金牌牛蛙锅/泡椒牛蛙\", \"date\": \"2026-06-12\"}, {\"quote\": \"创新肥肠与烤鱼的组合，卤过的肥肠软糯入味，辣得过瘾又不踩雷。招牌肥肠烤鱼是不少食客的心头好，一口下去回味无穷。建议错峰打卡，晚市人潮汹涌。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=280855877\", \"dish\": \"肥肠烤鱼\", \"date\": \"2026-03-18\"}], \"negative\": [\"三层楼夜宵店，环境偏嘈杂\", \"部分评价提到口味偏重\"], \"soft_ad\": [\"抖音有团购套餐内容\", \"三层楼规模较大，商业气息浓\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 623,
+    "name": "本来川菜(中骏广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"公司附近很出名的一家川菜馆，中午基本座无虚席来晚了就要排队了！个人认为中骏广场最正宗的川菜餐厅。盐帮仔姜蛙蛙跳必点招牌之一，牛蛙非常鲜嫩，肉肉粒粒分明。四川回锅肉也是最喜欢的菜品，肥瘦相间，色泽鲜艳。\", \"source\": \"360地图\", \"url\": \"https://m.map.so.com/m/album/detail/pid=4546f9e9b53e11d0\", \"dish\": \"盐帮仔姜蛙蛙跳/四川回锅肉\", \"date\": \"2025-01-25\"}, {\"quote\": \"自贡招牌麻辣鱼，每一片鱼肉都非常厚实，裹着红油却辣而不燥，整体是麻辣鲜香的口感。传统宫保鸡丁，整体偏甜辣口，鸡丁的量给的很足。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7598063697336960185\", \"dish\": \"自贡麻辣鱼/宫保鸡丁\", \"date\": \"2026-01-22\"}], \"negative\": [\"抖音多条68抵100/69抵100代金券挂车\", \"中骏广场新店，口味稳定性待验证\"], \"soft_ad\": [\"多条抖音代金券促销视频\", \"新店开业营销密集\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 624,
+    "name": "成都鱼庄·石锅烤鱼(华发路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"开了十几年的成都鱼庄，整鱼都是活鱼现捞现做的，这就是他们开了十几年口碑还这么好的原因。烤鱼不仅能做经典烤鱼，还能换成独有的石锅鱼。鱼肉真的好嫩。川渝人过年才能吃到的川东土腊肉，配上蒜苔真的好香，因为都是现炒的。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7587359045951016242\", \"dish\": \"石锅鱼/川东土腊肉\", \"date\": \"2025-12-24\"}, {\"quote\": \"一进门，花椒混着辣椒的香气直往鼻子里钻。秘制石锅鲶鱼！汤汁浓得像琥珀，鲶鱼炖得酥烂，每一丝肉里都裹着醇厚的滋味，拌着米饭。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7629733833999565286\", \"dish\": \"石锅鲶鱼\", \"date\": \"2026-04-17\"}], \"negative\": [\"抖音多条套餐/代金券促销\", \"位置较偏（华发路近徐浦大桥）\"], \"soft_ad\": [\"多条抖音套餐挂车视频\", \"老板自己出镜拍视频较多\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 625,
+    "name": "老吴家川菜(昭化路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 70,
+      "score_taste": 70,
+      "score_endorsement": 40,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"四川江油的老板带着一帮四川的师傅，把这家上海路边的小店做出了四川当地老馆子的感觉。必点的麻婆豆腐，肉末拌着豆豉豆瓣煸干炒香，下一碗配了足足5种辣椒的辣椒面，勾芡3道之后出锅。专门定制的豆腐，麻辣鲜香烫嫩全。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7533060040731725095\", \"dish\": \"麻婆豆腐\", \"date\": \"2025-07-31\"}, {\"quote\": \"Excellent and affordable Sichuan restaurant serving up authentic, spicy classics like mapo tofu, lazi ji, bullfrog, and fish dishes, which are especially good. Really friendly service, too. Straight-up legit Sichuan food, not fusion, not toned down.\", \"source\": \"SmartShanghai\", \"url\": \"https://www.smartshanghai.com/venue/34465/wu_s_cooking_anyuan_lu\", \"dish\": \"麻婆豆腐/辣子鸡/牛蛙\", \"date\": \"2026-04-26\"}, {\"quote\": \"干腰合炒吃起来会觉得它炒的稍微咸了一点。麻婆豆腐烧的很好吃，但是加了猪脑以后反而不好吃了。整体是一家蛮好吃的店，推荐。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7685685864492723176\", \"dish\": \"干腰合炒/麻婆豆腐\", \"date\": \"2026-09-15\"}], \"negative\": [\"有食客反馈菜比成都偏咸\", \"加猪脑的麻婆豆腐评价分歧\"], \"soft_ad\": [\"少量抖音探店视频\", \"无明显集中投放痕迹\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 626,
+    "name": "火辣土菜馆(浦东大道店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 45,
+      "score_taste": 50,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "【存疑·证据弱】有海外地图评价和携程菜品描述，但携程笔记模板化严重，湘川菜混合定位模糊。独立非营销堂食证据偏弱。 {\"quotes\": [{\"quote\": \"浦东这家土菜馆也太绝了吧！辣子鸡每块鸡肉都被煸得焦香酥脆。回锅肉绝了！肥瘦相间的五花肉片，被煸炒得金黄透亮，油香四溢，下饭神器！\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=295106316\", \"dish\": \"辣子鸡/回锅肉\", \"date\": \"2026-04-20\"}, {\"quote\": \"We stayed at Novotel Atlantis, just a walking distance to Huola. The place is clean and a friendly atmosphere, all dishes are awesome!\", \"source\": \"Wanderboat\", \"url\": \"https://wanderboat.ai/restaurants/china/shanghai/huola-sichuan-cuisine-roasted-fish/3Vl9zrqKRc2Il24n-zR_5g\", \"dish\": null, \"date\": \"2026-06-01\"}], \"negative\": [\"携程笔记模板化痕迹较重（'太绝了吧''神器'）\", \"部分内容疑似湘川菜混合，非纯川菜\"], \"soft_ad\": [\"携程多篇笔记标题模板化\", \"抖音有小龙虾套餐促销\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 627,
+    "name": "友谊川味馆(苍梧路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 45,
+      "score_diner": 35,
+      "score_taste": 45,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】苍梧路店独立证据薄弱，搜索结果大量混入友谊食店等其他店。仅有一条抖音视频有具体菜品描述，来源类型单一。 {\"quotes\": [{\"quote\": \"上海一家不起眼但非常好吃的川菜馆子，菜量大到惊人。煸过的鸭头外面皮是脆脆的，像炸鸡一样，里面肉很嫩。腰花炒出来是粉嘟嘟的，一点异味也没有。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7586999828762217734\", \"dish\": \"卤鸭头/爆炒腰花\", \"date\": \"2025-12-23\"}, {\"quote\": \"在上海难得吃到正宗的川菜炒菜，老板伙计都四川乐山人，味道超赞。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7543024439191293219\", \"dish\": null, \"date\": \"2025-08-27\"}], \"negative\": [\"搜索结果大量混入'友谊食店'（人民广场店），非此店\", \"苍梧路店独立评价极少\", \"第二条评价为空话无具体菜品\"], \"soft_ad\": [\"抖音少量探店视频\", \"无明显集中投放\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 628,
+    "name": "三木川菜",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 50,
+      "score_taste": 55,
+      "score_endorsement": 10,
+      "soft_ad_penalty": 15,
+      "evidence_summary": "【存疑·证据弱】有具体菜品描述和本地口碑，但抖音内容同一天批量发布，新店开业营销痕迹重。老店有基础但周浦新店独立验证不足。 {\"quotes\": [{\"quote\": \"周浦最nb好吃的！特色鲜椒黄喉兔，地道的盐帮川菜，兔肉好嫩黄喉好脆弹！辣而不燥，每一口都有回甘！鲜椒鱼籽鱼泡闭眼点不踩雷，口味鲜麻柔和。韭香嫩牛肉，新鲜现切的牛肉很嫩滑，加上韭菜的特殊香气。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7672063727134371963\", \"dish\": \"鲜椒黄喉兔/鲜椒鱼籽鱼泡/韭香嫩牛肉\", \"date\": \"2026-08-10\"}, {\"quote\": \"四川老板带领了一整个四川的团队，已经开了三家店了。招牌沸腾鱼，热油浇淋香气直转鼻腔，鱼肉鲜嫩。鲜椒霸王兔肉丁，炒的外酥里嫩，香料完全渗透。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7546115118984727844\", \"dish\": \"沸腾鱼/鲜椒霸王兔\", \"date\": \"2025-09-04\"}], \"negative\": [\"大量抖音视频集中在2025-09-04同一天发布（至少5条）\", \"新店开业促销密集\"], \"soft_ad\": [\"2025年9月4日多条视频同一天集中发布\", \"118元三人餐/68抵100代金券挂车\", \"秀沿路老店+周浦新店，三店联动营销\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 629,
+    "name": "民间川菜(尚大国际店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 60,
+      "score_taste": 60,
+      "score_endorsement": 25,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"宫保鸡丁每次必点，经典，量大味美。鱼香肉丝真的有鱼的味道哦，味道很正宗。蒜泥白肉，上面一层白肉，下面是黄瓜片。熘肥肠不辣的。\", \"source\": \"360地图\", \"url\": \"https://m.map.so.com/m/album/detail/pid=b96bbf80829ffa97\", \"dish\": \"宫保鸡丁/鱼香肉丝/蒜泥白肉/熘肥肠\", \"date\": \"2025-01-22\"}, {\"quote\": \"上大路7号线附近一家川菜馆子，人真是多，味道不错，价格实惠，量也多。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=122995853\", \"dish\": null, \"date\": \"2025-02-16\"}], \"negative\": [\"饭点人多上菜稍慢\", \"追求环境和服务的不适合来\"], \"soft_ad\": [\"无明显集中投放\", \"平价学生店营销较少\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 630,
+    "name": "Pepper Tree花椒树",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 40,
+      "score_taste": 45,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 15,
+      "evidence_summary": "【存疑·证据弱】高端创意中餐，非传统川菜。主厨光环+开业营销密集，但多条独立差评指向口味不稳定和偏咸。餐厅自称'不是川菜'，归类存疑。 {\"quotes\": [{\"quote\": \"每道菜都很咸。剥开价格拿掉滤镜，单纯的就尝尝这些菜。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7646776236203090427\", \"dish\": null, \"date\": \"2026-06-02\"}, {\"quote\": \"创意有余，风味不足。整体不惊艳也不踩雷。该贴心的细节都没到位，建议再培训一下。环境8分，主厨光环加分，菜品发挥一般，最近在调整菜单。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=311735936\", \"dish\": null, \"date\": \"2026-05-24\"}, {\"quote\": \"这一罐子辣椒、花椒、香草、烟熏的章红鱼，非常好吃。确实用到了很多川菜的元素，但确实也不是传统的川菜。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7655357158934553256\", \"dish\": \"烟熏章红鱼\", \"date\": \"2026-06-27\"}], \"negative\": [\"多条差评：太咸、创意有余风味不足、服务差\", \"菜品发挥不稳定，频繁调整菜单\", \"餐厅官方自称'不是川菜'\"], \"soft_ad\": [\"开业初期大量抖音探店\", \"主厨光环（言盐创始人）营销\", \"一菜一天一份等稀缺性营销\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 631,
+    "name": "井庭xNEW ARC·锅(BFC外滩金融中心店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 45,
+      "score_diner": 30,
+      "score_taste": 45,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "【存疑·证据弱】仅穷游一篇文章有具体描述，其余搜索结果均为柴门荟/翠蝶等同商场其他店。独立堂食证据严重不足。 {\"quotes\": [{\"quote\": \"能把川菜吃成高级西餐感的井庭。野山椒、广西白米椒、鹰嘴椒制作的菜肴，每一道都很独特，辣得正正好，关键是在大众川菜馆里吃不到，有种私房菜的体验感。\", \"source\": \"穷游\", \"url\": \"https://biu.qyer.com/p/KQvpMyFTk6Yke6riqkZQAg.html\", \"dish\": null, \"date\": \"2026-08-14\"}], \"negative\": [\"搜索结果大量混入柴门荟（同BFC店），非此店\", \"店名含'锅'但证据为炒菜描述\", \"独立非营销来源仅1条\"], \"soft_ad\": [\"BFC商场店，商务宴请定位\", \"无明显团购挂车\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 632,
+    "name": "蜀宴赋·上海(华东首店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 40,
+      "score_taste": 45,
+      "score_endorsement": 25,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "【存疑·证据弱】沉浸式餐秀体验大于菜品本身，改良川菜辣度大幅调低。作为'川菜'店口味正宗性不足，更多是文化体验消费。 {\"quotes\": [{\"quote\": \"在沉浸式餐厅里，它的川味功底属于第一梯队。辣度友好，虽然是川菜二十四味打底，但明显做了海派改良。麻婆豆腐香而不燥，怪味牛肉层次丰富，吃辣小白也能接受。硬菜扎实，鹿鸣雏鸽仙羹石斛炖乳鸽。\", \"source\": \"Trip.com\", \"url\": \"https://my.trip.com/moments/detail/shanghai-2-143818487\", \"dish\": \"麻婆豆腐/怪味牛肉/乳鸽\", \"date\": \"2026-09-22\"}, {\"quote\": \"楚汉时期的椒麻乳鸽，外皮酥脆，里面汁水很多。几道汤品的味道比较清淡，可以缓解一些味道重的菜。该菜系为改良川菜，店家已经把辣度调低了，大部分菜品都不太辣。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=364141282\", \"dish\": \"椒麻乳鸽\", \"date\": \"2026-08-27\"}], \"negative\": [\"本质是沉浸式餐秀，菜品服务于表演\", \"辣度大幅调低，非正宗川菜\", \"人均300主要买体验非口味\"], \"soft_ad\": [\"大量抖音/携程探店均为'穿越''封神'体验向内容\", \"国风文化营销密集\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 633,
+    "name": "板前川菜(静安寺小巷)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 20,
+      "score_diner": 10,
+      "score_taste": 20,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 30,
+      "evidence_summary": "【建议下架·待裁决】地址不明确、无电话、无公开评价、搜索无法定位到具体门店。信息不透明，无法验证真实存在性和口味。 {\"quotes\": [], \"negative\": [\"地址模糊：'新闸路附近，具体需预约告知'，无法确证POI\", \"搜索结果出现多家不同板前川菜（叙山河、陈钱罐等），均无法确证是此店\", \"无任何带URL的独立堂食评价\"], \"soft_ad\": [\"信息极度模糊，疑似匿名预约制店\", \"无公开菜单/价格/电话\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 634,
+    "name": "椿庐ChunLounge(凯德晶萃店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 60,
+      "score_taste": 65,
+      "score_endorsement": 45,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】黑珍珠入围品牌，环境榜第1，有具体菜品评价。高端融合川菜定位，软广嫌疑较低。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"海味毛血旺用料真的很足，鲜虾、鱿鱼、毛肚、黄喉。萝卜干掌中宝弹脆，配陈香萝卜干，麻辣鲜香双脆。秋菊手撕鸡，盐焗鸡咸香，菊花清甜润燥。川味鲍鱼焖猪手焖得软糯胶浓。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7681215129459973882\", \"dish\": \"海味毛血旺/萝卜干掌中宝/秋菊手撕鸡/鲍鱼焖猪手\", \"date\": \"2026-09-03\"}, {\"quote\": \"椿庐的融合哲学，并非打破传统的壁垒，而是让传统川菜以温柔、辽阔的方式呈现。春季新菜椿芽蚕豆，蚕豆糯糯的。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=278358102\", \"dish\": \"椿芽蚕豆\", \"date\": \"2026-03-12\"}], \"negative\": [\"人均300+，价格偏高\", \"融合菜定位，传统川菜爱好者可能失望\"], \"soft_ad\": [\"黑珍珠入围品牌营销\", \"多季节限定菜单推广\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 635,
+    "name": "金孔雀(国金中心店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 65,
+      "score_taste": 65,
+      "score_endorsement": 45,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"歌乐山辣子鸡，我能说是我吃过最好的辣子鸡么？这里保持着一定的热度，最大程度保持了最佳的口感，桌上最先清盘的一道菜！咸蛋黄明虾球个个饱满大只，口感弹性十足。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=42391448\", \"dish\": \"歌乐山辣子鸡/咸蛋黄明虾球\", \"date\": \"2024-04-28\"}, {\"quote\": \"盐帮仔姜蛙蛙跳，四两左右的牛蛙，用小米辣、二荆条辣椒和仔姜作为辅料，火红的汤色撩人魂魄，细嫩爽滑的肉质里带着浓重的香辣。\", \"source\": \"搜狐\", \"url\": \"https://m.sohu.com/a/206941718_409256/\", \"dish\": \"盐帮仔姜蛙蛙跳\", \"date\": \"2017-11-27\"}], \"negative\": [\"国金中心店租金高，性价比一般\", \"必吃榜上榜后游客增多\"], \"soft_ad\": [\"2026必吃榜上榜营销\", \"FCC GROUP旗下连锁品牌\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 636,
+    "name": "翠蝶川菜(BFC外滩金融中心店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 45,
+      "score_diner": 30,
+      "score_taste": 50,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 25,
+      "evidence_summary": "【建议下架·待裁决】BFC店升级当天至少8条抖音视频集中发布，全部挂代金券，文案模板化严重。品牌老店但此店升级内容纯营销，无法区分真实口碑。 {\"quotes\": [{\"quote\": \"川府沸腾鱼，活鱼现杀，油也是一次性用油。辣椒、花椒、胡辣香气直接扑过来，鱼肉真的很嫩。雪花牛肉麻婆豆腐，里面的牛肉用的是M5雪花牛肉。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7667782971261664762\", \"dish\": \"川府沸腾鱼/雪花牛肉麻婆豆腐\", \"date\": \"2026-07-29\"}, {\"quote\": \"17年招牌香锅牛蛙，蛙腿都是私教级别的，外面挂了薄浆，吃起来很脆而且特别入味。翠蝶口水鸡红油真的巨香。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7667777364202142655\", \"dish\": \"香锅牛蛙/口水鸡\", \"date\": \"2026-07-29\"}], \"negative\": [\"至少8条抖音视频全部在2026-07-29同一天发布\", \"全部挂79代100代金券\", \"文案高度模板化（'重磅升级''四川班底''不预制'）\"], \"soft_ad\": [\"2026年7月29日BFC店升级当天集中投放至少8条视频\", \"全部挂79代100代金券链接\", \"文案模板化严重，'活鱼现杀''一次性用油'重复出现\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 638,
+    "name": "孔雀川菜(港汇恒隆广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 60,
+      "score_taste": 60,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"藤椒深海石斑鱼，肉质特别弹，鱼皮部分还带着胶质感，藤椒的清新和微麻很开胃。高压玉奶烧排骨，排骨炖到轻轻一抿就脱骨。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7665276488170619883\", \"dish\": \"藤椒石斑鱼/芋艿排骨\", \"date\": \"2026-07-22\"}, {\"quote\": \"川香麻辣鸡丝粉皮用的红油撒子和乐山的钵钵鸡料汁，粉皮q弹爽滑。火爆草原肚是和韭菜一起爆炒的。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=348295928\", \"dish\": \"麻辣鸡丝粉皮/火爆草原肚\", \"date\": \"2026-08-01\"}], \"negative\": [\"麻婆豆腐白口吃太咸，需配饭\", \"改良川菜，嗜辣者可能觉得不够劲\"], \"soft_ad\": [\"13年品牌，上新营销\", \"FCC GROUP旗下\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 639,
+    "name": "翠蝶川菜(北外滩来福士店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 25,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"翠蝶口水鸡是经典，皮滑肉嫩，酱汁香浓入味，辣度温和适中。川府沸腾鱼鱼片嫩滑入味，红油香而不燥。贡椒蒸黄鱼，大黄鱼肉质细嫩，贡椒的香气完全渗入鱼肉。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=210627509\", \"dish\": \"口水鸡/川府沸腾鱼/贡椒蒸黄鱼\", \"date\": \"2025-10-10\"}, {\"quote\": \"陈酿精品花雕虾用的大只的罗氏虾，口感还挺新鲜的。麻麻椒香牛舌，这道菜味道比较重，很麻，感觉有点过头。蒜香排骨不好吃，肉不行，有一股膻味。红油抄手很难吃，抄手太大了，没什么调味。应该不会再去了。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?article=80708055\", \"dish\": \"花雕虾/牛舌/蒜香排骨/红油抄手\", \"date\": \"2024-09-10\"}], \"negative\": [\"有明确差评：蒜香排骨膻味、红油抄手难吃、牛舌太麻\", \"牛蛙本身口味淡，配菜薯片吸满油\"], \"soft_ad\": [\"澎湃新闻/头条有推广文章\", \"品牌连锁统一营销\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 640,
+    "name": "翠蝶川菜(One ITC店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 55,
+      "score_taste": 55,
+      "score_endorsement": 25,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "【存疑·证据弱】16年老店，有工作日排队证据和具体菜品评价。改良川菜定位明确。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"鲍鱼参海鲜毛血旺用料挺足，有海参鲍鱼，口味上应该也改良过，不算特别辣，很丰富。鲜虾干捞粉丝煲粉丝入味不油，微微辣很鲜。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=231060698\", \"dish\": \"海鲜毛血旺/干捞粉丝煲\", \"date\": \"2025-11-22\"}, {\"quote\": \"翠蝶川菜在徐家汇One ITC的B2层，晚上7点多竟然还需要取号排队。他家的菜抓人胃，而且还特实惠，人均100。\", \"source\": \"新浪\", \"url\": \"https://www.sina.cn/media/5722336896\", \"dish\": null, \"date\": \"2026-09-22\"}], \"negative\": [\"One ITC B2层位置偏，不占优势\", \"改良川菜，不算特别辣\"], \"soft_ad\": [\"品牌连锁统一营销\", \"代金券促销\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 641,
+    "name": "映水芙蓉(白玉兰广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 65,
+      "score_taste": 65,
+      "score_endorsement": 40,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】8年7次必吃榜，有正反两面具体菜品评价。来源跨ugc两类。高端精致川菜定位。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"敲糖棒棒鸡，红油如岩浆般涌出，裹住鲜嫩土鸡肉，麻辣甜香层次丰富。蓉城鸡豆花，清如茶汤，豆花般嫩滑。宫保虾球，大颗虾球紧实Q弹，花椒微麻，酸甜辣多层次风味依次迸发。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?article=202093200\", \"dish\": \"敲糖棒棒鸡/鸡豆花/宫保虾球\", \"date\": \"2025-09-23\"}, {\"quote\": \"好吃的有醉蟹、水煮鲜切吊龙、砂锅焗鳕鱼、麻婆豆腐都非常的不错，他家的担担面味道实在一般。\", \"source\": \"马蜂窝\", \"url\": \"https://m.mafengwo.cn/mweng/wengdetailssr/weng?id=1853108017484768\", \"dish\": \"醉蟹/水煮吊龙/砂锅鳕鱼/麻婆豆腐/担担面\", \"date\": \"2026-02-11\"}], \"negative\": [\"担担面评价差\", \"人均150偏高端\"], \"soft_ad\": [\"8年7榜必吃榜营销\", \"多季节套餐推广\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 642,
+    "name": "蜀当家·盐帮川菜(上海首店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 50,
+      "score_taste": 55,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 15,
+      "evidence_summary": "【存疑·证据弱】地址登记有误（标浦东实际在徐汇苍梧路），且抖音团购促销密集。有Trip.com和携程的具体菜品评价，但软广嫌疑较重。 {\"quotes\": [{\"quote\": \"店裡坐滿了食客，人間煙火氣好足。歌樂山辣子雞上桌時自帶鍋氣，香氣撲鼻，雞肉香酥鮮辣，內裡不失汁水，辣椒花椒相輔相成。\", \"source\": \"Trip.com\", \"url\": \"https://hk.trip.com/moments/detail/shanghai-2-139003572/\", \"dish\": \"歌乐山辣子鸡\", \"date\": \"2025-12-07\"}, {\"quote\": \"麻辣沸腾鱼用的黑鱼片，吃起来一点都不腥，淋过热油就是香，鱼片吃上去很嫩。自贡火爆干腰合炒，自贡鲜椒兔，都是自贡当空运来的新鲜食材，猛火爆炒。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7622294444641731299\", \"dish\": \"沸腾鱼/干腰合炒/鲜椒兔\", \"date\": \"2026-03-28\"}], \"negative\": [\"68代100代金券可无限叠加，团购力度大\", \"地址登记为'浦东新区(具体地址待查)'，实际在徐汇苍梧路/田林一带\"], \"soft_ad\": [\"大量抖音视频挂68抵100代金券\", \"2026年3月集中发布多条视频\", \"新店开业促销密集\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 643,
+    "name": "柴门饭儿(陆家嘴中心店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 60,
+      "score_taste": 60,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"家传泡豇豆烧江团，我心中的全场最佳！江团鱼肉又嫩又滑，还没有小刺，泡豇豆的酸香特别开胃，汤汁浓郁又下饭，我直接怒干两碗米饭。\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?article=284632769\", \"dish\": \"泡豇豆烧江团\", \"date\": \"2026-03-27\"}, {\"quote\": \"盐帮仔姜美蛙，牛蛙个头又大又饱满。黑毛猪冬笋炒口菇，猪肉贼香，笋片和口菇又鲜又脆，锅气十足。烧椒广安手工皮蛋，鲜辣回甘口感层次丰富。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7582822188089920826\", \"dish\": \"仔姜美蛙/黑毛猪炒口菇/烧椒皮蛋\", \"date\": \"2025-12-12\"}], \"negative\": [\"灯光偏暗\", \"人均100+在陆家嘴商圈不算便宜\"], \"soft_ad\": [\"成都米其林黑珍珠平替营销\", \"非遗传承人背书\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1376,
+    "name": "新荣记(前滩太古里店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 90,
+      "score_diner": 85,
+      "score_taste": 92,
+      "score_endorsement": 95,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"鮸鱼家烧，鱼肉太太太惊艳！入口即化的细嫩口感绝了～不过家烧做法偏咸口，后面几块实在有点顶不住。配的年糕软糯香甜，直接封神！酸汤望潮，酸度超标预警，喜欢酸口的姐妹可以冲。招牌黄鱼花胶，一如既往的优秀，鲜美浓稠的汤汁。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=276902522\", \"dish\": \"鮸鱼家烧/酸汤望潮/黄鱼花胶\", \"date\": \"2026-03-09\"}, {\"quote\": \"汤羹上来的是猪肚鸡汤，胡椒味很重，喝起来暖暖的，猪肚很好吃，鸡肉炖得也很软烂。陈年花雕酒蒸黄鱼仔。石锅花椒牛小排，牛肉切块很入味，吃起来不会感觉老。家烧菜蕻，小青菜炒得非常好吃。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=277077018\", \"dish\": \"猪肚鸡汤/花雕蒸黄鱼/花椒牛小排\", \"date\": \"2026-03-09\"}, {\"quote\": \"前菜薯炝旺炒，台州东海岸旺炒即迷你八爪鱼，处理得特别脆嫩，配着芥末和辣椒香气的秘制酱汁，很开胃。杏仁片薄薄一片，清香酥脆。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7651957988283201535\", \"dish\": \"薯炝旺炒/杏仁片\", \"date\": \"2026-06-16\"}], \"negative\": [\"人均一千加需提前一周预约，到店前先交一千押金，连菜都得人到之前点好\", \"三个人不到3000含10%服务费，性价比争议\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1377,
+    "name": "新荣记(虹桥店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 90,
+      "score_diner": 85,
+      "score_taste": 90,
+      "score_endorsement": 95,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"脆皮乳鸽皮脆到流泪，黄金脆带鱼大份真的值，熟醉溏心富贵虾膏满到离谱，家烧鲳鱼汤汁能下三碗饭，蜜汁红薯甜而不腻超治愈。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=251476387\", \"dish\": \"脆皮乳鸽/黄金脆带鱼/熟醉富贵虾/家烧鲳鱼\", \"date\": \"2026-01-05\"}, {\"quote\": \"黃金脆帶魚大份，帶魚炸得金黃酥脆，不會太油膩，入口帶有淡淡海味，配飯一流。熟醉溏心富貴蝦選用新鮮海蝦，熟醉風味帶酒香，蝦身彈牙。家燒鯧魚傳統江浙菜色，醬汁收得濃郁。\", \"source\": \"Trip.com\", \"url\": \"https://my.trip.com/moments/detail/shanghai-2-144632161?locale=zh-MY\", \"dish\": \"黄金脆带鱼/熟醉富贵虾/家烧鲳鱼\", \"date\": \"2026-09-22\"}, {\"quote\": \"梅童鱼被整齐码在盘中蒸制，金黄的鱼身浸在红亮汤汁里，夹一筷子鱼肉嫩得像豆腐，入口即化，鲜气直钻鼻腔。川乌作为春汛第一鲜，大汤烧做法让鱼肉吸饱了青雪汤汁。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=282667631\", \"dish\": \"梅童鱼/川乌\", \"date\": \"2026-03-23\"}], \"negative\": [\"菜品分量偏小（脆皮乳鸽跟拳头差不多大）\", \"头牌黄鱼一斤以上卖到两三千以上，价格高\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1380,
+    "name": "新荣记(滨江店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 88,
+      "score_diner": 80,
+      "score_taste": 88,
+      "score_endorsement": 95,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"黄金脆带鱼不愧是卖了快三十年的招牌，只取带鱼中段，外皮是薄脆的一层筋壳，里面的鱼肉还保持着意外的嫩度和汁水，三十元一块，尝鲜一次很值得。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7569223898988039013\", \"dish\": \"黄金脆带鱼\", \"date\": \"2025-11-05\"}, {\"quote\": \"家烧鲳鱼肉质细嫩到用勺子就能挖，最绝的是里面的年糕吸饱了鱼汤精华超级入味。坐在窗边位置还能看到陆家嘴三件套。点的番茄炒蛋也意外好吃，锅气十足。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=223923127\", \"dish\": \"家烧鲳鱼/番茄炒蛋\", \"date\": \"2025-11-06\"}, {\"quote\": \"398套餐性价比很高，吃到很饱。牛油果冰淇淋和鸡头米都挺一般，鸡头米嚼都嚼不碎，汤底没什么味道。服务还是很不错的。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7544007210654453030\", \"dish\": \"鸡头米/牛油果冰淇淋\", \"date\": \"2025-08-29\"}], \"negative\": [\"甜品（鸡头米/牛油果冰淇淋）评价一般\", \"398套餐出品中规中矩，没有特别惊艳\", \"江景位需提前预约\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 828,
+    "name": "杭州新开元大酒店(徐家汇路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 55,
+      "score_taste": 65,
+      "score_endorsement": 40,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "【存疑·证据弱】在营老牌杭帮菜，eChinacities/途牛/本地宝均有收录，但独立深度堂食评价稀少，抖音端评价聚合文案模板化嫌疑重。特色菜列表（龙井虾仁/西湖醋鱼/宋嫂鱼羹）可查但缺近期食客逐字长评。 {\"quotes\": [{\"quote\": \"龙井虾仁鲜爽弹牙，龙井茶香沁入虾肉，清鲜不腻。宋嫂鱼羹汤色奶白，鱼肉细腻无刺，酸辣鲜香一口开胃。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7593628857778929523\", \"dish\": \"龙井虾仁/宋嫂鱼羹\", \"date\": \"2026-01-10\"}, {\"quote\": \"服务周到热情，口味鲜美，饭菜量大可口。人多，上菜有点慢，腰果虾仁不错，红烧肉有点柴。\", \"source\": \"抖音评价聚合\", \"url\": \"https://www.iesdouyin.com/share/video/7677380382224078031\", \"dish\": \"腰果虾仁/红烧肉\", \"date\": \"2026-08-24\"}], \"negative\": [\"人多上菜慢\", \"红烧肉有点柴\"], \"soft_ad\": [\"抖音评价聚合文案模板化（多条视频相同TOP菜推荐+相同评价话术）\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 831,
+    "name": "老头儿油爆虾(宏伊国际广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 75,
+      "score_diner": 75,
+      "score_taste": 72,
+      "score_endorsement": 55,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"首推油爆沼虾，虾壳炸得透亮酥脆，咬开咔嚓响，虾肉却软嫩弹牙，甜咸汁裹得匀。酱鸭是隐藏款，鸭皮...\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=179110345\", \"dish\": \"油爆沼虾/酱鸭\", \"date\": \"2025-08-01\"}, {\"quote\": \"老头儿油爆沼虾，虾壳炸得金黄酥脆，连虾须都带着焦香，虾肉饱满弹牙，一个接一个根本停不下来。腐皮杭白菜，豆腐皮浸润了白菜的清甜汤汁。老头儿干炸类，肉质嫩而不柴，咸淡适中带着微微焦香。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=267578466\", \"dish\": \"油爆沼虾/腐皮杭白菜/干炸带鱼\", \"date\": \"2026-02-14\"}, {\"quote\": \"油爆沼虾确实很好吃，虾里面都很入味，先炸过再炒的，酱汁是带甜的。老头儿拿手炒腰花确实很...\", \"source\": \"新浪新闻\", \"url\": \"https://www.sina.cn/news/detail/4937900968644787.html\", \"dish\": \"油爆沼虾/炒腰花\", \"date\": \"2023-08-23\"}], \"negative\": [\"分量不是很多，感觉没以前那么好吃了\", \"店名因《繁花》带火后游客占比上升\"], \"soft_ad\": [\"抖音端多条代金券推广视频（79.9抵100/238抵300）\", \"繁花IP带流量，探店内容集中\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 844,
+    "name": "丰收日(豫园店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 45,
+      "score_taste": 55,
+      "score_endorsement": 30,
+      "soft_ad_penalty": 25,
+      "evidence_summary": "【建议下架·待裁决】老牌宁波菜连锁但近期抖音端被团购推广淹没，话术模板化严重，城市吧口味/服务分偏低（3.0/2.0）。唯一独立深度评价来自2017年老客回忆，近期缺真实堂食长评。团购挂车+多店通用=营销驱动而非口碑驱动。 {\"quotes\": [{\"quote\": \"丰收日的菜肴咸鲜合一，比较配阿拉上海宁波人的胃口。镇店菜必尝：鲜嫩细腻的葱油膏蟹、干净入味的葱油海瓜子、外酥里嫩的椒盐龙头烤。\", \"source\": \"老小孩博客\", \"url\": \"https://www.oldkids.cn/blog/view.php?bid=1170039\", \"dish\": \"葱油膏蟹/葱油海瓜子/椒盐龙头烤\", \"date\": \"2017-05-13\"}, {\"quote\": \"椒盐龙头烤外表酥脆，内里非常软嫩，基本没什么刺。花蛤细沙处理得非常干净，姜葱爆香味道鲜美。韭香海鲜捞饭粒粒分明。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7679019923876806627\", \"dish\": \"椒盐龙头烤/姜葱花蛤/海鲜捞饭\", \"date\": \"2026-08-28\"}], \"negative\": [\"城市吧评分：口味3.0/服务2.0（偏低）\", \"上菜很快但服务评价差\"], \"soft_ad\": [\"抖音端大量团购套餐推广视频（200多9道菜/多店通用/刷到赶紧囤）\", \"多条视频话术雷同（外酥里嫩/粒粒分明/性价比高）\", \"团购挂车且差评被淹没\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 847,
+    "name": "甬季(浙鲜小酒馆·福州路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 75,
+      "score_taste": 75,
+      "score_endorsement": 40,
+      "soft_ad_penalty": 10,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"宁式风味蟹，蟹膏像果冻一样，透骨新鲜。招牌秘制酱烧大黄鱼，大黄鱼先是炸过，味道全吸进去了，外脆里嫩。霉勒鱼、海蜇丝，有点像咸香鱼的味道。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7615818643142813605\", \"dish\": \"宁式风味蟹/酱烧大黄鱼/霉勒鱼\", \"date\": \"2026-03-11\"}, {\"quote\": \"点了黄鱼豆腐汤和红烧肉，都很好吃。红烧肉肉质很嫩，入口即化。黄鱼豆腐汤也很鲜美，汤很浓，吃起来很鲜。下次还会再来吃。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=255564919\", \"dish\": \"黄鱼豆腐汤/红烧肉\", \"date\": \"2026-01-15\"}, {\"quote\": \"带鱼用的是油浸做法，完全保留了带鱼的鲜味和细嫩，肉头够厚。海钓鱿鱼选了香茅做法，开盖就能闻到香茅香气，鱿鱼紧实弹嫩和鲜甜。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7681306900100648255\", \"dish\": \"油浸带鱼/香茅海钓鱿鱼\", \"date\": \"2026-09-03\"}], \"negative\": [\"十六梅一条129元，有点小\", \"新店开业代金券推广痕迹明显\"], \"soft_ad\": [\"新店开业期68代100代金券推广集中\", \"明档海鲜+小黑板点菜有网红bistro氛围\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 848,
+    "name": "宁波汤团店(豫园店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 85,
+      "score_diner": 80,
+      "score_taste": 82,
+      "score_endorsement": 80,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"芝麻汤圆皮糯到拉丝，芝麻馅流心爆浆，甜而不腻。别点鲜肉馅，本地人都不吃。我每次买两盒生的带走，回家煮当早餐。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=299394908\", \"dish\": \"芝麻汤圆\", \"date\": \"2026-04-29\"}, {\"quote\": \"水磨糯米皮，黑芝麻馅料像瀑布一样流出来，芯子也不是很甜，适合老年人吃。鲜肉汤团里面都是汤汁，糯到拉丝。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7611125330967132081\", \"dish\": \"黑芝麻汤圆/鲜肉汤团\", \"date\": \"2026-02-26\"}], \"negative\": [\"游客排队为主，本地老客多买生胚带走\", \"口味单一（只有汤圆/馄饨）\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 853,
+    "name": "孔乙己酒家(虹桥路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 78,
+      "score_diner": 80,
+      "score_taste": 78,
+      "score_endorsement": 55,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"茴香豆，桂皮与茴香卤制的蚕豆，软糯入味。东坡肉五花三层炖得软烂，肥而不腻，酱汁拌饭能干两碗。目鱼蛋蒸...\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=280530657\", \"dish\": \"茴香豆/东坡肉/目鱼蛋\", \"date\": \"2026-03-17\"}, {\"quote\": \"绍兴登鸡必须点上，熟醉大头虾虾肉鲜甜伴着酒香，响油鳝丝食材新鲜，热炝腰花做的相当好，千里飘香干煎臭豆腐香脆得连平时不太吃臭豆腐的人都喜欢。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=179555811\", \"dish\": \"绍兴登鸡/熟醉大头虾/热炝腰花/臭豆腐\", \"date\": \"2025-08-03\"}, {\"quote\": \"清鸡汤炖羊肚菌不太推荐，口味略微清淡，没有期待的鸡汤味道。整体两道特色菜（登鸡/熟醉大头虾）还是值得一试。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=233932196\", \"dish\": \"清鸡汤炖羊肚菌/登鸡/熟醉大头虾\", \"date\": \"2025-11-28\"}], \"negative\": [\"价格不便宜\", \"清鸡汤炖羊肚菌等菜品未达预期\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 857,
+    "name": "绍荟悦(大宁店,原70后·绍东家)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 60,
+      "score_taste": 60,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 18,
+      "evidence_summary": "【存疑·证据弱】前身为绍东家，大宁国际有官方品牌页。菜品经绍兴本地人点评认为做法偏本帮改良而非正宗绍兴味，有真实负面。抖音端三条店同时代金券推广，软广痕迹明显。口味定位偏改良浙菜，不宜作为正宗绍兴菜推荐。 {\"quotes\": [{\"quote\": \"菜式都不错，味道挺好的，但招牌菜绍兴酥鱼和梅干菜土猪肉都没得到祖籍绍兴人的认可：第一，绍兴没有酥鱼这种烧法；第二，绍兴正宗梅干菜都是加肉干蒸的，而这家店用的是上海本帮红烧的做法（其实我蛮喜欢的）。老虎斑鱼肉鲜嫩，臭豆腐蒸墨鱼蛋闻着臭吃得香。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=332080904\", \"dish\": \"绍兴酥鱼/梅干菜土猪肉/臭豆腐蒸墨鱼蛋\", \"date\": \"2026-07-05\"}, {\"quote\": \"绍兴酥鱼和本帮熏鱼看着有点像，却又完全不同，酱油还是用的但酱汁不厚重，偏甜口，味觉简单酥脆，肉质透嫩。花雕竹林鸡Q，汤汁浓郁主打鲜咸。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=56598886\", \"dish\": \"绍兴酥鱼/花雕竹林鸡\", \"date\": \"2024-06-15\"}], \"negative\": [\"绍兴本地人认为酥鱼做法不正宗\", \"梅干菜做法偏本帮红烧而非绍兴干蒸\"], \"soft_ad\": [\"抖音端大量70代100/59代100代金券推广\", \"三条连锁店（人民广场/大宁/虹口）同时推广\", \"话术模板化（人均50多/性价比高/江南风格）\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 858,
+    "name": "糯米帝·温州糯米饭(徐汇店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 50,
+      "score_taste": 55,
+      "score_endorsement": 20,
+      "soft_ad_penalty": 15,
+      "evidence_summary": "【存疑·证据弱】温州糯米饭专门店，仅抖音端有食客评价，缺大众点评/携程/公众号等独立来源。评价内容有具体菜名但渠道单一，且有糯米偏湿的负面反馈。28元定价与温州本地5元差距大，性价比存疑。 {\"quotes\": [{\"quote\": \"糯米蒸得刚好，粒粒分明又软糯。上面铺满脆油条碎、肉松、香菇丁，拌开的瞬间第一口咸香浓郁。杏仁腐是解腻神器，滑溜溜像果冻，糖水清甜带着桂花香。煎炒黄牛肉锅气爆棚。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7633414466374564721\", \"dish\": \"温州糯米饭/杏仁腐/煎炒黄牛肉\", \"date\": \"2026-04-27\"}, {\"quote\": \"糯米采用温州的天光糯米，一碗糯米饭配一碗现榨豆浆。口感层次好丰富，糯米会稍微偏湿了一点点，如果能再糯一点感觉会更好。总体非常满意，值得再来一次。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7599614539479000549\", \"dish\": \"温州糯米饭/豆浆\", \"date\": \"2026-01-26\"}], \"negative\": [\"糯米饭偏湿，不够粒粒分明\", \"28元一份价格争议（温州本地5元）\"], \"soft_ad\": [\"抖音端多个探店视频话术雷同（油条碎+肉汤+仪式感）\", \"部分视频疑似团购推广\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 863,
+    "name": "瓯江宴·海派温州菜(龙华会店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 75,
+      "score_taste": 72,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】龙华会温州菜，多源携程食客评价含具体菜名（红糟蒸带鱼/沙蒜豆面/熏鲳鱼/黄年糕），负面信号真实（偏咸/生蚝小）。龙华寺打卡场景有轻微网红属性但菜品评价具体。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"红糟蒸带鱼，温州人刻在DNA里的做法，选肉厚刺少的东海带鱼，裹上温州特有的红糟蒸熟，酒香裹着鱼鲜。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=223309227\", \"dish\": \"红糟蒸带鱼\", \"date\": \"2025-11-05\"}, {\"quote\": \"熏鲳鱼焦香松脆酱汁鲜甜。老醋海蜇很滑脆。蒜蓉粉丝蒸生蚝，生蚝不大软滑鲜嫩，蒜蓉汁调得偏咸。菜品有一定温州特色，整体调味偏咸。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=274829773\", \"dish\": \"熏鲳鱼/老醋海蜇/蒜蓉粉丝蒸生蚝\", \"date\": \"2026-03-03\"}, {\"quote\": \"沙蒜豆面黏而不糊，吸饱了海鲜鲜汁，沙蒜的鲜味儿钻到骨子里，吸溜一口弹韧又入味。非遗黄年糕糯叽叽，蘸上古法红糖，像咬了口焦糖布丁。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=282518279\", \"dish\": \"沙蒜豆面/非遗黄年糕\", \"date\": \"2026-03-22\"}], \"negative\": [\"整体调味偏咸\", \"生蚝不大\", \"九层塔海鲜焗走地鸡夏天吃有点厚重\"], \"soft_ad\": [\"部分携程笔记话术偏种草（绝了/封神/天花板）\", \"龙华寺祈福顺路打卡场景有网红属性\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 865,
+    "name": "瓯宴·陆悦新温州菜(上海首店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 40,
+      "score_taste": 50,
+      "score_endorsement": 15,
+      "soft_ad_penalty": 28,
+      "evidence_summary": "【建议下架·待裁决】2026年3月新开餐厅，所有可见评价均来自开业期集中投放的抖音探店视频（≥8条），话术高度雷同且全部带团购/代金券链接。缺携程/公众号/海外媒体等任何独立来源，缺开业后促销期外的真实食客长评。典型新店开业软广轰炸模式。 {\"quotes\": [{\"quote\": \"八宝糯米饭蒸膏蟹选用鲜活青膏蟹，揭开蒸笼瞬间香气炸裂，蟹膏像金色的山一样，下面八宝糯米饭用料丰富吃起来特别香。酒炖溪鳗用枸杞红枣慢炖，看起来清淡气味很香醇，吃起来鲜甜软糯。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7614706214576896251\", \"dish\": \"八宝糯米饭蒸膏蟹/酒炖溪鳗\", \"date\": \"2026-03-08\"}, {\"quote\": \"温州鱼丸汤好鲜。八宝糯米饭蒸膏蟹好吃。酒炖溪鳗是浙江小溪里长出来的鳗鱼，浓浓的酒香好嫩，一点腥味都没有。跟某记差不多。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7614522995306576506\", \"dish\": \"温州鱼丸汤/八宝糯米饭蒸膏蟹/酒炖溪鳗\", \"date\": \"2026-03-07\"}], \"negative\": [\"几乎全部为新店开业期（2026年3月）推广内容\", \"398四人餐/69代100代金券为开业促销价\", \"缺开业后的独立食客长评\"], \"soft_ad\": [\"2026年3月集中轰炸：至少8条以上抖音探店视频集中发布\", \"话术高度雷同（69代100/陆家嘴附近/商务宴请/八宝糯米饭蒸膏蟹）\", \"所有视频均带代金券/团购链接\", \"将某记（新荣记）作为对标拉踩\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 868,
+    "name": "虹浦荟·新派温州菜(虹桥店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 68,
+      "score_diner": 70,
+      "score_taste": 68,
+      "score_endorsement": 35,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"手工鱼饼都是地道温州家常味道，真的有鱼肉的味道，蘸酱油醋吃鲜到家了。招牌雁荡山茶香乳鸽，尝得出是好茶叶炒出来的，茶香很浓郁，乳鸽外皮焦香内里汁水足。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=309221676\", \"dish\": \"手工鱼饼/雁荡山茶香乳鸽\", \"date\": \"2026-05-19\"}, {\"quote\": \"泉水牛腱汤底清透，牛腱薄如蝉翼入口即化。鱼饼三重奏嫩到筷子一夹就duangduang晃动，蘸特调酱汁。蛏子豆面蛏子肥美到爆汁，豆面吸饱了鲜汁。\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=189307245\", \"dish\": \"泉水牛腱/鱼饼三重奏/蛏子豆面\", \"date\": \"2025-08-24\"}, {\"quote\": \"葵花鸡一身向日葵般金灿灿的鸡皮，皮脂滑而不肥，皮下还有一层啫喱锁住肉汁。猪脸肉软糯鲜香，肥而不腻，隐约夹杂毛峰茶的醇厚清香。\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7333564304987311423\", \"dish\": \"葵花鸡/猪脸肉\", \"date\": \"2024-02-09\"}], \"negative\": [\"开在独栋洋楼环境溢价，人均300-400\", \"2024年初开业，口碑沉淀时间尚短\"], \"soft_ad\": [\"开业期（2024年初）抖音探店集中\", \"浦江荟集团旗下品牌，营销体系成熟\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 729,
+    "name": "春里·淮扬(西岸梦中心店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 22,
+      "score_taste": 16,
+      "score_endorsement": 4,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"招牌烩鱼头（配刀削面）半只鱼头炖得胶质满满，刀削面往汤里一拌，鲜得很，糟骨头蒸膏蟹，蟹肉肥得流黄，糟香混着肉香，同事夹了块蟹腿直喊：这出品，米其林级吧！经典淮扬软兜长鱼嫩到能掐出水，黑胡椒金陵烧鸭皮脆肉嫩\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=229655063&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"招牌烩鱼头配刀削面/糟骨头蒸膏蟹/软兜长鱼/黑胡椒金陵烧鸭\", \"date\": \"2025-11-19\"}, {\"quote\": \"龙井莼菜鸭舌冻很创新的吃法！莼菜变成果冻般的口感，每一块里都有鸭舌，鲜美开胃。招牌鱼头佛跳墙好大一个砂锅，底部是巨大的鱼头，上面铺着满满的鲍鱼和海参，酱汁浓郁，搭配米饭一绝\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=269797732&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"龙井莼菜鸭舌冻/招牌鱼头佛跳墙\", \"date\": \"2026-02-20\"}], \"negative\": [\"部分携程笔记使用模板化文案（98%食客强推/绝绝子），软广嫌疑需注意\"], \"soft_ad\": [\"部分笔记用词模板化，如'98%食客强推''绝绝子'\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 732,
+    "name": "九厨·淮扬(博荟广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 68,
+      "score_diner": 20,
+      "score_taste": 15,
+      "score_endorsement": 3,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"淮安特色一品狮子头，个头真霸气，加了马蹄，口感更清爽，入口即化，鲜味非常纯粹，是那种很高级的淮扬鲜。再来鸡油蒸淡水大白鱼，鱼肉太嫩了，鲜肉的香气完全浸到鱼肉里\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7602898886173395897\", \"dish\": \"淮安一品狮子头/鸡油蒸大白鱼\", \"date\": \"2026-02-04\"}, {\"quote\": \"炒软兜，大煮干丝，清蒸白水鱼，炒虾仁等都是必点的，但都没到惊艳的程度，性价比不是很高\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7463807935685102858\", \"dish\": \"炒软兜/大煮干丝/清蒸白水鱼\", \"date\": \"2025-01-25\"}], \"negative\": [\"食客评价'都没到惊艳的程度，性价比不是很高'，出品中规中矩\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 733,
+    "name": "南里山房(长宁荟聚店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 18,
+      "score_taste": 13,
+      "score_endorsement": 2,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】有2条含具体菜名的堂食评价，含正面和负面交叉验证（品控不稳定）。软广推广集中扣分。来源均为UGC。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"鳝丝浓油赤酱，咸鲜微甜，最特别的是配了烤鸭的饼皮——夹一筷子鳝丝，卷进薄饼里，一口咬下去，饼皮的韧、鳝丝的滑嫩、酱汁的浓郁全在嘴里炸开。清炒河虾，小是小，但每一颗都手工剥的\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=301913662&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"炒软兜卷饼/清炒河虾\", \"date\": \"2026-05-03\"}, {\"quote\": \"长宁荟聚的这一家南里山房，给我的感觉就是品控确实没有来福士的那家好，明显几个菜品都有一些小瑕疵...喝的时候如果鼻子不吸气，嘴巴里确实是酸甜味道的，但如果你正好呼吸了，可能就会有我妈的那种感觉，好像是有点抹布味\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7680890088762394850\", \"dish\": \"凉菜/饮品\", \"date\": \"2026-09-02\"}], \"negative\": [\"长宁荟聚店品控不如来福士店，有食客反映菜品有'抹布味'瑕疵\", \"连锁店出品不稳定\"], \"soft_ad\": [\"瑞虹新店开业期间大量79代100代金券推广视频集中轰炸\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 734,
+    "name": "宴江月(南京东路宏伊广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 66,
+      "score_diner": 19,
+      "score_taste": 14,
+      "score_endorsement": 2,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "【存疑·证据弱】有2条含具体菜名的堂食评价，来源跨UGC。菜品描述具体（软兜卷饼/红蒸鳗鱼/石斛炖乳鸽）。南京东路游客区景观型餐厅，部分笔记模板化扣分。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"淮扬软兜地道淮扬名菜，采用旺火烹饪，笔杆粗细的鳝鱼色泽乌亮，将鳝鱼包入薄饼中入口，质地柔软，咸鲜适中。鲍鱼烧猪手入口QQ弹弹，蛮有嚼劲的。猪手吃起来软软糯糯，满口胶原蛋白\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=283120223&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"淮扬软兜/鲍鱼烧猪手\", \"date\": \"2026-03-24\"}, {\"quote\": \"这道红蒸鳗鱼比较有特色，跟想象中的味道有点不一样，还挺好吃的。石斛虫草花炖乳鸽，鸽肉新鲜，肉松软。整体来说这里的菜品味道除了有个别菜偏甜，其他都还不错\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7573274490412530427\", \"dish\": \"红蒸鳗鱼/石斛虫草花炖乳鸽\", \"date\": \"2025-11-16\"}], \"negative\": [\"食客反映个别菜偏甜\", \"位于南京东路游客区，景观为主要卖点\"], \"soft_ad\": [\"部分携程笔记使用'天花板''宝藏店铺TOP3'等模板文案\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 735,
+    "name": "桂花楼(浦东香格里拉店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 78,
+      "score_diner": 24,
+      "score_taste": 18,
+      "score_endorsement": 7,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"陈醋炸脆鳝：脆鳝色泽油亮，入口后一尾尾在口腔中爆开，酥松爽脆，酸甜可口。水晶肴肉：嫣红嫩冻，光滑晶莹，精肉香酥可口，肥肉柔润细腻，肉皮劲道不梗\", \"source\": \"ELLE中文网\", \"url\": \"https://www.ellechina.com/fashion/news/a40750277/shanghai-pudong/\", \"dish\": \"陈醋炸脆鳝/水晶肴肉\", \"date\": \"2022-07-29\"}, {\"quote\": \"熟醉小河虾每一只都带点糟卤的味道。炸脆鳝上桌后淋上点陈年意大利黑醋，把浓郁的酸味浸润在这炸的很透的鳝肉里，酸甜中带着酥香。灌汤鱼圆以燕窝为芯，外包鱼茸，配三套鸭的做法，炖足数小时，汤味清而不寡\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7164002449496313119\", \"dish\": \"熟醉小河虾/炸脆鳝/灌汤鱼圆\", \"date\": \"2022-11-09\"}], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 736,
+    "name": "游宴一品淮扬(万达瑞华酒店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 82,
+      "score_diner": 22,
+      "score_taste": 17,
+      "score_endorsement": 9,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"蟹粉豆腐搭配葱油饼意外的惊喜。狮子头味道实在是太好了。连续六年上榜米其林推荐榜单。狮子头是这里的招牌菜，入口即化。江南砂锅神仙鸡、招牌牛肉等也非常受欢迎\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=76045495&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"蟹粉豆腐配葱油饼/狮子头/江南砂锅神仙鸡\", \"date\": \"2024-08-24\"}, {\"quote\": \"虽然菜式有几多疏漏...狮子头汲取了淮扬菜的精华，入口即化\", \"source\": \"搜狐-一片吃心\", \"url\": \"https://m.sohu.com/a/123646969_304784/\", \"dish\": \"狮子头\", \"date\": \"2017-01-06\"}], \"negative\": [\"资深食评人指出'菜式有几多疏漏'，非完美无缺\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 738,
+    "name": "南京大牌档(中山公园龙之梦店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 16,
+      "score_taste": 12,
+      "score_endorsement": 3,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"响油鳝糊，地道江南淮扬风味，鳝丝软嫩入味，淋上热油滋滋作响，鲜香浓郁特别下饭。金陵烤鸭是明档挂炉现烤。糖蒜爆鳜鱼选用鲜活鳜鱼烹制，先蒸后浇热油激香\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=351491729&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"响油鳝糊/金陵烤鸭/糖蒜爆鳜鱼\", \"date\": \"2026-08-06\"}, {\"quote\": \"鸭肝入口又苦又涩，难吃到根本咽不下去，找店家反馈，对方居然理直气壮说：我们家鸭肝一直就是这个苦\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7631014302393176690\", \"dish\": \"鸭肝\", \"date\": \"2026-04-21\"}], \"negative\": [\"鸭肝发苦被食客投诉食品安全问题\", \"黑猫投诉：美龄粥漂浮异物、冰镇酒酿吃到刺状异物\", \"有食客反映'菜大概率用的是预制菜，招牌烤鸭酱汁齁甜，鸭肉很柴'\", \"排队2小时被吐槽'全线踩雷'\"], \"soft_ad\": [\"连锁品牌游客排队型餐厅，南京东路等游客区为主力客群\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 742,
+    "name": "南京大牌档(人民广场世茂店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 58,
+      "score_diner": 16,
+      "score_taste": 11,
+      "score_endorsement": 3,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】连锁品牌有具体菜名评价（天王烤鸭包/地锅鸡/美龄粥）。负面交叉验证充分（不如南京总店/分量缩水/有虫）。人民广场游客区。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"天王烤鸭包咬开汤水流出来，是一个大号的小笼包。地锅鸡微微辣慢炖入味，锅边饼子香脆。民国美龄粥甜甜的，表面还有一点百合。招牌煎饺肉馅的还有颗粒\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=109856706&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"天王烤鸭包/地锅鸡/民国美龄粥/招牌煎饺\", \"date\": \"2024-12-25\"}, {\"quote\": \"上海虽然是连锁店但是味道口感却不如南京的好吃，排骨没有南京的那么入味。天王烤鸭包以前吃过一次现在比以前小了一圈\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=38617489&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"天王烤鸭包/排骨\", \"date\": \"2024-04-12\"}], \"negative\": [\"食客反映上海店不如南京总店好吃\", \"天王烤鸭包缩水变小\", \"老鸭粉丝汤有虫子飞进去\"], \"soft_ad\": [\"连锁游客型餐厅\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 743,
+    "name": "金陵·启海人家(上海店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 40,
+      "score_diner": 5,
+      "score_taste": 5,
+      "score_endorsement": 0,
+      "soft_ad_penalty": 25,
+      "evidence_summary": "【建议下架·待裁决】全平台仅见抖音团购推广视频，模板文案严重，同一日期集中轰炸，无任何独立堂食评价或非推广食客反馈。菜品定位以海鲜套餐团购为主，与苏菜标签不符。软广特征极其明显。 {\"quotes\": [{\"quote\": \"海肠捞饭用的还是鲜活的海肠，都是现点现捞现做的，上面的海肠吃进嘴里咔哧咔哧的，特别爽脆。剁椒鲳鱼用的还是小银鲳，每天鲜送的，鱼肉就很软嫩\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7576121546571099305\", \"dish\": \"海肠捞饭/剁椒鲳鱼\", \"date\": \"2025-11-24\"}], \"negative\": [], \"soft_ad\": [\"所有搜索结果均为抖音团购推广视频，同一日期(2026-08-05)大量同质内容集中发布\", \"模板文案严重：'鲜得眉毛跳舞，香得舌尖蹦迪''老板怕不是家里有片东海''不试后悔一整年'\", \"所有视频均挂团购链接(198元4-5人餐/398元6人餐)且无独立差评\", \"菜品以波士顿龙虾/老虎斑等海鲜套餐为噱头，与苏菜/淮扬菜定位不符\", \"无任何独立媒体或非推广食客评价\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 744,
+    "name": "梅府家宴(建业里店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 75,
+      "score_diner": 22,
+      "score_taste": 16,
+      "score_endorsement": 6,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"清炖狮子头，肥瘦相间，入口即化，汤鲜不腻。茉莉熏松叶蟹肉，蟹肉包裹着茉莉花香，配上百合的清甜。梅府金牌红烧肉，肥肉一点都不油，搭配上脆米，感觉肉在舌尖上起舞\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7368331293127363891\", \"dish\": \"清炖狮子头/茉莉熏松叶蟹肉/梅府金牌红烧肉\", \"date\": \"2024-05-13\"}, {\"quote\": \"梅府家宴里的菜谱里中保留了梅蘭芳生前經常吃的一些菜，現在由梅蘭芳御用廚師第三代传人掌厨，没有菜单，根据24个节气提供当季配菜。人均800元-3000元，每100元递增，百分之十服务费\", \"source\": \"马蜂窝\", \"url\": \"https://m.mafengwo.cn/mweng/wengdetailssr/weng?id=1704715630643878\", \"dish\": \"24节气配菜制\", \"date\": \"2026-08-10\"}], \"negative\": [\"人均800-3000元另加10%服务费，价格昂贵，性价比争议\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 745,
+    "name": "南京大牌档(静安寺店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 58,
+      "score_diner": 15,
+      "score_taste": 10,
+      "score_endorsement": 3,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】连锁品牌，正负评价交叉充分。负面信号突出（排队2小时/预制菜质疑/鸭血像科技）。静安寺晶品店为商场店。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"金陵烤鸭店里人气TOP1！甜口皮脆肉嫩，每桌必点。民国美龄粥绵糯清甜带着淡淡的奶香味。招牌盐水鸭肉嫩不咸。天王烤鸭包咬开有汤汁\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=286388096&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"金陵烤鸭/民国美龄粥/招牌盐水鸭/天王烤鸭包\", \"date\": \"2026-03-31\"}, {\"quote\": \"排队2小时纯纯大冤种！招牌烤鸭酱汁齁甜，鸭肉很柴口感一般。鸭血软趴趴的，看上去像是科技。鸭胗腥味很浓。里脊口感诡异，不像肉也不像火腿\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7671883209902165274\", \"dish\": \"招牌烤鸭/鸭血/鸭胗\", \"date\": \"2026-08-09\"}], \"negative\": [\"排队2小时被吐槽全线踩雷\", \"烤鸭酱汁齁甜鸭肉柴\", \"鸭血软趴趴疑似科技与狠活\", \"鸭胗腥味浓\"], \"soft_ad\": [\"连锁游客型餐厅\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 746,
+    "name": "南京大牌档(月星环球港店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 58,
+      "score_diner": 15,
+      "score_taste": 11,
+      "score_endorsement": 3,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "【存疑·证据弱】连锁品牌，有具体菜名评价（清炖狮子头/大牌鸭血旺/鲜椒蒸白鱼）。负面信号真实（体验下降/有虫/盐水鸭一般）。环球港商场店。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"清炖狮子头比我的拳头还要大，里面是实打实的猪肉，汤头清冽。大牌鸭血旺爱吃辣星人必点，鸭血一口鲜，麻麻辣辣的，里面还放了菌菇、豆皮等。鲜椒蒸白鱼整条鱼霸气上桌\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=247391607&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"清炖狮子头/大牌鸭血旺/鲜椒蒸白鱼\", \"date\": \"2025-12-27\"}, {\"quote\": \"整体体验不如从前了。招牌盐水鸭比较一般，无功无过。老鸭粉丝汤居然有虫子飞进去\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=369774399&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"招牌盐水鸭/老鸭粉丝汤\", \"date\": \"2026-09-06\"}], \"negative\": [\"食客反映'整体体验不如从前了'\", \"老鸭粉丝汤有虫子飞进去\", \"招牌盐水鸭无功无过\"], \"soft_ad\": [\"连锁商场店\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 748,
+    "name": "新斋桥苏式面馆",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 22,
+      "score_taste": 16,
+      "score_endorsement": 3,
+      "soft_ad_penalty": 3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"每碗都铺着好几大片小黄鱼肉，都是当天现剔的，海捕小黄鱼，没吃到过碎刺。细面煮得软硬刚好，奶白的汤头鲜得连喝三口都不齁，每次都连面带汤直接炫完。黄鱼春卷外皮炸得酥脆\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7687378190348197563\", \"dish\": \"手剔黄鱼面/黄鱼春卷\", \"date\": \"2026-09-20\"}, {\"quote\": \"本地老爷叔回头客很多！手工现拆蟹黄，浓郁细腻。蟹黄面虾仁Q弹，新鲜得不行，配上劲道苏式面，层次感爆棚。奥味红汤面超正宗\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=102191559&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"蟹黄面/三虾面/红汤面\", \"date\": \"2024-11-25\"}], \"negative\": [\"有食客提醒'别把勾芡蟹粉当成宝'，对蟹粉浇头品质有保留\"], \"soft_ad\": [\"携程笔记有'无限接近黑珍珠和米其林'等夸张文案\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 749,
+    "name": "松鹤楼(豫园店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 20,
+      "score_taste": 14,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"焖肉面是招牌，手擀面劲道十足，焖肉软糯入味、鲜香适口，略微有点甜，光是汤就能喝掉大半碗。蟹粉汤包皮很薄，汤汁浓郁\", \"source\": \"去哪儿\", \"url\": \"https://touch.go.qunar.com/poi/27618440\", \"dish\": \"焖肉面/蟹粉汤包\", \"date\": \"2019-12-22\"}, {\"quote\": \"爆炒猪肝拌面香气十足，猪肝鲜嫩滑口，青椒笋片提鲜，浓稠酱汁裹住每一根苏式细面，口感筋道入味\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=346467395&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"爆炒猪肝拌面\", \"date\": \"2026-07-30\"}], \"negative\": [\"有食客反映'生煎包里汤汁很少，吃起来很干，馅料也不够紧实...味道肯定是差点意思'\", \"景区店游客为主，口味评价两极\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 750,
+    "name": "松鹤楼(嘉里城店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 21,
+      "score_taste": 15,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】松鹤楼连锁嘉里城店，有具体菜名评价（古法焖肉面/响油鳝糊浇头/清炒蟹粉面）。32种配料熬汤底有工艺背书。可免费续汤续面是加分项。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"红汤由32种配料熬制，入口鲜甜不口干。古法焖肉面+响油鳝糊浇头，白汤或红汤盲选不踩雷。焖肉面38元，可免费续汤续面。喝得出是真肉汤，没有科技与狠活\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=280753719&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"古法焖肉面/响油鳝糊浇头\", \"date\": \"2026-03-18\"}, {\"quote\": \"清炒蟹粉麵套餐真的很香很好吃，加上香醋味道正好凸顯蟹粉的鮮味。燙青菜和春捲也還不錯\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=77752165&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"清炒蟹粉面/烫青菜/春卷\", \"date\": \"2024-08-29\"}], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 756,
+    "name": "松鹤楼(世纪汇店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 70,
+      "score_diner": 20,
+      "score_taste": 15,
+      "score_endorsement": 5,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"什锦焖肉面是苏式面中的经典。焖肉从原来的50克升级到了70克，保持大块+厚切的特色，肉质丰腴鲜美，入口即化。面汤用猪大骨、鸡架、蹄膀、鳝骨等多种食材熬制\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=201345411&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"什锦焖肉面\", \"date\": \"2025-09-22\"}, {\"quote\": \"红汤面汤底非常鲜美，响油鳝糊很有苏式特色甜甜的。炸猪排味道也很不错\", \"source\": \"Trip.com\", \"url\": \"https://www.trip.com/restaurant/china/shanghai/detail/city-104588922/\", \"dish\": \"红汤面/响油鳝糊/炸猪排\", \"date\": \"2026-05-18\"}], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 763,
+    "name": "无锡万家小笼(恒达公寓店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 65,
+      "score_diner": 18,
+      "score_taste": 14,
+      "score_endorsement": 2,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】平价无锡小笼店，有具体菜名评价（无锡小笼/红汤馄饨/开洋拌馄饨）。皮薄汤多甜口酱肉馅是正宗无锡味。地址需注意：抖音称新会路286号，库内为292号，可能为同一店铺门牌号差异。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"小笼包个头是真的大，一个人吃两个其实也饱了。肉馅是甜丝丝的酱肉味道，是无锡小笼包的味道。皮薄，汤汁也丰富。我觉得吃多了会有点发腻\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=136520112&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"无锡小笼包\", \"date\": \"2025-04-04\"}, {\"quote\": \"无锡小笼3块钱一个，看看这个汤汁，小笼皮很薄，肉馅非常大，口味是甜咸甜咸的，肉馅吃到后面非常香。加点醋，蘸一蘸喝汤，这口汤太鲜美了。红汤馄饨里面放了些蛋皮、葱花、紫菜\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7462660971337731382\", \"dish\": \"无锡小笼/红汤馄饨\", \"date\": \"2025-01-22\"}], \"negative\": [\"食客反映'吃多了会有点发腻'\", \"排骨有点贵\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 764,
+    "name": "鼎盛源无锡小笼馄饨店",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 10,
+      "score_taste": 10,
+      "score_endorsement": 1,
+      "soft_ad_penalty": 8,
+      "evidence_summary": "【存疑·证据弱】仅找到1条含具体描述的本地食客评价（无锡小笼个大），其余均为抖音平台模板化自动生成评价。缺乏独立第二来源交叉验证。闵行兰坪路社区店，本地老客光顾但证据链不足。 {\"quotes\": [{\"quote\": \"无锡小笼4个，小笼来的，伊迭个小笼，特迭个上海小笼，一只顶两只，有可能顶三只。无锡小笼是大，吓煞人\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7593280620986639793\", \"dish\": \"无锡小笼/小馄饨\", \"date\": \"2026-01-09\"}], \"negative\": [], \"soft_ad\": [\"抖音平台评价为模板化自动生成文案（'肉馅紧实醇厚，环境优雅静逸，店员很贴心'），非真实食客逐字评价\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 767,
+    "name": "无锡小笼(梅岭北路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 16,
+      "score_taste": 12,
+      "score_endorsement": 2,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"小笼皮子是厚的，甜还可以，我觉着能够接受。肉块颜色还可以，大小也还好。这只是三鲜面，量蛮多。面骨子还是比较硬的，面不甜，能够吃甜的可以来试试看\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7355036684477648182\", \"dish\": \"无锡小笼/三鲜面\", \"date\": \"2024-04-07\"}, {\"quote\": \"从父母辈，传到现在儿子辈。每次去吃总是一碗无锡小排面，加素鸡，再来一客小笼，小笼一如既往的好吃，只是小排和素鸡比不上之前的口味了，略微遗憾\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7345449396324158755\", \"dish\": \"无锡小排面加素鸡/小笼\", \"date\": \"2024-03-12\"}], \"negative\": [\"小排和素鸡口味不如从前（'略微遗憾'）\", \"Trip.com总体评分仅3.0/5\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 768,
+    "name": "鼎福记·小笼馄饨(蒙自路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 68,
+      "score_diner": 18,
+      "score_taste": 14,
+      "score_endorsement": 6,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"小笼个头还真不小，皮比一般的小笼稍厚一些，但有韧性不会夹破。一口皮子咬下去，甜口的汤汁就涌了出来，里边的馅也是肉大紧实。红汤辣馄饨汤里有蛋皮和豆干丝，一份十只馄饨个头很大，肉很扎实\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7028876521104231693\", \"dish\": \"无锡小笼/红汤辣馄饨\", \"date\": \"2021-11-10\"}, {\"quote\": \"15块钱的红汤辣馄饨相当有性价比，细长的馄饨里是咸鲜的纯肉馅，连着香而不辣的红汤一起入口，口腔微热，咸鲜分子四处扩散，调味不算精巧却相当落胃\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7618524251398311091\", \"dish\": \"红汤辣馄饨\", \"date\": \"2026-03-18\"}], \"negative\": [\"食客反映'小笼皮厚了些，可能担心会破'\"], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 774,
+    "name": "猪仔强把子肉(政通路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 35,
+      "score_diner": 5,
+      "score_taste": 5,
+      "score_endorsement": 0,
+      "soft_ad_penalty": 28,
+      "evidence_summary": "【建议下架·待裁决】新店开业集中轰炸典型软广案例。所有结果来自2026年7月23-24日（同一周），十余条抖音视频模板化推广，全部挂团购链接，无任何独立食客评价或差评。软广特征极其明显。 {\"quotes\": [{\"quote\": \"老卤慢炖足足几个小时，炖的透透酥酥的，一点都不腻。肥肉入口直接化成了渣，瘦肉还一点都不柴，每一丝肉都吸满了老卤香味\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7665665208928958193\", \"dish\": \"把子肉\", \"date\": \"2026-07-23\"}], \"negative\": [], \"soft_ad\": [\"所有搜索结果集中在2026年7月23-24日（新店开业当周），十余条抖音视频集中轰炸\", \"全部视频挂团购链接（18.8元单人餐），模板文案：'肥而不腻入口即化''比我小手臂还长'\", \"无任何非推广食客评价，无差评信号\", \"所有视频话术高度同质化，均为'新店开业趁活动囤券'\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 777,
+    "name": "徐州地锅鸡(聚丰园路弘基广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 50,
+      "score_diner": 6,
+      "score_taste": 8,
+      "score_endorsement": 0,
+      "soft_ad_penalty": 0,
+      "evidence_summary": "【存疑·证据弱】仅找到Trip.com英文评价1条，无具体菜名/做法细节描述。搜索结果中聚丰园路弘基广场附近多家餐厅混杂，无法确认该店独立堂食证据。证据链不足。 {\"quotes\": [{\"quote\": \"This braised chicken restaurant is located next to Shanghai University. The owner and staff are very welcoming, the food is authentic, and the price is reasonable, making it excellent value for money\", \"source\": \"Trip.com\", \"url\": \"https://www.trip.com/restaurant/china/shanghai/detail/restaurant-121687790/\", \"dish\": \"地锅鸡\", \"date\": \"2025-05-15\"}], \"negative\": [], \"soft_ad\": []}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 778,
+    "name": "徐州老灶台地锅鸡(东川公路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 62,
+      "score_diner": 16,
+      "score_taste": 13,
+      "score_endorsement": 1,
+      "soft_ad_penalty": 3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"这个鸡的肉质一吃就吃出来很新鲜，肉质很弹，鸡香味很重，说明原材料很不错。散养苏北地锅鸡炖出来是真的香。生意好的不得了，全场爆满。可以在我心目中吃过的所有铁锅里面可以排名前三的鸡和排骨，选料都不错，玉米饼特别香\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7512481088037326114\", \"dish\": \"地锅鸡/排骨/玉米饼\", \"date\": \"2025-06-09\"}, {\"quote\": \"地锅鸡软烂入味，贴饼吸满汤汁超香。地锅排骨排骨入味但骨头较多，适合喜欢嚼骨头的朋友。鸭子煲入口即化，菜很扎实\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7667436240044959195\", \"dish\": \"地锅鸡/地锅排骨/鸭子煲\", \"date\": \"2026-07-28\"}], \"negative\": [\"排骨骨头较多，适合喜欢嚼骨头的朋友（隐含排骨肉少）\"], \"soft_ad\": [\"抖音平台评价部分为模板化自动生成文案\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 779,
+    "name": "沪传奇地锅(沪闵路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 55,
+      "score_diner": 12,
+      "score_taste": 10,
+      "score_endorsement": 1,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "【存疑·证据弱】闵行莲花路6年地锅鸡老店，有含菜名的评价（地锅鸡/鹅肉/贴饼/配菜）。但搜索结果全为抖音团购推广视频，模板文案重复，缺乏独立非推广食客评价。团购挂车密集扣分。 {\"quotes\": [{\"quote\": \"鸡肉炖的特别软烂好吃。就连配菜都吸饱了汤汁。最后再来一口贴饼子，真的封神了。鸡肉都是当天现...从头到尾现场制作，看的明明白白。想吃点什么预制菜都找不到地方\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7558780995248491812\", \"dish\": \"地锅鸡/贴饼\", \"date\": \"2025-10-08\"}, {\"quote\": \"老板总共90多块钱...我们是六周年庆才有的活动。现点现炒，通过秘制的酱料使其鲜味更加浓郁。满满一大锅的鸡肉、鹅肉炖的软烂不柴，再搭配这5份吸饱了汤汁的配菜\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7636728430306524273\", \"dish\": \"地锅鸡/鹅肉/配菜/贴饼\", \"date\": \"2026-05-06\"}], \"negative\": [], \"soft_ad\": [\"多条抖音视频均为团购套餐推广（98元/128元套餐），模板文案重复\", \"视频中反复强调'活动价''趁现在活动最给力'\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 781,
+    "name": "皖缃坊·地锅鸡(洞薛路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 40,
+      "score_diner": 3,
+      "score_taste": 5,
+      "score_endorsement": 0,
+      "soft_ad_penalty": 30,
+      "evidence_summary": "【建议下架·待裁决】未找到任何独立堂食食客评价。所有搜索结果均为抖音平台自动生成的模板化评价（'老板娘热情好客'重复出现），无具体菜品细节。证据为零，典型平台刷分特征。 {\"quotes\": [], \"negative\": [], \"soft_ad\": [\"所有搜索结果均为抖音平台模板化自动生成评价（4.8分252人评价），无一条独立食客逐字评价\", \"模板文案完全重复：'老板娘热情好客，分量十足，卫生很不错，环境很凉快，下次还来'\", \"无任何具体菜品做法/口味细节描述\", \"无独立媒体或非推广来源\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 786,
+    "name": "逸品淮扬(白玉兰广场店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 72,
+      "score_diner": 22,
+      "score_taste": 16,
+      "score_endorsement": 3,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "【存疑·证据弱】北外滩白玉兰广场江景淮扬菜。有2条含具体菜名的评价（年糕烧大黄鱼/狮子头/软兜/红烧肉/小笼包）。菜品描述具体。部分笔记模板化（天花板/国宴水准）扣分。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"年糕烧大黄鱼非常的鲜嫩。扬州狮子头一直是我的最爱，这颗做的不错，肉的肥瘦刚好。软兜就是鳝丝的中段，浓油赤酱，但不会很腻。在米饭上淋上大黄鱼的酱汁，再拌上清炒虾仁\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7545708340559564089\", \"dish\": \"年糕烧大黄鱼/扬州狮子头/软兜/清炒虾仁\", \"date\": \"2025-09-03\"}, {\"quote\": \"狮子头招牌，汤头鲜美，狮子头很嫩，孩子能吃。招牌的红烧肉，肥瘦相间，浓油赤酱，肉质酥烂，很棒。小笼包个头很大，汤汁鲜美。煮干丝约等于喝汤，加点干丝\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=329183401&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"清炖狮子头/红烧肉/小笼包/煮干丝\", \"date\": \"2026-06-30\"}], \"negative\": [], \"soft_ad\": [\"部分携程笔记使用'江景天花板''国宴水准'等夸张模板文案\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 787,
+    "name": "南里山房(瑞虹天地太阳宫店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 60,
+      "score_diner": 16,
+      "score_taste": 13,
+      "score_endorsement": 2,
+      "soft_ad_penalty": 12,
+      "evidence_summary": "【存疑·证据弱】南里山房连锁瑞虹新店，有含具体菜名的评价（大煮干丝/拆烩鱼羹/盘菊烧鸡/菜包狮子头）。但新店开业集中推广特征明显（同日多条视频挂团购券），软广扣分较重。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"淮扬经典名菜大煮干丝，是用纯鸡汤熬煮，里面有鸡丝、笋丝、火腿丝还有虾仁。这个汤真的很鲜，干丝很顺滑。拆烩鱼羹，汤底使用鲫鱼和黑鱼熬煮，汤鲜嫩嫩滑，口感有点像蟹肉，加了醋味道更鲜\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7672978437720036453\", \"dish\": \"大煮干丝/拆烩鱼羹\", \"date\": \"2026-08-12\"}, {\"quote\": \"盘菊烧鸡，文火慢烤外皮金灿灿的，里面的肉很嫩。菜包狮子头是淮扬经典名菜，鲜香温润一点都不腻。山房烤鸭金黄酥脆的，汁水就还蛮足的\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7672971331873495971\", \"dish\": \"盘菊烧鸡/菜包狮子头/山房烤鸭\", \"date\": \"2026-08-12\"}], \"negative\": [], \"soft_ad\": [\"瑞虹太阳宫新店开业期间(2026年8月12日)，同日大量抖音视频集中发布，全部挂79代100代金券团购链接\", \"模板文案重复：'头波活动闭眼囤''地标级淮扬菜'\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 789,
+    "name": "上扬府·淮扬小品(南京东路店)",
+    "fields": {
+      "data_updated_at": "2026-09-23",
+      "score_objective": 68,
+      "score_diner": 20,
+      "score_taste": 15,
+      "score_endorsement": 3,
+      "soft_ad_penalty": 5,
+      "evidence_summary": "【存疑·证据弱】南京东路淮扬小品，有2条含具体菜名的评价（五福蟹粉小笼包五色皮/松露黑毛猪红烧肉/清炖狮子头/金蒜黑胡椒牛肉粒）。菜品描述具体。有团购活动扣少量分。；主复核：来源类型单一(仅ugc)，缺跨类型验证 {\"quotes\": [{\"quote\": \"招牌的五福蟹粉小笼包，分别是用红曲米、菠菜汁、枸杞汁、墨鱼汁和内蒙雪花粉来做的皮，也太鲜了，丝毫没有蟹腥味。蟹腿肉都在里面，都是正儿八经的螃蟹拆出来的。红烧肉用的都是300多天的黑毛猪\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7526107438823820587\", \"dish\": \"五福蟹粉小笼包/黑毛猪红烧肉\", \"date\": \"2025-07-12\"}, {\"quote\": \"松露黑毛猪红烧肉色泽红亮，吃起来肥而不腻，再加上松露独特的香味，和米饭简直是绝配。淮扬清炖狮子头黑毛猪肉做成的，口感细腻，入口即化，汤汁清润可口。金蒜黑胡椒牛肉粒黑胡椒味道浓郁，煎制的外焦里嫩\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=179458301&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165\", \"dish\": \"松露黑毛猪红烧肉/清炖狮子头/金蒜黑胡椒牛肉粒\", \"date\": \"2025-08-02\"}], \"negative\": [], \"soft_ad\": [\"有65代100代金券团购活动，部分笔记为推广性质\"]}"
+    },
+    "cids_add": [],
+    "conflicts": [],
+    "warnings": []
+  }
+]

@@ -1,0 +1,249 @@
+[
+  {
+    "id": 819,
+    "name": "山东菜馆(莲园路店)",
+    "district": "浦东新区",
+    "address": "上海市浦东新区博华路与莲园路交叉口东南110米",
+    "price": 80,
+    "evlen": 172,
+    "phone": true,
+    "roots": [
+      "鲁菜"
+    ],
+    "cuisine_root": "鲁菜"
+  },
+  {
+    "id": 820,
+    "name": "俺家味道山东饭店(三铭广场店)",
+    "district": "松江区",
+    "address": "松江区松卫北路790号1-2号(三铭广场)",
+    "price": 105,
+    "evlen": 79,
+    "phone": true,
+    "roots": [
+      "鲁菜"
+    ],
+    "cuisine_root": "鲁菜"
+  },
+  {
+    "id": 646,
+    "name": "小旺阁·老字号粤菜(江桥老街店)",
+    "district": "嘉定区",
+    "address": "嘉定区江桥镇老街35号",
+    "price": 85,
+    "evlen": 184,
+    "phone": true,
+    "roots": [
+      "粤菜"
+    ],
+    "cuisine_root": "粤菜"
+  },
+  {
+    "id": 650,
+    "name": "蘩楼(淮海百盛店)",
+    "district": "黄浦区",
+    "address": "黄浦区淮海中路918号百盛购物中心4楼",
+    "price": 117,
+    "evlen": 187,
+    "phone": true,
+    "roots": [
+      "粤菜"
+    ],
+    "cuisine_root": "粤菜"
+  },
+  {
+    "id": 651,
+    "name": "龙筵轩·广府宴(长宁虹桥店)",
+    "district": "长宁区",
+    "address": "长宁区延安西路2099号二楼A区",
+    "price": 299,
+    "evlen": 167,
+    "phone": true,
+    "roots": [
+      "粤菜"
+    ],
+    "cuisine_root": "粤菜"
+  },
+  {
+    "id": 653,
+    "name": "香港龙凤楼(巨鹿路洋房店)",
+    "district": "静安区",
+    "address": "静安区巨鹿路889号7-8号楼",
+    "price": 200,
+    "evlen": 191,
+    "phone": true,
+    "roots": [
+      "粤菜"
+    ],
+    "cuisine_root": "粤菜"
+  },
+  {
+    "id": 673,
+    "name": "魔都潮滋味·潮汕牛肉火锅·粿条(叶家宅路店)",
+    "district": "普陀区",
+    "address": "普陀区叶家宅路100号10幢1层",
+    "price": 70,
+    "evlen": 181,
+    "phone": true,
+    "roots": [
+      "粤菜"
+    ],
+    "cuisine_root": "粤菜"
+  },
+  {
+    "id": 721,
+    "name": "荣申府(四安里古建店)",
+    "district": "静安区",
+    "address": "静安区裕通路69号(四安里独栋古建星巴克对面)",
+    "price": 150,
+    "evlen": 140,
+    "phone": true,
+    "roots": [
+      "粤菜"
+    ],
+    "cuisine_root": "粤菜"
+  },
+  {
+    "id": 722,
+    "name": "景煊 SOLE",
+    "district": "静安区",
+    "address": "静安区南京西路1376号上海商城1层109室",
+    "price": 300,
+    "evlen": 111,
+    "phone": true,
+    "roots": [
+      "粤菜"
+    ],
+    "cuisine_root": "粤菜"
+  },
+  {
+    "id": 892,
+    "name": "阿翁沙茶面",
+    "district": "虹口区",
+    "address": "四川北路/长春路一带(13年老店)",
+    "price": 40,
+    "evlen": 175,
+    "phone": false,
+    "roots": [
+      "闽菜"
+    ],
+    "cuisine_root": "闽菜"
+  },
+  {
+    "id": 893,
+    "name": "黑明餐厅·厦门菜(CP静安店)",
+    "district": "静安区",
+    "address": "愚园路68号CP静安7楼703(静安寺地铁站步行370米)",
+    "price": 180,
+    "evlen": 184,
+    "phone": false,
+    "roots": [
+      "闽菜"
+    ],
+    "cuisine_root": "闽菜"
+  },
+  {
+    "id": 896,
+    "name": "闽叔福建菜(陆家嘴中心L+Mall店)",
+    "district": "浦东新区",
+    "address": "陆家嘴中心L+Mall(商城路地铁站步行110米)",
+    "price": 103,
+    "evlen": 127,
+    "phone": false,
+    "roots": [
+      "闽菜"
+    ],
+    "cuisine_root": "闽菜"
+  },
+  {
+    "id": 897,
+    "name": "闽约闽南小馆",
+    "district": "静安区",
+    "address": "西康路850号604幢1楼C104室(曹家渡)",
+    "price": 130,
+    "evlen": 121,
+    "phone": false,
+    "roots": [
+      "闽菜"
+    ],
+    "cuisine_root": "闽菜"
+  },
+  {
+    "id": 901,
+    "name": "莆味小馆(宝山万渡汇店)",
+    "district": "宝山区",
+    "address": "纪蕰路38号一层F1016室(万渡汇全季酒店隔壁)",
+    "price": 55,
+    "evlen": 168,
+    "phone": false,
+    "roots": [
+      "闽菜"
+    ],
+    "cuisine_root": "闽菜"
+  },
+  {
+    "id": 902,
+    "name": "莆田卤面馆(汇融天地店)",
+    "district": "普陀区",
+    "address": "曹杨路555号汇融天地B1层10-1号商铺",
+    "price": 28,
+    "evlen": 141,
+    "phone": false,
+    "roots": [
+      "闽菜"
+    ],
+    "cuisine_root": "闽菜"
+  },
+  {
+    "id": 922,
+    "name": "粉牛牛常德牛肉米粉(灵石路店)",
+    "district": "静安区",
+    "address": "灵石路697号3-103号健康智谷",
+    "price": 22,
+    "evlen": 175,
+    "phone": false,
+    "roots": [
+      "湘菜"
+    ],
+    "cuisine_root": "湘菜"
+  },
+  {
+    "id": 951,
+    "name": "徽州月·民间徽菜（浦东总店）",
+    "district": "浦东新区",
+    "address": "浦东大道1088号（14号线源深路站3A出口直行100米）",
+    "price": 118,
+    "evlen": 174,
+    "phone": true,
+    "roots": [
+      "徽菜"
+    ],
+    "cuisine_root": "徽菜"
+  },
+  {
+    "id": 954,
+    "name": "醉徽楼",
+    "district": "浦东新区",
+    "address": "杨南路399弄1号（上南翡翠苑南门）",
+    "price": 92,
+    "evlen": 161,
+    "phone": true,
+    "roots": [
+      "徽菜"
+    ],
+    "cuisine_root": "徽菜"
+  },
+  {
+    "id": 961,
+    "name": "正宗安徽太和板面(莎海商务大厦店)",
+    "district": "闵行区",
+    "address": "中春路7319号莎海商务大厦",
+    "price": 22,
+    "evlen": 172,
+    "phone": true,
+    "roots": [
+      "徽菜"
+    ],
+    "cuisine_root": "徽菜"
+  }
+]

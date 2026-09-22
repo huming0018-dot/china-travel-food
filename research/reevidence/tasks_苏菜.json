@@ -1,0 +1,366 @@
+[
+  {
+    "id": 729,
+    "name": "春里·淮扬(西岸梦中心店)",
+    "district": "徐汇区",
+    "address": "徐汇区龙腾大道2266号西岸梦中心4栋2楼208室",
+    "price": 95,
+    "evlen": 103,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 732,
+    "name": "九厨·淮扬(博荟广场店)",
+    "district": "黄浦区",
+    "address": "黄浦区中山南一路788号博荟广场One East F2",
+    "price": 160,
+    "evlen": 97,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 733,
+    "name": "南里山房(长宁荟聚店)",
+    "district": "长宁区",
+    "address": "长宁区金钟路788号荟聚中心2层C18",
+    "price": 120,
+    "evlen": 149,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 734,
+    "name": "宴江月(南京东路宏伊广场店)",
+    "district": "黄浦区",
+    "address": "黄浦区南京东路299号宏伊广场6层S-604",
+    "price": 150,
+    "evlen": 189,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 735,
+    "name": "桂花楼(浦东香格里拉店)",
+    "district": "浦东新区",
+    "address": "浦东新区富城路33号浦东香格里拉浦江楼1层",
+    "price": 350,
+    "evlen": 136,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 736,
+    "name": "游宴一品淮扬(万达瑞华酒店)",
+    "district": "黄浦区",
+    "address": "黄浦区中山东二路538号上海万达瑞华酒店5层",
+    "price": 780,
+    "evlen": 173,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 738,
+    "name": "南京大牌档(中山公园龙之梦店)",
+    "district": "长宁区",
+    "address": "长宁区长宁路1018号龙之梦购物公园L8层8035",
+    "price": 65,
+    "evlen": 156,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 742,
+    "name": "南京大牌档(人民广场世茂店)",
+    "district": "黄浦区",
+    "address": "黄浦区南京西路世茂52+三层",
+    "price": 70,
+    "evlen": 93,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 743,
+    "name": "金陵·启海人家(上海店)",
+    "district": "宝山区",
+    "address": "宝山区富长路1118号",
+    "price": 180,
+    "evlen": 104,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 744,
+    "name": "梅府家宴(建业里店)",
+    "district": "徐汇区",
+    "address": "徐汇区建国西路480号建业里",
+    "price": 600,
+    "evlen": 92,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 745,
+    "name": "南京大牌档(静安寺店)",
+    "district": "静安区",
+    "address": "静安区愚园路68号晶品Crystal Galleria 6层",
+    "price": 100,
+    "evlen": 120,
+    "phone": false,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 746,
+    "name": "南京大牌档(月星环球港店)",
+    "district": "普陀区",
+    "address": "普陀区中山北路3300号月星环球港4层",
+    "price": 100,
+    "evlen": 69,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 748,
+    "name": "新斋桥苏式面馆",
+    "district": "徐汇区",
+    "address": "徐汇区漕溪北路439号（徐家汇地铁站4号口步行80米）",
+    "price": 48,
+    "evlen": 168,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 749,
+    "name": "松鹤楼(豫园店)",
+    "district": "黄浦区",
+    "address": "黄浦区百翎路5-7号一楼二楼（豫园商城5号门进）",
+    "price": 60,
+    "evlen": 177,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 750,
+    "name": "松鹤楼(嘉里城店)",
+    "district": "浦东新区",
+    "address": "浦东新区花木路1378号浦东嘉里城B1-124号",
+    "price": 60,
+    "evlen": 114,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 756,
+    "name": "松鹤楼(世纪汇店)",
+    "district": "浦东新区",
+    "address": "浦东新区世纪大道1192号世纪汇广场LG1层028+029号",
+    "price": 120,
+    "evlen": 131,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 763,
+    "name": "无锡万家小笼(恒达公寓店)",
+    "district": "普陀区",
+    "address": "普陀区新会路292号（长寿路地铁站步行150米）",
+    "price": 21,
+    "evlen": 135,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 764,
+    "name": "鼎盛源无锡小笼馄饨店",
+    "district": "闵行区",
+    "address": "闵行区兰坪路208号1层3室（闵行饭店北50米）",
+    "price": 29,
+    "evlen": 137,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 767,
+    "name": "无锡小笼(梅岭北路店)",
+    "district": "普陀区",
+    "address": "普陀区梅岭北路614号（曹杨二中后门，近兰溪路四季情菜场）",
+    "price": 25,
+    "evlen": 122,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 768,
+    "name": "鼎福记·小笼馄饨(蒙自路店)",
+    "district": "黄浦区",
+    "address": "黄浦区蒙自路169号4-101",
+    "price": 30,
+    "evlen": 140,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 774,
+    "name": "猪仔强把子肉(政通路店)",
+    "district": "杨浦区",
+    "address": "杨浦区政通路近国和路(五角场)",
+    "price": 30,
+    "evlen": 176,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 777,
+    "name": "徐州地锅鸡(聚丰园路弘基广场店)",
+    "district": "宝山区",
+    "address": "宝山区聚丰园路9弄弘基广场",
+    "price": 75,
+    "evlen": 194,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 778,
+    "name": "徐州老灶台地锅鸡(东川公路店)",
+    "district": "浦东新区",
+    "address": "浦东新区东川公路4569号(近龚丰路)",
+    "price": 70,
+    "evlen": 173,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 779,
+    "name": "沪传奇地锅(沪闵路店)",
+    "district": "闵行区",
+    "address": "闵行区沪闵路近莘庄",
+    "price": 65,
+    "evlen": 175,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 781,
+    "name": "皖缃坊·地锅鸡(洞薛路店)",
+    "district": "松江区",
+    "address": "松江区洞泾镇洞薛路218号",
+    "price": 70,
+    "evlen": 98,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 786,
+    "name": "逸品淮扬(白玉兰广场店)",
+    "district": "虹口区",
+    "address": "虹口区东长治路588号白玉兰广场",
+    "price": 200,
+    "evlen": 168,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 787,
+    "name": "南里山房(瑞虹天地太阳宫店)",
+    "district": "虹口区",
+    "address": "虹口区瑞虹路181号瑞虹天地太阳宫",
+    "price": 150,
+    "evlen": 183,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  },
+  {
+    "id": 789,
+    "name": "上扬府·淮扬小品(南京东路店)",
+    "district": "黄浦区",
+    "address": "黄浦区南京东路(近福建中路)",
+    "price": 150,
+    "evlen": 166,
+    "phone": true,
+    "roots": [
+      "苏菜"
+    ],
+    "cuisine_root": "苏菜"
+  }
+]

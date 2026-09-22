@@ -1,0 +1,184 @@
+[
+  {
+    "id": 828,
+    "name": "杭州新开元大酒店(徐家汇路店)",
+    "district": "黄浦区",
+    "address": "上海市黄浦区徐家汇路560号(近打浦路)",
+    "price": 100,
+    "evlen": 167,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 831,
+    "name": "老头儿油爆虾(宏伊国际广场店)",
+    "district": "黄浦区",
+    "address": "上海市黄浦区南京东路288号宏伊国际广场F5",
+    "price": 120,
+    "evlen": 179,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 844,
+    "name": "丰收日(豫园店)",
+    "district": "黄浦区",
+    "address": "复兴东路789号上海外滩豫园美居酒店1-2楼",
+    "price": 180,
+    "evlen": 183,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 847,
+    "name": "甬季(浙鲜小酒馆·福州路店)",
+    "district": "黄浦区",
+    "address": "福州路666号",
+    "price": 130,
+    "evlen": 176,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 848,
+    "name": "宁波汤团店(豫园店)",
+    "district": "黄浦区",
+    "address": "旧校场路122号(豫园商城内)",
+    "price": 35,
+    "evlen": 199,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 853,
+    "name": "孔乙己酒家(虹桥路店)",
+    "district": "长宁区",
+    "address": "上海市长宁区虹桥路1480号(近古北路,伊犁路站3号口步行约450米)",
+    "price": 167,
+    "evlen": 177,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 857,
+    "name": "绍荟悦(大宁店,原70后·绍东家)",
+    "district": "静安区",
+    "address": "上海市静安区共和新路2008号12栋512-2、513室",
+    "price": 142,
+    "evlen": 187,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 858,
+    "name": "糯米帝·温州糯米饭(徐汇店)",
+    "district": "徐汇区",
+    "address": "徐汇区龙山新村88号-3(近宛平南路)",
+    "price": 25,
+    "evlen": 178,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 863,
+    "name": "瓯江宴·海派温州菜(龙华会店)",
+    "district": "徐汇区",
+    "address": "徐汇区龙华路2778号龙华会L2层南区(龙华地铁站5号口旁)",
+    "price": 170,
+    "evlen": 165,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 865,
+    "name": "瓯宴·陆悦新温州菜(上海首店)",
+    "district": "浦东新区",
+    "address": "浦东新区中科路1817号陆悦天地水星三楼",
+    "price": 188,
+    "evlen": 180,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 868,
+    "name": "虹浦荟·新派温州菜(虹桥店)",
+    "district": "长宁区",
+    "address": "长宁区虹桥路2396号(独栋洋楼)",
+    "price": 288,
+    "evlen": 199,
+    "phone": true,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 1376,
+    "name": "新荣记(前滩太古里店)",
+    "district": "浦东新区",
+    "address": "浦东新区东育路500弄前滩太古里木区6楼",
+    "price": 800,
+    "evlen": 48,
+    "phone": false,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 1377,
+    "name": "新荣记(虹桥店)",
+    "district": "闵行区",
+    "address": "闵行区红松东路1116号虹桥祥源希尔顿酒店2号楼1楼",
+    "price": 750,
+    "evlen": 57,
+    "phone": false,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  },
+  {
+    "id": 1380,
+    "name": "新荣记(滨江店)",
+    "district": "浦东新区",
+    "address": "浦东新区浦明路868弄保利one56禧玥酒店25楼",
+    "price": 800,
+    "evlen": 58,
+    "phone": false,
+    "roots": [
+      "浙菜"
+    ],
+    "cuisine_root": "浙菜"
+  }
+]
