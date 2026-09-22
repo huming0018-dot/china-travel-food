@@ -74,6 +74,13 @@ LANGUAGE sql IMMUTABLE AS $$
     ELSE '奢华' END
 $$;
 
+-- 1.5 sync_log 补齐 /api/sync 保鲜巡检心跳所需列（旧库增量；001 新库已含，IF NOT EXISTS 幂等）
+ALTER TABLE sync_log
+  ADD COLUMN IF NOT EXISTS started_at        timestamptz,
+  ADD COLUMN IF NOT EXISTS completed_at      timestamptz,
+  ADD COLUMN IF NOT EXISTS records_processed integer,
+  ADD COLUMN IF NOT EXISTS notes             text;
+
 -- =====================================================================
 -- BATCH 2 — CHECK 约束 + 列默认
 -- =====================================================================
@@ -182,8 +189,33 @@ DO $$ BEGIN
 END $$;
 
 -- =====================================================================
--- BATCH 3 — 派生触发器（tier / score_total / search_vector / updated_at）
+-- BATCH 3 — 派生触发器（tier / score_total / updated_at）
+-- ---------------------------------------------------------------------
+-- search_vector 是 GENERATED ALWAYS STORED 列（001 定义，数据库强制自动维护，
+-- 比触发器更强：任何角色都无法手填）。旧库若生成表达式不含 business_area，
+-- 在此幂等重建（需先摘下依赖它的 v_restaurant_enriched，Batch5 会重建）。
 -- =====================================================================
+DROP VIEW IF EXISTS v_restaurant_enriched;
+DO $$
+DECLARE need boolean;
+BEGIN
+  SELECT (a.attgenerated='s' AND coalesce(pg_get_expr(d.adbin,d.adrelid),'') NOT LIKE '%business_area%')
+  INTO need
+  FROM pg_attribute a
+  LEFT JOIN pg_attrdef d ON d.adrelid=a.attrelid AND d.adnum=a.attnum
+  WHERE a.attrelid='restaurants'::regclass AND a.attname='search_vector';
+  IF need THEN
+    ALTER TABLE restaurants DROP COLUMN search_vector;
+    EXECUTE $q$ALTER TABLE restaurants ADD COLUMN search_vector tsvector GENERATED ALWAYS AS (
+      setweight(to_tsvector('simple',coalesce(name,'')),'A') ||
+      setweight(to_tsvector('simple',coalesce(name_en,'')),'A') ||
+      setweight(to_tsvector('simple',coalesce(business_area,'')),'B') ||
+      setweight(to_tsvector('simple',coalesce(district,'')),'B') ||
+      setweight(to_tsvector('simple',coalesce(address,'')),'C')
+    ) STORED$q$;
+  END IF;
+END $$;
+CREATE INDEX IF NOT EXISTS idx_restaurants_search ON restaurants USING GIN(search_vector);
 
 CREATE OR REPLACE FUNCTION derive_restaurant() RETURNS trigger
 LANGUAGE plpgsql AS $$
@@ -207,13 +239,8 @@ BEGIN
             - coalesce(NEW.soft_ad_penalty,0), 1)));
   END IF;
 
-  -- 搜索向量自动维护（新增店不再需要应用层手写 tsvector）
-  NEW.search_vector :=
-      setweight(to_tsvector('simple', coalesce(NEW.name,'')), 'A')
-   || setweight(to_tsvector('simple', coalesce(NEW.name_en,'')), 'A')
-   || setweight(to_tsvector('simple', coalesce(NEW.business_area,'')), 'B')
-   || setweight(to_tsvector('simple', coalesce(NEW.district,'')), 'B')
-   || setweight(to_tsvector('simple', coalesce(NEW.address,'')), 'C');
+  -- search_vector 为 GENERATED ALWAYS 列，数据库在触发器之后自动生成；
+  -- BEFORE 触发器对其赋值会被忽略，故此处不写（见 001 与本文件 Batch3 说明）。
 
   RETURN NEW;
 END $$;
@@ -325,6 +352,13 @@ SELECT r.*,
        (SELECT round(avg(rv.rating_total)::numeric,2) FROM reviews rv
          WHERE rv.restaurant_id=r.id AND rv.is_hidden=false)              AS ugc_avg
 FROM restaurants r;
+
+-- 5.5 视图最小权限：审计/保鲜视图仅 service_role（不向前端暴露数据缺口）；
+--     标签覆盖/富信息视图对匿名与登录用户只读。
+REVOKE SELECT ON v_audit_gaps     FROM PUBLIC, anon, authenticated;
+REVOKE SELECT ON v_data_freshness FROM PUBLIC, anon, authenticated;
+GRANT  SELECT ON v_audit_gaps, v_data_freshness, v_tag_coverage, v_restaurant_enriched TO service_role;
+GRANT  SELECT ON v_tag_coverage, v_restaurant_enriched TO anon, authenticated;
 
 -- =====================================================================
 -- BATCH 6 — 幂等写入口 RPC（坐标传 lng/lat；内部触发器/约束全部生效）

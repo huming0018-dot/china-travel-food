@@ -1,7 +1,12 @@
 -- ============================================================
--- China Travel · 美食地图 数据库 Schema
--- 数据库: PostgreSQL 15+ (Supabase)
+-- China Travel · 美食地图 数据库 Schema（初始结构 001）
+-- 数据库: PostgreSQL 15+ (Supabase) + PostGIS
 -- 执行方式: 在 Supabase SQL Editor 中粘贴执行，或 psql -f
+--
+-- ★ 完整现网结构 = 001_init.sql + 002_harden.sql 按顺序执行：
+--    001 建表/RLS/基础索引/GENERATED 搜索列；002 追加归一函数、CHECK 约束、
+--    派生触发器（tier/score_total）、防重唯一索引、审计/保鲜视图、幂等 RPC。
+--    重建库时两个都要跑，勿只跑 001。
 -- ============================================================
 
 -- 启用 PostGIS（地理坐标/距离查询）
@@ -36,7 +41,7 @@ CREATE TABLE restaurants (
   id                SERIAL PRIMARY KEY,
   name              VARCHAR(200) NOT NULL,
   name_en           VARCHAR(200),
-  tier              VARCHAR(20),              -- 亲民 / 中端 / 高端
+  tier              VARCHAR(20),              -- 五档（002 触发器按 price_avg 自动算）：经济/平价/中档/高档/奢华
   price_avg         INTEGER,
   price_range       VARCHAR(50),
   address           TEXT,
@@ -137,12 +142,17 @@ CREATE INDEX idx_pb_restaurant ON price_benchmarks(restaurant_id);
 -- ============================================================
 CREATE TABLE sync_log (
   id             SERIAL PRIMARY KEY,
-  source         VARCHAR(200),  -- 飞书表格名/URL
+  source         VARCHAR(200),  -- 飞书表格名/URL 或 vercel-cron
   sheet_name     VARCHAR(100),
   revision       INTEGER,
   records_synced INTEGER,
-  status         VARCHAR(30),   -- success/failed/skipped
-  synced_at      TIMESTAMPTZ DEFAULT NOW()
+  status         VARCHAR(30),   -- running/success/failed/skipped
+  synced_at      TIMESTAMPTZ DEFAULT NOW(),
+  -- /api/sync 保鲜巡检心跳使用（002 对旧库以 ADD COLUMN IF NOT EXISTS 补齐）
+  started_at          TIMESTAMPTZ,
+  completed_at        TIMESTAMPTZ,
+  records_processed   INTEGER,
+  notes               TEXT
 );
 
 -- ============================================================
@@ -237,12 +247,15 @@ CREATE TRIGGER trg_negotiations_updated BEFORE UPDATE ON negotiations  FOR EACH 
 -- ============================================================
 -- 全文搜索索引（餐厅名/地址/招牌菜）
 -- ============================================================
+-- search_vector 为 GENERATED 列（数据库强制自动维护，任何写入都无法手填或绕过）。
+-- 权重：店名/英文名 A，商圈/行政区 B，门牌地址 C。002 触发器不再写此列。
 ALTER TABLE restaurants ADD COLUMN search_vector tsvector
   GENERATED ALWAYS AS (
     setweight(to_tsvector('simple', COALESCE(name,'')), 'A') ||
     setweight(to_tsvector('simple', COALESCE(name_en,'')), 'A') ||
-    setweight(to_tsvector('simple', COALESCE(address,'')), 'B') ||
-    setweight(to_tsvector('simple', COALESCE(district,'')), 'B')
+    setweight(to_tsvector('simple', COALESCE(business_area,'')), 'B') ||
+    setweight(to_tsvector('simple', COALESCE(district,'')), 'B') ||
+    setweight(to_tsvector('simple', COALESCE(address,'')), 'C')
   ) STORED;
 CREATE INDEX idx_restaurants_search ON restaurants USING GIN(search_vector);
 

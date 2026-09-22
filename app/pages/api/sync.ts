@@ -15,8 +15,9 @@ import { createClient } from '@supabase/supabase-js';
  * - 真正的补数据走 food_pipeline（stage1→5），统一经过数据库触发器/约束/幂等 RPC，
  *   不在此路由直接写餐厅数据。
  *
- * sync_log 表结构（001_init.sql）：id, source, sheet_name, revision,
- * records_synced, status(success/failed/skipped), synced_at。不要引用不存在的列。
+ * sync_log 表结构（001_init.sql / 002_harden.sql 1.5）：id, source, sheet_name,
+ * revision, records_synced, status(running/success/failed/skipped), synced_at,
+ * started_at, completed_at, records_processed, notes。
  */
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -32,13 +33,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ success: false, error: 'Unauthorized' });
   }
 
+  const startedAt = new Date().toISOString();
   const supabase = createClient(supabaseUrl, serviceRoleKey);
-  const finish = async (status: 'success' | 'failed', records: number | null) => {
+  const finish = async (
+    status: 'running' | 'success' | 'failed',
+    records: number | null,
+    notes?: string,
+  ) => {
     await supabase.from('sync_log').insert({
       source: 'vercel-cron',
       sheet_name: 'freshness-check',
       status,
       records_synced: records,
+      records_processed: records,
+      started_at: startedAt,
+      completed_at: status === 'running' ? null : new Date().toISOString(),
+      notes: notes ?? null,
     });
   };
 
@@ -66,7 +76,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       gapSummary[k] = (gapSummary[k] || 0) + 1;
     }
 
-    await finish('success', totalCount || 0);
+    await finish(
+      'success',
+      totalCount || 0,
+      `超期需复查 ${staleCount ?? 0}；关店 ${closedCount ?? 0}；缺口 ${JSON.stringify(gapSummary)}`,
+    );
 
     return res.status(200).json({
       success: true,
@@ -78,7 +92,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   } catch (error: any) {
     console.error('Sync API error:', error);
-    await finish('failed', null);
+    await finish('failed', null, String(error && error.message ? error.message : error));
     return res.status(500).json({ success: false, error: error.message });
   }
 }

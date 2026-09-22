@@ -52,3 +52,24 @@ app/.next/
 # 本地一次性采集/地理编码中间产物（含潜在敏感信息，禁止入库）
 /data_subagent_work/
 /geocode_progress/
+
+# 本地数据采集工作区、备份与下载（体量大、含一次性证据，统一走 Supabase + food_pipeline）
+/backups/
+/data/
+/pipeline_work/
+/download.txt
+
+# 历史一次性建库/推送脚本（不再使用，统一走 scripts/food_pipeline，本地保留不入库）
+/build_*.py
+/push_*.py
+/create_*_feishu.py
+/fix_*_feishu.py
+/xibei_all_subgenres.json
+/scripts/step2_geocode.py
+
+# 过程性审计中间稿（终版 audit-harden / audit-pm-qa-eng / coverage-audit 入库）
+/audit-2026-09-22.md
+/audit-final-2026-09-22.md
+/audit-hardened-2026-09-22.md
+/coverage-report-2026-09-21.md
+/coverage-report-2026-09-22.md
