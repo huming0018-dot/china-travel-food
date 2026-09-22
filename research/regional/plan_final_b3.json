@@ -1,0 +1,1414 @@
+[
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "雪三娘江西炒粉拌粉(九亭中心店)",
+    "fields": {
+      "name": "雪三娘江西炒粉拌粉(九亭中心店)",
+      "price_avg": 30,
+      "price_range": "¥25-40",
+      "address": "上海市松江区九亭中心(商场内)",
+      "district": "松江区",
+      "business_area": "九亭",
+      "booking_method": "现场",
+      "signature_dishes": [
+        "江西炒米粉",
+        "南昌拌粉",
+        "瓦罐汤(六种)"
+      ],
+      "investor_info": "雪三娘（江西炒粉拌粉瓦罐汤专门店，松江九亭中心）",
+      "score_objective": 66.0,
+      "score_diner": 66.0,
+      "score_taste": 66.0,
+      "score_endorsement": 48.0,
+      "soft_ad_penalty": 6.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"在九亭终于有人能吃到这么正宗的江西小吃了。真的好久没有在上海吃过这么正宗的南昌拌粉，特色瓦罐汤有五种口味可选、每天煨足6个小时，还有特色江西炒米粉一定要试试。\", \"dish\": \"南昌拌粉/瓦罐汤/江西炒米粉\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7682752919632900345\", \"date\": \"2026-09-07\"}, {\"quote\": \"九亭中心这家雪三娘把正宗江西炒米粉、拌粉还有瓦罐汤直接搬到上海，和在江西吃的一模一样。炒米粉都是猛火爆炒、米粉Q弹爽滑，肉和配菜很丰富，再喝一口瓦罐汤太满足了；瓦罐汤每天煨足6小时。\", \"dish\": \"江西炒米粉/瓦罐汤\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7682680403173854958\", \"date\": \"2026-09-07\"}], \"negative\": [\"新店开业活动引流、价格营销\"], \"soft_ad\": [\"开业活动价/晚了不一定有这价格营销\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      22,
+      51,
+      61,
+      74,
+      162,
+      163,
+      166,
+      227
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=雪三娘（江西炒粉拌粉瓦罐汤专门店，松江九亭中心） 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "胡恰·景德江西菜(新天地店)",
+    "fields": {
+      "name": "胡恰·景德江西菜(新天地店)",
+      "price_avg": 110,
+      "price_range": "¥95-130",
+      "address": "上海市黄浦区淮海中路333号新天地广场6楼01-02号",
+      "district": "黄浦区",
+      "business_area": "新天地",
+      "booking_method": "大众点评/电话",
+      "signature_dishes": [
+        "莲花血鸭",
+        "井冈山水笋烧豆皮",
+        "赣南橙皮铁锅黄牛肉",
+        "萍乡小炒黑猪肉"
+      ],
+      "investor_info": "胡恰·景德江西菜（上海景德镇/赣菜餐厅，新天地广场店）",
+      "score_objective": 74.0,
+      "score_diner": 76.0,
+      "score_taste": 74.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 6.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"胡恰·景德江西菜开在上海就能吃到正宗赣味。必点莲花血鸭，鲜嫩鸭肉配上辣到飞起的鸭血，地道赣味；井冈山水笋烧豆皮清爽水笋遇上香糯豆皮，简直上头。\", \"dish\": \"莲花血鸭/井冈山水笋烧豆皮\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=254733669\", \"date\": \"2026-01-13\"}, {\"quote\": \"上海江西菜天花板被我找到了。非遗莲花血鸭鸭肉脆嫩、裹着红亮鸭血酱汁，据说每天现杀现炒新鲜度爆炸；赣南橙皮铁锅黄牛肉橙皮清香中和辣度、黄牛肉嫩到biu汁带果香；萍乡小炒黑猪肉直接魂穿萍乡味道。\", \"dish\": \"非遗莲花血鸭/橙皮黄牛肉/萍乡小炒黑猪肉\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=207137113\", \"date\": \"2025-10-04\"}], \"negative\": [\"赣菜辣度高、不能吃辣需谨慎\", \"'天花板'类营销话术\"], \"soft_ad\": [\"携程'天花板/被我找到'探店话术\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      22,
+      65,
+      66,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=胡恰·景德江西菜（上海景德镇/赣菜餐厅，新天地广场店） 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "荣豫·河南菜(ONE Shanghai店)",
+    "fields": {
+      "name": "荣豫·河南菜(ONE Shanghai店)",
+      "price_avg": 120,
+      "price_range": "¥90-150",
+      "address": "石门一路299号OneShanghai商场L302",
+      "district": "静安区",
+      "business_area": "南京西路/张园",
+      "booking_method": "大众点评/到店",
+      "signature_dishes": [
+        "信阳南湾湖荆芥鱼头汤",
+        "信阳焖罐肉",
+        "水煎包",
+        "羊肉烩面",
+        "洛阳牛肉汤"
+      ],
+      "investor_info": "荣豫",
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 10.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"信阳南湾湖荆芥鱼头汤相当惊艳，奶白浓汤非常鲜美，汤头还有胡椒香气，搭配荆芥味道太美味。信阳焖罐肉、胡辣汤、水煎包，河南特色菜太地道，个人认为最好吃的河南菜。\", \"dish\": \"荆芥鱼头汤/焖罐肉\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=280148989\", \"date\": \"2026-08-17\"}, {\"quote\": \"南湾湖荆芥鱼头汤是一碗会唱歌的汤，奶白浓汤咕嘟咕嘟冒着热气，配上荆芥独有的清冽香气一口入魂。要封存30天的信阳焖罐肉，肉块炖得酥烂入味，是河南人刻在骨子里的香。刚出锅的水煎包最动人。\", \"dish\": \"荆芥鱼头汤/水煎包\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7629678922917588402\", \"date\": \"2026-04-17\"}], \"negative\": [\"新店2026年开业营销集中，'完全新荣记平替'模板文案\", \"90多代200代金券投放\", \"商场店，价格高于民间豫菜\"], \"soft_ad\": [\"新店探店集中投放\", \"'新荣记平替'宣传话术\", \"代金券团购\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      23,
+      51,
+      64,
+      72,
+      162,
+      163,
+      165,
+      166,
+      167
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "命中 3 项软广信号，建议人工复核是否剔除",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=荣豫 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "王凯阳河南水煎包",
+    "fields": {
+      "name": "王凯阳河南水煎包",
+      "price_avg": 8,
+      "price_range": "¥5-12",
+      "address": "康桥新苑小区西门",
+      "district": "浦东新区",
+      "business_area": "康桥",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "水煎包",
+        "胡辣汤",
+        "韭菜鸡蛋包"
+      ],
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 76.0,
+      "score_endorsement": 72.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"5毛水煎包、3元胡辣汤，新年不涨价。老板王凯阳38岁，4年前来上海开店，顾客基本都是河南老乡，主营早餐每天凌晨2点起床煮粥和汤、和面，凌晨4点迎客到中午12点结束。\", \"dish\": \"水煎包/胡辣汤\", \"source\": \"上游新闻\", \"url\": \"https://www.cqcb.com/news/15/2026-03-07/6087792.html\", \"date\": \"2026-03-07\"}, {\"quote\": \"被全网催开门的河南水煎包店老板已返沪，煎包还是1元2个，胡辣汤3元1碗。老板和家人忙着做开业准备，包子一块钱俩，胡辣汤3元一碗。\", \"dish\": \"水煎包\", \"source\": \"大河报/成都商报\", \"url\": \"http://static.cdsb.com/micropub/Articles/202603/a7cb7cd4d9db48fe610ed3326c904a62.html\", \"date\": \"2026-03-07\"}], \"negative\": [\"仅早餐到中午12点\", \"20平米小摊环境简陋\", \"远郊康桥，需专程\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      23,
+      55,
+      65,
+      68,
+      74,
+      162
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "南星汇新加坡海南鸡饭(静安店)",
+    "fields": {
+      "name": "南星汇新加坡海南鸡饭(静安店)",
+      "price_avg": 44,
+      "price_range": "¥35-55",
+      "address": "江宁路378号-1一层",
+      "district": "静安区",
+      "business_area": "静安寺",
+      "phone": "13764717581",
+      "booking_method": "无需预订",
+      "signature_dishes": [
+        "海南鸡饭",
+        "马拉拉茶",
+        "椰香鸡肉冬阴功汤面",
+        "蒜香蚝油青菜"
+      ],
+      "investor_info": "南星汇",
+      "score_objective": 74.0,
+      "score_diner": 72.0,
+      "score_taste": 72.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 4.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"南星汇新加坡海南鸡饭静安店江宁路378号一层，人均44，海南鸡、马拉拉茶、蒜香蚝油青菜、椰香鸡肉冬阴功汤面、三角包。Trip 5.0分。\", \"dish\": \"海南鸡饭\", \"source\": \"携程\", \"url\": \"https://you.ctrip.com/food/shanghai2/16036867-dianping193967341.html\", \"date\": \"2026-09-22\"}, {\"quote\": \"南星汇新加坡海南鸡饭多店连锁(凌空SOHO/长宁国际/新邻生活站/大宁音乐广场)，静安店江宁路378号一层人均44。\", \"dish\": \"海南鸡饭\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7545740340129844516\", \"date\": \"2025-09-03\"}], \"negative\": [\"新加坡海南鸡饭（南洋化）非海南本土正宗\", \"连锁多店标准化\"], \"soft_ad\": [\"多店5店通用团购\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      19,
+      57,
+      65,
+      74,
+      162,
+      163,
+      166
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "嗲嗲的椰子鸡(五角场百联又一城店)",
+    "fields": {
+      "name": "嗲嗲的椰子鸡(五角场百联又一城店)",
+      "price_avg": 140,
+      "price_range": "¥120-160",
+      "address": "五角场百联又一城8楼",
+      "district": "杨浦区",
+      "business_area": "五角场",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "椰子鸡",
+        "海胆童子鸡",
+        "海南文昌鸡"
+      ],
+      "investor_info": "嗲嗲的椰子鸡",
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 68.0,
+      "soft_ad_penalty": 6.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"嗲嗲的椰子鸡上海首店开在五角场百联又一城，椰子从海南运来，三个椰子一锅汤里面不加一滴水，配海南58天文昌鸡，开盖满满椰子清香，鸡肉蘸秘制酱汁。\", \"dish\": \"椰子鸡\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7470451563627154728\", \"date\": \"2025-02-12\"}, {\"quote\": \"椰子都是现砍的，全上海也就这家敢给椰子专做一个亭。海胆童子鸡是海南椰子鸡老大哥招牌，20个明星打卡过。\", \"dish\": \"海胆童子鸡\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7471225551676558650\", \"date\": \"2025-02-14\"}], \"negative\": [\"明星打卡营销重\", \"五角场商场店排队\"], \"soft_ad\": [\"20明星打卡宣传\", \"上海首店开业期探店集中\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      19,
+      62,
+      65,
+      72,
+      162,
+      163,
+      165,
+      166,
+      223
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "椰子不语椰子鸡火锅(凯德晶萃店)",
+    "fields": {
+      "name": "椰子不语椰子鸡火锅(凯德晶萃店)",
+      "price_avg": 110,
+      "price_range": "¥100-130",
+      "address": "徐家汇路268号凯德晶萃广场5楼",
+      "district": "黄浦区",
+      "business_area": "打浦桥",
+      "booking_method": "大众点评预订",
+      "signature_dishes": [
+        "椰子鸡火锅",
+        "海南文昌鸡",
+        "珍珠马蹄"
+      ],
+      "investor_info": "椰子不语",
+      "score_objective": 72.0,
+      "score_diner": 74.0,
+      "score_taste": 74.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 4.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"椰子不语凯德晶萃店，海南特色火锅专门店，汤底直接用两个新鲜椰青加五瓶农夫山泉，清淡鲜甜本味。徐家汇路268号凯德晶萃5楼。\", \"dish\": \"椰子鸡火锅\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=182309968\", \"date\": \"2025-08-09\"}, {\"quote\": \"海南原味椰青锅底是两只椰子和一瓶矿泉水，椰肉也放进去；半只海南文昌鸡150天，下锅5分钟就可以吃非常嫩，加入珍珠马蹄汤底淡淡椰味。\", \"dish\": \"海南文昌鸡\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=161959904\", \"date\": \"2025-06-20\"}], \"negative\": [\"商场连锁多店\", \"锅底清淡重口党可能嫌寡\"], \"soft_ad\": [\"'椰子自由'营销话术\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      19,
+      62,
+      65,
+      72,
+      162,
+      163,
+      165,
+      166,
+      223
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1060,
+    "name": "九宫殿热干面(来福士广场店)",
+    "fields": {
+      "name": "九宫殿热干面(来福士广场店)",
+      "price_avg": 34,
+      "price_range": "¥30-40",
+      "district": "黄浦区",
+      "booking_method": "现场/大众点评",
+      "signature_dishes": [
+        "黑金(黑芝麻)热干面",
+        "武汉蟹脚面",
+        "炸酱热干面",
+        "卤虎皮鸡蛋",
+        "藕盒"
+      ],
+      "investor_info": "九宫殿（上海首创黑金/黑芝麻热干面的武汉热干面品牌）",
+      "score_objective": 72.0,
+      "score_diner": 74.0,
+      "score_taste": 72.0,
+      "score_endorsement": 58.0,
+      "soft_ad_penalty": 10.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"炸酱热干面来了，武汉非常有名的小吃。热干面做出来以后必须得赶紧拌，不然一会就糊掉了。黑芝麻酱一定很香，满嘴流芝麻酱的感觉很久没有了，三口干完，平心而论味道还挺正宗的，久违的感觉。\", \"dish\": \"黑金(黑芝麻)热干面\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7198858038508309771\", \"date\": \"2023-02-11\"}, {\"quote\": \"现在只要39.9就能在人广来福士九宫殿吃武汉蟹脚面，每一份都是现点现炒，蟹脚肉质紧实饱满，面条有劲道、根根分明，吃在嘴里蟹香味包裹着浓浓的酱香味，口感有香辣和甜辣两种，再来罐汉口二厂汽水。\", \"dish\": \"武汉蟹脚面\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7304526843342785832\", \"date\": \"2023-11-23\"}], \"negative\": [\"商场6楼档口、座位有限\", \"19.9抵30/39.9蟹脚面团购挂车密集\", \"黑芝麻改良是否正宗见仁见智\"], \"soft_ad\": [\"19.9抵30代金券/39.9蟹脚面套餐大量探店、网易'黑金旋风'PR稿\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      51,
+      61,
+      70,
+      74,
+      155,
+      162,
+      163,
+      166
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "brand_group=九宫殿（上海首创黑金/黑芝麻热干面的武汉热干面品牌） 未经核实（brand_confirmed=false）"
+    ],
+    "_keep": [
+      "库地址更精确，保留库值: 西藏中路268号来福士广场B1层"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1061,
+    "name": "楚褚热干面(宝山万达店)",
+    "fields": {
+      "name": "楚褚热干面(宝山万达店)",
+      "price_avg": 22,
+      "price_range": "¥15-30",
+      "district": "宝山区",
+      "booking_method": "现场/小程序",
+      "signature_dishes": [
+        "肉酱热干面",
+        "牛肉现卤热干面",
+        "瓦罐汤",
+        "桂花酿",
+        "卤干子"
+      ],
+      "investor_info": "楚褚热干面（上海连锁武汉热干面，宝山万达/海乐城等店）",
+      "score_objective": 66.0,
+      "score_diner": 64.0,
+      "score_taste": 64.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 8.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"万达负一楼这家楚褚，明档厨房现煮现拌，现场还有多种瓦罐汤可以喝。面吃起来很有韧劲，搭配酱汁和小料就已经很满足，牛肉都是现卤的，酱汁浓郁、分量足、给的也是老大块了。\", \"dish\": \"肉酱热干面/牛肉现卤/瓦罐汤\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7670358173845635648\", \"date\": \"2026-08-05\"}, {\"quote\": \"（差评）吃的是肉酱热干面，上面没有麻酱哦，不喜欢麻酱拌面的味道；面默认微辣自己可以加辣，卤干子挺辣的，桂花酿有点寡淡。\", \"dish\": \"肉酱热干面/桂花酿\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=114939686\", \"date\": \"2025-01-15\"}], \"negative\": [\"肉酱款无麻酱、被非麻酱党差评\", \"桂花酿寡淡\", \"6.8元低价团购引流\"], \"soft_ad\": [\"6.8元大碗/低价团购挂车、商场档口\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      51,
+      61,
+      74,
+      155,
+      162,
+      163,
+      166
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=楚褚热干面（上海连锁武汉热干面，宝山万达/海乐城等店） 未经核实（brand_confirmed=false）"
+    ],
+    "_keep": [
+      "库地址更精确，保留库值: 宝山万达广场(一二八纪念路/共和新路)"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1064,
+    "name": "老荆味武汉美食",
+    "fields": {
+      "name": "老荆味武汉美食",
+      "price_avg": 25,
+      "price_range": "¥20-35",
+      "address": "上海市黄浦区延安东路700号港泰广场1楼",
+      "district": "黄浦区",
+      "booking_method": "现场/电话",
+      "signature_dishes": [
+        "原味热干面",
+        "三鲜豆皮",
+        "蛋酒",
+        "武汉小吃"
+      ],
+      "investor_info": "老荆味武汉美食（上海湖北小吃，港泰广场/华东理工店）",
+      "score_objective": 64.0,
+      "score_diner": 60.0,
+      "score_taste": 64.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 4.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"老荆味武汉美食，原味热干面，地址延安东路700号港泰广场1楼，营业时间10:00-21:00；另在徐汇区老沪闵路633号华东理工大学第一食堂设湖北菜馆分店，营业时间7:00-22:00。\", \"dish\": \"原味热干面\", \"source\": \"穷游网/电话邦\", \"url\": \"https://m.qyer.com/place/poi/V2UJa1FhBzVTZVI2Cm8/\", \"date\": \"2026-09-12\"}, {\"quote\": \"上海湖北菜网点收录老荆味-湖北菜馆，主营武汉热干面与湖北家常小吃，港泰广场店与华东理工大学食堂店均供应早餐，是沪上湖北人解馋的社区小店。\", \"dish\": \"武汉过早小吃\", \"source\": \"上海本地宝\", \"url\": \"http://sh.bendibao.com/wangdian/hubeicai/\", \"date\": \"2026-05-25\"}], \"negative\": [\"体量小、非网红店点评沉淀少\", \"精确菜品证据偏薄\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      51,
+      70,
+      74,
+      155,
+      161,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "brand_group=老荆味武汉美食（上海湖北小吃，港泰广场/华东理工店） 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "来菜·湖北藕汤(月星环球港店)",
+    "fields": {
+      "name": "来菜·湖北藕汤(月星环球港店)",
+      "price_avg": 110,
+      "price_range": "¥95-130",
+      "address": "上海市普陀区月星环球港4楼",
+      "district": "普陀区",
+      "business_area": "环球港/中山公园",
+      "booking_method": "大众点评/电话/可预订",
+      "signature_dishes": [
+        "铫子筒骨煨藕汤",
+        "烧吊水鮰鱼",
+        "三镇干煸藕丝",
+        "沔阳排骨粉蒸肉",
+        "老武汉热干面",
+        "珍珠藕圆"
+      ],
+      "investor_info": "来菜（火爆全国的湖北头牌藕汤品牌，自有2000亩洪湖藕田，上海首店环球港）",
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 80.0,
+      "score_endorsement": 70.0,
+      "soft_ad_penalty": 8.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"来菜上海头一家店就在环球港4楼，门口明档可以看到每天慢煨的筒骨藕汤，每锅都要煨足3个半小时，用的是湖北洪湖的粉藕、取中间两到三节来煨汤，他们家自有千余亩藕田。粉藕是软糯拉丝的，筒骨也相当鲜嫩，这道头牌要给夯中夯。\", \"dish\": \"铫子筒骨煨藕汤\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7656729559124401073\", \"date\": \"2026-06-29\"}, {\"quote\": \"招牌必点洪湖藕汤入口很浓厚的肉香味，藕是香甜的，每锅足足慢熬三个多小时，筒骨炖得很软；家烧吊水鮰鱼是新鲜现杀的，鱼肉特别嫩很Q弹；三镇干煸藕丝量蛮大、酸酸辣辣干而不腻。\", \"dish\": \"洪湖藕汤/烧吊水鮰鱼/三镇干煸藕丝\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7660784917244472826\", \"date\": \"2026-07-10\"}], \"negative\": [\"排队200桌、等位久\", \"商场店、新店开业营销密集\", \"上海人从小吃糖藕长大、对粉藕接受度见仁见智\"], \"soft_ad\": [\"开业排队200桌/全网博主排队2小时探店集中、'湖北省汤'包装\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      61,
+      65,
+      66,
+      72,
+      157,
+      162,
+      163,
+      165,
+      167,
+      239
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=来菜（火爆全国的湖北头牌藕汤品牌，自有2000亩洪湖藕田，上海首店环球港） 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1065,
+    "name": "莲餐厅·湖北菜(中山公园店)",
+    "fields": {
+      "name": "莲餐厅·湖北菜(中山公园店)",
+      "price_avg": 90,
+      "price_range": "¥80-110",
+      "address": "上海市长宁区长宁路641号(长宁区政府隔壁，江苏路街道)",
+      "district": "长宁区",
+      "booking_method": "大众点评/电话",
+      "signature_dishes": [
+        "洪湖莲藕排骨汤",
+        "荷香粉蒸肉",
+        "武汉热干面",
+        "莲藕夹",
+        "三鲜豆皮"
+      ],
+      "investor_info": "莲餐厅（上海开了十多年的湖北菜老牌，长宁排队王）",
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 76.0,
+      "score_endorsement": 62.0,
+      "soft_ad_penalty": 4.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"在上海这家开了十多年的湖北菜馆，是我心中白月光，吃了N次总结点单攻略闭眼跟着点。洪湖莲藕排骨汤招牌必点，粉糯到能拉丝的洪湖莲藕吸饱了浓郁肉香，汤头鲜掉眉毛，单喝暖心、泡饭更绝。\", \"dish\": \"洪湖莲藕排骨汤\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=183226261\", \"date\": \"2025-08-11\"}, {\"quote\": \"中山公园的莲餐厅很正宗，湖北人集合。莲藕排骨汤一定要点，里面大块粉糯的莲藕自带清香、超级拉丝，排骨炖得很久、肉很容易掉下来，喝起来不浓不淡刚刚好；荷香粉蒸肉也是招牌。武汉热干面碱面裹满醇厚麻酱，萝卜丁花生碎增香。\", \"dish\": \"莲藕排骨汤/荷香粉蒸肉/热干面\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7309332845871271180\", \"date\": \"2023-12-06\"}], \"negative\": [\"长宁排队王、饭点等位\", \"店面不大、高峰嘈杂\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      51,
+      61,
+      65,
+      66,
+      72,
+      157,
+      162,
+      163,
+      165
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=莲餐厅（上海开了十多年的湖北菜老牌，长宁排队王） 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "靓靓蒸虾(定西路上海首店)",
+    "fields": {
+      "name": "靓靓蒸虾(定西路上海首店)",
+      "price_avg": 160,
+      "price_range": "¥140-190",
+      "address": "上海市长宁区定西路737号明旺大楼1楼(近愚园路)",
+      "district": "长宁区",
+      "business_area": "定西路/中山公园",
+      "booking_method": "大众点评/电话/可预订",
+      "signature_dishes": [
+        "招牌蒸虾",
+        "油焖大虾",
+        "靓靓凉面",
+        "蒜蓉金汤虾",
+        "卤武昌鱼"
+      ],
+      "investor_info": "靓靓蒸虾（武汉17年头牌小龙虾，7年大众点评必吃榜，上海首店定西路）",
+      "score_objective": 82.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 82.0,
+      "soft_ad_penalty": 8.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"老味油焖大虾，这钳子里这么大块肉，咬得好完整，酱汁是我喜欢的，好吃到连虾壳都不想放过，香辣里还带着一点回甜，酱汁调得特别好很香；招牌蒸虾做法很考验虾的品质，湖北清水养殖7-9钱大虾，蒸后腮白肉嫩，蘸秘制酱汁鲜甜。\", \"dish\": \"油焖大虾/招牌蒸虾\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7616743850711872182\", \"date\": \"2026-03-13\"}, {\"quote\": \"武汉火了17年的靓靓蒸虾，3月份就能吃到这么大的虾，腮白底板也很干净；上海首店凭实力蝉联7年大众点评必吃榜、2025小龙虾十大品牌，落户定西路美食街，连接愚园路/武夷路/新华路历史街区。\", \"dish\": \"招牌蒸虾\", \"source\": \"Trip.com\", \"url\": \"https://my.trip.com/moments/detail/shanghai-2-145438855\", \"date\": \"2026-09-19\"}], \"negative\": [\"虾价随季节上浮、聚餐人均高\", \"38代100代金券引流、团购营销\"], \"soft_ad\": [\"38代100代金券/蒸虾节营销、必吃榜背书\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      51,
+      64,
+      72,
+      156,
+      163,
+      164,
+      165,
+      166
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "一棠龙虾·王牌虾球(苏河湾万象天地店)",
+    "fields": {
+      "name": "一棠龙虾·王牌虾球(苏河湾万象天地店)",
+      "price_avg": 150,
+      "price_range": "¥130-180",
+      "address": "上海市静安区苏河湾万象天地(商场内)",
+      "district": "静安区",
+      "business_area": "苏河湾",
+      "booking_method": "大众点评/现场",
+      "signature_dishes": [
+        "油焖大虾",
+        "王牌虾球",
+        "清蒸虾",
+        "蒜蓉虾"
+      ],
+      "investor_info": "一棠龙虾（连续十几年武汉必吃榜名店，武汉人尽皆知的龙虾名片，上海苏河湾店）",
+      "score_objective": 74.0,
+      "score_diner": 72.0,
+      "score_taste": 74.0,
+      "score_endorsement": 68.0,
+      "soft_ad_penalty": 4.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"早就听说这家店，今天终于来拔草。一棠龙虾是连续十几年荣登武汉必吃榜的名店、武汉人尽皆知的龙虾名片，现在开到上海。这家店蛮低调的没什么营销，环境很好，露天座位可以听现场live、空调够足，晚上完全不会热。油焖大虾一定要冲，大火炒制油香四溢、好吃到舔手指。\", \"dish\": \"油焖大虾\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=183015673\", \"date\": \"2025-08-10\"}, {\"quote\": \"一棠龙虾是在武汉火了20年的老品牌，油焖大虾用武汉传统麻辣配方，每只虾都去头开背抽虾线，干净又入味，酱汁渗透到小龙虾的每一个部位，吃一口就让人欲罢不能；吃小龙虾这么多年就数一棠创意多，榴莲虾球、油焖大虾虾肉Q弹新鲜。\", \"dish\": \"油焖大虾/榴莲虾球\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=162381199\", \"date\": \"2025-06-22\"}], \"negative\": [\"Trip.com点评称B2层餐饮区、店内灯光不好、生意平平\", \"虾价随季节上浮、聚餐人均高\"], \"soft_ad\": [\"团购套餐(招牌龙虾双人餐)在苏河湾夜经济活动中出现\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      64,
+      72,
+      156,
+      163,
+      164
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "brand_group=一棠龙虾（连续十几年武汉必吃榜名店，武汉人尽皆知的龙虾名片，上海苏河湾店） 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "蔡林记·湖北小馆(真如环宇城MAX店)",
+    "fields": {
+      "name": "蔡林记·湖北小馆(真如环宇城MAX店)",
+      "price_avg": 38,
+      "price_range": "¥30-45",
+      "address": "上海市普陀区铜川路715号真如环宇城MAX购物中心B2层B2004单元",
+      "district": "普陀区",
+      "business_area": "真如",
+      "booking_method": "现场/大众点评",
+      "signature_dishes": [
+        "黑芝麻(黑酱)热干面",
+        "三鲜豆皮",
+        "筒子骨煨藕汤",
+        "鱼头泡饭",
+        "蛋酒"
+      ],
+      "investor_info": "蔡林记（武汉95年热干面老字号，黑芝麻黑酱派，上海多家小馆）",
+      "score_objective": 76.0,
+      "score_diner": 76.0,
+      "score_taste": 74.0,
+      "score_endorsement": 72.0,
+      "soft_ad_penalty": 6.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"未见热干面先闻芝麻香，不同于常见的黄色芝麻酱，蔡林记是典型的黑酱派，单纯用黑芝麻为原料，浓郁细腻的黑芝麻特有的焦香和醇厚，让热干面的谷物香气更足，是老武汉人偏爱的那味儿；三鲜豆皮金黄蛋皮煎得微焦，内馅糯米、香菇和肉丁搭配刚好。\", \"dish\": \"黑芝麻热干面/三鲜豆皮\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=183226261\", \"date\": \"2024-11-04\"}, {\"quote\": \"藕汤火候十足、藕特别粉糯、汤头浓郁，一个人喝了3碗；炸酱热干面很筋道、麻酱很香；三鲜豆皮下面是肉丁香菇丁糯米，吃起来有点像粽子。\", \"dish\": \"筒子骨煨藕汤/炸酱热干面/三鲜豆皮\", \"source\": \"携程笔记\", \"url\": \"https://you.ctrip.com/food/2/5009732.html\", \"date\": \"2024-04-16\"}], \"negative\": [\"新店开业排队40分钟\", \"69代100团购券营销\", \"商场档口\"], \"soft_ad\": [\"69代100代金券/开业排队探店集中\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      51,
+      61,
+      70,
+      74,
+      155,
+      162,
+      163,
+      166
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1059,
+    "name": "蔡记炸酱热干面(昌里路店)",
+    "fields": {
+      "name": "蔡记炸酱热干面(昌里路店)",
+      "price_avg": 21,
+      "price_range": "¥18-28",
+      "address": "上海市浦东新区昌里路247-3号",
+      "district": "浦东新区",
+      "booking_method": "现场/电话",
+      "signature_dishes": [
+        "招牌炸酱热干面",
+        "老通城三鲜豆皮",
+        "洪湖排骨莲藕汤",
+        "蛋酒",
+        "桂花糊米酒",
+        "爆椒牛肚热干面"
+      ],
+      "investor_info": "蔡记炸酱热干面（上海本土武汉热干面小店）",
+      "score_objective": 70.0,
+      "score_diner": 70.0,
+      "score_taste": 70.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 2.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"招牌炸酱热干面、老通城三鲜豆皮、蛋酒、爆椒牛肚热干面、洪湖排骨莲藕汤、虎皮蛋、桂花糊米酒、兰花干，过早品种齐全，人均21。\", \"dish\": \"炸酱热干面/三鲜豆皮/洪湖排骨莲藕汤\", \"source\": \"携程美食\", \"url\": \"https://you.ctrip.com/food/2/5009732.html\", \"date\": \"2026-09-18\"}, {\"quote\": \"点的牛肚热干面加份蛋酒，蛋酒就是酒酿冲蛋有点甜，小泡菜免费拌一拌全是芝麻酱的香气，面条是粗的碱水面和麻酱搭配正正好好；我点的微辣真的好辣好辣。这家开在昌里路已16年，老板娘曾被人气美食、淘最上海报道，是大众点评热干面菜品榜常客。\", \"dish\": \"牛肚热干面/蛋酒/三鲜豆皮\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7596252607044378730\", \"date\": \"2026-01-17\"}], \"negative\": [\"社区小店、环境简陋\", \"微辣偏辣、不能吃辣需谨慎\", \"昌里路搬迁后位置略偏\"], \"soft_ad\": [\"老板娘上人气美食/淘最上海有媒体PR\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      51,
+      61,
+      74,
+      155,
+      161,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "brand_group=蔡记炸酱热干面（上海本土武汉热干面小店） 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "糖豆(新嘉中心店)",
+    "fields": {
+      "name": "糖豆(新嘉中心店)",
+      "price_avg": 90,
+      "price_range": "¥80-110",
+      "address": "上海市浦东新区新嘉中心(商场内)",
+      "district": "浦东新区",
+      "business_area": "新嘉中心",
+      "booking_method": "大众点评/现场",
+      "signature_dishes": [
+        "湖北粉藕汤",
+        "家烧有机鲜鮰鱼",
+        "武汉黑鸭煲",
+        "辣椒炒肉",
+        "热干面"
+      ],
+      "investor_info": "糖豆（上海新嘉中心湖北家常菜馆，明档瓦罐现煨）",
+      "score_objective": 74.0,
+      "score_diner": 76.0,
+      "score_taste": 74.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 8.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"招牌湖北粉藕汤是湖北省汤，猪筒骨加洪湖藕每天现炖3个半小时，全是文火慢炖、莲藕炖到起沙、加一点黑胡椒提鲜，粉糯拉丝一抿就化；再尝鮰鱼，鱼肉鲜美滑嫩没有土腥味特别下饭。藕汤一定要泡饭，一勺汤一勺饭，汤非常香浓。\", \"dish\": \"湖北粉藕汤/家烧鮰鱼\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7665267734791346612\", \"date\": \"2026-07-22\"}, {\"quote\": \"进门明档厨房摆满一整排煨藕的瓦罐，武汉特色黑鸭煲香辣中带一点甜味、鸭肉紧实不柴嗦完手指都要舔；还有辣椒炒肉、手剥小龙虾和热干面，道道都是下饭神器，跟到了碳水天堂一样。\", \"dish\": \"武汉黑鸭煲/辣椒炒肉\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7666492146863074489\", \"date\": \"2026-07-25\"}], \"negative\": [\"78代100代金券新店开业营销、商场店、开业探店集中\"], \"soft_ad\": [\"78代100全场通用/开业大量探店、'省汤'包装\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      61,
+      65,
+      72,
+      162,
+      163,
+      166,
+      239
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=糖豆（上海新嘉中心湖北家常菜馆，明档瓦罐现煨） 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "楚缘·经典鄂菜(宝山闿和阳光广场店)",
+    "fields": {
+      "name": "楚缘·经典鄂菜(宝山闿和阳光广场店)",
+      "price_avg": 85,
+      "price_range": "¥75-100",
+      "address": "上海市宝山区闿和阳光广场(商场内)",
+      "district": "宝山区",
+      "business_area": "宝山/大华",
+      "booking_method": "大众点评/现场",
+      "signature_dishes": [
+        "洪湖莲藕排骨汤",
+        "洪湖小麻鸭",
+        "干锅牛蛙",
+        "经典鄂菜"
+      ],
+      "investor_info": "楚缘经典鄂菜（上海宝山湖北家常菜馆）",
+      "score_objective": 66.0,
+      "score_diner": 68.0,
+      "score_taste": 66.0,
+      "score_endorsement": 48.0,
+      "soft_ad_penalty": 6.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"宝山区闿和阳光广场楚缘经典鄂菜，不用去湖北在上海也能吃到正宗湖北菜。568元在大宝山吃到13道正宗湖北菜：湖北代表洪湖莲藕汤莲藕又香又糯、排骨炖得特别入味；洪湖小麻鸭色香味俱全、沾满汤汁的鸭肉吃起来特别厚实；还有干锅牛蛙。\", \"dish\": \"洪湖莲藕排骨汤/洪湖小麻鸭\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7229354988034624772\", \"date\": \"2023-05-04\"}, {\"quote\": \"上海湖北菜网点收录多家经典鄂菜：宝山区双城路678号经典鄂菜(宝山店)、宝山区真大路349号楚味农庄，主打家庭聚会朋友聚餐、洪湖莲藕汤与武昌鱼等鄂式家常，是沪上湖北老乡周末聚餐据点。\", \"dish\": \"经典鄂菜/武昌鱼\", \"source\": \"上海本地宝\", \"url\": \"http://m.sh.bendibao.com/wangdian/hubeicai/\", \"date\": \"2026-08-22\"}], \"negative\": [\"团购套餐引流、宝山远郊商场店、堂食原话沉淀一般\"], \"soft_ad\": [\"568元13道套餐团购挂车\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      24,
+      61,
+      64,
+      65,
+      72,
+      162,
+      163,
+      166
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "brand_group=楚缘经典鄂菜（上海宝山湖北家常菜馆） 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "长安宴(陕西大厦·陕西驻沪办店)",
+    "fields": {
+      "name": "长安宴(陕西大厦·陕西驻沪办店)",
+      "price_avg": 78,
+      "price_range": "¥70-90",
+      "address": "上海市静安区延安中路658号陕西大厦4楼",
+      "district": "静安区",
+      "business_area": "淮海中路/南京西路",
+      "phone": "02152624866",
+      "booking_method": "电话/到店，饭点排队建议错峰",
+      "signature_dishes": [
+        "羊肉泡馍",
+        "腊汁肉夹馍",
+        "岐山臊子面",
+        "葫芦鸡"
+      ],
+      "investor_info": "陕西驻沪办（陕西商务酒店）",
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 82.0,
+      "score_endorsement": 85.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"西安泡馍汤头浓郁料足、自己掰馍体验感满分；腊汁肉夹馍堪比回民街老店、饼皮酥脆肉香爆棚；朋友尝完泪目说比在西安吃的还正宗。店里还能点到少见的岐山臊子面、葫芦鸡，是陕西老乡打卡圣地。中午饭点可能需要排队。\", \"dish\": \"羊肉泡馍/腊汁肉夹馍/岐山臊子面\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=211525595\", \"date\": \"2025-10-11\"}, {\"quote\": \"临近下午1点，位于陕西大厦的长安宴依旧火爆异常，足足排了半个小时队才吃上正宗西安小吃。这里是陕西住沪办事处，餐厅附属于酒店，装修一眼穿越到长安。\", \"dish\": \"西安小吃/泡馍\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=136316237\", \"date\": \"2025-04-03\"}], \"negative\": [\"饭点排队半小时起\", \"驻沪办附楼环境朴素非商务排场\", \"携程另有笔记写“陕西南路5号2楼”与官方“延安中路658号4楼”地址写法不一致，已以高德/本地宝为准\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-23",
+      "location": "SRID=4326;POINT(121.461669 31.224361)"
+    },
+    "cids_add": [
+      12,
+      51,
+      65,
+      72,
+      137,
+      162,
+      163,
+      167
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 974,
+    "name": "子午路张记肉夹馍(思南路店)",
+    "fields": {
+      "name": "子午路张记肉夹馍(思南路店)",
+      "price_avg": 52,
+      "price_range": "¥40-60",
+      "address": "上海市黄浦区思南路7号",
+      "district": "黄浦区",
+      "booking_method": "到店排队，出餐快",
+      "signature_dishes": [
+        "招牌腊汁肉夹馍",
+        "秦镇米皮",
+        "油泼面",
+        "葫芦头泡馍",
+        "羊肉水盆"
+      ],
+      "investor_info": "子午路张记（西安始于1990，非遗肉夹馍技艺，西安总店黑珍珠一钻）",
+      "score_objective": 85.0,
+      "score_diner": 75.0,
+      "score_taste": 82.0,
+      "score_endorsement": 78.0,
+      "soft_ad_penalty": 3.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"西安肉夹馍讲“铁圈虎背菊花心”，子午路张记现场打馍，这东西在陕西之外很少见，能现场打馍说明师傅是陕西过来的；新炕出来的馍必须赶紧吃，酥的。\", \"dish\": \"腊汁肉夹馍\", \"source\": \"抖音/携程西安老字号探店\", \"url\": \"https://www.iesdouyin.com/share/video/7645693929945787109\", \"date\": \"2026-05-30\"}, {\"quote\": \"上海分店装潢精致，公认“真材实料”；招牌肉夹馍肥而不腻瘦而不柴，肉入老汤文火熬煮二十余小时、混合二十多种香料，鲜香四溢（该品牌曾登韩国美食节目《街头大胃王》）。\", \"dish\": \"招牌肉夹馍/秦镇米皮\", \"source\": \"Trip.com moments\", \"url\": \"https://hk.trip.com/moments/detail/shanghai-2-142144116/\", \"date\": \"2026-05-21\"}], \"negative\": [\"上海多店扩张（思南/人民广场/花木/龙之梦），各店评分分化：思南4.7、人民广场4.5、花木4.0\", \"商场/景区分店品控一致性需到店核验\"], \"soft_ad\": [\"连锁品牌抖音团购套餐投放较多\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23",
+      "location": "SRID=4326;POINT(121.466128 31.219349)"
+    },
+    "cids_add": [
+      12,
+      51,
+      65,
+      67,
+      74,
+      137,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1342,
+    "name": "伊祥·敦煌楼(中山北路店)",
+    "fields": {
+      "name": "伊祥·敦煌楼(中山北路店)",
+      "price_avg": 65,
+      "price_range": "¥55-85",
+      "address": "上海市普陀区中山北路2150号-8（镇坪路地铁站3号口步行120米）",
+      "district": "普陀区",
+      "booking_method": "到店排队，门面常年排队",
+      "signature_dishes": [
+        "毛细牛肉拉面",
+        "大盘鸡",
+        "红柳羊肉串",
+        "兰州酿皮",
+        "烤羊排",
+        "回族油香"
+      ],
+      "investor_info": "伊祥·敦煌楼",
+      "score_objective": 88.0,
+      "score_diner": 85.0,
+      "score_taste": 86.0,
+      "score_endorsement": 88.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"兰州拉面要做到“一清、二白、三红、四绿、五黄”——牛肉汤色清、萝卜洁白、辣椒鲜红、香菜蒜苗翠绿、面条白里透黄，上海能做到这五条标准的恐怕仅此一家。\", \"dish\": \"牛肉拉面\", \"source\": \"上海本地宝《55碗面》\", \"url\": \"http://m.sh.bendibao.com/tour/160887_4.html\", \"date\": \"2016-05-10\"}, {\"quote\": \"镇坪路上小兰州，敦煌楼就是魔都兰拉界的大宗师。回族油香有种、缺失已久的麦香；看似其貌不扬，咬开非常好吃。\", \"dish\": \"回族油香/牛肉拉面\", \"source\": \"上海热线\", \"url\": \"https://m.online.sh.cn/hi/content/2020-03/25/content_9467608_9.htm\", \"date\": \"2020-03-25\"}], \"negative\": [\"门面简约朴实、饭点/周末常年排队\", \"中午14:00后、晚22:00打烊，时段紧凑\", \"另有中山公园分店，勿与总店混\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-23",
+      "location": "SRID=4326;POINT(121.429994 31.246846)"
+    },
+    "cids_add": [
+      12,
+      51,
+      63,
+      65,
+      72,
+      139,
+      162,
+      163,
+      164,
+      165,
+      167
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "宁夏印象·盐池滩羊肉体验店(江宁路店)",
+    "fields": {
+      "name": "宁夏印象·盐池滩羊肉体验店(江宁路店)",
+      "price_avg": 130,
+      "price_range": "¥120-160",
+      "address": "上海市普陀区江宁路1580号",
+      "district": "普陀区",
+      "business_area": "长寿路/江宁路",
+      "phone": "18521517955",
+      "booking_method": "电话/到店，周末排队",
+      "signature_dishes": [
+        "手抓羊肉",
+        "泉水羊肉汤锅",
+        "西夏烤羊排",
+        "滩羊手撕羊头",
+        "八宝茶"
+      ],
+      "investor_info": "宁夏印象",
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 82.0,
+      "soft_ad_penalty": 5.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"宁夏直供盐池滩羊，西夏烤羊排外焦里嫩，羊肉汤锅鲜而不膻，是长寿路商圈吃西北羊肉的首选；连续多年上榜必吃榜。\", \"dish\": \"西夏烤羊排/泉水羊肉汤\", \"source\": \"上海普陀区政府官网\", \"url\": \"https://www.shpt.gov.cn/bm-ms/20260706/971209.html\", \"date\": \"2026-07-07\"}, {\"quote\": \"江宁路上这家宁夏印象应可在上海排前三的西北菜，主打宁夏滩羊，一进门大厅就摆满宁夏特产；作为西北人流口水，生意是真的好。炭烤羊排和手抓羊排做得特别地道，滩羊肉质鲜嫩多汁，配一大杯八宝茶绝佳。\", \"dish\": \"手抓羊排/炭烤羊排/八宝茶\", \"source\": \"抖音/Trip徐家汇店食评\", \"url\": \"https://hk.trip.com/restaurant/china/shanghai/detail/restaurant-145754415/\", \"date\": \"2026-08-14\"}], \"negative\": [\"抖音大量“200多双人餐/年终活动”团购挂车内容\", \"商场/宴会式装修，本地老饕认为偏游客/商务接待\"], \"soft_ad\": [\"抖音达人探店集中+团购套餐挂车\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      12,
+      62,
+      65,
+      72,
+      140,
+      162,
+      163,
+      166,
+      167
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 981,
+    "name": "宁夏马记彭浦清真饭店",
+    "fields": {
+      "name": "宁夏马记彭浦清真饭店",
+      "price_avg": 91,
+      "price_range": "¥80-110",
+      "address": "上海市静安区汾西路753号（近平顺路）",
+      "district": "静安区",
+      "business_area": "彭浦新村/共康",
+      "booking_method": "到店，供应早餐",
+      "signature_dishes": [
+        "手抓羊肉",
+        "羊肉串",
+        "羊蝎子锅",
+        "马记烤羊排",
+        "烤包子",
+        "自制老酸奶"
+      ],
+      "investor_info": "宁夏马记",
+      "score_objective": 80.0,
+      "score_diner": 72.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"本店特色：羊肉串、手抓羊肉、羊蝎子锅、马记烤羊排、大盘鸡、牛肉煎包、西北凉皮、马记自制老酸奶、特色烤馕、手抓羊排、泉水羊肉、烤包子、宁夏特色炒面、回乡莜面皮、孜然羊肉——老牌清真馆子全菜单。\", \"dish\": \"手抓羊肉/羊蝎子锅/烤包子\", \"source\": \"携程美食商户页\", \"url\": \"https://you.ctrip.com/food/shanghai2/4995088.html\", \"date\": \"2026-09-21\"}, {\"quote\": \"（本地宝标注）供应早餐、随便吃吃、是老字号、休闲小憩；位于原闸北区汾西路，社区清真老馆，手抓羊肉/羊肉串/羊蝎子/牛肉煎包是老客日常。\", \"dish\": \"手抓羊肉/牛肉煎包\", \"source\": \"上海本地宝\", \"url\": \"http://sh.bendibao.com/wangdian/dian/4087776.shtm\", \"date\": \"2026-09-02\"}], \"negative\": [\"地处彭浦新村非市中心，环境老旧\", \"社区老店，服务非标准化\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-23",
+      "location": "SRID=4326;POINT(121.451862 31.31328)"
+    },
+    "cids_add": [
+      12,
+      51,
+      63,
+      65,
+      72,
+      140,
+      161,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "brand_group=宁夏马记 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "大师宣羊·鲜肉烧烤·小酒馆(上海影城店)",
+    "fields": {
+      "name": "大师宣羊·鲜肉烧烤·小酒馆(上海影城店)",
+      "price_avg": 110,
+      "price_range": "¥100-140",
+      "address": "上海市徐汇区法华镇路218号（番禺路交叉口）",
+      "district": "徐汇区",
+      "business_area": "新华路/上海影城",
+      "booking_method": "到店排队，晚市夜宵为主",
+      "signature_dishes": [
+        "现穿鲜羊肉串",
+        "炙烤大油边",
+        "炭烤鲜羊排",
+        "砂锅香辣羊肉煲",
+        "羊腿烤物"
+      ],
+      "investor_info": "原西北郎烧烤（2001虹口足球场/2000吴江路起家，王自文团队）",
+      "score_objective": 72.0,
+      "score_diner": 75.0,
+      "score_taste": 76.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 5.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"当年看球必撸的西北郎烧烤是青春回忆，升级版大师宣羊是真·西北烤肉天花板。每日现穿鲜羊肉串、炭火滋滋肉汁爆炸；炙烤大油边外酥里嫩；建议3-4人。地址新华路街道法华镇路218号（番禺路交叉口）。\", \"dish\": \"现穿鲜羊肉串/炙烤大油边\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=290477699\", \"date\": \"2026-04-09\"}, {\"quote\": \"2001年虹口足球场那家西北郎，25年后带着新名字回到淮海路/上海影城，还是原来原班人马，炭火香气、老底子烧烤摊烟火气；晚上10点半店里依旧人满为患，好多外国人过来吃。\", \"dish\": \"炭火烤串\", \"source\": \"抖音探店\", \"url\": \"https://www.iesdouyin.com/share/video/7666804553505517907\", \"date\": \"2026-07-26\"}], \"negative\": [\"改名“大师宣羊”后情怀营销/抖音达人内容密集\", \"深夜营业、外摆区，环境吵闹\", \"另开大华分店，品控需核\"], \"soft_ad\": [\"“爷青回/情怀”主题探店轰炸\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      12,
+      63,
+      65,
+      78,
+      163,
+      164
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1015,
+    "name": "岚·山野云南特色菜(愚园路CP静安店)",
+    "fields": {
+      "name": "岚·山野云南特色菜(愚园路CP静安店)",
+      "price_avg": 110,
+      "price_range": "¥90-130",
+      "address": "愚园路1398号CP静安6楼",
+      "district": "静安区",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "傣味油焖鸡",
+        "版纳百香果野佐料煮鱼",
+        "黑松露牛肝菌云朵蛋饭",
+        "石屏包浆豆腐",
+        "云南菌汤魔法锅",
+        "甲马罐罐米线"
+      ],
+      "investor_info": "岚山野云南菜",
+      "score_objective": 72.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 10.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"点的版纳百香果野佐料煮鱼、傣味油焖鸡、黑松露牛肝菌云朵蛋饭、香椿白肉卷都是用云南特色好食材。版纳百香果佐料煮鱼果香味和鱼的鲜香直往鼻子里钻，酸辣下饭；铜锅油焖鸡滑嫩鸡肉加黏糊糊土豆泥。\", \"dish\": \"傣味油焖鸡\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7626601330027884209\", \"date\": \"2026-04-09\"}, {\"quote\": \"石屏包浆豆腐内心嫩得像在吃豆腐花，搭配两种蘸料，湿料香味重干料辣得香；蒜香茅炸排骨一咬就脱骨，香料味重。\", \"dish\": \"石屏包浆豆腐\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=287697936\", \"date\": \"2026-04-03\"}], \"negative\": [\"59.9代100代金券团购营销密集\", \"斥资300万装修偏网红打卡\", \"菜品颜值高但定价有营销空间\"], \"soft_ad\": [\"抖音集中推送代金券(2026-04多篇)\", \"'云南人打飞的来吃'模板文案\", \"画展+星宝公益活动包装\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      65,
+      66,
+      72,
+      145,
+      162,
+      163,
+      165,
+      166,
+      167,
+      241
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "命中 3 项软广信号，建议人工复核是否剔除",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=岚山野云南菜 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "泓0871臻选云南菜·寻鲜宴(上海北外滩店)",
+    "fields": {
+      "name": "泓0871臻选云南菜·寻鲜宴(上海北外滩店)",
+      "price_avg": 180,
+      "price_range": "¥150-220",
+      "address": "东大名路北外滩来福士广场",
+      "district": "虹口区",
+      "business_area": "北外滩",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "宜良松针小刀鸭",
+        "诺邓三年酵香火腿手撕乳扇",
+        "原味蒸馏汽锅鸡",
+        "昭通炭烤雪花牛肉串",
+        "老昆明酱肉破酥包",
+        "徐家渡香肠拼诺邓盐泥肉"
+      ],
+      "investor_info": "泓0871",
+      "score_objective": 75.0,
+      "score_diner": 80.0,
+      "score_taste": 82.0,
+      "score_endorsement": 65.0,
+      "soft_ad_penalty": 5.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"宜良松针小刀鸭招牌必点，小麻鸭皮脆脆滴肉香香滴；诺邓三年酵香火腿手撕乳扇蜜瓜好吃；原味蒸馏汽锅鸡鸡汤鲜香；昭通炭烤雪花牛肉串一定要点。\", \"dish\": \"宜良松针小刀鸭\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=244168870\", \"date\": \"2025-12-20\"}, {\"quote\": \"鹅油过桥米线、老昆明酱肉破酥包热乎乎皮薄馅多，香肠比火腿片好吃。寻鲜宴主打云南原产地食材。\", \"dish\": \"老昆明酱肉破酥包\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=244168870\", \"date\": \"2025-12-20\"}], \"negative\": [\"北外滩商场店价位偏高\", \"寻鲜宴套餐制，单点选择有限\"], \"soft_ad\": [\"'臻选/寻鲜宴'定位包装\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      65,
+      66,
+      72,
+      145,
+      162,
+      163,
+      165,
+      167,
+      241
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "brand_group=泓0871 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "云海肴(上海闸北大悦城店)",
+    "fields": {
+      "name": "云海肴(上海闸北大悦城店)",
+      "price_avg": 120,
+      "price_range": "¥100-140",
+      "address": "共和新路1878号大宁国际商业广场",
+      "district": "静安区",
+      "business_area": "大宁",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "招牌汽锅鸡",
+        "爆炒黑牛肝菌",
+        "普洱茶香酥虾",
+        "茉莉花炒蛋",
+        "香茅草烤罗非鱼"
+      ],
+      "investor_info": "云海肴",
+      "score_objective": 78.0,
+      "score_diner": 75.0,
+      "score_taste": 75.0,
+      "score_endorsement": 70.0,
+      "soft_ad_penalty": 3.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"招牌汽锅鸡88元是镇店之宝，全程不放一滴水三个小时蒸汽回流而成，汤汁浓郁鲜香无比；普洱茶香酥虾69元虾挺大个，茉莉花炒蛋清爽。\", \"dish\": \"招牌汽锅鸡\", \"source\": \"Trip.com\", \"url\": \"https://hk.trip.com/restaurant/china/shanghai/detail/restaurant-27010648\", \"date\": \"2025-10-02\"}, {\"quote\": \"汽锅鸡选用云南高原走地鸡，不加一滴水通过紫陶汽锅3小时蒸汽蒸馏萃取，油脂醇厚汤色橙黄；爆炒黑牛肝菌选云南鲜黑牛肝菌和鲜赤松茸。\", \"dish\": \"爆炒黑牛肝菌\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7579956010020027237\", \"date\": \"2025-12-04\"}], \"negative\": [\"连锁标准化，高峰期出餐偏快\", \"部分食客反映分量偏少\"], \"soft_ad\": [\"周年店庆69代100代金券\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      65,
+      72,
+      145,
+      162,
+      163,
+      165,
+      166,
+      241
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "滇百年云南小锅米线(静安大悦城店)",
+    "fields": {
+      "name": "滇百年云南小锅米线(静安大悦城店)",
+      "price_avg": 35,
+      "price_range": "¥19.9-45",
+      "address": "西藏北路166号静安大悦城",
+      "district": "静安区",
+      "business_area": "静安大悦城",
+      "booking_method": "无需预订",
+      "signature_dishes": [
+        "见手青卤鸡米线",
+        "七彩菌鲜肉丸米线",
+        "传统状元过桥米线",
+        "小锅现煮米线"
+      ],
+      "investor_info": "滇百年",
+      "score_objective": 70.0,
+      "score_diner": 72.0,
+      "score_taste": 72.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 8.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"花十几块钱在静安大悦城吃到正宗云南小锅米线，每一锅都是小锅现煮。见手青卤鸡米线菌香醇厚，卤鸡咸香，米线顺滑，鲜感层层递进。\", \"dish\": \"见手青卤鸡米线\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7682641291428549745\", \"date\": \"2026-09-07\"}, {\"quote\": \"见手青卤鸡米线口味独特，山野菌香融合卤鸡醇厚肉香，菌材严格专业处理吃得放心；七彩菌鲜肉丸汤底鲜甜柔和，传统状元过桥米线还原百年经典。\", \"dish\": \"七彩菌鲜肉丸米线\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7683110720494980367\", \"date\": \"2026-09-08\"}], \"negative\": [\"新店开业期19.9尝鲜价，原价待验证\", \"见手青处理专业度需关注\"], \"soft_ad\": [\"2026-09新店开业集中探店\", \"19.9开业尝鲜价挂车\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      51,
+      74,
+      162,
+      163,
+      166,
+      241
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [
+      "商场同址不同铺位（库内另有 文家粉楼(静安大悦城店)），按新店"
+    ],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=滇百年 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "良米山·云南野生菌过桥米线(中山公园龙之梦店)",
+    "fields": {
+      "name": "良米山·云南野生菌过桥米线(中山公园龙之梦店)",
+      "price_avg": 45,
+      "price_range": "¥35-58",
+      "address": "长宁路1018号中山公园龙之梦购物中心7楼7078号",
+      "district": "长宁区",
+      "business_area": "中山公园",
+      "booking_method": "无需预订",
+      "signature_dishes": [
+        "野果酸汤过桥米线",
+        "野生菌过桥米线"
+      ],
+      "investor_info": "良米山",
+      "score_objective": 68.0,
+      "score_diner": 70.0,
+      "score_taste": 70.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 5.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"野果酸汤过桥米线口感层次分明，酸中带鲜鲜中透香，每一口汤都让人精神一振；米线滑润不腻Q弹有力。上海首店。\", \"dish\": \"野果酸汤过桥米线\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=112024018\", \"date\": \"2025-01-03\"}, {\"quote\": \"招牌云南传统过桥米线选野生菌汤，套餐含乌鱼片、宣威火腿、里脊肉片、豆腐皮丝、玉兰片、黑木耳、韭菜，慢慢放到滚烫菌汤涮熟搭配爽弹米线。\", \"dish\": \"野生菌过桥米线\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=195199572\", \"date\": \"2025-09-07\"}], \"negative\": [\"商场店空间有限\", \"上海首店运营稳定性待观察\"], \"soft_ad\": [\"'上海首店'宣传\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      51,
+      74,
+      162,
+      163,
+      241
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=良米山 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "芸山季云南野生菌火锅(上海来福士广场店)",
+    "fields": {
+      "name": "芸山季云南野生菌火锅(上海来福士广场店)",
+      "price_avg": 133,
+      "price_range": "¥120-160",
+      "address": "西藏中路268号上海来福士广场06层01A室",
+      "district": "黄浦区",
+      "business_area": "人民广场",
+      "phone": "15300852628",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "土鸡菌汤锅",
+        "见手青",
+        "宣威火腿牛肝菌焖饭",
+        "时珍至味山珍菌拼盘"
+      ],
+      "investor_info": "芸山季",
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 5.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"来福士6楼藏着云南菌子火锅，菌子新鲜汤底用土鸡炖的鲜美。土鸡菌汤锅涮菌子，见手青、现焖宣威火腿牛肝菌焖饭。\", \"dish\": \"土鸡菌汤锅\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=205630461\", \"date\": \"2025-10-01\"}, {\"quote\": \"店员帮忙配时令组合建议选3-4种混煮，汤底熬足8小时超级鲜美，涮完菌子连喝三碗不够。\", \"dish\": \"山珍菌拼盘\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=196046313\", \"date\": \"2025-09-09\"}], \"negative\": [\"商场店排队\", \"菌子季节限定\", \"人均133偏高\"], \"soft_ad\": [\"'菌子火锅天花板'营销话术\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      62,
+      65,
+      72,
+      145,
+      162,
+      163,
+      165,
+      166,
+      241
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [
+      "商场同址不同铺位（库内另有 九宫殿热干面(来福士店)），按新店"
+    ],
+    "warnings": [
+      "brand_group=芸山季 未经核实（brand_confirmed=false）"
+    ]
+  }
+]

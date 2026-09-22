@@ -1,0 +1,403 @@
+[
+  {
+    "name": "捡角台湾食堂(古北店)",
+    "action": "update",
+    "rid": 1037,
+    "rc_added": [
+      17,
+      57,
+      65,
+      70
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1037,
+      "name": "捡角台湾食堂(古北店)",
+      "status": "active",
+      "location": "0101000020E6100000944C4EED0C5A5E40CBD6FA22A1313F40",
+      "phone": "",
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 68.5,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 76.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "张黄锦记螺蛳粉桂林米粉(阳光天地店)",
+    "action": "new",
+    "rid": 1650,
+    "rc_added": [
+      21,
+      51,
+      74,
+      162,
+      163,
+      256
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1650,
+      "name": "张黄锦记螺蛳粉桂林米粉(阳光天地店)",
+      "status": "active",
+      "location": null,
+      "phone": "13002131180",
+      "tier": "经济",
+      "price_avg": 27,
+      "score_total": 57.8,
+      "score_objective": 62.0,
+      "score_diner": 64.0,
+      "score_taste": 64.0,
+      "score_endorsement": 40.0
+    },
+    "ok": true
+  },
+  {
+    "name": "方中山胡辣汤(静安康定路店)",
+    "action": "new",
+    "rid": 1651,
+    "rc_added": [
+      23,
+      51,
+      61,
+      74,
+      162,
+      230
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1651,
+      "name": "方中山胡辣汤(静安康定路店)",
+      "status": "active",
+      "location": "0101000020E61000006E162F16865B5E40081D7409873A3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 23,
+      "score_total": 81.5,
+      "score_objective": 85.0,
+      "score_diner": 85.0,
+      "score_taste": 85.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "五星海南鸡饭(新乐路店)",
+    "action": "new",
+    "rid": 1652,
+    "rc_added": [
+      19,
+      57,
+      65,
+      74,
+      162,
+      163
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1652,
+      "name": "五星海南鸡饭(新乐路店)",
+      "status": "active",
+      "location": null,
+      "phone": "02164482919",
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 71.6,
+      "score_objective": 74.0,
+      "score_diner": 76.0,
+      "score_taste": 76.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "冰城老于家(徐汇店)",
+    "action": "update",
+    "rid": 984,
+    "rc_added": [
+      65,
+      66
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 984,
+      "name": "冰城老于家(徐汇店)",
+      "status": "active",
+      "location": "0101000020E61000007B4FE5B4A75C5E40581B6327BC303F40",
+      "phone": "13301743619",
+      "tier": "平价",
+      "price_avg": 85,
+      "score_total": 71.5,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 76.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "李老哈·东北菜(宋园路店)",
+    "action": "update",
+    "rid": 985,
+    "rc_added": [
+      51,
+      65,
+      67
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 985,
+      "name": "李老哈·东北菜(宋园路店)",
+      "status": "active",
+      "location": "0101000020E610000095D39E92735A5E4038D906EE40313F40",
+      "phone": "",
+      "tier": "平价",
+      "price_avg": 80,
+      "score_total": 67.5,
+      "score_objective": 80.0,
+      "score_diner": 76.0,
+      "score_taste": 76.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "串姐焦烤鸡架(五角场店)",
+    "action": "new",
+    "rid": 1653,
+    "rc_added": [
+      11,
+      63,
+      65,
+      78,
+      163,
+      164,
+      166
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1653,
+      "name": "串姐焦烤鸡架(五角场店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 60.5,
+      "score_objective": 74.0,
+      "score_diner": 72.0,
+      "score_taste": 74.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "东北四季饺子王(茅台路店)",
+    "action": "new",
+    "rid": 1654,
+    "rc_added": [
+      11,
+      51,
+      65,
+      74,
+      143,
+      162,
+      163
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1654,
+      "name": "东北四季饺子王(茅台路店)",
+      "status": "active",
+      "location": null,
+      "phone": "02162337577",
+      "tier": "平价",
+      "price_avg": 60,
+      "score_total": 69.4,
+      "score_objective": 76.0,
+      "score_diner": 74.0,
+      "score_taste": 74.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "王老六铁锅炖鱼(桂林路店)",
+    "action": "new",
+    "rid": 1655,
+    "rc_added": [
+      11,
+      62,
+      64,
+      72,
+      142,
+      162,
+      163
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1655,
+      "name": "王老六铁锅炖鱼(桂林路店)",
+      "status": "active",
+      "location": "0101000020E61000000D6FD6E07D5A5E40048E041A6C2E3F40",
+      "phone": "02160729009",
+      "tier": "平价",
+      "price_avg": 80,
+      "score_total": 71.4,
+      "score_objective": 76.0,
+      "score_diner": 76.0,
+      "score_taste": 76.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "鹤北北·东北黏糊麻辣烫(人民广场店)",
+    "action": "new",
+    "rid": 1656,
+    "rc_added": [
+      11,
+      51,
+      62,
+      66,
+      70,
+      74,
+      162,
+      163
+    ],
+    "rc_total": 8,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1656,
+      "name": "鹤北北·东北黏糊麻辣烫(人民广场店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 25,
+      "score_total": 67.1,
+      "score_objective": 74.0,
+      "score_diner": 74.0,
+      "score_taste": 74.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "久月东北砂锅麻辣烫",
+    "action": "new",
+    "rid": 1657,
+    "rc_added": [
+      11,
+      51,
+      62,
+      66,
+      70,
+      74,
+      162,
+      163
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1657,
+      "name": "久月东北砂锅麻辣烫",
+      "status": "active",
+      "location": "0101000020E61000001DCC26C0B05C5E400377A04E79483F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 30,
+      "score_total": 67.1,
+      "score_objective": 74.0,
+      "score_diner": 74.0,
+      "score_taste": 74.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "家里没煮",
+    "action": "new",
+    "rid": 1658,
+    "rc_added": [
+      17,
+      51,
+      57,
+      65,
+      72,
+      150,
+      162,
+      163,
+      165
+    ],
+    "rc_total": 9,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1658,
+      "name": "家里没煮",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120,
+      "score_total": 62.2,
+      "score_objective": 70.0,
+      "score_diner": 72.0,
+      "score_taste": 74.0,
+      "score_endorsement": 58.0
+    },
+    "ok": true
+  },
+  {
+    "name": "熹餐厅",
+    "action": "update",
+    "rid": 1084,
+    "rc_added": [
+      73,
+      77,
+      167
+    ],
+    "rc_total": 17,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1084,
+      "name": "熹餐厅",
+      "status": "active",
+      "location": "0101000020E61000008F705AF0A2605E407EAB75E272503F40",
+      "phone": "13817234412",
+      "tier": "高档",
+      "price_avg": 200,
+      "score_total": 66.1,
+      "score_objective": 72.0,
+      "score_diner": 72.0,
+      "score_taste": 76.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  }
+]

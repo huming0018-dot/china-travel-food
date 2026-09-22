@@ -1,0 +1,334 @@
+[
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "九色云野生菌火锅(长泰广场店)",
+    "fields": {
+      "name": "九色云野生菌火锅(长泰广场店)",
+      "price_avg": 140,
+      "price_range": "¥120-160",
+      "address": "金科路2889弄长泰广场西区7座B1层(那时新疆旁)",
+      "district": "浦东新区",
+      "business_area": "张江",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "野生菌火锅",
+        "菌汤锅",
+        "时令菌子拼盘"
+      ],
+      "investor_info": "九色云",
+      "score_objective": 72.0,
+      "score_diner": 74.0,
+      "score_taste": 76.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 6.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"九色云野生菌火锅鲜到灵魂出窍，菌控闭眼冲，鲜掉眉毛不夸张。\", \"dish\": \"野生菌火锅\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=181661698\", \"date\": \"2025-08-07\"}, {\"quote\": \"金汤锅底是菌锅灵魂，菌菇拼盘倒入加特色茶地生态鸡，静等计时器揭盖，菌与鸡熬出醇厚浓汤；见手青滑嫩入味，金黄鸡肉裹菌香。\", \"dish\": \"茶地生态鸡菌汤\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7630296193336482725\", \"date\": \"2026-04-19\"}], \"negative\": [\"张江长泰广场偏远\", \"网红火锅标签\"], \"soft_ad\": [\"'鲜到灵魂出窍'模板文案\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      62,
+      72,
+      145,
+      162,
+      163,
+      165,
+      166,
+      241
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=九色云 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1023,
+    "name": "山石榴·贵州菜(丰盛里店)",
+    "fields": {
+      "name": "山石榴·贵州菜(丰盛里店)",
+      "price_avg": 117,
+      "price_range": "¥100-140",
+      "address": "茂名北路281弄16号304单元3楼(南京西路地铁站14号口旁)",
+      "district": "静安区",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "贵州酸汤鱼",
+        "花溪牛肉粉",
+        "黔味爆腰花",
+        "毕节爆浆小豆腐",
+        "蕨粑炒腊肉",
+        "苗家红姑娘"
+      ],
+      "investor_info": "山石榴",
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 78.0,
+      "soft_ad_penalty": 3.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"山石榴酸汤鱼源自酸汤鱼之乡贵州凯里，古法发酵的果味酸汤浓香开胃，夹一片炖得鲜嫩的鱼肉蘸上贵州苗岭特制蘸水一秒入魂；毕节爆浆小豆腐、蕨粑炒腊肉。\", \"dish\": \"贵州酸汤鱼\", \"source\": \"TimeOut上海\", \"url\": \"https://www.timeoutshanghai.cn/features/6306.html\", \"date\": \"2026-08-26\"}, {\"quote\": \"花溪牛肉粉很好吃不愧是招牌而且可以免费续粉；黔味爆腰花非常辣腰花蛮多；免费鱼腥草小菜解辣。\", \"dish\": \"花溪牛肉粉\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7438922207620828443\", \"date\": \"2024-11-19\"}], \"negative\": [\"黔味爆腰花过辣不适合怕辣客\", \"丰盛里店午市人多需错峰\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      65,
+      66,
+      72,
+      146,
+      162,
+      163,
+      165,
+      167,
+      239
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "黔香阁·味(花木店)",
+    "fields": {
+      "name": "黔香阁·味(花木店)",
+      "price_avg": 176,
+      "price_range": "¥150-200",
+      "address": "锦康路252号陆家嘴世纪金融广场7号楼5层(美食汇)",
+      "district": "浦东新区",
+      "business_area": "花木",
+      "phone": "02168595917",
+      "booking_method": "电话/大众点评预订",
+      "signature_dishes": [
+        "贵州酸汤乌江鱼",
+        "花溪牛肉粉",
+        "汽锅鸡",
+        "秘制黔菜"
+      ],
+      "investor_info": "黔香阁",
+      "score_objective": 74.0,
+      "score_diner": 74.0,
+      "score_taste": 76.0,
+      "score_endorsement": 68.0,
+      "soft_ad_penalty": 3.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"黔香阁花木店人均176，主打贵州酸汤乌江鱼、花溪牛肉粉、汽锅鸡。上海黔香阁5家门店连锁(大上海时代广场/陆家嘴/虹桥/花木)。\", \"dish\": \"贵州酸汤乌江鱼\", \"source\": \"携程\", \"url\": \"https://you.ctrip.com/food/shanghai2/12070882-dianping163641245.html\", \"date\": \"2026-09-22\"}, {\"quote\": \"黔香阁上海5家门店连锁，花木店锦康路252号陆家嘴世纪金融广场7号楼，主打贵州酸汤乌江鱼、花溪牛肉粉、汽锅鸡。\", \"dish\": \"贵州酸汤乌江鱼\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7588058880271113407\", \"date\": \"2025-12-26\"}], \"negative\": [\"人均176偏贵\", \"金融广场商务宴请场景\"], \"soft_ad\": [\"5店通用团购套餐\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      65,
+      72,
+      146,
+      162,
+      163,
+      165,
+      167,
+      239
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "秦香岚·贵州菜·凯里酸汤鱼(博荟广场店)",
+    "fields": {
+      "name": "秦香岚·贵州菜·凯里酸汤鱼(博荟广场店)",
+      "price_avg": 90,
+      "price_range": "¥80-110",
+      "address": "中山南一路788号博荟广场B1层-10-A(世博会博物馆对面)",
+      "district": "黄浦区",
+      "business_area": "世博",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "凯里红酸汤黄辣丁鱼",
+        "秦家豆腐丸子/豆腐圆子",
+        "桂花米酱手搓冰粉",
+        "糟辣椒小炒梅花肉",
+        "爽脆花生苗"
+      ],
+      "investor_info": "秦香岚",
+      "score_objective": 74.0,
+      "score_diner": 78.0,
+      "score_taste": 76.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 5.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"凯里酸汤黄辣丁鱼是店里主打，整条黄辣丁肉质肥美细腻，汤底酸辣开胃鱼肉嫩滑无刺，加份米粉吸满汤汁；豆腐丸子外酥里嫩蘸特制辣椒面。\", \"dish\": \"凯里红酸汤黄辣丁鱼\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=78532721\", \"date\": \"2024-09-01\"}, {\"quote\": \"酸汤鱼汤底酸辣开胃鱼肉嫩滑无刺加份米粉进去吸满汤汁，豆腐丸子外酥里嫩蘸特制辣椒面好吃到跺脚；环境简约贵州苗寨风。\", \"dish\": \"秦家豆腐丸子\", \"source\": \"携程笔记\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=225105259\", \"date\": \"2025-11-09\"}], \"negative\": [\"多店连锁(天山路创邑MIX/博荟广场/悦荟/K11)\", \"团购套餐营销\", \"博荟广场位置偏\"], \"soft_ad\": [\"'绝绝子/好吃到跺脚'模板文案\", \"100多套餐挂车\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      14,
+      62,
+      72,
+      146,
+      162,
+      163,
+      165,
+      166,
+      239
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "青藏餐厅·牦牛·藏羊(爱琴海店)",
+    "fields": {
+      "name": "青藏餐厅·牦牛·藏羊(爱琴海店)",
+      "price_avg": 100,
+      "price_range": "¥80-130",
+      "address": "虹井路120弄4号爱琴海购物公园B1层藏文化街区",
+      "district": "闵行区",
+      "business_area": "龙柏",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "手抓牦牛肉",
+        "松茸炖鸡",
+        "酥油茶",
+        "糌粑",
+        "泡椒溜牦牛肝",
+        "牦牛三拼"
+      ],
+      "investor_info": "青藏餐厅",
+      "score_objective": 74.0,
+      "score_diner": 76.0,
+      "score_taste": 74.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 6.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"爱琴海B1层青藏餐厅，刚进门收到藏族朋友献哈达，地道藏式装修。200出头套餐四道菜一份主食一壶藏茶够两三人吃；泡椒溜牦牛肝鲜辣开胃。晚上7点有现场歌舞表演。\", \"dish\": \"泡椒溜牦牛肝\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7604153517116804091\", \"date\": \"2026-02-07\"}, {\"quote\": \"闵行爱琴海地下一层青藏一条街，整片街区六大板块含甜茶馆，可亲手做糌粑喝酥油茶；牛杂煲用料扎实，牦牛肉从雪域高原空运，肉质比普通牛肉纤维更粗更Q弹紧实。\", \"dish\": \"牛杂煲\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7659690137269939840\", \"date\": \"2026-07-07\"}], \"negative\": [\"沉浸式主题餐厅，歌舞表演偏旅游打卡\", \"商场店\", \"套餐营销\"], \"soft_ad\": [\"'不用去西藏/魔都地下青藏街'模板文案\", \"周末歌舞表演引流\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      20,
+      61,
+      65,
+      72,
+      162,
+      163,
+      165,
+      166,
+      167,
+      225
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=青藏餐厅 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "扎西达娲(徐汇绿地缤纷城店)",
+    "fields": {
+      "name": "扎西达娲(徐汇绿地缤纷城店)",
+      "price_avg": 100,
+      "price_range": "¥80-120",
+      "address": "徐汇绿地缤纷城",
+      "district": "徐汇区",
+      "business_area": "龙华",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "牦牛肉盖饼",
+        "酥油茶",
+        "糌粑",
+        "藏式酸奶"
+      ],
+      "investor_info": "扎西达娲",
+      "score_objective": 70.0,
+      "score_diner": 74.0,
+      "score_taste": 74.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 4.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"徐汇绿地缤纷城扎西达娲，装修具西藏特色，老板服务员食材都来自西藏。套餐199一桌，藏民四宝有三宝在套餐里：藏族特色糌粑酥油茶和牦牛肉。牦牛肉盖饼全场最佳。\", \"dish\": \"牦牛肉盖饼\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7128691167658609950\", \"date\": \"2022-08-06\"}, {\"quote\": \"扎西达娲在龙华绿地缤纷城西区3层月牙街WD-305(7/12号线龙华中路站)，大口吃牦牛肉、大个藏香猪肉丸，16周年庆可体验自制糌粑喝藏式奶茶。\", \"dish\": \"牦牛肉\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7027757685609090334\", \"date\": \"2021-11-07\"}], \"negative\": [\"证据为2022年旧帖，营业状态需复核\", \"绿地缤纷城商场店\"], \"soft_ad\": [\"199套餐\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      20,
+      61,
+      65,
+      72,
+      162,
+      163,
+      165,
+      166,
+      225
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "brand_group=扎西达娲 未经核实（brand_confirmed=false）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1072,
+    "name": "多杰拉姆藏餐吧(朱家角店)",
+    "fields": {
+      "name": "多杰拉姆藏餐吧(朱家角店)",
+      "price_avg": 80,
+      "price_range": "¥60-100",
+      "district": "青浦区",
+      "booking_method": "无需预订",
+      "signature_dishes": [
+        "藏式咖喱",
+        "牦牛肉",
+        "酥油茶",
+        "藏面"
+      ],
+      "score_objective": 66.0,
+      "score_diner": 68.0,
+      "score_taste": 68.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 3.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Duo Jie La Mu Tibetan Food Bar位于青浦朱家角西井街41号，Phone +86 21 5298 8005。Visit to escape the tourist...藏式小馆。\", \"dish\": \"藏式咖喱\", \"source\": \"Wanderlog\", \"url\": \"https://wanderlog.com/place/details/12538167/duo-jie-la-mu-tibetan-food-ba\", \"date\": \"2026-09-17\"}, {\"quote\": \"青浦朱家角西井街41号Duo Jie La Mu藏餐吧，藏式咖喱牦牛肉酥油茶，phone 021-52988800。\", \"dish\": \"藏式咖喱\", \"source\": \"Wanderboat\", \"url\": \"https://wanderboat.ai/restaurants/china/shanghai/duo-jie-la-mu-tibetan-food-ba/Ynb9rE6aR-u6EYHg3QKOKQ\", \"date\": \"2026-08-16\"}], \"negative\": [\"朱家角古镇游客区\", \"小店空间小\", \"食客评价少\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      20,
+      65,
+      69,
+      72,
+      162,
+      163,
+      225
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ],
+    "_keep": [
+      "库地址更精确，保留库值: 朱家角古镇西湖街41号"
+    ]
+  }
+]
