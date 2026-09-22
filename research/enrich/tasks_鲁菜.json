@@ -1,0 +1,56 @@
+[
+  {
+    "name": "鲁采LU STYLE(环宇荟店)",
+    "cuisine_todo": [
+      "补预订电话"
+    ],
+    "addr_now": "上海市黄浦区黄陂南路838弄中海环宇荟2层207室",
+    "price": 528,
+    "action": "update"
+  },
+  {
+    "name": "鲁采LU STYLE(苏河湾慎余里店)",
+    "cuisine_todo": [
+      "补预订电话"
+    ],
+    "addr_now": "上海市静安区苏河湾万象天地西里慎余里石库门建筑群",
+    "price": 800,
+    "action": "new"
+  },
+  {
+    "name": "东莱馋房(环球金融中心店)",
+    "cuisine_todo": [
+      "补预订电话"
+    ],
+    "addr_now": "上海市浦东新区陆家嘴环路1000号恒生银行大厦(环球金融中心)2-3楼",
+    "price": 200,
+    "action": "update"
+  },
+  {
+    "name": "郭姐·威海渔村(柳州路店)",
+    "cuisine_todo": [
+      "补第二类独立来源(官方指南/海外媒体/地图/第二UGC)"
+    ],
+    "addr_now": "上海市徐汇区柳州路531号",
+    "price": 100,
+    "action": "update"
+  },
+  {
+    "name": "沈春芳手工饺子(花木时光里店)",
+    "cuisine_todo": [
+      "补第二类独立来源(官方指南/海外媒体/地图/第二UGC)"
+    ],
+    "addr_now": "上海市浦东新区花木时光里B1层",
+    "price": 25,
+    "action": "new"
+  },
+  {
+    "name": "上海国际饭店·丰泽楼",
+    "cuisine_todo": [
+      "补预订电话"
+    ],
+    "addr_now": "上海市黄浦区黄河路28号国际饭店2楼",
+    "price": 300,
+    "action": "new"
+  }
+]

@@ -1,0 +1,166 @@
+[
+  {
+    "name": "鸿姐老火锅·传统炒料(上海旗舰店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市长宁区延安西路1394号5栋102室(定西路与延安西路交叉口)",
+    "price": 120,
+    "action": "new"
+  },
+  {
+    "name": "金姐老火锅(陆家嘴店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市浦东新区浦东大道1108号(近源深路地铁站,陆家嘴商圈)",
+    "price": 120,
+    "action": "new"
+  },
+  {
+    "name": "宴山城火锅(外滩江景店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市黄浦区广东路20号外滩5号6楼江景(看东方明珠)",
+    "price": 728,
+    "action": "new"
+  },
+  {
+    "name": "红料理·串串有瘾(万航渡路店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市长宁区万航渡路550号(近武定西路,武定路地铁站2号口)",
+    "price": 86,
+    "action": "new"
+  },
+  {
+    "name": "成都你六姐·牛肉冒菜(七巧国店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市杨浦区隆昌路586号复旦软件园1号楼1-5层一楼C1",
+    "price": 40,
+    "action": "new"
+  },
+  {
+    "name": "龙玥川菜·豆花饭(丽园路总店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市黄浦区丽园路50号(近陆家浜路)",
+    "price": 90,
+    "action": "new"
+  },
+  {
+    "name": "烤匠麻辣烤鱼(上海首店·五角场合生汇店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市杨浦区五角场合生汇(近五角场站5号口)",
+    "price": 139,
+    "action": "new"
+  },
+  {
+    "name": "溪雨观酸菜鱼(七宝宝龙城店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市闵行区七宝宝龙城",
+    "price": 90,
+    "action": "new"
+  },
+  {
+    "name": "百岁我家酸菜鱼(古美店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市闵行区古美(古美生活圈)",
+    "price": 85,
+    "action": "new"
+  },
+  {
+    "name": "釜溪盐韵·私宴(上海首店)",
+    "cuisine_todo": [
+      "补预订电话",
+      "补坐标"
+    ],
+    "addr_now": "上海市闵行区万源路2708号蜀谭记集团总部大楼1F",
+    "price": 400,
+    "action": "new"
+  },
+  {
+    "name": "南兴园 NAN·XING·YUAN",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市徐汇区淮海中路1728号12栋",
+    "price": 1000,
+    "action": "new"
+  },
+  {
+    "name": "孔雀厅 The Peacock Room",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市静安区石门一路288号兴业太古汇南楼S301(近威海路)",
+    "price": 450,
+    "action": "new"
+  },
+  {
+    "name": "千平平重庆面庄(延平路总店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市静安区延平路163号(近昌平路地铁站)",
+    "price": 43,
+    "action": "new"
+  },
+  {
+    "name": "十八梯邓凳面(上海店)",
+    "cuisine_todo": [
+      "冲突核实(同路/同址,确认确切门牌与是否同店)",
+      "补坐标"
+    ],
+    "addr_now": "上海市静安区愚园路(愚园路店;上海约3家分店)",
+    "price": 25,
+    "action": "conflict"
+  },
+  {
+    "name": "桂釜山城重庆小面(南京西路店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市静安区南汇路72弄5-11号(近南京西路)",
+    "price": 35,
+    "action": "new"
+  },
+  {
+    "name": "川味面荘·泸州牛肉面(南翔老街店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市嘉定区南翔老街(南华路美食街)",
+    "price": 25,
+    "action": "new"
+  },
+  {
+    "name": "寛的窄的面馆(打浦路店)",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市黄浦区打浦路200号(淑芬串串一楼,近打浦桥)",
+    "price": 28,
+    "action": "new"
+  },
+  {
+    "name": "九品川味·四川绵阳米粉",
+    "cuisine_todo": [
+      "补坐标"
+    ],
+    "addr_now": "上海市闵行区景谷路141号(漕宝路另有店)",
+    "price": 18,
+    "action": "new"
+  }
+]
