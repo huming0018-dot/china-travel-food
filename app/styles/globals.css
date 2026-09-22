@@ -3,31 +3,273 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 250, 250, 250;
-  --background-end-rgb: 255, 255, 255;
+  --cream: #F5F0E8;
+  --mocha: #2A1F1A;
+  --line: #E0D5C8;
+  --terracotta: #B85C38;
+  --moss: #6B7F5E;
+  --mustard: #C9A961;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  margin: 0;
+  padding: 0;
+  background: var(--cream);
+  color: var(--mocha);
+  font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01', 'cv11';
 }
 
-/* 卡片悬浮效果 */
-.card-hover {
-  transition: transform 0.2s, box-shadow 0.2s;
+/* 选中文字 - 赤陶橙 */
+::selection {
+  background: var(--terracotta);
+  color: var(--cream);
 }
-.card-hover:hover {
+
+/* 滚动条 - 极细 */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8B8A5;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--terracotta);
+}
+
+/* ===== Quiet Luxury 组件 ===== */
+
+/* 标签 - 小号大写 */
+.kicker {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mocha);
+}
+
+/* 衬线标题 */
+.serif {
+  font-family: 'Fraunces', 'Noto Serif SC', Georgia, serif;
+}
+
+/* 编号样式 - 大号衬线斜体 */
+.numeral {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* 卡片 - 柔和圆角 + 微妙阴影 */
+.card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 2px 20px rgba(42,31,26,0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card:hover {
+  box-shadow: 0 8px 40px rgba(42,31,26,0.12);
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* 评分星星 */
-.star {
-  color: #fbbf24;
+/* 按钮 - 柔和圆角 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-primary {
+  background: var(--terracotta);
+  color: white;
+}
+.btn-primary:hover {
+  background: #9A4528;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(184,92,56,0.3);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--mocha);
+  border-color: var(--mocha);
+}
+.btn-outline:hover {
+  background: var(--mocha);
+  color: var(--cream);
+}
+.btn-moss {
+  background: var(--moss);
+  color: white;
+}
+.btn-moss:hover {
+  background: #4F6045;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(107,127,94,0.3);
+}
+
+/* 标签药丸 - 柔和 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  border-radius: 999px;
+  line-height: 1.6;
+}
+
+/* 菜系色标签（低饱和大地色） */
+.tag-japanese { background: #F0DDD0; color: #9A4528; }
+.tag-chinese { background: #E8D8C8; color: #6B4423; }
+.tag-asian { background: #E0E5D8; color: #4F6045; }
+.tag-western { background: #DDE2E8; color: #3D4F5F; }
+.tag-other { background: #E5DED5; color: #5C4D3E; }
+
+/* 档位标签（旧三档，兼容详情页） */
+.tag-casual { background: #E0E5D8; color: #4F6045; }
+.tag-mid { background: #F0E8D0; color: #8B6B2A; }
+.tag-premium { background: #F0DDD0; color: #9A4528; }
+
+/* 五档价位标签（经济→奢华，色彩递进） */
+.tag-budget { background: #ECE8E2; color: #6E6358; }
+.tag-value  { background: #E0E5D8; color: #4F6045; }
+.tag-fine   { background: #F0DDD0; color: #9A4528; }
+.tag-luxury { background: #2A1F1A; color: #DCC085; }
+
+/* 价位筛选按钮激活态 */
+.price-chip[data-active="true"][data-tier="经济"] { background:#ECE8E2; color:#544B41; border-color:#C9C0B4; }
+.price-chip[data-active="true"][data-tier="平价"] { background:#E0E5D8; color:#43543A; border-color:#8FA080; }
+.price-chip[data-active="true"][data-tier="中档"] { background:#F0E8D0; color:#8B6B2A; border-color:#C9A961; }
+.price-chip[data-active="true"][data-tier="高档"] { background:#F0DDD0; color:#9A4528; border-color:#D4845E; }
+.price-chip[data-active="true"][data-tier="奢华"] { background:#2A1F1A; color:#DCC085; border-color:#2A1F1A; }
+
+/* 筛选抽屉动画 */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.filter-panel { animation: slideDown 0.18s ease-out; }
+
+/* 筛选标签（维度） */
+.flag {
+  display:inline-flex; align-items:center; gap:4px;
+  padding:5px 12px; font-size:12px; font-weight:500;
+  border-radius:999px; border:1px solid var(--line);
+  background:#fff; color:#5C4A3E; white-space:nowrap;
+  transition:all .15s ease; cursor:pointer;
+}
+.flag:hover { border-color:#D4845E; color:#B85C38; }
+.flag[data-on="true"] { background:var(--terracotta); border-color:var(--terracotta); color:#fff; }
+.flag .n { font-size:10px; opacity:.65; font-variant-numeric:tabular-nums; }
+.flag[data-on="true"] .n { opacity:.8; }
+
+/* 筛选触发按钮 */
+.filter-trigger {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:7px 14px; font-size:12px; font-weight:500;
+  border-radius:999px; border:1px solid var(--line);
+  background:#fff; color:#5C4A3E; cursor:pointer; transition:all .15s ease;
+}
+.filter-trigger:hover { border-color:#D4845E; color:#B85C38; }
+.filter-trigger[data-on="true"] { background:var(--mocha); border-color:var(--mocha); color:#F5F0E8; }
+.filter-trigger .badge {
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:16px; height:16px; padding:0 4px; border-radius:999px;
+  background:var(--terracotta); color:#fff; font-size:10px; font-weight:600;
+}
+.filter-trigger[data-on="true"] .badge { background:#DCC085; color:#2A1F1A; }
+
+/* 链接下划线动画 */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.2s ease;
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* 骨架屏 */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #EDE6DA 25%, #E0D5C8 50%, #EDE6DA 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.5rem;
+}
+
+/* Leaflet 地图 */
+.leaflet-container {
+  font-family: 'Inter', 'Noto Sans SC', sans-serif !important;
+  border-radius: 1rem !important;
+  background: var(--cream) !important;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 0.75rem !important;
+  box-shadow: 0 4px 30px rgba(42,31,26,0.1) !important;
+}
+.leaflet-popup-content {
+  margin: 14px 18px !important;
+  font-size: 13px !important;
+}
+
+/* 加载旋转 */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--line);
+  border-top-color: var(--terracotta);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Bento Grid 项目 */
+.bento-item {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bento-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 50px rgba(42,31,26,0.15);
 }

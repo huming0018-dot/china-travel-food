@@ -110,7 +110,7 @@ export default function MapPage() {
 
   // 优先读 restaurant.location GeoJSON，KNOWN_COORDS 降为 fallback
   const restaurantsWithCoords = restaurants
-    .filter((r) => r.status !== '关店')
+    .filter((r) => r.status !== 'closed' && r.status !== '关店')
     .map((r) => {
       const loc = parseLocation(r.location);
       const known = KNOWN_COORDS[r.name];
@@ -134,7 +134,7 @@ export default function MapPage() {
           </Link>
           <div className="flex items-center gap-4">
             <span className="kicker text-ink-faint">
-              {restaurantsWithCoords.length} / {restaurants.filter(r => r.status !== '关店').length} 家已定位
+              {restaurantsWithCoords.length} / {restaurants.filter(r => r.status !== 'closed' && r.status !== '关店').length} 家已定位
             </span>
           </div>
         </div>

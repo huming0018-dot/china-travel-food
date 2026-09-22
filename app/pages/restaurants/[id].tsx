@@ -143,7 +143,7 @@ export default function RestaurantDetail() {
   if (!restaurant) return <div className="min-h-screen bg-cream-50 flex items-center justify-center text-mocha-faint">餐厅不存在</div>;
 
   const r = restaurant;
-  const isClosed = r.status === '关店';
+  const isClosed = r.status === 'closed' || r.status === '关店';
   const dataAge = r.data_updated_at
     ? Math.floor((Date.now() - new Date(r.data_updated_at).getTime()) / (1000 * 60 * 60 * 24))
     : null;

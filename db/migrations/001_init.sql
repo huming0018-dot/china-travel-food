@@ -55,7 +55,9 @@ CREATE TABLE restaurants (
   score_endorsement NUMERIC(5,2),
   soft_ad_penalty   NUMERIC(5,2),
   evidence_summary  TEXT,
-  status            VARCHAR(30) DEFAULT '候选', -- 候选/推荐/已议价/已成交
+  status            VARCHAR(30) DEFAULT 'active', -- active/closed
+  closed_date       DATE,
+  closed_source     TEXT,
   data_updated_at   DATE,
   created_at        TIMESTAMPTZ DEFAULT NOW(),
   updated_at        TIMESTAMPTZ DEFAULT NOW()
@@ -81,14 +83,17 @@ CREATE INDEX idx_rc_restaurant ON restaurant_cuisines(restaurant_id);
 -- 4. reviews — 食客点评证据（只计堂食）
 -- ============================================================
 CREATE TABLE reviews (
-  id                SERIAL PRIMARY KEY,
-  restaurant_id     INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
-  source            VARCHAR(50),   -- 点评/小红书/谷歌/口述
-  content           TEXT,
-  is_dine_in        BOOLEAN DEFAULT TRUE,
-  review_date       DATE,
-  credibility_score NUMERIC(3,2),
-  created_at        TIMESTAMPTZ DEFAULT NOW()
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  restaurant_id INT REFERENCES restaurants(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES auth.users,
+  author_name TEXT,
+  rating_total INT CHECK (rating_total BETWEEN 1 AND 5),
+  rating_taste INT CHECK (rating_taste BETWEEN 1 AND 5),
+  content TEXT,
+  visit_date DATE,
+  is_hidden BOOLEAN DEFAULT FALSE,
+  report_count INT DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE INDEX idx_reviews_restaurant ON reviews(restaurant_id);
 
@@ -193,7 +198,10 @@ ALTER TABLE favorites         ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "餐厅公开读" ON restaurants FOR SELECT USING (true);
 CREATE POLICY "分类公开读" ON cuisines    FOR SELECT USING (true);
 CREATE POLICY "关联公开读" ON restaurant_cuisines FOR SELECT USING (true);
-CREATE POLICY "点评公开读" ON reviews     FOR SELECT USING (true);
+CREATE POLICY "reviews_public_read" ON reviews FOR SELECT USING (is_hidden = false);
+CREATE POLICY "reviews_insert_own" ON reviews FOR INSERT TO authenticated WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "reviews_update_own" ON reviews FOR UPDATE TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "reviews_delete_own" ON reviews FOR DELETE TO authenticated USING (auth.uid() = user_id);
 CREATE POLICY "价格锚点公开读" ON price_benchmarks FOR SELECT USING (true);
 
 -- 议价记录：仅登录用户可读（管理员可见全部，普通用户仅可见已成交的摘要）

@@ -236,7 +236,7 @@ export default function RestaurantsPage() {
   const filtered = useMemo(() => {
     let result = [...restaurants];
     // 关店默认不展示
-    result = result.filter((r) => r.status !== '关店');
+    result = result.filter((r) => r.status !== 'closed' && r.status !== '关店');
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       result = result.filter((r) =>
