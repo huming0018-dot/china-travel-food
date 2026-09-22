@@ -1,0 +1,499 @@
+[
+  {
+    "name": "钵湘湘·常德钵子菜(梅川路店)",
+    "action": "new",
+    "rid": 1522,
+    "rc_added": [
+      7,
+      62,
+      65,
+      72,
+      130,
+      162,
+      163,
+      165,
+      239
+    ],
+    "rc_total": 9,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1522,
+      "name": "钵湘湘·常德钵子菜(梅川路店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 62.4,
+      "score_objective": 72.0,
+      "score_diner": 72.0,
+      "score_taste": 75.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "罐罐儿·湘西小馆(鸿寿坊店)",
+    "action": "update",
+    "rid": 929,
+    "rc_added": [
+      7,
+      61,
+      65,
+      241,
+      242
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 929,
+      "name": "罐罐儿·湘西小馆(鸿寿坊店)",
+      "status": "active",
+      "location": "0101000020E61000001FDB32E02C5C5E40B41CE8A1B63D3F40",
+      "phone": "18930778925",
+      "tier": "平价",
+      "price_avg": 90,
+      "score_total": 70.4,
+      "score_objective": 72.0,
+      "score_diner": 82.0,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "武妹娘湖南特色牛肉米粉(南泉北路店)",
+    "action": "update",
+    "rid": 920,
+    "rc_added": [
+      7,
+      51,
+      65
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 920,
+      "name": "武妹娘湖南特色牛肉米粉(南泉北路店)",
+      "status": "active",
+      "location": "0101000020E6100000FE28EACC3D615E40C823B891B2393F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 18,
+      "score_total": 68.7,
+      "score_objective": 68.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "呷佬长沙手工米粉(金沙江路店)",
+    "action": "update",
+    "rid": 910,
+    "rc_added": [
+      7,
+      51,
+      65
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 910,
+      "name": "呷佬长沙手工米粉(金沙江路店)",
+      "status": "active",
+      "location": "0101000020E610000019CA897615585E40EF71A609DB3B3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 25,
+      "score_total": 67.7,
+      "score_objective": 68.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "湘翁(北外滩来福士东塔56楼)",
+    "action": "new",
+    "rid": 1523,
+    "rc_added": [
+      7,
+      65,
+      71,
+      129,
+      163,
+      165,
+      167,
+      239,
+      241
+    ],
+    "rc_total": 9,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1523,
+      "name": "湘翁(北外滩来福士东塔56楼)",
+      "status": "active",
+      "location": null,
+      "phone": "02155887888",
+      "tier": "高档",
+      "price_avg": 400,
+      "score_total": 80.6,
+      "score_objective": 82.0,
+      "score_diner": 82.0,
+      "score_taste": 86.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "皖宴(龙柏饭店店)",
+    "action": "update",
+    "rid": 568,
+    "rc_added": [
+      133,
+      167,
+      239,
+      241
+    ],
+    "rc_total": 14,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 568,
+      "name": "皖宴(龙柏饭店店)",
+      "status": "active",
+      "location": "0101000020E6100000B98AC56F0A575E401346B3B27D303F40",
+      "phone": "02162095177",
+      "tier": "高档",
+      "price_avg": 373,
+      "score_total": 84.0,
+      "score_objective": 88.0,
+      "score_diner": 80.0,
+      "score_taste": 88.0,
+      "score_endorsement": 92.0
+    },
+    "ok": true
+  },
+  {
+    "name": "皖宴(苏河湾店)",
+    "action": "update",
+    "rid": 569,
+    "rc_added": [
+      66,
+      133,
+      167,
+      239
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 569,
+      "name": "皖宴(苏河湾店)",
+      "status": "active",
+      "location": "0101000020E610000038BBB54C865E5E40749A05DA1D3E3F40",
+      "phone": "02162095177",
+      "tier": "高档",
+      "price_avg": 350,
+      "score_total": 80.2,
+      "score_objective": 82.0,
+      "score_diner": 82.0,
+      "score_taste": 85.0,
+      "score_endorsement": 88.0
+    },
+    "ok": true
+  },
+  {
+    "name": "徽珍源(潍坊路店)",
+    "action": "update",
+    "rid": 558,
+    "rc_added": [
+      167,
+      239,
+      241
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 558,
+      "name": "徽珍源(潍坊路店)",
+      "status": "active",
+      "location": "0101000020E61000000A4AD1CABD615E40399D64ABCB393F40",
+      "phone": "02168769117",
+      "tier": "中档",
+      "price_avg": 120,
+      "score_total": 75.7,
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "徽味轩(中山北路店)",
+    "action": "update",
+    "rid": 940,
+    "rc_added": [
+      8,
+      65,
+      165,
+      239,
+      242
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 940,
+      "name": "徽味轩(中山北路店)",
+      "status": "active",
+      "location": "0101000020E6100000DD5B9198A05B5E4083C13577F43F3F40",
+      "phone": "02162417797",
+      "tier": "平价",
+      "price_avg": 84,
+      "score_total": 70.5,
+      "score_objective": 80.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "璞徽(瑞虹天地太阳宫店)",
+    "action": "new",
+    "rid": 1524,
+    "rc_added": [
+      8,
+      65,
+      72,
+      133,
+      162,
+      163,
+      165,
+      167,
+      239,
+      241
+    ],
+    "rc_total": 10,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1524,
+      "name": "璞徽(瑞虹天地太阳宫店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 175,
+      "score_total": 65.6,
+      "score_objective": 75.0,
+      "score_diner": 72.0,
+      "score_taste": 75.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "皖荟·徽菜(白玉兰广场店)",
+    "action": "update",
+    "rid": 943,
+    "rc_added": [
+      8,
+      51,
+      56,
+      65,
+      135,
+      242
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 943,
+      "name": "皖荟·徽菜(白玉兰广场店)",
+      "status": "active",
+      "location": "0101000020E610000048A643A7E75F5E4055A69883A03F3F40",
+      "phone": "02165198310 / 13023168955",
+      "tier": "平价",
+      "price_avg": 90,
+      "score_total": 69.2,
+      "score_objective": 75.0,
+      "score_diner": 75.0,
+      "score_taste": 76.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "嘉良驿园(闵行合川路店)",
+    "action": "update",
+    "rid": 946,
+    "rc_added": [
+      8,
+      65,
+      66,
+      165,
+      167,
+      239
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 946,
+      "name": "嘉良驿园(闵行合川路店)",
+      "status": "active",
+      "location": "0101000020E61000009016670C73585E40D0D1AA96742C3F40",
+      "phone": "021-67286277",
+      "tier": "中档",
+      "price_avg": 180,
+      "score_total": 62.1,
+      "score_objective": 72.0,
+      "score_diner": 75.0,
+      "score_taste": 74.0,
+      "score_endorsement": 40.0
+    },
+    "ok": true
+  },
+  {
+    "name": "小菜园新徽菜(虹桥天街店)",
+    "action": "new",
+    "rid": 1525,
+    "rc_added": [
+      8,
+      65,
+      66,
+      72,
+      133,
+      162,
+      163,
+      239
+    ],
+    "rc_total": 8,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1525,
+      "name": "小菜园新徽菜(虹桥天街店)",
+      "status": "active",
+      "location": null,
+      "phone": "02134501886",
+      "tier": "平价",
+      "price_avg": 75,
+      "score_total": 67.8,
+      "score_objective": 78.0,
+      "score_diner": 65.0,
+      "score_taste": 68.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "大富贵酒楼(中华路总店)",
+    "action": "new",
+    "rid": 1526,
+    "rc_added": [
+      8,
+      9,
+      51,
+      65,
+      72,
+      133,
+      162,
+      163,
+      239
+    ],
+    "rc_total": 9,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1526,
+      "name": "大富贵酒楼(中华路总店)",
+      "status": "active",
+      "location": null,
+      "phone": "02163770322",
+      "tier": "平价",
+      "price_avg": 85,
+      "score_total": 73.3,
+      "score_objective": 78.0,
+      "score_diner": 72.0,
+      "score_taste": 70.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "徽江悦(外滩老码头店)",
+    "action": "update",
+    "rid": 945,
+    "rc_added": [
+      65,
+      165,
+      167,
+      239,
+      242
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 945,
+      "name": "徽江悦(外滩老码头店)",
+      "status": "active",
+      "location": "0101000020E6100000A4880CAB78605E409C8C2AC3B8373F40",
+      "phone": "02163337028",
+      "tier": "中档",
+      "price_avg": 180,
+      "score_total": 67.8,
+      "score_objective": 78.0,
+      "score_diner": 72.0,
+      "score_taste": 75.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "徽悦食府(佘山新天地店)",
+    "action": "new",
+    "rid": 1527,
+    "rc_added": [
+      8,
+      65,
+      72,
+      133,
+      162,
+      163,
+      167,
+      239
+    ],
+    "rc_total": 8,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1527,
+      "name": "徽悦食府(佘山新天地店)",
+      "status": "active",
+      "location": null,
+      "phone": "02133587799",
+      "tier": "平价",
+      "price_avg": 80,
+      "score_total": 62.7,
+      "score_objective": 68.0,
+      "score_diner": 72.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0
+    },
+    "ok": true
+  }
+]
