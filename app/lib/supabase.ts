@@ -15,7 +15,8 @@ export interface Restaurant {
   price_range?: string;
   address?: string;
   district?: string;
-  location?: string;
+  business_area?: string; // 商圈（文本），如"陆家嘴""古北"
+  location?: unknown;     // PostGIS 地理点（地图用），勿存文本
   phone?: string;
   booking_method?: string;
   signature_dishes?: string[];
@@ -45,4 +46,18 @@ export interface Cuisine {
   price_mid?: number;
   price_high?: number;
   shanghai_format?: string;
+}
+
+export interface Review {
+  id: string;
+  restaurant_id: number;
+  user_id: string;
+  author_name?: string;
+  rating_total?: number;
+  rating_taste?: number;
+  content?: string;
+  visit_date?: string;
+  is_hidden: boolean;
+  report_count: number;
+  created_at: string;
 }

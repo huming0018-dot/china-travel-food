@@ -79,6 +79,19 @@ const KNOWN_COORDS: Record<string, [number, number]> = {
   '逸道(外滩源店)': [31.2400, 121.4850],
 };
 
+// 从 GeoJSON Point 提取 [lat, lng]，失败返回 null
+function parseLocation(loc: unknown): [number, number] | null {
+  if (!loc || typeof loc !== 'object') return null;
+  const geo = loc as { type?: string; coordinates?: number[] };
+  if (geo.type === 'Point' && Array.isArray(geo.coordinates) && geo.coordinates.length >= 2) {
+    const [lng, lat] = geo.coordinates;
+    if (typeof lng === 'number' && typeof lat === 'number' && lng !== 0 && lat !== 0) {
+      return [lat, lng];
+    }
+  }
+  return null;
+}
+
 export default function MapPage() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
@@ -95,23 +108,37 @@ export default function MapPage() {
     load();
   }, []);
 
-  const restaurantsWithCoords = restaurants.filter(r => KNOWN_COORDS[r.name]);
+  // 优先读 restaurant.location GeoJSON，KNOWN_COORDS 降为 fallback
+  const restaurantsWithCoords = restaurants
+    .filter((r) => r.status !== '关店')
+    .map((r) => {
+      const loc = parseLocation(r.location);
+      const known = KNOWN_COORDS[r.name];
+      const pos = loc || (known ? [known[0], known[1]] as [number, number] : null);
+      return { r, pos };
+    })
+    .filter((x): x is { r: Restaurant; pos: [number, number] } => x.pos !== null);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-paper-100">
       <Head>
         <title>地图 · China Travel</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
       </Head>
 
-      <nav className="bg-white border-b sticky top-0 z-[1000]">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="font-bold text-lg text-primary-700">← 首页</Link>
-          <span className="text-gray-600 text-sm">
-            {restaurantsWithCoords.length} / {restaurants.length} 家已定位
-          </span>
+      <header className="border-b hairline sticky top-0 z-[1000] bg-paper-100/90 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 text-ink hover:text-ink-soft transition">
+            <span>←</span>
+            <span className="serif text-base font-medium">首页</span>
+          </Link>
+          <div className="flex items-center gap-4">
+            <span className="kicker text-ink-faint">
+              {restaurantsWithCoords.length} / {restaurants.filter(r => r.status !== '关店').length} 家已定位
+            </span>
+          </div>
         </div>
-      </nav>
+      </header>
 
       <div className="h-[calc(100vh-57px)]">
         {iconFixed && !loading && (
@@ -124,18 +151,18 @@ export default function MapPage() {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {restaurantsWithCoords.map((r) => (
-              <Marker key={r.id} position={KNOWN_COORDS[r.name]}>
+            {restaurantsWithCoords.map(({ r, pos }) => (
+              <Marker key={r.id} position={pos}>
                 <Popup>
                   <div className="min-w-[160px]">
-                    <h3 className="font-bold text-sm">{r.name}</h3>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {r.tier} · ¥{r.price_avg || '?'}/人
+                    <h3 className="serif text-sm font-medium">{r.name}</h3>
+                    <p className="text-2xs text-ink-faint mt-1 kicker">
+                      {r.tier}{r.price_avg ? ` · ¥${r.price_avg}/人` : ''}
                     </p>
-                    {r.address && <p className="text-xs text-gray-400 mt-1">{r.address}</p>}
+                    {r.address && <p className="text-2xs text-ink-faint mt-1">{r.address}</p>}
                     <Link
                       href={`/restaurants/${r.id}`}
-                      className="text-xs text-primary-600 hover:underline mt-2 inline-block"
+                      className="text-2xs text-ink hover:underline mt-2 inline-block kicker"
                     >
                       查看详情 →
                     </Link>
@@ -145,11 +172,11 @@ export default function MapPage() {
             ))}
           </MapContainer>
         )}
-        {loading && <div className="p-8 text-gray-400 text-center">加载地图中...</div>}
+        {loading && <div className="p-8 text-ink-faint text-center"><div className="spinner mx-auto" /></div>}
       </div>
 
-      <div className="fixed bottom-4 left-4 bg-white/90 backdrop-blur rounded-lg px-3 py-2 text-xs text-gray-500 shadow z-[1000]">
-        坐标为近似值，后续将通过地址解析精确化
+      <div className="fixed bottom-4 left-4 bg-white/90 backdrop-blur border hairline px-4 py-2.5 text-2xs text-ink-faint z-[1000]">
+        📍 坐标为近似值，后续将通过地址解析精确化
       </div>
     </div>
   );

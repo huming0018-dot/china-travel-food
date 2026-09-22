@@ -6,102 +6,107 @@ import { useRouter } from 'next/router';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const { signIn, signUp } = useAuth();
+  const [sent, setSent] = useState(false);
+  const { signInWithOtp, user } = useAuth();
   const router = useRouter();
+
+  // 已登录则跳转
+  if (user) {
+    router.replace('/');
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
-
-    const result = isSignUp
-      ? await signUp(email, password)
-      : await signIn(email, password);
-
+    const result = await signInWithOtp(email);
     setSubmitting(false);
-
     if (result.error) {
       setError(result.error);
     } else {
-      router.push('/');
+      setSent(true);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-paper-100 flex items-center justify-center px-6">
       <Head>
-        <title>{isSignUp ? '注册' : '登录'} · China Travel</title>
+        <title>登录 · China Travel</title>
       </Head>
 
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link href="/" className="text-2xl font-bold text-primary-700">🍜 China Travel</Link>
-          <p className="text-gray-500 mt-2">上海美食地图</p>
+      <div className="w-full max-w-sm">
+        {/* Logo */}
+        <div className="text-center mb-10">
+          <Link href="/" className="inline-block">
+            <span className="serif text-2xl font-semibold tracking-tight">China Travel</span>
+            <div className="kicker text-ink-faint mt-1">FOOD GUIDE · SHANGHAI</div>
+          </Link>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border p-8">
-          <h1 className="text-xl font-bold text-gray-800 mb-6">
-            {isSignUp ? '创建账号' : '欢迎回来'}
-          </h1>
+        {/* 表单卡片 */}
+        <div className="border hairline bg-white p-8">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="w-6 h-px bg-ink" />
+            <h1 className="serif text-xl font-medium">欢迎回来</h1>
+          </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg text-sm">
-              {error}
+            <div className="mb-5 p-3 border border-signal-deep/30 bg-signal-soft/30 text-signal-deep text-xs">
+              ⚠️ {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
-                placeholder="you@example.com"
-              />
+          {sent ? (
+            <div className="text-center py-4">
+              <div className="text-4xl mb-4">✉️</div>
+              <p className="serif text-base mb-2">魔法链接已发送</p>
+              <p className="text-sm text-ink-faint leading-relaxed">
+                请查收 <span className="font-medium text-ink">{email}</span> 的邮件，
+                点击邮件中的链接即可登录。
+              </p>
+              <p className="text-2xs text-ink-faint mt-4">
+                邮件可能在垃圾邮件文件夹中，链接 60 分钟内有效。
+              </p>
+              <button
+                onClick={() => setSent(false)}
+                className="mt-6 text-2xs text-terracotta underline"
+              >
+                重新输入邮箱
+              </button>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="kicker text-ink-faint block mb-2">邮箱 / EMAIL</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full px-0 py-2.5 bg-transparent border-b hairline text-sm focus:outline-none focus:border-ink transition placeholder:text-ink-faint"
+                  placeholder="you@example.com"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">密码</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
-                placeholder="至少 6 位"
-              />
-            </div>
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn btn-primary w-full mt-4"
+              >
+                {submitting ? '发送中...' : '发送魔法链接'}
+              </button>
 
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full bg-primary-600 text-white py-2.5 rounded-lg font-medium hover:bg-primary-700 transition disabled:opacity-50"
-            >
-              {submitting ? '处理中...' : isSignUp ? '注册' : '登录'}
-            </button>
-          </form>
-
-          <div className="mt-6 text-center text-sm text-gray-500">
-            {isSignUp ? '已有账号？' : '还没有账号？'}
-            <button
-              onClick={() => setIsSignUp(!isSignUp)}
-              className="text-primary-600 hover:text-primary-700 font-medium ml-1"
-            >
-              {isSignUp ? '去登录' : '去注册'}
-            </button>
-          </div>
+              <p className="text-2xs text-ink-faint text-center pt-2">
+                无需密码，点击邮件链接即可登录
+              </p>
+            </form>
+          )}
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-6">
-          注册即表示同意服务条款和隐私政策
+        <p className="text-center text-2xs text-ink-faint mt-6">
+          登录后可收藏餐厅、发布食客评价
         </p>
       </div>
     </div>
