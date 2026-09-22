@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "sync": "python3 scripts/sync_feishu_to_supabase.py --full"
+    "lint": "next lint"
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",

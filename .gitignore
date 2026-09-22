@@ -44,3 +44,11 @@ build/
 .venv/
 venv/
 app/.next/
+
+# vercel 本地构建产物与 project link（所有层级）
+.vercel/
+**/.vercel/
+
+# 本地一次性采集/地理编码中间产物（含潜在敏感信息，禁止入库）
+/data_subagent_work/
+/geocode_progress/
