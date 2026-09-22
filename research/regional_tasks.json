@@ -1,0 +1,192 @@
+{
+  "本帮菜": {
+    "shops": 20,
+    "leaves": 0,
+    "thin_leaves": [],
+    "thin_evidence": []
+  },
+  "京菜": {
+    "shops": 30,
+    "leaves": 3,
+    "thin_leaves": [],
+    "thin_evidence": [
+      {
+        "id": 1049,
+        "name": "美·大董(外滩BFC店)",
+        "evlen": 128
+      },
+      {
+        "id": 1051,
+        "name": "全聚德(淮海中路店)",
+        "evlen": 150
+      },
+      {
+        "id": 1052,
+        "name": "小大董(新世界城店)",
+        "evlen": 124
+      },
+      {
+        "id": 1054,
+        "name": "老门框爆肚涮肉(四川北路店)",
+        "evlen": 196
+      },
+      {
+        "id": 1057,
+        "name": "小吊梨汤·北京菜·烤鸭(豫园店)",
+        "evlen": 153
+      }
+    ]
+  },
+  "东北菜": {
+    "shops": 15,
+    "leaves": 4,
+    "thin_leaves": [],
+    "thin_evidence": [
+      {
+        "id": 989,
+        "name": "玺炖·中国铁锅炖(陆家嘴店)",
+        "evlen": 140
+      },
+      {
+        "id": 990,
+        "name": "老朴家铁锅炖(总店)",
+        "evlen": 176
+      },
+      {
+        "id": 991,
+        "name": "瑞鑫饺子馆(兰溪路店)",
+        "evlen": 151
+      },
+      {
+        "id": 992,
+        "name": "仲秋的饺子馆(曹杨路复悦荟店)",
+        "evlen": 144
+      }
+    ]
+  },
+  "西北菜": {
+    "shops": 31,
+    "leaves": 4,
+    "thin_leaves": [],
+    "thin_evidence": [
+      {
+        "id": 976,
+        "name": "秦韵味道(国权北路店)",
+        "evlen": 150
+      },
+      {
+        "id": 977,
+        "name": "麦之初·陕小馆(长宁Art Park大融城店)",
+        "evlen": 148
+      }
+    ]
+  },
+  "新疆菜": {
+    "shops": 12,
+    "leaves": 2,
+    "thin_leaves": [],
+    "thin_evidence": []
+  },
+  "西南菜": {
+    "shops": 17,
+    "leaves": 2,
+    "thin_leaves": [],
+    "thin_evidence": [
+      {
+        "id": 1015,
+        "name": "岚·山野云南特色菜(愚园路CP静安店)",
+        "evlen": 161
+      },
+      {
+        "id": 1018,
+        "name": "秦香岚·贵州菜·凯里酸汤鱼",
+        "evlen": 159
+      }
+    ]
+  },
+  "台湾菜": {
+    "shops": 13,
+    "leaves": 3,
+    "thin_leaves": [],
+    "thin_evidence": [
+      {
+        "id": 1045,
+        "name": "蔡家食谱(古北一店)",
+        "evlen": 128
+      },
+      {
+        "id": 1046,
+        "name": "台北雅厨(中芯花园店)",
+        "evlen": 117
+      }
+    ]
+  },
+  "海南菜": {
+    "shops": 4,
+    "leaves": 2,
+    "thin_leaves": [],
+    "thin_evidence": []
+  },
+  "青藏菜": {
+    "shops": 3,
+    "leaves": 1,
+    "thin_leaves": [],
+    "thin_evidence": []
+  },
+  "广西菜": {
+    "shops": 4,
+    "leaves": 1,
+    "thin_leaves": [],
+    "thin_evidence": []
+  },
+  "江西菜": {
+    "shops": 5,
+    "leaves": 2,
+    "thin_leaves": [],
+    "thin_evidence": []
+  },
+  "河南菜": {
+    "shops": 4,
+    "leaves": 3,
+    "thin_leaves": [
+      {
+        "leaf": "豫菜·开封洛阳",
+        "n": 2
+      }
+    ],
+    "thin_evidence": []
+  },
+  "湖北菜": {
+    "shops": 12,
+    "leaves": 4,
+    "thin_leaves": [
+      {
+        "leaf": "湖北家常菜馆·藕汤",
+        "n": 2
+      }
+    ],
+    "thin_evidence": [
+      {
+        "id": 1060,
+        "name": "九宫殿热干面(来福士店)",
+        "evlen": 106
+      },
+      {
+        "id": 1061,
+        "name": "楚褚热干面(宝山万达店)",
+        "evlen": 134
+      },
+      {
+        "id": 1064,
+        "name": "老荆味武汉美食",
+        "evlen": 151
+      }
+    ]
+  },
+  "内蒙古菜": {
+    "shops": 6,
+    "leaves": 3,
+    "thin_leaves": [],
+    "thin_evidence": []
+  }
+}
