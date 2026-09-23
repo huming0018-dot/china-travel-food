@@ -158,27 +158,35 @@ export default function RestaurantsPage() {
     return ids;
   }, [cuisines]);
 
-  // 选中某风味：同步顶层 Tab；再次点同一标签则取消
+  // 选中某风味：同步顶层 Tab + 地址栏（仅用户点击触发，首次外部链接进入不清 URL）；再次点同一标签则取消
   const selectFlavor = useCallback((name: string) => {
-    setFlavor((prev) => {
-      if (prev === name) return null;
-      if (TOP_LEVELS.includes(name)) {
-        setCuisineTab(name);
-      } else {
-        const c = cuisines.find((x) => x.name === name && x.dimension === '菜系');
-        if (c) setCuisineTab(topLevel(c, cuisines));
-      }
-      return name;
-    });
-  }, [cuisines]);
+    if (TOP_LEVELS.includes(name)) {
+      setCuisineTab(name);
+      setFlavor(name);
+      router.replace('/restaurants', undefined, { shallow: true });
+      return;
+    }
+    const c = cuisines.find((x) => x.name === name && x.dimension === '菜系');
+    const next = flavor === name ? null : name;
+    setFlavor(next);
+    if (c) setCuisineTab(topLevel(c, cuisines));
+    if (next) router.replace(`/restaurants?cuisine=${encodeURIComponent(next)}`, undefined, { shallow: true });
+    else router.replace('/restaurants', undefined, { shallow: true });
+  }, [cuisines, flavor, router]);
 
-  // 某菜系（含全部子孙流派）关联的餐厅去重数——父标签本身可能 0 店、店都挂在子流派上
+  // 关店店 id（计数/展示排除，数据保鲜口径）
+  const closedIds = useMemo(
+    () => new Set(restaurants.filter((r) => r.status === 'closed' || r.status === '关店').map((r) => r.id)),
+    [restaurants]
+  );
+
+  // 某菜系（含全部子孙流派）关联的【在营】餐厅去重数——父标签本身可能 0 店、店都挂在子流派上
   const subtreeCount = useCallback((name: string): number => {
     const ids = collectFlavorIds(name);
     const rs = new Set<number>();
-    rc.forEach((x) => { if (ids.has(x.cuisine_id)) rs.add(x.restaurant_id); });
+    rc.forEach((x) => { if (ids.has(x.cuisine_id) && !closedIds.has(x.restaurant_id)) rs.add(x.restaurant_id); });
     return rs.size;
-  }, [collectFlavorIds, rc]);
+  }, [collectFlavorIds, rc, closedIds]);
 
   // 行政区 / 商圈
   const districts = useMemo(() => {
@@ -279,6 +287,7 @@ export default function RestaurantsPage() {
   const clearAll = () => {
     setSearch(''); setFlavor(null); setTiers(new Set()); setDistrict(null);
     setLocation(null); setTagSel(new Set());
+    router.replace('/restaurants', undefined, { shallow: true });
   };
 
   const renderFlavorTag = (c: Cuisine) => {
@@ -495,7 +504,7 @@ export default function RestaurantsPage() {
             <span className="kicker text-mocha-faint">已选</span>
             {flavor && (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-terracotta text-white text-xs rounded-full">
-                {flavor}<button onClick={() => setFlavor(null)}>✕</button>
+                {flavor}<button onClick={() => { setFlavor(null); router.replace('/restaurants', undefined, { shallow: true }); }}>✕</button>
               </span>
             )}
             {Array.from(tiers).map((t) => (
