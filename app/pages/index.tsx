@@ -11,12 +11,12 @@ const ROOT_EN: Record<string, string> = {
   北美洲: 'N. America', 南美洲: 'S. America', 融合菜: 'Fusion', 非正餐: 'Café & Bar',
 };
 
-async function fetchAll<T = any>(table: string, select: string, extra?: [string, any]): Promise<T[]> {
+async function fetchAll<T = any>(table: string, select: string, extra?: [string, any], orderBy = 'id'): Promise<T[]> {
   const step = 1000;
   let start = 0;
   let all: T[] = [];
   for (;;) {
-    let q = supabase.from(table).select(select).order('id').range(start, start + step - 1);
+    let q = supabase.from(table).select(select).order(orderBy).range(start, start + step - 1);
     if (extra) q = q.eq(extra[0], extra[1]);
     const { data, error } = await q;
     if (error) throw error;
@@ -41,7 +41,7 @@ export default function Home() {
       const [rest, cuis, links] = await Promise.all([
         fetchAll<Restaurant>('restaurants', '*', ['status', 'active']),
         fetchAll<Cuisine>('cuisines', '*'),
-        fetchAll<{ restaurant_id: number; cuisine_id: number }>('restaurant_cuisines', 'restaurant_id,cuisine_id'),
+        fetchAll<{ restaurant_id: number; cuisine_id: number }>('restaurant_cuisines', 'restaurant_id,cuisine_id', undefined, 'restaurant_id'),
       ]);
       setRestaurants(rest);
       setCuisines(cuis);
