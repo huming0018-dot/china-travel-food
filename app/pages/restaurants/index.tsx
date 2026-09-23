@@ -219,7 +219,7 @@ export default function RestaurantsPage() {
   const specialTags = useMemo(() => byDim('标签'), [byDim]);
   // 常驻亮点快捷标签（核心认证/特别标签，提升可发现性；完整列表在筛选抽屉）
   const quickTags = useMemo(
-    () => [159, 160, 45, 46].map((id) => cuisines.find((c) => c.id === id)).filter(Boolean) as Cuisine[],
+    () => [159, 160, 323, 45, 46].map((id) => cuisines.find((c) => c.id === id)).filter(Boolean) as Cuisine[],
     [cuisines]
   );
   const ingredientTags = useMemo(() => {
