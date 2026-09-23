@@ -3,6 +3,7 @@ import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { supabase, Restaurant, Cuisine, Review } from '@/lib/supabase';
+import { parseLngLat } from '@/lib/geo';
 import { useFavorites } from '@/lib/favorites';
 import { useAuth } from '@/lib/auth';
 
@@ -30,19 +31,6 @@ async function fetchAll<T = any>(table: string, select: string, orderCol: string
     start += step;
   }
   return all;
-}
-
-// 从 GeoJSON Point 提取 [lng, lat]
-function parseLngLat(loc: unknown): [number, number] | null {
-  if (!loc || typeof loc !== 'object') return null;
-  const geo = loc as { type?: string; coordinates?: number[] };
-  if (geo.type === 'Point' && Array.isArray(geo.coordinates) && geo.coordinates.length >= 2) {
-    const [lng, lat] = geo.coordinates;
-    if (typeof lng === 'number' && typeof lat === 'number' && lng !== 0 && lat !== 0) {
-      return [lng, lat];
-    }
-  }
-  return null;
 }
 
 function StarRating({ value, onChange, size = 'text-lg' }: { value: number; onChange?: (v: number) => void; size?: string }) {

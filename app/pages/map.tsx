@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Head from 'next/head';
 import { supabase, Restaurant } from '@/lib/supabase';
+import { parseLatLng } from '@/lib/geo';
 
 // 动态导入 Leaflet 组件，禁用 SSR（Leaflet 依赖 window）
 const MapContainer = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
@@ -27,52 +28,6 @@ const fixLeafletIcon = () => {
 
 // 上海中心坐标
 const SHANGHAI_CENTER: [number, number] = [31.2304, 121.4737];
-
-// ---- 坐标解析：库内 location 为 PostGIS hex EWKB（supabase-js 不会自动转 GeoJSON）----
-
-// hex EWKB/WKB → [lat, lng]（仅 Point）
-function parseHexWKB(hex: string): [number, number] | null {
-  try {
-    const clean = hex.trim();
-    const bytes = new Uint8Array(clean.length / 2);
-    for (let i = 0; i < bytes.length; i++) bytes[i] = parseInt(clean.substr(i * 2, 2), 16);
-    const dv = new DataView(bytes.buffer);
-    const littleEndian = bytes[0] === 1;
-    let off = 1;
-    const type = dv.getUint32(off, littleEndian);
-    off += 4;
-    const hasSRID = (type & 0x20000000) !== 0;
-    const gtype = type & 0x0fffffff;
-    if (gtype !== 1) return null; // 非 Point
-    if (hasSRID) off += 4;        // 跳过 SRID
-    const x = dv.getFloat64(off, littleEndian); off += 8; // lng
-    const y = dv.getFloat64(off, littleEndian);           // lat
-    if (!Number.isFinite(x) || !Number.isFinite(y) || x === 0 || y === 0) return null;
-    return [y, x];
-  } catch {
-    return null;
-  }
-}
-
-// 从 GeoJSON / hex EWKB / WKT 提取 [lat, lng]，失败返回 null
-function parseLocation(loc: unknown): [number, number] | null {
-  if (!loc) return null;
-  if (typeof loc === 'object') {
-    const geo = loc as { type?: string; coordinates?: number[] };
-    if (geo.type === 'Point' && Array.isArray(geo.coordinates) && geo.coordinates.length >= 2) {
-      const [lng, lat] = geo.coordinates;
-      if (typeof lng === 'number' && typeof lat === 'number' && lng !== 0 && lat !== 0) return [lat, lng];
-    }
-    return null;
-  }
-  if (typeof loc === 'string') {
-    const s = loc.trim();
-    if (/^[0-9a-f]+$/i.test(s)) return parseHexWKB(s);
-    const m = s.match(/POINT\s*\(\s*([-+\d.]+)\s+([-+\d.]+)\s*\)/i);
-    if (m) return [parseFloat(m[2]), parseFloat(m[1])];
-  }
-  return null;
-}
 
 // 分页拉全（PostgREST 单页 ≤1000，必须分页，否则漏店）
 async function fetchAllRestaurants(): Promise<Restaurant[]> {
@@ -119,7 +74,7 @@ export default function MapPage() {
       const active = all.filter((r) => r.status !== 'closed' && r.status !== '关店');
       setActiveTotal(active.length);
       const withCoords = active
-        .map((r) => ({ r, pos: parseLocation(r.location) }))
+        .map((r) => ({ r, pos: parseLatLng(r.location) }))
         .filter((x): x is { r: Restaurant; pos: [number, number] } => x.pos !== null);
       setPoints(withCoords);
       setLoading(false);

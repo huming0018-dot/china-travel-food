@@ -1,0 +1,83 @@
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "Bake No Title", "detail": "番禺路232号，韩式门头，香蕉肉桂卷/经典豆蔻肉桂卷，TimeOut上海烘焙新店测评", "discovery_path": "抖音breadwalk视频+TimeOut上海", "evidence_status": "multi_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "闹NOW", "detail": "云南风味烘焙工坊，紫糯米吐司/花椒云腿司康", "discovery_path": "抖音番禺路6家合集", "evidence_status": "single_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "Lonbakery town(小狗面包)", "detail": "吴江路/静安嘉里中心/新天地，复古英伦风，葡式蛋挞/黑胡椒肠仔可颂", "discovery_path": "抖音上海面包合集", "evidence_status": "single_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "mbd", "detail": "上海恰巴塔天花板，每天出三轮，均价20", "discovery_path": "抖音500元吃7家面包", "evidence_status": "single_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "SoSo盐面包", "detail": "番禺路，汤种盐面包软盐/硬盐，¥8起", "discovery_path": "抖音番禺路逛吃+6家合集", "evidence_status": "multi_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "Orenda bake", "detail": "香茅草椰香吐司排队王，利西路可邮寄", "discovery_path": "抖音番禺路8家+XHS利西路1万赞笔记评论区", "evidence_status": "multi_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "chuf", "detail": "番禺路，肉桂卷/蓝莓酸面包", "discovery_path": "抖音番禺路8家", "evidence_status": "single_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "nano", "detail": "木浆子恰巴塔", "discovery_path": "抖音番禺路8家", "evidence_status": "single_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "团子Tuanzi", "detail": "番禺路日系烘焙，爆浆抹茶吐司/330g", "discovery_path": "抖音番禺路6家+B站", "evidence_status": "multi_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "Madre", "detail": "番禺路地中海风，奶油面包/佛卡夏", "discovery_path": "抖音番禺路6家", "evidence_status": "single_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "PAIN CHAUD百丘", "detail": "番禺路/建国西路，衡复法式烘焙标杆，开心果泡芙¥43/无花果泡芙/杏仁可颂", "discovery_path": "抖音(4视频)+携程(3笔记)+腾讯新闻+TimeOut+Wanderlog", "evidence_status": "strong"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "smaka", "detail": "瑞典肉桂卷¥20，北欧烘焙，布达佩斯蛋糕", "discovery_path": "抖音breadwalk+愚园路9家", "evidence_status": "multi_source"}
+{"round": 1, "seed": "BAsdBAN", "edge_type": "店→店+平台关联", "candidate": "drunk baker醉师傅", "detail": "陕康里/前滩，离沪必买伴手礼，磅蛋糕/盐面包/辣松松/肉桂卷", "discovery_path": "抖音(8视频含差评)+Trip.com(2店)+携程", "evidence_status": "strong"}
+{"round": 1, "seed": "When Pigs Fly", "edge_type": "店→店", "candidate": "enchante", "detail": "碱水包闭眼挑不踩雷", "discovery_path": "抖音5家碱水面包", "evidence_status": "single_source"}
+{"round": 1, "seed": "When Pigs Fly", "edge_type": "店→店", "candidate": "ISAN BAKERY", "detail": "牛牛碱水内藏玄机", "discovery_path": "抖音5家碱水面包", "evidence_status": "single_source"}
+{"round": 1, "seed": "When Pigs Fly", "edge_type": "店→店", "candidate": "Carino Bakery&Cafe", "detail": "碱水内馅饱满", "discovery_path": "抖音5家碱水面包", "evidence_status": "single_source"}
+{"round": 1, "seed": "When Pigs Fly", "edge_type": "店→店", "candidate": "纳尔斯", "detail": "现象级佛卡夏三明治新店，开心果火腿", "discovery_path": "抖音上海新开6家", "evidence_status": "single_source"}
+{"round": 1, "seed": "When Pigs Fly", "edge_type": "店→店", "candidate": "Abendbrot", "detail": "传统德式面包房，vegan选项", "discovery_path": "Wanderlog 44 best bakeries", "evidence_status": "single_source"}
+{"round": 1, "seed": "When Pigs Fly", "edge_type": "店→店", "candidate": "Maison de Manne et Sante", "detail": "绍兴路/新闸路，软法棍/甜甜圈", "discovery_path": "eChinacities", "evidence_status": "single_source"}
+{"round": 1, "seed": "TonTon", "edge_type": "人→内容(Mavis团队)", "candidate": "Nonna永康路", "detail": "永康路，与TonTon同期被探店视频并列", "discovery_path": "抖音性价比攻略", "evidence_status": "single_source"}
+{"round": 1, "seed": "Gluglu", "edge_type": "同商圈遍历", "candidate": "堂屋糖水", "detail": "愚园路1409号，复古老牌港式糖水，芋圆桃胶，三分糖", "discovery_path": "抖音愚园路9家+10家+澎湃夏日清单", "evidence_status": "multi_source"}
+{"round": 1, "seed": "Gluglu", "edge_type": "同商圈遍历", "candidate": "ARTIST LA PIE", "detail": "愚园路法式古堡氛围甜品，欧洲古董陈设", "discovery_path": "抖音愚园路citywalk(2视频)", "evidence_status": "multi_source"}
+{"round": 1, "seed": "Gluglu", "edge_type": "同商圈遍历", "candidate": "Money Shops", "detail": "愚园路洋房brunch，开心果肉桂卷/梅果布丁蛋挞", "discovery_path": "抖音愚园路10家(2视频)", "evidence_status": "multi_source"}
+{"round": 1, "seed": "Gluglu", "edge_type": "同商圈遍历", "candidate": "面包咖啡好天气", "detail": "日系温柔小店，海盐卷配咖啡", "discovery_path": "抖音愚园路9家", "evidence_status": "single_source"}
+{"round": 1, "seed": "Gluglu", "edge_type": "同商圈遍历", "candidate": "露地怪物冰屋", "detail": "愚园路日式雪花冰，造型可爱", "discovery_path": "抖音愚园路9家", "evidence_status": "single_source"}
+{"round": 1, "seed": "VERIE", "edge_type": "主厨圈/内容→评论区", "candidate": "spring cacao/spring可可家", "detail": "可可专卖店，超大杯提拉米苏，嗜苦爱好者", "discovery_path": "抖音20家甜品+XHS评论区", "evidence_status": "multi_source"}
+{"round": 1, "seed": "VERIE", "edge_type": "主厨圈/内容→评论区", "candidate": "ojuua", "detail": "水果塔专门店，芒果斑斓糯米", "discovery_path": "抖音20家甜品", "evidence_status": "single_source"}
+{"round": 1, "seed": "VERIE", "edge_type": "主厨圈/内容→评论区", "candidate": "白日梦", "detail": "焦糖榛子拿破仑", "discovery_path": "抖音20家甜品", "evidence_status": "single_source"}
+{"round": 1, "seed": "VERIE", "edge_type": "主厨圈/内容→评论区", "candidate": "La Boulangerie", "detail": "法棍之神", "discovery_path": "抖音梧桐区5家", "evidence_status": "single_source"}
+{"round": 1, "seed": "查询矩阵(日式甜品)", "edge_type": "关键词矩阵", "candidate": "泽田本家", "detail": "铜锣烧专门店，迪拜巧克力开心果/柿子流心铜锣烧", "discovery_path": "抖音(4视频)+XHS评论区(作者回复)", "evidence_status": "strong"}
+{"round": 1, "seed": "查询矩阵(日式甜品)", "edge_type": "关键词矩阵", "candidate": "和味制菓", "detail": "黑石公寓和果子店，主理人李蒙茜，瑞典长大，传统技法融合中国食材", "discovery_path": "澎湃新闻小店故事", "evidence_status": "single_source"}
+{"round": 1, "seed": "查询矩阵(gelato)", "edge_type": "关键词矩阵", "candidate": "达可芮Dal Cuore", "detail": "陕西北路600号/张园，上海最老牌gelato，葱油拌面口味/开心果/巴斯克蛋糕，双拼¥45", "discovery_path": "抖音(4视频)+携程(4页)+澎湃+Wanderlog", "evidence_status": "strong"}
+{"round": 1, "seed": "查询矩阵(gelato)", "edge_type": "关键词矩阵", "candidate": "il Laboratorio del gelato(ILDG)", "detail": "高级gelato，橄榄油味/日本柚子紫苏，奶油克制", "discovery_path": "抖音(2视频)", "evidence_status": "multi_source"}
+{"round": 1, "seed": "查询矩阵(gelato)", "edge_type": "关键词矩阵", "candidate": "Bonus", "detail": "乌鲁木齐中路243-3号，只卖意式gelato，开心果茉莉花茶", "discovery_path": "抖音10家冰淇淋", "evidence_status": "single_source"}
+{"round": 1, "seed": "查询矩阵(gelato)", "edge_type": "关键词矩阵", "candidate": "igloo gelato", "detail": "上海gelato测评列表提及", "discovery_path": "抖音窜稀备忘录", "evidence_status": "single_source"}
+{"round": 1, "seed": "查询矩阵(gelato)", "edge_type": "关键词矩阵", "candidate": "Giolitti乔立蒂", "detail": "意大利gelato品牌", "discovery_path": "抖音窜稀备忘录", "evidence_status": "single_source"}
+{"round": 1, "seed": "查询矩阵(gelato)", "edge_type": "关键词矩阵", "candidate": "FLAVERSE", "detail": "gelato", "discovery_path": "抖音窜稀备忘录", "evidence_status": "single_source"}
+{"round": 1, "seed": "查询矩阵(gelato)", "edge_type": "关键词矩阵", "candidate": "野人先生", "detail": "徐汇全球旗舰店，中式gelato，当天现做不隔夜，双拼¥19.9", "discovery_path": "抖音(2视频)+徐汇区政府官网+东方网", "evidence_status": "strong"}
+{"round": 1, "seed": "查询矩阵(gelato)", "edge_type": "关键词矩阵", "candidate": "红楼HONGLOU Gelato", "detail": "iapm全国首店，中式C-elato未来小屋", "discovery_path": "东方网", "evidence_status": "single_source"}
+{"round": 1, "seed": "B站采集器", "edge_type": "site:bilibili.com", "candidate": "都恩客", "detail": "高岛屋B1日式面包，盐面包/法棍/吐司/巨无霸法棍日限3根", "discovery_path": "B站BV1FbW4zQEbZ", "evidence_status": "single_source"}
+{"round": 1, "seed": "B站采集器", "edge_type": "site:bilibili.com", "candidate": "翠爷贝果", "detail": "贝果No.1，韧性与扎实平衡，南瓜/碱水全麦/罗勒口味", "discovery_path": "B站加糖小昕点专栏", "evidence_status": "single_source"}
+{"round": 1, "seed": "B站采集器", "edge_type": "site:bilibili.com", "candidate": "avectoi", "detail": "奶油葡萄法棍", "discovery_path": "B站BV1tj7vzgEFW", "evidence_status": "single_source"}
+{"round": 1, "seed": "B站采集器", "edge_type": "site:bilibili.com", "candidate": "nanna", "detail": "蘑菇芝士恰巴塔", "discovery_path": "B站BV1tj7vzgEFW", "evidence_status": "single_source"}
+{"round": 1, "seed": "B站采集器", "edge_type": "site:bilibili.com", "candidate": "moofin", "detail": "肉桂卷", "discovery_path": "B站BV1tj7vzgEFW", "evidence_status": "single_source"}
+{"round": 1, "seed": "B站采集器", "edge_type": "site:bilibili.com", "candidate": "纽约贝果博物馆", "detail": "新天地马当路/陆家嘴，20+口味，香葱韭菜芝士/红豆黄油/黑松露无花果贝果", "discovery_path": "抖音(3视频)+携程+Trip.com(2页)", "evidence_status": "strong"}
+{"round": 1, "seed": "B站采集器", "edge_type": "site:bilibili.com", "candidate": "石窑先生", "detail": "芝士吐司", "discovery_path": "B站BV1tLTqzpEVx", "evidence_status": "single_source"}
+{"round": 1, "seed": "B站采集器", "edge_type": "site:bilibili.com", "candidate": "花神Maison Flora Pain", "detail": "法式香草蓝莓奶油磅蛋糕/开心果巧克力牛角包/黑松露火腿芝士酥皮派", "discovery_path": "B站BV1jD1TBhEt5", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1贝果分支", "edge_type": "查询矩阵(贝果)", "candidate": "Holy Bagel", "detail": "古北/苏河湾/幸福里，高品质贝果+咖啡，天然无添加", "discovery_path": "TimeOut上海", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1贝果分支", "edge_type": "查询矩阵(贝果)", "candidate": "Look Bagel&Cafe", "detail": "新闸路831号丽都新贵7楼", "discovery_path": "抖音5家贝果", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1贝果分支", "edge_type": "查询矩阵(贝果)", "candidate": "BegL餐厅", "detail": "贝果餐厅，开心果贝果¥32，三件93", "discovery_path": "抖音(2视频)", "evidence_status": "multi_source"}
+{"round": 2, "seed": "R1贝果分支", "edge_type": "查询矩阵(贝果)", "candidate": "Apoli Ita", "detail": "霍格沃茨风贝果，萨拉米芝士辣椒", "discovery_path": "Trip.com", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1糖水分支", "edge_type": "查询矩阵(糖水)", "candidate": "旺角陆号", "detail": "香港开来糖水店，TVB艺人常客，双皮奶有皮", "discovery_path": "抖音4家糖水", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1糖水分支", "edge_type": "查询矩阵(糖水)", "candidate": "十三姨港式糖水铺", "detail": "功夫双皮奶(云南水牛奶)，鬼口水开心果糊，仙本那蓝柑冰粉", "discovery_path": "TimeOut上海", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1糖水分支", "edge_type": "查询矩阵(糖水)", "candidate": "李叔慢炖", "detail": "历城路9㎡夫妻店，炭火慢炖养生糖水，人均十几元，上南口味榜第一", "discovery_path": "澎湃新闻", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1糖水分支", "edge_type": "查询矩阵(糖水)", "candidate": "潮甘露", "detail": "青浦宝龙商圈移动餐车，潮汕甜汤，木薯大满贯", "discovery_path": "澎湃新闻", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1舒芙蕾分支", "edge_type": "查询矩阵(舒芙蕾)", "candidate": "米仓pop", "detail": "舒芙蕾松饼专门店，日式烤年糕抹茶松饼，39抵50", "discovery_path": "抖音+Lemon8", "evidence_status": "multi_source"}
+{"round": 2, "seed": "R1舒芙蕾分支", "edge_type": "查询矩阵(舒芙蕾)", "candidate": "Fuzzi手作舒芙蕾", "detail": "小众手作舒芙蕾，口味多到开博物馆，酸甜都有", "discovery_path": "抖音甜品合集", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1舒芙蕾分支", "edge_type": "查询矩阵(舒芙蕾)", "candidate": "MIKAKU", "detail": "南京西路，爆炸黑巧克力，提拉米苏舒芙蕾松饼镇店", "discovery_path": "上观新闻/头条", "evidence_status": "single_source"}
+{"round": 2, "seed": "R1舒芙蕾分支", "edge_type": "查询矩阵(舒芙蕾)", "candidate": "Puffin", "detail": "泡芙专门店，迪拜巧克力泡芙2.0，黄金焦糖香草泡芙¥16.8", "discovery_path": "抖音", "evidence_status": "single_source"}
+{"round": 2, "seed": "XHS评论区深采", "edge_type": "内容→评论区", "candidate": "In Dough We Trust", "detail": "XHS猜你想搜自动关联，上海知名甜品店", "discovery_path": "小红书18家甜品笔记猜你想搜", "evidence_status": "single_source"}
+{"round": 2, "seed": "XHS评论区深采", "edge_type": "内容→评论区(巴斯克6形态)", "candidate": "505世家", "detail": "西餐厅炙烤巴斯克¥79/小块，表皮焦香内部熔岩拉丝，博主称吃完质疑之前所有巴斯克", "discovery_path": "小红书7693赞视频评论区AI总结", "evidence_status": "single_source"}
+{"round": 2, "seed": "XHS评论区深采", "edge_type": "内容→评论区(巴斯克6形态)", "candidate": "B+Bakery", "detail": "黑芝麻吐司嵌巴斯克夹心¥28，性价比最高", "discovery_path": "小红书7693赞视频评论区AI总结", "evidence_status": "single_source"}
+{"round": 2, "seed": "XHS评论区深采", "edge_type": "内容→评论区(巴斯克6形态)", "candidate": "TODOS", "detail": "黑巧甘纳许+原味巴斯克+奥利奥夹心¥38，香草味不甜腻", "discovery_path": "小红书7693赞视频评论区AI总结", "evidence_status": "single_source"}
+{"round": 2, "seed": "XHS评论区深采", "edge_type": "内容→评论区(巴斯克6形态)", "candidate": "Lava", "detail": "巴斯克藏在伯爵茶软曲奇里¥28，口感递进变软", "discovery_path": "小红书7693赞视频评论区AI总结", "evidence_status": "single_source"}
+{"round": 2, "seed": "XHS评论区深采", "edge_type": "内容→评论区(巴斯克6形态)", "candidate": "一川", "detail": "伯爵红茶味大块切角巴斯克¥38，像员工价", "discovery_path": "小红书7693赞视频评论区AI总结", "evidence_status": "single_source"}
+{"round": 2, "seed": "XHS评论区深采", "edge_type": "内容→评论区(巴斯克6形态)", "candidate": "mercado", "detail": "巴斯克被差评：好咸好腻", "discovery_path": "小红书7693赞视频评论区", "evidence_status": "single_source"}
+{"round": 2, "seed": "XHS搜索(可颂)", "edge_type": "关键词矩阵", "candidate": "SOAE", "detail": "试营业后预计大排长队，利西路新店", "discovery_path": "小红书(2笔记)", "evidence_status": "single_source"}
+{"round": 3, "seed": "R2 evidence-firming", "edge_type": "多源并集", "candidate": "Don Nino", "detail": "意大利gelato，粉蓝配色梦幻口味，刚开半年", "discovery_path": "澎湃冰淇淋小店地图", "evidence_status": "single_source"}
+{"round": 3, "seed": "R2 evidence-firming", "edge_type": "多源并集", "candidate": "Dip In Gelato", "detail": "携程10家冰淇淋地图提及", "discovery_path": "携程笔记", "evidence_status": "single_source"}
+{"round": 4, "seed": "saturation check", "edge_type": "连续2轮零新增", "candidate": null, "detail": "R4对R3候选(Don Nino/Dip In Gelato/SOAE/505世家等)二次溯源，未发现新的店→店/人→内容边，frontier清空，连续2轮零新增=饱和", "discovery_path": "N/A", "evidence_status": "saturated"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "EVERNAKED裸蛋糕(巨鹿路店)", "detail": "9959条评价，人均¥57，静安寺，玫瑰荔枝蛋糕/西瓜草莓/法式栗子裸蛋糕", "discovery_path": "大众点评口味榜", "evidence_status": "strong(平台数据)"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "FASCINO BAKERY(丰盛里/幸福里/万象城)", "detail": "9859+3845+3131条评价，人均¥43-46，海盐奶油卷/乳酪贝果/枫糖核桃吐司", "discovery_path": "大众点评口味榜", "evidence_status": "strong(平台数据)"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "yeetlemon柠檬蛋糕", "detail": "14199条评价，人均¥94，同乐坊，柠檬蛋糕/柠檬奶冻/玫瑰柠檬塔", "discovery_path": "大众点评口味榜", "evidence_status": "strong(平台数据)"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "yeetchoco巧克力蛋糕", "detail": "10785+4168条评价，人均¥51-63，中山公园/淮海路，70%醇巧克力蛋糕/巧克力奶冻", "discovery_path": "大众点评口味榜", "evidence_status": "strong(平台数据)"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "Fuzii手作舒芙蕾", "detail": "1890条评价，人均¥70，静安寺，巧克力/草莓/柠檬舒芙蕾（=抖音Fuzzi）", "discovery_path": "大众点评口味榜+抖音", "evidence_status": "multi_source"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "杜哈夫DOUX RÊVE", "detail": "3374条评价，人均¥183，陆家嘴，香草海盐裸蛋糕/焦糖香缇蛋糕", "discovery_path": "大众点评口味榜", "evidence_status": "strong(平台数据)"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "The Red Macaron", "detail": "607条评价，人均¥57，长寿路，茉莉/抹茶马卡龙/伯爵波波橙", "discovery_path": "大众点评口味榜", "evidence_status": "moderate"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "SAN SAN CAKE", "detail": "1224条评价，人均¥36，陈家镇，榴莲千层/蝶豆花千层/提拉米苏千层", "discovery_path": "大众点评口味榜", "evidence_status": "moderate"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "廣蓮申海派點心", "detail": "7861条评价，人均¥43，咸口软泡芙/灌浆曲奇/女王卷", "discovery_path": "大众点评口味榜", "evidence_status": "strong(平台数据)"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "江枫堂宽兵卫", "detail": "1406条评价，人均¥20，世纪公园，抹茶铜锣烧/原味红豆铜锣烧/奶油芝士铜锣烧", "discovery_path": "大众点评口味榜", "evidence_status": "moderate"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "WenTinG文汀Cake&Brunch", "detail": "6442条评价，人均¥134，徐家汇，晴王酸奶4寸/草莓晴王双拼", "discovery_path": "大众点评口味榜", "evidence_status": "moderate"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "La Boulangerie NICO", "detail": "373条评价，人均¥36，松江，酒渍提子酸奶法棍/明太子法棍", "discovery_path": "大众点评口味榜", "evidence_status": "moderate"}
+{"round": 2, "seed": "大众点评口味榜", "edge_type": "B商圈逐格(dianping)", "candidate": "PAIN CHAUD百丘(静安久光店)", "detail": "11033条评价，人均¥50，静安寺，开心果泡芙/冰淇淋/可颂 — 与R1候选交叉确认", "discovery_path": "大众点评口味榜+抖音+携程", "evidence_status": "strong"}

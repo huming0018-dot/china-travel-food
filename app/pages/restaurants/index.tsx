@@ -217,6 +217,11 @@ export default function RestaurantsPage() {
   const awardTags = useMemo(() => byDim('认证'), [byDim]);
   // 特别标签：始终显示（含0店的核心筛选项如素食/纯素、分子/先锋、可预订）
   const specialTags = useMemo(() => byDim('标签'), [byDim]);
+  // 常驻亮点快捷标签（核心认证/特别标签，提升可发现性；完整列表在筛选抽屉）
+  const quickTags = useMemo(
+    () => [159, 160, 45, 46].map((id) => cuisines.find((c) => c.id === id)).filter(Boolean) as Cuisine[],
+    [cuisines]
+  );
   const ingredientTags = useMemo(() => {
     const seen = new Set<string>();
     return byDim('食材').filter((c) => {
@@ -383,6 +388,22 @@ export default function RestaurantsPage() {
                 style={on ? {} : { background: '#fff', borderColor: '#E0D5C8', color: '#5C4A3E' }}
                 onClick={() => toggleTier(t.key)}>
                 {t.key}<span className={`ml-1 text-2xs ${on ? 'opacity-70' : 'text-mocha-faint'}`}>{t.range}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 亮点快捷筛选（常驻：核心认证/特别标签，一键可筛） */}
+        <div className="flex items-center gap-2 mb-4 flex-wrap">
+          <span className="kicker text-mocha-faint mr-1">亮点</span>
+          {quickTags.map((c) => {
+            const on = tagSel.has(c.id);
+            return (
+              <button key={c.id} onClick={() => toggleTag(c.id)}
+                className={`px-3.5 py-1.5 rounded-full text-xs border transition-all whitespace-nowrap ${
+                  on ? 'bg-mocha text-cream-50 border-mocha' : 'bg-white border-line text-mocha-soft hover:border-terracotta hover:text-terracotta'
+                }`}>
+                {c.name}<span className={`ml-1 text-2xs ${on ? 'text-cream-50/70' : 'text-mocha-faint'}`}>{tagCount[c.id] || 0}</span>
               </button>
             );
           })}
