@@ -79,10 +79,11 @@ export default function RestaurantsPage() {
     [cuisines]
   );
 
-  // URL ?cuisine= 自动定位
+  // URL ?cuisine= 自动定位（虚拟根或具体菜系）
   useEffect(() => {
     if (router.query.cuisine && cuisines.length) {
       const name = decodeURIComponent(router.query.cuisine as string);
+      if (ROOTS.includes(name)) { setRoot(name); setFlavor(name); return; }
       const c = cuisines.find((x) => x.name === name && x.dimension === '菜系');
       if (c) {
         setFlavor(name);
