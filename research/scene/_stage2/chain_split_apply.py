@@ -112,6 +112,13 @@ def build_plan():
         agg = C.req("GET", f"/restaurants?id=eq.{agg_id}&select=*").json()[0]
         cids = sorted(x["cuisine_id"] for x in C.req(
             "GET", f"/restaurant_cuisines?select=cuisine_id&restaurant_id=eq.{agg_id}").json())
+        # 全品牌近坐标查重：库中已有该品牌（含异写/早期收录，如烤匠rid1443）且 <120m 视为已存在
+        exist_pts = []
+        for e in C.req("GET", "/restaurants", params={
+                "select": "id,location", "name": f"ilike.*{brand}*"}).json():
+            _p = C.parse_location(e.get("location"))
+            if _p:
+                exist_pts.append((_p[1], _p[0]))  # (lat,lng)，与分店坐标顺序一致
         bl = branches[brand]
         _ll = C.parse_location(agg.get("location"))  # (lng, lat)
         agg_pos = (_ll[1], _ll[0]) if _ll else None  # → (lat, lng)，与分店坐标顺序一致
@@ -123,10 +130,11 @@ def build_plan():
         if anchor is None:
             anchor = bl[0]
         rest = [b for b in bl if b is not anchor]
-        # 过滤已存在（幂等重跑）
+        # 过滤已存在（幂等重跑）：精确店名 或 全品牌近坐标 <120m
         new_rows = []
         for b in rest:
-            if existing_id(b["title"]):
+            bp = (b["lat"], b["lng"])
+            if existing_id(b["title"]) or any(meters(bp, ep) < 120 for ep in exist_pts):
                 continue
             new_rows.append(b)
             time.sleep(0.05)
