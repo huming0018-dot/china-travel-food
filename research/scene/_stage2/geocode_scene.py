@@ -3,12 +3,15 @@
 """用腾讯 WebService 批量补坐标（强化版）：
 多关键词(全名/品牌核心/英文/中文)聚合 suggestion 候选 → 地址·商场强匹配选分店 →
 连锁无地址吻合标 ambiguous(不瞎选) → 实在无候选才 geocoder 兜底。只产出结果，不写库。"""
-import json, math, re, time, pathlib
+import json, math, re, sys, time, pathlib
 import requests
 
 KEY = "7PQBZ-7IDKZ-YUHXF-7V2GG-M2B3O-4OBT6"
 BASE = "https://apis.map.qq.com"
 HERE = pathlib.Path(__file__).parent
+_PIPE = "/Users/hubowen/Library/Application Support/Doubao/Default/.doubao/agent_mode/workspace/.user_skills/city-food-guide/scripts/food_pipeline"
+sys.path.insert(0, _PIPE)
+import tencent_sig as TS  # noqa: E402
 TASKS = HERE / "scene_coord_tasks.json"
 OUT = HERE / "scene_coords_result.json"
 
@@ -51,9 +54,9 @@ def mall_of(addr):
 
 def suggest(keyword):
     try:
-        r = requests.get(BASE + "/ws/place/v1/suggestion",
-                         params={"keyword": keyword, "region": "上海", "region_fix": 1,
-                                 "key": KEY, "page_size": 10}, timeout=20)
+        r = TS.signed_get("/ws/place/v1/suggestion",
+                          {"keyword": keyword, "region": "上海",
+                           "region_fix": 1, "page_size": 10})
         j = r.json()
         return j.get("data", []) if j.get("status") == 0 else []
     except requests.RequestException:
@@ -62,7 +65,7 @@ def suggest(keyword):
 
 def geocode(address):
     try:
-        r = requests.get(BASE + "/ws/geocoder/v1/", params={"address": address, "key": KEY}, timeout=20)
+        r = TS.signed_get("/ws/geocoder/v1/", {"address": address})
         j = r.json()
         return j.get("result") if j.get("status") == 0 else None
     except requests.RequestException:

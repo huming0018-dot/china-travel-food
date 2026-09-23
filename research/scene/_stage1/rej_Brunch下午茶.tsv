@@ -1,10 +1,2 @@
 name	reasons
-SMAKA（愚园路店）	真实食客UGC堂食原话少于2条（当前1；媒体/官方/榜单/品牌稿不计入食客数）
-蜂蜜草 Honey N' Clover（吴兴路店）	来源类型少于2类（当前 ['ugc']；须 UGC + 官方指南/媒体/地图 至少两类）
-湖心亭茶楼	真实食客UGC堂食原话少于2条（当前1；媒体/官方/榜单/品牌稿不计入食客数）
-泥靴 Boots（港汇恒隆店）	缺 platform_scores | 来源类型少于2类（当前 ['ugc']；须 UGC + 官方指南/媒体/地图 至少两类）
-上海浦东丽思卡尔顿酒店 AURA酒廊	来源类型少于2类（当前 ['ugc']；须 UGC + 官方指南/媒体/地图 至少两类）
-MEL BOURNE 猫尔本 Brunch&Bistro（静安店）	来源类型少于2类（当前 ['ugc']；须 UGC + 官方指南/媒体/地图 至少两类）
-SOMETHING DINING BAR（武康路店）	来源类型少于2类（当前 ['ugc']；须 UGC + 官方指南/媒体/地图 至少两类）
-Brut Eatery 悦璞食堂（愚园路店）	真实食客UGC堂食原话少于2条（当前1；媒体/官方/榜单/品牌稿不计入食客数）
-CASALUNA Brunch&Bistro	来源类型少于2类（当前 ['ugc']；须 UGC + 官方指南/媒体/地图 至少两类）
+泥靴 Boots（港汇恒隆店）	缺 platform_scores
