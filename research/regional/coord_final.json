@@ -931,5 +931,16 @@
   "matched_q": "家里没煮 香港新世界大厦",
   "coord_source": "tencent_poi",
   "why": "锚点命中:淮海中路"
+ },
+ {
+  "id": 1659,
+  "name": "桂山禾·桂林卤菜粉",
+  "lat": 31.004881,
+  "lng": 121.419131,
+  "addr": "上海市闵行区江川路街道兰坪路209号",
+  "tel": null,
+  "matched_q": "桂山禾 桂林卤菜粉",
+  "coord_source": "tencent_poi",
+  "why": "fix2桂林米粉补采,路名门牌与库址209号-2一致"
  }
 ]

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "桂山禾·桂林卤菜粉",
+    "action": "new",
+    "rid": 1659,
+    "rc_added": [
+      21,
+      51,
+      74,
+      162,
+      163,
+      164,
+      256
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1659,
+      "name": "桂山禾·桂林卤菜粉",
+      "status": "active",
+      "location": null,
+      "phone": "18001831708",
+      "tier": "经济",
+      "price_avg": 24,
+      "score_total": 56.8,
+      "score_objective": 68.0,
+      "score_diner": 75.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  }
+]
