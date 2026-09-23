@@ -1,0 +1,93 @@
+[
+  {
+    "name": "FINE pancake&canteen(陕西南路店)",
+    "action": "new",
+    "rid": 1836,
+    "rc_added": [
+      48,
+      67,
+      68,
+      77,
+      161,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1836,
+      "name": "FINE pancake&canteen(陕西南路店)",
+      "status": "active",
+      "location": "0101000020E61000001DE4F560525D5E4036583849F3373F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 68,
+      "score_total": 73.6,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 76.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Le Pain Sense(建国东路店)",
+    "action": "new",
+    "rid": 1837,
+    "rc_added": [
+      48,
+      67,
+      68,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1837,
+      "name": "Le Pain Sense(建国东路店)",
+      "status": "active",
+      "location": "0101000020E61000009D0FCF12645E5E40A01A2FDD24363F40",
+      "phone": "17514022634",
+      "tier": "经济",
+      "price_avg": 28,
+      "score_total": 68.4,
+      "score_objective": 72.0,
+      "score_diner": 76.0,
+      "score_taste": 74.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "WULI",
+    "action": "new",
+    "rid": 1838,
+    "rc_added": [
+      35,
+      72,
+      162,
+      163
+    ],
+    "rc_total": 4,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1838,
+      "name": "WULI",
+      "status": "active",
+      "location": "0101000020E61000004791B586525B5E408BFB8F4C87363F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 200,
+      "score_total": 58.0,
+      "score_objective": 68.0,
+      "score_diner": 55.0,
+      "score_taste": 64.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  }
+]

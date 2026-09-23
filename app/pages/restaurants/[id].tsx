@@ -321,7 +321,7 @@ export default function RestaurantDetail() {
           {r.evidence_summary && (
             <div className="mt-8 p-5 bg-white border border-line rounded-xl">
               <div className="kicker text-mocha-faint mb-2">EVIDENCE / 食客证据</div>
-              <p className="text-sm text-mocha-soft leading-relaxed">{r.evidence_summary}</p>
+              <p className="text-sm text-mocha-soft leading-relaxed whitespace-pre-line">{r.evidence_summary}</p>
             </div>
           )}
         </section>
