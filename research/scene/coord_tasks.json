@@ -1,0 +1,786 @@
+[
+ {
+  "id": 28,
+  "name": "牛New寿喜烧（自助）",
+  "address": "多区连锁（上海多家分店）",
+  "district": "多区连锁",
+  "price_avg": 116
+ },
+ {
+  "id": 30,
+  "name": "大牛寿喜烧（自助顶配）",
+  "address": "多区连锁（上海多家分店）",
+  "district": "多区连锁",
+  "price_avg": 219
+ },
+ {
+  "id": 584,
+  "name": "鲤香(板前)",
+  "address": "上海市(具体地址需预订确认，程玉平儿子小程师傅主理)",
+  "district": "长宁区",
+  "price_avg": 780
+ },
+ {
+  "id": 614,
+  "name": "我们屋头串串(老闵行)",
+  "address": "闵行区老闵行",
+  "district": "闵行区",
+  "price_avg": 80
+ },
+ {
+  "id": 780,
+  "name": "东润邻里徐州羊肉小馆",
+  "address": "浦东新区东润路东润邻里中心",
+  "district": "浦东新区",
+  "price_avg": 40
+ },
+ {
+  "id": 1269,
+  "name": "el Efante",
+  "address": "黄浦区太仓路近马当路新天地",
+  "district": "黄浦区",
+  "price_avg": 280
+ },
+ {
+  "id": 1375,
+  "name": "aftertaste回味(江勇路店)",
+  "address": "浦东新区江勇路86号W3-102",
+  "district": "浦东新区",
+  "price_avg": 80
+ },
+ {
+  "id": 1444,
+  "name": "溪雨观酸菜鱼(七宝宝龙城店)",
+  "address": "上海市闵行区新龙路395号宝龙广场T4栋1楼(漕宝路3299号宝龙城4T-395-397商铺)",
+  "district": "闵行区",
+  "price_avg": 90
+ },
+ {
+  "id": 1448,
+  "name": "孔雀厅 The Peacock Room",
+  "address": "上海市静安区石门一路288号兴业太古汇南楼S301(近威海路)",
+  "district": "静安区",
+  "price_avg": 450
+ },
+ {
+  "id": 1450,
+  "name": "千平平重庆面庄(延平路总店)",
+  "address": "上海市静安区延平路163号(近昌平路地铁站)",
+  "district": "静安区",
+  "price_avg": 43
+ },
+ {
+  "id": 1453,
+  "name": "川味面荘·泸州牛肉面(南翔老街店)",
+  "address": "上海市嘉定区南翔镇南华路286号(南翔老街南华路美食街)",
+  "district": "嘉定区",
+  "price_avg": 25
+ },
+ {
+  "id": 1454,
+  "name": "寛的窄的面馆(打浦路店)",
+  "address": "上海市黄浦区打浦路200号(淑芬串串一楼,近打浦桥)",
+  "district": "黄浦区",
+  "price_avg": 28
+ },
+ {
+  "id": 1455,
+  "name": "九品川味·四川绵阳米粉",
+  "address": "上海市闵行区景谷路141号(漕宝路另有店)",
+  "district": "闵行区",
+  "price_avg": 18
+ },
+ {
+  "id": 1478,
+  "name": "今日牛事(瑞金店)",
+  "address": "上海市黄浦区瑞金南路343-5号",
+  "district": "黄浦区",
+  "price_avg": 110
+ },
+ {
+  "id": 1482,
+  "name": "潮汕草根鲜牛肉海鲜火锅排档(七宝店)",
+  "address": "上海市闵行区七宝镇草宝路3366号领展中心广场",
+  "district": "闵行区",
+  "price_avg": 100
+ },
+ {
+  "id": 1484,
+  "name": "留住阁潮汕砂锅粥馆(长宁店)",
+  "address": "上海市长宁区定西路805号",
+  "district": "长宁区",
+  "price_avg": 80
+ },
+ {
+  "id": 1493,
+  "name": "南京大牌档(世茂商都店)",
+  "address": "上海市黄浦区南京西路258号世茂商都3楼",
+  "district": "黄浦区",
+  "price_avg": 70
+ },
+ {
+  "id": 1495,
+  "name": "徐州味道(镇坪路店)",
+  "address": "上海市普陀区镇坪路(近中山北路)",
+  "district": "普陀区",
+  "price_avg": 65
+ },
+ {
+  "id": 1522,
+  "name": "钵湘湘·常德钵子菜(梅川路店)",
+  "address": "上海市普陀区梅川路1532号(另有浦东东建路创始店)",
+  "district": "普陀区",
+  "price_avg": 55
+ },
+ {
+  "id": 1527,
+  "name": "徽悦食府(佘山新天地店)",
+  "address": "上海市松江区佘山镇桃源路188弄112号新天地广场4号楼2层",
+  "district": "松江区",
+  "price_avg": 80
+ },
+ {
+  "id": 1532,
+  "name": "东发道茶冰厅(新业坊店)",
+  "address": "上海市宝山区逸仙路1328号新业坊·源创园区",
+  "district": "宝山区",
+  "price_avg": 80
+ },
+ {
+  "id": 1546,
+  "name": "潮顺潮汕牛肉粿条(上海总店)",
+  "address": "上海市普陀区常德路1246号（长寿路地铁站2号口右转）",
+  "district": "普陀区",
+  "price_avg": 35
+ },
+ {
+  "id": 1557,
+  "name": "柒熙里(愚园路店)",
+  "address": "上海市静安区愚园路88号静安寺108美食广场一层(观光电梯旁)",
+  "district": "静安区",
+  "price_avg": 100
+ },
+ {
+  "id": 1565,
+  "name": "京悦南门涮肉(人民广场店)",
+  "address": "淮海中路1号美食不夜城3楼301室",
+  "district": "黄浦区",
+  "price_avg": 130
+ },
+ {
+  "id": 1567,
+  "name": "街角和晚风台式小厨",
+  "address": "上海市静安区静安寺静安CP商场B2层",
+  "district": "静安区",
+  "price_avg": 85
+ },
+ {
+  "id": 1569,
+  "name": "老张牛肉面(江宁路店)",
+  "address": "上海市静安区江宁路99号(近北京西路)",
+  "district": "静安区",
+  "price_avg": 45
+ },
+ {
+  "id": 1570,
+  "name": "台麻里台湾小馆",
+  "address": "上海市闵行区龙柏新村(地铁10号线龙柏新村站步行2分钟)",
+  "district": "闵行区",
+  "price_avg": 45
+ },
+ {
+  "id": 1581,
+  "name": "大壶春(四川中路店)",
+  "address": "上海市黄浦区四川中路136号",
+  "district": "黄浦区",
+  "price_avg": 28
+ },
+ {
+  "id": 1614,
+  "name": "大师宣羊·鲜肉烧烤·小酒馆(上海影城店)",
+  "address": "上海市徐汇区法华镇路218号（番禺路交叉口）",
+  "district": "徐汇区",
+  "price_avg": 110
+ },
+ {
+  "id": 1628,
+  "name": "京悦南门涮肉(仙霞路店)",
+  "address": "仙霞路632号",
+  "district": "长宁区",
+  "price_avg": 120
+ },
+ {
+  "id": 1629,
+  "name": "南门天下·蒙羊世家烀羊专家(公兴路店)",
+  "address": "公兴路6号1层",
+  "district": "静安区",
+  "price_avg": 130
+ },
+ {
+  "id": 1648,
+  "name": "小小羔·内蒙涮肉&烧烤(徐家汇店)",
+  "address": "天钥桥路218号3楼",
+  "district": "徐汇区",
+  "price_avg": 90
+ },
+ {
+  "id": 1654,
+  "name": "东北四季饺子王(茅台路店)",
+  "address": "茅台路190号(近古北路)",
+  "district": "长宁区",
+  "price_avg": 60
+ },
+ {
+  "id": 1660,
+  "name": "O.P.S CAFE",
+  "address": "上海市徐汇区太原路177弄1号临",
+  "district": "徐汇区",
+  "price_avg": 48
+ },
+ {
+  "id": 1661,
+  "name": "Captain George风味博物馆",
+  "address": "上海市徐汇区太原路236号",
+  "district": "徐汇区",
+  "price_avg": 77
+ },
+ {
+  "id": 1662,
+  "name": "有容乃大 LuckyDraw",
+  "address": "上海市静安区北京西路1622号",
+  "district": "静安区",
+  "price_avg": 40
+ },
+ {
+  "id": 1663,
+  "name": "月球咖啡 Retro",
+  "address": "上海市静安区茂名北路75弄2号底层前客堂",
+  "district": "静安区",
+  "price_avg": 50
+ },
+ {
+  "id": 1664,
+  "name": "鲁马滋 Rumors Coffee Roastery",
+  "address": "上海市徐汇区湖南路9号甲",
+  "district": "徐汇区",
+  "price_avg": 80
+ },
+ {
+  "id": 1665,
+  "name": "Café del Volcán",
+  "address": "上海市徐汇区永康路80号",
+  "district": "徐汇区",
+  "price_avg": 45
+ },
+ {
+  "id": 1666,
+  "name": "Radar Coffee",
+  "address": "上海市黄浦区思南路27号",
+  "district": "黄浦区",
+  "price_avg": 25
+ },
+ {
+  "id": 1667,
+  "name": "Brew Island 煮屿",
+  "address": "上海市虹口区溧阳路739号",
+  "district": "虹口区",
+  "price_avg": 77
+ },
+ {
+  "id": 1668,
+  "name": "白鲸咖啡 White Whale",
+  "address": "上海市宝山区真大路520号米谷产业园",
+  "district": "宝山区",
+  "price_avg": 35
+ },
+ {
+  "id": 1669,
+  "name": "aftertaste 回味",
+  "address": "上海市浦东新区江永路86号W3-102",
+  "district": "浦东新区",
+  "price_avg": 85
+ },
+ {
+  "id": 1670,
+  "name": "小半咖啡",
+  "address": "上海市普陀区曹杨二村北杨园小区242号楼",
+  "district": "普陀区",
+  "price_avg": 28
+ },
+ {
+  "id": 1671,
+  "name": "pocket pocket 口袋咖啡",
+  "address": "上海市徐汇区永嘉路309号口袋公园内",
+  "district": "徐汇区",
+  "price_avg": 28
+ },
+ {
+  "id": 1672,
+  "name": "HUGO HUSKY HOUSE 雨果咖啡",
+  "address": "上海市徐汇区永嘉路227号甲",
+  "district": "徐汇区",
+  "price_avg": 55
+ },
+ {
+  "id": 1673,
+  "name": "DayDreaming by Monos 白日梦",
+  "address": "上海市徐汇区永嘉路285号、287号",
+  "district": "徐汇区",
+  "price_avg": 45
+ },
+ {
+  "id": 1674,
+  "name": "IKIGAI",
+  "address": "上海市徐汇区永嘉路260号",
+  "district": "徐汇区",
+  "price_avg": 42
+ },
+ {
+  "id": 1675,
+  "name": "城是 CITYBORING",
+  "address": "上海市徐汇区永嘉路394号",
+  "district": "徐汇区",
+  "price_avg": 48
+ },
+ {
+  "id": 1676,
+  "name": "LANERS老虎灶喫咖啡",
+  "address": "上海市徐汇区永嘉路293号慎成里弄堂口",
+  "district": "徐汇区",
+  "price_avg": 35
+ },
+ {
+  "id": 1677,
+  "name": "BIG SUR COFFEE",
+  "address": "上海市徐汇区永嘉路277号",
+  "district": "徐汇区",
+  "price_avg": 50
+ },
+ {
+  "id": 1678,
+  "name": "Metal Hands 铁手咖啡制造局",
+  "address": "上海市徐汇区永嘉路37号",
+  "district": "徐汇区",
+  "price_avg": 45
+ },
+ {
+  "id": 1679,
+  "name": "VOYAGE COFFEE",
+  "address": "上海市徐汇区永嘉路502号",
+  "district": "徐汇区",
+  "price_avg": 65
+ },
+ {
+  "id": 1680,
+  "name": "赤瑕咖啡 Akadama",
+  "address": "上海市静安区武定西路1194号",
+  "district": "静安区",
+  "price_avg": 45
+ },
+ {
+  "id": 1681,
+  "name": "DEARYOU 咖啡豆研究所",
+  "address": "上海市徐汇区襄阳南路174号1层",
+  "district": "徐汇区",
+  "price_avg": 50
+ },
+ {
+  "id": 1682,
+  "name": "MONO",
+  "address": "上海市虹口区今潮8弄3号楼101室",
+  "district": "虹口区",
+  "price_avg": 45
+ },
+ {
+  "id": 1683,
+  "name": "Manner Coffee",
+  "address": "上海市静安区南阳路（创始店），多区数百家分店",
+  "district": "多区连锁",
+  "price_avg": 20
+ },
+ {
+  "id": 1685,
+  "name": "星巴克臻选上海烘焙工坊",
+  "address": "上海市静安区南京西路789号兴业太古汇N110-N201",
+  "district": "静安区",
+  "price_avg": 65
+ },
+ {
+  "id": 1686,
+  "name": "New Lane Coffee 纽巷",
+  "address": "上海市徐汇区襄阳南路500号2511室",
+  "district": "徐汇区",
+  "price_avg": 75
+ },
+ {
+  "id": 1687,
+  "name": "Rain Mountain 雨山咖啡",
+  "address": "上海市徐汇区飞洲国际大厦1楼大堂",
+  "district": "徐汇区",
+  "price_avg": 38
+ },
+ {
+  "id": 1688,
+  "name": "堀口咖啡 HORIGUCHI COFFEE",
+  "address": "上海市黄浦区圆明园路169号协进大楼",
+  "district": "黄浦区",
+  "price_avg": 70
+ },
+ {
+  "id": 1689,
+  "name": "且乐 cheer",
+  "address": "上海市静安区彭浦新村居民区",
+  "district": "静安区",
+  "price_avg": 32
+ },
+ {
+  "id": 1690,
+  "name": "Gregorius 航迹",
+  "address": "上海市徐汇区安福路/愚园路",
+  "district": "徐汇区",
+  "price_avg": 50
+ },
+ {
+  "id": 1691,
+  "name": "3又二分之一",
+  "address": "上海市徐汇区太原路",
+  "district": "徐汇区",
+  "price_avg": 55
+ },
+ {
+  "id": 1692,
+  "name": "0566咖啡製作所",
+  "address": "上海市黄浦区新天地南里",
+  "district": "黄浦区",
+  "price_avg": 75
+ },
+ {
+  "id": 1693,
+  "name": "VERIE BAKEHOUSE(新天地店)",
+  "address": "上海市黄浦区马当路245号新天地时尚II L层L108",
+  "district": "黄浦区",
+  "price_avg": 59
+ },
+ {
+  "id": 1694,
+  "name": "TonTon(永康路店)",
+  "address": "上海市徐汇区永康路176-178号",
+  "district": "徐汇区",
+  "price_avg": 36
+ },
+ {
+  "id": 1695,
+  "name": "Bebaked(愚园路店)",
+  "address": "上海市长宁区愚园路1107号",
+  "district": "长宁区",
+  "price_avg": 45
+ },
+ {
+  "id": 1696,
+  "name": "O'Mills Sourdough Bakery & Bistro(永嘉路店)",
+  "address": "上海市徐汇区永嘉路110号",
+  "district": "徐汇区",
+  "price_avg": 60
+ },
+ {
+  "id": 1697,
+  "name": "Gluglu(愚园路店)",
+  "address": "上海市长宁区愚园路1421号",
+  "district": "长宁区",
+  "price_avg": 35
+ },
+ {
+  "id": 1698,
+  "name": "Sloppy Gin(延平路店)",
+  "address": "上海市静安区延平路425号1楼104",
+  "district": "静安区",
+  "price_avg": 30
+ },
+ {
+  "id": 1699,
+  "name": "Luneurs月乐诗(南京西路店)",
+  "address": "上海市静安区南京西路1601号1D室(芮欧百货)",
+  "district": "静安区",
+  "price_avg": 55
+ },
+ {
+  "id": 1700,
+  "name": "柴田西点Chez Shibata(紫云西路店)",
+  "address": "上海市长宁区紫云西路24号(近遵义路)",
+  "district": "长宁区",
+  "price_avg": 58
+ },
+ {
+  "id": 1701,
+  "name": "辛一铜锣烧(静安大悦城店)",
+  "address": "上海市静安区西藏北路198号静安大悦城北座B1层NB143D室",
+  "district": "静安区",
+  "price_avg": 22
+ },
+ {
+  "id": 1702,
+  "name": "香港华心糖水铺(南西总店)",
+  "address": "上海市静安区南京西路790号地铺",
+  "district": "静安区",
+  "price_avg": 55
+ },
+ {
+  "id": 1703,
+  "name": "双喜老铺(静安寺店)",
+  "address": "上海市静安区北京西路1744号(近胶州路)",
+  "district": "静安区",
+  "price_avg": 26
+ },
+ {
+  "id": 1704,
+  "name": "小团圆糖水铺(思南路店)",
+  "address": "上海市黄浦区思南路115弄5号-1",
+  "district": "黄浦区",
+  "price_avg": 32
+ },
+ {
+  "id": 1705,
+  "name": "yesOcake巴斯克专门店",
+  "address": "上海市徐汇区襄阳南路(具体门牌号待核实)",
+  "district": "徐汇区",
+  "price_avg": 39
+ },
+ {
+  "id": 1707,
+  "name": "gula bistro",
+  "address": "延平路448号",
+  "district": "徐汇区",
+  "price_avg": 250
+ },
+ {
+  "id": 1708,
+  "name": "Yeats Bistro",
+  "address": "延平路98号C幢202室",
+  "district": "静安区",
+  "price_avg": 220
+ },
+ {
+  "id": 1709,
+  "name": "Wine Universe",
+  "address": "愚园路769号",
+  "district": "长宁区",
+  "price_avg": 260
+ },
+ {
+  "id": 1710,
+  "name": "Fiamo Bistro by Senso",
+  "address": "徐汇区湖南路街道世纪商贸广场（安福路附近）",
+  "district": "徐汇区",
+  "price_avg": 130
+ },
+ {
+  "id": 1711,
+  "name": "Bella Vita Bistro",
+  "address": "天平路（具体门牌待补）",
+  "district": "徐汇区",
+  "price_avg": 280
+ },
+ {
+  "id": 1712,
+  "name": "Le Verre à vin",
+  "address": "武康路378号武康庭105铺",
+  "district": "徐汇区",
+  "price_avg": 286
+ },
+ {
+  "id": 1713,
+  "name": "大酉 The Merchants",
+  "address": "永福路52号",
+  "district": "徐汇区",
+  "price_avg": 300
+ },
+ {
+  "id": 1714,
+  "name": "壳里西餐厅 Coquille Seafood Bistro",
+  "address": "蒙自路（具体门牌待补）",
+  "district": "黄浦区",
+  "price_avg": 400
+ },
+ {
+  "id": 1715,
+  "name": "Alimentari Grande",
+  "address": "东湖路20号101-201室",
+  "district": "徐汇区",
+  "price_avg": 200
+ },
+ {
+  "id": 1716,
+  "name": "Juke",
+  "address": "东平路11号-102",
+  "district": "徐汇区",
+  "price_avg": 350
+ },
+ {
+  "id": 1717,
+  "name": "SOSA",
+  "address": "上海市浦东新区商城路665号LU1885陆里微醺Hub（近世纪大道）",
+  "district": "浦东新区",
+  "price_avg": 200
+ },
+ {
+  "id": 1718,
+  "name": "游牧Bistro by耶里夏丽",
+  "address": "上海市静安区茂名北路229弄丰盛里8号一楼（裕莲茶楼隔壁巷内）",
+  "district": "静安区",
+  "price_avg": 150
+ },
+ {
+  "id": 1719,
+  "name": "有喜屋深夜食堂",
+  "address": "上海多区连锁（南桥百联等15家直营）",
+  "district": "多区连锁",
+  "price_avg": 120
+ },
+ {
+  "id": 1720,
+  "name": "烤匠麻辣烤鱼",
+  "address": "上海多家门店（合生汇/中山公园龙之梦等）",
+  "district": "多区连锁",
+  "price_avg": 100
+ },
+ {
+  "id": 1721,
+  "name": "武宫酒吧",
+  "address": "上海市长宁区武夷路320弄MIX320园区A105",
+  "district": "长宁区",
+  "price_avg": 120
+ },
+ {
+  "id": 1722,
+  "name": "三山野·云南傣家菜",
+  "address": "上海首店（具体门牌待补）",
+  "district": "黄浦区",
+  "price_avg": 120
+ },
+ {
+  "id": 1723,
+  "name": "煤球 Charcoal",
+  "address": "世博园（具体门牌待补）",
+  "district": "浦东新区",
+  "price_avg": 350
+ },
+ {
+  "id": 1724,
+  "name": "壮壮酒馆 Terroir Strong",
+  "address": "淮海中路中环广场（具体门牌待补）",
+  "district": "黄浦区",
+  "price_avg": 280
+ },
+ {
+  "id": 1725,
+  "name": "RAC BAR（安福路店）",
+  "address": "安福路322号14幢一楼（武康路口）",
+  "district": "徐汇区",
+  "price_avg": 120
+ },
+ {
+  "id": 1727,
+  "name": "Alimentari（安福路店）",
+  "address": "安福路158号、160号（近乌鲁木齐路）",
+  "district": "徐汇区",
+  "price_avg": 117
+ },
+ {
+  "id": 1728,
+  "name": "Money Shops（愚园路店）",
+  "address": "愚园路1381-2号（近久光/静安寺）",
+  "district": "长宁区",
+  "price_avg": 130
+ },
+ {
+  "id": 1729,
+  "name": "岚山早餐公司 Breakfast Company（武定路店）",
+  "address": "武定路982号（近康定路）",
+  "district": "静安区",
+  "price_avg": 55
+ },
+ {
+  "id": 1730,
+  "name": "Baker & Spice（安福路店）",
+  "address": "安福路195号",
+  "district": "徐汇区",
+  "price_avg": 70
+ },
+ {
+  "id": 1731,
+  "name": "Lokal",
+  "address": "武康路202号",
+  "district": "徐汇区",
+  "price_avg": 100
+ },
+ {
+  "id": 1732,
+  "name": "FUNK&KALE（兴业太古汇店）",
+  "address": "南京西路789号兴业太古汇F1",
+  "district": "静安区",
+  "price_avg": 94
+ },
+ {
+  "id": 1733,
+  "name": "新天地朗廷酒店大堂吧",
+  "address": "马当路99号新天地朗廷酒店1楼",
+  "district": "黄浦区",
+  "price_avg": 280
+ },
+ {
+  "id": 1734,
+  "name": "海仑宾馆505Bar",
+  "address": "南京东路505号",
+  "district": "黄浦区",
+  "price_avg": 188
+ },
+ {
+  "id": 1735,
+  "name": "外滩华尔道夫酒店羿庭",
+  "address": "中山东一路2号华尔道夫酒店新楼1楼",
+  "district": "黄浦区",
+  "price_avg": 350
+ },
+ {
+  "id": 1736,
+  "name": "和平饭店华懋阁",
+  "address": "南京东路20号和平饭店9楼",
+  "district": "黄浦区",
+  "price_avg": 310
+ },
+ {
+  "id": 1737,
+  "name": "Matcha Love 抹艾茶",
+  "address": "番禺路381号7号楼102室",
+  "district": "长宁区",
+  "price_avg": 50
+ },
+ {
+  "id": 1738,
+  "name": "点都德（瑞虹太阳宫店）",
+  "address": "瑞虹路181号瑞虹天地太阳宫4层406室",
+  "district": "虹口区",
+  "price_avg": 80
+ },
+ {
+  "id": 1739,
+  "name": "裕莲茶楼（金虹桥国际中心店）",
+  "address": "遵义路100号金虹桥国际中心",
+  "district": "长宁区",
+  "price_avg": 30
+ },
+ {
+  "id": 1740,
+  "name": "西园抹茶专卖店（大悦城店）",
+  "address": "西藏北路166号大悦城B1层",
+  "district": "静安区",
+  "price_avg": 40
+ },
+ {
+  "id": 1741,
+  "name": "翠富楼·粤式点心·啫啫煲",
+  "address": "控江路1628号紫荆广场6楼L601",
+  "district": "杨浦区",
+  "price_avg": 95
+ }
+]

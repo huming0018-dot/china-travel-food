@@ -1,0 +1,844 @@
+[
+  {
+    "name": "Juke",
+    "action": "new",
+    "rid": 1716,
+    "rc_added": [
+      44,
+      73,
+      163,
+      185
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1716,
+      "name": "Juke",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 350,
+      "score_total": 59.5,
+      "score_objective": 70.0,
+      "score_diner": 55.0,
+      "score_taste": 66.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "SOSA",
+    "action": "new",
+    "rid": 1717,
+    "rc_added": [
+      49,
+      73,
+      81,
+      162,
+      163,
+      164
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1717,
+      "name": "SOSA",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 200,
+      "score_total": 48.1,
+      "score_objective": 64.0,
+      "score_diner": 50.0,
+      "score_taste": 60.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "游牧Bistro by耶里夏丽",
+    "action": "new",
+    "rid": 1718,
+    "rc_added": [
+      12,
+      13,
+      73,
+      163
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1718,
+      "name": "游牧Bistro by耶里夏丽",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 150,
+      "score_total": 52.8,
+      "score_objective": 66.0,
+      "score_diner": 55.0,
+      "score_taste": 62.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "有喜屋深夜食堂",
+    "action": "new",
+    "rid": 1719,
+    "rc_added": [
+      78,
+      96,
+      163,
+      164
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1719,
+      "name": "有喜屋深夜食堂",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120,
+      "score_total": 51.5,
+      "score_objective": 66.0,
+      "score_diner": 55.0,
+      "score_taste": 58.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "烤匠麻辣烤鱼",
+    "action": "new",
+    "rid": 1720,
+    "rc_added": [
+      2,
+      63,
+      78,
+      163,
+      164
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1720,
+      "name": "烤匠麻辣烤鱼",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 100,
+      "score_total": 48.1,
+      "score_objective": 70.0,
+      "score_diner": 62.0,
+      "score_taste": 60.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "武宫酒吧",
+    "action": "new",
+    "rid": 1721,
+    "rc_added": [
+      49,
+      78,
+      81,
+      163,
+      164
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1721,
+      "name": "武宫酒吧",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120,
+      "score_total": 51.9,
+      "score_objective": 62.0,
+      "score_diner": 50.0,
+      "score_taste": 58.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "三山野·云南傣家菜",
+    "action": "new",
+    "rid": 1722,
+    "rc_added": [
+      72,
+      73,
+      145,
+      162,
+      163
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1722,
+      "name": "三山野·云南傣家菜",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120,
+      "score_total": 34.3,
+      "score_objective": 58.0,
+      "score_diner": 45.0,
+      "score_taste": 58.0,
+      "score_endorsement": 40.0
+    },
+    "ok": true
+  },
+  {
+    "name": "煤球 Charcoal",
+    "action": "new",
+    "rid": 1723,
+    "rc_added": [
+      44,
+      63,
+      64,
+      65,
+      73,
+      163,
+      185
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1723,
+      "name": "煤球 Charcoal",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 350,
+      "score_total": 61.8,
+      "score_objective": 68.0,
+      "score_diner": 66.0,
+      "score_taste": 68.0,
+      "score_endorsement": 62.0
+    },
+    "ok": true
+  },
+  {
+    "name": "壮壮酒馆 Terroir Strong",
+    "action": "new",
+    "rid": 1724,
+    "rc_added": [
+      44,
+      49,
+      73,
+      163
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1724,
+      "name": "壮壮酒馆 Terroir Strong",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 280,
+      "score_total": 59.8,
+      "score_objective": 66.0,
+      "score_diner": 64.0,
+      "score_taste": 66.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "RAC BAR（安福路店）",
+    "action": "new",
+    "rid": 1725,
+    "rc_added": [
+      26,
+      67,
+      68,
+      76,
+      77,
+      161,
+      162
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1725,
+      "name": "RAC BAR（安福路店）",
+      "status": "active",
+      "location": null,
+      "phone": "13636590712",
+      "tier": "中档",
+      "price_avg": 120,
+      "score_total": 60.1,
+      "score_objective": 68.0,
+      "score_diner": 75.0,
+      "score_taste": 72.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "O'mills Sourdough Bakery & Bistro（永嘉路店）",
+    "action": "new",
+    "rid": 1726,
+    "rc_added": [
+      66,
+      68,
+      76,
+      77,
+      161,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1726,
+      "name": "O'mills Sourdough Bakery & Bistro（永嘉路店）",
+      "status": "active",
+      "location": null,
+      "phone": "02162092952",
+      "tier": "中档",
+      "price_avg": 130,
+      "score_total": 66.2,
+      "score_objective": 72.0,
+      "score_diner": 78.0,
+      "score_taste": 75.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Alimentari（安福路店）",
+    "action": "new",
+    "rid": 1727,
+    "rc_added": [
+      27,
+      65,
+      68,
+      73,
+      76,
+      77,
+      161,
+      162,
+      163
+    ],
+    "rc_total": 9,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1727,
+      "name": "Alimentari（安福路店）",
+      "status": "active",
+      "location": null,
+      "phone": "02154036991",
+      "tier": "中档",
+      "price_avg": 117,
+      "score_total": 61.9,
+      "score_objective": 70.0,
+      "score_diner": 70.0,
+      "score_taste": 72.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Money Shops（愚园路店）",
+    "action": "new",
+    "rid": 1728,
+    "rc_added": [
+      31,
+      65,
+      67,
+      76,
+      77,
+      161,
+      162
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1728,
+      "name": "Money Shops（愚园路店）",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 130,
+      "score_total": 51.6,
+      "score_objective": 65.0,
+      "score_diner": 70.0,
+      "score_taste": 68.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "岚山早餐公司 Breakfast Company（武定路店）",
+    "action": "new",
+    "rid": 1729,
+    "rc_added": [
+      31,
+      51,
+      65,
+      67,
+      76,
+      77,
+      161,
+      162
+    ],
+    "rc_total": 8,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1729,
+      "name": "岚山早餐公司 Breakfast Company（武定路店）",
+      "status": "active",
+      "location": null,
+      "phone": "15618873479",
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 57.3,
+      "score_objective": 62.0,
+      "score_diner": 65.0,
+      "score_taste": 65.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Baker & Spice（安福路店）",
+    "action": "new",
+    "rid": 1730,
+    "rc_added": [
+      48,
+      67,
+      68,
+      76,
+      77,
+      161,
+      162
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1730,
+      "name": "Baker & Spice（安福路店）",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 70,
+      "score_total": 57.0,
+      "score_objective": 70.0,
+      "score_diner": 65.0,
+      "score_taste": 70.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Dugout Brunch & Bistro",
+    "action": "update",
+    "rid": 1355,
+    "rc_added": [
+      31,
+      67,
+      185
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1355,
+      "name": "Dugout Brunch & Bistro",
+      "status": "active",
+      "location": "0101000020E6100000A8380EBC5A5F5E40BA69334E433C3F40",
+      "phone": "13585947489",
+      "tier": "平价",
+      "price_avg": 90,
+      "score_total": 59.6,
+      "score_objective": 65.0,
+      "score_diner": 68.0,
+      "score_taste": 66.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Lokal",
+    "action": "new",
+    "rid": 1731,
+    "rc_added": [
+      65,
+      66,
+      76,
+      77,
+      161,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1731,
+      "name": "Lokal",
+      "status": "active",
+      "location": null,
+      "phone": "02154665890",
+      "tier": "中档",
+      "price_avg": 100,
+      "score_total": 56.6,
+      "score_objective": 65.0,
+      "score_diner": 70.0,
+      "score_taste": 68.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Mignon 9",
+    "action": "update",
+    "rid": 1160,
+    "rc_added": [
+      76,
+      77,
+      161
+    ],
+    "rc_total": 13,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1160,
+      "name": "Mignon 9",
+      "status": "active",
+      "location": "0101000020E6100000BC75FEEDB25C5E4078D503E621373F40",
+      "phone": "02164660186",
+      "tier": "中档",
+      "price_avg": 128,
+      "score_total": 62.2,
+      "score_objective": 68.0,
+      "score_diner": 72.0,
+      "score_taste": 72.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "FUNK&KALE（兴业太古汇店）",
+    "action": "new",
+    "rid": 1732,
+    "rc_added": [
+      66,
+      76,
+      77,
+      161,
+      162
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1732,
+      "name": "FUNK&KALE（兴业太古汇店）",
+      "status": "active",
+      "location": null,
+      "phone": "02162127172",
+      "tier": "平价",
+      "price_avg": 94,
+      "score_total": 48.4,
+      "score_objective": 60.0,
+      "score_diner": 58.0,
+      "score_taste": 60.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "新天地朗廷酒店大堂吧",
+    "action": "new",
+    "rid": 1733,
+    "rc_added": [
+      48,
+      67,
+      77
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1733,
+      "name": "新天地朗廷酒店大堂吧",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 280,
+      "score_total": 56.5,
+      "score_objective": 70.0,
+      "score_diner": 60.0,
+      "score_taste": 65.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "海仑宾馆505Bar",
+    "action": "new",
+    "rid": 1734,
+    "rc_added": [
+      48,
+      67,
+      77
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1734,
+      "name": "海仑宾馆505Bar",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 188,
+      "score_total": 50.1,
+      "score_objective": 65.0,
+      "score_diner": 62.0,
+      "score_taste": 60.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "外滩华尔道夫酒店羿庭",
+    "action": "new",
+    "rid": 1735,
+    "rc_added": [
+      48,
+      67,
+      77
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1735,
+      "name": "外滩华尔道夫酒店羿庭",
+      "status": "active",
+      "location": null,
+      "phone": "02163229988",
+      "tier": "高档",
+      "price_avg": 350,
+      "score_total": 63.5,
+      "score_objective": 75.0,
+      "score_diner": 65.0,
+      "score_taste": 70.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "和平饭店华懋阁",
+    "action": "new",
+    "rid": 1736,
+    "rc_added": [
+      48,
+      67,
+      77,
+      163
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1736,
+      "name": "和平饭店华懋阁",
+      "status": "active",
+      "location": null,
+      "phone": "02161386881",
+      "tier": "高档",
+      "price_avg": 310,
+      "score_total": 57.6,
+      "score_objective": 72.0,
+      "score_diner": 60.0,
+      "score_taste": 65.0,
+      "score_endorsement": 78.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Matcha Love 抹艾茶",
+    "action": "new",
+    "rid": 1737,
+    "rc_added": [
+      48,
+      67,
+      69,
+      77
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1737,
+      "name": "Matcha Love 抹艾茶",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 54.3,
+      "score_objective": 62.0,
+      "score_diner": 68.0,
+      "score_taste": 68.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "点都德（瑞虹太阳宫店）",
+    "action": "new",
+    "rid": 1738,
+    "rc_added": [
+      3,
+      51,
+      65,
+      67,
+      77,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1738,
+      "name": "点都德（瑞虹太阳宫店）",
+      "status": "active",
+      "location": null,
+      "phone": "02165678026",
+      "tier": "平价",
+      "price_avg": 80,
+      "score_total": 62.8,
+      "score_objective": 68.0,
+      "score_diner": 70.0,
+      "score_taste": 68.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "裕莲茶楼（金虹桥国际中心店）",
+    "action": "new",
+    "rid": 1739,
+    "rc_added": [
+      3,
+      48,
+      67,
+      77
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1739,
+      "name": "裕莲茶楼（金虹桥国际中心店）",
+      "status": "active",
+      "location": null,
+      "phone": "19921186093",
+      "tier": "经济",
+      "price_avg": 30,
+      "score_total": 45.0,
+      "score_objective": 60.0,
+      "score_diner": 62.0,
+      "score_taste": 62.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "西园抹茶专卖店（大悦城店）",
+    "action": "new",
+    "rid": 1740,
+    "rc_added": [
+      48,
+      67,
+      69,
+      77
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1740,
+      "name": "西园抹茶专卖店（大悦城店）",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 40,
+      "score_total": 53.7,
+      "score_objective": 58.0,
+      "score_diner": 62.0,
+      "score_taste": 62.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "翠富楼·粤式点心·啫啫煲",
+    "action": "new",
+    "rid": 1741,
+    "rc_added": [
+      3,
+      51,
+      65,
+      67,
+      77,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1741,
+      "name": "翠富楼·粤式点心·啫啫煲",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 95,
+      "score_total": 54.3,
+      "score_objective": 62.0,
+      "score_diner": 65.0,
+      "score_taste": 65.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  }
+]

@@ -1,0 +1,867 @@
+[
+  {
+    "name": "O.P.S CAFE",
+    "action": "new",
+    "rid": 1660,
+    "rc_added": [
+      48,
+      67,
+      69,
+      77,
+      162,
+      165
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1660,
+      "name": "O.P.S CAFE",
+      "status": "active",
+      "location": null,
+      "phone": "15618060636",
+      "tier": "经济",
+      "price_avg": 48,
+      "score_total": 81.9,
+      "score_objective": 85.0,
+      "score_diner": 88.0,
+      "score_taste": 90.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Captain George风味博物馆",
+    "action": "new",
+    "rid": 1661,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1661,
+      "name": "Captain George风味博物馆",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 77,
+      "score_total": 84.1,
+      "score_objective": 88.0,
+      "score_diner": 85.0,
+      "score_taste": 92.0,
+      "score_endorsement": 90.0
+    },
+    "ok": true
+  },
+  {
+    "name": "有容乃大 LuckyDraw",
+    "action": "new",
+    "rid": 1662,
+    "rc_added": [
+      48,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1662,
+      "name": "有容乃大 LuckyDraw",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 40,
+      "score_total": 78.4,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 85.0,
+      "score_endorsement": 78.0
+    },
+    "ok": true
+  },
+  {
+    "name": "月球咖啡 Retro",
+    "action": "new",
+    "rid": 1663,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1663,
+      "name": "月球咖啡 Retro",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 80.2,
+      "score_objective": 82.0,
+      "score_diner": 85.0,
+      "score_taste": 82.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "鲁马滋 Rumors Coffee Roastery",
+    "action": "new",
+    "rid": 1664,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1664,
+      "name": "鲁马滋 Rumors Coffee Roastery",
+      "status": "active",
+      "location": null,
+      "phone": "02134605708",
+      "tier": "平价",
+      "price_avg": 80,
+      "score_total": 85.6,
+      "score_objective": 85.0,
+      "score_diner": 88.0,
+      "score_taste": 90.0,
+      "score_endorsement": 82.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Café del Volcán",
+    "action": "new",
+    "rid": 1665,
+    "rc_added": [
+      48,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1665,
+      "name": "Café del Volcán",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 77.6,
+      "score_objective": 80.0,
+      "score_diner": 78.0,
+      "score_taste": 82.0,
+      "score_endorsement": 78.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Radar Coffee",
+    "action": "new",
+    "rid": 1666,
+    "rc_added": [
+      48,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1666,
+      "name": "Radar Coffee",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 25,
+      "score_total": 76.6,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 82.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Brew Island 煮屿",
+    "action": "new",
+    "rid": 1667,
+    "rc_added": [
+      48,
+      77,
+      162,
+      165
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1667,
+      "name": "Brew Island 煮屿",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 77,
+      "score_total": 82.7,
+      "score_objective": 85.0,
+      "score_diner": 82.0,
+      "score_taste": 88.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "白鲸咖啡 White Whale",
+    "action": "new",
+    "rid": 1668,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1668,
+      "name": "白鲸咖啡 White Whale",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 75.9,
+      "score_objective": 78.0,
+      "score_diner": 75.0,
+      "score_taste": 80.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "aftertaste 回味",
+    "action": "new",
+    "rid": 1669,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1669,
+      "name": "aftertaste 回味",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 85,
+      "score_total": 85.2,
+      "score_objective": 88.0,
+      "score_diner": 82.0,
+      "score_taste": 92.0,
+      "score_endorsement": 90.0
+    },
+    "ok": true
+  },
+  {
+    "name": "小半咖啡",
+    "action": "new",
+    "rid": 1670,
+    "rc_added": [
+      48,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1670,
+      "name": "小半咖啡",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 28,
+      "score_total": 75.1,
+      "score_objective": 75.0,
+      "score_diner": 82.0,
+      "score_taste": 75.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "pocket pocket 口袋咖啡",
+    "action": "new",
+    "rid": 1671,
+    "rc_added": [
+      48,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1671,
+      "name": "pocket pocket 口袋咖啡",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 28,
+      "score_total": 73.9,
+      "score_objective": 75.0,
+      "score_diner": 78.0,
+      "score_taste": 75.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "HUGO HUSKY HOUSE 雨果咖啡",
+    "action": "new",
+    "rid": 1672,
+    "rc_added": [
+      48,
+      67,
+      68,
+      77,
+      162,
+      259
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1672,
+      "name": "HUGO HUSKY HOUSE 雨果咖啡",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 73.8,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "DayDreaming by Monos 白日梦",
+    "action": "new",
+    "rid": 1673,
+    "rc_added": [
+      48,
+      67,
+      68,
+      77,
+      162
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1673,
+      "name": "DayDreaming by Monos 白日梦",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 74.5,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "IKIGAI",
+    "action": "new",
+    "rid": 1674,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1674,
+      "name": "IKIGAI",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 42,
+      "score_total": 75.8,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "城是 CITYBORING",
+    "action": "new",
+    "rid": 1675,
+    "rc_added": [
+      48,
+      68,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1675,
+      "name": "城是 CITYBORING",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 48,
+      "score_total": 75.0,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "LANERS老虎灶喫咖啡",
+    "action": "new",
+    "rid": 1676,
+    "rc_added": [
+      48,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1676,
+      "name": "LANERS老虎灶喫咖啡",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 75.8,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 76.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "BIG SUR COFFEE",
+    "action": "new",
+    "rid": 1677,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1677,
+      "name": "BIG SUR COFFEE",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 78.2,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Metal Hands 铁手咖啡制造局",
+    "action": "new",
+    "rid": 1678,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1678,
+      "name": "Metal Hands 铁手咖啡制造局",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 78.0,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "VOYAGE COFFEE",
+    "action": "new",
+    "rid": 1679,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1679,
+      "name": "VOYAGE COFFEE",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 65,
+      "score_total": 78.5,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "赤瑕咖啡 Akadama",
+    "action": "new",
+    "rid": 1680,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1680,
+      "name": "赤瑕咖啡 Akadama",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 77.0,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "DEARYOU 咖啡豆研究所",
+    "action": "new",
+    "rid": 1681,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1681,
+      "name": "DEARYOU 咖啡豆研究所",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 73.9,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "MONO",
+    "action": "new",
+    "rid": 1682,
+    "rc_added": [
+      48,
+      69,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1682,
+      "name": "MONO",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 74.8,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Manner Coffee",
+    "action": "new",
+    "rid": 1683,
+    "rc_added": [
+      48,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1683,
+      "name": "Manner Coffee",
+      "status": "active",
+      "location": null,
+      "phone": "4008206998",
+      "tier": "经济",
+      "price_avg": 20,
+      "score_total": 63.9,
+      "score_objective": 75.0,
+      "score_diner": 70.0,
+      "score_taste": 72.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Seesaw Coffee",
+    "action": "new",
+    "rid": 1684,
+    "rc_added": [
+      48,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1684,
+      "name": "Seesaw Coffee",
+      "status": "closed",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 40.5,
+      "score_objective": 50.0,
+      "score_diner": 55.0,
+      "score_taste": 65.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "星巴克臻选上海烘焙工坊",
+    "action": "new",
+    "rid": 1685,
+    "rc_added": [
+      48,
+      67,
+      68,
+      77,
+      162,
+      163
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1685,
+      "name": "星巴克臻选上海烘焙工坊",
+      "status": "active",
+      "location": null,
+      "phone": "4008206998",
+      "tier": "平价",
+      "price_avg": 65,
+      "score_total": 63.3,
+      "score_objective": 72.0,
+      "score_diner": 75.0,
+      "score_taste": 70.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "New Lane Coffee 纽巷",
+    "action": "new",
+    "rid": 1686,
+    "rc_added": [
+      48,
+      77
+    ],
+    "rc_total": 2,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1686,
+      "name": "New Lane Coffee 纽巷",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75,
+      "score_total": 79.7,
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 85.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Rain Mountain 雨山咖啡",
+    "action": "new",
+    "rid": 1687,
+    "rc_added": [
+      48,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1687,
+      "name": "Rain Mountain 雨山咖啡",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 38,
+      "score_total": 75.3,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "堀口咖啡 HORIGUCHI COFFEE",
+    "action": "new",
+    "rid": 1688,
+    "rc_added": [
+      48,
+      67,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1688,
+      "name": "堀口咖啡 HORIGUCHI COFFEE",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 70,
+      "score_total": 79.4,
+      "score_objective": 82.0,
+      "score_diner": 82.0,
+      "score_taste": 85.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "且乐 cheer",
+    "action": "new",
+    "rid": 1689,
+    "rc_added": [
+      48,
+      67,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1689,
+      "name": "且乐 cheer",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 32,
+      "score_total": 73.8,
+      "score_objective": 74.0,
+      "score_diner": 80.0,
+      "score_taste": 76.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  }
+]

@@ -1,0 +1,908 @@
+[
+  {
+    "name": "Gregorius 航迹",
+    "action": "new",
+    "rid": 1690,
+    "rc_added": [
+      48,
+      67,
+      77,
+      162
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1690,
+      "name": "Gregorius 航迹",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 75.2,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "3又二分之一",
+    "action": "new",
+    "rid": 1691,
+    "rc_added": [
+      48,
+      67,
+      69,
+      77,
+      162
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1691,
+      "name": "3又二分之一",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 76.5,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "0566咖啡製作所",
+    "action": "new",
+    "rid": 1692,
+    "rc_added": [
+      48,
+      77,
+      162
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1692,
+      "name": "0566咖啡製作所",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75,
+      "score_total": 74.5,
+      "score_objective": 78.0,
+      "score_diner": 78.0,
+      "score_taste": 82.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "VERIE BAKEHOUSE(新天地店)",
+    "action": "new",
+    "rid": 1693,
+    "rc_added": [
+      48,
+      67,
+      68,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1693,
+      "name": "VERIE BAKEHOUSE(新天地店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 59,
+      "score_total": 75.7,
+      "score_objective": 82.0,
+      "score_diner": 75.0,
+      "score_taste": 82.0,
+      "score_endorsement": 90.0
+    },
+    "ok": true
+  },
+  {
+    "name": "BAsdBAN巴适得板(愚园路店)",
+    "action": "update",
+    "rid": 1404,
+    "rc_added": [
+      48
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1404,
+      "name": "BAsdBAN巴适得板(愚园路店)",
+      "status": "active",
+      "location": "0101000020E610000000378B170B5C5E408D45D3D9C9383F40",
+      "phone": "13167260607",
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 69.7,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "TonTon(永康路店)",
+    "action": "new",
+    "rid": 1694,
+    "rc_added": [
+      48,
+      67,
+      68,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1694,
+      "name": "TonTon(永康路店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 36,
+      "score_total": 78.3,
+      "score_objective": 80.0,
+      "score_diner": 83.0,
+      "score_taste": 82.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Bebaked(愚园路店)",
+    "action": "new",
+    "rid": 1695,
+    "rc_added": [
+      48,
+      67,
+      68,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1695,
+      "name": "Bebaked(愚园路店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 65.8,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "O'Mills Sourdough Bakery & Bistro(永嘉路店)",
+    "action": "new",
+    "rid": 1696,
+    "rc_added": [
+      48,
+      67,
+      68,
+      77,
+      161,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1696,
+      "name": "O'Mills Sourdough Bakery & Bistro(永嘉路店)",
+      "status": "active",
+      "location": null,
+      "phone": "02162092952",
+      "tier": "平价",
+      "price_avg": 60,
+      "score_total": 80.9,
+      "score_objective": 82.0,
+      "score_diner": 85.0,
+      "score_taste": 82.0,
+      "score_endorsement": 82.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Gluglu(愚园路店)",
+    "action": "new",
+    "rid": 1697,
+    "rc_added": [
+      48,
+      67,
+      68,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1697,
+      "name": "Gluglu(愚园路店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 65.1,
+      "score_objective": 74.0,
+      "score_diner": 75.0,
+      "score_taste": 75.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Sloppy Gin(延平路店)",
+    "action": "new",
+    "rid": 1698,
+    "rc_added": [
+      48,
+      67,
+      68,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1698,
+      "name": "Sloppy Gin(延平路店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 30,
+      "score_total": 62.7,
+      "score_objective": 72.0,
+      "score_diner": 75.0,
+      "score_taste": 72.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Luneurs月乐诗(南京西路店)",
+    "action": "new",
+    "rid": 1699,
+    "rc_added": [
+      48,
+      67,
+      68,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1699,
+      "name": "Luneurs月乐诗(南京西路店)",
+      "status": "active",
+      "location": null,
+      "phone": "15021574803",
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 72.1,
+      "score_objective": 78.0,
+      "score_diner": 76.0,
+      "score_taste": 78.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "柴田西点Chez Shibata(紫云西路店)",
+    "action": "new",
+    "rid": 1700,
+    "rc_added": [
+      48,
+      67,
+      77,
+      98,
+      162
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1700,
+      "name": "柴田西点Chez Shibata(紫云西路店)",
+      "status": "active",
+      "location": null,
+      "phone": "02152065671",
+      "tier": "平价",
+      "price_avg": 58,
+      "score_total": 73.5,
+      "score_objective": 76.0,
+      "score_diner": 73.0,
+      "score_taste": 75.0,
+      "score_endorsement": 82.0
+    },
+    "ok": true
+  },
+  {
+    "name": "辛一铜锣烧(静安大悦城店)",
+    "action": "new",
+    "rid": 1701,
+    "rc_added": [
+      48,
+      67,
+      74,
+      77,
+      98,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1701,
+      "name": "辛一铜锣烧(静安大悦城店)",
+      "status": "active",
+      "location": null,
+      "phone": "13127523231",
+      "tier": "经济",
+      "price_avg": 22,
+      "score_total": 60.9,
+      "score_objective": 70.0,
+      "score_diner": 75.0,
+      "score_taste": 72.0,
+      "score_endorsement": 40.0
+    },
+    "ok": true
+  },
+  {
+    "name": "香港华心糖水铺(南西总店)",
+    "action": "new",
+    "rid": 1702,
+    "rc_added": [
+      48,
+      67,
+      74,
+      162,
+      163,
+      164
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1702,
+      "name": "香港华心糖水铺(南西总店)",
+      "status": "active",
+      "location": null,
+      "phone": "02152555779",
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 71.5,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "双喜老铺(静安寺店)",
+    "action": "new",
+    "rid": 1703,
+    "rc_added": [
+      48,
+      67,
+      74,
+      162,
+      163,
+      164
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1703,
+      "name": "双喜老铺(静安寺店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 26,
+      "score_total": 70.7,
+      "score_objective": 74.0,
+      "score_diner": 82.0,
+      "score_taste": 80.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "小团圆糖水铺(思南路店)",
+    "action": "new",
+    "rid": 1704,
+    "rc_added": [
+      48,
+      67,
+      74,
+      162,
+      163,
+      164
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1704,
+      "name": "小团圆糖水铺(思南路店)",
+      "status": "active",
+      "location": null,
+      "phone": "13761027727",
+      "tier": "经济",
+      "price_avg": 32,
+      "score_total": 70.9,
+      "score_objective": 72.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "yesOcake巴斯克专门店",
+    "action": "new",
+    "rid": 1705,
+    "rc_added": [
+      48,
+      67,
+      74,
+      77
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1705,
+      "name": "yesOcake巴斯克专门店",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 39,
+      "score_total": 54.7,
+      "score_objective": 68.0,
+      "score_diner": 72.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0
+    },
+    "ok": true
+  },
+  {
+    "name": "nabi",
+    "action": "update",
+    "rid": 1347,
+    "rc_added": [
+      44,
+      160,
+      165,
+      167
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1347,
+      "name": "nabi",
+      "status": "active",
+      "location": "0101000020E6100000E0490B97555B5E4088653387A4363F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 1200,
+      "score_total": 69.0,
+      "score_objective": 78.0,
+      "score_diner": 72.0,
+      "score_taste": 75.0,
+      "score_endorsement": 92.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Jellooo",
+    "action": "update",
+    "rid": 1351,
+    "rc_added": [
+      164,
+      185
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1351,
+      "name": "Jellooo",
+      "status": "active",
+      "location": "0101000020E61000004BE9995E625E5E4078280AF489383F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 350,
+      "score_total": 52.4,
+      "score_objective": 72.0,
+      "score_diner": 58.0,
+      "score_taste": 65.0,
+      "score_endorsement": 82.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Yaya's Pasta Bar",
+    "action": "update",
+    "rid": 1349,
+    "rc_added": [
+      44,
+      77
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1349,
+      "name": "Yaya's Pasta Bar",
+      "status": "active",
+      "location": "0101000020E6100000DECCE847C35C5E407EC9C6832D3A3F40",
+      "phone": "19921344145",
+      "tier": "中档",
+      "price_avg": 180,
+      "score_total": 46.0,
+      "score_objective": 50.0,
+      "score_diner": 50.0,
+      "score_taste": 60.0,
+      "score_endorsement": 40.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Nono's Ristorante",
+    "action": "new",
+    "rid": 1706,
+    "rc_added": [
+      27,
+      44,
+      51,
+      57,
+      73,
+      162,
+      163,
+      164
+    ],
+    "rc_total": 8,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1706,
+      "name": "Nono's Ristorante",
+      "status": "active",
+      "location": null,
+      "phone": "13524794793",
+      "tier": "高档",
+      "price_avg": 250,
+      "score_total": 50.0,
+      "score_objective": 50.0,
+      "score_diner": 62.0,
+      "score_taste": 62.0,
+      "score_endorsement": 40.0
+    },
+    "ok": true
+  },
+  {
+    "name": "gula bistro",
+    "action": "new",
+    "rid": 1707,
+    "rc_added": [
+      44,
+      49,
+      73,
+      81,
+      163
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1707,
+      "name": "gula bistro",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 250,
+      "score_total": 47.6,
+      "score_objective": 70.0,
+      "score_diner": 60.0,
+      "score_taste": 68.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Yeats Bistro",
+    "action": "new",
+    "rid": 1708,
+    "rc_added": [
+      33,
+      44,
+      68,
+      73,
+      163,
+      185
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1708,
+      "name": "Yeats Bistro",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 220,
+      "score_total": 61.9,
+      "score_objective": 72.0,
+      "score_diner": 60.0,
+      "score_taste": 68.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Wine Universe",
+    "action": "new",
+    "rid": 1709,
+    "rc_added": [
+      49,
+      73,
+      81,
+      163,
+      164,
+      185
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1709,
+      "name": "Wine Universe",
+      "status": "active",
+      "location": null,
+      "phone": "02152986130",
+      "tier": "高档",
+      "price_avg": 260,
+      "score_total": 57.2,
+      "score_objective": 68.0,
+      "score_diner": 62.0,
+      "score_taste": 62.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Fiamo Bistro by Senso",
+    "action": "new",
+    "rid": 1710,
+    "rc_added": [
+      27,
+      73,
+      162,
+      163,
+      185
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1710,
+      "name": "Fiamo Bistro by Senso",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 130,
+      "score_total": 59.5,
+      "score_objective": 72.0,
+      "score_diner": 55.0,
+      "score_taste": 66.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Bella Vita Bistro",
+    "action": "new",
+    "rid": 1711,
+    "rc_added": [
+      27,
+      73,
+      162,
+      163,
+      185,
+      190
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1711,
+      "name": "Bella Vita Bistro",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 280,
+      "score_total": 61.0,
+      "score_objective": 70.0,
+      "score_diner": 62.0,
+      "score_taste": 66.0,
+      "score_endorsement": 62.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Le Verre à vin",
+    "action": "new",
+    "rid": 1712,
+    "rc_added": [
+      26,
+      49,
+      73,
+      81,
+      163,
+      164,
+      185
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1712,
+      "name": "Le Verre à vin",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 286,
+      "score_total": 58.8,
+      "score_objective": 66.0,
+      "score_diner": 62.0,
+      "score_taste": 64.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "大酉 The Merchants",
+    "action": "new",
+    "rid": 1713,
+    "rc_added": [
+      44,
+      63,
+      65,
+      73,
+      163,
+      185
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1713,
+      "name": "大酉 The Merchants",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 300,
+      "score_total": 57.9,
+      "score_objective": 66.0,
+      "score_diner": 60.0,
+      "score_taste": 60.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "壳里西餐厅 Coquille Seafood Bistro",
+    "action": "new",
+    "rid": 1714,
+    "rc_added": [
+      26,
+      64,
+      73,
+      163,
+      185
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1714,
+      "name": "壳里西餐厅 Coquille Seafood Bistro",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 400,
+      "score_total": 61.0,
+      "score_objective": 70.0,
+      "score_diner": 62.0,
+      "score_taste": 66.0,
+      "score_endorsement": 62.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Alimentari Grande",
+    "action": "new",
+    "rid": 1715,
+    "rc_added": [
+      27,
+      73,
+      162,
+      163,
+      185,
+      258
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1715,
+      "name": "Alimentari Grande",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 200,
+      "score_total": 56.8,
+      "score_objective": 70.0,
+      "score_diner": 60.0,
+      "score_taste": 64.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  }
+]

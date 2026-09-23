@@ -1,0 +1,20 @@
+{
+  "description": "回归测试集——用户历轮点名/亲测店，作为sourcing机制的断言。命中=机制自动捞到；未命中=定位断点修机制后重跑，绝不手工补店。",
+  "version": "v3",
+  "created": "2026-09-23",
+  "assertions": [
+    {"name": "宫鸠", "aliases": ["宫鸠炭火烧鸟", "宫鸠烧鸟"], "scene": "日料·烧鸟", "expected_path": "老饕私藏/名厨", "hit": false, "first_hit_source": null},
+    {"name": "大志", "aliases": ["大志和牛烧肉", "大志烧肉"], "scene": "日料·烧肉", "expected_path": "老饕私藏", "hit": false, "first_hit_source": null},
+    {"name": "吉兆", "aliases": ["吉兆寿司", "吉兆日本料理"], "scene": "日料·寿司", "expected_path": "老饕私藏", "hit": false, "first_hit_source": null},
+    {"name": "晴川", "aliases": ["晴川日本料理", "晴川寿司"], "scene": "日料·中端寿司", "expected_path": "商圈/老饕", "hit": false, "first_hit_source": null},
+    {"name": "鸟鸟炒菜店", "aliases": ["鸟鸟", "鸟鸟川菜"], "scene": "川菜·家常", "expected_path": "A老饕私藏", "hit": false, "first_hit_source": null},
+    {"name": "张记川味苑", "aliases": ["张记川味苑(定西路)", "张记宜宾燃面"], "scene": "川菜·川南宜宾", "expected_path": "B商圈逐格", "hit": false, "first_hit_source": null},
+    {"name": "帅帅精致家常味", "aliases": ["帅帅精致", "帅晓剑餐厅"], "scene": "本帮菜", "expected_path": "G影视综艺→主厨", "hit": false, "first_hit_source": null},
+    {"name": "聪菜馆", "aliases": ["聪菜馆(淮海路)"], "scene": "本帮菜", "expected_path": "J本地老饕", "hit": false, "first_hit_source": null},
+    {"name": "泓0871", "aliases": ["泓0871云南菜", "泓0871臻选云南菜"], "scene": "云南菜", "expected_path": "I权威名单(米其林/黑珍珠)", "hit": false, "first_hit_source": null},
+    {"name": "nabi", "aliases": ["nabi餐厅", "nabi翡悦里"], "scene": "场景·咖啡/bistro", "expected_path": "图遍历/老饕合集", "hit": true, "first_hit_source": "v3咖啡bistro验证 R2 店→店(WULI同集团Tom Ryu/柳泰赫+JEJU前东家+翡悦里园区矩阵); 查询矩阵'韩餐 高端 预约制'抖音10大超难约排名第6", "hit_round": 2, "hit_path": "店→店+查询矩阵"},
+    {"name": "jelu", "aliases": ["Jellooo", "Jelu", "吉鹿", "捷鹿", "J-LU"], "scene": "场景·咖啡/bistro", "expected_path": "图遍历/评论区", "hit": true, "first_hit_source": "v3咖啡bistro验证 R2 店→店(EHB前身罗昊×Esben 2025.9停业→Jellooo接棒/好利来系/BLACKSWAN姊妹); TimeOut北欧餐酒馆专题", "hit_round": 2, "hit_path": "店→店+查询矩阵"},
+    {"name": "yaya's", "aliases": ["Yaya's Pasta Bar", "yaya's意面", "yayas pasta"], "scene": "场景·bistro/意面", "expected_path": "图遍历/老饕", "hit": true, "first_hit_source": "v3咖啡bistro验证 R1 人→内容(从gula bistro种子出发→抖音Franklin/Next Bottle主理人'主厨去哪吃'视频直接推荐'第一个想到yayas')", "hit_round": 1, "hit_path": "人→内容(老饕合集)"},
+    {"name": "nono's", "aliases": ["Nono's Ristorante", "nono's永福路", "nonos意面"], "scene": "场景·bistro", "expected_path": "图遍历/评论区", "hit": true, "first_hit_source": "v3咖啡bistro验证 R1 文章对比(Sophie Serves Up正文'Nono's...not as strongly as Yaya's'); 店→店确认Yaya's姊妹店(主厨Chris+侍酒师Franklin)", "hit_round": 1, "hit_path": "内容→评论区/文章对比+店→店"}
+  ]
+}
