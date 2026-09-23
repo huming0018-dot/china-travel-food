@@ -151,11 +151,11 @@ export default function RestaurantsPage() {
     else router.replace('/restaurants', undefined, { shallow: true });
   }, [cuisines, flavor, router]);
 
-  // 切换一级根：清空 flavor
+  // 切换一级根：立即按该根筛选（虚拟根同样可由 collectFlavorIds 收集子孙）
   const selectRoot = useCallback((rname: string) => {
     setRoot(rname);
-    setFlavor(null);
-    router.replace('/restaurants', undefined, { shallow: true });
+    setFlavor(rname);
+    router.replace(`/restaurants?cuisine=${encodeURIComponent(rname)}`, undefined, { shallow: true });
   }, [router]);
 
   // 关店店 id
@@ -178,9 +178,9 @@ export default function RestaurantsPage() {
     [childrenOf, root, subtreeCount]
   );
 
-  // 选中菜系的三级子流派
+  // 选中菜系的三级子流派（flavor 为虚拟根时不展开，避免与二级重复）
   const flavorChildren = useMemo(() => {
-    if (!flavor) return [];
+    if (!flavor || ROOTS.includes(flavor)) return [];
     return childrenOf(flavor).sort((a, b) => subtreeCount(b.name) - subtreeCount(a.name));
   }, [flavor, childrenOf, subtreeCount]);
 
