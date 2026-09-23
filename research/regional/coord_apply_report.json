@@ -1,0 +1,1084 @@
+[
+  {
+    "id": 1558,
+    "name": "东北风(松江万达店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.242839,
+      31.057522
+    ]
+  },
+  {
+    "id": 1559,
+    "name": "李大喜·吉林原味烧烤",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.479745,
+      31.266609
+    ]
+  },
+  {
+    "id": 1560,
+    "name": "辣些年东北烧烤(五角场店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.521479,
+      31.291037
+    ]
+  },
+  {
+    "id": 1561,
+    "name": "大董(国金中心IFC店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.50326,
+      31.235805
+    ]
+  },
+  {
+    "id": 1562,
+    "name": "大董(环贸iapm店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.458599,
+      31.216125
+    ]
+  },
+  {
+    "id": 1563,
+    "name": "便宜坊(世纪大道华贸广场店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.501871,
+      31.238641
+    ]
+  },
+  {
+    "id": 1564,
+    "name": "东来顺(外滩南京东路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.488612,
+      31.238844
+    ]
+  },
+  {
+    "id": 1565,
+    "name": "京悦南门涮肉(人民广场店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.478945,
+      31.225737
+    ]
+  },
+  {
+    "id": 1566,
+    "name": "小吊梨汤·北京菜·烤鸭(龙华会店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.454018,
+      31.173767
+    ]
+  },
+  {
+    "id": 1567,
+    "name": "街角和晚风台式小厨",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.438519,
+      31.217597
+    ]
+  },
+  {
+    "id": 1568,
+    "name": "芳邻食堂",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.412675,
+      31.191614
+    ]
+  },
+  {
+    "id": 1571,
+    "name": "度小月(美罗城店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.439674,
+      31.192948
+    ]
+  },
+  {
+    "id": 1572,
+    "name": "鼎泰丰(新天地店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.474765,
+      31.218813
+    ]
+  },
+  {
+    "id": 1573,
+    "name": "米屿邦·台式小馆",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.442553,
+      31.22398
+    ]
+  },
+  {
+    "id": 1574,
+    "name": "FIFTYLAN(CP静安店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.446278,
+      31.225926
+    ]
+  },
+  {
+    "id": 1575,
+    "name": "鲜芋仙(日月光店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.467963,
+      31.206726
+    ]
+  },
+  {
+    "id": 1576,
+    "name": "桂芭蕉GUI BISTRO(静安嘉里中心店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.449233,
+      31.222961
+    ]
+  },
+  {
+    "id": 1577,
+    "name": "漓江码头桂林农家菜(金汇·华光城店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.374172,
+      31.182535
+    ]
+  },
+  {
+    "id": 1578,
+    "name": "柳州肥姨妈大骨螺蛳粉(紫藤路店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.365204,
+      31.170851
+    ]
+  },
+  {
+    "id": 1579,
+    "name": "塔哈尔·新疆盛宴(中山龙之梦店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.416218,
+      31.218573
+    ]
+  },
+  {
+    "id": 1580,
+    "name": "胖胖君的新疆抓饭(黄浦店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.485195,
+      31.241825
+    ]
+  },
+  {
+    "id": 1582,
+    "name": "萝春阁·生煎大王(浙江中路店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.477604,
+      31.236515
+    ]
+  },
+  {
+    "id": 1583,
+    "name": "晓燕生煎(定西路店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.423064,
+      31.214266
+    ]
+  },
+  {
+    "id": 1584,
+    "name": "南翔馒头店(豫园店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.491468,
+      31.226588
+    ]
+  },
+  {
+    "id": 1585,
+    "name": "万寿斋(山阴路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.484809,
+      31.2659
+    ]
+  },
+  {
+    "id": 1586,
+    "name": "莱莱小笼(天津路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.47712,
+      31.236132
+    ]
+  },
+  {
+    "id": 1587,
+    "name": "佳家汤包(黄河路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.470344,
+      31.235154
+    ]
+  },
+  {
+    "id": 1588,
+    "name": "四如春食府(石泉路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.428951,
+      31.252388
+    ]
+  },
+  {
+    "id": 1589,
+    "name": "鲜得来排骨年糕(云南南路总店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.479498,
+      31.227841
+    ]
+  },
+  {
+    "id": 1590,
+    "name": "小绍兴(云南南路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.480516,
+      31.227967
+    ]
+  },
+  {
+    "id": 1591,
+    "name": "振鼎鸡(福州路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.487883,
+      31.234729
+    ]
+  },
+  {
+    "id": 1592,
+    "name": "老正兴(福州路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.480142,
+      31.233095
+    ]
+  },
+  {
+    "id": 1593,
+    "name": "鹿园MOOSE(新华路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.429477,
+      31.201902
+    ]
+  },
+  {
+    "id": 1594,
+    "name": "人和馆(肇嘉浜路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.458108,
+      31.201623
+    ]
+  },
+  {
+    "id": 1595,
+    "name": "海金滋(进贤路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.457574,
+      31.221175
+    ]
+  },
+  {
+    "id": 1596,
+    "name": "瓦屋老宅江西土菜(世博源店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.491712,
+      31.187014
+    ]
+  },
+  {
+    "id": 1597,
+    "name": "小匠喜江西菜(黄浦世贸广场店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.475349,
+      31.234347
+    ]
+  },
+  {
+    "id": 1598,
+    "name": "周真真南昌拌粉·瓦罐汤(大宁店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.448966,
+      31.283167
+    ]
+  },
+  {
+    "id": 1599,
+    "name": "雪三娘江西炒粉拌粉(九亭中心店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.318,
+      31.140637
+    ]
+  },
+  {
+    "id": 1600,
+    "name": "胡恰·景德江西菜(新天地店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.474206,
+      31.222656
+    ]
+  },
+  {
+    "id": 1601,
+    "name": "荣豫·河南菜(ONE Shanghai店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.461955,
+      31.228512
+    ]
+  },
+  {
+    "id": 1602,
+    "name": "王凯阳河南水煎包",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.613006,
+      31.142696
+    ]
+  },
+  {
+    "id": 1603,
+    "name": "南星汇新加坡海南鸡饭(静安店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.453259,
+      31.23358
+    ]
+  },
+  {
+    "id": 1604,
+    "name": "嗲嗲的椰子鸡(五角场百联又一城店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.515897,
+      31.301377
+    ]
+  },
+  {
+    "id": 1605,
+    "name": "椰子不语椰子鸡火锅(凯德晶萃店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.477037,
+      31.209757
+    ]
+  },
+  {
+    "id": 1606,
+    "name": "来菜·湖北藕汤(月星环球港店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.412232,
+      31.233377
+    ]
+  },
+  {
+    "id": 1607,
+    "name": "靓靓蒸虾(定西路上海首店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.423851,
+      31.207485
+    ]
+  },
+  {
+    "id": 1608,
+    "name": "一棠龙虾·王牌虾球(苏河湾万象天地店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.477339,
+      31.24238
+    ]
+  },
+  {
+    "id": 1609,
+    "name": "蔡林记·湖北小馆(真如环宇城MAX店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.40859,
+      31.250182
+    ]
+  },
+  {
+    "id": 1610,
+    "name": "糖豆(新嘉中心店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.590586,
+      31.281892
+    ]
+  },
+  {
+    "id": 1611,
+    "name": "楚缘·经典鄂菜(宝山闿和阳光广场店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.445461,
+      31.378801
+    ]
+  },
+  {
+    "id": 1613,
+    "name": "宁夏印象·盐池滩羊肉体验店(江宁路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.440245,
+      31.248102
+    ]
+  },
+  {
+    "id": 1615,
+    "name": "泓0871臻选云南菜·寻鲜宴(上海北外滩店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.507414,
+      31.252614
+    ]
+  },
+  {
+    "id": 1616,
+    "name": "云海肴(上海闸北大悦城店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.45228,
+      31.274107
+    ]
+  },
+  {
+    "id": 1617,
+    "name": "滇百年云南小锅米线(静安大悦城店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.472167,
+      31.242969
+    ]
+  },
+  {
+    "id": 1618,
+    "name": "良米山·云南野生菌过桥米线(中山公园龙之梦店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.419896,
+      31.221835
+    ]
+  },
+  {
+    "id": 1619,
+    "name": "芸山季云南野生菌火锅(上海来福士广场店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.477112,
+      31.232318
+    ]
+  },
+  {
+    "id": 1620,
+    "name": "九色云野生菌火锅(长泰广场店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.600973,
+      31.205373
+    ]
+  },
+  {
+    "id": 1621,
+    "name": "黔香阁·味(花木店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.536455,
+      31.213343
+    ]
+  },
+  {
+    "id": 1622,
+    "name": "秦香岚·贵州菜·凯里酸汤鱼(博荟广场店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.479984,
+      31.196907
+    ]
+  },
+  {
+    "id": 1623,
+    "name": "青藏餐厅·牦牛·藏羊(爱琴海店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.372263,
+      31.174774
+    ]
+  },
+  {
+    "id": 1624,
+    "name": "扎西达娲(徐汇绿地缤纷城店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.456639,
+      31.183624
+    ]
+  },
+  {
+    "id": 1625,
+    "name": "京云华(张江汇智店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.601468,
+      31.203337
+    ]
+  },
+  {
+    "id": 1626,
+    "name": "老门框爆肚涮肉(杨浦中原店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.527317,
+      31.329005
+    ]
+  },
+  {
+    "id": 1627,
+    "name": "京城南门涮肉(杨浦大连路店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.503403,
+      31.27335
+    ]
+  },
+  {
+    "id": 1630,
+    "name": "多来转爆肚店(七宝老街店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.35503,
+      31.151753
+    ]
+  },
+  {
+    "id": 1631,
+    "name": "丰碗居(长宁来福士店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.415248,
+      31.216522
+    ]
+  },
+  {
+    "id": 1632,
+    "name": "老北京炸酱面(包头南路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.538901,
+      31.306435
+    ]
+  },
+  {
+    "id": 1633,
+    "name": "宫宴Gongyan(北京西路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.447516,
+      31.22686
+    ]
+  },
+  {
+    "id": 1634,
+    "name": "礼部·新京菜(CP静安店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.446266,
+      31.225532
+    ]
+  },
+  {
+    "id": 1635,
+    "name": "和季新京菜(数通链谷店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.434357,
+      31.295781
+    ]
+  },
+  {
+    "id": 1636,
+    "name": "东来顺(虹桥天地店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.3155,
+      31.19276
+    ]
+  },
+  {
+    "id": 1637,
+    "name": "京悦南门涮肉(虹桥丽宝广场店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.31019,
+      31.194203
+    ]
+  },
+  {
+    "id": 1639,
+    "name": "胡麻过桥米线",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.48183,
+      31.153325
+    ]
+  },
+  {
+    "id": 1640,
+    "name": "滇味园云南过桥米线(南京东路店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.483558,
+      31.239209
+    ]
+  },
+  {
+    "id": 1641,
+    "name": "上黔庄·一品贵州菜(吴中路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.389954,
+      31.17817
+    ]
+  },
+  {
+    "id": 1643,
+    "name": "耶里夏丽·新疆菜(南京东路世茂店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.475219,
+      31.234074
+    ]
+  },
+  {
+    "id": 1644,
+    "name": "那时新疆·乌孙(虹桥南丰城店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.407883,
+      31.208187
+    ]
+  },
+  {
+    "id": 1645,
+    "name": "卡德尔大叔新疆主题餐厅(东方路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.52882,
+      31.211947
+    ]
+  },
+  {
+    "id": 1647,
+    "name": "爱上草原内蒙餐厅(老沪闵路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.429117,
+      31.144379
+    ]
+  },
+  {
+    "id": 1648,
+    "name": "小小羔·内蒙涮肉&烧烤(徐家汇店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.441861,
+      31.187179
+    ]
+  },
+  {
+    "id": 1649,
+    "name": "东北人家(弘基广场店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.386649,
+      31.315731
+    ]
+  },
+  {
+    "id": 1650,
+    "name": "张黄锦记螺蛳粉桂林米粉(阳光天地店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.58822,
+      31.312303
+    ]
+  },
+  {
+    "id": 1652,
+    "name": "五星海南鸡饭(新乐路店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.455102,
+      31.217633
+    ]
+  },
+  {
+    "id": 1653,
+    "name": "串姐焦烤鸡架(五角场店)",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.51557,
+      31.301655
+    ]
+  },
+  {
+    "id": 1656,
+    "name": "鹤北北·东北黏糊麻辣烫(人民广场店)",
+    "ok": true,
+    "fields": [
+      "location"
+    ],
+    "readback": [
+      121.481091,
+      31.232804
+    ]
+  },
+  {
+    "id": 1658,
+    "name": "家里没煮",
+    "ok": true,
+    "fields": [
+      "location",
+      "phone"
+    ],
+    "readback": [
+      121.473589,
+      31.223435
+    ]
+  }
+]
