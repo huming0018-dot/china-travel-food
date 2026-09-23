@@ -73,3 +73,5 @@ app/.next/
 /audit-hardened-2026-09-22.md
 /coverage-report-2026-09-21.md
 /coverage-report-2026-09-22.md
+*.bak
+.env*

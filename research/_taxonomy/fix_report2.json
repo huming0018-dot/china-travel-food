@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Captain George风味博物馆",
+    "action": "update",
+    "rid": 1396,
+    "rc_added": [],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1396,
+      "name": "Captain George风味博物馆(太原路店)",
+      "status": "active",
+      "location": "0101000020E6100000E0D57267265D5E40292499D53B343F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 77,
+      "score_total": 84.1,
+      "score_objective": 88.0,
+      "score_diner": 85.0,
+      "score_taste": 92.0,
+      "score_endorsement": 90.0
+    },
+    "ok": true
+  },
+  {
+    "name": "堀口咖啡 HORIGUCHI COFFEE",
+    "action": "update",
+    "rid": 1395,
+    "rc_added": [],
+    "rc_total": 10,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1395,
+      "name": "堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)",
+      "status": "active",
+      "location": "0101000020E61000002EC72B103D5F5E40F3AFE595EB3D3F40",
+      "phone": "02163333100",
+      "tier": "平价",
+      "price_avg": 70,
+      "score_total": 79.4,
+      "score_objective": 82.0,
+      "score_diner": 82.0,
+      "score_taste": 85.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "VERIE BAKEHOUSE(新天地店)",
+    "action": "update",
+    "rid": 1170,
+    "rc_added": [],
+    "rc_total": 13,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1170,
+      "name": "VERIE BAKEHOUSE(马当路店)",
+      "status": "active",
+      "location": "0101000020E61000009752978C635E5E4067D65240DA373F40",
+      "phone": "02153860717",
+      "tier": "平价",
+      "price_avg": 59,
+      "score_total": 75.7,
+      "score_objective": 82.0,
+      "score_diner": 75.0,
+      "score_taste": 82.0,
+      "score_endorsement": 90.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Kaki Mania日式刨冰(长乐路店)",
+    "action": "update",
+    "rid": 1312,
+    "rc_added": [],
+    "rc_total": 11,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1312,
+      "name": "Kaki Mania日式刨冰",
+      "status": "active",
+      "location": "0101000020E610000013B875374F5D5E400664AF777F383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 65,
+      "score_total": 71.0,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  }
+]

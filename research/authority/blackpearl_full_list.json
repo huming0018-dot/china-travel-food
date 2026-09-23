@@ -1,0 +1,49 @@
+{
+  "edition": "2026黑珍珠餐厅指南（2026-01-27发布）",
+  "city": "上海",
+  "total_shanghai": 61,
+  "source_press": [
+    "http://m.toutiao.com/group/7600207294030234112/",
+    "http://m.toutiao.com/group/7600363491689529875/"
+  ],
+  "note": "黑珍珠官方名单在大众点评黑珍珠频道（登录墙），全61家店名待真人登录补全；以下为已核实关键变动。",
+  "three_star": [
+    {
+      "name": "遇外滩(新天地店)",
+      "note": "★2钻升3钻 闽菜/台州菜；库id=523"
+    },
+    {
+      "name": "Ultraviolet by Paul Pairet",
+      "note": "待核：2026三钻主体第三家"
+    },
+    {
+      "name": "待补",
+      "note": "第三家三钻待官方名单补全"
+    }
+  ],
+  "two_star": [
+    {
+      "name": "Ling Long 凌珑",
+      "note": "★1钻升2钻；库id=1391，应归中餐·创新菜（现误挂融合菜/Fusion）"
+    },
+    {
+      "name": "中国菜·头灶",
+      "note": "★1钻升2钻；库id=719"
+    },
+    {
+      "name": "其余4家二钻",
+      "note": "待官方名单补全"
+    }
+  ],
+  "one_star_count": 52,
+  "notable": [
+    {
+      "name": "醉东 Oriental House",
+      "note": "黑珍珠一钻，台州海鲜餐酒；库内缺失→已补raw"
+    },
+    {
+      "name": "泓0871臻选云南菜(北外滩)",
+      "note": "2026年度菜品奖：鲁甸花椒芽螺丝椒独蒜红葱菌"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "edition": "2026上海米其林指南（沪苏浙合并发布，2026-04-09 台州发布）",
+  "city": "上海",
+  "total_shanghai": 156,
+  "source_official": "https://guide.michelin.com/en/shanghai-municipality/shanghai/restaurants",
+  "source_press": [
+    "https://finance.sina.com.cn/jjxw/2026-04-10/doc-inhtzhtt7965867.shtml",
+    "https://m.thepaper.cn/newsDetail_forward_32942532",
+    "https://m.jiemian.com/article/14227867.html"
+  ],
+  "note": "官网 guide.michelin.com 当前对自动化浏览器返回空列表（地域/JS拦截），星级店名以官方发布海报+上观/新浪/界面/澎湃交叉核实；一星35家蝉联+必比登27家+入选70家全名单待真人登录官网逐页补全（见 name_audit_summary 真人补证清单）。",
+  "three_star": [
+    {
+      "name": "泰安门",
+      "name_en": "Taian Table",
+      "cuisine": "现代欧陆/创意",
+      "address_hint": "静安"
+    }
+  ],
+  "two_star": [
+    {
+      "name": "壹零贰小馆",
+      "name_en": "102 House",
+      "note": "蝉联"
+    },
+    {
+      "name": "8½ Otto e Mezzo Bombana",
+      "name_en": "8½ Otto e Mezzo Bombana",
+      "note": "蝉联"
+    },
+    {
+      "name": "宝丽轩",
+      "name_en": "Bao Li Xuan",
+      "note": "蝉联 粤菜"
+    },
+    {
+      "name": "喜粤8号(黄浦)",
+      "name_en": "Canton 8 (Huangpu)",
+      "note": "蝉联；库内现挂『喜粤8号(汝南街总店)』为旧址，需核对迁址"
+    },
+    {
+      "name": "Da Vittorio",
+      "name_en": "Da Vittorio Shanghai",
+      "note": "蝉联 意餐"
+    },
+    {
+      "name": "福和慧",
+      "name_en": "Fu He Hui",
+      "note": "蝉联 素食/本帮"
+    },
+    {
+      "name": "御宝轩",
+      "name_en": "Imperial Treasure Fine Chinese Cuisine",
+      "note": "蝉联 粤菜"
+    },
+    {
+      "name": "吉品轩",
+      "name_en": "Ji Pin Court",
+      "note": "蝉联 粤菜"
+    },
+    {
+      "name": "荣府宴",
+      "name_en": "The House of Rong",
+      "note": "蝉联 台州菜/私宴"
+    },
+    {
+      "name": "菁禧荟(长宁)",
+      "name_en": "Amazing Chinese Cuisine (Changning)",
+      "note": "★晋升二星 P；库内挂 BFC/外滩店，需核对二星主体为长宁本店"
+    },
+    {
+      "name": "唐阁",
+      "name_en": "T'ang Court",
+      "note": "★晋升二星 P；库id=496"
+    },
+    {
+      "name": "头灶",
+      "name_en": "Tou Zao",
+      "note": "★晋升二星 P；库id=719 头灶(上海商城店)"
+    }
+  ],
+  "one_star_new": [
+    {
+      "name": "Fabula",
+      "name_en": "Fabula",
+      "note": "新晋一星；库id=1386"
+    },
+    {
+      "name": "三月醉淮扬(静安)",
+      "name_en": null,
+      "note": "新晋一星；库id=511 三月醉淮扬(越洋广场店)"
+    },
+    {
+      "name": "Vivant by Johnny Pham",
+      "name_en": "VIVANT by Johnny Pham",
+      "note": "新晋一星；法/法越日融合，罗昊(好利来/黑天鹅)+主厨Johnny Pham(泰安东/TRB背景)，1880套餐；库内缺失→已补raw"
+    }
+  ],
+  "one_star_continued_count": 35,
+  "bib_gourmand_new": [
+    "157食坊",
+    "和膳面家",
+    "阿勇面馆(东书房路)",
+    "菰城宴",
+    "瑰禧",
+    "宁海食府",
+    "瓯越尊鲜",
+    "坛"
+  ],
+  "bib_gourmand_total": 35,
+  "selected_total": 70
+}

@@ -1,0 +1,340 @@
+[
+  {
+    "rid": 584,
+    "name": "鲤香(板前)",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.473667,
+      "lat": 31.230525
+    }
+  },
+  {
+    "rid": 1840,
+    "name": "醉东 Oriental House(静安嘉里店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "静安嘉里中心商场",
+    "address": "上海市静安区南京西路1515号",
+    "tel": null,
+    "lat": 31.22293,
+    "lng": 121.449963
+  },
+  {
+    "rid": 1841,
+    "name": "VIVANT by Johnny Pham",
+    "status": "ok",
+    "method": "suggestion:name_unique",
+    "matched_title": "VIVANT by JohnnyPham",
+    "address": "上海市黄浦区南京东路街道北海路279号",
+    "tel": null,
+    "lat": 31.230217,
+    "lng": 121.477852
+  },
+  {
+    "rid": 1842,
+    "name": "Cheeva Thai",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "Cheeva Thai",
+    "address": "上海市徐汇区湖南路街道永福路125号永福里3号楼3楼302号",
+    "tel": null,
+    "lat": 31.209859,
+    "lng": 121.443852
+  },
+  {
+    "rid": 1843,
+    "name": "聪菜馆",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "聪菜馆(六合大厦店)",
+    "address": "上海市黄浦区六合路158号(六合大厦1F)",
+    "tel": null,
+    "lat": 31.237142,
+    "lng": 121.474627
+  },
+  {
+    "rid": 1844,
+    "name": "豪生酒家",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "豪生酒家(徐家汇)",
+    "address": "上海市徐汇区天平路街道广元路156号",
+    "tel": null,
+    "lat": 31.199173,
+    "lng": 121.439786
+  },
+  {
+    "rid": 1845,
+    "name": "黄公子",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "黄公子(天平路店)",
+    "address": "上海市徐汇区徐家汇街道天平路320弄21号1-2层",
+    "tel": null,
+    "lat": 31.196305,
+    "lng": 121.439396
+  },
+  {
+    "rid": 1846,
+    "name": "AmoyA",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.448865,
+      "lat": 31.215764
+    }
+  },
+  {
+    "rid": 1847,
+    "name": "来去Laichill",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "五原路281弄16号",
+    "lat": 31.211318,
+    "lng": 121.443237,
+    "reliability": 7
+  },
+  {
+    "rid": 1848,
+    "name": "作故私房菜",
+    "status": "ok",
+    "method": "suggestion:name_unique",
+    "matched_title": "作故私房菜",
+    "address": "上海市长宁区新华路街道番禺路232号院内",
+    "tel": null,
+    "lat": 31.20655,
+    "lng": 121.429209
+  },
+  {
+    "rid": 1849,
+    "name": "叶叶菩提(太原别墅店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "叶叶菩提(太原别墅店)",
+    "address": "上海市徐汇区天平路街道太原路160号太原别墅6号楼一层",
+    "tel": null,
+    "lat": 31.206325,
+    "lng": 121.454399
+  },
+  {
+    "rid": 1850,
+    "name": "田咖啡",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "田咖啡",
+    "address": "上海市徐汇区湖南路街道新乐路70弄66号201室",
+    "tel": null,
+    "lat": 31.218165,
+    "lng": 121.455868
+  },
+  {
+    "rid": 1851,
+    "name": "ONIRICO CAFÉ",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "ONIRICOCAFÉ",
+    "address": "上海市黄浦区思南路32号",
+    "tel": null,
+    "lat": 31.218332,
+    "lng": 121.466032
+  },
+  {
+    "rid": 1852,
+    "name": "DOU COFFEE ROASTERS(嘉善路店)",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "DOU COFFEE ROASTERS(嘉善路店)",
+    "address": "上海市徐汇区天平路街道嘉善路121号",
+    "tel": null,
+    "lat": 31.209971,
+    "lng": 121.45942
+  },
+  {
+    "rid": 1853,
+    "name": "苹果花园(南泉路店)",
+    "status": "multi_no_point",
+    "note": "一条记录含多分店/多址，无单点坐标，需拆分"
+  },
+  {
+    "rid": 1854,
+    "name": "ISAN BAKERY & CAFE",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.399712,
+      "lat": 31.24439
+    }
+  },
+  {
+    "rid": 1855,
+    "name": "银座仁志川(兴业太古汇店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "银座仁志川·生吐司创意餐厅(兴业太古汇店)",
+    "address": "上海市静安区南京西路789号兴业太古汇LG201(靠近地铁13号线7号出口)",
+    "tel": null,
+    "lat": 31.228492,
+    "lng": 121.462828
+  },
+  {
+    "rid": 1856,
+    "name": "泽田本家铜锣烧(上海店)",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.436307,
+      "lat": 31.188334
+    }
+  },
+  {
+    "rid": 1857,
+    "name": "野人先生Gelato(徐汇旗舰店)",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.454103,
+      "lat": 31.216279
+    }
+  },
+  {
+    "rid": 1858,
+    "name": "和果子本铺四葉",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "和菓子本铺",
+    "address": "上海市长宁区荣华西道99弄11-12号1楼2室",
+    "tel": null,
+    "lat": 31.194245,
+    "lng": 121.392867
+  },
+  {
+    "rid": 1859,
+    "name": "The Odd Couple",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "上海新天地北里",
+    "lat": 31.2207,
+    "lng": 121.474773,
+    "reliability": 7
+  },
+  {
+    "rid": 1860,
+    "name": "ZION",
+    "status": "ok",
+    "method": "suggestion:name_unique",
+    "matched_title": "Zion",
+    "address": "上海市静安区大沽路378号-3",
+    "tel": null,
+    "lat": 31.225605,
+    "lng": 121.466363
+  },
+  {
+    "rid": 1861,
+    "name": "La Burg 勒博格金砖俱乐部南非餐吧",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "La Burg勒博格金砖俱乐部南非餐吧(月星国际家居店)",
+    "address": "上海市普陀区澳门路168号月星家居茂五楼WD11号",
+    "tel": null,
+    "lat": 31.24851,
+    "lng": 121.445695
+  },
+  {
+    "rid": 1862,
+    "name": "COLCA 秘鲁西班牙餐厅(衡山路店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "COLCA秘鲁西班牙餐厅(衡山路店)",
+    "address": "上海市徐汇区衡山路199号2201室(衡山路地铁站1号口步行150米)",
+    "tel": null,
+    "lat": 31.205038,
+    "lng": 121.44712
+  },
+  {
+    "rid": 1863,
+    "name": "拉蒂娜·巴西牛排馆 Latina(陆家嘴旗舰店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "拉蒂娜·巴西牛排馆Latina·Brazilian Steakhouse(陆家嘴旗舰店)",
+    "address": "上海市浦东新区陆家嘴环路165号2层(香格里拉酒店对面近名商路)",
+    "tel": null,
+    "lat": 31.235243,
+    "lng": 121.501107
+  },
+  {
+    "rid": 1864,
+    "name": "El Bodegon 阿根廷餐厅(常熟路店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "El Bodegon阿根廷秘鲁餐厅(常熟路店)",
+    "address": "上海市静安区常熟路83号神州商务大楼4层",
+    "tel": null,
+    "lat": 31.217273,
+    "lng": 121.447885
+  },
+  {
+    "rid": 1865,
+    "name": "Tacolicious(同乐坊店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "Tacolicious(余姚路店)",
+    "address": "上海市静安区余姚路34号104-105室",
+    "tel": null,
+    "lat": 31.236325,
+    "lng": 121.443665
+  },
+  {
+    "rid": 1866,
+    "name": "Flambe Bistro 奥地利餐厅(湖滨道店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "Flambe Bistro·奥地利餐厅(湖滨道店)",
+    "address": "上海市黄浦区淮海中路街道湖滨路150号湖滨道购物中心1层L1-E03(星巴克对面)",
+    "tel": null,
+    "lat": 31.220974,
+    "lng": 121.479376
+  },
+  {
+    "rid": 1867,
+    "name": "Greek Taverna Milos 米洛洛斯希腊餐厅(老外街店)",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "上海老外街景区",
+    "lat": 31.190632,
+    "lng": 121.38909,
+    "reliability": 7
+  },
+  {
+    "rid": 1868,
+    "name": "Delight Food 比利时啤酒餐厅(老外街店)",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "坎爷火锅老外街店",
+    "lat": 31.191522,
+    "lng": 121.388355,
+    "reliability": 7
+  },
+  {
+    "rid": 1869,
+    "name": "麺屋KING",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "麺屋KING",
+    "address": "上海市长宁区华阳路街道定西路1118号武夷坊停车场(近武夷路)",
+    "tel": null,
+    "lat": 31.212472,
+    "lng": 121.423572
+  },
+  {
+    "rid": 1870,
+    "name": "纹兵卫手打荞麦面日料(天山店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "纹兵卫·手打荞麦面日料(天山店)",
+    "address": "上海市长宁区天山路街道天山路765号103室内(虹桥公寓1楼近古北路)",
+    "tel": null,
+    "lat": 31.211103,
+    "lng": 121.402112
+  }
+]

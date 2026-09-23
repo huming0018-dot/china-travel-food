@@ -1,0 +1,3569 @@
+[
+  {
+    "name": "醉东 Oriental House(静安嘉里店)",
+    "action": "new",
+    "rid": 1840,
+    "rc_added": [
+      5,
+      64,
+      72,
+      160,
+      162,
+      163,
+      165,
+      167,
+      237
+    ],
+    "rc_total": 9,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1840,
+      "name": "醉东 Oriental House(静安嘉里店)",
+      "status": "active",
+      "location": null,
+      "phone": "02152715727",
+      "tier": "高档",
+      "price_avg": 325,
+      "score_total": 76.7,
+      "score_objective": 80.0,
+      "score_diner": 83.0,
+      "score_taste": 84.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "VIVANT by Johnny Pham",
+    "action": "new",
+    "rid": 1841,
+    "rc_added": [
+      26,
+      71,
+      159,
+      163,
+      165
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1841,
+      "name": "VIVANT by Johnny Pham",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 1880,
+      "score_total": 82.1,
+      "score_objective": 84.0,
+      "score_diner": 85.0,
+      "score_taste": 86.0,
+      "score_endorsement": 88.0
+    },
+    "ok": true
+  },
+  {
+    "name": "L'Atelier de Joël Robuchon 乔尔·卢布松美食坊",
+    "action": "update",
+    "rid": 1139,
+    "rc_added": [
+      160
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1139,
+      "name": "L'Atelier de Joël Robuchon 乔尔·卢布松美食坊",
+      "status": "closed",
+      "location": "0101000020E610000004543882545F5E4020EC14AB063D3F40",
+      "phone": "02160718888",
+      "tier": "奢华",
+      "price_avg": 1580,
+      "score_total": 79.8,
+      "score_objective": 80.0,
+      "score_diner": 80.0,
+      "score_taste": 85.0,
+      "score_endorsement": 88.0
+    },
+    "ok": true
+  },
+  {
+    "name": "唐阁(新天地朗廷酒店)",
+    "action": "update",
+    "rid": 496,
+    "rc_added": [],
+    "rc_total": 13,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 496,
+      "name": "唐阁(新天地朗廷酒店)",
+      "status": "active",
+      "location": "0101000020E61000002B172AFF5A5E5E40DB166536C8383F40",
+      "phone": "02123302430",
+      "tier": "奢华",
+      "price_avg": 880,
+      "score_total": 82.4,
+      "score_objective": 85.0,
+      "score_diner": 84.0,
+      "score_taste": 86.0,
+      "score_endorsement": 90.0
+    },
+    "ok": true
+  },
+  {
+    "name": "凌珑 Ling Long",
+    "action": "update",
+    "rid": 1391,
+    "rc_added": [
+      260
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1391,
+      "name": "凌珑 Ling Long",
+      "status": "active",
+      "location": "0101000020E61000001A14CD03585F5E40BFB9BF7ADC3B3F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 1980,
+      "score_total": 83.6,
+      "score_objective": 86.0,
+      "score_diner": 86.0,
+      "score_taste": 87.0,
+      "score_endorsement": 90.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Cheeva Thai",
+    "action": "new",
+    "rid": 1842,
+    "rc_added": [
+      36,
+      83,
+      162,
+      163
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1842,
+      "name": "Cheeva Thai",
+      "status": "active",
+      "location": null,
+      "phone": "18964184568",
+      "tier": "奢华",
+      "price_avg": 1280,
+      "score_total": 67.8,
+      "score_objective": 70.0,
+      "score_diner": 72.0,
+      "score_taste": 80.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "聪菜馆",
+    "action": "new",
+    "rid": 1843,
+    "rc_added": [
+      9,
+      83,
+      159,
+      162,
+      163
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1843,
+      "name": "聪菜馆",
+      "status": "active",
+      "location": null,
+      "phone": "02163335531",
+      "tier": "高档",
+      "price_avg": 268,
+      "score_total": 77.8,
+      "score_objective": 75.0,
+      "score_diner": 78.0,
+      "score_taste": 82.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "豪生酒家",
+    "action": "new",
+    "rid": 1844,
+    "rc_added": [
+      9,
+      83,
+      159,
+      162,
+      163
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1844,
+      "name": "豪生酒家",
+      "status": "active",
+      "location": null,
+      "phone": "02162826446",
+      "tier": "中档",
+      "price_avg": 150,
+      "score_total": 81.9,
+      "score_objective": 78.0,
+      "score_diner": 85.0,
+      "score_taste": 85.0,
+      "score_endorsement": 82.0
+    },
+    "ok": true
+  },
+  {
+    "name": "黄公子",
+    "action": "new",
+    "rid": 1845,
+    "rc_added": [
+      83,
+      162,
+      163
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1845,
+      "name": "黄公子",
+      "status": "active",
+      "location": null,
+      "phone": "15316869328",
+      "tier": "奢华",
+      "price_avg": 3000,
+      "score_total": 67.8,
+      "score_objective": 72.0,
+      "score_diner": 75.0,
+      "score_taste": 80.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "AmoyA",
+    "action": "new",
+    "rid": 1846,
+    "rc_added": [
+      6,
+      83,
+      126,
+      162,
+      163
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1846,
+      "name": "AmoyA",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 1500,
+      "score_total": 56.6,
+      "score_objective": 55.0,
+      "score_diner": 70.0,
+      "score_taste": 78.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "来去Laichill",
+    "action": "new",
+    "rid": 1847,
+    "rc_added": [
+      9,
+      83,
+      162,
+      163
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1847,
+      "name": "来去Laichill",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 298,
+      "score_total": 68.7,
+      "score_objective": 68.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "作故私房菜",
+    "action": "new",
+    "rid": 1848,
+    "rc_added": [
+      83,
+      162,
+      163
+    ],
+    "rc_total": 3,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1848,
+      "name": "作故私房菜",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 298,
+      "score_total": 66.1,
+      "score_objective": 65.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "叶叶菩提(太原别墅店)",
+    "action": "new",
+    "rid": 1849,
+    "rc_added": [
+      45,
+      83,
+      162,
+      163
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1849,
+      "name": "叶叶菩提(太原别墅店)",
+      "status": "active",
+      "location": null,
+      "phone": "02152666089",
+      "tier": "奢华",
+      "price_avg": 1260,
+      "score_total": 79.4,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 78.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "皖宴(龙柏饭店店)",
+    "action": "update",
+    "rid": 568,
+    "rc_added": [
+      83
+    ],
+    "rc_total": 15,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 568,
+      "name": "皖宴(龙柏饭店店)",
+      "status": "active",
+      "location": "0101000020E6100000B98AC56F0A575E401346B3B27D303F40",
+      "phone": "02162095177",
+      "tier": "高档",
+      "price_avg": 388,
+      "score_total": 77.7,
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "O.P.S CAFE",
+    "action": "update",
+    "rid": 1660,
+    "rc_added": [
+      300,
+      304
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1660,
+      "name": "O.P.S CAFE",
+      "status": "active",
+      "location": "0101000020E6100000FED478E9265D5E40DBBFB2D2A4343F40",
+      "phone": "15618060636",
+      "tier": "经济",
+      "price_avg": 48,
+      "score_total": 81.9,
+      "score_objective": 85.0,
+      "score_diner": 88.0,
+      "score_taste": 90.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Captain George风味博物馆",
+    "action": "update",
+    "rid": 1661,
+    "ok": false,
+    "error": "RC 77: {\"code\":\"23503\",\"details\":\"Key (restaurant_id)=(1661) is not present in table \\\"restaurants\\\".\",\"hint\":null,\"message\":\"insert or update on table \\\"restaurant_cu"
+  },
+  {
+    "name": "有容乃大 LuckyDraw",
+    "action": "update",
+    "rid": 1662,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1662,
+      "name": "有容乃大 LuckyDraw",
+      "status": "active",
+      "location": "0101000020E6100000E40F069E7B5C5E40BA6A9E23F2393F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 40,
+      "score_total": 78.4,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 85.0,
+      "score_endorsement": 78.0
+    },
+    "ok": true
+  },
+  {
+    "name": "月球咖啡 Retro",
+    "action": "update",
+    "rid": 1663,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1663,
+      "name": "月球咖啡 Retro",
+      "status": "active",
+      "location": "0101000020E6100000469A7807785D5E40FD135CACA8393F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 80.2,
+      "score_objective": 82.0,
+      "score_diner": 85.0,
+      "score_taste": 82.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "鲁马滋 Rumors Coffee Roastery",
+    "action": "update",
+    "rid": 1664,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1664,
+      "name": "鲁马滋 Rumors Coffee Roastery",
+      "status": "active",
+      "location": "0101000020E610000091F3FE3F4E5C5E40618907944D353F40",
+      "phone": "02134605708",
+      "tier": "平价",
+      "price_avg": 80,
+      "score_total": 85.6,
+      "score_objective": 85.0,
+      "score_diner": 88.0,
+      "score_taste": 90.0,
+      "score_endorsement": 82.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Café del Volcán",
+    "action": "update",
+    "rid": 1665,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1665,
+      "name": "Café del Volcán",
+      "status": "active",
+      "location": "0101000020E61000005342B0AA5E5D5E406BD3D85E0B363F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 77.6,
+      "score_objective": 80.0,
+      "score_diner": 78.0,
+      "score_taste": 82.0,
+      "score_endorsement": 78.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Radar Coffee",
+    "action": "update",
+    "rid": 1666,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1666,
+      "name": "Radar Coffee",
+      "status": "active",
+      "location": "0101000020E61000009D6516A1D85D5E40FDF50A0BEE373F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 25,
+      "score_total": 76.6,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 82.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Brew Island 煮屿",
+    "action": "update",
+    "rid": 1667,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1667,
+      "name": "Brew Island 煮屿",
+      "status": "active",
+      "location": "0101000020E6100000BD8A8C0E485F5E4042EBE1CB44413F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 77,
+      "score_total": 82.7,
+      "score_objective": 85.0,
+      "score_diner": 82.0,
+      "score_taste": 88.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "白鲸咖啡 White Whale",
+    "action": "update",
+    "rid": 1668,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1668,
+      "name": "白鲸咖啡 White Whale",
+      "status": "active",
+      "location": "0101000020E61000007BBFD18E1B5A5E40B8B1D991EA4B3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 75.9,
+      "score_objective": 78.0,
+      "score_diner": 75.0,
+      "score_taste": 80.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "aftertaste 回味",
+    "action": "update",
+    "rid": 1669,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1669,
+      "name": "aftertaste 回味",
+      "status": "active",
+      "location": "0101000020E6100000E0F599B33E5E5E4055BE672442273F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 85,
+      "score_total": 85.2,
+      "score_objective": 88.0,
+      "score_diner": 82.0,
+      "score_taste": 92.0,
+      "score_endorsement": 90.0
+    },
+    "ok": true
+  },
+  {
+    "name": "小半咖啡",
+    "action": "update",
+    "rid": 1670,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1670,
+      "name": "小半咖啡",
+      "status": "active",
+      "location": "0101000020E61000003E42CD902A5A5E40E700C11C3D3E3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 28,
+      "score_total": 75.1,
+      "score_objective": 75.0,
+      "score_diner": 82.0,
+      "score_taste": 75.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "pocket pocket 口袋咖啡",
+    "action": "update",
+    "rid": 1671,
+    "rc_added": [
+      300,
+      306
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1671,
+      "name": "pocket pocket 口袋咖啡",
+      "status": "active",
+      "location": "0101000020E61000006E88F19A575D5E40EE0A7DB08C353F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 28,
+      "score_total": 73.9,
+      "score_objective": 75.0,
+      "score_diner": 78.0,
+      "score_taste": 75.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "HUGO HUSKY HOUSE 雨果咖啡",
+    "action": "update",
+    "rid": 1672,
+    "rc_added": [
+      300,
+      306
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1672,
+      "name": "HUGO HUSKY HOUSE 雨果咖啡",
+      "status": "active",
+      "location": "0101000020E61000003FAC376A855D5E405BB4006DAB353F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 73.8,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "DayDreaming by Monos 白日梦",
+    "action": "update",
+    "rid": 1673,
+    "rc_added": [
+      300,
+      306
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1673,
+      "name": "DayDreaming by Monos 白日梦",
+      "status": "active",
+      "location": "0101000020E6100000282D5C56615D5E40AF08FEB792353F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 74.5,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "IKIGAI",
+    "action": "update",
+    "rid": 1674,
+    "rc_added": [
+      300,
+      306
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1674,
+      "name": "IKIGAI",
+      "status": "active",
+      "location": "0101000020E6100000016A6AD95A5D5E40C1C41F459D353F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 42,
+      "score_total": 75.8,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "城是 CITYBORING",
+    "action": "update",
+    "rid": 1675,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1675,
+      "name": "城是 CITYBORING",
+      "status": "active",
+      "location": "0101000020E6100000D27135B22B5D5E4070B6B9313D353F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 48,
+      "score_total": 75.0,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "LANERS老虎灶喫咖啡",
+    "action": "update",
+    "rid": 1676,
+    "rc_added": [
+      300,
+      306
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1676,
+      "name": "LANERS老虎灶喫咖啡",
+      "status": "active",
+      "location": "0101000020E6100000A11342075D5D5E401F48DE3994353F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 75.8,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 76.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "BIG SUR COFFEE",
+    "action": "update",
+    "rid": 1677,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1677,
+      "name": "BIG SUR COFFEE",
+      "status": "active",
+      "location": "0101000020E61000002B3410CB665D5E4021CD58349D353F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 78.2,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Metal Hands 铁手咖啡制造局",
+    "action": "update",
+    "rid": 1678,
+    "rc_added": [
+      300,
+      306
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1678,
+      "name": "Metal Hands 铁手咖啡制造局",
+      "status": "active",
+      "location": "0101000020E61000005776C1E09A5D5E402D5DC136E2353F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 78.0,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "VOYAGE COFFEE",
+    "action": "update",
+    "rid": 1679,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1679,
+      "name": "VOYAGE COFFEE",
+      "status": "active",
+      "location": "0101000020E6100000A4E194B9F95C5E400BCF4BC5C6343F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 65,
+      "score_total": 78.5,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "赤瑕咖啡 Akadama",
+    "action": "update",
+    "rid": 1680,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1680,
+      "name": "赤瑕咖啡 Akadama",
+      "status": "active",
+      "location": "0101000020E61000006EFB1EF5D75B5E4006D49B51F3393F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 77.0,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "田咖啡",
+    "action": "new",
+    "rid": 1850,
+    "rc_added": [
+      77,
+      162,
+      300,
+      305
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1850,
+      "name": "田咖啡",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 48,
+      "score_total": 76.9,
+      "score_objective": 76.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "DEARYOU 咖啡豆研究所",
+    "action": "update",
+    "rid": 1681,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1681,
+      "name": "DEARYOU 咖啡豆研究所",
+      "status": "active",
+      "location": "0101000020E6100000C4EBFA05BB5D5E40747973B856373F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 73.9,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "MONO",
+    "action": "update",
+    "rid": 1682,
+    "rc_added": [
+      300,
+      306
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1682,
+      "name": "MONO",
+      "status": "active",
+      "location": "0101000020E61000003AB01C21035F5E407366BB421F403F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 74.8,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Manner Coffee",
+    "action": "update",
+    "rid": 1683,
+    "rc_added": [
+      300,
+      307
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1683,
+      "name": "Manner Coffee",
+      "status": "active",
+      "location": "0101000020E6100000E23E726BD25C5E40F5673F52443A3F40",
+      "phone": "4008206998",
+      "tier": "经济",
+      "price_avg": 20,
+      "score_total": 63.9,
+      "score_objective": 75.0,
+      "score_diner": 70.0,
+      "score_taste": 72.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Seesaw Coffee",
+    "action": "update",
+    "rid": 1684,
+    "rc_added": [
+      300,
+      307
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1684,
+      "name": "Seesaw Coffee",
+      "status": "closed",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 40.5,
+      "score_objective": 50.0,
+      "score_diner": 55.0,
+      "score_taste": 65.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "星巴克臻选上海烘焙工坊",
+    "action": "update",
+    "rid": 1685,
+    "rc_added": [
+      300,
+      307
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1685,
+      "name": "星巴克臻选上海烘焙工坊",
+      "status": "active",
+      "location": "0101000020E6100000F3CAF5B6995D5E407D586FD40A3B3F40",
+      "phone": "4008206998",
+      "tier": "平价",
+      "price_avg": 65,
+      "score_total": 63.3,
+      "score_objective": 72.0,
+      "score_diner": 75.0,
+      "score_taste": 70.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "New Lane Coffee 纽巷",
+    "action": "update",
+    "rid": 1686,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1686,
+      "name": "New Lane Coffee 纽巷",
+      "status": "active",
+      "location": "0101000020E6100000A4C684984B5D5E4097E315889E343F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75,
+      "score_total": 79.7,
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 85.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Rain Mountain 雨山咖啡",
+    "action": "update",
+    "rid": 1687,
+    "rc_added": [
+      300,
+      306
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1687,
+      "name": "Rain Mountain 雨山咖啡",
+      "status": "active",
+      "location": "0101000020E610000054742497FF5B5E4045BC75FEED2E3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 38,
+      "score_total": 75.3,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "堀口咖啡 HORIGUCHI COFFEE",
+    "action": "update",
+    "rid": 1688,
+    "ok": false,
+    "error": "RC 67: {\"code\":\"23503\",\"details\":\"Key (restaurant_id)=(1688) is not present in table \\\"restaurants\\\".\",\"hint\":null,\"message\":\"insert or update on table \\\"restaurant_cu"
+  },
+  {
+    "name": "且乐 cheer",
+    "action": "update",
+    "rid": 1689,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1689,
+      "name": "且乐 cheer",
+      "status": "active",
+      "location": "0101000020E6100000E831CA332F5D5E408AE76C01A1513F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 32,
+      "score_total": 73.8,
+      "score_objective": 74.0,
+      "score_diner": 80.0,
+      "score_taste": 76.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Gregorius 航迹",
+    "action": "update",
+    "rid": 1690,
+    "rc_added": [
+      300,
+      304
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1690,
+      "name": "Gregorius航迹(愚园路店)",
+      "status": "active",
+      "location": "0101000020E6100000A087DA368C5B5E400742B28009383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 75.2,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 70.0
+    },
+    "ok": false
+  },
+  {
+    "name": "3又二分之一",
+    "action": "update",
+    "rid": 1691,
+    "rc_added": [
+      300,
+      304
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1691,
+      "name": "3又二分之一",
+      "status": "active",
+      "location": "0101000020E6100000D714C8EC2C5D5E40D53C47E4BB343F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 76.5,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "0566咖啡製作所",
+    "action": "update",
+    "rid": 1692,
+    "rc_added": [
+      300,
+      305
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1692,
+      "name": "0566咖啡製作所",
+      "status": "active",
+      "location": "0101000020E6100000DD96C805675E5E404374081C09383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75,
+      "score_total": 74.5,
+      "score_objective": 78.0,
+      "score_diner": 78.0,
+      "score_taste": 82.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "ONIRICO CAFÉ",
+    "action": "new",
+    "rid": 1851,
+    "rc_added": [
+      77,
+      162,
+      300,
+      305
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1851,
+      "name": "ONIRICO CAFÉ",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 74.5,
+      "score_objective": 78.0,
+      "score_diner": 75.0,
+      "score_taste": 80.0,
+      "score_endorsement": 78.0
+    },
+    "ok": true
+  },
+  {
+    "name": "DOU COFFEE ROASTERS(嘉善路店)",
+    "action": "new",
+    "rid": 1852,
+    "rc_added": [
+      77,
+      162,
+      300,
+      305
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1852,
+      "name": "DOU COFFEE ROASTERS(嘉善路店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 69.6,
+      "score_objective": 75.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "VERIE BAKEHOUSE(新天地店)",
+    "action": "update",
+    "rid": 1693,
+    "ok": false,
+    "error": "RC 67: {\"code\":\"23503\",\"details\":\"Key (restaurant_id)=(1693) is not present in table \\\"restaurants\\\".\",\"hint\":null,\"message\":\"insert or update on table \\\"restaurant_cu"
+  },
+  {
+    "name": "BAsdBAN巴适得板(愚园路店)",
+    "action": "update",
+    "rid": 1404,
+    "rc_added": [
+      301,
+      308
+    ],
+    "rc_total": 14,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1404,
+      "name": "BAsdBAN巴适得板(愚园路店)",
+      "status": "active",
+      "location": "0101000020E6100000E50AEF72115C5E403F575BB1BF383F40",
+      "phone": "13167260607",
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 69.7,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "TonTon(永康路店)",
+    "action": "update",
+    "rid": 1694,
+    "rc_added": [
+      301,
+      308
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1694,
+      "name": "TonTon(永康路店)",
+      "status": "active",
+      "location": "0101000020E6100000EB5223F4335D5E4019390B7BDA353F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 36,
+      "score_total": 78.3,
+      "score_objective": 80.0,
+      "score_diner": 83.0,
+      "score_taste": 82.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Bebaked(愚园路店)",
+    "action": "update",
+    "rid": 1695,
+    "rc_added": [
+      301,
+      308
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1695,
+      "name": "Bebaked(愚园路店)",
+      "status": "active",
+      "location": "0101000020E61000004AD235936F5B5E407847C66AF3373F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 65.8,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "O'Mills Sourdough Bakery & Bistro(永嘉路店)",
+    "action": "update",
+    "rid": 1696,
+    "rc_added": [
+      74,
+      301,
+      312
+    ],
+    "rc_total": 17,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1696,
+      "name": "O'Mills Sourdough Bakery & Bistro(永嘉路店)",
+      "status": "active",
+      "location": "0101000020E6100000F7915B936E5D5E406CEBA7FFAC353F40",
+      "phone": "02162092952",
+      "tier": "平价",
+      "price_avg": 60,
+      "score_total": 80.9,
+      "score_objective": 82.0,
+      "score_diner": 85.0,
+      "score_taste": 82.0,
+      "score_endorsement": 82.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Gluglu(愚园路店)",
+    "action": "update",
+    "rid": 1697,
+    "rc_added": [
+      301,
+      310
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1697,
+      "name": "Gluglu(愚园路店)",
+      "status": "active",
+      "location": "0101000020E61000001A1538D9065B5E40158C4AEA04383F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 65.1,
+      "score_objective": 74.0,
+      "score_diner": 75.0,
+      "score_taste": 75.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Sloppy Gin(延平路店)",
+    "action": "update",
+    "rid": 1698,
+    "rc_added": [
+      301,
+      310
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1698,
+      "name": "Sloppy Gin(延平路店)",
+      "status": "active",
+      "location": "0101000020E610000054742497FF5B5E40541A31B3CF3B3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 30,
+      "score_total": 62.7,
+      "score_objective": 72.0,
+      "score_diner": 75.0,
+      "score_taste": 72.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Luneurs月乐诗(南京西路店)",
+    "action": "update",
+    "rid": 1699,
+    "rc_added": [
+      301,
+      308
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1699,
+      "name": "Luneurs月乐诗(南京西路店)",
+      "status": "active",
+      "location": "0101000020E610000029779FE3A35C5E40F488D1730B393F40",
+      "phone": "15021574803",
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 72.1,
+      "score_objective": 78.0,
+      "score_diner": 76.0,
+      "score_taste": 78.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "乔尔卢布松美食坊Boulangerie(外滩18号)",
+    "action": "update",
+    "rid": 1774,
+    "rc_added": [
+      301,
+      308
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1774,
+      "name": "乔尔卢布松美食坊Boulangerie(外滩18号)",
+      "status": "active",
+      "location": "0101000020E61000007B849A21555F5E40912BF52C083D3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75,
+      "score_total": 82.1,
+      "score_objective": 85.0,
+      "score_diner": 82.0,
+      "score_taste": 85.0,
+      "score_endorsement": 95.0
+    },
+    "ok": true
+  },
+  {
+    "name": "When Pigs Fly当猪飞(愚园路店)",
+    "action": "update",
+    "rid": 1747,
+    "rc_added": [
+      301,
+      310
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1747,
+      "name": "When Pigs Fly当猪飞(愚园路店)",
+      "status": "active",
+      "location": "0101000020E6100000B77C24253D5B5E4092AD2EA704383F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 18,
+      "score_total": 69.1,
+      "score_objective": 72.0,
+      "score_diner": 78.0,
+      "score_taste": 72.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "苹果花园(南泉路店)",
+    "action": "new",
+    "rid": 1853,
+    "rc_added": [
+      67,
+      68,
+      74,
+      77,
+      162,
+      258,
+      301,
+      310
+    ],
+    "rc_total": 8,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1853,
+      "name": "苹果花园(南泉路店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 15,
+      "score_total": 63.6,
+      "score_objective": 65.0,
+      "score_diner": 72.0,
+      "score_taste": 65.0,
+      "score_endorsement": 30.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Le Pain Sense(建国东路店)",
+    "action": "update",
+    "rid": 1837,
+    "rc_added": [
+      301,
+      308
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1837,
+      "name": "Le Pain Sense(建国东路店)",
+      "status": "active",
+      "location": "0101000020E61000009D0FCF12645E5E40A01A2FDD24363F40",
+      "phone": "17514022634",
+      "tier": "经济",
+      "price_avg": 28,
+      "score_total": 68.4,
+      "score_objective": 72.0,
+      "score_diner": 76.0,
+      "score_taste": 74.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "国际饭店帆声饼屋(黄河路店)",
+    "action": "update",
+    "rid": 1784,
+    "rc_added": [
+      301,
+      310
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1784,
+      "name": "国际饭店帆声饼屋(黄河路店)",
+      "status": "active",
+      "location": "0101000020E610000043FF04172B5E5E4071CB4752D23B3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 83.7,
+      "score_objective": 82.0,
+      "score_diner": 85.0,
+      "score_taste": 82.0,
+      "score_endorsement": 90.0
+    },
+    "ok": true
+  },
+  {
+    "name": "PAIN CHAUD百丘(番禺路店)",
+    "action": "update",
+    "rid": 1785,
+    "rc_added": [
+      301,
+      308
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1785,
+      "name": "PAIN CHAUD百丘(番禺路店)",
+      "status": "active",
+      "location": "0101000020E6100000C47762D68B5B5E402BFBAE08FE333F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50,
+      "score_total": 75.6,
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 82.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "drunk baker醉师傅(陕康里店)",
+    "action": "update",
+    "rid": 1786,
+    "rc_added": [
+      301,
+      308
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1786,
+      "name": "drunk baker醉师傅(陕康里店)",
+      "status": "active",
+      "location": "0101000020E610000039807EDFBF5C5E40F3CB608C483C3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 25,
+      "score_total": 64.7,
+      "score_objective": 75.0,
+      "score_diner": 75.0,
+      "score_taste": 76.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "纽约贝果博物馆(新天地店)",
+    "action": "update",
+    "rid": 1788,
+    "rc_added": [
+      301,
+      311
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1788,
+      "name": "纽约贝果博物馆(新天地店)",
+      "status": "active",
+      "location": "0101000020E6100000CF4C309C6B5E5E4009DFFB1BB4373F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 68.6,
+      "score_objective": 75.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "FASCINO BAKERY(丰盛里店)",
+    "action": "update",
+    "rid": 1789,
+    "rc_added": [
+      301,
+      310
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1789,
+      "name": "FASCINO BAKERY(丰盛里店)",
+      "status": "active",
+      "location": "0101000020E6100000F03504C7655D5E40E73A8DB4543A3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 43,
+      "score_total": 71.2,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 76.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Bake No Title(番禺路店)",
+    "action": "update",
+    "rid": 1792,
+    "rc_added": [
+      301,
+      310
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1792,
+      "name": "Bake No Title(番禺路店)",
+      "status": "active",
+      "location": "0101000020E6100000B70DA320785B5E402922C32ADE343F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 40,
+      "score_total": 66.7,
+      "score_objective": 74.0,
+      "score_diner": 78.0,
+      "score_taste": 76.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "ISAN BAKERY & CAFE",
+    "action": "new",
+    "rid": 1854,
+    "rc_added": [
+      68,
+      74,
+      77,
+      162,
+      301,
+      309
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1854,
+      "name": "ISAN BAKERY & CAFE",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35,
+      "score_total": 70.7,
+      "score_objective": 72.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "银座仁志川(兴业太古汇店)",
+    "action": "new",
+    "rid": 1855,
+    "rc_added": [
+      68,
+      74,
+      77,
+      162,
+      301,
+      309
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1855,
+      "name": "银座仁志川(兴业太古汇店)",
+      "status": "active",
+      "location": null,
+      "phone": "13040675697",
+      "tier": "平价",
+      "price_avg": 98,
+      "score_total": 63.7,
+      "score_objective": 70.0,
+      "score_diner": 75.0,
+      "score_taste": 76.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "柴田西点Chez Shibata(紫云西路店)",
+    "action": "update",
+    "rid": 1700,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1700,
+      "name": "柴田西点Chez Shibata(紫云西路店)",
+      "status": "active",
+      "location": "0101000020E6100000A67D737FF5595E407E52EDD3F1343F40",
+      "phone": "02152065671",
+      "tier": "平价",
+      "price_avg": 58,
+      "score_total": 73.5,
+      "score_objective": 76.0,
+      "score_diner": 73.0,
+      "score_taste": 75.0,
+      "score_endorsement": 82.0
+    },
+    "ok": true
+  },
+  {
+    "name": "辛一铜锣烧(静安大悦城店)",
+    "action": "update",
+    "rid": 1701,
+    "rc_added": [
+      318
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1701,
+      "name": "辛一铜锣烧(静安大悦城店)",
+      "status": "active",
+      "location": "0101000020E6100000BA66F2CD365E5E405F7B6649803E3F40",
+      "phone": "13127523231",
+      "tier": "经济",
+      "price_avg": 22,
+      "score_total": 60.9,
+      "score_objective": 70.0,
+      "score_diner": 75.0,
+      "score_taste": 72.0,
+      "score_endorsement": 40.0
+    },
+    "ok": true
+  },
+  {
+    "name": "香港华心糖水铺(南西总店)",
+    "action": "update",
+    "rid": 1702,
+    "rc_added": [
+      77,
+      316
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1702,
+      "name": "香港华心糖水铺(南西总店)",
+      "status": "active",
+      "location": "0101000020E6100000D8648D7A885D5E4091990B5C1E3B3F40",
+      "phone": "02152555779",
+      "tier": "平价",
+      "price_avg": 55,
+      "score_total": 71.5,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "双喜老铺(静安寺店)",
+    "action": "update",
+    "rid": 1703,
+    "rc_added": [
+      77,
+      316
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1703,
+      "name": "双喜老铺(静安寺店)",
+      "status": "active",
+      "location": "0101000020E610000020D1048A585C5E4066F4A3E194393F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 26,
+      "score_total": 70.7,
+      "score_objective": 74.0,
+      "score_diner": 82.0,
+      "score_taste": 80.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "小团圆糖水铺(思南路店)",
+    "action": "update",
+    "rid": 1704,
+    "rc_added": [
+      77,
+      316
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1704,
+      "name": "小团圆糖水铺(思南路店)",
+      "status": "active",
+      "location": "0101000020E6100000F2406491265E5E403830B95164353F40",
+      "phone": "13761027727",
+      "tier": "经济",
+      "price_avg": 32,
+      "score_total": 70.9,
+      "score_objective": 72.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "yesOcake巴斯克专门店",
+    "action": "update",
+    "rid": 1705,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1705,
+      "name": "yesOcake巴斯克专门店",
+      "status": "active",
+      "location": "0101000020E61000003944DC9C4A5D5E403718EAB0C2353F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 39,
+      "score_total": 54.7,
+      "score_objective": 68.0,
+      "score_diner": 72.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0
+    },
+    "ok": true
+  },
+  {
+    "name": "L'eclair de Genie闪电巴黎(芮欧百货店)",
+    "action": "update",
+    "rid": 1773,
+    "rc_added": [
+      313
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1773,
+      "name": "L'eclair de Genie闪电巴黎(芮欧百货店)",
+      "status": "active",
+      "location": "0101000020E6100000CA880B40A35C5E4062156F641E393F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 68,
+      "score_total": 73.9,
+      "score_objective": 80.0,
+      "score_diner": 76.0,
+      "score_taste": 78.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "法田鹿蛋糕",
+    "action": "update",
+    "rid": 1775,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1775,
+      "name": "法田鹿蛋糕",
+      "status": "active",
+      "location": "0101000020E6100000997FF44D9A5A5E40CAC4AD82182C3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 65,
+      "score_total": 68.7,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Lady M(上海恒隆广场店)",
+    "action": "update",
+    "rid": 1776,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1776,
+      "name": "Lady M(上海恒隆广场店)",
+      "status": "active",
+      "location": "0101000020E61000001E335019FF5C5E40A8E15B58373A3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75,
+      "score_total": 77.6,
+      "score_objective": 80.0,
+      "score_diner": 76.0,
+      "score_taste": 80.0,
+      "score_endorsement": 88.0
+    },
+    "ok": true
+  },
+  {
+    "name": "聚福shanghailander(乌鲁木齐南路店)",
+    "action": "update",
+    "rid": 1777,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1777,
+      "name": "聚福shanghailander(乌鲁木齐南路店)",
+      "status": "active",
+      "location": "0101000020E610000001C0B167CF5C5E40DB89929048333F40",
+      "phone": "4000221107",
+      "tier": "平价",
+      "price_avg": 52,
+      "score_total": 73.5,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "汕鹤潮式甜汤(人广来福士店)",
+    "action": "update",
+    "rid": 1486,
+    "rc_added": [
+      74,
+      313
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1486,
+      "name": "汕鹤潮式甜汤(人广来福士店)",
+      "status": "active",
+      "location": "0101000020E6100000DC82A5BA805E5E400BD3F71A823B3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 18,
+      "score_total": 59.2,
+      "score_objective": 70.0,
+      "score_diner": 76.0,
+      "score_taste": 72.0,
+      "score_endorsement": 40.0
+    },
+    "ok": true
+  },
+  {
+    "name": "贵州冰浆(陕西北路店)",
+    "action": "update",
+    "rid": 1778,
+    "rc_added": [
+      313
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1778,
+      "name": "贵州冰浆(陕西北路店)",
+      "status": "active",
+      "location": "0101000020E61000004033880FEC5C5E40778368AD683B3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 22,
+      "score_total": 64.9,
+      "score_objective": 68.0,
+      "score_diner": 74.0,
+      "score_taste": 70.0,
+      "score_endorsement": 45.0
+    },
+    "ok": true
+  },
+  {
+    "name": "FINE pancake&canteen(陕西南路店)",
+    "action": "update",
+    "rid": 1836,
+    "rc_added": [
+      74,
+      315
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1836,
+      "name": "FINE pancake&canteen(陕西南路店)",
+      "status": "active",
+      "location": "0101000020E61000001DE4F560525D5E4036583849F3373F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 68,
+      "score_total": 73.6,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 76.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Kaki Mania日式刨冰(长乐路店)",
+    "action": "update",
+    "rid": 1779,
+    "ok": false,
+    "error": "RC 67: {\"code\":\"23503\",\"details\":\"Key (restaurant_id)=(1779) is not present in table \\\"restaurants\\\".\",\"hint\":null,\"message\":\"insert or update on table \\\"restaurant_cu"
+  },
+  {
+    "name": "麻布屋AZABUYA(永康路店)",
+    "action": "update",
+    "rid": 1780,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1780,
+      "name": "麻布屋AZABUYA(永康路店)",
+      "status": "active",
+      "location": "0101000020E6100000B0912408575D5E4046787B1002363F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 38,
+      "score_total": 75.9,
+      "score_objective": 78.0,
+      "score_diner": 82.0,
+      "score_taste": 78.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "HUFFY coffee&gelato(威海路店)",
+    "action": "update",
+    "rid": 1781,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1781,
+      "name": "HUFFY coffee&gelato(威海路店)",
+      "status": "active",
+      "location": "0101000020E6100000768A5583305D5E407C9DD497A5393F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 39,
+      "score_total": 76.6,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 80.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "MIMILATO(长乐路店)",
+    "action": "update",
+    "rid": 1782,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1782,
+      "name": "MIMILATO(长乐路店)",
+      "status": "active",
+      "location": "0101000020E6100000C85F5AD4275C5E40A794D74AE8363F40",
+      "phone": "17317619656",
+      "tier": "经济",
+      "price_avg": 42,
+      "score_total": 73.1,
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 76.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Sit Gelato(南昌路店)",
+    "action": "update",
+    "rid": 1783,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1783,
+      "name": "Sit Gelato(南昌路店)",
+      "status": "active",
+      "location": "0101000020E6100000D673D2FBC65D5E4039B4C876BE373F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 42,
+      "score_total": 73.8,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Spiceman辣男Gelato(思南路店)",
+    "action": "update",
+    "rid": 1748,
+    "rc_added": [
+      313
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1748,
+      "name": "Spiceman辣男Gelato(思南路店)",
+      "status": "active",
+      "location": "0101000020E6100000D690B8C7D25D5E4044F9821612383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 52,
+      "score_total": 68.3,
+      "score_objective": 74.0,
+      "score_diner": 78.0,
+      "score_taste": 74.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "达可芮Gelato Dal Cuore(陕西北路店)",
+    "action": "update",
+    "rid": 1787,
+    "rc_added": [
+      67,
+      313
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1787,
+      "name": "达可芮Gelato Dal Cuore(陕西北路店)",
+      "status": "active",
+      "location": "0101000020E6100000AD855968E75C5E4061889CBE9E3B3F40",
+      "phone": "13818587747",
+      "tier": "经济",
+      "price_avg": 45,
+      "score_total": 78.5,
+      "score_objective": 80.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "泽田本家铜锣烧(上海店)",
+    "action": "new",
+    "rid": 1856,
+    "rc_added": [
+      67,
+      74,
+      77,
+      162,
+      318
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1856,
+      "name": "泽田本家铜锣烧(上海店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 25,
+      "score_total": 65.7,
+      "score_objective": 72.0,
+      "score_diner": 78.0,
+      "score_taste": 75.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "野人先生Gelato(徐汇旗舰店)",
+    "action": "new",
+    "rid": 1857,
+    "rc_added": [
+      67,
+      74,
+      77,
+      162,
+      313
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1857,
+      "name": "野人先生Gelato(徐汇旗舰店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 25,
+      "score_total": 58.8,
+      "score_objective": 68.0,
+      "score_diner": 72.0,
+      "score_taste": 70.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "EVERNAKED裸蛋糕(巨鹿路店)",
+    "action": "update",
+    "rid": 1790,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1790,
+      "name": "EVERNAKED裸蛋糕(巨鹿路店)",
+      "status": "active",
+      "location": "0101000020E61000000B7BDAE1AF5C5E40F6B3588AE4373F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 57,
+      "score_total": 75.3,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "yeetlemon柠檬蛋糕(同乐坊店)",
+    "action": "update",
+    "rid": 1791,
+    "rc_added": [
+      317
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1791,
+      "name": "yeetlemon柠檬蛋糕(同乐坊店)",
+      "status": "active",
+      "location": "0101000020E6100000DBDFD91EBD5C5E406A15FDA1993B3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75,
+      "score_total": 73.4,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "堂屋糖水铺(愚园路店)",
+    "action": "update",
+    "rid": 1793,
+    "rc_added": [
+      316
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1793,
+      "name": "堂屋糖水铺(愚园路店)",
+      "status": "active",
+      "location": "0101000020E61000002B323A20095B5E40577BD80B05383F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 28,
+      "score_total": 66.9,
+      "score_objective": 72.0,
+      "score_diner": 75.0,
+      "score_taste": 73.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "和果子本铺四葉",
+    "action": "new",
+    "rid": 1858,
+    "rc_added": [
+      67,
+      74,
+      77,
+      162,
+      318
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1858,
+      "name": "和果子本铺四葉",
+      "status": "active",
+      "location": null,
+      "phone": "19512245121",
+      "tier": "经济",
+      "price_avg": 30,
+      "score_total": 73.5,
+      "score_objective": 75.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "SOiF",
+    "action": "update",
+    "rid": 1360,
+    "rc_added": [
+      303,
+      321
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1360,
+      "name": "SOiF",
+      "status": "active",
+      "location": "0101000020E61000002E573F36C95C5E40D4EE5701BE3B3F40",
+      "phone": "02152665536",
+      "tier": "高档",
+      "price_avg": 260,
+      "score_total": 56.6,
+      "score_objective": 68.0,
+      "score_diner": 60.0,
+      "score_taste": 62.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Wine Universe",
+    "action": "update",
+    "rid": 1709,
+    "rc_added": [
+      303,
+      321
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1709,
+      "name": "Wine Universe",
+      "status": "active",
+      "location": "0101000020E6100000B0E76B96CB5B5E40CF2F4AD05F383F40",
+      "phone": "02152986130",
+      "tier": "高档",
+      "price_avg": 260,
+      "score_total": 57.2,
+      "score_objective": 68.0,
+      "score_diner": 62.0,
+      "score_taste": 62.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Le Verre à vin",
+    "action": "update",
+    "rid": 1712,
+    "rc_added": [
+      303,
+      321
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1712,
+      "name": "Le Verre à vin",
+      "status": "active",
+      "location": "0101000020E6100000944F8F6D195C5E40D7FB8D76DC343F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 286,
+      "score_total": 58.8,
+      "score_objective": 66.0,
+      "score_diner": 62.0,
+      "score_taste": 64.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "武宫酒吧",
+    "action": "update",
+    "rid": 1721,
+    "rc_added": [
+      303,
+      322
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1721,
+      "name": "武宫酒吧",
+      "status": "active",
+      "location": "0101000020E6100000AFCF9CF5295B5E40792288F370363F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120,
+      "score_total": 51.9,
+      "score_objective": 62.0,
+      "score_diner": 50.0,
+      "score_taste": 58.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Bar Leone",
+    "action": "update",
+    "rid": 1742,
+    "rc_added": [
+      303,
+      322
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1742,
+      "name": "Bar Leone",
+      "status": "active",
+      "location": "0101000020E610000000E65AB4005E5E40F41ABB44F5363F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 300,
+      "score_total": 69.9,
+      "score_objective": 82.0,
+      "score_diner": 72.0,
+      "score_taste": 80.0,
+      "score_endorsement": 95.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Speak Low 低语",
+    "action": "update",
+    "rid": 1812,
+    "rc_added": [
+      303,
+      322
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1812,
+      "name": "Speak Low 低语",
+      "status": "active",
+      "location": "0101000020E6100000B891B245D25D5E40DEAB5626FC363F40",
+      "phone": "02164160133",
+      "tier": "中档",
+      "price_avg": 180,
+      "score_total": 65.2,
+      "score_objective": 76.0,
+      "score_diner": 65.0,
+      "score_taste": 74.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "明日酿造/明日酒馆",
+    "action": "update",
+    "rid": 1743,
+    "rc_added": [
+      303,
+      320
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1743,
+      "name": "明日酿造/明日酒馆",
+      "status": "active",
+      "location": "0101000020E6100000207BBDFBE35D5E405EB9DE36533D3F40",
+      "phone": "02163770228",
+      "tier": "中档",
+      "price_avg": 120,
+      "score_total": 62.1,
+      "score_objective": 70.0,
+      "score_diner": 65.0,
+      "score_taste": 68.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Vinism",
+    "action": "update",
+    "rid": 1813,
+    "rc_added": [
+      303,
+      321
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1813,
+      "name": "Vinism",
+      "status": "active",
+      "location": "0101000020E6100000B8C83D5DDD5B5E40361E6CB1DB373F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 200,
+      "score_total": 61.2,
+      "score_objective": 70.0,
+      "score_diner": 62.0,
+      "score_taste": 64.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Nora's Wine Shop & Bar",
+    "action": "update",
+    "rid": 1362,
+    "rc_added": [
+      303,
+      321
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1362,
+      "name": "Nora's Wine Shop & Bar",
+      "status": "active",
+      "location": "0101000020E61000002F6F0ED76A5C5E40F5108DEE20363F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 220,
+      "score_total": 59.7,
+      "score_objective": 68.0,
+      "score_diner": 62.0,
+      "score_taste": 62.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Sober Company",
+    "action": "update",
+    "rid": 1816,
+    "rc_added": [
+      303,
+      322
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1816,
+      "name": "Sober Company",
+      "status": "active",
+      "location": "0101000020E6100000005471E3165E5E4008944DB9C2373F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 150,
+      "score_total": 73.6,
+      "score_objective": 78.0,
+      "score_diner": 75.0,
+      "score_taste": 82.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Pony Up",
+    "action": "update",
+    "rid": 1817,
+    "rc_added": [
+      303,
+      322
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1817,
+      "name": "Pony Up",
+      "status": "active",
+      "location": "0101000020E61000007FA2B2614D5D5E401135D1E7A3383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 180,
+      "score_total": 67.8,
+      "score_objective": 75.0,
+      "score_diner": 70.0,
+      "score_taste": 80.0,
+      "score_endorsement": 88.0
+    },
+    "ok": true
+  },
+  {
+    "name": "COA Shanghai",
+    "action": "update",
+    "rid": 1818,
+    "rc_added": [
+      303,
+      322
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1818,
+      "name": "COA Shanghai",
+      "status": "active",
+      "location": "0101000020E6100000BCCE86FC335C5E405628D2FD9C363F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 200,
+      "score_total": 71.2,
+      "score_objective": 76.0,
+      "score_diner": 72.0,
+      "score_taste": 80.0,
+      "score_endorsement": 82.0
+    },
+    "ok": true
+  },
+  {
+    "name": "ABA WHISKEY BAR 糟糕艺术家",
+    "action": "update",
+    "rid": 1819,
+    "rc_added": [
+      303,
+      319
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1819,
+      "name": "ABA WHISKEY BAR 糟糕艺术家",
+      "status": "active",
+      "location": "0101000020E610000025EA059FE65C5E407BD80B056C3B3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 150,
+      "score_total": 73.4,
+      "score_objective": 72.0,
+      "score_diner": 75.0,
+      "score_taste": 78.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Tourbillon 特彼龙 Whisky Lounge",
+    "action": "update",
+    "rid": 1826,
+    "rc_added": [
+      303,
+      322
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1826,
+      "name": "Tourbillon 特彼龙 Whisky Lounge",
+      "status": "active",
+      "location": "0101000020E6100000950C0055DC5C5E40B22C98F8A3343F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 172,
+      "score_total": 77.8,
+      "score_objective": 82.0,
+      "score_diner": 85.0,
+      "score_taste": 85.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Project W威士忌·鸡尾酒",
+    "action": "update",
+    "rid": 1827,
+    "rc_added": [
+      303,
+      322
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1827,
+      "name": "Project W威士忌·鸡尾酒",
+      "status": "active",
+      "location": "0101000020E6100000931B45D61A5D5E4037A8FDD64E383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 162,
+      "score_total": 71.6,
+      "score_objective": 80.0,
+      "score_diner": 80.0,
+      "score_taste": 82.0,
+      "score_endorsement": 72.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Goose Island Taproom 鹅岛精酿啤酒屋(巨鹿路店)",
+    "action": "update",
+    "rid": 1828,
+    "rc_added": [
+      303,
+      320
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1828,
+      "name": "Goose Island Taproom 鹅岛精酿啤酒屋(巨鹿路店)",
+      "status": "active",
+      "location": "0101000020E6100000A5F8F884EC5C5E40664F029B73383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 118,
+      "score_total": 67.5,
+      "score_objective": 76.0,
+      "score_diner": 75.0,
+      "score_taste": 78.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "飲适精酿 Ease Taproom(南京东路店)",
+    "action": "update",
+    "rid": 1829,
+    "rc_added": [
+      303,
+      320
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1829,
+      "name": "飲适精酿 Ease Taproom(南京东路店)",
+      "status": "active",
+      "location": "0101000020E6100000902DCBD7655E5E40DDED7A698A3C3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75,
+      "score_total": 67.0,
+      "score_objective": 72.0,
+      "score_diner": 74.0,
+      "score_taste": 75.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "ONE WAY STREET精酿啤酒(大沽路店)",
+    "action": "update",
+    "rid": 1830,
+    "rc_added": [
+      303,
+      320
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1830,
+      "name": "ONE WAY STREET精酿啤酒(大沽路店)",
+      "status": "active",
+      "location": "0101000020E6100000D542C9E4D45D5E4060AB048BC3393F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 117,
+      "score_total": 68.1,
+      "score_objective": 73.0,
+      "score_diner": 75.0,
+      "score_taste": 76.0,
+      "score_endorsement": 62.0
+    },
+    "ok": true
+  },
+  {
+    "name": "PuR'aisin Wine Bar皮酉海让葡萄酒酒吧(定西路店)",
+    "action": "update",
+    "rid": 1832,
+    "rc_added": [
+      303,
+      321
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1832,
+      "name": "PuR'aisin Wine Bar皮酉海让葡萄酒酒吧(定西路店)",
+      "status": "active",
+      "location": "0101000020E6100000DA8D3EE6035B5E40EA40D653AB373F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 196,
+      "score_total": 70.6,
+      "score_objective": 76.0,
+      "score_diner": 76.0,
+      "score_taste": 78.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "葡道Wine Shop & Bar(武康店)",
+    "action": "update",
+    "rid": 1833,
+    "rc_added": [
+      303,
+      321
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1833,
+      "name": "葡道Wine Shop & Bar(武康店)",
+      "status": "active",
+      "location": "0101000020E6100000817C09151C5C5E40C45C52B5DD343F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 201,
+      "score_total": 66.5,
+      "score_objective": 75.0,
+      "score_diner": 75.0,
+      "score_taste": 76.0,
+      "score_endorsement": 68.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Lab whisky&cocktail(武定路店)",
+    "action": "update",
+    "rid": 1834,
+    "rc_added": [
+      303,
+      319
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1834,
+      "name": "Lab whisky&cocktail(武定路店)",
+      "status": "active",
+      "location": "0101000020E610000027BF45274B5C5E4081971936CA3A3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 188,
+      "score_total": 70.8,
+      "score_objective": 76.0,
+      "score_diner": 76.0,
+      "score_taste": 78.0,
+      "score_endorsement": 70.0
+    },
+    "ok": true
+  },
+  {
+    "name": "PLAN B(襄阳北路店)",
+    "action": "update",
+    "rid": 1835,
+    "rc_added": [
+      303,
+      320
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1835,
+      "name": "PLAN B(襄阳北路店)",
+      "status": "active",
+      "location": "0101000020E61000001EA4A7C8215D5E40C095ECD808383F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 44,
+      "score_total": 65.6,
+      "score_objective": 70.0,
+      "score_diner": 74.0,
+      "score_taste": 73.0,
+      "score_endorsement": 58.0
+    },
+    "ok": true
+  },
+  {
+    "name": "The Odd Couple",
+    "action": "new",
+    "rid": 1859,
+    "rc_added": [
+      81,
+      163,
+      164,
+      165,
+      303,
+      322
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1859,
+      "name": "The Odd Couple",
+      "status": "active",
+      "location": null,
+      "phone": "02163332363",
+      "tier": "中档",
+      "price_avg": 158,
+      "score_total": 75.3,
+      "score_objective": 82.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 75.0
+    },
+    "ok": true
+  },
+  {
+    "name": "ZION",
+    "action": "new",
+    "rid": 1860,
+    "rc_added": [
+      81,
+      163,
+      164,
+      303,
+      322
+    ],
+    "rc_total": 5,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1860,
+      "name": "ZION",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 130,
+      "score_total": 74.6,
+      "score_objective": 75.0,
+      "score_diner": 85.0,
+      "score_taste": 83.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "La Burg 勒博格金砖俱乐部南非餐吧",
+    "action": "new",
+    "rid": 1861,
+    "rc_added": [
+      72,
+      162,
+      163,
+      283,
+      286,
+      287
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1861,
+      "name": "La Burg 勒博格金砖俱乐部南非餐吧",
+      "status": "active",
+      "location": null,
+      "phone": "02164370057",
+      "tier": "中档",
+      "price_avg": 139,
+      "score_total": 64.1,
+      "score_objective": 72.0,
+      "score_diner": 68.0,
+      "score_taste": 72.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Tajine Moroccan 塔金摩洛哥中东餐厅",
+    "action": "update",
+    "rid": 1228,
+    "rc_added": [
+      282,
+      284,
+      285
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1228,
+      "name": "Tajine Moroccan 塔金摩洛哥中东餐厅",
+      "status": "active",
+      "location": "0101000020E6100000D82AC1E2705F5E40DC9F8B868C3B3F40",
+      "phone": "02163390957",
+      "tier": "中档",
+      "price_avg": 180,
+      "score_total": 61.5,
+      "score_objective": 68.0,
+      "score_diner": 66.0,
+      "score_taste": 70.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "COLCA 秘鲁西班牙餐厅(衡山路店)",
+    "action": "new",
+    "rid": 1862,
+    "rc_added": [
+      72,
+      160,
+      162,
+      163,
+      291,
+      296,
+      297
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1862,
+      "name": "COLCA 秘鲁西班牙餐厅(衡山路店)",
+      "status": "active",
+      "location": null,
+      "phone": "02154015366",
+      "tier": "高档",
+      "price_avg": 300,
+      "score_total": 80.6,
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 82.0,
+      "score_endorsement": 80.0
+    },
+    "ok": true
+  },
+  {
+    "name": "拉蒂娜·巴西牛排馆 Latina(陆家嘴旗舰店)",
+    "action": "new",
+    "rid": 1863,
+    "rc_added": [
+      79,
+      162,
+      163,
+      290,
+      294,
+      295
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1863,
+      "name": "拉蒂娜·巴西牛排馆 Latina(陆家嘴旗舰店)",
+      "status": "active",
+      "location": null,
+      "phone": "02133830577",
+      "tier": "高档",
+      "price_avg": 250,
+      "score_total": 67.8,
+      "score_objective": 76.0,
+      "score_diner": 72.0,
+      "score_taste": 74.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "El Bodegon 阿根廷餐厅(常熟路店)",
+    "action": "new",
+    "rid": 1864,
+    "rc_added": [
+      72,
+      162,
+      163,
+      292,
+      298,
+      299
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1864,
+      "name": "El Bodegon 阿根廷餐厅(常熟路店)",
+      "status": "active",
+      "location": null,
+      "phone": "021-54651275",
+      "tier": "中档",
+      "price_avg": 199,
+      "score_total": 69.9,
+      "score_objective": 70.0,
+      "score_diner": 72.0,
+      "score_taste": 74.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Tacolicious(同乐坊店)",
+    "action": "new",
+    "rid": 1865,
+    "rc_added": [
+      42,
+      72,
+      162,
+      163,
+      288,
+      289
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1865,
+      "name": "Tacolicious(同乐坊店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 140,
+      "score_total": 65.6,
+      "score_objective": 68.0,
+      "score_diner": 66.0,
+      "score_taste": 68.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Flambe Bistro 奥地利餐厅(湖滨道店)",
+    "action": "new",
+    "rid": 1866,
+    "rc_added": [
+      73,
+      162,
+      163,
+      276,
+      278,
+      279
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1866,
+      "name": "Flambe Bistro 奥地利餐厅(湖滨道店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 180,
+      "score_total": 73.8,
+      "score_objective": 76.0,
+      "score_diner": 74.0,
+      "score_taste": 76.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Greek Taverna Milos 米洛洛斯希腊餐厅(老外街店)",
+    "action": "new",
+    "rid": 1867,
+    "rc_added": [
+      32,
+      72,
+      162,
+      163
+    ],
+    "rc_total": 4,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1867,
+      "name": "Greek Taverna Milos 米洛洛斯希腊餐厅(老外街店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 160,
+      "score_total": 69.4,
+      "score_objective": 70.0,
+      "score_diner": 72.0,
+      "score_taste": 74.0,
+      "score_endorsement": 50.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Delight Food 比利时啤酒餐厅(老外街店)",
+    "action": "new",
+    "rid": 1868,
+    "rc_added": [
+      72,
+      162,
+      163,
+      277,
+      280,
+      281
+    ],
+    "rc_total": 6,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1868,
+      "name": "Delight Food 比利时啤酒餐厅(老外街店)",
+      "status": "active",
+      "location": null,
+      "phone": "02164011790",
+      "tier": "中档",
+      "price_avg": 180,
+      "score_total": 66.5,
+      "score_objective": 68.0,
+      "score_diner": 66.0,
+      "score_taste": 70.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "麺屋KING",
+    "action": "new",
+    "rid": 1869,
+    "rc_added": [
+      51,
+      72,
+      85,
+      162,
+      163,
+      262,
+      263
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1869,
+      "name": "麺屋KING",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 94,
+      "score_total": 77.6,
+      "score_objective": 78.0,
+      "score_diner": 80.0,
+      "score_taste": 82.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "富贵椰 Thai Bistro & Eatery(丰盛里店)",
+    "action": "update",
+    "rid": 1098,
+    "rc_added": [
+      76
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1098,
+      "name": "富贵椰 Thai Bistro & Eatery(丰盛里店)",
+      "status": "active",
+      "location": "0101000020E6100000C24D4695615D5E40E17D552E543A3F40",
+      "phone": "15618383183",
+      "tier": "中档",
+      "price_avg": 180,
+      "score_total": 67.0,
+      "score_objective": 74.0,
+      "score_diner": 72.0,
+      "score_taste": 74.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "纹兵卫手打荞麦面日料(天山店)",
+    "action": "new",
+    "rid": 1870,
+    "rc_added": [
+      51,
+      72,
+      85,
+      162,
+      163,
+      270,
+      271
+    ],
+    "rc_total": 7,
+    "location_set": false,
+    "derive_ok": true,
+    "readback": {
+      "id": 1870,
+      "name": "纹兵卫手打荞麦面日料(天山店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 90,
+      "score_total": 75.4,
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  }
+]

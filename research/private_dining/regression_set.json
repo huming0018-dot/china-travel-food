@@ -1,0 +1,47 @@
+{
+  "slice": "B_private_dining",
+  "generated": "2026-09-23",
+  "regression_assertions": [
+    {
+      "name": "Cheeva Thai",
+      "aliases": ["Cheeva Thai", "เชฟไทย"],
+      "expected_leaf": "L3_异国料理私厨",
+      "should_be_found_via": "上海最难约泰国私房菜/永福路125号/提前半年预约",
+      "in_db": "待查",
+      "first_hit_source": "Trip.com moments + 槟客文化香槟晚宴 + 网易黑钻预约",
+      "note": "与 Slice A 重叠，若采到 notes 标注'与authority片重叠'"
+    },
+    {
+      "name": "聪菜馆",
+      "aliases": ["Cong's Kitchen", "聪菜馆(六合大厦店)"],
+      "expected_leaf": "L1_本帮家宴私厨",
+      "should_be_found_via": "米其林必比登/六合路158号/本帮",
+      "in_db": "待查",
+      "first_hit_source": "米其林指南官网 + 电话邦 + 携程"
+    },
+    {
+      "name": "豪生酒家",
+      "aliases": ["Hao Sheng"],
+      "expected_leaf": "L1_本帮家宴私厨",
+      "should_be_found_via": "一人4桌/无菜单本帮omakase/广元路156号/100-150-200三档",
+      "in_db": "待查",
+      "first_hit_source": "米其林指南 + 抖音牛哥会吃 + 上海热线本帮指南"
+    },
+    {
+      "name": "黄公子",
+      "aliases": ["黄公子私房菜"],
+      "expected_leaf": "L8_洋楼时令私宴",
+      "should_be_found_via": "衡山坊/每日两席/人均3000起/9年最难约",
+      "in_db": "待查",
+      "first_hit_source": "TimeOut上海 features/6238 + 携程笔记包场4万"
+    },
+    {
+      "name": "AmoyA",
+      "aliases": ["amoy", "Amoy A"],
+      "expected_leaf": "L4_闽沿海主厨发办",
+      "should_be_found_via": "长乐村/每天一桌/无招牌里弄/厦门菜/1500",
+      "in_db": "待查",
+      "first_hit_source": "抖音 7658165141 + 7654869929"
+    }
+  ]
+}

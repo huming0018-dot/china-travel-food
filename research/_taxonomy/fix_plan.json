@@ -1,0 +1,149 @@
+[
+  {
+    "action": "update",
+    "restaurant_id": 1396,
+    "name": "Captain George风味博物馆",
+    "fields": {
+      "name_en": "Captain George Flavor Museum",
+      "price_avg": 77,
+      "price_range": "¥55-98",
+      "district": "徐汇区",
+      "business_area": "太原路/岳阳路",
+      "booking_method": "到店排队，周末需等位",
+      "investor_info": "Captain George乔治队长",
+      "score_objective": 88.0,
+      "score_diner": 85.0,
+      "score_taste": 92.0,
+      "score_endorsement": 90.0,
+      "soft_ad_penalty": 4.0,
+      "evidence_summary": "Captain George风味博物馆由2022/2024世界咖啡冲煮大赛中国区冠军彭近洋主理，贵阳起家后入驻上海太原路。店铺主打冠军级手冲，豆单涵盖埃塞俄比亚、巴拿马、肯尼亚、哥伦比亚等产区，季节性更新频繁。点单后咖啡师会引导选豆，出品时杯上标注温度，可体验不同温度下风味变化——温热时果香突出，降温后茶感和醇厚感增强。招牌埃塞金标瑰夏手冲入口有柑橘和茉莉花香，酸质明亮平衡；肯尼亚SL28水洗冰冲则有更浓郁的黑醋栗和番茄酸感。Guided Tasting Set品鉴组合可一次尝多款。同品类对比：相比O.P.S的创意特调路线，Captain George走纯手冲技术流，竞标豆单杯可达98元，定价偏高；座位间隔较挤，吧台位可看虹吸和手冲过程。周末需排队。差评集中在'竞标豆价格偏高'和'座位局促'。\n— 食客堂食原话 —\n1. [携程笔记·手冲风味组合] 点了两个手冲风味咖啡，可以体验到在不同温度下咖啡口味的变化。豆子种类太丰富了，制作手法也很多种，品尝过程很讲究，还有很多咖啡豆知识介绍。 (https://m.ctrip.com/webapp/you/community/detail?articleId=317960924)\n2. [抖音探店·巴拿马卡托瓦/肯尼亚SL28冰冲] 喝到非常清晰的比较像核果类李子这样的甜感，酸度平缓轻柔，醇厚度不算太高，有喝冰冰水果茶的感觉。第二支肯尼亚SL28水洗冰冲，赋予了更浓郁的黑醋栗感。 (https://www.iesdouyin.com/share/video/7684561991751526565)\n3. [携程笔记·埃塞手冲] 点了一杯手冲埃塞豆子，呈现方式很特别，可以直接看到咖啡温度，喝到不同温度下的口感。入口清新，带着柑橘和花香，整体平衡感很棒，适合喜欢清爽口感的朋友。 (https://m.ctrip.com/webapp/you/community/detail?articleId=129677654)\n差评/风险：座位间隔较挤，到店体验略局促；竞标豆价格偏高，单杯可达98元；周末排队，网红属性强",
+      "status": "active",
+      "data_updated_at": "2026-09-23",
+      "location": "SRID=4326;POINT(121.455469 31.204038)"
+    },
+    "cids_add": [
+      77,
+      162,
+      300,
+      305
+    ],
+    "needs_amap": false,
+    "coord_source": "tencent",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "source 自填类型 overseas_media 与 URL 判定 other 不符: Captain George Fla",
+      "source 自填类型 overseas_media 与 URL 判定 other 不符: 10 Viral Shanghai "
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1395,
+    "name": "堀口咖啡 HORIGUCHI COFFEE",
+    "fields": {
+      "name_en": "HORIGUCHI COFFEE",
+      "price_avg": 70,
+      "price_range": "¥55-90",
+      "district": "黄浦区",
+      "business_area": "外滩源/圆明园路",
+      "booking_method": "到店",
+      "investor_info": "堀口咖啡",
+      "score_objective": 82.0,
+      "score_diner": 82.0,
+      "score_taste": 85.0,
+      "score_endorsement": 80.0,
+      "soft_ad_penalty": 3.0,
+      "evidence_summary": "堀口咖啡HORIGUCHI COFFEE是'日本精品咖啡之父'堀口俊英的海外首店，位于洛克外滩源圆明园路，曾是《三十而已》取景地。店内每周空运新鲜烘焙咖啡豆，所有器具甚至滤纸都从日本运——手冲铁壶是玉川堂纯手工打造，咖啡杯碟是有田烧大师作品，金属勺是新潟燕市出品。咖啡豆共9种以数字1-9编号，数字越小越酸越大越苦。携程食客点手冲奥蕾（手冲拿铁）98元，评价'除了贵没毛病，就俩字值得，手冲细腻与焦香在唇齿间蔓延'。抖音食客介绍'创始人是美国精品咖啡协会裁判、日本咖啡化学会理事，咖啡界名人'。恒隆新店食客选曼特宁手冲和拿铁，评价'咖啡杯都很好看，即使不喝手冲拿铁味道也很优秀，搭配蒙布朗收获一下午愉悦'。同品类对比：堀口以日本名店海外首店和全套日式器具为核心壁垒，价格偏高（手冲98元起），但仪式感和器具专业度匹配。差评集中在'价格贵'。\n— 食客堂食原话 —\n1. [携程笔记·手冲奥蕾（手冲拿铁）] 这里咖啡很贵一杯手冲98元，点了Ice Cafe Au Lait手冲奥蕾。除了贵没毛病就俩字值得，手冲咖啡的细腻与焦香在唇齿间蔓延，冰手冲第一口沁人心脾。 (https://m.ctrip.com/webapp/you/community/detail?articleId=68947390)\n2. [抖音探店·手冲单品] 创始人堀口先生是美国精品咖啡协会裁判、日本咖啡化学会理事。咖啡豆共九种选择，数字越小越酸越大越苦，我喜欢中度烘焙。 (https://www.iesdouyin.com/share/video/7034403764782042372)\n3. [携程笔记·曼特宁手冲/拿铁/蒙布朗] 恒隆广场新开的HORIGUCHI，之前在外滩源喝过。主打手冲可自己选豆子共9种，闺蜜选曼特宁我选拿铁，再搭配蒙布朗轻松收获一下午。咖啡杯都很好看，拿铁味道也很优秀。 (https://m.ctrip.com/webapp/you/community/detail?articleId=115218412)\n差评/风险：大陆唯一店，无连锁规模；外滩源位置偏游客区；价格偏高",
+      "status": "active",
+      "data_updated_at": "2026-09-23",
+      "location": "SRID=4326;POINT(121.488102 31.241876)"
+    },
+    "cids_add": [
+      67,
+      77,
+      162,
+      300,
+      305
+    ],
+    "needs_amap": false,
+    "coord_source": "tencent",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "source 自填类型 platform 与 URL 判定 ugc 不符: HORIGUCHI COFFEE -",
+      "source 自填类型 platform 与 URL 判定 ugc 不符: Trip.com堀口咖啡商户页"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1170,
+    "name": "VERIE BAKEHOUSE(新天地店)",
+    "fields": {
+      "name_en": "Verie Bakehouse by Frederic Jaros",
+      "price_avg": 59,
+      "price_range": "¥45-75",
+      "district": "黄浦区",
+      "business_area": "新天地",
+      "booking_method": "到店购买，无需预订",
+      "investor_info": "VERIE/上海饴厅餐饮",
+      "score_objective": 82.0,
+      "score_diner": 75.0,
+      "score_taste": 82.0,
+      "score_endorsement": 90.0,
+      "soft_ad_penalty": 5.0,
+      "evidence_summary": "VERIE BAKEHOUSE由前米其林二星Da Vittorio上海甜品主厨Frederic Jaros(FJ)于2024年创立，主打法式酥皮+日常烘焙，将米其林水准做成亲民社区面包店价格。招牌拿破仑圣多诺黑现点现做，卡仕达用料足、奶油轻盈不腻；榛子瑞士酥酥皮层叠、黄油香浓郁。同品类横向对比：相比Farine时代的高端定位，VERIE价格更亲民(人均59元)，但有食客直言'和DV比还差一口气'，酥皮出品时好时差。差评集中在'品种少、周末备货不足'和'蝴蝶结可颂夹心太少'。pain au chocolat被海外食客评为上海同类最佳。新天地商圈游客占比高，开业初期媒体曝光密度大，但主厨FJ几乎每天亲自坐镇制作，复购客群在逐步建立。\n— 食客堂食原话 —\n1. [携程笔记·可芬/树莓奶油] 网上差评太多，我倒是降低了期待，讲真不难吃，面包并没有很硬很干，我吃起来还是香酥的，不过和DV的面包比那肯定还是要差一口气的，小可芬顶部和内里的树莓奶油酸甜解腻很好吃，就是不知道为什么，店里面包品种看起来很少，本来想买一个面包橱窗里也看不到，不知道是卖完了还是没出炉 (https://m.ctrip.com/webapp/you/community/detail?articleId=71785946)\n2. [抖音·提子酥脆卷/酥皮面包] 说实话这里没有想象中那么的惊艳。可能因为我没有点他们的招牌甜点，但作为一家能把米其林水准做成日常亲民价格的社区面包店。我觉得路过新天地真的值得顺道来试一试。连吃两口咸口的总觉得少了点啥，又点了个提子酥脆卷，让小姐姐加热了一下。酥皮类面包果然要热的才够魂 (https://www.iesdouyin.com/share/video/7676135917203625710)\n3. [携程笔记·拿破仑圣多诺黑] verie家的拿破仑据说在网上出圈，赶快点了拿破仑圣多诺黑，现点现做，端上来的就忍不住先尝一口奶油，整体口感绵密，卡仕达用料很足，绝对是甜品达人不二选择 (https://m.ctrip.com/webapp/you/community/detail?articleId=367155447)\n差评/风险：澎湃新闻指出酥皮出品有不稳定评价；食客反馈品种少、周末备货不足；新天地商圈游客占比高",
+      "status": "active",
+      "data_updated_at": "2026-09-23"
+    },
+    "cids_add": [
+      67,
+      68,
+      74,
+      77,
+      162,
+      301,
+      308
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "命中 3 项软广信号，建议人工复核是否剔除"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1312,
+    "name": "Kaki Mania日式刨冰(长乐路店)",
+    "fields": {
+      "price_avg": 65,
+      "price_range": "¥55-75",
+      "district": "黄浦区",
+      "business_area": "长乐路/淮海路",
+      "booking_method": "到店排队，夏季周末等位30分钟+",
+      "investor_info": "Kaki Mania",
+      "score_objective": 76.0,
+      "score_diner": 80.0,
+      "score_taste": 78.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 5.0,
+      "evidence_summary": "Kaki Mania是2026年夏季上海日式刨冰爆款店，位于长乐路462号集社Green Station二楼薄荷绿建筑内，板前座位可近距离观看制冰。招牌葱油拌面刨冰为'海派冰品'话题出圈款，但口味两极分化；茉莉青苔抹茶刨冰抹茶完全不甜微苦，内藏炒米为点睛之笔；黑芝麻豆乳刨冰入口即化无冰渣，黑芝麻香气浓郁。同品类对比：相比普通刨冰店的工业刨冰，Kaki Mania走地道日式细腻刨冰路线(细腻程度'堪比安陵容的心思')，单份59-74元属高端档位。高德评分4.6。上观新闻/今日头条均报道'葱油拌面刨冰'话题。夏季周末排队30分钟+。\n— 食客堂食原话 —\n1. [抖音·茉莉青苔抹茶刨冰] Kaki mania是非常地道的日式刨冰，细腻程度堪比安陵容的心思。招牌茉莉青苔抹茶抹茶完全不甜甚至微微发苦，最厉害的不是外面的抹茶是里面的炒米 (https://www.iesdouyin.com/share/video/7667458168939605242)\n2. [抖音·黑芝麻豆乳刨冰] 藏在长乐路一个小广场二楼，坐在板前直接近距离看制冰。黑芝麻豆乳放到面前就能闻到巨浓的黑芝麻香气。第一口入口即化的刨冰就知道稳了，没有冰渣 (https://www.iesdouyin.com/share/video/7652390593720487194)\n3. [抖音·黑芝麻抹茶麻薯刨冰] 花59元吃上海巨型黑芝麻抹茶麻薯刨冰，老大一个了。整体外面很浓郁黑芝麻香，再来一口抹茶麻薯大塞一口冰脑门 (https://www.iesdouyin.com/share/video/7647857979085766755)\n差评/风险：夏季排队30分钟+；葱油拌面刨冰口味两极分化(有人喜欢有人觉得不是菜)；二楼位置不太好找",
+      "status": "active",
+      "data_updated_at": "2026-09-23",
+      "location": "SRID=4326;POINT(121.45796 31.220695)"
+    },
+    "cids_add": [
+      67,
+      74,
+      77,
+      162,
+      314
+    ],
+    "needs_amap": false,
+    "coord_source": "坐标互换修复（原lat/lng写反）",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  }
+]

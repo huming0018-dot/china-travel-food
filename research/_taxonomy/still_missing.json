@@ -1,0 +1,58 @@
+[
+  {
+    "rid": 584,
+    "name": "鲤香(板前)",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.473667,
+      "lat": 31.230525
+    }
+  },
+  {
+    "rid": 1846,
+    "name": "AmoyA",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.448865,
+      "lat": 31.215764
+    }
+  },
+  {
+    "rid": 1853,
+    "name": "苹果花园(南泉路店)",
+    "status": "multi_no_point",
+    "note": "一条记录含多分店/多址，无单点坐标，需拆分"
+  },
+  {
+    "rid": 1854,
+    "name": "ISAN BAKERY & CAFE",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.399712,
+      "lat": 31.24439
+    }
+  },
+  {
+    "rid": 1856,
+    "name": "泽田本家铜锣烧(上海店)",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.436307,
+      "lat": 31.188334
+    }
+  },
+  {
+    "rid": 1857,
+    "name": "野人先生Gelato(徐汇旗舰店)",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.454103,
+      "lat": 31.216279
+    }
+  }
+]
