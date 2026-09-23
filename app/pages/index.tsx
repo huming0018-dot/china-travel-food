@@ -4,96 +4,118 @@ import { useEffect, useState, useMemo } from 'react';
 import { supabase, Restaurant, Cuisine } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 
-const CUISINE_GROUPS = [
-  { key: '日料·细分品类', label: '日料', en: 'Japanese', color: 'terracotta' },
-  { key: '中餐·八大菜系', label: '中餐八大', en: 'Chinese Eight', color: 'mustard' },
-  { key: '中餐·地方菜', label: '地方菜', en: 'Regional', color: 'mustard' },
-  { key: '国际·亚洲', label: '亚洲', en: 'Asian', color: 'moss' },
-  { key: '国际·西餐', label: '西餐', en: 'Western', color: 'mocha' },
-  { key: '国际·其他', label: '其他', en: 'Other', color: 'mocha' },
-];
+// 一级根（地图认知顺序）
+const ROOTS = ['中餐', '亚洲', '欧洲', '非洲', '北美洲', '南美洲', '融合菜', '非正餐'];
+const ROOT_EN: Record<string, string> = {
+  中餐: 'Chinese', 亚洲: 'Asian', 欧洲: 'Europe', 非洲: 'Africa',
+  北美洲: 'N. America', 南美洲: 'S. America', 融合菜: 'Fusion', 非正餐: 'Café & Bar',
+};
+
+async function fetchAll<T = any>(table: string, select: string, extra?: [string, any]): Promise<T[]> {
+  const step = 1000;
+  let start = 0;
+  let all: T[] = [];
+  for (;;) {
+    let q = supabase.from(table).select(select).order('id').range(start, start + step - 1);
+    if (extra) q = q.eq(extra[0], extra[1]);
+    const { data, error } = await q;
+    if (error) throw error;
+    if (!data || data.length === 0) break;
+    all = all.concat(data as T[]);
+    if (data.length < step) break;
+    start += step;
+  }
+  return all;
+}
 
 export default function Home() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [cuisines, setCuisines] = useState<Cuisine[]>([]);
-  const [restaurantCuisines, setRestaurantCuisines] = useState<{restaurant_id: number, cuisine_id: number}[]>([]);
-  const [activeGroup, setActiveGroup] = useState('日料·细分品类');
+  const [rc, setRc] = useState<{ restaurant_id: number; cuisine_id: number }[]>([]);
+  const [activeRoot, setActiveRoot] = useState('中餐');
   const [loading, setLoading] = useState(true);
   const { user, signOut } = useAuth();
 
   useEffect(() => {
-    async function load() {
-      const [{ data: rest }, { data: cuis }, { data: rc }] = await Promise.all([
-        supabase.from('restaurants').select('*').eq('status', '推荐').order('score_total', { ascending: false }),
-        supabase.from('cuisines').select('*').order('dimension').order('name'),
-        supabase.from('restaurant_cuisines').select('restaurant_id,cuisine_id'),
+    (async () => {
+      const [rest, cuis, links] = await Promise.all([
+        fetchAll<Restaurant>('restaurants', '*', ['status', 'active']),
+        fetchAll<Cuisine>('cuisines', '*'),
+        fetchAll<{ restaurant_id: number; cuisine_id: number }>('restaurant_cuisines', 'restaurant_id,cuisine_id'),
       ]);
-      setRestaurants(rest || []);
-      setCuisines(cuis || []);
-      setRestaurantCuisines(rc || []);
+      setRestaurants(rest);
+      setCuisines(cuis);
+      setRc(links);
       setLoading(false);
-    }
-    load();
+    })();
   }, []);
 
-  const cuisineMap = useMemo(() => {
-    const map: Record<number, string> = {};
-    for (const c of cuisines) map[c.id] = c.name;
-    return map;
+  const id2cuisine = useMemo(() => {
+    const m: Record<number, Cuisine> = {};
+    cuisines.forEach((c) => { m[c.id] = c; });
+    return m;
   }, [cuisines]);
 
-  const restaurantCuisineMap = useMemo(() => {
-    const map: Record<number, string[]> = {};
-    for (const rc of restaurantCuisines) {
-      if (!map[rc.restaurant_id]) map[rc.restaurant_id] = [];
-      const name = cuisineMap[rc.cuisine_id];
-      if (name) map[rc.restaurant_id].push(name);
-    }
-    return map;
-  }, [restaurantCuisines, cuisineMap]);
+  const rTags = useMemo(() => {
+    const m: Record<number, Set<number>> = {};
+    rc.forEach((x) => {
+      if (!m[x.restaurant_id]) m[x.restaurant_id] = new Set();
+      m[x.restaurant_id].add(x.cuisine_id);
+    });
+    return m;
+  }, [rc]);
 
-  const cuisinesByGroup = useMemo(() => {
-    const map: Record<string, Cuisine[]> = {};
-    for (const c of cuisines) {
-      if (c.dimension !== '菜系') continue;
-      const key = c.parent_category || '未分类';
-      if (!map[key]) map[key] = [];
-      map[key].push(c);
-    }
-    return map;
-  }, [cuisines]);
+  // 递归收集菜系子孙 id
+  const subtreeIds = (name: string): Set<number> => {
+    const ids = new Set<number>();
+    const visit = (nm: string) => {
+      cuisines.filter((c) => c.dimension === '菜系' && (c.name === nm || c.parent_category === nm))
+        .forEach((o) => { if (!ids.has(o.id)) { ids.add(o.id); visit(o.name); } });
+    };
+    visit(name);
+    return ids;
+  };
+  const subtreeCount = (name: string) => {
+    const ids = subtreeIds(name);
+    const rs = new Set<number>();
+    rc.forEach((x) => { if (ids.has(x.cuisine_id)) rs.add(x.restaurant_id); });
+    // 只计在营
+    return restaurants.filter((r) => rs.has(r.id)).length;
+  };
+
+  const rCuisineNames = (rid: number) =>
+    Array.from(rTags[rid] || [])
+      .map((cid) => id2cuisine[cid])
+      .filter((c) => c && c.dimension === '菜系')
+      .map((c) => c!.name);
+
+  const rootChildren = useMemo(
+    () => cuisines.filter((c) => c.dimension === '菜系' && c.parent_category === activeRoot),
+    [cuisines, activeRoot]
+  );
 
   const getCuisineRestaurants = (cuisineName: string) => {
+    const cid = cuisines.find((c) => c.name === cuisineName && c.dimension === '菜系')?.id;
+    if (!cid) return [];
     return restaurants
-      .filter(r => (restaurantCuisineMap[r.id] || []).includes(cuisineName))
+      .filter((r) => rTags[r.id]?.has(cid))
+      .sort((a, b) => (b.score_total || 0) - (a.score_total || 0))
       .slice(0, 2);
   };
 
-  const topRestaurants = restaurants.slice(0, 6);
-
-  const stats = useMemo(() => {
-    let jp = 0, cn = 0;
-    const jpCats = ['咖喱', '天妇罗', '寿司', '寿喜烧', '居酒屋', '怀石', '拉面', '日式甜品', '日料/日本料理', '炉端烧', '烧肉', '烧鸟', '铁板烧', '鳗鱼饭'];
-    const cnCats = ['鲁菜', '川菜', '粤菜', '苏菜', '闽菜', '浙菜', '湘菜', '徽菜', '本帮菜', '京菜', '东北菜'];
-    for (const r of restaurants) {
-      const names = restaurantCuisineMap[r.id] || [];
-      if (names.some(n => jpCats.some(j => n.includes(j)))) jp++;
-      if (names.some(n => cnCats.some(c => n.includes(c)))) cn++;
-    }
-    return { total: restaurants.length, japanese: jp, chinese: cn };
-  }, [restaurants, restaurantCuisineMap]);
-
-  const activeGroupConfig = CUISINE_GROUPS.find(g => g.key === activeGroup);
+  const topRestaurants = useMemo(
+    () => [...restaurants].sort((a, b) => (b.score_total || 0) - (a.score_total || 0)).slice(0, 6),
+    [restaurants]
+  );
 
   return (
     <div className="min-h-screen bg-cream-100">
       <Head>
         <title>China Travel · 上海美食地图</title>
-        <meta name="description" content="上海美食地图 — 日料14类+中餐八大菜系，反软广真实评分，只认口味" />
+        <meta name="description" content="上海美食地图 — 中餐八大菜系·各国料理·咖啡酒吧，反软广真实评分，只认口味" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {/* ===== 顶部导航 ===== */}
       <header className="sticky top-0 z-50 bg-cream-100/80 backdrop-blur-md border-b border-line">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
@@ -117,7 +139,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ===== Hero - 超大衬线标题 + 赤陶橙强调 ===== */}
       <section className="max-w-7xl mx-auto px-6 pt-20 pb-16">
         <div className="flex items-center gap-3 mb-8">
           <span className="w-10 h-px bg-terracotta" />
@@ -132,109 +153,91 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mt-12">
           <div className="lg:col-span-5">
             <p className="text-mocha-soft text-base leading-relaxed">
-              日料十四类细分 · 中餐八大菜系 · 反软广真实评分体系。
-              只认口味，不看性价比与环境。每一家店都经过食客实测与多维度交叉验证。
+              中餐八大菜系 · 各国大陆料理 · 咖啡面包甜品酒吧。
+              只认口味，不看性价比与环境。每一家都源自食客堂食实测与多维度交叉验证，主动剔除软广与预制菜。
             </p>
             <div className="flex gap-4 mt-8">
-              <Link href="/restaurants" className="btn btn-primary">
-                开始探索 →
-              </Link>
-              <Link href="/map" className="btn btn-outline">
-                地图模式
-              </Link>
+              <Link href="/restaurants" className="btn btn-primary">开始探索 →</Link>
+              <Link href="/map" className="btn btn-outline">地图模式</Link>
             </div>
           </div>
-          <div className="lg:col-span-7 flex items-end gap-12">
+          <div className="lg:col-span-7 flex items-end gap-10 flex-wrap">
             <div>
-              <div className="serif text-6xl font-light text-terracotta">{stats.total}</div>
+              <div className="serif text-6xl font-light text-terracotta">{restaurants.length}</div>
               <div className="kicker text-mocha-faint mt-2">家餐厅</div>
             </div>
             <div>
-              <div className="serif text-6xl font-light text-moss">{stats.japanese}</div>
+              <div className="serif text-6xl font-light text-mustard">{subtreeCount('中餐')}</div>
+              <div className="kicker text-mocha-faint mt-2">中餐</div>
+            </div>
+            <div>
+              <div className="serif text-6xl font-light text-moss">{subtreeCount('日料/日本料理')}</div>
               <div className="kicker text-mocha-faint mt-2">日料</div>
             </div>
             <div>
-              <div className="serif text-6xl font-light text-mustard">{stats.chinese}</div>
-              <div className="kicker text-mocha-faint mt-2">中餐</div>
+              <div className="serif text-6xl font-light text-mocha">{subtreeCount('非正餐')}</div>
+              <div className="kicker text-mocha-faint mt-2">咖啡酒吧</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== 菜系大类 - 胶囊导航 ===== */}
+      {/* 根胶囊导航 */}
       <section className="max-w-7xl mx-auto px-6 pb-8">
         <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-1 px-1">
-          {CUISINE_GROUPS.map((g) => {
-            const count = cuisinesByGroup[g.key]?.length || 0;
-            if (count === 0) return null;
-            const isActive = activeGroup === g.key;
+          {ROOTS.map((rname) => {
+            const isActive = activeRoot === rname;
             return (
-              <button
-                key={g.key}
-                onClick={() => setActiveGroup(g.key)}
+              <button key={rname} onClick={() => setActiveRoot(rname)}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full whitespace-nowrap transition-all flex-shrink-0 text-sm ${
-                  isActive
-                    ? `bg-${g.color} text-white shadow-soft`
-                    : 'bg-white text-mocha-soft hover:bg-cream-200 border border-line'
-                }`}
-              >
-                <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-white/60' : `bg-cuisine-${g.color}`}`} />
-                <span className="font-medium">{g.label}</span>
-                <span className={`text-xs ${isActive ? 'text-white/60' : 'text-mocha-faint'}`}>{count}</span>
+                  isActive ? 'bg-terracotta text-white shadow-soft' : 'bg-white text-mocha-soft hover:bg-cream-200 border border-line'
+                }`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-white/60' : 'bg-terracotta'}`} />
+                <span className="font-medium">{rname}</span>
+                <span className={`text-xs ${isActive ? 'text-white/60' : 'text-mocha-faint'}`}>{subtreeCount(rname)}</span>
               </button>
             );
           })}
         </div>
       </section>
 
-      {/* ===== 细分品类 - Bento Grid ===== */}
       <section className="max-w-7xl mx-auto px-6 py-10">
         <div className="flex items-end justify-between mb-8">
           <div>
             <div className="kicker text-mocha-faint mb-2">CATEGORY / 分类</div>
             <h2 className="serif text-3xl font-light">
-              {activeGroupConfig?.label}
-              <span className="text-mocha-faint text-xl ml-3 italic font-light">{activeGroupConfig?.en}</span>
+              {activeRoot}<span className="text-mocha-faint text-xl ml-3 italic font-light">{ROOT_EN[activeRoot]}</span>
             </h2>
           </div>
+          <Link href={`/restaurants`} className="text-sm text-mocha-faint hover:text-terracotta">查看全部 →</Link>
         </div>
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="skeleton h-44" />
-            ))}
+            {[...Array(6)].map((_, i) => <div key={i} className="skeleton h-44" />)}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {(cuisinesByGroup[activeGroup] || []).map((c, idx) => {
+            {rootChildren.map((c, idx) => {
               const reps = getCuisineRestaurants(c.name);
-              // Bento 大小变化：每第1、4个大一点
               const isLarge = idx % 4 === 0;
               return (
-                <Link
-                  key={c.id}
-                  href={`/restaurants?cuisine=${encodeURIComponent(c.name)}`}
-                  className={`bento-item bg-white p-6 flex flex-col ${isLarge ? 'md:col-span-2 lg:col-span-1' : ''}`}
-                >
+                <Link key={c.id} href={`/restaurants?cuisine=${encodeURIComponent(c.name)}`}
+                  className={`bento-item bg-white p-6 flex flex-col ${isLarge ? 'md:col-span-2 lg:col-span-1' : ''}`}>
                   <div className="flex items-start justify-between mb-4">
                     <h3 className="serif text-xl font-medium">{c.name}</h3>
                     {c.price_low && c.price_high && (
                       <span className="kicker text-mocha-faint">¥{c.price_low}–{c.price_high}</span>
                     )}
                   </div>
-                  {c.flavor_profile && (
-                    <p className="text-xs text-mocha-faint italic mb-4">{c.flavor_profile}</p>
-                  )}
+                  {c.flavor_profile && <p className="text-xs text-mocha-faint italic mb-4">{c.flavor_profile}</p>}
                   <div className="mt-auto space-y-2 pt-4 border-t border-line">
                     {reps.length > 0 ? reps.map((r, i) => (
                       <div key={i} className="flex items-center justify-between text-sm">
                         <span className="text-mocha-soft truncate flex-1">{r.name}</span>
                         <span className="text-mocha-faint ml-2 flex-shrink-0 text-xs">¥{r.price_avg || '—'}</span>
                       </div>
-                    )) : (
-                      <p className="text-xs text-mocha-faint italic">暂无收录</p>
-                    )}
+                    )) : <p className="text-xs text-mocha-faint italic">暂无收录</p>}
                   </div>
                 </Link>
               );
@@ -243,7 +246,6 @@ export default function Home() {
         )}
       </section>
 
-      {/* ===== 高分推荐 - 卡片式 ===== */}
       <section className="bg-white border-y border-line">
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="flex items-end justify-between mb-10">
@@ -256,17 +258,11 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {topRestaurants.map((r, idx) => {
-              const cuisineNames = restaurantCuisineMap[r.id] || [];
+              const names = rCuisineNames(r.id);
               return (
-                <Link
-                  key={r.id}
-                  href={`/restaurants/${r.id}`}
-                  className="card p-6 flex flex-col group"
-                >
+                <Link key={r.id} href={`/restaurants/${r.id}`} className="card p-6 flex flex-col group">
                   <div className="flex items-start justify-between mb-4">
-                    <span className="numeral text-4xl text-terracotta/30 font-light">
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
+                    <span className="numeral text-4xl text-terracotta/30 font-light">{String(idx + 1).padStart(2, '0')}</span>
                     {r.score_total && (
                       <div className="text-right">
                         <span className="serif text-2xl font-medium text-moss">{r.score_total.toFixed(1)}</span>
@@ -275,9 +271,9 @@ export default function Home() {
                     )}
                   </div>
                   <h3 className="serif text-xl font-medium mb-2 group-hover:text-terracotta transition">{r.name}</h3>
-                  <div className="flex items-center gap-2 mb-4">
-                    {cuisineNames.slice(0, 2).map((cn, i) => (
-                      <span key={i} className={`tag tag-${cn.includes('日') || ['咖喱','寿司','拉面','烧鸟','烧肉','天妇罗','居酒屋','怀石','炉端烧','铁板烧','鳗鱼饭','寿喜烧','日式甜品'].some(c => cn.includes(c)) ? 'japanese' : 'chinese'}`}>{cn}</span>
+                  <div className="flex items-center gap-2 mb-4 flex-wrap">
+                    {names.slice(0, 2).map((cn, i) => (
+                      <span key={i} className="tag tag-value">{cn}</span>
                     ))}
                   </div>
                   {r.signature_dishes && Array.isArray(r.signature_dishes) && r.signature_dishes.length > 0 && (
@@ -294,14 +290,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== 评分体系 - 简洁说明 ===== */}
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
             <div className="kicker text-mocha-faint mb-3">METHODOLOGY / 方法论</div>
             <h2 className="serif text-3xl font-light mb-6">反软广<br />评分体系</h2>
             <p className="text-mocha-soft text-sm leading-relaxed mb-6">
-              拒绝平台标注人均与媒体榜单。每一家店的评分都来自客观数据、食客实测、口味权重与行业背书的综合计算，并对软广嫌疑进行扣分。
+              拒绝平台标注人均与媒体榜单。评分来自客观数据、食客堂食实测、口味权重与行业背书，并对软广嫌疑扣分；预制菜、连锁工业化店标注但不进精选。
             </p>
             <Link href="/restaurants" className="btn btn-outline !text-xs">查看完整榜单</Link>
           </div>
@@ -325,7 +320,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== 页脚 ===== */}
       <footer className="border-t border-line bg-cream-200/50">
         <div className="max-w-7xl mx-auto px-6 py-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">

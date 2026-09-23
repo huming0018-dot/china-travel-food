@@ -2,10 +2,16 @@ import { useRouter } from 'next/router';
 import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { supabase, Restaurant, Cuisine, Review } from '@/lib/supabase';
-import { parseLngLat } from '@/lib/geo';
+import { parseLngLat, parseLatLng } from '@/lib/geo';
 import { useFavorites } from '@/lib/favorites';
 import { useAuth } from '@/lib/auth';
+
+// 内嵌小地图（Leaflet 依赖 window，禁用 SSR）
+const MapContainer = dynamic(() => import('react-leaflet').then((m) => m.MapContainer), { ssr: false });
+const TileLayer = dynamic(() => import('react-leaflet').then((m) => m.TileLayer), { ssr: false });
+const Marker = dynamic(() => import('react-leaflet').then((m) => m.Marker), { ssr: false });
 
 const SCORE_BARS = [
   { key: 'score_objective', label: '客观评分', desc: '平台分×可信度', max: 40 },
@@ -102,6 +108,19 @@ export default function RestaurantDetail() {
     })();
   }, [id]);
 
+  // 修复 Leaflet 默认图标路径
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    import('leaflet').then((L) => {
+      delete (L.Icon.Default.prototype as any)._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+      });
+    });
+  }, []);
+
   const tagsById = useMemo(() => {
     const m: Record<number, Cuisine> = {};
     cuisines.forEach((c) => { m[c.id] = c; });
@@ -136,6 +155,7 @@ export default function RestaurantDetail() {
     ? Math.floor((Date.now() - new Date(r.data_updated_at).getTime()) / (1000 * 60 * 60 * 24))
     : null;
   const lngLat = parseLngLat(r.location);
+  const pos = parseLatLng(r.location);
 
   // 提交评价
   const handleSubmitReview = async (e: React.FormEvent) => {
@@ -185,7 +205,10 @@ export default function RestaurantDetail() {
 
   return (
     <div className={`min-h-screen bg-cream-50 ${isClosed ? 'grayscale opacity-70' : ''}`}>
-      <Head><title>{r.name} · China Travel</title></Head>
+      <Head>
+        <title>{r.name} · China Travel</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+      </Head>
 
       <header className="border-b border-line sticky top-0 z-50 bg-cream-50/90 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
@@ -272,6 +295,23 @@ export default function RestaurantDetail() {
             </div>
           )}
         </section>
+
+        {/* 内嵌地图定位 */}
+        {pos && (
+          <section className="border-t border-line pt-8 mb-10">
+            <h2 className="kicker text-mocha-faint mb-6">MAP / 地图定位</h2>
+            <div className="h-64 rounded-xl overflow-hidden border border-line">
+              <MapContainer center={pos} zoom={16} style={{ height: '100%', width: '100%' }}>
+                <TileLayer
+                  attribution="&copy; 高德地图 AutoNavi"
+                  url="https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}"
+                  subdomains={['1', '2', '3', '4']}
+                />
+                <Marker position={pos} />
+              </MapContainer>
+            </div>
+          </section>
+        )}
 
         {/* 招牌菜 */}
         {r.signature_dishes && Array.isArray(r.signature_dishes) && r.signature_dishes.length > 0 && (

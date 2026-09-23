@@ -12,10 +12,9 @@ const TIERS = [
   { key: '高档', range: '¥200–499' },
   { key: '奢华', range: '¥500+' },
 ];
-const CUISINE_TABS = ['中餐', '亚洲菜', '西餐', '其他'];
-const TOP_LEVELS = ['中餐', '亚洲菜', '西餐', '其他'];
-const EIGHT_GREAT = ['鲁菜', '川菜', '粤菜', '苏菜', '浙菜', '闽菜', '湘菜', '徽菜'];
-const FORMAT_GROUPS = ['正餐', '快餐简餐', '甜品下午茶', '饮料酒吧', '其他场景'];
+
+// 一级根：地图认知顺序（中餐独立；其余按大陆→国家；非正餐为场景；融合菜单列）
+const ROOTS = ['中餐', '亚洲', '欧洲', '非洲', '北美洲', '南美洲', '融合菜', '非正餐'];
 const PAGE = 120;
 
 const tierClass = (t?: string) =>
@@ -51,8 +50,8 @@ export default function RestaurantsPage() {
 
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState<'score' | 'price_asc' | 'price_desc'>('score');
-  const [cuisineTab, setCuisineTab] = useState('中餐');
-  const [flavor, setFlavor] = useState<string | null>(null); // 选中的风味菜系 name
+  const [root, setRoot] = useState('中餐');          // 一级根 Tab
+  const [flavor, setFlavor] = useState<string | null>(null); // 选中的菜系 name（叶子或中间层）
   const [tiers, setTiers] = useState<Set<string>>(new Set());
   const [district, setDistrict] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(null);
@@ -74,6 +73,12 @@ export default function RestaurantsPage() {
     })();
   }, []);
 
+  // ---- 树索引 ----
+  const childrenOf = useCallback(
+    (parent: string) => cuisines.filter((c) => c.dimension === '菜系' && c.parent_category === parent),
+    [cuisines]
+  );
+
   // URL ?cuisine= 自动定位
   useEffect(() => {
     if (router.query.cuisine && cuisines.length) {
@@ -81,7 +86,7 @@ export default function RestaurantsPage() {
       const c = cuisines.find((x) => x.name === name && x.dimension === '菜系');
       if (c) {
         setFlavor(name);
-        setCuisineTab(topLevel(c, cuisines));
+        setRoot(topLevel(c, cuisines));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,38 +124,16 @@ export default function RestaurantsPage() {
 
   const byDim = useCallback((dim: string) => cuisines.filter((c) => c.dimension === dim), [cuisines]);
 
-  // 菜系树
-  const eightGreat = useMemo(
-    () => EIGHT_GREAT.map((n) => cuisines.find((c) => c.name === n && c.dimension === '菜系')).filter(Boolean) as Cuisine[],
-    [cuisines]
-  );
-  const regionalCN = useMemo(
-    () => byDim('菜系').filter((c) => c.parent_category === '中餐' && !EIGHT_GREAT.includes(c.name))
-      .sort((a, b) => (tagCount[b.id] || 0) - (tagCount[a.id] || 0)),
-    [cuisines, tagCount, byDim]
-  );
-  const asianList = useMemo(() => byDim('菜系').filter((c) => c.parent_category === '亚洲菜'), [byDim]);
-  const westernList = useMemo(() => byDim('菜系').filter((c) => c.parent_category === '西餐'), [byDim]);
-  const otherCuisineList = useMemo(() => byDim('菜系').filter((c) => c.parent_category === '其他'), [byDim]);
-
-  // 风味选中后的子流派
-  const flavorChildren = useMemo(() => {
-    if (!flavor) return [];
-    return byDim('菜系').filter((c) => c.parent_category === flavor);
-  }, [flavor, byDim]);
-
   // 递归收集菜系子孙 id
   const collectFlavorIds = useCallback((name: string): Set<number> => {
     const ids = new Set<number>();
-    // name 可能是真实标签行（如"日料/日本料理""川菜"），也可能只是虚拟分组根
-    //（"中餐""亚洲菜""西餐""其他"仅作为 parent_category 存在，本身不是标签行）
     const visit = (nm: string) => {
       cuisines
         .filter((c) => c.dimension === '菜系' && (c.name === nm || c.parent_category === nm))
         .forEach((obj) => {
           if (!ids.has(obj.id)) {
             ids.add(obj.id);
-            visit(obj.name); // 递归子流派
+            visit(obj.name);
           }
         });
     };
@@ -158,35 +141,48 @@ export default function RestaurantsPage() {
     return ids;
   }, [cuisines]);
 
-  // 选中某风味：同步顶层 Tab + 地址栏（仅用户点击触发，首次外部链接进入不清 URL）；再次点同一标签则取消
+  // 选中某菜系：同步根 Tab + 地址栏；再次点同一标签则取消
   const selectFlavor = useCallback((name: string) => {
-    if (TOP_LEVELS.includes(name)) {
-      setCuisineTab(name);
-      setFlavor(name);
-      router.replace('/restaurants', undefined, { shallow: true });
-      return;
-    }
     const c = cuisines.find((x) => x.name === name && x.dimension === '菜系');
     const next = flavor === name ? null : name;
     setFlavor(next);
-    if (c) setCuisineTab(topLevel(c, cuisines));
+    if (c) setRoot(topLevel(c, cuisines));
     if (next) router.replace(`/restaurants?cuisine=${encodeURIComponent(next)}`, undefined, { shallow: true });
     else router.replace('/restaurants', undefined, { shallow: true });
   }, [cuisines, flavor, router]);
 
-  // 关店店 id（计数/展示排除，数据保鲜口径）
+  // 切换一级根：清空 flavor
+  const selectRoot = useCallback((rname: string) => {
+    setRoot(rname);
+    setFlavor(null);
+    router.replace('/restaurants', undefined, { shallow: true });
+  }, [router]);
+
+  // 关店店 id
   const closedIds = useMemo(
     () => new Set(restaurants.filter((r) => r.status === 'closed' || r.status === '关店').map((r) => r.id)),
     [restaurants]
   );
 
-  // 某菜系（含全部子孙流派）关联的【在营】餐厅去重数——父标签本身可能 0 店、店都挂在子流派上
+  // 某菜系（含全部子孙）关联的【在营】餐厅去重数
   const subtreeCount = useCallback((name: string): number => {
     const ids = collectFlavorIds(name);
     const rs = new Set<number>();
     rc.forEach((x) => { if (ids.has(x.cuisine_id) && !closedIds.has(x.restaurant_id)) rs.add(x.restaurant_id); });
     return rs.size;
   }, [collectFlavorIds, rc, closedIds]);
+
+  // 当前根的二级菜系（按店数排序）
+  const rootChildren = useMemo(
+    () => childrenOf(root).sort((a, b) => subtreeCount(b.name) - subtreeCount(a.name)),
+    [childrenOf, root, subtreeCount]
+  );
+
+  // 选中菜系的三级子流派
+  const flavorChildren = useMemo(() => {
+    if (!flavor) return [];
+    return childrenOf(flavor).sort((a, b) => subtreeCount(b.name) - subtreeCount(a.name));
+  }, [flavor, childrenOf, subtreeCount]);
 
   // 行政区 / 商圈
   const districts = useMemo(() => {
@@ -204,20 +200,15 @@ export default function RestaurantsPage() {
     return Object.entries(m).sort((a, b) => b[1] - a[1]).map((x) => x[0]);
   }, [restaurants, district]);
 
-  // 形式标签按 parent 分组（只保留有店的）
-  const formatByGroup = useMemo(() => {
-    const g: Record<string, Cuisine[]> = {};
-    FORMAT_GROUPS.forEach((grp) => {
-      g[grp] = byDim('形式').filter((c) => c.parent_category === grp && (tagCount[c.id] || 0) > 0)
-        .sort((a, b) => (tagCount[b.id] || 0) - (tagCount[a.id] || 0));
-    });
-    return g;
-  }, [byDim, tagCount]);
-  // 认证标签：始终显示（含0店的核心筛选项如米其林/黑珍珠）
+  // 形式标签（有店的，按店数排序）
+  const formatTags = useMemo(
+    () => byDim('形式').filter((c) => (tagCount[c.id] || 0) > 0)
+      .sort((a, b) => tagCount[b.id] - tagCount[a.id]),
+    [byDim, tagCount]
+  );
   const awardTags = useMemo(() => byDim('认证'), [byDim]);
-  // 特别标签：始终显示（含0店的核心筛选项如素食/纯素、分子/先锋、可预订）
   const specialTags = useMemo(() => byDim('标签'), [byDim]);
-  // 常驻亮点快捷标签（核心认证/特别标签，提升可发现性；完整列表在筛选抽屉）
+  // 常驻亮点快捷标签
   const quickTags = useMemo(
     () => [159, 160, 323, 45, 46].map((id) => cuisines.find((c) => c.id === id)).filter(Boolean) as Cuisine[],
     [cuisines]
@@ -248,7 +239,6 @@ export default function RestaurantsPage() {
   // ---- 筛选 ----
   const filtered = useMemo(() => {
     let result = [...restaurants];
-    // 关店默认不展示
     result = result.filter((r) => r.status !== 'closed' && r.status !== '关店');
     if (search.trim()) {
       const q = search.trim().toLowerCase();
@@ -318,7 +308,6 @@ export default function RestaurantsPage() {
     );
   };
 
-  // 筛选抽屉里的通用标签
   const renderFlag = (c: Cuisine) => {
     const on = tagSel.has(c.id);
     return (
@@ -349,7 +338,7 @@ export default function RestaurantsPage() {
       </header>
 
       <div className="max-w-6xl mx-auto px-6 py-6">
-        {/* 搜索 + 排序 + 更多筛选 */}
+        {/* 搜索 + 排序 + 筛选 */}
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <div className="relative flex-1 min-w-[220px]">
             <input
@@ -377,7 +366,7 @@ export default function RestaurantsPage() {
           </select>
         </div>
 
-        {/* 价位条（常驻） */}
+        {/* 价位条 */}
         <div className="flex items-center gap-2 mb-4 flex-wrap">
           <span className="kicker text-mocha-faint mr-1">价位</span>
           {TIERS.map((t) => {
@@ -393,7 +382,7 @@ export default function RestaurantsPage() {
           })}
         </div>
 
-        {/* 亮点快捷筛选（常驻：核心认证/特别标签，一键可筛） */}
+        {/* 亮点快捷筛选 */}
         <div className="flex items-center gap-2 mb-4 flex-wrap">
           <span className="kicker text-mocha-faint mr-1">亮点</span>
           {quickTags.map((c) => {
@@ -409,38 +398,36 @@ export default function RestaurantsPage() {
           })}
         </div>
 
-        {/* 风味（菜系树，主导航） */}
+        {/* 菜系树主导航 */}
         <div className="bg-white border border-line rounded-2xl p-4 mb-4 space-y-3 shadow-soft">
+          {/* 一级根 Tab */}
           <div className="flex gap-1 border-b border-line pb-2 flex-wrap">
-            {CUISINE_TABS.map((tab) => (
-              <button key={tab} onClick={() => selectFlavor(tab)}
-                className={`px-4 py-1.5 text-sm transition ${
-                  cuisineTab === tab ? 'text-terracotta font-medium border-b-2 border-terracotta -mb-[9px]' : 'text-mocha-faint hover:text-mocha'
-                }`}>{tab}</button>
-            ))}
+            {ROOTS.map((rname) => {
+              const active = root === rname;
+              return (
+                <button key={rname} onClick={() => selectRoot(rname)}
+                  className={`px-3.5 py-1.5 text-sm transition ${
+                    active ? 'text-terracotta font-medium border-b-2 border-terracotta -mb-[9px]' : 'text-mocha-faint hover:text-mocha'
+                  }`}>
+                  {rname}<span className={`ml-1 text-2xs ${active ? 'text-terracotta/70' : 'text-mocha-faint/70'}`}>{subtreeCount(rname)}</span>
+                </button>
+              );
+            })}
           </div>
 
-          {cuisineTab === '中餐' && (
-            <div className="space-y-2.5">
-              <div className="flex items-start gap-3 flex-wrap">
-                <span className="kicker text-mocha-faint w-14 shrink-0 pt-2">八大菜系</span>
-                <div className="flex flex-wrap gap-1.5 flex-1">{eightGreat.map(renderFlavorTag)}</div>
-              </div>
-              <div className="flex items-start gap-3 flex-wrap">
-                <span className="kicker text-mocha-faint w-14 shrink-0 pt-2">地方菜</span>
-                <div className="flex flex-wrap gap-1.5 flex-1">{regionalCN.map(renderFlavorTag)}</div>
-              </div>
-            </div>
-          )}
-          {cuisineTab === '亚洲菜' && <div className="flex flex-wrap gap-1.5">{asianList.map(renderFlavorTag)}</div>}
-          {cuisineTab === '西餐' && <div className="flex flex-wrap gap-1.5">{westernList.map(renderFlavorTag)}</div>}
-          {cuisineTab === '其他' && <div className="flex flex-wrap gap-1.5">{otherCuisineList.map(renderFlavorTag)}</div>}
+          {/* 二级菜系 */}
+          <div className="flex flex-wrap gap-1.5">
+            {rootChildren.length ? rootChildren.map(renderFlavorTag) : (
+              <span className="text-xs text-mocha-faint py-1">该分类正在补充中</span>
+            )}
+          </div>
 
-          {flavorChildren.length > 0 && !TOP_LEVELS.includes(flavor || '') && (
+          {/* 三级子流派 */}
+          {flavorChildren.length > 0 && (
             <div className="flex items-start gap-3 flex-wrap pt-3 border-t border-dashed border-line">
               <span className="kicker text-mocha-faint shrink-0 pt-1.5">{flavor}</span>
               <div className="flex flex-wrap gap-1.5 flex-1">
-                <button onClick={() => setFlavor(flavor)}
+                <button onClick={() => selectFlavor(flavor!)}
                   className="px-2.5 py-1 text-xs rounded-full bg-terracotta/10 text-terracotta border border-terracotta/30">
                   全部{flavor}
                 </button>
@@ -457,10 +444,9 @@ export default function RestaurantsPage() {
           )}
         </div>
 
-        {/* 更多筛选抽屉 */}
+        {/* 筛选抽屉 */}
         {showFilters && (
           <div className="filter-panel bg-white border border-line rounded-2xl p-5 mb-4 space-y-4 shadow-card">
-            {/* 位置 */}
             <div className="space-y-2">
               <span className="kicker text-mocha-faint">位置 · 行政区</span>
               <div className="flex flex-wrap gap-1.5">
@@ -484,26 +470,18 @@ export default function RestaurantsPage() {
               )}
             </div>
 
-            {/* 业态 */}
-            {FORMAT_GROUPS.some((g) => formatByGroup[g]?.length > 0) && (
+            {formatTags.length > 0 && (
               <div className="space-y-2">
-                <span className="kicker text-mocha-faint">业态 · 场景</span>
-                {FORMAT_GROUPS.map((g) => formatByGroup[g]?.length > 0 && (
-                  <div key={g} className="flex items-start gap-3 flex-wrap">
-                    <span className="text-2xs text-mocha-faint w-16 shrink-0 pt-1.5">{g}</span>
-                    <div className="flex flex-wrap gap-1.5 flex-1">{formatByGroup[g].map(renderFlag)}</div>
-                  </div>
-                ))}
+                <span className="kicker text-mocha-faint">业态 · 形式</span>
+                <div className="flex flex-wrap gap-1.5">{formatTags.map(renderFlag)}</div>
               </div>
             )}
 
-            {/* 认证 · 始终显示 */}
             <div className="space-y-2">
               <span className="kicker text-mocha-faint">权威认证</span>
               <div className="flex flex-wrap gap-1.5">{awardTags.map(renderFlag)}</div>
             </div>
 
-            {/* 食材 */}
             {ingredientTags.length > 0 && (
               <div className="space-y-2">
                 <span className="kicker text-mocha-faint">食材 · 吃什么</span>
@@ -511,7 +489,6 @@ export default function RestaurantsPage() {
               </div>
             )}
 
-            {/* 特别标签 · 始终显示 */}
             <div className="space-y-2">
               <span className="kicker text-mocha-faint">特别标签</span>
               <div className="flex flex-wrap gap-1.5">{specialTags.map(renderFlag)}</div>
@@ -525,7 +502,7 @@ export default function RestaurantsPage() {
             <span className="kicker text-mocha-faint">已选</span>
             {flavor && (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-terracotta text-white text-xs rounded-full">
-                {flavor}<button onClick={() => { setFlavor(null); router.replace('/restaurants', undefined, { shallow: true }); }}>✕</button>
+                {flavor}<button onClick={() => setFlavor(null)}>✕</button>
               </span>
             )}
             {Array.from(tiers).map((t) => (
@@ -560,12 +537,8 @@ export default function RestaurantsPage() {
         {/* 餐厅列表 */}
         {filtered.length === 0 ? (
           <div className="text-center py-20">
-            <p className="serif text-2xl text-mocha-faint mb-2">
-              {flavor && TOP_LEVELS.includes(flavor) ? '该风味正在补充中' : '没有找到'}
-            </p>
-            <p className="text-sm text-mocha-faint">
-              {flavor && TOP_LEVELS.includes(flavor) ? `${flavor}餐厅尚未收录，先看看其他风味` : '试试调整筛选条件'}
-            </p>
+            <p className="serif text-2xl text-mocha-faint mb-2">没有找到</p>
+            <p className="text-sm text-mocha-faint">试试调整筛选条件</p>
             <button onClick={clearAll} className="mt-6 btn btn-outline">清除筛选</button>
           </div>
         ) : (
@@ -626,13 +599,13 @@ export default function RestaurantsPage() {
   );
 }
 
-// 沿 parent 链找到顶层分类
+// 沿 parent 链找到一级根
 function topLevel(c: Cuisine, all: Cuisine[]): string {
   let cur: Cuisine | undefined = c;
   let guard = 0;
-  while (cur && cur.parent_category && !TOP_LEVELS.includes(cur.parent_category) && guard < 8) {
+  while (cur && cur.parent_category && !ROOTS.includes(cur.parent_category) && guard < 8) {
     cur = all.find((x) => x.name === cur!.parent_category && x.dimension === '菜系');
     guard++;
   }
-  return cur?.parent_category && TOP_LEVELS.includes(cur.parent_category) ? cur.parent_category : '其他';
+  return cur?.parent_category && ROOTS.includes(cur.parent_category) ? cur.parent_category : '中餐';
 }

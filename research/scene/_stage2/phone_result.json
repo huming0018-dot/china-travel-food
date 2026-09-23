@@ -1,0 +1,1626 @@
+[
+ {
+  "rid": 4,
+  "name": "御千代（王雷师傅）",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "御千代.诺雅",
+  "poi_addr": "上海市长宁区长宁国际T8"
+ },
+ {
+  "rid": 8,
+  "name": "酉町·烧鸟专门店",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "酉町·烧鸟专门店",
+  "poi_addr": "上海市长宁区番禺路390号102室"
+ },
+ {
+  "rid": 10,
+  "name": "小景门（仇师傅）",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 11,
+  "name": "海宫",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 14,
+  "name": "金宗咖喱",
+  "conf": "high",
+  "tel": "17521651689",
+  "poi_title": "金宗咖喱(江桥万达店)",
+  "poi_addr": "上海市嘉定区江桥镇金街上海江桥万达广场"
+ },
+ {
+  "rid": 16,
+  "name": "晚餐馆咖喱饭",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 18,
+  "name": "环七·土佐子",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "环七土佐子(上海首店)",
+  "poi_addr": "上海市静安区万航渡路50号1层8号商铺"
+ },
+ {
+  "rid": 20,
+  "name": "Ramen满吉(广元西路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 23,
+  "name": "鳗重",
+  "conf": "mid",
+  "tel": "021-62153188;021-52689958",
+  "poi_title": "鳗重(愚园路店)",
+  "poi_addr": "上海市静安区静安寺街道愚园路580号(中实新村北门对面)"
+ },
+ {
+  "rid": 24,
+  "name": "哲平鳗满",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 25,
+  "name": "竿屋",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 28,
+  "name": "牛New寿喜烧（自助）",
+  "conf": "high",
+  "tel": "021-35309725",
+  "poi_title": "牛new寿喜烧(五角场百联店)",
+  "poi_addr": "上海市杨浦区淞沪路8号百联又一城6楼(地铁10号线江湾体育场3号口)"
+ },
+ {
+  "rid": 29,
+  "name": "日和寿喜烧",
+  "conf": "high",
+  "tel": "021-62283576",
+  "poi_title": "日和寿喜烧(金虹桥店)",
+  "poi_addr": "上海市长宁区茅台路179号金虹桥商场L1"
+ },
+ {
+  "rid": 31,
+  "name": "炎珀EMBER",
+  "conf": "mid",
+  "tel": "021-60715667",
+  "poi_title": "炎珀EMBER·炭火和牛(静安嘉里中心店)",
+  "poi_addr": "上海市静安区南京西路1515号静安嘉里中心F2-S2-04"
+ },
+ {
+  "rid": 36,
+  "name": "天天天妇罗",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "天天·天妇罗专门店(美罗城店)",
+  "poi_addr": "上海市徐汇区肇嘉浜路1111号美罗城B1"
+ },
+ {
+  "rid": 37,
+  "name": "天嘉(天妇罗专门店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 39,
+  "name": "尚膳天焱",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "尚膳天焱·天妇罗牛排饭",
+  "poi_addr": "上海市长宁区华阳路街道长宁路1018号龙之梦7层7205B号"
+ },
+ {
+  "rid": 42,
+  "name": "丸龟制面",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 43,
+  "name": "荞麦道",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 45,
+  "name": "とんかつ一滨·炸猪排(世博天地首店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "とんかつ一滨·炸猪排(上海首店)",
+  "poi_addr": "上海市浦东新区上钢新村街道世博大道1467号世博天地2楼L222号"
+ },
+ {
+  "rid": 46,
+  "name": "静冈胜政",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "静冈胜政(总账号店)",
+  "poi_addr": "上海市徐汇区虹梅路街道宜山路1388号民润大厦2楼"
+ },
+ {
+  "rid": 453,
+  "name": "鲁丰居(灵石路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 455,
+  "name": "新嘉中心胶东烟火小馆",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 456,
+  "name": "鲁菜根(上海嘉定店)",
+  "conf": "mid",
+  "tel": "17621433327;15563258377",
+  "poi_title": "鲁菜根(上海嘉定店)",
+  "poi_addr": "上海市嘉定区汇源路258弄6号B1层"
+ },
+ {
+  "rid": 457,
+  "name": "鲁菜馆(融信绿地店)",
+  "conf": "mid",
+  "tel": "13162025000",
+  "poi_title": "鲁菜馆(融信绿地店)",
+  "poi_addr": "上海市闵行区华漕镇融信绿地国际2期盘阳路66弄5-8-12号(恺畅酒店后面一栋)"
+ },
+ {
+  "rid": 458,
+  "name": "东莱海上(长宁来福士店)",
+  "conf": "high",
+  "tel": "13501683038",
+  "poi_title": "东莱海上(长宁来福士店)",
+  "poi_addr": "上海市长宁区长宁路1123号长宁来福士广场东区六楼35号"
+ },
+ {
+  "rid": 461,
+  "name": "传熹·胶东菜(CP静安店)",
+  "conf": "high",
+  "tel": "18603693226",
+  "poi_title": "传熹·胶东菜(CP静安店)",
+  "poi_addr": "上海市静安区静安寺街道愚园路68号6楼L612(近2/7_14号线静安寺地铁站3号口)"
+ },
+ {
+  "rid": 462,
+  "name": "鲁东胶州菜(世纪汇店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 466,
+  "name": "山海鲁·紫荆阁(浦东假日酒店店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 468,
+  "name": "川飨小馆(天山路店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "川飨小馆",
+  "poi_addr": "上海市长宁区天山路762号f1层01室22号商铺"
+ },
+ {
+  "rid": 470,
+  "name": "惠中川香蛙(嘉善路店)",
+  "conf": "mid",
+  "tel": "021-64317499;13611837985",
+  "poi_title": "惠中川香蛙(慎成里店)",
+  "poi_addr": "上海市徐汇区永嘉路291弄1-90号慎成里"
+ },
+ {
+  "rid": 471,
+  "name": "先启半步颠小酒馆(定西路店)",
+  "conf": "high",
+  "tel": "4000808028;13002135727",
+  "poi_title": "先启半步颠小酒馆(定西路店)",
+  "poi_addr": "上海市长宁区新华路街道定西路790号2楼"
+ },
+ {
+  "rid": 476,
+  "name": "瓦屋川菜(西岸梦中心店)",
+  "conf": "mid",
+  "tel": "13581725204",
+  "poi_title": "瓦屋川菜(西岸梦中心店)",
+  "poi_addr": "上海市徐汇区徐汇滨江绿道"
+ },
+ {
+  "rid": 477,
+  "name": "辛香汇·锦里(静安大悦城店)",
+  "conf": "high",
+  "tel": "021-56790787",
+  "poi_title": "辛香汇·锦里·现炒川菜(静安大悦城店)",
+  "poi_addr": "上海市静安区西藏北路166号大悦城南楼9层S901-10、S901-11室"
+ },
+ {
+  "rid": 480,
+  "name": "柴门荟(BFC外滩金融中心店)",
+  "conf": "mid",
+  "tel": "021-63306690",
+  "poi_title": "柴门荟(BFC外滩店)",
+  "poi_addr": "上海市黄浦区中山东二路558号BFC外滩金融中心2层"
+ },
+ {
+  "rid": 512,
+  "name": "天水雅居(滨江大道店)",
+  "conf": "mid",
+  "tel": "021-59880815",
+  "poi_title": "天水雅居(虹桥店)",
+  "poi_addr": "上海市青浦区徐泾镇谢卫路1466号A区3-301号"
+ },
+ {
+  "rid": 513,
+  "name": "淳百味·沙县小吃研究所",
+  "conf": "mid",
+  "tel": "13584991659",
+  "poi_title": "淳百味·沙县小吃研究所(竹园路店)",
+  "poi_addr": "上海市闵行区浦江镇竹园路559、康华路558号9幢1层101C室"
+ },
+ {
+  "rid": 515,
+  "name": "闽燕记八闽特色美食(国际传媒港店)",
+  "conf": "mid",
+  "tel": "13764481951",
+  "poi_title": "闽燕记·八闽特色美食(传媒港G·WALK店)",
+  "poi_addr": "上海市徐汇区龙华街道滨江龙腾大道2171号"
+ },
+ {
+  "rid": 516,
+  "name": "荣先森·闽南菜",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 519,
+  "name": "阿忠食坊·厦门菜(上海首店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "阿忠食坊·厦门菜",
+  "poi_addr": "上海市浦东新区洋泾街道张杨路2389弄置汇旭辉广场3楼14-15号"
+ },
+ {
+  "rid": 521,
+  "name": "闽和南·欢席(苏河湾万象天地店)",
+  "conf": "high",
+  "tel": "021-57881881",
+  "poi_title": "闽和南·欢席(上海苏河湾万象天地店)",
+  "poi_addr": "上海市静安区北站街道山西北路111号万象天地东里2层L201-202(北门入口)"
+ },
+ {
+  "rid": 522,
+  "name": "闽润·福建会馆",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 528,
+  "name": "新白鹿餐厅(第一百货店)",
+  "conf": "mid",
+  "tel": "021-53865688",
+  "poi_title": "新白鹿餐厅(第一百货店)",
+  "poi_addr": "上海市黄浦区南京东路800号上海市第一百货商店(C馆)F9"
+ },
+ {
+  "rid": 529,
+  "name": "旧村·老宁波海鲜小馆",
+  "conf": "mid",
+  "tel": "18964228458",
+  "poi_title": "旧村·老宁波海鲜小馆",
+  "poi_addr": "上海市闵行区虹桥镇虹井路225号先锋大厦1楼102"
+ },
+ {
+  "rid": 530,
+  "name": "涌小仙·江浙小鲜",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "涌小仙·江浙小鲜融合菜",
+  "poi_addr": "上海市黄浦区打浦桥街道徐家汇路268号凯德晶萃广场4楼(11号12号电梯直达)"
+ },
+ {
+  "rid": 531,
+  "name": "甬府小包",
+  "conf": "mid",
+  "tel": "18221052408",
+  "poi_title": "甬府小包(长乐路店)",
+  "poi_addr": "上海市黄浦区长乐路386弄小区西南门旁"
+ },
+ {
+  "rid": 532,
+  "name": "桂满陇·杭州小馆(人民广场店)",
+  "conf": "high",
+  "tel": "15502149525",
+  "poi_title": "桂满陇·杭州小馆",
+  "poi_addr": "上海市浦东新区三林镇耀体路308号晶耀前滩商场东区三层L316"
+ },
+ {
+  "rid": 537,
+  "name": "小孃孃(思南公馆店)",
+  "conf": "mid",
+  "tel": "17602110608",
+  "poi_title": "小孃孃(虹桥天街店)",
+  "poi_addr": "上海市闵行区虹桥天街A馆外街一层131号"
+ },
+ {
+  "rid": 542,
+  "name": "甬府·北外滩",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "甬府·北外滩",
+  "poi_addr": "上海市虹口区北外滩街道东大名路1089号北外滩来福士东楼56楼"
+ },
+ {
+  "rid": 557,
+  "name": "凤凰湘语(三湘大厦店)",
+  "conf": "mid",
+  "tel": "021-62086350;18721022962",
+  "poi_title": "凤凰湘语(三湘大厦店)",
+  "poi_addr": "上海市长宁区虹桥街道中山西路1243-1号阳光酒店2-3楼"
+ },
+ {
+  "rid": 570,
+  "name": "徽廷宴·徽菜(新天地东台里店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "徽廷宴·徽菜(新天地店)",
+  "poi_addr": "上海市黄浦区淮海中路街道吉安路111号新天地东台里B栋2层L242-245号"
+ },
+ {
+  "rid": 571,
+  "name": "徽廷宴·徽菜(创智天地店)",
+  "conf": "mid",
+  "tel": "021-55780835",
+  "poi_title": "徽廷宴·徽菜(创智天地店)",
+  "poi_addr": "上海市杨浦区政学路77号一层101,102,103室"
+ },
+ {
+  "rid": 572,
+  "name": "徽商故里(陆家嘴店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 574,
+  "name": "邻里川菜馆",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 576,
+  "name": "锦盐记川菜小馆(莘朱路店)",
+  "conf": "high",
+  "tel": "13651975133",
+  "poi_title": "锦盐记·川菜小馆",
+  "poi_addr": "上海市闵行区莘朱路767号"
+ },
+ {
+  "rid": 577,
+  "name": "蜀湘记(古美路店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "蜀湘记",
+  "poi_addr": "上海市松江区岳阳街道小塔前小区"
+ },
+ {
+  "rid": 578,
+  "name": "辣味鲜老刘特色菜",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 582,
+  "name": "JSL三椒·川南小馆(虹桥南丰城店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 584,
+  "name": "鲤香(板前)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 586,
+  "name": "李老幺重庆大排档(松东路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 587,
+  "name": "东泰荟·江湖菜(火车站店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "东泰荟·江湖菜(静安店)",
+  "poi_addr": "上海市静安区天目西路街道恒丰路600号(近天目西路)"
+ },
+ {
+  "rid": 593,
+  "name": "老吴川菜馆",
+  "conf": "mid",
+  "tel": "13818195371;15026820802",
+  "poi_title": "老吴家川菜(昭化路店)",
+  "poi_addr": "上海市长宁区昭化路116号申亚臻悦商苑F1层"
+ },
+ {
+  "rid": 594,
+  "name": "竹屋川菜",
+  "conf": "high",
+  "tel": "021-53832877;021-64154730",
+  "poi_title": "竹屋川菜(时代广场店)",
+  "poi_addr": "上海市黄浦区淮海中路93-111号大上海时代广场B1"
+ },
+ {
+  "rid": 595,
+  "name": "椒点·川粤精品",
+  "conf": "mid",
+  "tel": "021-62227785;021-62225519",
+  "poi_title": "椒点·川粤精品(尚嘉中心店)",
+  "poi_addr": "上海市长宁区天山路街道仙霞路99号尚嘉中心L314"
+ },
+ {
+  "rid": 597,
+  "name": "椿庐(凯德晶萃店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 601,
+  "name": "张记川味苑(定西路店)",
+  "conf": "high",
+  "tel": "15881993450",
+  "poi_title": "张记川味苑",
+  "poi_addr": "上海市长宁区新华路街道定西路710弄17号(鸿申大厦正对面)"
+ },
+ {
+  "rid": 602,
+  "name": "三木川菜(真如古镇店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "三木川菜(普陀真如店)",
+  "poi_addr": "上海市普陀区兰溪路201号自如友寓(兰溪路店)"
+ },
+ {
+  "rid": 607,
+  "name": "十八梯邓凳面(愚园路店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "十八梯邓凳面",
+  "poi_addr": "上海市静安区静安寺街道北京西路1829号玖博广场1层101室"
+ },
+ {
+  "rid": 613,
+  "name": "山城印象重庆小面(灵山路店)",
+  "conf": "high",
+  "tel": "15213371762",
+  "poi_title": "山城印象重庆小面",
+  "poi_addr": "上海市浦东新区洋泾街道灵山路926号"
+ },
+ {
+  "rid": 614,
+  "name": "我们屋头串串(老闵行)",
+  "conf": "mid",
+  "tel": "17339621210",
+  "poi_title": "屋头串串(川沙店)",
+  "poi_addr": "上海市浦东新区川沙绿地东海岸1号楼"
+ },
+ {
+  "rid": 618,
+  "name": "对酒当歌·地道川菜(南京东路店)",
+  "conf": "mid",
+  "tel": "13122226412",
+  "poi_title": "对酒当歌·地道川菜(人民广场店)",
+  "poi_addr": "上海市黄浦区山东中路311号1楼2楼"
+ },
+ {
+  "rid": 619,
+  "name": "贾温柔迷踪菜",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "贾温柔迷踪菜",
+  "poi_addr": "上海市静安区万航渡路393弄2号1楼"
+ },
+ {
+  "rid": 621,
+  "name": "袍哥川小馆·肥肠鸡(天钥桥路店)",
+  "conf": "mid",
+  "tel": "13127890229",
+  "poi_title": "袍哥川小馆·肥肠鸡(天山路店)",
+  "poi_addr": "上海市长宁区天山路街道天山路1111号1楼115铺"
+ },
+ {
+  "rid": 622,
+  "name": "沪小川肥肠烤鱼泡椒牛蛙(定西路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 628,
+  "name": "三木川菜",
+  "conf": "mid",
+  "tel": "13587777004",
+  "poi_title": "三木川菜(上南路店)",
+  "poi_addr": "上海市浦东新区康桥镇上南路7775号"
+ },
+ {
+  "rid": 629,
+  "name": "民间川菜(尚大国际店)",
+  "conf": "mid",
+  "tel": "17721051599",
+  "poi_title": "民间川菜(尚大国际店)",
+  "poi_addr": "上海市宝山区沪太路3100号B101-2(上大路地铁4号口旁)"
+ },
+ {
+  "rid": 642,
+  "name": "蜀当家·盐帮川菜(上海首店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "蜀当家盐帮川菜",
+  "poi_addr": "上海市徐汇区虹梅路街道苍梧路14号-48、49"
+ },
+ {
+  "rid": 672,
+  "name": "潮桔桔·潮汕小吃堂(江湾里MEET678店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 675,
+  "name": "阿嫲潮味(江湾里店)",
+  "conf": "mid",
+  "tel": "13641760138;13472767769",
+  "poi_title": "阿嫲潮味(江湾里店)",
+  "poi_addr": "上海市杨浦区新江湾城街道民府路602号T3-2F02室"
+ },
+ {
+  "rid": 683,
+  "name": "虹潮荟(瑞虹天地太阳宫店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "虹潮荟(上海蟠龙天地店)",
+  "poi_addr": "上海市青浦区潘鼎路123弄8号上海蟠龙天地F1"
+ },
+ {
+  "rid": 688,
+  "name": "三伯公·山野客家菜(徐汇日月光店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 692,
+  "name": "客语(上海分店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 698,
+  "name": "老赣南客家菜(静安寺店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 745,
+  "name": "南京大牌档(静安寺店)",
+  "conf": "mid",
+  "tel": "4001877177",
+  "poi_title": "南京大牌档(中山公园龙之梦店)",
+  "poi_addr": "上海市长宁区长宁路1018号龙之梦城市生活中心L8-8077"
+ },
+ {
+  "rid": 790,
+  "name": "山东家常菜(繁安综合市场店)",
+  "conf": "mid",
+  "tel": "13917412999",
+  "poi_title": "山东家常菜",
+  "poi_addr": "上海市青浦区夏阳街道青昆路43号"
+ },
+ {
+  "rid": 791,
+  "name": "爸爸的鱼妈妈的饼",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "爸爸的鱼妈妈的饼",
+  "poi_addr": "上海市松江区鼓浪路220号手牵手文化产业园107-109室"
+ },
+ {
+  "rid": 792,
+  "name": "味道山东经典鲁菜(宜川路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 793,
+  "name": "鲁滋味山东菜",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "鲁滋味山东菜(川周公路店)",
+  "poi_addr": "上海市浦东新区康桥镇川周公路百龙新村"
+ },
+ {
+  "rid": 794,
+  "name": "鲁一品",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 795,
+  "name": "糁姐鲁小菜(七宝店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "糁姐鲁小菜(七宝店)",
+  "poi_addr": "上海市闵行区七宝镇七宝宝龙城F1-007(海底捞对面)"
+ },
+ {
+  "rid": 800,
+  "name": "于妈妈烟台水饺",
+  "conf": "mid",
+  "tel": "17621997869",
+  "poi_title": "于妈妈烟台水饺",
+  "poi_addr": "上海市静安区威海路836号"
+ },
+ {
+  "rid": 801,
+  "name": "郭姐·威海渔村(中山公园/定西路店)",
+  "conf": "mid",
+  "tel": "18017987646",
+  "poi_title": "郭姐·威海渔村(中山公园店)",
+  "poi_addr": "上海市长宁区定西路1550号二楼(中山公园地铁站8号口步行220米)"
+ },
+ {
+  "rid": 802,
+  "name": "烟屿家烧小馆(川沙店)",
+  "conf": "high",
+  "tel": "13611888641",
+  "poi_title": "烟屿家烧小馆",
+  "poi_addr": "上海市浦东新区川沙新镇新川路370号、372号、374号、376号1幢2层205、207、209室"
+ },
+ {
+  "rid": 803,
+  "name": "威海小海鲜(通河新村/宝山店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "威海小海鲜(金高路店)",
+  "poi_addr": "上海市浦东新区金桥镇金高路2107号"
+ },
+ {
+  "rid": 804,
+  "name": "郭姐·威海渔村(大连路/莱克大厦店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "郭姐·威海渔村(和平公园店)",
+  "poi_addr": "上海市杨浦区四平路街道大连路1548-2号底层(上海教育电视台正对面)"
+ },
+ {
+  "rid": 810,
+  "name": "郭姐·威海渔村(柳州路店)",
+  "conf": "high",
+  "tel": "18302190631",
+  "poi_title": "郭姐·威海渔村(柳州路店)",
+  "poi_addr": "上海市徐汇区柳州路531-1号"
+ },
+ {
+  "rid": 812,
+  "name": "白茸小鲜(太阳宫店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "白茸小鲜(瑞虹天地太阳宫)",
+  "poi_addr": "上海市虹口区瑞虹路181号瑞虹天地太阳宫L7"
+ },
+ {
+  "rid": 813,
+  "name": "申客厅 SHEEN Pavilion",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 826,
+  "name": "新发现(绿地缤纷城店)",
+  "conf": "mid",
+  "tel": "18106590036",
+  "poi_title": "新发现(徐汇绿地缤纷城店)",
+  "poi_addr": "上海市徐汇区东安路562号绿地缤纷城(徐汇店)F2"
+ },
+ {
+  "rid": 829,
+  "name": "江南晓馆(五角场合生汇店)",
+  "conf": "mid",
+  "tel": "15221449595",
+  "poi_title": "江南晓馆·地道杭帮菜(合生汇店)",
+  "poi_addr": "上海市杨浦区五角场街道翔殷路合生汇国际广场4层12B"
+ },
+ {
+  "rid": 833,
+  "name": "茶人村·江南雅宴(前滩店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 836,
+  "name": "青彩轩·新浙菜(长宁国际店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "青彩轩·新浙菜(上海环宇城MAX店)",
+  "poi_addr": "上海市普陀区石泉路街道铜川路699弄1号中海环宇城max5楼5006号(近1号门)"
+ },
+ {
+  "rid": 837,
+  "name": "钱珑·江浙菜(真如大都会店)",
+  "conf": "high",
+  "tel": "021-52358757",
+  "poi_title": "钱珑·江浙菜(真如大都会店)",
+  "poi_addr": "上海市普陀区曹杨路1518号建设银行2楼(地铁真如站1号出口龙头位置即到)"
+ },
+ {
+  "rid": 842,
+  "name": "柒熙里(辛耕路店)",
+  "conf": "high",
+  "tel": "17177796777",
+  "poi_title": "柒熙里·宁波小鲜(徐家汇店)",
+  "poi_addr": "上海市徐汇区徐家汇街道辛耕路152-154号(城开yoyo1F/2F)"
+ },
+ {
+  "rid": 843,
+  "name": "卿家姆小馆·生腌熟醉·宁波小鲜(外滩店)",
+  "conf": "mid",
+  "tel": "13958249233",
+  "poi_title": "卿家姆小馆·生腌熟醉·宁波小鲜(慈溪银泰店)",
+  "poi_addr": "浙江省宁波市慈溪市浒山街道糖坊路72-74号、(银泰二期)近地下停车场入口"
+ },
+ {
+  "rid": 846,
+  "name": "宁海食福·小漁家(复兴中路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 849,
+  "name": "甬悦小馆(栖山路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 856,
+  "name": "醉玖兰亭·精细绍兴菜(南京东路店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "醉玖兰亭(南京东路店)",
+  "poi_addr": "上海市黄浦区南京东路300号恒基名人购物中心6层"
+ },
+ {
+  "rid": 859,
+  "name": "瓯江渔市·地标温州菜(思南路店)",
+  "conf": "high",
+  "tel": "13402088368",
+  "poi_title": "瓯江渔市·地标温州菜(思南路店)",
+  "poi_addr": "上海市黄浦区瑞金二路街道思南路30-32号南幢二楼(原客堂间山房私宴)"
+ },
+ {
+  "rid": 860,
+  "name": "温牛也也(凯德晶萃店)",
+  "conf": "mid",
+  "tel": "18385900094",
+  "poi_title": "温牛也也(凯德晶萃店)",
+  "poi_addr": "上海市黄浦区徐家汇路凯德晶萃广场3楼"
+ },
+ {
+  "rid": 861,
+  "name": "浙时码头·温州海鲜大排档(静安寺店)",
+  "conf": "mid",
+  "tel": "15026922100",
+  "poi_title": "浙时码头·温州海鲜大排档(汾阳路店)",
+  "poi_addr": "上海市徐汇区天平路街道汾阳路110号"
+ },
+ {
+  "rid": 862,
+  "name": "瓯叙·温州家烧(上海首店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 866,
+  "name": "浙时码头·温州海鲜大排档(汾阳路店)",
+  "conf": "high",
+  "tel": "15026922100",
+  "poi_title": "浙时码头·温州海鲜大排档(汾阳路店)",
+  "poi_addr": "上海市徐汇区天平路街道汾阳路110号"
+ },
+ {
+  "rid": 867,
+  "name": "瓯越·尊鲜(CP静安店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 869,
+  "name": "双井头饭店(上海首店)",
+  "conf": "mid",
+  "tel": "17816802021",
+  "poi_title": "双井头饭店",
+  "poi_addr": "浙江省温州市鹿城区蒲鞋市街道学院西路55号A1-10"
+ },
+ {
+  "rid": 870,
+  "name": "浙时渔季·温州小馆(虹桥南丰城店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 881,
+  "name": "福味福州名小吃",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 882,
+  "name": "榕汇来海鲜面",
+  "conf": "mid",
+  "tel": "18121321929",
+  "poi_title": "榕汇来海鲜面",
+  "poi_addr": "上海市黄浦区陆家浜路1331号"
+ },
+ {
+  "rid": 885,
+  "name": "福见仁FúDining·福州火灶(K11店)",
+  "conf": "high",
+  "tel": "15821735611",
+  "poi_title": "福见仁FúDining·福州火灶",
+  "poi_addr": "上海市黄浦区淮海中路街道k11购物中心三楼301-B商铺(3楼出电梯左转直走30米)"
+ },
+ {
+  "rid": 886,
+  "name": "席上·福建料理Hokkien Cuisine",
+  "conf": "high",
+  "tel": "021-56619996",
+  "poi_title": "席上·福建料理 Hokkien Cuisine",
+  "poi_addr": "上海市静安区福建北路万象天地慎余里6号"
+ },
+ {
+  "rid": 888,
+  "name": "屿园沙茶面(长春路店)",
+  "conf": "high",
+  "tel": "15659682558",
+  "poi_title": "屿园沙茶面(长春路店)",
+  "poi_addr": "上海市虹口区长春路168号"
+ },
+ {
+  "rid": 889,
+  "name": "林氏海蛎煎(福建路64号店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 890,
+  "name": "泉仔·闽南小吃(定西路店)",
+  "conf": "mid",
+  "tel": "15905857165",
+  "poi_title": "泉仔闽南小吃",
+  "poi_addr": "上海市徐汇区云锦路701号B1-FC-02"
+ },
+ {
+  "rid": 892,
+  "name": "阿翁沙茶面",
+  "conf": "mid",
+  "tel": "13061956269",
+  "poi_title": "阿翁沙茶面(骏丰国际财富广场店)",
+  "poi_addr": "上海市虹口区嘉兴路街道大连路1599号俊峰财富广场106"
+ },
+ {
+  "rid": 893,
+  "name": "黑明餐厅·厦门菜(CP静安店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "黑明餐厅·厦门菜(cp静安店)",
+  "poi_addr": "上海市静安区静安寺街道愚园路68号(cp静安)7楼703"
+ },
+ {
+  "rid": 894,
+  "name": "呷佰贰",
+  "conf": "high",
+  "tel": "15214380618",
+  "poi_title": "呷佰贰",
+  "poi_addr": "上海市黄浦区瑞金二路街道巨鹿路405号2楼"
+ },
+ {
+  "rid": 896,
+  "name": "闽叔福建菜(陆家嘴中心L+Mall店)",
+  "conf": "mid",
+  "tel": "18601798588",
+  "poi_title": "闽叔福建菜(上海陆家嘴中心店)",
+  "poi_addr": "上海市浦东新区陆家嘴街道浦东南路889号上海陆家嘴中心7FL716号"
+ },
+ {
+  "rid": 897,
+  "name": "闽约闽南小馆",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 900,
+  "name": "阿不先生福建小馆(鲁能中心店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "阿不先生福建小馆",
+  "poi_addr": "上海市浦东新区鲁能国际中心B座负一层52号"
+ },
+ {
+  "rid": 901,
+  "name": "莆味小馆(宝山万渡汇店)",
+  "conf": "mid",
+  "tel": "18567681666",
+  "poi_title": "莆味小馆",
+  "poi_addr": "上海市宝山区长江西路2221号纪蕰路38号"
+ },
+ {
+  "rid": 902,
+  "name": "莆田卤面馆(汇融天地店)",
+  "conf": "mid",
+  "tel": "18396001422",
+  "poi_title": "莆田卤面馆(汇融天地店)",
+  "poi_addr": "上海市普陀区长风新村街道曹扬路555号汇融天地B1层10-1号"
+ },
+ {
+  "rid": 905,
+  "name": "CHIC1699远洋私厨(华润时代广场店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 907,
+  "name": "福序(徐汇滨江店)",
+  "conf": "mid",
+  "tel": "021-60299669;13167190669",
+  "poi_title": "福序(徐汇滨江店)",
+  "poi_addr": "上海市徐汇区龙华街道龙文路317号星瀚广场R5栋1-2层"
+ },
+ {
+  "rid": 908,
+  "name": "海湾荟·闽采(世贸大厦40楼)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "海湾荟·闽采·福建菜",
+  "poi_addr": "上海市黄浦区世界贸易大厦40楼"
+ },
+ {
+  "rid": 909,
+  "name": "康丰路长沙米粉店",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "康丰路",
+  "poi_addr": "上海市嘉定区"
+ },
+ {
+  "rid": 911,
+  "name": "亲亲长沙米粉(新闸路店)",
+  "conf": "high",
+  "tel": "13774330135",
+  "poi_title": "亲亲长沙米粉(新福康里店)",
+  "poi_addr": "上海市静安区新闸路868号(自然博物馆地铁站2号口步行450米)"
+ },
+ {
+  "rid": 912,
+  "name": "粉新社长沙米粉(华敏店)",
+  "conf": "mid",
+  "tel": "19121559289",
+  "poi_title": "粉新社长沙米粉(新天地店)",
+  "poi_addr": "上海市黄浦区兴业路123弄1-7号三楼南里食集-粉新社"
+ },
+ {
+  "rid": 914,
+  "name": "湘小盏·不改良湖南菜(近铁广场店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 915,
+  "name": "王胜利·长沙家菜馆(长宁来福士店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 921,
+  "name": "粉醉牛·湖南米粉(中山西路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 922,
+  "name": "粉牛牛常德牛肉米粉(灵石路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 923,
+  "name": "湘椒红常德牛肉粉(潍坊路店)",
+  "conf": "high",
+  "tel": "15907360808",
+  "poi_title": "湘椒红常德牛肉粉",
+  "poi_addr": "上海市浦东新区晨空间潍坊园(潍坊路)"
+ },
+ {
+  "rid": 925,
+  "name": "钵湘湘·常德钵子菜(浦东创始店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "钵湘湘·常德钵子菜(青浦店)",
+  "poi_addr": "上海市青浦区新凤中路888号14号1层106室"
+ },
+ {
+  "rid": 926,
+  "name": "洞庭3000里·乡野湖南菜(苏河湾万象天地店)",
+  "conf": "high",
+  "tel": "4008752508",
+  "poi_title": "洞庭3000里·湘菜与酒Bistro(上海苏河湾万象天地店)",
+  "poi_addr": "上海市静安区苏河湾万象天地西里负二楼"
+ },
+ {
+  "rid": 928,
+  "name": "借碗·湘西",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 930,
+  "name": "罐罐儿·湘西家味(世博天地店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "罐罐儿·湘西家味(世博天地店)",
+  "poi_addr": "上海市浦东新区上钢新村街道(上海)自由贸易试验区世博大道1467号商业C二层L203(沪上馨和右侧)"
+ },
+ {
+  "rid": 931,
+  "name": "湘西农家菜(古美路店)",
+  "conf": "mid",
+  "tel": "15618898705;15618708186",
+  "poi_title": "湘西农家菜(牌楼休闲广场店)",
+  "poi_addr": "上海市闵行区东兰路288号2号楼108室"
+ },
+ {
+  "rid": 932,
+  "name": "芙蓉阁(三湘大厦店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 933,
+  "name": "西湘姑娘·湖南菜(沪太路店)",
+  "conf": "mid",
+  "tel": "13120898635",
+  "poi_title": "西湘姑娘·湖南菜",
+  "poi_addr": "上海市宝山区大场镇沪太路3100号尚大国际E座一层E107(麦当劳对面)"
+ },
+ {
+  "rid": 934,
+  "name": "湘约屋坎上·土家菜(松江鹿都店)",
+  "conf": "mid",
+  "tel": "15208397316",
+  "poi_title": "湘约屋坎上·土家菜·湘西炊锅(松江鹿都店)",
+  "poi_addr": "上海市松江区松汇中路568号鹿都国际广场1楼1117室"
+ },
+ {
+  "rid": 936,
+  "name": "甬府·世博轩(世博中心店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 942,
+  "name": "璞徽(正大广场店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 944,
+  "name": "徽苑·新徽菜·烤鸭(万象城店)",
+  "conf": "high",
+  "tel": "18236239963",
+  "poi_title": "徽苑·新徽菜·烤鸭(万象城店)",
+  "poi_addr": "上海市闵行区吴中路1599号万象城L6-609a"
+ },
+ {
+  "rid": 956,
+  "name": "朏记红皮鸭（胐记）",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 957,
+  "name": "宋记淮南牛肉汤(虹梅路店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "淮南牛肉汤",
+  "poi_addr": "上海市徐汇区"
+ },
+ {
+  "rid": 958,
+  "name": "骨里香淮南牛肉汤(绿苑路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 959,
+  "name": "阿英阿英·正宗淮南牛肉汤",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "阿英阿英·正宗淮南牛肉汤",
+  "poi_addr": "上海市静安区静安寺街道胶州路120弄1号"
+ },
+ {
+  "rid": 960,
+  "name": "淮南牛肉汤(兰溪路92号老店)",
+  "conf": "high",
+  "tel": "17717329255",
+  "poi_title": "淮南牛肉汤(兰溪路店)",
+  "poi_addr": "上海市普陀区曹杨新村街道曹杨花溪园"
+ },
+ {
+  "rid": 962,
+  "name": "玉花姐皖北地锅鸡(包头路旗舰总店)",
+  "conf": "high",
+  "tel": "13024111410;021-55215116",
+  "poi_title": "玉花姐·皖北地锅鸡(包头路店)",
+  "poi_addr": "上海市杨浦区殷行街道包头路278号(京沪南门左侧)"
+ },
+ {
+  "rid": 970,
+  "name": "憶长安·西安宴·陕派官府菜",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 972,
+  "name": "秦潮食集(花木时光店)",
+  "conf": "mid",
+  "tel": "021-68773665",
+  "poi_title": "秦潮食集(花木时光里店)",
+  "poi_addr": "上海市浦东新区花木街道杨高南路99弄1号花木时光里B1-122号"
+ },
+ {
+  "rid": 973,
+  "name": "陕现·西安小馆(西岸凤巢店)",
+  "conf": "high",
+  "tel": "13900907923",
+  "poi_title": "陕现·西安小馆(全国首店)",
+  "poi_addr": "上海市徐汇区云锦路701号"
+ },
+ {
+  "rid": 978,
+  "name": "张有德老字号牛肉面",
+  "conf": "high",
+  "tel": "19921771717",
+  "poi_title": "张有德老字号牛肉面(上海首店)",
+  "poi_addr": "上海市静安区愚园路315号1层101单元"
+ },
+ {
+  "rid": 983,
+  "name": "吕老哈印象锅包肉(虹口海伦路店)",
+  "conf": "mid",
+  "tel": "021-60252691",
+  "poi_title": "吕老哈印象锅包肉",
+  "poi_addr": "上海市普陀区中江路889号"
+ },
+ {
+  "rid": 985,
+  "name": "李老哈·东北菜(宋园路店)",
+  "conf": "high",
+  "tel": "021-62362229;17643531743",
+  "poi_title": "李老哈·东北菜(宋园路店)",
+  "poi_addr": "上海市长宁区虹桥街道宋园路71、72、74号"
+ },
+ {
+  "rid": 987,
+  "name": "傻大姐东北菜水饺(梅川路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 992,
+  "name": "仲秋的饺子馆(曹杨路复悦荟店)",
+  "conf": "mid",
+  "tel": "15821359168",
+  "poi_title": "仲秋的饺子馆",
+  "poi_addr": "上海市普陀区曹杨路1888弄12号一层S02室"
+ },
+ {
+  "rid": 993,
+  "name": "东北四季饺子王(昌平路店)",
+  "conf": "mid",
+  "tel": "021-62819977;18221285118",
+  "poi_title": "东北四季饺子王(华山路店)",
+  "poi_addr": "上海市长宁区新华路街道华山路1623号华山菜市场19号摊位"
+ },
+ {
+  "rid": 994,
+  "name": "喜鼎海胆水饺(长宁来福士店)",
+  "conf": "high",
+  "tel": "13917145843",
+  "poi_title": "喜鼎海胆水饺(长宁来福士店)",
+  "poi_addr": "上海市长宁区周家桥街道长宁路来福士广场东区2号古建1-2楼(东区商场2号门对面)"
+ },
+ {
+  "rid": 995,
+  "name": "喜尚鲜·东北小馆(外滩外白渡桥店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 996,
+  "name": "上关雪东北菜(宝地广场店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1015,
+  "name": "岚·山野云南特色菜(愚园路CP静安店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1016,
+  "name": "滇界云南鲜菌火锅(五角场万达店)",
+  "conf": "mid",
+  "tel": "18516080357",
+  "poi_title": "滇界·云南野鲜菌火锅(上海首店)",
+  "poi_addr": "上海市杨浦区政通路189号万达广场(上海五角场店)F1"
+ },
+ {
+  "rid": 1022,
+  "name": "黔山婆·地道贵州菜(静安店)",
+  "conf": "high",
+  "tel": "19302129006",
+  "poi_title": "黔山婆·地道贵州菜(静安店)",
+  "poi_addr": "上海市静安区富民路179号2楼,地铁静安寺站8号口步行200米"
+ },
+ {
+  "rid": 1029,
+  "name": "二道桥1881西域楼兰餐厅",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1031,
+  "name": "胡集酒肆·唐潮西域菜(万象城店)",
+  "conf": "high",
+  "tel": "19533897869",
+  "poi_title": "胡集酒肆·唐潮西域菜(上海万象城店)",
+  "poi_addr": "上海市闵行区虹桥镇吴中路万象城5层L517f"
+ },
+ {
+  "rid": 1033,
+  "name": "卡尔湾新疆餐厅(虹梅路店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "卡尔湾新疆餐厅",
+  "poi_addr": "上海市闵行区古美路1488号1-2层"
+ },
+ {
+  "rid": 1034,
+  "name": "塔城饭店(新沪路店)",
+  "conf": "high",
+  "tel": "18930071638;13918835300",
+  "poi_title": "塔城饭店(新沪路店)",
+  "poi_addr": "上海市宝山区沪太路1618号向阳900美食不夜城F1"
+ },
+ {
+  "rid": 1035,
+  "name": "阿卡哥哥·喀什葛尔手抓饭(静安店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1037,
+  "name": "捡角台湾食堂(古北店)",
+  "conf": "mid",
+  "tel": "18717770573",
+  "poi_title": "捡角台湾食堂(古北店)",
+  "poi_addr": "上海市长宁区虹桥街道伊犁南路288弄7幢7号楼一层713室"
+ },
+ {
+  "rid": 1045,
+  "name": "蔡家食谱(古北一店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1048,
+  "name": "bistro bonbon凤凤亭(武夷路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1056,
+  "name": "佟爷老北京炙子烤肉(定西路店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "佟爷·老北京炙子烤肉(定西路店)",
+  "poi_addr": "上海市长宁区新华路街道定西路655号"
+ },
+ {
+  "rid": 1057,
+  "name": "小吊梨汤·北京菜·烤鸭(豫园店)",
+  "conf": "mid",
+  "tel": "18917283351;021-63356627",
+  "poi_title": "小吊梨汤·北京菜·烤鸭(豫园店)",
+  "poi_addr": "上海市黄浦区旧校场路159号三楼TYX3-1、TYX3-2商铺"
+ },
+ {
+  "rid": 1058,
+  "name": "谢记武汉热干面(七浦路店)",
+  "conf": "high",
+  "tel": "",
+  "poi_title": "谢记武汉热干面(七浦路店)",
+  "poi_addr": "上海市静安区北站街道七浦路258号新金浦时尚服装市场006号(78路公交终点站正对面)"
+ },
+ {
+  "rid": 1060,
+  "name": "九宫殿热干面(来福士广场店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1061,
+  "name": "楚褚热干面(宝山万达店)",
+  "conf": "high",
+  "tel": "18621713943",
+  "poi_title": "楚褚热干面(宝山万达店)",
+  "poi_addr": "上海市宝山区一二八纪念路1000弄3号157-2室"
+ },
+ {
+  "rid": 1063,
+  "name": "来菜·湖北头牌藕汤(环球港店)",
+  "conf": "high",
+  "tel": "15316927361",
+  "poi_title": "来菜·湖北头牌藕汤",
+  "poi_addr": "上海市普陀区中山北路3300号环球港4楼"
+ },
+ {
+  "rid": 1066,
+  "name": "监利早酒·湖北菜(国定路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1073,
+  "name": "喜来稀肉(虹泉路店)",
+  "conf": "high",
+  "tel": "021-64657729",
+  "poi_title": "喜来稀肉(虹泉路店)",
+  "poi_addr": "上海市闵行区虹泉路1101弄3号风度国际生活广场F1层"
+ },
+ {
+  "rid": 1083,
+  "name": "韩味岛酱蟹(天乐广场店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1089,
+  "name": "多乐房土豆汤(虹泉路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1092,
+  "name": "济州食堂by钟路商会(虹泉路店)",
+  "conf": "mid",
+  "tel": "",
+  "poi_title": "济州食堂BY钟路商会(日月光店)",
+  "poi_addr": "上海市黄浦区打浦桥街道日月光中心4楼徐家汇区(4F-XJH12)"
+ },
+ {
+  "rid": 1094,
+  "name": "青鹤谷烤肉(虹泉路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1099,
+  "name": "POETS泰狮(徐家汇店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1101,
+  "name": "Hidden Thai Bistro",
+  "conf": "mid",
+  "tel": "021-62372991;021-64734749",
+  "poi_title": "HIDDEN THAI BISTRO(番禺路店)",
+  "poi_addr": "上海市长宁区新华路街道番禺路395号"
+ },
+ {
+  "rid": 1102,
+  "name": "Akanee Thai Izakaya(愚园路)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1104,
+  "name": "泰北清迈小馆(虹桥路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1105,
+  "name": "清迈排挡(北外滩来福士店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1106,
+  "name": "船面专门店(美罗城店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1107,
+  "name": "大学路泰餐(大学路店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1109,
+  "name": "清迈瓦罐火锅",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ },
+ {
+  "rid": 1110,
+  "name": "Rasa Rasa越南料理&串烧(新天地店)",
+  "conf": "none",
+  "tel": null,
+  "poi_title": null,
+  "poi_addr": null
+ }
+]
