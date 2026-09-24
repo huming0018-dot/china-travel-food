@@ -141,8 +141,11 @@ export default function RestaurantDetail() {
   // 食客均分
   const dinerAvg = useMemo(() => {
     if (reviews.length === 0) return null;
-    const sum = reviews.reduce((acc, r) => acc + (r.rating_total || 0), 0);
-    return sum / reviews.length;
+    const rated = reviews
+      .map((r) => (typeof r.rating_total === 'number' ? r.rating_total : r.aspect_taste))
+      .filter((v): v is number => typeof v === 'number');
+    if (rated.length === 0) return null;
+    return rated.reduce((acc, v) => acc + v, 0) / rated.length;
   }, [reviews]);
 
   if (loading) return (
@@ -443,10 +446,14 @@ export default function RestaurantDetail() {
                   <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
                     <div className="flex items-center gap-3">
                       <span className="serif text-sm font-medium">{rv.author_name || '食客'}</span>
-                      <StarRating value={rv.rating_total || 0} size="text-sm" />
-                      {rv.rating_taste && (
-                        <span className="text-2xs text-mocha-faint">口味 {rv.rating_taste}★</span>
-                      )}
+                      {typeof rv.rating_total === 'number' ? (
+                        <StarRating value={rv.rating_total} size="text-sm" />
+                      ) : typeof rv.aspect_taste === 'number' ? (
+                        <span className="text-sm text-terracotta tracking-tight">
+                          {'★'.repeat(rv.aspect_taste)}
+                          <span className="text-2xs text-mocha-faint ml-1">口味 {rv.aspect_taste}/5</span>
+                        </span>
+                      ) : null}
                     </div>
                     <div className="flex items-center gap-3 text-2xs text-mocha-faint">
                       {rv.visit_date && <span>📅 {rv.visit_date}</span>}

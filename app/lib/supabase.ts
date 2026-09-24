@@ -61,6 +61,7 @@ export interface Review {
   author_name?: string;
   rating_total?: number;
   rating_taste?: number;
+  aspect_taste?: number;
   content?: string;
   visit_date?: string;
   is_hidden: boolean;
