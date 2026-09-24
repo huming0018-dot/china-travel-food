@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState, useMemo } from 'react';
 import { supabase, Restaurant, Cuisine } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
+import FeedSection from '@/components/FeedSection';
 
 // 一级根（地图认知顺序）
 const ROOTS = ['中餐', '亚洲', '欧洲', '非洲', '北美洲', '南美洲', '融合菜', '非正餐'];
@@ -181,6 +182,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <FeedSection />
 
       {/* 根胶囊导航 */}
       <section className="max-w-7xl mx-auto px-6 pb-8">

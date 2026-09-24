@@ -67,3 +67,18 @@ export interface Review {
   report_count: number;
   created_at: string;
 }
+
+export interface FeedEvent {
+  id: number;
+  scope: string;        // local / overseas / industry
+  category: string;     // new_open / relocated / closed / chef_changed / guest_kitchen / collaboration / popup / award / menu_update / coming_soon
+  title: string;
+  summary?: string;
+  event_date?: string;
+  restaurant_id?: number;
+  related_restaurant_id?: number;
+  chef_id?: number;
+  district?: string;
+  confidence: string;   // high / mid / low
+  status: string;       // verified / rumor
+}
