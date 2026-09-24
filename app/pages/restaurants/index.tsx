@@ -2,16 +2,17 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { supabase, Restaurant, Cuisine } from '@/lib/supabase';
+import { supabase, Restaurant, Cuisine, fetchThresholds, PriceThreshold, bandLabel, thresholdFor } from '@/lib/supabase';
 import { safeText } from '@/lib/format';
 
-// 五档价位（上海口径，按人均自动归档；仅用于价格过滤，品类内高低另看 price_position）
-const TIERS = [
-  { key: '经济', range: '< ¥50' },
-  { key: '平价', range: '¥50–99' },
-  { key: '中档', range: '¥100–199' },
-  { key: '高档', range: '¥200–499' },
-  { key: '奢华', range: '¥500+' },
+// 预算筛选：客观的绝对人均区间（全库统一，用于"按预算找店"）。
+// 边界取自正餐真实价格分位数并取整（P25=95→100 / P50=133→150 / P75=268→300 / P90=629→600），不拍脑袋。
+const BUDGETS = [
+  { key: 'b1', lo: null as number | null, hi: 100, label: '<¥100' },
+  { key: 'b2', lo: 100, hi: 150, label: '¥100–150' },
+  { key: 'b3', lo: 150, hi: 300, label: '¥150–300' },
+  { key: 'b4', lo: 300, hi: 600, label: '¥300–600' },
+  { key: 'b5', lo: 600, hi: null as number | null, label: '¥600+' },
 ];
 
 // 一级根：地图认知顺序（中餐独立；其余按大陆→国家；非正餐为场景；融合菜单列）
@@ -20,10 +21,9 @@ const PAGE = 120;
 // 详情页返回时恢复筛选与滚动位置的快照键（sessionStorage）
 const RETURN_KEY = 'restaurants:returnState';
 
-// 卡片档标签：品类内相对档（咖啡/面包/小吃不套用正餐绝对档）
-const positionClass = (p?: string) =>
-  ({ 入门: 'tag-budget', 主流: 'tag-value', 进阶: 'tag-mid', 高端: 'tag-fine', 旗舰: 'tag-luxury' } as Record<string, string>)[p || ''] ||
-  'tag-budget';
+// 卡片价格带颜色：按客观 price_band（1-5）由浅到深，仅反映价格高低、不暗示品质。
+const BAND_CLASSES = ['tag-budget', 'tag-value', 'tag-mid', 'tag-fine', 'tag-luxury'];
+const bandClass = (band?: number | null) => BAND_CLASSES[(band || 1) - 1] || 'tag-mid';
 
 // 食材「主营专门店」判定：食材名 -> 匹配"主营该食材的菜系叶子名"的正则。
 // 选食材后，命中且菜系主营匹配 = 主营(main)；命中食材但菜系主营是别的 = 菜单含有(secondary 折叠)。
@@ -84,7 +84,8 @@ export default function RestaurantsPage() {
   const [root, setRoot] = useState('中餐');              // 一级根 Tab
   const [flavor, setFlavor] = useState<string | null>(null); // 二级菜系 name
   const [subFlavor, setSubFlavor] = useState<string | null>(null); // 三级子流派 name（在二级基础上再筛）
-  const [tiers, setTiers] = useState<Set<string>>(new Set());
+  const [budgets, setBudgets] = useState<Set<string>>(new Set()); // 预算区间 key（BUDGETS）
+  const [thresholds, setThresholds] = useState<PriceThreshold[]>([]); // 各场景价格带阈值
   const [district, setDistrict] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(null);
   const [tagSel, setTagSel] = useState<Set<number>>(new Set()); // 业态/认证/标签/食材 多选
@@ -95,14 +96,16 @@ export default function RestaurantsPage() {
 
   useEffect(() => {
     (async () => {
-      const [rest, cuis, links] = await Promise.all([
+      const [rest, cuis, links, th] = await Promise.all([
         fetchAll<Restaurant>('restaurants', '*', 'id'),
         fetchAll<Cuisine>('cuisines', '*', 'id'),
         fetchAll<{ restaurant_id: number; cuisine_id: number }>('restaurant_cuisines', 'restaurant_id,cuisine_id', 'restaurant_id'),
+        fetchThresholds(),
       ]);
       setRestaurants(rest);
       setCuisines(cuis);
       setRc(links);
+      setThresholds(th);
       setLoading(false);
     })();
   }, []);
@@ -291,7 +294,7 @@ export default function RestaurantsPage() {
   }, [tagSel, cuisines]);
 
   const activeFilterCount =
-    tiers.size + (district ? 1 : 0) + (location ? 1 : 0) + tagSel.size + (flavor ? 1 : 0) + (search ? 1 : 0);
+    budgets.size + (district ? 1 : 0) + (location ? 1 : 0) + tagSel.size + (flavor ? 1 : 0) + (search ? 1 : 0);
 
   const doSort = (arr: Restaurant[]) => {
     if (sortBy === 'score') arr.sort((a, b) => (b.score_total || 0) - (a.score_total || 0));
@@ -320,7 +323,12 @@ export default function RestaurantsPage() {
       const ids = collectFlavorIds(activeFlavor);
       result = result.filter((r) => rTagIds[r.id] && Array.from(ids).some((id) => rTagIds[r.id].has(id)));
     }
-    if (tiers.size) result = result.filter((r) => r.tier && tiers.has(r.tier));
+    if (budgets.size) result = result.filter((r) => {
+      const p = r.price_avg;
+      if (p == null) return false;
+      return BUDGETS.some((b) => budgets.has(b.key) &&
+        (b.lo == null || p >= b.lo) && (b.hi == null || p < b.hi));
+    });
     if (district) result = result.filter((r) => r.district === district);
     if (location) result = result.filter((r) => r.business_area === location);
     // 标签组（食材组单独处理）
@@ -349,14 +357,14 @@ export default function RestaurantsPage() {
     doSort(result); doSort(secondary);
     return { main: result, secondary };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [restaurants, search, hideChain, flavor, subFlavor, tiers, district, location, tagGroups, sortBy, rTagIds, rCuisineNames, cuisines, collectFlavorIds, isNonDiner]);
+  }, [restaurants, search, hideChain, flavor, subFlavor, budgets, district, location, tagGroups, sortBy, rTagIds, rCuisineNames, cuisines, collectFlavorIds, isNonDiner]);
 
   const filtered = view.main;
   const secondaryList = view.secondary;
   const hasIngredient = !!tagGroups['食材'];
 
   useEffect(() => { setShown(PAGE); setShowSecondary(false); },
-    [search, hideChain, flavor, subFlavor, tiers, district, location, tagSel, sortBy]);
+    [search, hideChain, flavor, subFlavor, budgets, district, location, tagSel, sortBy]);
 
   // 详情页"更多餐厅"带 ?return=1 返回：恢复筛选快照与滚动位置
   const restoredRef = useRef(false);
@@ -372,7 +380,7 @@ export default function RestaurantsPage() {
       setRoot(snap.root || '中餐');
       setFlavor(snap.flavor || null);
       setSubFlavor(snap.subFlavor || null);
-      setTiers(new Set(snap.tiers || []));
+      setBudgets(new Set(snap.budgets || snap.tiers || []));
       setDistrict(snap.district || null);
       setLocation(snap.location || null);
       setTagSel(new Set(snap.tagSel || []));
@@ -406,7 +414,7 @@ export default function RestaurantsPage() {
     router.replace('/restaurants', undefined, { shallow: true });
   }, [router.query.return, loading, restaurants.length, router]);
 
-  const toggleTier = (k: string) => setTiers((prev) => {
+  const toggleBudget = (k: string) => setBudgets((prev) => {
     const n = new Set(prev);
     if (n.has(k)) n.delete(k); else n.add(k);
     return n;
@@ -422,15 +430,15 @@ export default function RestaurantsPage() {
   const saveReturn = useCallback(() => {
     try {
       sessionStorage.setItem(RETURN_KEY, JSON.stringify({
-        v: 1, search, sortBy, root, flavor, subFlavor,
-        tiers: Array.from(tiers), district, location,
+        v: 2, search, sortBy, root, flavor, subFlavor,
+        budgets: Array.from(budgets), district, location,
         tagSel: Array.from(tagSel), hideChain, scrollY: window.scrollY,
       }));
     } catch { /* 隐私模式等忽略 */ }
-  }, [search, sortBy, root, flavor, subFlavor, tiers, district, location, tagSel, hideChain]);
+  }, [search, sortBy, root, flavor, subFlavor, budgets, district, location, tagSel, hideChain]);
 
   const clearAll = () => {
-    setSearch(''); setFlavor(null); setSubFlavor(null); setTiers(new Set()); setDistrict(null);
+    setSearch(''); setFlavor(null); setSubFlavor(null); setBudgets(new Set()); setDistrict(null);
     setLocation(null); setTagSel(new Set());
     router.replace('/restaurants', undefined, { shallow: true });
   };
@@ -509,8 +517,8 @@ export default function RestaurantsPage() {
           <button className="filter-trigger" data-on={showFilters || activeFilterCount - (flavor ? 1 : 0) - (search ? 1 : 0) > 0}
             onClick={() => setShowFilters((v) => !v)}>
             <span>筛选</span>
-            {tiers.size + (district ? 1 : 0) + (location ? 1 : 0) + tagSel.size > 0 && (
-              <span className="badge">{tiers.size + (district ? 1 : 0) + (location ? 1 : 0) + tagSel.size}</span>
+            {budgets.size + (district ? 1 : 0) + (location ? 1 : 0) + tagSel.size > 0 && (
+              <span className="badge">{budgets.size + (district ? 1 : 0) + (location ? 1 : 0) + tagSel.size}</span>
             )}
             <span className="text-2xs">{showFilters ? '▲' : '▼'}</span>
           </button>
@@ -535,14 +543,14 @@ export default function RestaurantsPage() {
         {/* 价位条 */}
         <div className="flex items-center gap-2 mb-4 flex-wrap">
           <span className="kicker text-mocha-faint mr-1">价位</span>
-          {TIERS.map((t) => {
-            const on = tiers.has(t.key);
+          {BUDGETS.map((b) => {
+            const on = budgets.has(b.key);
             return (
-              <button key={t.key} className="price-chip px-3.5 py-1.5 rounded-full text-xs border transition-all whitespace-nowrap"
-                data-active={on} data-tier={t.key}
+              <button key={b.key} className="price-chip px-3.5 py-1.5 rounded-full text-xs border transition-all whitespace-nowrap"
+                data-active={on}
                 style={on ? {} : { background: '#fff', borderColor: '#E0D5C8', color: '#5C4A3E' }}
-                onClick={() => toggleTier(t.key)}>
-                {t.key}<span className={`ml-1 text-2xs ${on ? 'opacity-70' : 'text-mocha-faint'}`}>{t.range}</span>
+                onClick={() => toggleBudget(b.key)}>
+                {b.label}
               </button>
             );
           })}
@@ -672,11 +680,14 @@ export default function RestaurantsPage() {
                 <button onClick={() => { if (subFlavor) selectSub(subFlavor); else { setFlavor(null); } }}>✕</button>
               </span>
             )}
-            {Array.from(tiers).map((t) => (
-              <span key={t} className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-line text-xs rounded-full bg-white">
-                {t}<button onClick={() => toggleTier(t)}>✕</button>
-              </span>
-            ))}
+            {Array.from(budgets).map((bk) => {
+              const b = BUDGETS.find((x) => x.key === bk);
+              return (
+                <span key={bk} className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-line text-xs rounded-full bg-white">
+                  {b?.label}<button onClick={() => toggleBudget(bk)}>✕</button>
+                </span>
+              );
+            })}
             {district && (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-line text-xs rounded-full bg-white">
                 {district}{location ? ` · ${location}` : ''}<button onClick={() => { setDistrict(null); setLocation(null); }}>✕</button>
@@ -710,7 +721,7 @@ export default function RestaurantsPage() {
           </div>
         ) : (
           <>
-            <RestaurantRows rows={filtered.slice(0, shown)} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={0} isNonDiner={isNonDiner} onOpen={saveReturn} />
+            <RestaurantRows rows={filtered.slice(0, shown)} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={0} isNonDiner={isNonDiner} onOpen={saveReturn} thresholds={thresholds} />
 
             {/* 食材：菜单含该食材的正餐大店（折叠） */}
             {hasIngredient && secondaryList.length > 0 && (
@@ -718,7 +729,7 @@ export default function RestaurantsPage() {
                 {showSecondary ? (
                   <>
                     <p className="kicker text-mocha-faint mb-2">另有 {secondaryList.length} 家菜单含此食材的餐厅</p>
-                    <RestaurantRows rows={secondaryList} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={filtered.length} isNonDiner={isNonDiner} onOpen={saveReturn} />
+                    <RestaurantRows rows={secondaryList} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={filtered.length} isNonDiner={isNonDiner} onOpen={saveReturn} thresholds={thresholds} />
                     <div className="text-center pt-4">
                       <button onClick={() => setShowSecondary(false)} className="text-2xs text-mocha-faint underline">收起</button>
                     </div>
@@ -747,13 +758,14 @@ export default function RestaurantsPage() {
   );
 }
 
-function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx, isNonDiner, onOpen }: {
+function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx, isNonDiner, onOpen, thresholds }: {
   rows: Restaurant[];
   rCuisineNames: Record<number, string[]>;
   rTagIds: Record<number, Set<number>>;
   startIdx: number;
   isNonDiner: (r: Restaurant) => boolean;
   onOpen: () => void;
+  thresholds: PriceThreshold[];
 }) {
   return (
     <div className="border-t border-line">
@@ -789,7 +801,13 @@ function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx, isNonDiner, on
                 <p className="text-xs text-mocha-soft truncate">{r.signature_dishes.slice(0, 3).join(' · ')}</p>
               )}
             </div>
-            <span title="品类内相对档" className={`tag ${positionClass(r.price_position)} flex-shrink-0`}>{r.price_position || r.tier || '—'}</span>
+            {(() => {
+              const t = thresholdFor(thresholds, r.price_scene, r.price_band);
+              return t ? (
+                <span title={`${r.price_scene} · 价格带 ${r.price_band}/5（客观区间，不代表品质）`}
+                  className={`tag ${bandClass(r.price_band)} flex-shrink-0`}>{bandLabel(t)}</span>
+              ) : <span className="tag tag-mid flex-shrink-0">—</span>;
+            })()}
             <span className="serif text-base font-medium w-16 text-right flex-shrink-0 tabular-nums">
               {r.price_avg ? `¥${r.price_avg}` : '—'}
             </span>

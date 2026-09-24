@@ -31,7 +31,7 @@ const SHANGHAI_CENTER: [number, number] = [31.2304, 121.4737];
 
 // 分页拉全（PostgREST 单页 ≤1000，必须分页，否则漏店）
 async function fetchAllRestaurants(): Promise<Restaurant[]> {
-  const cols = 'id,name,name_en,tier,price_avg,address,district,status,location';
+  const cols = 'id,name,name_en,price_scene,price_band,price_avg,address,district,status,location';
   const step = 1000;
   let start = 0;
   const all: Restaurant[] = [];
@@ -125,7 +125,7 @@ export default function MapPage() {
                     <div className="min-w-[160px]">
                       <h3 className="serif text-sm font-medium">{r.name}</h3>
                       <p className="text-2xs text-ink-faint mt-1 kicker">
-                        {r.tier}{r.price_avg ? ` · ¥${r.price_avg}/人` : ''}
+                        {r.price_scene ? `${r.price_scene}` : ''}{r.price_avg ? ` · ¥${r.price_avg}/人` : ''}
                       </p>
                       {r.address && <p className="text-2xs text-ink-faint mt-1">{r.address}</p>}
                       <Link href={`/restaurants/${r.id}`} className="text-2xs text-ink hover:underline mt-2 inline-block kicker">

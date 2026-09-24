@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import { supabase, Restaurant, Cuisine, Review } from '@/lib/supabase';
+import { supabase, Restaurant, Cuisine, Review, fetchThresholds, PriceThreshold, bandLabel, thresholdFor } from '@/lib/supabase';
 import { parseLngLat, parseLatLng } from '@/lib/geo';
 import { safeText } from '@/lib/format';
 import { useFavorites } from '@/lib/favorites';
@@ -21,9 +21,9 @@ const SCORE_BARS = [
   { key: 'score_endorsement', label: '背书评分', desc: '名厨/老店/传承 · 权重15%', max: 100 },
 ];
 
-const tierClass = (t?: string) =>
-  ({ 经济: 'tag-budget', 平价: 'tag-value', 中档: 'tag-mid', 高档: 'tag-fine', 奢华: 'tag-luxury' } as Record<string, string>)[t || ''] ||
-  'tag-budget';
+// 价格带颜色：按客观 price_band（1-5）由浅到深，仅反映价格高低、不暗示品质。
+const BAND_CLASSES = ['tag-budget', 'tag-value', 'tag-mid', 'tag-fine', 'tag-luxury'];
+const bandClass = (band?: number | null) => BAND_CLASSES[(band || 1) - 1] || 'tag-mid';
 
 async function fetchAll<T = any>(table: string, select: string, orderCol: string): Promise<T[]> {
   const step = 1000;
@@ -65,6 +65,7 @@ export default function RestaurantDetail() {
   const [cuisines, setCuisines] = useState<Cuisine[]>([]);
   const [rc, setRc] = useState<{ restaurant_id: number; cuisine_id: number }[]>([]);
   const [loading, setLoading] = useState(true);
+  const [thresholds, setThresholds] = useState<PriceThreshold[]>([]);
   const { isFavorite, toggleFavorite } = useFavorites();
   const { user } = useAuth();
 
@@ -83,13 +84,15 @@ export default function RestaurantDetail() {
     if (!id) return;
     (async () => {
       const { data: rest } = await supabase.from('restaurants').select('*').eq('id', id).single();
-      const [cuis, links] = await Promise.all([
+      const [cuis, links, th] = await Promise.all([
         fetchAll<Cuisine>('cuisines', '*', 'id'),
         fetchAll<{ restaurant_id: number; cuisine_id: number }>('restaurant_cuisines', 'restaurant_id,cuisine_id', 'restaurant_id'),
+        fetchThresholds(),
       ]);
       setRestaurant(rest);
       setCuisines(cuis);
       setRc(links);
+      setThresholds(th);
       setLoading(false);
     })();
   }, [id]);
@@ -254,9 +257,15 @@ export default function RestaurantDetail() {
           <h1 className="serif text-4xl md:text-5xl font-medium leading-tight mb-3">{r.name}</h1>
           {r.name_en && <p className="text-mocha-faint italic text-sm">{r.name_en}</p>}
           <div className="flex items-center gap-4 md:gap-6 mt-6 flex-wrap">
-            <span title="绝对价位档" className={`tag ${tierClass(r.tier)}`}>{r.tier || '—'}</span>
-            {r.price_position && (
-              <span title="品类内相对档" className="text-xs text-mocha-soft">本品类档 · <span className="font-medium text-mocha">{r.price_position}</span></span>
+            {(() => {
+              const t = thresholdFor(thresholds, r.price_scene, r.price_band);
+              return t ? (
+                <span title={`${r.price_scene} · 价格带 ${r.price_band}/5（客观区间，不代表品质）`}
+                  className={`tag ${bandClass(r.price_band)}`}>{bandLabel(t)}</span>
+              ) : <span className="tag tag-mid">—</span>;
+            })()}
+            {r.price_scene && (
+              <span title="价格场景" className="text-xs text-mocha-soft">{r.price_scene} · 价格带 <span className="font-medium text-mocha">{r.price_band}/5</span></span>
             )}
             <div className="serif text-xl font-medium">
               {r.price_avg ? `¥${r.price_avg}` : '—'}<span className="text-sm text-mocha-faint"> / 人</span>

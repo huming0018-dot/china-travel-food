@@ -39,7 +39,37 @@ export interface Restaurant {
   central_kitchen?: boolean; // 中央厨房
   premade_risk?: string;     // 预制菜风险
   is_chain_standardized?: boolean | null; // 标准化连锁派生列（008），前端隐藏/角标依据
-  price_position?: string;   // 品类内相对档：入门/主流/进阶/高端/旗舰
+  price_position?: string;   // 品类内相对档（已停用，前端不再展示）
+  price_scene?: string;      // 价格场景：正餐/快餐小吃/咖啡茶饮/面包/甜品/酒吧
+  price_band?: number | null;// 场景内价格带 1-5（客观，按固定阈值由人均算出）
+}
+
+export interface PriceThreshold {
+  scene: string;
+  band: number;
+  lo: number | null;
+  hi: number | null;
+}
+
+/** 价格带 → 客观区间文本（零模糊）。 */
+export function bandLabel(t: PriceThreshold): string {
+  if (t.lo == null) return `¥<${t.hi}`;
+  if (t.hi == null) return `¥${t.lo}+`;
+  return `¥${t.lo}–${t.hi}`;
+}
+
+let _thCache: PriceThreshold[] | null = null;
+export async function fetchThresholds(): Promise<PriceThreshold[]> {
+  if (_thCache) return _thCache;
+  const { data, error } = await supabase
+    .from('price_band_thresholds').select('scene,band,lo,hi').order('band');
+  if (error) throw error;
+  _thCache = (data as PriceThreshold[]) || [];
+  return _thCache;
+}
+
+export function thresholdFor(thresholds: PriceThreshold[], scene?: string, band?: number | null): PriceThreshold | undefined {
+  return thresholds.find((t) => t.scene === scene && t.band === band);
 }
 
 export interface Cuisine {
