@@ -11,6 +11,15 @@ node_modules/
 /.next/
 /out/
 
+# next-pwa 生成的 service worker（每次构建重新生成，禁止入库；曾因残留旧 workbox 致 build 失败）
+app/public/sw.js
+app/public/workbox-*.js
+app/public/swe-worker-*.js
+app/public/fallback-*.js
+
+# stage5 在仓库根生成的临时报告
+/recalc_report.json
+
 # production
 /build
 
