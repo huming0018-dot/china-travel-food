@@ -16,14 +16,39 @@ const TIERS = [
 
 // 一级根：地图认知顺序（中餐独立；其余按大陆→国家；非正餐为场景；融合菜单列）
 const ROOTS = ['中餐', '亚洲', '欧洲', '非洲', '北美洲', '南美洲', '融合菜', '非正餐'];
-// 正餐根（用于判断"挂了食材的是正餐大餐厅还是食材专门店"）
-const DINER_ROOTS = ROOTS.filter((r) => r !== '非正餐');
 const PAGE = 120;
 
 // 卡片档标签：品类内相对档（咖啡/面包/小吃不套用正餐绝对档）
 const positionClass = (p?: string) =>
   ({ 入门: 'tag-budget', 主流: 'tag-value', 进阶: 'tag-mid', 高端: 'tag-fine', 旗舰: 'tag-luxury' } as Record<string, string>)[p || ''] ||
   'tag-budget';
+
+// 食材「主营专门店」判定：食材名 -> 匹配"主营该食材的菜系叶子名"的正则。
+// 选食材后，命中且菜系主营匹配 = 主营(main)；命中食材但菜系主营是别的 = 菜单含有(secondary 折叠)。
+// 关键：分区依据是"该食材是否为店的主营品类"，不是"正餐 vs 非正餐"（否则面馆被折叠、咖啡店反进主营）。
+// 陷阱：面 ≠ 面包（用 面(?!包)）；新增食材需在此补主营词。详见 skill cuisine-classification-engine。
+const INGREDIENT_SPECIALTY: Record<string, RegExp> = {
+  '面': /面(?!包)|拉面|荞麦|乌冬|河粉|米粉|粿条|叻沙|意面|pho|ramen|soba|udon|pasta|noodle/i,
+  '饺子/馄饨': /饺子|水饺|煎饺|锅贴|馄饨|烧麦|烧卖|dumpling|gyoza|wonton/i,
+  '包子/馒头': /包子|馒头|生煎|小笼|灌汤包|肉包|菜包|花卷|蒸包|baozi|xiaolongbao/i,
+  '饼': /饼|披萨|比萨|pizza|抓饼|葱油饼|可丽饼|crepe|naan|馕|飞饼|flatbread/i,
+  '饭': /饭|丼|烩饭|抓饭|焗饭|炒饭|risotto|donburi|nasi|biryani/i,
+  '粥/泡饭': /粥|泡饭|congee|porridge/i,
+  '汤/煲': /汤|煲|soup|broth|potage/i,
+  '火锅/锅物': /火锅|锅物|打边炉|寿喜烧|hot\s?pot|shabu|sukiyaki/i,
+  '烧烤/烤串': /烧烤|烤串|烧鸟|烧肉|烤肉|串烧|bbq|grill|yakitori|yakiniku|kebab|churrasco|巴西烤/i,
+  '海鲜': /海鲜|鱼生|刺身|生蚝|龙虾|蟹|鱼鲜|寿司|seafood|sashimi|oyster|lobster|sushi|nigiri/i,
+  '肉禽': /牛排|猪排|炸鸡|烤鸭|烧鹅|白切鸡|盐焗鸡|烧鸟|烧肉|烤肉|火腿|羊肉|牛肉|steak|chop|rotisserie|charcuterie|churrasco|佛罗伦萨/i,
+  '蔬菜/素食': /素食|素菜|沙拉|轻食|植物肉|vegan|vegetarian|salad/i,
+  '甜品/点心': /甜品|甜点|甜汤|糖水|蛋糕|冰淇淋|布丁|提拉米苏|马卡龙|和果子|刨冰|芭菲|松饼|dessert|gelato|ice\s?cream|parfait|sorbet|pastry/i,
+  '面包/烘焙': /面包|烘焙|可颂|贝果|酸种|法棍|吐司|bakery|bread|croissant|bagel|sourdough/i,
+  '饮品': /咖啡|奶茶|茶饮|茶馆|特调|手冲|酒吧|鸡尾酒|威士忌|精酿|葡萄酒|清酒|果汁|coffee|tea|bar|cocktail|whisk|wine|sake|juice|brew/i,
+  '小吃/街头': /小吃|街头|臭豆腐|烤冷面|章鱼小丸子|鸡蛋仔|盐酥鸡|炸串|关东煮|串串香|麻辣烫|street|snack/i,
+  '河鲜': /河鲜|河鱼|江湖鱼/i,
+  '菌菇/山珍': /菌菇|山珍|野菌/i,
+  '豆制品/豆花': /豆制品|豆花|豆腐|tofu/i,
+  '烧腊/卤味': /烧腊|卤味|烧鹅|叉烧|卤水|char\s?siu|roast/i,
+};
 
 // 分页拉全（关联表已超 1000 行，必须分页，否则筛选漏店）
 async function fetchAll<T = any>(table: string, select: string, orderCol: string): Promise<T[]> {
@@ -148,16 +173,7 @@ export default function RestaurantsPage() {
     return ids;
   }, [cuisines]);
 
-  // 归属于"正餐根"的全部菜系标签 id（用于区分食材专门店 vs 菜单含食材的正餐大店）
-  const dinerCuisineIds = useMemo(() => {
-    const s = new Set<number>();
-    DINER_ROOTS.forEach((rname) => collectFlavorIds(rname).forEach((id) => s.add(id)));
-    return s;
-  }, [collectFlavorIds]);
-  const isDinerRestaurant = useCallback(
-    (r: Restaurant) => (rTagIds[r.id] ? Array.from(rTagIds[r.id]).some((id) => dinerCuisineIds.has(id)) : false),
-    [rTagIds, dinerCuisineIds]
-  );
+  // 食材主营判定见模块级 INGREDIENT_SPECIALTY：分区依据是"该食材是否为店的主营菜系"。
 
   // 选中二级菜系：同步根 Tab + 地址栏；再点同一二级（且无三级）则取消
   const selectFlavor = useCallback((name: string) => {
@@ -304,18 +320,27 @@ export default function RestaurantsPage() {
       if (dim === '食材') { ingredientGroup = group; return; }
       result = result.filter((r) => rTagIds[r.id] && Array.from(group).some((id) => rTagIds[r.id].has(id)));
     });
-    // 食材：主营专门店优先；菜单含该食材的正餐大店折叠
+    // 食材：主营该食材的专门店进 main；菜单含此食材但主营是别的菜系 -> secondary 折叠
     let secondary: Restaurant[] = [];
     if (ingredientGroup) {
-      const g = ingredientGroup;
-      result = result.filter((r) => rTagIds[r.id] && (Array.from(g) as number[]).some((id) => rTagIds[r.id].has(id)));
-      secondary = result.filter((r) => isDinerRestaurant(r));
-      result = result.filter((r) => !isDinerRestaurant(r));
+      const g = Array.from(ingredientGroup) as number[];
+      result = result.filter((r) => rTagIds[r.id] && g.some((id) => rTagIds[r.id].has(id)));
+      // 主营：命中的食材中，有任一食材的"主营菜系正则"命中该店菜系名
+      const isMain = (r: Restaurant) => {
+        const names = rCuisineNames[r.id] || [];
+        return g.some((id) => {
+          const ingName = cuisines.find((c) => c.id === id)?.name || '';
+          const re = INGREDIENT_SPECIALTY[ingName];
+          return !!re && names.some((n) => re.test(n));
+        });
+      };
+      secondary = result.filter((r) => !isMain(r));
+      result = result.filter((r) => isMain(r));
     }
     doSort(result); doSort(secondary);
     return { main: result, secondary };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [restaurants, search, hideChain, flavor, subFlavor, tiers, district, location, tagGroups, sortBy, rTagIds, collectFlavorIds, isDinerRestaurant]);
+  }, [restaurants, search, hideChain, flavor, subFlavor, tiers, district, location, tagGroups, sortBy, rTagIds, rCuisineNames, cuisines, collectFlavorIds]);
 
   const filtered = view.main;
   const secondaryList = view.secondary;
