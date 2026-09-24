@@ -1,0 +1,603 @@
+{
+  "date": "2026-09-24",
+  "calls": {
+    "suggestion": 57,
+    "geocoder": 1,
+    "amap": 0,
+    "place_search_blocked": 0
+  },
+  "errors": [],
+  "cells": {
+    "omakase 寿司|Omakase板前": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P0",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "Omakase板前"
+      ]
+    },
+    "板前 omakase|Omakase板前": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 2,
+      "new_candidates": 2,
+      "excluded_db": 0,
+      "prio": "P0",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "Omakase板前"
+      ]
+    },
+    "寿司 割烹|寿司": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 3,
+      "new_candidates": 3,
+      "excluded_db": 0,
+      "prio": "P0",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "寿司"
+      ]
+    },
+    "烧鸟 提灯|烧鸟": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 1,
+      "new_candidates": 1,
+      "excluded_db": 0,
+      "prio": "P0",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "烧鸟"
+      ]
+    },
+    "和牛 烧肉|烧肉": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 9,
+      "new_candidates": 9,
+      "excluded_db": 0,
+      "prio": "P0",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "烧肉"
+      ]
+    },
+    "日式拉面 沾面|拉面": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 0,
+      "new_candidates": 0,
+      "excluded_db": 0,
+      "prio": "P0",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "拉面"
+      ]
+    },
+    "天妇罗 专门店|天妇罗": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 7,
+      "new_candidates": 6,
+      "excluded_db": 1,
+      "prio": "P0",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "天妇罗"
+      ]
+    },
+    "居酒屋 烧鸟|居酒屋": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "居酒屋"
+      ]
+    },
+    "日式咖喱 猪排|日式咖喱": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "日式咖喱"
+      ]
+    },
+    "讚岐 乌冬|乌冬": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 0,
+      "new_candidates": 0,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "乌冬"
+      ]
+    },
+    "荞麦面 涮涮锅|荞麦": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P2",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "荞麦"
+      ]
+    },
+    "怀石 会席|怀石": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "怀石"
+      ]
+    },
+    "牛排馆 和牛|牛排馆": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P0",
+      "cuisine_path": [
+        "西餐",
+        "牛排馆"
+      ]
+    },
+    "意大利菜 手工意面|意餐": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 2,
+      "new_candidates": 2,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "西餐",
+        "意餐"
+      ]
+    },
+    "法国菜 bistro|法餐": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 6,
+      "new_candidates": 6,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "西餐",
+        "法餐"
+      ]
+    },
+    "西班牙菜 海鲜饭|西班牙餐": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 2,
+      "new_candidates": 2,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "西餐",
+        "西班牙餐"
+      ]
+    },
+    "德国菜 猪肘|德国菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P2",
+      "cuisine_path": [
+        "西餐",
+        "德国菜"
+      ]
+    },
+    "俄餐 红菜汤|俄餐": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 0,
+      "new_candidates": 0,
+      "excluded_db": 0,
+      "prio": "P2",
+      "cuisine_path": [
+        "西餐",
+        "俄餐"
+      ]
+    },
+    "川菜 苍蝇馆子|川菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "中餐",
+        "川菜"
+      ]
+    },
+    "粤菜 烧腊 烧味|粤菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 0,
+      "new_candidates": 0,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "中餐",
+        "粤菜"
+      ]
+    },
+    "本帮菜 老上海|本帮菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 10,
+      "new_candidates": 10,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "中餐",
+        "本帮菜"
+      ]
+    },
+    "淮扬菜 狮子头|江浙菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P2",
+      "cuisine_path": [
+        "中餐",
+        "江浙菜"
+      ]
+    },
+    "鲁菜 九转大肠|鲁菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 4,
+      "new_candidates": 2,
+      "excluded_db": 2,
+      "prio": "P2",
+      "cuisine_path": [
+        "中餐",
+        "鲁菜"
+      ]
+    },
+    "闽菜 佛跳墙|闽菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 7,
+      "excluded_db": 1,
+      "prio": "P2",
+      "cuisine_path": [
+        "中餐",
+        "闽菜"
+      ]
+    },
+    "湘菜 剁椒鱼头|湘菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "中餐",
+        "湘菜"
+      ]
+    },
+    "徽菜 臭鳜鱼|徽菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 5,
+      "new_candidates": 5,
+      "excluded_db": 0,
+      "prio": "P2",
+      "cuisine_path": [
+        "中餐",
+        "徽菜"
+      ]
+    },
+    "东北菜 铁锅炖|东北菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 11,
+      "new_candidates": 11,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "中餐",
+        "东北菜"
+      ]
+    },
+    "西北菜 手抓羊肉|西北菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "中餐",
+        "西北菜"
+      ]
+    },
+    "云南菜 菌子 汽锅鸡|云南菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "中餐",
+        "云南菜"
+      ]
+    },
+    "贵州菜 酸汤鱼|贵州菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 4,
+      "new_candidates": 4,
+      "excluded_db": 0,
+      "prio": "P2",
+      "cuisine_path": [
+        "中餐",
+        "贵州菜"
+      ]
+    },
+    "台湾菜 牛肉面|台湾菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 5,
+      "new_candidates": 4,
+      "excluded_db": 1,
+      "prio": "P0",
+      "cuisine_path": [
+        "中餐",
+        "台湾菜"
+      ]
+    },
+    "潮汕菜 打冷 牛肉火锅|潮汕菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 1,
+      "new_candidates": 1,
+      "excluded_db": 0,
+      "prio": "P0",
+      "cuisine_path": [
+        "中餐",
+        "潮汕菜"
+      ]
+    },
+    "顺德菜 鱼生|顺德菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 6,
+      "new_candidates": 6,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "中餐",
+        "顺德菜"
+      ]
+    },
+    "港式茶餐厅 菠萝油|港式茶餐厅": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 6,
+      "excluded_db": 2,
+      "prio": "P1",
+      "cuisine_path": [
+        "中餐",
+        "港式茶餐厅"
+      ]
+    },
+    "泰餐 冬阴功 冬阴功汤|泰餐": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "亚洲菜",
+        "泰餐"
+      ]
+    },
+    "越南菜 河粉 法包|越南菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P2",
+      "cuisine_path": [
+        "亚洲菜",
+        "越南菜"
+      ]
+    },
+    "韩餐 烤肉 部队锅|韩餐": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 1,
+      "new_candidates": 1,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "亚洲菜",
+        "韩餐"
+      ]
+    },
+    "印度菜 咖喱 馕|印度菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 7,
+      "excluded_db": 1,
+      "prio": "P2",
+      "cuisine_path": [
+        "亚洲菜",
+        "印度菜"
+      ]
+    },
+    "海南鸡饭 新加坡|新加坡菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 6,
+      "excluded_db": 2,
+      "prio": "P2",
+      "cuisine_path": [
+        "亚洲菜",
+        "新加坡菜"
+      ]
+    },
+    "肉骨茶 马来西亚|马来西亚菜": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P2",
+      "cuisine_path": [
+        "亚洲菜",
+        "马来西亚菜"
+      ]
+    },
+    "精品咖啡 手冲|精品咖啡": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 4,
+      "new_candidates": 4,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "场景",
+        "精品咖啡"
+      ]
+    },
+    "甜品 烘焙 巴斯克|甜品烘焙": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 0,
+      "new_candidates": 0,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "场景",
+        "甜品烘焙"
+      ]
+    },
+    "brunch 早午餐|Brunch": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 7,
+      "excluded_db": 1,
+      "prio": "P1",
+      "cuisine_path": [
+        "场景",
+        "Brunch"
+      ]
+    },
+    "bistro 餐酒馆|Bistro餐酒": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P0",
+      "cuisine_path": [
+        "场景",
+        "Bistro餐酒"
+      ]
+    },
+    "私宴 家厨 预约制|私宴会所": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 8,
+      "new_candidates": 8,
+      "excluded_db": 0,
+      "prio": "P1",
+      "cuisine_path": [
+        "场景",
+        "私宴会所"
+      ]
+    },
+    "Nagi 凪 拉面|拉面": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 0,
+      "new_candidates": 0,
+      "excluded_db": 0,
+      "prio": "REGRESSION",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "拉面"
+      ]
+    },
+    "鮨 天照|Omakase板前": {
+      "platform": "tencent_suggestion",
+      "call": 1,
+      "returned": 1,
+      "new_candidates": 1,
+      "excluded_db": 0,
+      "prio": "REGRESSION",
+      "cuisine_path": [
+        "亚洲菜",
+        "日料",
+        "Omakase板前"
+      ]
+    }
+  },
+  "quota_status": {},
+  "quota_notes": {
+    "place_search": "status=121 今日配额耗尽，全程未调用（遵守禁令）",
+    "suggestion": "配额独立，57次全部 status=0，未触限",
+    "geocoder": "配额独立，1次成功",
+    "amap": "app/.env.local 未配置 AMAP_KEY，按规则不硬编码、未调用"
+  },
+  "grid_coverage": {
+    "keywords_scanned": 47,
+    "keywords_total_target": 47,
+    "districts_covered": "16区中通过地址落桶覆盖到14区（黄浦/徐汇/长宁/静安/普陀/虹口/杨浦/闵行/宝山/嘉定/松江/青浦/奉贤/金山/崇明；浦东仅经补充词捞到4家江景店）",
+    "cells_unscanned_reason": "未做菜系叶子×区的逐格矩阵（suggestion 为城市级召回，非分页枚举）；闵行/外围区因 suggestion 排序偏市中心，召回偏少"
+  }
+}

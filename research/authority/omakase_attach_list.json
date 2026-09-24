@@ -1,0 +1,384 @@
+{
+  "generated_at": "2026-09-24",
+  "task": "Omakase(cid=325)挂载识别 + 日料叶子覆盖复核",
+  "scope": "仅产出清单，禁止写库",
+
+  "omakase_candidates": [
+    {
+      "rid": 1,
+      "name": "晴川sushi（午市）",
+      "district": "静安区",
+      "current_cuisines": [86, 64, 74, 162, 72, 163, 71, 85],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=86(寿司)",
+      "evidence_url": "https://m.ctrip.com/webapp/you/community/detail?articleId=175766018",
+      "evidence_summary": "携程笔记标题'惊艳！我用尽一生寻觅的Omakase就在晴川'；板前8-10席位；主厨姚师傅；晚餐由店主手写每日微调；¥980 omakase；'板前Omakase'多源确认",
+      "confidence": "high",
+      "note": "回归集assertion：晴川寿司 hit=false（在库但sourcing未自动发现）"
+    },
+    {
+      "rid": 2,
+      "name": "鮨水月（午市）",
+      "district": "浦东新区",
+      "current_cuisines": [86, 64, 63, 74, 72, 162, 163, 85, 71],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=86(寿司)",
+      "evidence_url": "https://www.iesdouyin.com/share/video/7609923490787459557",
+      "evidence_summary": "抖音'上海寿司四小龙｜鮨水月｜千元档老牌寿司omakase'；午市680/晚市1280；板前；主厨肖师傅；6道酒肴+12贯寿司套餐",
+      "confidence": "high"
+    },
+    {
+      "rid": 3,
+      "name": "岩田割烹鮨",
+      "district": "闵行区",
+      "current_cuisines": [86, 64, 72, 162, 163, 71, 85],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=86(寿司)",
+      "evidence_url": "https://www.iesdouyin.com/share/video/7484495730787339529",
+      "evidence_summary": "抖音'上海千元档寿司Omakase｜性价比之王—岩田割烹鮨'；980元/位；10道酒肴+9贯寿司；熟客制omakase；虹梅路3213号",
+      "confidence": "high"
+    },
+    {
+      "rid": 4,
+      "name": "御千代（王雷师傅）",
+      "district": "长宁区",
+      "current_cuisines": [85, 72, 162, 163, 86, 94, 71],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=86(寿司)+cid=94(铁板烧)",
+      "evidence_url": "https://rachelgouk.com/listings/ochiyo/",
+      "evidence_summary": "Nomfluence: 'Ochiyo is a top-tier Japanese omakase restaurant led by chef Sun-San. Every omakase meal is different'；dinner ¥1280, lunch ¥680；怀石式多道+寿司+铁板烧",
+      "confidence": "high"
+    },
+    {
+      "rid": 5,
+      "name": "Sushi Oyama 鮨大山",
+      "district": "黄浦区",
+      "current_cuisines": [86, 64, 71, 162, 163, 85],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=86(寿司)",
+      "evidence_url": "https://m.ctrip.com/webapp/you/community/detail?articleId=175766018",
+      "evidence_summary": "DB招牌菜明确写'每月更新Omakase套餐'；¥900/位；奢华档；大腹toro/应季刺身",
+      "confidence": "high",
+      "note": "DB内signature_dishes已含'Omakase套餐'字样，证据确凿"
+    },
+    {
+      "rid": 6,
+      "name": "吉兆 KITCHO",
+      "district": "静安区",
+      "current_cuisines": [85, 71, 162, 163, 97, 86],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=97(怀石)+cid=86(寿司)",
+      "evidence_url": "https://c.m.163.com/news/a/K1PU8BU505228HQE.html",
+      "evidence_summary": "网易新闻：'融合割烹精神与创新的Omakase体验'；台北米其林一星8年；主厨杰哥全球首位割烹摘星华人；¥2460/位；南京西路1333号",
+      "confidence": "high",
+      "note": "回归集assertion：吉兆寿司 hit=false（在库但sourcing未自动发现）"
+    },
+    {
+      "rid": 9,
+      "name": "宫鸠（华山路）",
+      "district": "长宁区",
+      "current_cuisines": [85, 71, 162, 163, 87, 86],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=87(烧鸟)+cid=86(寿司)",
+      "evidence_url": "https://washoku-guide.com/cities/shanghai/yakitori",
+      "evidence_summary": "Washoku Guide: 'Miyahato宮鳩 · Yakitori · omakase · 25 courses counter experience'；主厨宫田诚一郎（大阪米其林一星市松出身）；¥1100/位（点评人均1792）；板前烧鸟+寿司两区",
+      "confidence": "high",
+      "note": "回归集assertion：宫鸠烧鸟 hit=false（在库但sourcing未自动发现）"
+    },
+    {
+      "rid": 10,
+      "name": "小景门（仇师傅）",
+      "district": "静安区",
+      "current_cuisines": [85, 63, 71, 162, 163, 87],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=87(烧鸟)",
+      "evidence_url": "https://www.iesdouyin.com/share/video/7681577791171668593",
+      "evidence_summary": "抖音'上海700一位的板前烧鸟'；仇师傅'全上海最会做鸡的男人'；每天菜单根据到店食材微调；板前omakase",
+      "confidence": "high"
+    },
+    {
+      "rid": 31,
+      "name": "炎珀EMBER",
+      "district": "静安区",
+      "current_cuisines": [85, 62, 71, 162, 163, 93, 88],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=88(烧肉)",
+      "evidence_url": "https://rachelgouk.com/3-new-restaurants-pici-soi-thai-ember/",
+      "evidence_summary": "Nomfluence: 'Ember – Beef Omakase'；抖音'高级肉料理omakase'；'和牛烧肉omakase 13道料理'；10个吧台位；静安嘉里中心",
+      "confidence": "high"
+    },
+    {
+      "rid": 37,
+      "name": "天嘉(天妇罗专门店)",
+      "district": "闵行区",
+      "current_cuisines": [85, 64, 72, 162, 163, 91, 71],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=91(天妇罗)",
+      "evidence_url": "https://m.ctrip.com/webapp/you/community/detail?articleId=309930286",
+      "evidence_summary": "携程'吃到了喜欢的天妇罗Omakase'；板前位全程和主厨互动；虹梅路3194-3号；天妇罗+酒肴+寿司omakase",
+      "confidence": "high"
+    },
+    {
+      "rid": 38,
+      "name": "天吉·天遊峰",
+      "district": "长宁区",
+      "current_cuisines": [85, 64, 71, 162, 163, 91],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=91(天妇罗)",
+      "evidence_url": "http://m.toutiao.com/group/6857449641621848587/",
+      "evidence_summary": "今日头条'王校长想吃也要提前一个月预定，这家沪上第一天妇罗'；'日式omakase都是由厨师设定菜单'；¥2180/位；武夷路320弄",
+      "confidence": "high"
+    },
+    {
+      "rid": 1322,
+      "name": "鸟山鸣·薪火烧鸟",
+      "district": "静安区",
+      "current_cuisines": [87, 85, 71, 65, 165, 163, 164, 51, 162, 64],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=87(烧鸟)",
+      "evidence_url": "https://www.sina.cn/news/article/comos_niqntuk2417468.html",
+      "evidence_summary": "新浪'上海最难约的烧鸟omakase'；唯一套餐熟成绍兴阉鸡¥980/位；板前6-10位；微信小程序每月26日放号；余姚路55号",
+      "confidence": "high"
+    },
+    {
+      "rid": 1317,
+      "name": "小钵 Kobachi on Fifty Six(金茂56楼)",
+      "district": "浦东新区",
+      "current_cuisines": [71, 64, 165, 163, 97, 85, 65, 162, 86, 51],
+      "suggested_action": "add_cid_325",
+      "suggested_additional": "保留cid=97(怀石)+cid=86(寿司)",
+      "evidence_url": "https://washoku-guide.com/cities/shanghai/r/kobachi-on-fifty-six",
+      "evidence_summary": "Washoku Guide: 'Kaiseki · counter'；金茂君悦56楼开放式厨房；DB招牌菜'板前割烹会席'；¥800/位；酒店板前会席，非纯omakase但有板前counter+set course形式",
+      "confidence": "medium",
+      "note": "酒店餐厅性质，板前counter+会席套餐，非主厨发办无菜单型omakase；是否挂cid=325由主代理定夺"
+    },
+    {
+      "rid": 53,
+      "name": "烧肉·至心",
+      "district": "徐汇区",
+      "current_cuisines": [88, 63, 65, 71, 162, 163, 73],
+      "suggested_action": "review_add_cid_325",
+      "suggested_additional": "保留cid=88(烧肉)",
+      "evidence_url": "https://m.ctrip.com/webapp/you/community/detail?articleId=334953739",
+      "evidence_summary": "携程'套餐制，丰俭由人'；黑珍珠一星烧肉；¥500/位；嘉华坊4F；有套餐制但非板前omakase，仍以点单烧肉为主",
+      "confidence": "low",
+      "note": "黑珍珠烧肉但非板前omakase，套餐制≠厨师发办；建议不挂cid=325，除非有板前omakase套餐证据"
+    }
+  ],
+
+  "omakase_excluded": [
+    {"rid": 41, "name": "山茶花铁板烧", "reason": "花园饭店酒店铁板烧，固定套餐+点菜制，非板前omakase"},
+    {"rid": 50, "name": "三川烧肉Mikawa", "reason": "京都风格烧肉，点菜制和牛，非omakase"},
+    {"rid": 52, "name": "铁屋（古北）", "reason": "高端日式烧肉但点菜制，非omakase"},
+    {"rid": 1316, "name": "空蝉怀石料理", "reason": "怀石(97)正式多道会席，与Omakase板前并列不同业态，不挂325"},
+    {"rid": 13, "name": "龍響炉端烧", "reason": "炉端烧(95)，高价但非厨师发办omakase"},
+    {"rid": 48, "name": "大志/king大志", "reason": "中档烧肉¥185，非omakase"},
+    {"rid": 1752, "name": "有喜屋·鲜鸡板前烧鸟(各分店)", "reason": "连锁居酒屋¥120，'板前烧鸟'指吧台座位非omakase发办"}
+  ],
+
+  "coverage_review": {
+    "by_leaf": {
+      "寿司": {
+        "cid": 86,
+        "count": 11,
+        "restaurants": ["晴川sushi(rid=1)", "鮨水月(rid=2)", "岩田割烹鮨(rid=3)", "御千代(rid=4)", "鮨大山(rid=5)", "吉兆(rid=6)", "宫鸠(rid=9)", "竿屋(rid=25)", "咕咕(rid=26)", "Yugo(rid=1295)", "小钵Kobachi(rid=1317)"],
+        "missing": [
+          {"name": "鮨·天照(Sushi Teru)", "district": "静安区威海路500号", "source": "P3已发现/用户点名", "source_url": null, "need_deep_collect": true, "note": "寿司/omakase专门店，尚未写库"},
+          {"name": "鮨直辉 sushinaoki", "district": "闵行区虹梅路", "source": "携程'沪上新晋高级无菜单日本料理Omakase'", "source_url": "https://you.ctrip.com/food/shanghai2/11510561-dianping.html", "need_deep_collect": true},
+          {"name": "uni shushi雲丹鮨", "district": "长宁区", "source": "抖音'师承御千代孙师傅，板前omakase'", "source_url": "https://www.iesdouyin.com/share/video/7561280674871758090", "need_deep_collect": true},
+          {"name": "割烹·熊海月", "district": "闵行区古北", "source": "抖音'古北omakase堆料王880/位'", "source_url": "https://www.iesdouyin.com/share/video/7675953298595256229", "need_deep_collect": true}
+        ]
+      },
+      "Omakase板前": {
+        "cid": 325,
+        "count": 0,
+        "restaurants": [],
+        "missing": [
+          {"name": "nagi 凪", "district": "浦东新区滨江", "source": "P3已发现/用户点名", "source_url": "https://www.iesdouyin.com/share/video/7642421810725803099", "need_deep_collect": true, "note": "板前omakase，烧鸟+炭烤，'等了半年吃上上海最难约男人做的晚饭'"},
+          {"name": "鮨·天照", "district": "静安区", "source": "P3已发现/用户点名", "source_url": null, "need_deep_collect": true, "note": "寿司/omakase专门店"},
+          {"name": "勘六", "district": "黄浦区外滩22号", "source": "抖音'外滩22号Omakase板前烧肉498/698'", "source_url": "https://www.iesdouyin.com/share/video/7635275684999033563", "need_deep_collect": true},
+          {"name": "万牛和牛烧肉(古北SOHO)", "district": "闵行区古北", "source": "携程'澳洲和牛板前料理Omakase'", "source_url": "https://m.ctrip.com/webapp/you/community/detail?articleId=156417423", "need_deep_collect": true}
+        ],
+        "note": "当前0家挂cid=325！本次omakase_candidates中12家high confidence店应全部挂载"
+      },
+      "烧鸟": {
+        "cid": 87,
+        "count": 6,
+        "restaurants": ["披头士(rid=7)", "酉町(rid=8)", "宫鸠(rid=9)", "小景门(rid=10)", "鸟山鸣(rid=1322)", "银蔵(rid=1323)"],
+        "missing": [
+          {"name": "nagi 凪", "district": "浦东新区", "source": "P3/抖音omakase烧鸟", "source_url": "https://www.iesdouyin.com/share/video/7642421810725803099", "need_deep_collect": true, "note": "板前烧鸟omakase，同时归325"},
+          {"name": "山头火", "district": "浦东新区", "source": "抖音'浦东人的福音580/位，6个位'", "source_url": "https://www.iesdouyin.com/share/video/7645262622455116453", "need_deep_collect": true}
+        ],
+        "note": "回归集宫鸠已在库(rid=9)，hit=false指sourcing未自动发现"
+      },
+      "烧肉": {
+        "cid": 88,
+        "count": 7,
+        "restaurants": ["炎珀EMBER(rid=31)", "大志(rid=48)", "虎丸(rid=49)", "三川(rid=50)", "AJIYA(rid=51)", "铁屋(rid=52)", "至心(rid=53)"],
+        "missing": [
+          {"name": "肉屋kita", "district": "上海", "source": "抖音'上海顶流烧肉'与宫鸠同场", "source_url": "https://www.iesdouyin.com/share/video/7626471469408769882", "need_deep_collect": true}
+        ],
+        "note": "回归集大志已在库(rid=48)，hit=false指sourcing未自动发现"
+      },
+      "拉面": {
+        "cid": 89,
+        "count": 7,
+        "restaurants": ["环七土佐子(rid=18)", "一风堂(rid=19)", "满吉(rid=20)", "麺屋庄野(rid=1318)", "七豚(rid=1319)", "麺処益二郎(rid=1320)", "鲤久(rid=1321)"],
+        "missing": [
+          {"name": "nagi すごい煮干ラーメン凪", "district": "上海", "source": "回归集/用户点名", "source_url": null, "need_deep_collect": true, "note": "注意：P3确认上海nagi凪实际为板前omakase店而非拉面连锁店"},
+          {"name": "麺工房·牛醍", "district": "上海", "source": "抖音横评'咖喱番茄和牛拉面'", "source_url": "https://www.iesdouyin.com/share/video/7636133901924109620", "need_deep_collect": true},
+          {"name": "麺匠·吟海", "district": "上海", "source": "抖音横评'煮干梭子蟹拉面'", "source_url": "https://www.iesdouyin.com/share/video/7636133901924109620", "need_deep_collect": true}
+        ]
+      },
+      "咖喱": {
+        "cid": 90,
+        "count": 3,
+        "restaurants": ["金宗咖喱(rid=14)", "伽喱博士(rid=15)", "晚餐馆(rid=16)"],
+        "missing": [
+          {"name": "白熊咖喱(高岛屋店)", "district": "长宁区", "source": "携程'高岛屋开了十多年'", "source_url": "https://m.ctrip.com/webapp/you/community/detail?articleId=233579739", "need_deep_collect": false},
+          {"name": "寻福食堂", "district": "徐汇区", "source": "Trip.com'汤咖喱鸡腿'", "source_url": "https://www.trip.com/restaurant/china/shanghai/detail/xunfu-cafeteria-105934516/", "need_deep_collect": false}
+        ]
+      },
+      "天妇罗": {
+        "cid": 91,
+        "count": 4,
+        "restaurants": ["天天天妇罗(rid=36)", "天嘉(rid=37)", "天吉天遊峰(rid=38)", "尚膳天焱(rid=39)"],
+        "missing": [],
+        "note": "天嘉和天吉均应同时挂cid=325"
+      },
+      "寿喜烧": {
+        "cid": 93,
+        "count": 5,
+        "restaurants": ["牛New(rid=28)", "日和(rid=29)", "大牛(rid=30)", "炎珀EMBER(rid=31)", "motoya(rid=32)"],
+        "missing": []
+      },
+      "铁板烧": {
+        "cid": 94,
+        "count": 4,
+        "restaurants": ["御千代(rid=4)", "尚膳天焱(rid=39)", "桃山(rid=40)", "山茶花(rid=41)"],
+        "missing": []
+      },
+      "炉端烧": {
+        "cid": 95,
+        "count": 3,
+        "restaurants": ["海宫(rid=11)", "炉端一番(rid=12)", "龍響(rid=13)"],
+        "missing": [],
+        "note": "覆盖偏少，但上海炉端烧专门店本身不多"
+      },
+      "居酒屋": {
+        "cid": 96,
+        "count": 31,
+        "restaurants": ["披头士(rid=7)", "酉町(rid=8)", "竿屋(rid=25)", "咕咕(rid=26)", "有喜屋系(rid=33,1719,1750-1771)", "黑门乐酒天(rid=34)", "平成屋(rid=35)", "哥哥深夜食堂(rid=1831)"],
+        "missing": [],
+        "note": "有喜屋占约25家连锁，实际独立居酒屋仅约6家"
+      },
+      "怀石": {
+        "cid": 97,
+        "count": 3,
+        "restaurants": ["吉兆(rid=6)", "空蝉(rid=1316)", "小钵Kobachi(rid=1317)"],
+        "missing": [],
+        "note": "怀石与Omakase板前是并列不同业态，不互相替代"
+      },
+      "日式甜品": {
+        "cid": 98,
+        "count": 13,
+        "restaurants": ["辻利(rid=1311)", "Kaki Mania(rid=1312)", "九十葉(rid=1313)", "鲨鱼冰屋(rid=1314)", "Sobre(rid=1315)", "麻布屋(rid=1406)", "柴田西点(rid=1700)", "辛一铜锣烧(rid=1701)", "Flipper's(rid=1745)", "法田鹿(rid=1775)", "Lady M(rid=1776)", "聚福(rid=1777)", "蜂蜜草(rid=1797)"],
+        "missing": []
+      },
+      "日式洋食": {
+        "cid": 235,
+        "count": 6,
+        "restaurants": ["金宗咖喱(rid=14)", "晚餐馆(rid=16)", "一滨炸猪排(rid=45)", "静冈胜政(rid=46)", "KAI FINE(rid=1326)", "Rumor传闻(rid=1327)"],
+        "missing": []
+      },
+      "乌冬": {
+        "cid": 236,
+        "count": 3,
+        "restaurants": ["丸龟制面(rid=42)", "荞麦道(rid=43)", "纹兵卫(rid=44)"],
+        "missing": [
+          {"name": "讃岐田野", "district": "长宁区仙霞路345号", "source": "上观新闻'上海最早赞岐乌冬专门店之一，店主来自香川县'", "source_url": "http://m.toutiao.com/group/7232929924221403648/", "need_deep_collect": true},
+          {"name": "麺屋双", "district": "长宁区仙霞路", "source": "上观新闻'手擀上海乌冬'", "source_url": "http://m.toutiao.com/group/7490771855440216630/", "need_deep_collect": true},
+          {"name": "田口家", "district": "闵行区古北", "source": "抖音'手打乌冬面出名'", "source_url": "https://www.iesdouyin.com/share/video/7532416694963981628", "need_deep_collect": false},
+          {"name": "和屋赞岐乌冬", "district": "静安区/黄浦区", "source": "电话邦'南京西路580号/四川中路410号'", "source_url": "https://www.dianhua.cn/dt/1f3cf009bfde400ba6ad589ca289be52/aa7a04f8c730ea43132515e533c20d5b", "need_deep_collect": false}
+        ],
+        "note": "rid=43荞麦道实际是荞麦专门店，错挂cid=236(乌冬)，应改挂cid=261(荞麦)"
+      },
+      "荞麦": {
+        "cid": 261,
+        "count": 0,
+        "restaurants": [],
+        "missing": [
+          {"name": "荞麦道(そば道)", "district": "长宁区", "source": "已在DB(rid=43)但错挂乌冬cid=236", "source_url": "https://m.ctrip.com/webapp/you/community/detail?articleId=67483949", "need_deep_collect": false, "note": "'被日本人评为上海第一的荞麦面专门店'；应改挂cid=261"},
+          {"name": "万藏", "district": "长宁区", "source": "抖音'开了20年荞麦面店，日本老板'", "source_url": "https://www.iesdouyin.com/share/video/7599978744740187411", "need_deep_collect": true},
+          {"name": "纹兵卫(天山店)", "district": "长宁区", "source": "已在DB(rid=1870)，挂了270/271荞麦子叶但未挂261父类", "source_url": null, "need_deep_collect": false, "note": "应补挂cid=261"}
+        ],
+        "note": "严重缺失！0家直接挂cid=261；rid=43应改标签，rid=1870应补父类"
+      }
+    }
+  },
+
+  "user_named_missing": {
+    "nagi": {
+      "name": "nagi 凪",
+      "status": "confirmed_not_in_db",
+      "scene": "日料·Omakase板前(板前烧鸟/炭烤)",
+      "district": "浦东新区滨江",
+      "note": "注意：回归集原始scene写'拉面(煮干)'，但P3和抖音证据确认上海nagi凪实际为板前omakase店（非煮干拉面连锁店），回归集scene应修正"
+    },
+    "鮨照": {
+      "name": "鮨·天照(Sushi Teru)",
+      "status": "confirmed_not_in_db",
+      "scene": "日料·Omakase板前+寿司",
+      "district": "静安区威海路500号"
+    },
+    "宫鸠": {
+      "name": "宫鸠",
+      "status": "already_in_db(rid=9)",
+      "regression_hit": false,
+      "note": "在库但sourcing机制未自动发现；应同时挂cid=325(见omakase_candidates)"
+    },
+    "大志": {
+      "name": "大志/king大志",
+      "status": "already_in_db(rid=48)",
+      "regression_hit": false,
+      "note": "在库但sourcing机制未自动发现"
+    },
+    "吉兆": {
+      "name": "吉兆 KITCHO",
+      "status": "already_in_db(rid=6)",
+      "regression_hit": false,
+      "note": "在库但sourcing机制未自动发现；应同时挂cid=325(见omakase_candidates)"
+    },
+    "晴川": {
+      "name": "晴川sushi",
+      "status": "already_in_db(rid=1)",
+      "regression_hit": false,
+      "note": "在库但sourcing机制未自动发现；应同时挂cid=325(见omakase_candidates)"
+    }
+  },
+
+  "summary": {
+    "total_jp_restaurants_scanned": 100,
+    "omakase_high_confidence": 12,
+    "omakase_medium_confidence": 1,
+    "omakase_low_confidence": 1,
+    "omakase_excluded": 7,
+    "leaves_with_zero_count": ["Omakase板前(325)", "荞麦(261)"],
+    "leaves_weak": ["咖喱(3家)", "乌冬(3家)", "炉端烧(3家)", "天妇罗(4家)", "寿喜烧(5家)", "日式洋食(6家)", "烧鸟(6家)"],
+    "missing_shops_total": 22,
+    "mis_tag_issues": [
+      "rid=43荞麦道错挂cid=236(乌冬)，应改cid=261(荞麦)",
+      "rid=1870纹兵卫挂了270/271荞麦子叶但缺cid=261父类"
+    ]
+  },
+
+  "priority_recommendations": [
+    "P0: 12家high confidence omakase店立即挂cid=325（晴川/鮨水月/岩田/御千代/鮨大山/吉兆/宫鸠/小景门/炎珀/天嘉/天吉/鸟山鸣）",
+    "P1: nagi凪和鮨·天照深采写库（用户点名+P3已发现）",
+    "P1: 修正rid=43标签（乌冬→荞麦），补rid=1870父类cid=261",
+    "P2: 荞麦叶子补采万藏；乌冬叶子补采讃岐田野/麺屋双",
+    "P2: omakase叶子补采勘六/万牛/鮨直辉/雲丹鮨/熊海月",
+    "P3: medium confidence的小钵Kobachi由主代理定夺是否挂325",
+    "P3: low confidence的烧肉至心不建议挂325（非板前omakase）"
+  ]
+}

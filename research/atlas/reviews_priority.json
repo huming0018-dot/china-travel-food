@@ -1,0 +1,5406 @@
+[
+ {
+  "id": 1602,
+  "name": "王凯阳河南水煎包",
+  "tier": "经济",
+  "price_avg": 8,
+  "leaf": "河南菜",
+  "why": [
+   "leaf-top:河南菜"
+  ]
+ },
+ {
+  "id": 1058,
+  "name": "谢记武汉热干面(七浦路店)",
+  "tier": "经济",
+  "price_avg": 17,
+  "leaf": "武汉过早·热干面小吃",
+  "why": [
+   "leaf-top:武汉过早·热干面小吃"
+  ]
+ },
+ {
+  "id": 1747,
+  "name": "When Pigs Fly当猪飞(愚园路店)",
+  "tier": "经济",
+  "price_avg": 18,
+  "leaf": "酸种面包专门",
+  "why": [
+   "leaf-top:酸种面包专门"
+  ]
+ },
+ {
+  "id": 1455,
+  "name": "九品川味·四川绵阳米粉",
+  "tier": "经济",
+  "price_avg": 18,
+  "leaf": "川北·绵阳菜",
+  "why": [
+   "leaf-top:川北·绵阳菜"
+  ]
+ },
+ {
+  "id": 14,
+  "name": "金宗咖喱",
+  "tier": "经济",
+  "price_avg": 20,
+  "leaf": "咖喱",
+  "why": [
+   "leaf-top:咖喱",
+   "leaf-top:日式洋食"
+  ]
+ },
+ {
+  "id": 1683,
+  "name": "Manner Coffee",
+  "tier": "经济",
+  "price_avg": 20,
+  "leaf": "连锁咖啡",
+  "why": [
+   "leaf-top:连锁咖啡"
+  ]
+ },
+ {
+  "id": 1583,
+  "name": "晓燕生煎(定西路店)",
+  "tier": "经济",
+  "price_avg": 21,
+  "leaf": "上海家常",
+  "why": [
+   "leaf-top:上海家常"
+  ]
+ },
+ {
+  "id": 1778,
+  "name": "贵州冰浆(陕西北路店)",
+  "tier": "经济",
+  "price_avg": 22,
+  "leaf": "刨冰",
+  "why": [
+   "leaf-top:刨冰"
+  ]
+ },
+ {
+  "id": 1701,
+  "name": "辛一铜锣烧(静安大悦城店)",
+  "tier": "经济",
+  "price_avg": 22,
+  "leaf": "铜锣烧/和果子",
+  "why": [
+   "leaf-top:铜锣烧/和果子"
+  ]
+ },
+ {
+  "id": 1651,
+  "name": "方中山胡辣汤(静安康定路店)",
+  "tier": "经济",
+  "price_avg": 23,
+  "leaf": "河南菜",
+  "why": [
+   "leaf-top:河南菜",
+   "leaf-top:豫菜·胡辣汤"
+  ]
+ },
+ {
+  "id": 1659,
+  "name": "桂山禾·桂林卤菜粉",
+  "tier": "经济",
+  "price_avg": 24,
+  "leaf": "桂林米粉",
+  "why": [
+   "leaf-top:桂林米粉"
+  ]
+ },
+ {
+  "id": 957,
+  "name": "宋记淮南牛肉汤(虹梅路店)",
+  "tier": "经济",
+  "price_avg": 25,
+  "leaf": "皖北菜",
+  "why": [
+   "leaf-top:皖北菜"
+  ]
+ },
+ {
+  "id": 761,
+  "name": "锡缘无锡小笼馆(北海宁路店)",
+  "tier": "经济",
+  "price_avg": 25,
+  "leaf": "锡菜",
+  "why": [
+   "leaf-top:锡菜"
+  ]
+ },
+ {
+  "id": 1453,
+  "name": "川味面荘·泸州牛肉面(南翔老街店)",
+  "tier": "经济",
+  "price_avg": 25,
+  "leaf": "川南·泸州菜",
+  "why": [
+   "leaf-top:川南·泸州菜"
+  ]
+ },
+ {
+  "id": 1856,
+  "name": "泽田本家·铜锣烧(美罗城店)",
+  "tier": "经济",
+  "price_avg": 25,
+  "leaf": "铜锣烧/和果子",
+  "why": [
+   "leaf-top:铜锣烧/和果子"
+  ]
+ },
+ {
+  "id": 1703,
+  "name": "双喜老铺(静安寺店)",
+  "tier": "经济",
+  "price_avg": 26,
+  "leaf": "糖水/甜汤",
+  "why": [
+   "leaf-top:糖水/甜汤"
+  ]
+ },
+ {
+  "id": 1650,
+  "name": "张黄锦记螺蛳粉桂林米粉(阳光天地店)",
+  "tier": "经济",
+  "price_avg": 27,
+  "leaf": "桂林米粉",
+  "why": [
+   "leaf-top:桂林米粉"
+  ]
+ },
+ {
+  "id": 601,
+  "name": "张记川味苑(定西路店)",
+  "tier": "经济",
+  "price_avg": 28,
+  "leaf": "川南·宜宾菜",
+  "why": [
+   "leaf-top:川南·宜宾菜",
+   "regression"
+  ]
+ },
+ {
+  "id": 1454,
+  "name": "寛的窄的面馆(打浦路店)",
+  "tier": "经济",
+  "price_avg": 28,
+  "leaf": "川南·宜宾菜",
+  "why": [
+   "leaf-top:川南·宜宾菜"
+  ]
+ },
+ {
+  "id": 760,
+  "name": "熙盛源(丰庄路店)",
+  "tier": "经济",
+  "price_avg": 28,
+  "leaf": "锡菜",
+  "why": [
+   "leaf-top:锡菜"
+  ]
+ },
+ {
+  "id": 975,
+  "name": "西安5号米皮(仙霞西路店)",
+  "tier": "经济",
+  "price_avg": 28,
+  "leaf": "陕西小吃(肉夹馍/凉皮/油泼面)",
+  "why": [
+   "leaf-top:陕西小吃(肉夹馍/凉皮/油泼面)"
+  ]
+ },
+ {
+  "id": 1581,
+  "name": "大壶春(四川中路店)",
+  "tier": "经济",
+  "price_avg": 28,
+  "leaf": "本帮浓油赤酱老字号",
+  "why": [
+   "leaf-top:本帮浓油赤酱老字号"
+  ]
+ },
+ {
+  "id": 1452,
+  "name": "炊小川内江牛肉面",
+  "tier": "经济",
+  "price_avg": 28,
+  "leaf": "川南·内江菜",
+  "why": [
+   "leaf-top:川南·内江菜"
+  ]
+ },
+ {
+  "id": 1858,
+  "name": "和果子本铺四葉",
+  "tier": "经济",
+  "price_avg": 30,
+  "leaf": "铜锣烧/和果子",
+  "why": [
+   "leaf-top:铜锣烧/和果子"
+  ]
+ },
+ {
+  "id": 1704,
+  "name": "小团圆糖水铺(思南路店)",
+  "tier": "经济",
+  "price_avg": 32,
+  "leaf": "糖水/甜汤",
+  "why": [
+   "leaf-top:糖水/甜汤"
+  ]
+ },
+ {
+  "id": 1299,
+  "name": "司芳糯米(久光店)",
+  "tier": "经济",
+  "price_avg": 33,
+  "leaf": "泰国甜品",
+  "why": [
+   "leaf-top:泰国甜品"
+  ]
+ },
+ {
+  "id": 978,
+  "name": "张有德老字号牛肉面",
+  "tier": "经济",
+  "price_avg": 34,
+  "leaf": "兰州牛肉面",
+  "why": [
+   "leaf-top:兰州牛肉面"
+  ]
+ },
+ {
+  "id": 1060,
+  "name": "九宫殿热干面(来福士广场店)",
+  "tier": "经济",
+  "price_avg": 34,
+  "leaf": "武汉过早·热干面小吃",
+  "why": [
+   "leaf-top:武汉过早·热干面小吃"
+  ]
+ },
+ {
+  "id": 848,
+  "name": "宁波汤团店(豫园店)",
+  "tier": "经济",
+  "price_avg": 35,
+  "leaf": "宁波菜",
+  "why": [
+   "leaf-top:宁波菜"
+  ]
+ },
+ {
+  "id": 993,
+  "name": "东北四季饺子王(昌平路店)",
+  "tier": "经济",
+  "price_avg": 35,
+  "leaf": "东北饺子馆",
+  "why": [
+   "leaf-top:东北饺子馆"
+  ]
+ },
+ {
+  "id": 1330,
+  "name": "家味螺蛳粉&烤鱼(安远路店)",
+  "tier": "经济",
+  "price_avg": 35,
+  "leaf": "广西菜",
+  "why": [
+   "leaf-top:广西菜",
+   "leaf-top:柳州螺蛳粉"
+  ]
+ },
+ {
+  "id": 1339,
+  "name": "柒月粉(江苏路店)",
+  "tier": "经济",
+  "price_avg": 35,
+  "leaf": "江西菜",
+  "why": [
+   "leaf-top:江西菜",
+   "leaf-top:江西炒粉/拌粉"
+  ]
+ },
+ {
+  "id": 1078,
+  "name": "赣南粉局·江西锅气炒粉(久光中心店)",
+  "tier": "经济",
+  "price_avg": 35,
+  "leaf": "江西炒粉/拌粉",
+  "why": [
+   "leaf-top:江西炒粉/拌粉"
+  ]
+ },
+ {
+  "id": 1697,
+  "name": "Gluglu(愚园路店)",
+  "tier": "经济",
+  "price_avg": 35,
+  "leaf": "社区烘焙坊",
+  "why": [
+   "leaf-top:社区烘焙坊"
+  ]
+ },
+ {
+  "id": 1788,
+  "name": "纽约贝果博物馆(新天地店)",
+  "tier": "经济",
+  "price_avg": 35,
+  "leaf": "贝果专门",
+  "why": [
+   "leaf-top:贝果专门"
+  ]
+ },
+ {
+  "id": 1399,
+  "name": "翠贝果(乌鲁木齐南路店)",
+  "tier": "经济",
+  "price_avg": 35,
+  "leaf": "贝果专门",
+  "why": [
+   "leaf-top:贝果专门"
+  ]
+ },
+ {
+  "id": 1854,
+  "name": "ISAN BAKERY & CAFE",
+  "tier": "经济",
+  "price_avg": 35,
+  "leaf": "日式面包",
+  "why": [
+   "leaf-top:日式面包"
+  ]
+ },
+ {
+  "id": 979,
+  "name": "德元兰州纯汤牛肉面(奉贤路店)",
+  "tier": "经济",
+  "price_avg": 36,
+  "leaf": "兰州牛肉面",
+  "why": [
+   "leaf-top:兰州牛肉面"
+  ]
+ },
+ {
+  "id": 1694,
+  "name": "TonTon(永康路店)",
+  "tier": "经济",
+  "price_avg": 36,
+  "leaf": "可颂/起酥专门",
+  "why": [
+   "leaf-top:可颂/起酥专门"
+  ]
+ },
+ {
+  "id": 977,
+  "name": "麦之初·陕小馆(长宁Art Park大融城店)",
+  "tier": "经济",
+  "price_avg": 37,
+  "leaf": "陕西小吃(肉夹馍/凉皮/油泼面)",
+  "why": [
+   "leaf-top:陕西小吃(肉夹馍/凉皮/油泼面)"
+  ]
+ },
+ {
+  "id": 739,
+  "name": "小金陵盐水鸭(云南南路店)",
+  "tier": "经济",
+  "price_avg": 38,
+  "leaf": "金陵菜",
+  "why": [
+   "leaf-top:金陵菜"
+  ]
+ },
+ {
+  "id": 971,
+  "name": "懒猴子泡馍(打浦桥店)",
+  "tier": "经济",
+  "price_avg": 38,
+  "leaf": "西安菜(正餐/泡馍/葫芦鸡)",
+  "why": [
+   "leaf-top:西安菜(正餐/泡馍/葫芦鸡)"
+  ]
+ },
+ {
+  "id": 1609,
+  "name": "蔡林记·湖北小馆(真如环宇城MAX店)",
+  "tier": "经济",
+  "price_avg": 38,
+  "leaf": "武汉过早·热干面小吃",
+  "why": [
+   "leaf-top:武汉过早·热干面小吃",
+   "leaf-top:湖北菜"
+  ]
+ },
+ {
+  "id": 1780,
+  "name": "麻布屋AZABUYA(永康路店)",
+  "tier": "经济",
+  "price_avg": 38,
+  "leaf": "甜品",
+  "why": [
+   "leaf-top:甜品",
+   "leaf-top:蛋糕/法式甜品",
+   "leaf-top:冰淇淋Gelato"
+  ]
+ },
+ {
+  "id": 888,
+  "name": "屿园沙茶面(长春路店)",
+  "tier": "经济",
+  "price_avg": 39,
+  "leaf": "闽南菜",
+  "why": [
+   "leaf-top:闽南菜"
+  ]
+ },
+ {
+  "id": 1781,
+  "name": "HUFFY coffee&gelato(威海路店)",
+  "tier": "经济",
+  "price_avg": 39,
+  "leaf": "蛋糕/法式甜品",
+  "why": [
+   "leaf-top:蛋糕/法式甜品"
+  ]
+ },
+ {
+  "id": 42,
+  "name": "丸龟制面",
+  "tier": "经济",
+  "price_avg": 40,
+  "leaf": "乌冬",
+  "why": [
+   "leaf-top:乌冬"
+  ]
+ },
+ {
+  "id": 740,
+  "name": "小金陵盐水鸭(山西南路店)",
+  "tier": "经济",
+  "price_avg": 40,
+  "leaf": "金陵菜",
+  "why": [
+   "leaf-top:金陵菜"
+  ]
+ },
+ {
+  "id": 1329,
+  "name": "阳奶佬螺蛳粉(丽园路店)",
+  "tier": "经济",
+  "price_avg": 40,
+  "leaf": "广西菜",
+  "why": [
+   "leaf-top:广西菜",
+   "leaf-top:柳州螺蛳粉"
+  ]
+ },
+ {
+  "id": 1076,
+  "name": "文家粉楼(静安大悦城店)",
+  "tier": "经济",
+  "price_avg": 40,
+  "leaf": "江西菜",
+  "why": [
+   "leaf-top:江西菜",
+   "leaf-top:江西炒粉/拌粉",
+   "leaf-top:瓦罐汤"
+  ]
+ },
+ {
+  "id": 1792,
+  "name": "Bake No Title(番禺路店)",
+  "tier": "经济",
+  "price_avg": 40,
+  "leaf": "社区烘焙坊",
+  "why": [
+   "leaf-top:社区烘焙坊"
+  ]
+ },
+ {
+  "id": 1074,
+  "name": "陆丝芬·柳州原汤螺蛳粉(淮海中路店)",
+  "tier": "经济",
+  "price_avg": 42,
+  "leaf": "广西菜",
+  "why": [
+   "leaf-top:广西菜",
+   "leaf-top:柳州螺蛳粉"
+  ]
+ },
+ {
+  "id": 1783,
+  "name": "Sit Gelato(南昌路店)",
+  "tier": "经济",
+  "price_avg": 42,
+  "leaf": "冰淇淋Gelato",
+  "why": [
+   "leaf-top:冰淇淋Gelato"
+  ]
+ },
+ {
+  "id": 1782,
+  "name": "MIMILATO(长乐路店)",
+  "tier": "经济",
+  "price_avg": 42,
+  "leaf": "冰淇淋Gelato",
+  "why": [
+   "leaf-top:冰淇淋Gelato"
+  ]
+ },
+ {
+  "id": 800,
+  "name": "于妈妈烟台水饺",
+  "tier": "经济",
+  "price_avg": 43,
+  "leaf": "胶东菜",
+  "why": [
+   "leaf-top:胶东菜"
+  ]
+ },
+ {
+  "id": 1789,
+  "name": "FASCINO BAKERY(丰盛里店)",
+  "tier": "经济",
+  "price_avg": 43,
+  "leaf": "社区烘焙坊",
+  "why": [
+   "leaf-top:社区烘焙坊"
+  ]
+ },
+ {
+  "id": 1603,
+  "name": "南星汇新加坡海南鸡饭(静安店)",
+  "tier": "经济",
+  "price_avg": 44,
+  "leaf": "新加坡菜",
+  "why": [
+   "leaf-top:新加坡菜"
+  ]
+ },
+ {
+  "id": 1580,
+  "name": "胖胖君的新疆抓饭(黄浦店)",
+  "tier": "经济",
+  "price_avg": 45,
+  "leaf": "新疆菜",
+  "why": [
+   "leaf-top:新疆菜",
+   "leaf-top:新疆手抓饭/面馆"
+  ]
+ },
+ {
+  "id": 1040,
+  "name": "台北七条通牛肉面(漕宝路店)",
+  "tier": "经济",
+  "price_avg": 45,
+  "leaf": "台湾牛肉面·小吃",
+  "why": [
+   "leaf-top:台湾牛肉面·小吃"
+  ]
+ },
+ {
+  "id": 1784,
+  "name": "国际饭店帆声饼屋(黄河路店)",
+  "tier": "经济",
+  "price_avg": 45,
+  "leaf": "面包",
+  "why": [
+   "leaf-top:面包",
+   "leaf-top:社区烘焙坊"
+  ]
+ },
+ {
+  "id": 1678,
+  "name": "Metal Hands 铁手咖啡制造局",
+  "tier": "经济",
+  "price_avg": 45,
+  "leaf": "社区精品咖啡",
+  "why": [
+   "leaf-top:社区精品咖啡"
+  ]
+ },
+ {
+  "id": 1787,
+  "name": "达可芮Gelato Dal Cuore(陕西北路店)",
+  "tier": "经济",
+  "price_avg": 45,
+  "leaf": "甜品",
+  "why": [
+   "leaf-top:甜品",
+   "leaf-top:冰淇淋Gelato"
+  ]
+ },
+ {
+  "id": 15,
+  "name": "伽喱博士 Dr.CURRY",
+  "tier": "经济",
+  "price_avg": 48,
+  "leaf": "咖喱",
+  "why": [
+   "leaf-top:咖喱"
+  ]
+ },
+ {
+  "id": 1660,
+  "name": "O.P.S CAFE",
+  "tier": "经济",
+  "price_avg": 48,
+  "leaf": "咖啡",
+  "why": [
+   "leaf-top:咖啡",
+   "leaf-top:创意特调咖啡"
+  ]
+ },
+ {
+  "id": 986,
+  "name": "军哥饺子王",
+  "tier": "平价",
+  "price_avg": 50,
+  "leaf": "东北家常菜",
+  "why": [
+   "leaf-top:东北家常菜"
+  ]
+ },
+ {
+  "id": 1038,
+  "name": "芳邻食堂(古北店)",
+  "tier": "平价",
+  "price_avg": 50,
+  "leaf": "台湾牛肉面·小吃",
+  "why": [
+   "leaf-top:台湾牛肉面·小吃",
+   "leaf-top:台湾菜",
+   "leaf-top:台湾家常菜"
+  ]
+ },
+ {
+  "id": 1305,
+  "name": "VN Banh Mi&Cafe越法时光(1788广场店)",
+  "tier": "平价",
+  "price_avg": 50,
+  "leaf": "越南法包",
+  "why": [
+   "leaf-top:越南法包"
+  ]
+ },
+ {
+  "id": 1652,
+  "name": "五星海南鸡饭(新乐路店)",
+  "tier": "平价",
+  "price_avg": 50,
+  "leaf": "新加坡菜",
+  "why": [
+   "leaf-top:新加坡菜",
+   "leaf-top:马来西亚菜"
+  ]
+ },
+ {
+  "id": 1785,
+  "name": "PAIN CHAUD百丘(番禺路店)",
+  "tier": "平价",
+  "price_avg": 50,
+  "leaf": "可颂/起酥专门",
+  "why": [
+   "leaf-top:可颂/起酥专门"
+  ]
+ },
+ {
+  "id": 1663,
+  "name": "月球咖啡 Retro",
+  "tier": "平价",
+  "price_avg": 50,
+  "leaf": "社区精品咖啡",
+  "why": [
+   "leaf-top:社区精品咖啡"
+  ]
+ },
+ {
+  "id": 1010,
+  "name": "滇味园传统云南过桥米线(宁波路店)",
+  "tier": "平价",
+  "price_avg": 51,
+  "leaf": "云南菜",
+  "why": [
+   "leaf-top:云南菜"
+  ]
+ },
+ {
+  "id": 974,
+  "name": "子午路张记肉夹馍(思南路店)",
+  "tier": "平价",
+  "price_avg": 52,
+  "leaf": "西安菜(正餐/泡馍/葫芦鸡)",
+  "why": [
+   "leaf-top:西安菜(正餐/泡馍/葫芦鸡)",
+   "leaf-top:陕西小吃(肉夹馍/凉皮/油泼面)",
+   "leaf-top:西北菜"
+  ]
+ },
+ {
+  "id": 1777,
+  "name": "聚福shanghailander(乌鲁木齐南路店)",
+  "tier": "平价",
+  "price_avg": 52,
+  "leaf": "日式甜品",
+  "why": [
+   "leaf-top:日式甜品"
+  ]
+ },
+ {
+  "id": 18,
+  "name": "环七·土佐子",
+  "tier": "平价",
+  "price_avg": 55,
+  "leaf": "拉面",
+  "why": [
+   "leaf-top:拉面"
+  ]
+ },
+ {
+  "id": 1035,
+  "name": "阿卡哥哥·喀什葛尔手抓饭(静安店)",
+  "tier": "平价",
+  "price_avg": 55,
+  "leaf": "新疆手抓饭/面馆",
+  "why": [
+   "leaf-top:新疆手抓饭/面馆"
+  ]
+ },
+ {
+  "id": 1039,
+  "name": "吉亨面馆(古北1699店)",
+  "tier": "平价",
+  "price_avg": 55,
+  "leaf": "台湾牛肉面·小吃",
+  "why": [
+   "leaf-top:台湾牛肉面·小吃"
+  ]
+ },
+ {
+  "id": 1839,
+  "name": "芳邻食堂(静安漫选店)",
+  "tier": "平价",
+  "price_avg": 55,
+  "leaf": "台湾菜",
+  "why": [
+   "leaf-top:台湾菜"
+  ]
+ },
+ {
+  "id": 1691,
+  "name": "3又二分之一",
+  "tier": "平价",
+  "price_avg": 55,
+  "leaf": "社区精品咖啡",
+  "why": [
+   "leaf-top:社区精品咖啡",
+   "leaf-top:创意特调咖啡"
+  ]
+ },
+ {
+  "id": 1702,
+  "name": "香港华心糖水铺(南西总店)",
+  "tier": "平价",
+  "price_avg": 55,
+  "leaf": "糖水/甜汤",
+  "why": [
+   "leaf-top:糖水/甜汤"
+  ]
+ },
+ {
+  "id": 1586,
+  "name": "莱莱小笼(天津路店)",
+  "tier": "平价",
+  "price_avg": 55,
+  "leaf": "上海家常",
+  "why": [
+   "leaf-top:上海家常"
+  ]
+ },
+ {
+  "id": 991,
+  "name": "瑞鑫饺子馆(兰溪路店)",
+  "tier": "平价",
+  "price_avg": 56,
+  "leaf": "东北饺子馆",
+  "why": [
+   "leaf-top:东北饺子馆"
+  ]
+ },
+ {
+  "id": 1032,
+  "name": "BARFU·抓饭屋(武定路店)",
+  "tier": "平价",
+  "price_avg": 56,
+  "leaf": "新疆手抓饭/面馆",
+  "why": [
+   "leaf-top:新疆手抓饭/面馆"
+  ]
+ },
+ {
+  "id": 1440,
+  "name": "孔岳冒菜(五角场店)",
+  "tier": "平价",
+  "price_avg": 57,
+  "leaf": "成都家常菜/苍蝇馆子",
+  "why": [
+   "leaf-top:成都家常菜/苍蝇馆子"
+  ]
+ },
+ {
+  "id": 1700,
+  "name": "柴田西点Chez Shibata(紫云西路店)",
+  "tier": "平价",
+  "price_avg": 58,
+  "leaf": "日式甜品",
+  "why": [
+   "leaf-top:日式甜品"
+  ]
+ },
+ {
+  "id": 1170,
+  "name": "VERIE BAKEHOUSE(马当路店)",
+  "tier": "平价",
+  "price_avg": 59,
+  "leaf": "可颂甜品",
+  "why": [
+   "leaf-top:可颂甜品",
+   "leaf-top:面包",
+   "leaf-top:可颂/起酥专门"
+  ]
+ },
+ {
+  "id": 741,
+  "name": "南京大牌档(近铁广场店)",
+  "tier": "平价",
+  "price_avg": 60,
+  "leaf": "金陵菜",
+  "why": [
+   "leaf-top:金陵菜"
+  ]
+ },
+ {
+  "id": 771,
+  "name": "徐州味道(中山北路店)",
+  "tier": "平价",
+  "price_avg": 60,
+  "leaf": "徐海菜",
+  "why": [
+   "leaf-top:徐海菜"
+  ]
+ },
+ {
+  "id": 1654,
+  "name": "东北四季饺子王(茅台路店)",
+  "tier": "平价",
+  "price_avg": 60,
+  "leaf": "东北饺子馆",
+  "why": [
+   "leaf-top:东北饺子馆"
+  ]
+ },
+ {
+  "id": 1041,
+  "name": "鹅庄·台湾美食(金汇庭院店)",
+  "tier": "平价",
+  "price_avg": 60,
+  "leaf": "台湾牛肉面·小吃",
+  "why": [
+   "leaf-top:台湾牛肉面·小吃"
+  ]
+ },
+ {
+  "id": 1301,
+  "name": "Kyochon1991校村炸鸡(漕宝路店)",
+  "tier": "平价",
+  "price_avg": 60,
+  "leaf": "韩式炸鸡",
+  "why": [
+   "leaf-top:韩式炸鸡"
+  ]
+ },
+ {
+  "id": 1106,
+  "name": "船面专门店(美罗城店)",
+  "tier": "平价",
+  "price_avg": 60,
+  "leaf": "船面",
+  "why": [
+   "leaf-top:船面"
+  ]
+ },
+ {
+  "id": 1696,
+  "name": "O'Mills Sourdough Bakery & Bistro(永嘉路店)",
+  "tier": "平价",
+  "price_avg": 60,
+  "leaf": "面包",
+  "why": [
+   "leaf-top:面包",
+   "leaf-top:酸种面包专门"
+  ]
+ },
+ {
+  "id": 1595,
+  "name": "海金滋(进贤路店)",
+  "tier": "平价",
+  "price_avg": 61,
+  "leaf": "上海家常",
+  "why": [
+   "leaf-top:上海家常"
+  ]
+ },
+ {
+  "id": 762,
+  "name": "井梅无锡面馆(延平路店)",
+  "tier": "平价",
+  "price_avg": 63,
+  "leaf": "锡菜",
+  "why": [
+   "leaf-top:锡菜"
+  ]
+ },
+ {
+  "id": 1342,
+  "name": "伊祥·敦煌楼(中山北路店)",
+  "tier": "平价",
+  "price_avg": 65,
+  "leaf": "西北菜",
+  "why": [
+   "leaf-top:西北菜",
+   "leaf-top:兰州牛肉面",
+   "leaf-top:宁夏·西北清真手抓羊肉"
+  ]
+ },
+ {
+  "id": 1011,
+  "name": "上汤·云南过桥米线·卤烤(奉贤路店)",
+  "tier": "平价",
+  "price_avg": 65,
+  "leaf": "云南菜",
+  "why": [
+   "leaf-top:云南菜"
+  ]
+ },
+ {
+  "id": 1775,
+  "name": "法田鹿蛋糕",
+  "tier": "平价",
+  "price_avg": 65,
+  "leaf": "日式甜品",
+  "why": [
+   "leaf-top:日式甜品"
+  ]
+ },
+ {
+  "id": 1312,
+  "name": "Kaki Mania日式刨冰",
+  "tier": "平价",
+  "price_avg": 65,
+  "leaf": "刨冰",
+  "why": [
+   "leaf-top:刨冰"
+  ]
+ },
+ {
+  "id": 1685,
+  "name": "星巴克臻选上海烘焙工坊",
+  "tier": "平价",
+  "price_avg": 65,
+  "leaf": "连锁咖啡",
+  "why": [
+   "leaf-top:连锁咖啡"
+  ]
+ },
+ {
+  "id": 700,
+  "name": "新澳港式茶餐厅(延安西路店)",
+  "tier": "平价",
+  "price_avg": 66,
+  "leaf": "港式茶餐厅/冰室",
+  "why": [
+   "leaf-top:港式茶餐厅/冰室"
+  ]
+ },
+ {
+  "id": 1773,
+  "name": "L'eclair de Genie闪电巴黎(芮欧百货店)",
+  "tier": "平价",
+  "price_avg": 68,
+  "leaf": "甜品",
+  "why": [
+   "leaf-top:甜品",
+   "leaf-top:蛋糕/法式甜品"
+  ]
+ },
+ {
+  "id": 1836,
+  "name": "FINE pancake&canteen(陕西南路店)",
+  "tier": "平价",
+  "price_avg": 68,
+  "leaf": "松饼/薄饼",
+  "why": [
+   "leaf-top:松饼/薄饼"
+  ]
+ },
+ {
+  "id": 962,
+  "name": "玉花姐皖北地锅鸡(包头路旗舰总店)",
+  "tier": "平价",
+  "price_avg": 70,
+  "leaf": "皖北菜",
+  "why": [
+   "leaf-top:皖北菜"
+  ]
+ },
+ {
+  "id": 1493,
+  "name": "南京大牌档(世茂商都店)",
+  "tier": "平价",
+  "price_avg": 70,
+  "leaf": "金陵菜",
+  "why": [
+   "leaf-top:金陵菜"
+  ]
+ },
+ {
+  "id": 776,
+  "name": "老板娘大排档(马陆包装城店)",
+  "tier": "平价",
+  "price_avg": 70,
+  "leaf": "徐海菜",
+  "why": [
+   "leaf-top:徐海菜"
+  ]
+ },
+ {
+  "id": 983,
+  "name": "吕老哈印象锅包肉(虹口海伦路店)",
+  "tier": "平价",
+  "price_avg": 70,
+  "leaf": "东北家常菜",
+  "why": [
+   "leaf-top:东北家常菜"
+  ]
+ },
+ {
+  "id": 1166,
+  "name": "La Boulangerie by Pierre Gagnaire",
+  "tier": "平价",
+  "price_avg": 70,
+  "leaf": "可颂甜品",
+  "why": [
+   "leaf-top:可颂甜品"
+  ]
+ },
+ {
+  "id": 1304,
+  "name": "WING REPUBLIC来翅够",
+  "tier": "平价",
+  "price_avg": 70,
+  "leaf": "炸鸡",
+  "why": [
+   "leaf-top:炸鸡"
+  ]
+ },
+ {
+  "id": 1321,
+  "name": "鲤久面屋·横滨家系拉面(金桥啦啦宝都店)",
+  "tier": "平价",
+  "price_avg": 70,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 1044,
+  "name": "千秋小馆·台湾菜(古北店)",
+  "tier": "平价",
+  "price_avg": 71,
+  "leaf": "台湾家常菜",
+  "why": [
+   "leaf-top:台湾家常菜"
+  ]
+ },
+ {
+  "id": 1430,
+  "name": "冯三孃川菜馆(嘉善路店)",
+  "tier": "平价",
+  "price_avg": 72,
+  "leaf": "江湖菜",
+  "why": [
+   "leaf-top:江湖菜",
+   "leaf-top:成都家常菜/苍蝇馆子"
+  ]
+ },
+ {
+  "id": 20,
+  "name": "Ramen满吉(广元西路店)",
+  "tier": "平价",
+  "price_avg": 75,
+  "leaf": "拉面",
+  "why": [
+   "leaf-top:拉面"
+  ]
+ },
+ {
+  "id": 891,
+  "name": "洪老大泉州风味小馆(武夷路/虹桥路店)",
+  "tier": "平价",
+  "price_avg": 75,
+  "leaf": "闽南菜",
+  "why": [
+   "leaf-top:闽南菜"
+  ]
+ },
+ {
+  "id": 964,
+  "name": "辉嫂老铁地锅(中华新路店)",
+  "tier": "平价",
+  "price_avg": 75,
+  "leaf": "皖北菜",
+  "why": [
+   "leaf-top:皖北菜"
+  ]
+ },
+ {
+  "id": 699,
+  "name": "港九茶冰室(五环大楼店)",
+  "tier": "平价",
+  "price_avg": 75,
+  "leaf": "港式茶餐厅/冰室",
+  "why": [
+   "leaf-top:港式茶餐厅/冰室"
+  ]
+ },
+ {
+  "id": 1774,
+  "name": "乔尔卢布松美食坊Boulangerie(外滩18号)",
+  "tier": "平价",
+  "price_avg": 75,
+  "leaf": "面包",
+  "why": [
+   "leaf-top:面包",
+   "leaf-top:可颂/起酥专门"
+  ]
+ },
+ {
+  "id": 1776,
+  "name": "Lady M(上海恒隆广场店)",
+  "tier": "平价",
+  "price_avg": 75,
+  "leaf": "甜品",
+  "why": [
+   "leaf-top:甜品",
+   "leaf-top:蛋糕/法式甜品",
+   "leaf-top:日式甜品"
+  ]
+ },
+ {
+  "id": 1829,
+  "name": "飲适精酿 Ease Taproom(南京东路店)",
+  "tier": "平价",
+  "price_avg": 75,
+  "leaf": "精酿啤酒吧",
+  "why": [
+   "leaf-top:精酿啤酒吧"
+  ]
+ },
+ {
+  "id": 19,
+  "name": "一风堂",
+  "tier": "平价",
+  "price_avg": 77,
+  "leaf": "拉面",
+  "why": [
+   "leaf-top:拉面"
+  ]
+ },
+ {
+  "id": 1396,
+  "name": "Captain George风味博物馆(太原路店)",
+  "tier": "平价",
+  "price_avg": 77,
+  "leaf": "咖啡",
+  "why": [
+   "leaf-top:咖啡",
+   "leaf-top:手冲/自烘豆专门",
+   "leaf-top:创意特调咖啡"
+  ]
+ },
+ {
+  "id": 1667,
+  "name": "Brew Island 煮屿",
+  "tier": "平价",
+  "price_avg": 77,
+  "leaf": "手冲/自烘豆专门",
+  "why": [
+   "leaf-top:手冲/自烘豆专门"
+  ]
+ },
+ {
+  "id": 1612,
+  "name": "长安宴(陕西大厦·陕西驻沪办店)",
+  "tier": "平价",
+  "price_avg": 78,
+  "leaf": "西安菜(正餐/泡馍/葫芦鸡)",
+  "why": [
+   "leaf-top:西安菜(正餐/泡馍/葫芦鸡)",
+   "leaf-top:西北菜"
+  ]
+ },
+ {
+  "id": 747,
+  "name": "面庭芳·特色中餐厅",
+  "tier": "平价",
+  "price_avg": 79,
+  "leaf": "苏帮菜",
+  "why": [
+   "leaf-top:苏帮菜"
+  ]
+ },
+ {
+  "id": 1431,
+  "name": "归蜀第成都串串料理(梅花路店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "渝菜",
+  "why": [
+   "leaf-top:渝菜"
+  ]
+ },
+ {
+  "id": 953,
+  "name": "皖山汇小馆",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "皖江菜",
+  "why": [
+   "leaf-top:皖江菜"
+  ]
+ },
+ {
+  "id": 775,
+  "name": "洋火徐州鲜货烧烤(繁兴路店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "徐海菜",
+  "why": [
+   "leaf-top:徐海菜"
+  ]
+ },
+ {
+  "id": 982,
+  "name": "翠花娘家东北菜(国和路店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "东北家常菜",
+  "why": [
+   "leaf-top:东北家常菜",
+   "leaf-top:东北菜"
+  ]
+ },
+ {
+  "id": 985,
+  "name": "李老哈·东北菜(宋园路店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "东北家常菜",
+  "why": [
+   "leaf-top:东北家常菜"
+  ]
+ },
+ {
+  "id": 988,
+  "name": "姚稷大铁锅(东新路店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "东北菜",
+  "why": [
+   "leaf-top:东北菜",
+   "leaf-top:东北铁锅炖"
+  ]
+ },
+ {
+  "id": 1584,
+  "name": "南翔馒头店(豫园店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "本帮浓油赤酱老字号",
+  "why": [
+   "leaf-top:本帮浓油赤酱老字号"
+  ]
+ },
+ {
+  "id": 1072,
+  "name": "多杰拉姆藏餐吧(朱家角店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "青藏菜",
+  "why": [
+   "leaf-top:青藏菜",
+   "leaf-top:藏餐"
+  ]
+ },
+ {
+  "id": 1111,
+  "name": "FAT PHO大發越南粉(丰盛里店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "越南河粉",
+  "why": [
+   "leaf-top:越南河粉",
+   "leaf-top:越餐"
+  ]
+ },
+ {
+  "id": 1162,
+  "name": "Luneurs(洛克·外滩源店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "可颂甜品",
+  "why": [
+   "leaf-top:可颂甜品"
+  ]
+ },
+ {
+  "id": 1224,
+  "name": "Laya Burger 拉亚汉堡(宜山路店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "汉堡",
+  "why": [
+   "leaf-top:汉堡"
+  ]
+ },
+ {
+  "id": 1664,
+  "name": "鲁马滋 Rumors Coffee Roastery",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "咖啡",
+  "why": [
+   "leaf-top:咖啡",
+   "leaf-top:手冲/自烘豆专门"
+  ]
+ },
+ {
+  "id": 1553,
+  "name": "土灶头·金华菜(桃浦店)",
+  "tier": "平价",
+  "price_avg": 80,
+  "leaf": "金华/衢州菜",
+  "why": [
+   "leaf-top:金华/衢州菜"
+  ]
+ },
+ {
+  "id": 45,
+  "name": "とんかつ一滨·炸猪排(世博天地首店)",
+  "tier": "平价",
+  "price_avg": 81,
+  "leaf": "日式洋食",
+  "why": [
+   "leaf-top:日式洋食"
+  ]
+ },
+ {
+  "id": 1119,
+  "name": "印象芽庄越式餐厅(新华路店)",
+  "tier": "平价",
+  "price_avg": 81,
+  "leaf": "顺化菜",
+  "why": [
+   "leaf-top:顺化菜"
+  ]
+ },
+ {
+  "id": 939,
+  "name": "留柱小馆(梅陇店)",
+  "tier": "平价",
+  "price_avg": 84,
+  "leaf": "徽州菜",
+  "why": [
+   "leaf-top:徽州菜",
+   "leaf-top:皖江菜"
+  ]
+ },
+ {
+  "id": 1113,
+  "name": "西贡妈妈Saigon Mama(上海商城店)",
+  "tier": "平价",
+  "price_avg": 84,
+  "leaf": "越南河粉",
+  "why": [
+   "leaf-top:越南河粉",
+   "leaf-top:越餐"
+  ]
+ },
+ {
+  "id": 544,
+  "name": "芥菜园·粮仓饭湘(四川北路店)",
+  "tier": "平价",
+  "price_avg": 85,
+  "leaf": "湘菜",
+  "why": [
+   "leaf-top:湘菜",
+   "leaf-top:长沙菜"
+  ]
+ },
+ {
+  "id": 545,
+  "name": "费大厨辣椒炒肉(环球港店)",
+  "tier": "平价",
+  "price_avg": 85,
+  "leaf": "湘菜",
+  "why": [
+   "leaf-top:湘菜",
+   "leaf-top:长沙菜"
+  ]
+ },
+ {
+  "id": 1017,
+  "name": "黔莊",
+  "tier": "平价",
+  "price_avg": 85,
+  "leaf": "贵州菜",
+  "why": [
+   "leaf-top:贵州菜"
+  ]
+ },
+ {
+  "id": 1597,
+  "name": "小匠喜江西菜(黄浦世贸广场店)",
+  "tier": "平价",
+  "price_avg": 85,
+  "leaf": "江西菜",
+  "why": [
+   "leaf-top:江西菜"
+  ]
+ },
+ {
+  "id": 1669,
+  "name": "aftertaste 回味",
+  "tier": "平价",
+  "price_avg": 85,
+  "leaf": "咖啡",
+  "why": [
+   "leaf-top:咖啡",
+   "leaf-top:手冲/自烘豆专门",
+   "leaf-top:社区精品咖啡"
+  ]
+ },
+ {
+  "id": 1439,
+  "name": "红料理·串串有瘾(万航渡路店)",
+  "tier": "平价",
+  "price_avg": 86,
+  "leaf": "渝菜",
+  "why": [
+   "leaf-top:渝菜"
+  ]
+ },
+ {
+  "id": 751,
+  "name": "东吴石府(黑石公寓店)",
+  "tier": "平价",
+  "price_avg": 86,
+  "leaf": "苏帮菜",
+  "why": [
+   "leaf-top:苏帮菜"
+  ]
+ },
+ {
+  "id": 25,
+  "name": "竿屋",
+  "tier": "平价",
+  "price_avg": 88,
+  "leaf": "居酒屋",
+  "why": [
+   "leaf-top:居酒屋"
+  ]
+ },
+ {
+  "id": 795,
+  "name": "糁姐鲁小菜(七宝店)",
+  "tier": "平价",
+  "price_avg": 88,
+  "leaf": "济南菜",
+  "why": [
+   "leaf-top:济南菜"
+  ]
+ },
+ {
+  "id": 990,
+  "name": "老朴家铁锅炖(总店)",
+  "tier": "平价",
+  "price_avg": 88,
+  "leaf": "东北铁锅炖",
+  "why": [
+   "leaf-top:东北铁锅炖"
+  ]
+ },
+ {
+  "id": 1080,
+  "name": "掌柜的店·河南菜(日月光店)",
+  "tier": "平价",
+  "price_avg": 88,
+  "leaf": "豫菜·烩面",
+  "why": [
+   "leaf-top:豫菜·烩面"
+  ]
+ },
+ {
+  "id": 1798,
+  "name": "湖心亭茶楼",
+  "tier": "平价",
+  "price_avg": 88,
+  "leaf": "茶饮",
+  "why": [
+   "leaf-top:茶饮"
+  ]
+ },
+ {
+  "id": 1053,
+  "name": "洪长兴(云南南路店)",
+  "tier": "平价",
+  "price_avg": 89,
+  "leaf": "老北京铜锅涮肉",
+  "why": [
+   "leaf-top:老北京铜锅涮肉"
+  ]
+ },
+ {
+  "id": 1870,
+  "name": "纹兵卫手打荞麦面日料(天山店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "荞麦",
+  "why": [
+   "leaf-top:荞麦",
+   "leaf-top:荞麦·天妇罗盛荞麦",
+   "leaf-top:荞麦·冷荞麦/山药泥",
+   "regression"
+  ]
+ },
+ {
+  "id": 484,
+  "name": "八合里潮汕鲜牛肉火锅(世茂广场店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "潮汕菜",
+  "why": [
+   "leaf-top:潮汕菜"
+  ]
+ },
+ {
+  "id": 851,
+  "name": "绍兴名菜(可乐路店,又称星火私房菜/绍兴名菜馆)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "绍兴菜",
+  "why": [
+   "leaf-top:绍兴菜"
+  ]
+ },
+ {
+  "id": 925,
+  "name": "钵湘湘·常德钵子菜(浦东创始店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "洞庭湖区菜",
+  "why": [
+   "leaf-top:洞庭湖区菜"
+  ]
+ },
+ {
+  "id": 929,
+  "name": "罐罐儿·湘西小馆(鸿寿坊店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "湘西菜",
+  "why": [
+   "leaf-top:湘西菜"
+  ]
+ },
+ {
+  "id": 1442,
+  "name": "龙玥川菜·豆花饭(丽园路总店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "成都家常菜/苍蝇馆子",
+  "why": [
+   "leaf-top:成都家常菜/苍蝇馆子"
+  ]
+ },
+ {
+  "id": 693,
+  "name": "汤伯府·猪肚鸡火锅(上海分店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "客家菜",
+  "why": [
+   "leaf-top:客家菜"
+  ]
+ },
+ {
+  "id": 989,
+  "name": "玺炖·中国铁锅炖(陆家嘴店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "东北铁锅炖",
+  "why": [
+   "leaf-top:东北铁锅炖"
+  ]
+ },
+ {
+  "id": 1043,
+  "name": "和盈台湾料理(东方路店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "台湾家常菜",
+  "why": [
+   "leaf-top:台湾家常菜"
+  ]
+ },
+ {
+  "id": 1065,
+  "name": "莲餐厅·湖北菜(中山公园店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "湖北菜",
+  "why": [
+   "leaf-top:湖北菜",
+   "leaf-top:湖北家常菜馆·藕汤",
+   "leaf-top:湖北菜高端·宴请"
+  ]
+ },
+ {
+  "id": 1063,
+  "name": "来菜·湖北头牌藕汤(环球港店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "湖北家常菜馆·藕汤",
+  "why": [
+   "leaf-top:湖北家常菜馆·藕汤"
+  ]
+ },
+ {
+  "id": 1091,
+  "name": "万寿亭参鸡汤(虹泉路店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "汤饭/冷面",
+  "why": [
+   "leaf-top:汤饭/冷面"
+  ]
+ },
+ {
+  "id": 1115,
+  "name": "PhoToShop福秀·越南餐厅",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "越南河粉",
+  "why": [
+   "leaf-top:越南河粉",
+   "leaf-top:越餐",
+   "leaf-top:越南春卷/小吃"
+  ]
+ },
+ {
+  "id": 1124,
+  "name": "西贡Saigon越南菜(中环广场店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "越南法包",
+  "why": [
+   "leaf-top:越南法包"
+  ]
+ },
+ {
+  "id": 1149,
+  "name": "Dakshin南印餐厅",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "南印Dosa",
+  "why": [
+   "leaf-top:南印Dosa"
+  ]
+ },
+ {
+  "id": 1824,
+  "name": "弄口里烧烤(胶州路店)",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "阿拉伯烧烤",
+  "why": [
+   "leaf-top:阿拉伯烧烤"
+  ]
+ },
+ {
+  "id": 1183,
+  "name": "TOPO EXPRESS",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "那不勒斯披萨",
+  "why": [
+   "leaf-top:那不勒斯披萨"
+  ]
+ },
+ {
+  "id": 1192,
+  "name": "丝路驿站中亚餐厅",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "中亚菜",
+  "why": [
+   "leaf-top:中亚菜",
+   "leaf-top:烤包子/馕坑肉"
+  ]
+ },
+ {
+  "id": 1237,
+  "name": "Shake Shack 奶昔小屋",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "汉堡",
+  "why": [
+   "leaf-top:汉堡"
+  ]
+ },
+ {
+  "id": 1258,
+  "name": "派社 Pie Society",
+  "tier": "平价",
+  "price_avg": 90,
+  "leaf": "英式早餐",
+  "why": [
+   "leaf-top:英式早餐"
+  ]
+ },
+ {
+  "id": 1449,
+  "name": "洁而精川菜馆(雁荡路店)",
+  "tier": "平价",
+  "price_avg": 91,
+  "leaf": "海派改良川菜",
+  "why": [
+   "leaf-top:海派改良川菜"
+  ]
+ },
+ {
+  "id": 1831,
+  "name": "哥哥の深夜食堂(静安大悦城店)",
+  "tier": "平价",
+  "price_avg": 93,
+  "leaf": "居酒屋",
+  "why": [
+   "leaf-top:居酒屋"
+  ]
+ },
+ {
+  "id": 924,
+  "name": "食湘渔府·渔湘荟湖南土菜(大华店)",
+  "tier": "平价",
+  "price_avg": 94,
+  "leaf": "洞庭湖区菜",
+  "why": [
+   "leaf-top:洞庭湖区菜"
+  ]
+ },
+ {
+  "id": 1869,
+  "name": "麺屋KING",
+  "tier": "平价",
+  "price_avg": 94,
+  "leaf": "拉面·虾白汤",
+  "why": [
+   "leaf-top:拉面·虾白汤",
+   "leaf-top:拉面·柚子盐鸡白汤"
+  ]
+ },
+ {
+  "id": 517,
+  "name": "莆田餐厅PUTIEN(世博源店)",
+  "tier": "平价",
+  "price_avg": 95,
+  "leaf": "莆仙菜",
+  "why": [
+   "leaf-top:莆仙菜"
+  ]
+ },
+ {
+  "id": 773,
+  "name": "苏北土灶台·徐州菜(佘山店)",
+  "tier": "平价",
+  "price_avg": 95,
+  "leaf": "徐海菜",
+  "why": [
+   "leaf-top:徐海菜"
+  ]
+ },
+ {
+  "id": 827,
+  "name": "钱塘秋荷·新江浙菜(真华路店)",
+  "tier": "平价",
+  "price_avg": 95,
+  "leaf": "杭帮菜",
+  "why": [
+   "leaf-top:杭帮菜"
+  ]
+ },
+ {
+  "id": 1026,
+  "name": "艾尼巴亿餐厅(曲阳路店)",
+  "tier": "平价",
+  "price_avg": 95,
+  "leaf": "新疆正餐",
+  "why": [
+   "leaf-top:新疆正餐"
+  ]
+ },
+ {
+  "id": 1644,
+  "name": "那时新疆·乌孙(虹桥南丰城店)",
+  "tier": "平价",
+  "price_avg": 95,
+  "leaf": "新疆菜",
+  "why": [
+   "leaf-top:新疆菜"
+  ]
+ },
+ {
+  "id": 1331,
+  "name": "山间堂民间瓦缸煨汤馆(淮海店)",
+  "tier": "平价",
+  "price_avg": 95,
+  "leaf": "瓦罐汤",
+  "why": [
+   "leaf-top:瓦罐汤"
+  ]
+ },
+ {
+  "id": 1089,
+  "name": "多乐房土豆汤(虹泉路店)",
+  "tier": "平价",
+  "price_avg": 95,
+  "leaf": "汤饭/冷面",
+  "why": [
+   "leaf-top:汤饭/冷面"
+  ]
+ },
+ {
+  "id": 1093,
+  "name": "巴屋巴屋正宗韩国料理",
+  "tier": "平价",
+  "price_avg": 95,
+  "leaf": "韩定食",
+  "why": [
+   "leaf-top:韩定食"
+  ]
+ },
+ {
+  "id": 1122,
+  "name": "越洋越南菜",
+  "tier": "平价",
+  "price_avg": 95,
+  "leaf": "越南春卷/小吃",
+  "why": [
+   "leaf-top:越南春卷/小吃"
+  ]
+ },
+ {
+  "id": 1552,
+  "name": "衢叔家·衢州山里菜(延安西路店)",
+  "tier": "平价",
+  "price_avg": 97,
+  "leaf": "金华/衢州菜",
+  "why": [
+   "leaf-top:金华/衢州菜"
+  ]
+ },
+ {
+  "id": 1855,
+  "name": "银座仁志川(兴业太古汇店)",
+  "tier": "平价",
+  "price_avg": 98,
+  "leaf": "日式面包",
+  "why": [
+   "leaf-top:日式面包"
+  ]
+ },
+ {
+  "id": 44,
+  "name": "纹兵卫（午市套餐）",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "荞麦",
+  "why": [
+   "leaf-top:荞麦",
+   "regression"
+  ]
+ },
+ {
+  "id": 1429,
+  "name": "蜀谭记·盐帮川菜(四川北路店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "自贡盐帮菜",
+  "why": [
+   "leaf-top:自贡盐帮菜"
+  ]
+ },
+ {
+  "id": 663,
+  "name": "咏發顺德海鲜大排档(静安大悦城店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "顺德菜",
+  "why": [
+   "leaf-top:顺德菜"
+  ]
+ },
+ {
+  "id": 690,
+  "name": "夷和源客家菜(陆家嘴店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "客家菜",
+  "why": [
+   "leaf-top:客家菜"
+  ]
+ },
+ {
+  "id": 1466,
+  "name": "细记港九宵夜大牌档(东湖路总店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "港式茶餐厅/冰室",
+  "why": [
+   "leaf-top:港式茶餐厅/冰室"
+  ]
+ },
+ {
+  "id": 816,
+  "name": "金美华轩(齐鲁万怡店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "孔府菜",
+  "why": [
+   "leaf-top:孔府菜"
+  ]
+ },
+ {
+  "id": 1012,
+  "name": "云采云南菜(云南大厦店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "云南菜",
+  "why": [
+   "leaf-top:云南菜"
+  ]
+ },
+ {
+  "id": 1020,
+  "name": "上黔庄一品·酸汤鱼(吴中路店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "贵州菜",
+  "why": [
+   "leaf-top:贵州菜"
+  ]
+ },
+ {
+  "id": 1057,
+  "name": "小吊梨汤·北京菜·烤鸭(豫园店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "京菜",
+  "why": [
+   "leaf-top:京菜",
+   "leaf-top:京味炙子烤肉·京味小菜",
+   "leaf-top:京味家常"
+  ]
+ },
+ {
+  "id": 1566,
+  "name": "小吊梨汤·北京菜·烤鸭(龙华会店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "京味家常",
+  "why": [
+   "leaf-top:京味家常"
+  ]
+ },
+ {
+  "id": 1338,
+  "name": "辞琼·老海南糟粕醋火锅(月亮湾店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "糟粕醋",
+  "why": [
+   "leaf-top:糟粕醋"
+  ]
+ },
+ {
+  "id": 1623,
+  "name": "青藏餐厅·牦牛·藏羊(爱琴海店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "青藏菜",
+  "why": [
+   "leaf-top:青藏菜",
+   "leaf-top:藏餐"
+  ]
+ },
+ {
+  "id": 1624,
+  "name": "扎西达娲(徐汇绿地缤纷城店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "青藏菜",
+  "why": [
+   "leaf-top:青藏菜",
+   "leaf-top:藏餐"
+  ]
+ },
+ {
+  "id": 1082,
+  "name": "荣豫·河南菜(ONE上海张园店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "河南菜",
+  "why": [
+   "leaf-top:河南菜",
+   "leaf-top:豫菜·胡辣汤",
+   "leaf-top:豫菜·开封洛阳"
+  ]
+ },
+ {
+  "id": 1085,
+  "name": "富乐满韩国正宗炸鸡(虹泉路店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "韩式炸鸡",
+  "why": [
+   "leaf-top:韩式炸鸡",
+   "leaf-top:部队锅"
+  ]
+ },
+ {
+  "id": 1104,
+  "name": "泰北清迈小馆(虹桥路店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "泰北菜",
+  "why": [
+   "leaf-top:泰北菜"
+  ]
+ },
+ {
+  "id": 1114,
+  "name": "西贡妈妈Saigon Mama(港汇恒隆店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "越南河粉",
+  "why": [
+   "leaf-top:越南河粉"
+  ]
+ },
+ {
+  "id": 1117,
+  "name": "阮千金·法式越南菜",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "越餐",
+  "why": [
+   "leaf-top:越餐",
+   "leaf-top:顺化菜"
+  ]
+ },
+ {
+  "id": 1140,
+  "name": "RANGOLI蓝果丽印度餐厅(古北SOHO店)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "北印咖喱",
+  "why": [
+   "leaf-top:北印咖喱",
+   "leaf-top:印度菜"
+  ]
+ },
+ {
+  "id": 1148,
+  "name": "Indian Kitchen(南印)",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "印度菜",
+  "why": [
+   "leaf-top:印度菜",
+   "leaf-top:南印Dosa"
+  ]
+ },
+ {
+  "id": 1190,
+  "name": "撒马尔罕乌兹别克餐厅",
+  "tier": "中档",
+  "price_avg": 100,
+  "leaf": "中亚菜",
+  "why": [
+   "leaf-top:中亚菜",
+   "leaf-top:乌兹别克菜"
+  ]
+ },
+ {
+  "id": 1062,
+  "name": "楚韵酒馆·湖北卤味·潜江小龙虾(徐泾店)",
+  "tier": "中档",
+  "price_avg": 102,
+  "leaf": "潜江小龙虾·湖北夜宵",
+  "why": [
+   "leaf-top:潜江小龙虾·湖北夜宵"
+  ]
+ },
+ {
+  "id": 46,
+  "name": "静冈胜政",
+  "tier": "中档",
+  "price_avg": 104,
+  "leaf": "日式洋食",
+  "why": [
+   "leaf-top:日式洋食"
+  ]
+ },
+ {
+  "id": 796,
+  "name": "鲁菜羊肉馆(七莘路店)",
+  "tier": "中档",
+  "price_avg": 104,
+  "leaf": "济南菜",
+  "why": [
+   "leaf-top:济南菜"
+  ]
+ },
+ {
+  "id": 579,
+  "name": "本来川菜(陕西南路店)",
+  "tier": "中档",
+  "price_avg": 105,
+  "leaf": "自贡盐帮菜",
+  "why": [
+   "leaf-top:自贡盐帮菜"
+  ]
+ },
+ {
+  "id": 1333,
+  "name": "老门框爆肚涮肉(古美路店)",
+  "tier": "中档",
+  "price_avg": 106,
+  "leaf": "涮羊肉",
+  "why": [
+   "leaf-top:涮羊肉"
+  ]
+ },
+ {
+  "id": 552,
+  "name": "谭姐湘菜馆(浦东大道店)",
+  "tier": "中档",
+  "price_avg": 109,
+  "leaf": "湘西菜",
+  "why": [
+   "leaf-top:湘西菜"
+  ]
+ },
+ {
+  "id": 821,
+  "name": "海伯Bohai(全国首店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "鲁菜",
+  "why": [
+   "leaf-top:鲁菜"
+  ]
+ },
+ {
+  "id": 1643,
+  "name": "耶里夏丽·新疆菜(南京东路世茂店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "新疆菜",
+  "why": [
+   "leaf-top:新疆菜"
+  ]
+ },
+ {
+  "id": 1054,
+  "name": "老门框爆肚涮肉(四川北路店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "老北京铜锅涮肉",
+  "why": [
+   "leaf-top:老北京铜锅涮肉"
+  ]
+ },
+ {
+  "id": 1606,
+  "name": "来菜·湖北藕汤(月星环球港店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "湖北菜",
+  "why": [
+   "leaf-top:湖北菜",
+   "leaf-top:湖北家常菜馆·藕汤"
+  ]
+ },
+ {
+  "id": 1820,
+  "name": "食六区·罗氏虾龙虾烧烤夜宵(虹桥店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "潜江小龙虾·湖北夜宵",
+  "why": [
+   "leaf-top:潜江小龙虾·湖北夜宵"
+  ]
+ },
+ {
+  "id": 1605,
+  "name": "椰子不语椰子鸡火锅(凯德晶萃店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "海南菜",
+  "why": [
+   "leaf-top:海南菜",
+   "leaf-top:椰子鸡"
+  ]
+ },
+ {
+  "id": 1068,
+  "name": "冷三先生(虹莘路店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "韩式烤肉",
+  "why": [
+   "leaf-top:韩式烤肉"
+  ]
+ },
+ {
+  "id": 1600,
+  "name": "胡恰·景德江西菜(新天地店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "江西菜",
+  "why": [
+   "leaf-top:江西菜"
+  ]
+ },
+ {
+  "id": 1101,
+  "name": "Hidden Thai Bistro",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "船面",
+  "why": [
+   "leaf-top:船面"
+  ]
+ },
+ {
+  "id": 1105,
+  "name": "清迈排挡(北外滩来福士店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "泰东北Isan菜",
+  "why": [
+   "leaf-top:泰东北Isan菜"
+  ]
+ },
+ {
+  "id": 1308,
+  "name": "Nick&Nicky's Family妮琪泰式家庭料理(静安大悦城店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "泰东北Isan菜",
+  "why": [
+   "leaf-top:泰东北Isan菜"
+  ]
+ },
+ {
+  "id": 1125,
+  "name": "星洲小馆·新加坡菜(太阳宫店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "新加坡菜",
+  "why": [
+   "leaf-top:新加坡菜",
+   "leaf-top:新马印"
+  ]
+ },
+ {
+  "id": 1146,
+  "name": "Kaveen's Kitchen印度餐厅(虹桥店)",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "印度Biryani",
+  "why": [
+   "leaf-top:印度Biryani"
+  ]
+ },
+ {
+  "id": 1163,
+  "name": "安比斯印度餐厅",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "印度Biryani",
+  "why": [
+   "leaf-top:印度Biryani"
+  ]
+ },
+ {
+  "id": 1188,
+  "name": "Khachapuri格鲁吉亚美食",
+  "tier": "中档",
+  "price_avg": 110,
+  "leaf": "格鲁吉亚菜",
+  "why": [
+   "leaf-top:格鲁吉亚菜",
+   "leaf-top:中亚菜"
+  ]
+ },
+ {
+  "id": 535,
+  "name": "季家菜·温州饭摊(浦城路店)",
+  "tier": "中档",
+  "price_avg": 111,
+  "leaf": "浙菜",
+  "why": [
+   "leaf-top:浙菜"
+  ]
+ },
+ {
+  "id": 754,
+  "name": "裕兴记(徐家汇店)",
+  "tier": "中档",
+  "price_avg": 111,
+  "leaf": "苏帮菜",
+  "why": [
+   "leaf-top:苏帮菜"
+  ]
+ },
+ {
+  "id": 999,
+  "name": "茂隆餐厅(进贤路店)",
+  "tier": "中档",
+  "price_avg": 112,
+  "leaf": "本帮菜",
+  "why": [
+   "leaf-top:本帮菜"
+  ]
+ },
+ {
+  "id": 1073,
+  "name": "喜来稀肉(虹泉路店)",
+  "tier": "中档",
+  "price_avg": 112,
+  "leaf": "韩式烤肉",
+  "why": [
+   "leaf-top:韩式烤肉"
+  ]
+ },
+ {
+  "id": 1056,
+  "name": "佟爷老北京炙子烤肉(定西路店)",
+  "tier": "中档",
+  "price_avg": 115,
+  "leaf": "京味炙子烤肉·京味小菜",
+  "why": [
+   "leaf-top:京味炙子烤肉·京味小菜"
+  ]
+ },
+ {
+  "id": 557,
+  "name": "凤凰湘语(三湘大厦店)",
+  "tier": "中档",
+  "price_avg": 117,
+  "leaf": "湘西菜",
+  "why": [
+   "leaf-top:湘西菜"
+  ]
+ },
+ {
+  "id": 1023,
+  "name": "山石榴·贵州菜(丰盛里店)",
+  "tier": "中档",
+  "price_avg": 117,
+  "leaf": "西南菜",
+  "why": [
+   "leaf-top:西南菜"
+  ]
+ },
+ {
+  "id": 1830,
+  "name": "ONE WAY STREET精酿啤酒(大沽路店)",
+  "tier": "中档",
+  "price_avg": 117,
+  "leaf": "精酿啤酒吧",
+  "why": [
+   "leaf-top:精酿啤酒吧"
+  ]
+ },
+ {
+  "id": 1828,
+  "name": "Goose Island Taproom 鹅岛精酿啤酒屋(巨鹿路店)",
+  "tier": "中档",
+  "price_avg": 118,
+  "leaf": "精酿啤酒吧",
+  "why": [
+   "leaf-top:精酿啤酒吧"
+  ]
+ },
+ {
+  "id": 1436,
+  "name": "鸿姐老火锅·传统炒料(上海旗舰店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "渝菜",
+  "why": [
+   "leaf-top:渝菜"
+  ]
+ },
+ {
+  "id": 549,
+  "name": "金湘隆·清派湘菜(金沙江路店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "湘菜",
+  "why": [
+   "leaf-top:湘菜",
+   "leaf-top:长沙菜"
+  ]
+ },
+ {
+  "id": 830,
+  "name": "老头儿油爆虾(曲阳百联店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "杭帮菜",
+  "why": [
+   "leaf-top:杭帮菜"
+  ]
+ },
+ {
+  "id": 833,
+  "name": "茶人村·江南雅宴(前滩店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "杭帮菜",
+  "why": [
+   "leaf-top:杭帮菜"
+  ]
+ },
+ {
+  "id": 1013,
+  "name": "云之缘云南民族菜Lotus Eatery(定西路店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "云南菜",
+  "why": [
+   "leaf-top:云南菜"
+  ]
+ },
+ {
+  "id": 1616,
+  "name": "云海肴(上海闸北大悦城店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "西南菜",
+  "why": [
+   "leaf-top:西南菜"
+  ]
+ },
+ {
+  "id": 1031,
+  "name": "胡集酒肆·唐潮西域菜(万象城店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "新疆正餐",
+  "why": [
+   "leaf-top:新疆正餐"
+  ]
+ },
+ {
+  "id": 1066,
+  "name": "监利早酒·湖北菜(国定路店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "湖北菜高端·宴请",
+  "why": [
+   "leaf-top:湖北菜高端·宴请"
+  ]
+ },
+ {
+  "id": 1086,
+  "name": "大翰宫·蒙古包烤全羊·融合菜(七宝店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "内蒙古菜",
+  "why": [
+   "leaf-top:内蒙古菜",
+   "leaf-top:烤全羊",
+   "leaf-top:蒙餐·手把肉"
+  ]
+ },
+ {
+  "id": 1109,
+  "name": "清迈瓦罐火锅",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "泰北菜",
+  "why": [
+   "leaf-top:泰北菜"
+  ]
+ },
+ {
+  "id": 1130,
+  "name": "Secret Flavor(马来清真)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "新马印",
+  "why": [
+   "leaf-top:新马印",
+   "leaf-top:马来西亚菜"
+  ]
+ },
+ {
+  "id": 1306,
+  "name": "THE PAWON·8碗(古北SOHO店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "印尼菜",
+  "why": [
+   "leaf-top:印尼菜"
+  ]
+ },
+ {
+  "id": 1310,
+  "name": "莎德曼·秘烤美食殿(大拇指广场店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "乌兹别克菜",
+  "why": [
+   "leaf-top:乌兹别克菜"
+  ]
+ },
+ {
+  "id": 1302,
+  "name": "KOSMOS斯拉夫酒馆",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "俄式西餐",
+  "why": [
+   "leaf-top:俄式西餐"
+  ]
+ },
+ {
+  "id": 1239,
+  "name": "Element Fresh 新元素",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "Diner美式简餐",
+  "why": [
+   "leaf-top:Diner美式简餐"
+  ]
+ },
+ {
+  "id": 1250,
+  "name": "ELI FALAFEL 黎巴嫩餐厅(富城路店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "黎巴嫩地中海菜",
+  "why": [
+   "leaf-top:黎巴嫩地中海菜"
+  ]
+ },
+ {
+  "id": 1518,
+  "name": "鲜顺欧闽北私房菜(沪太支路店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "闽北菜",
+  "why": [
+   "leaf-top:闽北菜"
+  ]
+ },
+ {
+  "id": 812,
+  "name": "白茸小鲜(太阳宫店)",
+  "tier": "中档",
+  "price_avg": 120,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 594,
+  "name": "竹屋川菜",
+  "tier": "中档",
+  "price_avg": 122,
+  "leaf": "江湖菜",
+  "why": [
+   "leaf-top:江湖菜"
+  ]
+ },
+ {
+  "id": 474,
+  "name": "龙门阵茶屋川菜馆(武康路店)",
+  "tier": "中档",
+  "price_avg": 122,
+  "leaf": "海派改良川菜",
+  "why": [
+   "leaf-top:海派改良川菜"
+  ]
+ },
+ {
+  "id": 518,
+  "name": "莆田餐厅PUTIEN(BFC外滩金融中心店)",
+  "tier": "中档",
+  "price_avg": 122,
+  "leaf": "莆仙菜",
+  "why": [
+   "leaf-top:莆仙菜"
+  ]
+ },
+ {
+  "id": 1144,
+  "name": "虹盐RED SALT新派印巴餐厅(禧瑞广场店)",
+  "tier": "中档",
+  "price_avg": 124,
+  "leaf": "北印咖喱",
+  "why": [
+   "leaf-top:北印咖喱"
+  ]
+ },
+ {
+  "id": 23,
+  "name": "鳗重",
+  "tier": "中档",
+  "price_avg": 125,
+  "leaf": "鳗鱼饭",
+  "why": [
+   "leaf-top:鳗鱼饭"
+  ]
+ },
+ {
+  "id": 704,
+  "name": "何洪记(兴业太古汇店)",
+  "tier": "中档",
+  "price_avg": 125,
+  "leaf": "港式茶餐厅/冰室",
+  "why": [
+   "leaf-top:港式茶餐厅/冰室"
+  ]
+ },
+ {
+  "id": 533,
+  "name": "孔乙己酒家(文庙店)",
+  "tier": "中档",
+  "price_avg": 126,
+  "leaf": "绍兴菜",
+  "why": [
+   "leaf-top:绍兴菜"
+  ]
+ },
+ {
+  "id": 1088,
+  "name": "家在塔啦·烤全羊·蒙古包餐厅(天钥桥路店)",
+  "tier": "中档",
+  "price_avg": 127,
+  "leaf": "内蒙古菜",
+  "why": [
+   "leaf-top:内蒙古菜",
+   "leaf-top:烤全羊",
+   "leaf-top:蒙餐·手把肉"
+  ]
+ },
+ {
+  "id": 548,
+  "name": "御鲤湘(北京西路店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "洞庭湖区菜",
+  "why": [
+   "leaf-top:洞庭湖区菜"
+  ]
+ },
+ {
+  "id": 1613,
+  "name": "宁夏印象·盐池滩羊肉体验店(江宁路店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "西北菜",
+  "why": [
+   "leaf-top:西北菜",
+   "leaf-top:宁夏·西北清真手抓羊肉"
+  ]
+ },
+ {
+  "id": 1565,
+  "name": "京悦南门涮肉(人民广场店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "老北京铜锅涮肉",
+  "why": [
+   "leaf-top:老北京铜锅涮肉"
+  ]
+ },
+ {
+  "id": 1825,
+  "name": "西塔老太太泥炉烤肉(静安大悦城店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "京味炙子烤肉·京味小菜",
+  "why": [
+   "leaf-top:京味炙子烤肉·京味小菜"
+  ]
+ },
+ {
+  "id": 1077,
+  "name": "正三熙小木屋烤肉(虹泉路一号店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "韩式烤肉",
+  "why": [
+   "leaf-top:韩式烤肉",
+   "leaf-top:韩餐"
+  ]
+ },
+ {
+  "id": 1647,
+  "name": "爱上草原内蒙餐厅(老沪闵路店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "烤全羊",
+  "why": [
+   "leaf-top:烤全羊"
+  ]
+ },
+ {
+  "id": 1133,
+  "name": "南洋南香·东南亚美食(16铺店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "新马印",
+  "why": [
+   "leaf-top:新马印",
+   "leaf-top:马来西亚菜"
+  ]
+ },
+ {
+  "id": 1161,
+  "name": "Punjabi Bistro旁遮普",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "唐杜里/烤饼",
+  "why": [
+   "leaf-top:唐杜里/烤饼"
+  ]
+ },
+ {
+  "id": 1179,
+  "name": "BOTTEGA 意库",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "意餐",
+  "why": [
+   "leaf-top:意餐",
+   "leaf-top:那不勒斯披萨"
+  ]
+ },
+ {
+  "id": 1211,
+  "name": "俄士厨房(环球港店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "大列巴",
+  "why": [
+   "leaf-top:大列巴"
+  ]
+ },
+ {
+  "id": 1216,
+  "name": "El Santo Tacos&Tequila(158坊店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "墨西哥菜",
+  "why": [
+   "leaf-top:墨西哥菜"
+  ]
+ },
+ {
+  "id": 1215,
+  "name": "Cantina Agave(富民路店)",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "墨西哥菜",
+  "why": [
+   "leaf-top:墨西哥菜"
+  ]
+ },
+ {
+  "id": 1255,
+  "name": "Guinness Social by Butler & White's",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "英国菜",
+  "why": [
+   "leaf-top:英国菜",
+   "leaf-top:Fish&Chips"
+  ]
+ },
+ {
+  "id": 1256,
+  "name": "The Park Tavern",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "英国菜",
+  "why": [
+   "leaf-top:英国菜",
+   "leaf-top:Fish&Chips"
+  ]
+ },
+ {
+  "id": 1297,
+  "name": "Kora by Circle",
+  "tier": "中档",
+  "price_avg": 130,
+  "leaf": "非洲菜",
+  "why": [
+   "leaf-top:非洲菜"
+  ]
+ },
+ {
+  "id": 855,
+  "name": "越稽·地道绍兴菜馆(PAC购物中心店)",
+  "tier": "中档",
+  "price_avg": 131,
+  "leaf": "绍兴菜",
+  "why": [
+   "leaf-top:绍兴菜"
+  ]
+ },
+ {
+  "id": 1619,
+  "name": "芸山季云南野生菌火锅(上海来福士广场店)",
+  "tier": "中档",
+  "price_avg": 133,
+  "leaf": "西南菜",
+  "why": [
+   "leaf-top:西南菜"
+  ]
+ },
+ {
+  "id": 765,
+  "name": "米桃·江南苏锡菜(久光中心店)",
+  "tier": "中档",
+  "price_avg": 135,
+  "leaf": "锡菜",
+  "why": [
+   "leaf-top:锡菜"
+  ]
+ },
+ {
+  "id": 1067,
+  "name": "椰子不语椰子鸡火锅(淮海店)",
+  "tier": "中档",
+  "price_avg": 135,
+  "leaf": "海南菜",
+  "why": [
+   "leaf-top:海南菜",
+   "leaf-top:椰子鸡",
+   "leaf-top:糟粕醋"
+  ]
+ },
+ {
+  "id": 1443,
+  "name": "烤匠麻辣烤鱼(上海首店·五角场合生汇店)",
+  "tier": "中档",
+  "price_avg": 139,
+  "leaf": "江湖菜",
+  "why": [
+   "leaf-top:江湖菜"
+  ]
+ },
+ {
+  "id": 1861,
+  "name": "La Burg 勒博格金砖俱乐部南非餐吧",
+  "tier": "中档",
+  "price_avg": 139,
+  "leaf": "南非",
+  "why": [
+   "leaf-top:南非",
+   "leaf-top:南非正餐/烤肉",
+   "leaf-top:Bobotie马来风味派"
+  ]
+ },
+ {
+  "id": 1457,
+  "name": "东莱·海上",
+  "tier": "中档",
+  "price_avg": 140,
+  "leaf": "鲁菜",
+  "why": [
+   "leaf-top:鲁菜",
+   "leaf-top:胶东菜"
+  ]
+ },
+ {
+  "id": 1604,
+  "name": "嗲嗲的椰子鸡(五角场百联又一城店)",
+  "tier": "中档",
+  "price_avg": 140,
+  "leaf": "海南菜",
+  "why": [
+   "leaf-top:海南菜",
+   "leaf-top:椰子鸡"
+  ]
+ },
+ {
+  "id": 1220,
+  "name": "Maya",
+  "tier": "中档",
+  "price_avg": 140,
+  "leaf": "墨西哥菜",
+  "why": [
+   "leaf-top:墨西哥菜"
+  ]
+ },
+ {
+  "id": 1865,
+  "name": "Tacolicious(同乐坊店)",
+  "tier": "中档",
+  "price_avg": 140,
+  "leaf": "墨西哥菜",
+  "why": [
+   "leaf-top:墨西哥菜",
+   "leaf-top:创意Taco/Quesadilla",
+   "leaf-top:Tex-Mex"
+  ]
+ },
+ {
+  "id": 1572,
+  "name": "鼎泰丰(新天地店)",
+  "tier": "中档",
+  "price_avg": 145,
+  "leaf": "台湾菜",
+  "why": [
+   "leaf-top:台湾菜"
+  ]
+ },
+ {
+  "id": 34,
+  "name": "黑门乐酒天",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "居酒屋",
+  "why": [
+   "leaf-top:居酒屋"
+  ]
+ },
+ {
+  "id": 805,
+  "name": "崴海渔村/威海渔村(虹梅路总店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "胶东菜",
+  "why": [
+   "leaf-top:胶东菜"
+  ]
+ },
+ {
+  "id": 603,
+  "name": "有根葱不改良老火锅(徐汇全国首店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "渝菜",
+  "why": [
+   "leaf-top:渝菜"
+  ]
+ },
+ {
+  "id": 1503,
+  "name": "荣家黄鱼面(南京西路店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "浙菜",
+  "why": [
+   "leaf-top:浙菜",
+   "leaf-top:台州菜"
+  ]
+ },
+ {
+  "id": 947,
+  "name": "孙大师小鲜（原小皖宴）",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "皖江菜",
+  "why": [
+   "leaf-top:皖江菜"
+  ]
+ },
+ {
+  "id": 980,
+  "name": "宁夏印象·盐池滩羊(徐家汇店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "宁夏·西北清真手抓羊肉",
+  "why": [
+   "leaf-top:宁夏·西北清真手抓羊肉"
+  ]
+ },
+ {
+  "id": 995,
+  "name": "喜尚鲜·东北小馆(外滩外白渡桥店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "东北菜",
+  "why": [
+   "leaf-top:东北菜",
+   "leaf-top:东北菜高端"
+  ]
+ },
+ {
+  "id": 1021,
+  "name": "黔香阁(虹中路店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "贵州菜",
+  "why": [
+   "leaf-top:贵州菜"
+  ]
+ },
+ {
+  "id": 1030,
+  "name": "锡伯新疆餐厅(常熟路店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "新疆正餐",
+  "why": [
+   "leaf-top:新疆正餐"
+  ]
+ },
+ {
+  "id": 1055,
+  "name": "南门涮肉(世博大道总店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "老北京铜锅涮肉",
+  "why": [
+   "leaf-top:老北京铜锅涮肉"
+  ]
+ },
+ {
+  "id": 1576,
+  "name": "桂芭蕉GUI BISTRO(静安嘉里中心店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "广西菜",
+  "why": [
+   "leaf-top:广西菜"
+  ]
+ },
+ {
+  "id": 1100,
+  "name": "Mi Thai(安福路店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "冬阴功",
+  "why": [
+   "leaf-top:冬阴功",
+   "leaf-top:泰餐"
+  ]
+ },
+ {
+  "id": 1096,
+  "name": "四面泰(环贸iapm店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "冬阴功",
+  "why": [
+   "leaf-top:冬阴功",
+   "leaf-top:泰餐"
+  ]
+ },
+ {
+  "id": 1169,
+  "name": "MAKAN阿拉伯餐厅",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "中东/阿拉伯菜",
+  "why": [
+   "leaf-top:中东/阿拉伯菜",
+   "leaf-top:阿拉伯烧烤"
+  ]
+ },
+ {
+  "id": 1209,
+  "name": "飞象西餐厅",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "俄餐",
+  "why": [
+   "leaf-top:俄餐",
+   "leaf-top:俄式西餐"
+  ]
+ },
+ {
+  "id": 1212,
+  "name": "HELLO KIEV 乌克兰主题餐厅(世博源店)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "俄餐",
+  "why": [
+   "leaf-top:俄餐",
+   "leaf-top:红菜汤"
+  ]
+ },
+ {
+  "id": 1232,
+  "name": "Crafted 蔻阁梧桐露台西餐厅",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "炸鸡",
+  "why": [
+   "leaf-top:炸鸡"
+  ]
+ },
+ {
+  "id": 1816,
+  "name": "Sober Company",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "鸡尾酒吧",
+  "why": [
+   "leaf-top:鸡尾酒吧"
+  ]
+ },
+ {
+  "id": 1242,
+  "name": "The Nest(外滩)",
+  "tier": "中档",
+  "price_avg": 150,
+  "leaf": "北欧菜",
+  "why": [
+   "leaf-top:北欧菜",
+   "leaf-top:新北欧料理",
+   "leaf-top:北欧海鲜"
+  ]
+ },
+ {
+  "id": 1334,
+  "name": "严记老北京涮锅(乌鲁木齐路店)",
+  "tier": "中档",
+  "price_avg": 151,
+  "leaf": "内蒙古菜",
+  "why": [
+   "leaf-top:内蒙古菜",
+   "leaf-top:涮羊肉"
+  ]
+ },
+ {
+  "id": 1592,
+  "name": "老正兴(福州路店)",
+  "tier": "中档",
+  "price_avg": 153,
+  "leaf": "本帮浓油赤酱老字号",
+  "why": [
+   "leaf-top:本帮浓油赤酱老字号"
+  ]
+ },
+ {
+  "id": 550,
+  "name": "古意湘味浓(久光店)",
+  "tier": "中档",
+  "price_avg": 155,
+  "leaf": "洞庭湖区菜",
+  "why": [
+   "leaf-top:洞庭湖区菜"
+  ]
+ },
+ {
+  "id": 1042,
+  "name": "吴记鲜定味(吴中路店)",
+  "tier": "中档",
+  "price_avg": 155,
+  "leaf": "台湾家常菜",
+  "why": [
+   "leaf-top:台湾家常菜"
+  ]
+ },
+ {
+  "id": 861,
+  "name": "浙时码头·温州海鲜大排档(静安寺店)",
+  "tier": "中档",
+  "price_avg": 156,
+  "leaf": "温州菜",
+  "why": [
+   "leaf-top:温州菜"
+  ]
+ },
+ {
+  "id": 1307,
+  "name": "YA BENJIA by元爱本家(金虹桥店)",
+  "tier": "中档",
+  "price_avg": 158,
+  "leaf": "韩定食",
+  "why": [
+   "leaf-top:韩定食"
+  ]
+ },
+ {
+  "id": 1859,
+  "name": "The Odd Couple",
+  "tier": "中档",
+  "price_avg": 158,
+  "leaf": "鸡尾酒吧",
+  "why": [
+   "leaf-top:鸡尾酒吧"
+  ]
+ },
+ {
+  "id": 1515,
+  "name": "莆田餐厅PUTIEN(环贸iapm店)",
+  "tier": "中档",
+  "price_avg": 160,
+  "leaf": "莆仙菜",
+  "why": [
+   "leaf-top:莆仙菜"
+  ]
+ },
+ {
+  "id": 846,
+  "name": "宁海食福·小漁家(复兴中路店)",
+  "tier": "中档",
+  "price_avg": 160,
+  "leaf": "宁波菜",
+  "why": [
+   "leaf-top:宁波菜"
+  ]
+ },
+ {
+  "id": 1607,
+  "name": "靓靓蒸虾(定西路上海首店)",
+  "tier": "中档",
+  "price_avg": 160,
+  "leaf": "湖北菜",
+  "why": [
+   "leaf-top:湖北菜",
+   "leaf-top:潜江小龙虾·湖北夜宵"
+  ]
+ },
+ {
+  "id": 1097,
+  "name": "Home Thai(K11店)",
+  "tier": "中档",
+  "price_avg": 160,
+  "leaf": "冬阴功",
+  "why": [
+   "leaf-top:冬阴功"
+  ]
+ },
+ {
+  "id": 1102,
+  "name": "Akanee Thai Izakaya(愚园路)",
+  "tier": "中档",
+  "price_avg": 160,
+  "leaf": "泰北菜",
+  "why": [
+   "leaf-top:泰北菜"
+  ]
+ },
+ {
+  "id": 1142,
+  "name": "KLAY Modern Indian Restaurant(北京西路店)",
+  "tier": "中档",
+  "price_avg": 160,
+  "leaf": "印度菜",
+  "why": [
+   "leaf-top:印度菜",
+   "leaf-top:唐杜里/烤饼"
+  ]
+ },
+ {
+  "id": 1167,
+  "name": "Otantik黎凡特美食(西藏中路店)",
+  "tier": "中档",
+  "price_avg": 160,
+  "leaf": "黎巴嫩菜",
+  "why": [
+   "leaf-top:黎巴嫩菜",
+   "leaf-top:中东/阿拉伯菜"
+  ]
+ },
+ {
+  "id": 1180,
+  "name": "Shiraz波斯餐厅",
+  "tier": "中档",
+  "price_avg": 160,
+  "leaf": "波斯菜",
+  "why": [
+   "leaf-top:波斯菜"
+  ]
+ },
+ {
+  "id": 1204,
+  "name": "德国瀚克硕啤酒花园餐厅 Hacker-Pschorr",
+  "tier": "中档",
+  "price_avg": 160,
+  "leaf": "猪肘香肠啤酒",
+  "why": [
+   "leaf-top:猪肘香肠啤酒",
+   "leaf-top:德餐"
+  ]
+ },
+ {
+  "id": 1006,
+  "name": "绿波廊(豫园店)",
+  "tier": "中档",
+  "price_avg": 162,
+  "leaf": "本帮浓油赤酱老字号",
+  "why": [
+   "leaf-top:本帮浓油赤酱老字号"
+  ]
+ },
+ {
+  "id": 1298,
+  "name": "Trattoria del Bistecca·1565",
+  "tier": "中档",
+  "price_avg": 162,
+  "leaf": "佛罗伦萨牛排",
+  "why": [
+   "leaf-top:佛罗伦萨牛排"
+  ]
+ },
+ {
+  "id": 1827,
+  "name": "Project W威士忌·鸡尾酒",
+  "tier": "中档",
+  "price_avg": 162,
+  "leaf": "威士忌吧",
+  "why": [
+   "leaf-top:威士忌吧"
+  ]
+ },
+ {
+  "id": 866,
+  "name": "浙时码头·温州海鲜大排档(汾阳路店)",
+  "tier": "中档",
+  "price_avg": 167,
+  "leaf": "温州菜",
+  "why": [
+   "leaf-top:温州菜"
+  ]
+ },
+ {
+  "id": 1826,
+  "name": "Tourbillon 特彼龙 Whisky Lounge",
+  "tier": "中档",
+  "price_avg": 172,
+  "leaf": "Bar",
+  "why": [
+   "leaf-top:Bar",
+   "leaf-top:鸡尾酒吧",
+   "leaf-top:威士忌吧"
+  ]
+ },
+ {
+  "id": 1324,
+  "name": "玄白·炭烤活鳗(高岛屋首店)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "鳗鱼饭",
+  "why": [
+   "leaf-top:鳗鱼饭"
+  ]
+ },
+ {
+  "id": 458,
+  "name": "东莱海上(长宁来福士店)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "鲁菜",
+  "why": [
+   "leaf-top:鲁菜",
+   "leaf-top:胶东菜"
+  ]
+ },
+ {
+  "id": 835,
+  "name": "锦楼·臻选新杭帮(正大广场店)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "杭帮菜",
+  "why": [
+   "leaf-top:杭帮菜"
+  ]
+ },
+ {
+  "id": 1615,
+  "name": "泓0871臻选云南菜·寻鲜宴(上海北外滩店)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "西南菜",
+  "why": [
+   "leaf-top:西南菜",
+   "award"
+  ]
+ },
+ {
+  "id": 1184,
+  "name": "Hoxa Bistro沙美大楼",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "新疆菜",
+  "why": [
+   "leaf-top:新疆菜"
+  ]
+ },
+ {
+  "id": 1081,
+  "name": "草家真味酱蟹(天乐广场店)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "韩餐",
+  "why": [
+   "leaf-top:韩餐",
+   "leaf-top:酱蟹"
+  ]
+ },
+ {
+  "id": 1134,
+  "name": "Docks河畔餐厅(静安英迪格)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "新加坡菜",
+  "why": [
+   "leaf-top:新加坡菜",
+   "leaf-top:新马印",
+   "leaf-top:印尼菜"
+  ]
+ },
+ {
+  "id": 1165,
+  "name": "Otantik黎凡特美食(吴江路店)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "黎巴嫩菜",
+  "why": [
+   "leaf-top:黎巴嫩菜",
+   "leaf-top:中东/阿拉伯菜"
+  ]
+ },
+ {
+  "id": 1234,
+  "name": "尚牛社会 Beef & Liberty",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "美式牛排",
+  "why": [
+   "leaf-top:美式牛排",
+   "leaf-top:美餐",
+   "leaf-top:汉堡"
+  ]
+ },
+ {
+  "id": 1228,
+  "name": "Tajine Moroccan 塔金摩洛哥中东餐厅",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "Couscous库斯库斯",
+  "why": [
+   "leaf-top:Couscous库斯库斯",
+   "leaf-top:摩洛哥",
+   "leaf-top:摩洛哥塔吉锅正餐"
+  ]
+ },
+ {
+  "id": 1270,
+  "name": "Liquid Laundry",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "Diner美式简餐",
+  "why": [
+   "leaf-top:Diner美式简餐"
+  ]
+ },
+ {
+  "id": 1260,
+  "name": "BOR Eatery",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "北欧菜",
+  "why": [
+   "leaf-top:北欧菜",
+   "leaf-top:新北欧料理"
+  ]
+ },
+ {
+  "id": 1263,
+  "name": "北欧森林(安福路)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "北欧海鲜",
+  "why": [
+   "leaf-top:北欧海鲜"
+  ]
+ },
+ {
+  "id": 1244,
+  "name": "Greek Taverna Milos 希腊餐厅(老外街店)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "地中海/希腊菜",
+  "why": [
+   "leaf-top:地中海/希腊菜",
+   "leaf-top:希腊菜"
+  ]
+ },
+ {
+  "id": 1249,
+  "name": "So Mezze by Pasha",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "土耳其菜",
+  "why": [
+   "leaf-top:土耳其菜"
+  ]
+ },
+ {
+  "id": 1293,
+  "name": "La Burg勒博格南非餐吧",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "非洲菜",
+  "why": [
+   "leaf-top:非洲菜"
+  ]
+ },
+ {
+  "id": 1866,
+  "name": "Flambe Bistro 奥地利餐厅(湖滨道店)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "维也纳烤肋排/皇帝松饼",
+  "why": [
+   "leaf-top:维也纳烤肋排/皇帝松饼",
+   "leaf-top:奥地利",
+   "leaf-top:维也纳炸猪排"
+  ]
+ },
+ {
+  "id": 1868,
+  "name": "Delight Food 比利时啤酒餐厅(老外街店)",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "比利时啤酒/华夫饼",
+  "why": [
+   "leaf-top:比利时啤酒/华夫饼",
+   "leaf-top:比利时青口贝/薯条",
+   "leaf-top:比利时"
+  ]
+ },
+ {
+  "id": 1349,
+  "name": "Yaya's Pasta Bar",
+  "tier": "中档",
+  "price_avg": 180,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 48,
+  "name": "大志/king大志",
+  "tier": "中档",
+  "price_avg": 185,
+  "leaf": "烧肉",
+  "why": [
+   "leaf-top:烧肉",
+   "regression"
+  ]
+ },
+ {
+  "id": 1048,
+  "name": "bistro bonbon凤凤亭(武夷路店)",
+  "tier": "中档",
+  "price_avg": 185,
+  "leaf": "高端台菜·台菜Bistro",
+  "why": [
+   "leaf-top:高端台菜·台菜Bistro"
+  ]
+ },
+ {
+  "id": 1138,
+  "name": "Masala Art Indian Cuisine(大沽路店)",
+  "tier": "中档",
+  "price_avg": 186,
+  "leaf": "北印咖喱",
+  "why": [
+   "leaf-top:北印咖喱",
+   "leaf-top:印度菜"
+  ]
+ },
+ {
+  "id": 1834,
+  "name": "Lab whisky&cocktail(武定路店)",
+  "tier": "中档",
+  "price_avg": 188,
+  "leaf": "威士忌吧",
+  "why": [
+   "leaf-top:威士忌吧"
+  ]
+ },
+ {
+  "id": 664,
+  "name": "新顺记(南洋1931店)",
+  "tier": "中档",
+  "price_avg": 189,
+  "leaf": "顺德菜",
+  "why": [
+   "leaf-top:顺德菜"
+  ]
+ },
+ {
+  "id": 1434,
+  "name": "鸟鸟炒菜店(南昌路)",
+  "tier": "中档",
+  "price_avg": 190,
+  "leaf": "江湖菜",
+  "why": [
+   "leaf-top:江湖菜",
+   "leaf-top:成都家常菜/苍蝇馆子",
+   "regression"
+  ]
+ },
+ {
+  "id": 1892,
+  "name": "帅帅精致家常味(长乐路店)",
+  "tier": "中档",
+  "price_avg": 195,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 894,
+  "name": "呷佰贰",
+  "tier": "中档",
+  "price_avg": 196,
+  "leaf": "闽南菜",
+  "why": [
+   "leaf-top:闽南菜"
+  ]
+ },
+ {
+  "id": 1832,
+  "name": "PuR'aisin Wine Bar皮酉海让葡萄酒酒吧(定西路店)",
+  "tier": "中档",
+  "price_avg": 196,
+  "leaf": "葡萄酒/自然酒吧",
+  "why": [
+   "leaf-top:葡萄酒/自然酒吧"
+  ]
+ },
+ {
+  "id": 459,
+  "name": "老山东·鲁菜馆(陆家嘴店)",
+  "tier": "中档",
+  "price_avg": 198,
+  "leaf": "鲁菜",
+  "why": [
+   "leaf-top:鲁菜"
+  ]
+ },
+ {
+  "id": 1864,
+  "name": "El Bodegon 阿根廷餐厅(常熟路店)",
+  "tier": "中档",
+  "price_avg": 199,
+  "leaf": "阿根廷Asado炭烤牛排",
+  "why": [
+   "leaf-top:阿根廷Asado炭烤牛排",
+   "leaf-top:Empanada馅饼/Chimichurri",
+   "leaf-top:阿根廷"
+  ]
+ },
+ {
+  "id": 8,
+  "name": "酉町·烧鸟专门店",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "居酒屋",
+  "why": [
+   "leaf-top:居酒屋"
+  ]
+ },
+ {
+  "id": 24,
+  "name": "哲平鳗满",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "鳗鱼饭",
+  "why": [
+   "leaf-top:鳗鱼饭"
+  ]
+ },
+ {
+  "id": 852,
+  "name": "绍兴饭店·尊鲜(大宁国际店)",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "绍兴菜",
+  "why": [
+   "leaf-top:绍兴菜"
+  ]
+ },
+ {
+  "id": 1594,
+  "name": "人和馆(肇嘉浜路店)",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "海派融合",
+  "why": [
+   "leaf-top:海派融合"
+  ]
+ },
+ {
+  "id": 1050,
+  "name": "四季民福PEKING CHAMBER(吴淞路外白渡桥店)",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "北京烤鸭",
+  "why": [
+   "leaf-top:北京烤鸭",
+   "leaf-top:京菜"
+  ]
+ },
+ {
+  "id": 1296,
+  "name": "Verdant浮叶",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "台湾菜",
+  "why": [
+   "leaf-top:台湾菜",
+   "leaf-top:融合菜/Fusion"
+  ]
+ },
+ {
+  "id": 1079,
+  "name": "孔德洞真味酱蟹",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "韩餐",
+  "why": [
+   "leaf-top:韩餐",
+   "leaf-top:酱蟹"
+  ]
+ },
+ {
+  "id": 1084,
+  "name": "熹餐厅",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "豫菜·烩面",
+  "why": [
+   "leaf-top:豫菜·烩面",
+   "leaf-top:豫菜·胡辣汤",
+   "leaf-top:豫菜·开封洛阳"
+  ]
+ },
+ {
+  "id": 1189,
+  "name": "ALLORA 意大利西餐厅(外滩店)",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "意面",
+  "why": [
+   "leaf-top:意面"
+  ]
+ },
+ {
+  "id": 1201,
+  "name": "Brownstone Tapas & Lounge",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "Tapas",
+  "why": [
+   "leaf-top:Tapas"
+  ]
+ },
+ {
+  "id": 1219,
+  "name": "Texas Roadhouse 德州公路牛排馆(世纪汇店)",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "美式牛排",
+  "why": [
+   "leaf-top:美式牛排",
+   "leaf-top:美餐"
+  ]
+ },
+ {
+  "id": 1227,
+  "name": "Bourbon Cookhouse 玻本美式餐厅酒吧",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "BBQ烧烤",
+  "why": [
+   "leaf-top:BBQ烧烤"
+  ]
+ },
+ {
+  "id": 1271,
+  "name": "Smokin' Hog 美式烟熏BBQ",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "BBQ烧烤",
+  "why": [
+   "leaf-top:BBQ烧烤"
+  ]
+ },
+ {
+  "id": 1361,
+  "name": "Mavis966",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "Bar",
+  "why": [
+   "leaf-top:Bar",
+   "leaf-top:葡萄酒/自然酒吧"
+  ]
+ },
+ {
+  "id": 1251,
+  "name": "LEYAS 蕾娅中东美食",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "地中海/希腊菜",
+  "why": [
+   "leaf-top:地中海/希腊菜",
+   "leaf-top:黎巴嫩地中海菜"
+  ]
+ },
+ {
+  "id": 1252,
+  "name": "Otantik",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "黎巴嫩地中海菜",
+  "why": [
+   "leaf-top:黎巴嫩地中海菜"
+  ]
+ },
+ {
+  "id": 1634,
+  "name": "礼部·新京菜(CP静安店)",
+  "tier": "高档",
+  "price_avg": 200,
+  "leaf": "宫廷官府菜",
+  "why": [
+   "leaf-top:宫廷官府菜"
+  ]
+ },
+ {
+  "id": 1833,
+  "name": "葡道Wine Shop & Bar(武康店)",
+  "tier": "高档",
+  "price_avg": 201,
+  "leaf": "葡萄酒/自然酒吧",
+  "why": [
+   "leaf-top:葡萄酒/自然酒吧"
+  ]
+ },
+ {
+  "id": 40,
+  "name": "桃山日本料理铁板烧",
+  "tier": "高档",
+  "price_avg": 207,
+  "leaf": "铁板烧",
+  "why": [
+   "leaf-top:铁板烧"
+  ]
+ },
+ {
+  "id": 564,
+  "name": "徽商故里(虹桥店)",
+  "tier": "高档",
+  "price_avg": 207,
+  "leaf": "徽菜",
+  "why": [
+   "leaf-top:徽菜",
+   "leaf-top:徽州菜"
+  ]
+ },
+ {
+  "id": 1350,
+  "name": "Nono's",
+  "tier": "高档",
+  "price_avg": 210,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 504,
+  "name": "食庐(虹桥南丰城店)",
+  "tier": "高档",
+  "price_avg": 220,
+  "leaf": "淮扬菜",
+  "why": [
+   "leaf-top:淮扬菜"
+  ]
+ },
+ {
+  "id": 521,
+  "name": "闽和南·欢席(苏河湾万象天地店)",
+  "tier": "高档",
+  "price_avg": 220,
+  "leaf": "闽南菜",
+  "why": [
+   "leaf-top:闽南菜"
+  ]
+ },
+ {
+  "id": 554,
+  "name": "六月半湖南湘鲜馆(嘉里中心店)",
+  "tier": "高档",
+  "price_avg": 220,
+  "leaf": "湘西菜",
+  "why": [
+   "leaf-top:湘西菜"
+  ]
+ },
+ {
+  "id": 665,
+  "name": "顺席(肇嘉浜路店)",
+  "tier": "高档",
+  "price_avg": 220,
+  "leaf": "顺德菜",
+  "why": [
+   "leaf-top:顺德菜"
+  ]
+ },
+ {
+  "id": 1024,
+  "name": "毛辣果Maolaguo",
+  "tier": "高档",
+  "price_avg": 220,
+  "leaf": "贵州菜",
+  "why": [
+   "leaf-top:贵州菜"
+  ]
+ },
+ {
+  "id": 1182,
+  "name": "Barbarossa",
+  "tier": "高档",
+  "price_avg": 220,
+  "leaf": "中东/阿拉伯菜",
+  "why": [
+   "leaf-top:中东/阿拉伯菜",
+   "leaf-top:阿拉伯烧烤"
+  ]
+ },
+ {
+  "id": 1193,
+  "name": "Grappa's 意大利餐厅",
+  "tier": "高档",
+  "price_avg": 220,
+  "leaf": "意面",
+  "why": [
+   "leaf-top:意面"
+  ]
+ },
+ {
+  "id": 1247,
+  "name": "The Fat Olive 欧立威",
+  "tier": "高档",
+  "price_avg": 220,
+  "leaf": "地中海/希腊菜",
+  "why": [
+   "leaf-top:地中海/希腊菜",
+   "leaf-top:希腊菜"
+  ]
+ },
+ {
+  "id": 598,
+  "name": "四吉饭店",
+  "tier": "高档",
+  "price_avg": 227,
+  "leaf": "川菜",
+  "why": [
+   "leaf-top:川菜",
+   "leaf-top:官府菜/蓉派川菜"
+  ]
+ },
+ {
+  "id": 1047,
+  "name": "光头匠·光实匠(南丰城店)",
+  "tier": "高档",
+  "price_avg": 231,
+  "leaf": "高端台菜·台菜Bistro",
+  "why": [
+   "leaf-top:高端台菜·台菜Bistro"
+  ]
+ },
+ {
+  "id": 994,
+  "name": "喜鼎海胆水饺(长宁来福士店)",
+  "tier": "高档",
+  "price_avg": 237,
+  "leaf": "东北菜",
+  "why": [
+   "leaf-top:东北菜",
+   "leaf-top:东北菜高端"
+  ]
+ },
+ {
+  "id": 798,
+  "name": "城南往事(滨江世茂店)",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "济南菜",
+  "why": [
+   "leaf-top:济南菜"
+  ]
+ },
+ {
+  "id": 1517,
+  "name": "乾七道文化会馆(曲阳路复城国际店)",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "莆仙菜",
+  "why": [
+   "leaf-top:莆仙菜"
+  ]
+ },
+ {
+  "id": 541,
+  "name": "南麓·浙里(外滩店)",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "浙菜",
+  "why": [
+   "leaf-top:浙菜"
+  ]
+ },
+ {
+  "id": 869,
+  "name": "双井头饭店(上海首店)",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "温州菜",
+  "why": [
+   "leaf-top:温州菜"
+  ]
+ },
+ {
+  "id": 572,
+  "name": "徽商故里(陆家嘴店)",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "徽菜",
+  "why": [
+   "leaf-top:徽菜",
+   "leaf-top:徽州菜"
+  ]
+ },
+ {
+  "id": 1354,
+  "name": "MONA",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "那不勒斯披萨",
+  "why": [
+   "leaf-top:那不勒斯披萨"
+  ]
+ },
+ {
+  "id": 1359,
+  "name": "Vinism Wine Bar",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "Bar",
+  "why": [
+   "leaf-top:Bar",
+   "leaf-top:葡萄酒/自然酒吧"
+  ]
+ },
+ {
+  "id": 1248,
+  "name": "Efes Turkish & Mediterranean 爱妃丝土耳其餐厅",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "地中海/希腊菜",
+  "why": [
+   "leaf-top:地中海/希腊菜",
+   "leaf-top:土耳其菜"
+  ]
+ },
+ {
+  "id": 1863,
+  "name": "拉蒂娜·巴西牛排馆 Latina(陆家嘴旗舰店)",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "巴西",
+  "why": [
+   "leaf-top:巴西",
+   "leaf-top:巴西烤肉Churrasco自助",
+   "leaf-top:巴西烤牛舌/烤菠萝"
+  ]
+ },
+ {
+  "id": 1809,
+  "name": "Nono's Ristorante",
+  "tier": "高档",
+  "price_avg": 250,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 1002,
+  "name": "老吉士酒家(天平路店)",
+  "tier": "高档",
+  "price_avg": 260,
+  "leaf": "本帮菜",
+  "why": [
+   "leaf-top:本帮菜"
+  ]
+ },
+ {
+  "id": 1202,
+  "name": "Tomatito",
+  "tier": "高档",
+  "price_avg": 260,
+  "leaf": "海鲜饭",
+  "why": [
+   "leaf-top:海鲜饭",
+   "leaf-top:西班牙菜"
+  ]
+ },
+ {
+  "id": 1843,
+  "name": "聪菜馆",
+  "tier": "高档",
+  "price_avg": 268,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 565,
+  "name": "璞徽(长泰广场店)",
+  "tier": "高档",
+  "price_avg": 272,
+  "leaf": "徽菜",
+  "why": [
+   "leaf-top:徽菜"
+  ]
+ },
+ {
+  "id": 697,
+  "name": "润苑·悦椿轩(徐汇万科中心店)",
+  "tier": "高档",
+  "price_avg": 280,
+  "leaf": "客家菜",
+  "why": [
+   "leaf-top:客家菜"
+  ]
+ },
+ {
+  "id": 1269,
+  "name": "el Efante",
+  "tier": "高档",
+  "price_avg": 280,
+  "leaf": "Tapas",
+  "why": [
+   "leaf-top:Tapas"
+  ]
+ },
+ {
+  "id": 1205,
+  "name": "宝莱纳餐厅(长宁来福士店)",
+  "tier": "高档",
+  "price_avg": 280,
+  "leaf": "猪肘香肠啤酒",
+  "why": [
+   "leaf-top:猪肘香肠啤酒",
+   "leaf-top:德餐"
+  ]
+ },
+ {
+  "id": 1206,
+  "name": "宝莱纳餐厅(西岸梦中心店)",
+  "tier": "高档",
+  "price_avg": 280,
+  "leaf": "猪肘香肠啤酒",
+  "why": [
+   "leaf-top:猪肘香肠啤酒",
+   "leaf-top:德餐"
+  ]
+ },
+ {
+  "id": 1300,
+  "name": "Albaluz",
+  "tier": "高档",
+  "price_avg": 298,
+  "leaf": "西班牙菜",
+  "why": [
+   "leaf-top:西班牙菜",
+   "leaf-top:伊比利亚火腿"
+  ]
+ },
+ {
+  "id": 1847,
+  "name": "来去Laichill",
+  "tier": "高档",
+  "price_avg": 298,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 29,
+  "name": "日和寿喜烧",
+  "tier": "高档",
+  "price_avg": 300,
+  "leaf": "寿喜烧",
+  "why": [
+   "leaf-top:寿喜烧"
+  ]
+ },
+ {
+  "id": 32,
+  "name": "motoya寿喜烧",
+  "tier": "高档",
+  "price_avg": 300,
+  "leaf": "寿喜烧",
+  "why": [
+   "leaf-top:寿喜烧"
+  ]
+ },
+ {
+  "id": 1268,
+  "name": "Giovanni's 意大利餐厅(虹桥喜来登)",
+  "tier": "高档",
+  "price_avg": 300,
+  "leaf": "意面",
+  "why": [
+   "leaf-top:意面"
+  ]
+ },
+ {
+  "id": 1203,
+  "name": "宝莱纳餐厅(北外滩店)",
+  "tier": "高档",
+  "price_avg": 300,
+  "leaf": "猪肘香肠啤酒",
+  "why": [
+   "leaf-top:猪肘香肠啤酒",
+   "leaf-top:德餐"
+  ]
+ },
+ {
+  "id": 1742,
+  "name": "Bar Leone",
+  "tier": "高档",
+  "price_avg": 300,
+  "leaf": "Bar",
+  "why": [
+   "leaf-top:Bar",
+   "leaf-top:鸡尾酒吧"
+  ]
+ },
+ {
+  "id": 1862,
+  "name": "COLCA 秘鲁西班牙餐厅(衡山路店)",
+  "tier": "高档",
+  "price_avg": 300,
+  "leaf": "秘鲁-西班牙融合菜",
+  "why": [
+   "leaf-top:秘鲁-西班牙融合菜",
+   "leaf-top:秘鲁",
+   "leaf-top:秘鲁国菜Ceviche酸橘汁腌鱼"
+  ]
+ },
+ {
+  "id": 970,
+  "name": "憶长安·西安宴·陕派官府菜",
+  "tier": "高档",
+  "price_avg": 320,
+  "leaf": "西安菜(正餐/泡馍/葫芦鸡)",
+  "why": [
+   "leaf-top:西安菜(正餐/泡馍/葫芦鸡)"
+  ]
+ },
+ {
+  "id": 1840,
+  "name": "醉东 Oriental House(静安嘉里店)",
+  "tier": "高档",
+  "price_avg": 325,
+  "leaf": "",
+  "why": [
+   "award"
+  ]
+ },
+ {
+  "id": 493,
+  "name": "利苑酒家(国金中心店)",
+  "tier": "高档",
+  "price_avg": 328,
+  "leaf": "广府菜(广州)",
+  "why": [
+   "leaf-top:广府菜(广州)"
+  ]
+ },
+ {
+  "id": 799,
+  "name": "城南往事(正大广场精选店)",
+  "tier": "高档",
+  "price_avg": 350,
+  "leaf": "济南菜",
+  "why": [
+   "leaf-top:济南菜"
+  ]
+ },
+ {
+  "id": 684,
+  "name": "东平潮·潮汕菜(徐汇花园洋房店)",
+  "tier": "高档",
+  "price_avg": 350,
+  "leaf": "潮汕菜",
+  "why": [
+   "leaf-top:潮汕菜"
+  ]
+ },
+ {
+  "id": 569,
+  "name": "皖宴(苏河湾店)",
+  "tier": "高档",
+  "price_avg": 350,
+  "leaf": "徽州菜",
+  "why": [
+   "leaf-top:徽州菜",
+   "leaf-top:皖北菜"
+  ]
+ },
+ {
+  "id": 670,
+  "name": "恒悦轩·精致香港粤菜(徐家汇店)-顺德菜部",
+  "tier": "高档",
+  "price_avg": 350,
+  "leaf": "顺德菜",
+  "why": [
+   "leaf-top:顺德菜"
+  ]
+ },
+ {
+  "id": 1103,
+  "name": "Zaafran(素凯泰酒店)",
+  "tier": "高档",
+  "price_avg": 350,
+  "leaf": "冬阴功",
+  "why": [
+   "leaf-top:冬阴功",
+   "leaf-top:泰餐"
+  ]
+ },
+ {
+  "id": 511,
+  "name": "三月醉淮扬(越洋广场店)",
+  "tier": "高档",
+  "price_avg": 351,
+  "leaf": "苏菜",
+  "why": [
+   "leaf-top:苏菜",
+   "award"
+  ]
+ },
+ {
+  "id": 509,
+  "name": "龙吟山房(苏河湾万象天地店)",
+  "tier": "高档",
+  "price_avg": 374,
+  "leaf": "苏菜",
+  "why": [
+   "leaf-top:苏菜"
+  ]
+ },
+ {
+  "id": 568,
+  "name": "皖宴(龙柏饭店店)",
+  "tier": "高档",
+  "price_avg": 388,
+  "leaf": "皖江菜",
+  "why": [
+   "leaf-top:皖江菜"
+  ]
+ },
+ {
+  "id": 12,
+  "name": "炉端一番",
+  "tier": "高档",
+  "price_avg": 400,
+  "leaf": "炉端烧",
+  "why": [
+   "leaf-top:炉端烧"
+  ]
+ },
+ {
+  "id": 510,
+  "name": "食庐NOBLE(港汇恒隆店)",
+  "tier": "高档",
+  "price_avg": 400,
+  "leaf": "苏菜",
+  "why": [
+   "leaf-top:苏菜"
+  ]
+ },
+ {
+  "id": 1446,
+  "name": "釜溪盐韵·私宴(上海首店)",
+  "tier": "高档",
+  "price_avg": 400,
+  "leaf": "自贡盐帮菜",
+  "why": [
+   "leaf-top:自贡盐帮菜"
+  ]
+ },
+ {
+  "id": 823,
+  "name": "大董海参店(越洋广场店)",
+  "tier": "高档",
+  "price_avg": 400,
+  "leaf": "北京烤鸭",
+  "why": [
+   "leaf-top:北京烤鸭"
+  ]
+ },
+ {
+  "id": 1196,
+  "name": "Mercado 505 Gourmet Restaurant",
+  "tier": "高档",
+  "price_avg": 400,
+  "leaf": "海鲜饭",
+  "why": [
+   "leaf-top:海鲜饭",
+   "leaf-top:西班牙菜"
+  ]
+ },
+ {
+  "id": 540,
+  "name": "鹿园MOOSE(长宁店)",
+  "tier": "高档",
+  "price_avg": 418,
+  "leaf": "海派融合",
+  "why": [
+   "leaf-top:海派融合",
+   "leaf-top:本帮菜"
+  ]
+ },
+ {
+  "id": 1448,
+  "name": "孔雀厅 The Peacock Room",
+  "tier": "高档",
+  "price_avg": 450,
+  "leaf": "川菜",
+  "why": [
+   "leaf-top:川菜",
+   "leaf-top:新派川菜"
+  ]
+ },
+ {
+  "id": 839,
+  "name": "龚禧龚禧·甬菜(汤臣洲际店)",
+  "tier": "高档",
+  "price_avg": 450,
+  "leaf": "宁波菜",
+  "why": [
+   "leaf-top:宁波菜"
+  ]
+ },
+ {
+  "id": 583,
+  "name": "平川·程玉平川菜工作室",
+  "tier": "高档",
+  "price_avg": 450,
+  "leaf": "自贡盐帮菜",
+  "why": [
+   "leaf-top:自贡盐帮菜"
+  ]
+ },
+ {
+  "id": 758,
+  "name": "江南雅厨(宜昌路店)",
+  "tier": "高档",
+  "price_avg": 450,
+  "leaf": "苏帮菜",
+  "why": [
+   "leaf-top:苏帮菜"
+  ]
+ },
+ {
+  "id": 815,
+  "name": "白茸 Bai Rong",
+  "tier": "高档",
+  "price_avg": 450,
+  "leaf": "孔府菜",
+  "why": [
+   "leaf-top:孔府菜",
+   "regression"
+  ]
+ },
+ {
+  "id": 1877,
+  "name": "晟永兴(外滩店)",
+  "tier": "高档",
+  "price_avg": 450,
+  "leaf": "北京烤鸭",
+  "why": [
+   "leaf-top:北京烤鸭",
+   "leaf-top:京菜"
+  ]
+ },
+ {
+  "id": 479,
+  "name": "柴门荟(前滩太古里店)",
+  "tier": "高档",
+  "price_avg": 488,
+  "leaf": "川菜",
+  "why": [
+   "leaf-top:川菜",
+   "leaf-top:官府菜/蓉派川菜",
+   "leaf-top:新派川菜"
+  ]
+ },
+ {
+  "id": 525,
+  "name": "席作·福建会馆",
+  "tier": "高档",
+  "price_avg": 490,
+  "leaf": "闽菜",
+  "why": [
+   "leaf-top:闽菜",
+   "leaf-top:福州菜"
+  ]
+ },
+ {
+  "id": 52,
+  "name": "铁屋（古北）",
+  "tier": "奢华",
+  "price_avg": 500,
+  "leaf": "日料/日本料理",
+  "why": [
+   "leaf-top:日料/日本料理",
+   "leaf-top:烧肉"
+  ]
+ },
+ {
+  "id": 31,
+  "name": "炎珀EMBER",
+  "tier": "奢华",
+  "price_avg": 500,
+  "leaf": "Omakase 板前",
+  "why": [
+   "leaf-top:Omakase 板前",
+   "leaf-top:寿喜烧",
+   "leaf-top:烧肉"
+  ]
+ },
+ {
+  "id": 495,
+  "name": "御宝轩(益丰·外滩源店)",
+  "tier": "奢华",
+  "price_avg": 500,
+  "leaf": "粤菜",
+  "why": [
+   "leaf-top:粤菜",
+   "award"
+  ]
+ },
+ {
+  "id": 527,
+  "name": "府(Fucheng)·外滩华尔道夫",
+  "tier": "奢华",
+  "price_avg": 500,
+  "leaf": "福州菜",
+  "why": [
+   "leaf-top:福州菜"
+  ]
+ },
+ {
+  "id": 867,
+  "name": "瓯越·尊鲜(CP静安店)",
+  "tier": "奢华",
+  "price_avg": 500,
+  "leaf": "温州菜",
+  "why": [
+   "leaf-top:温州菜"
+  ]
+ },
+ {
+  "id": 1049,
+  "name": "美·大董(外滩BFC店)",
+  "tier": "奢华",
+  "price_avg": 500,
+  "leaf": "北京烤鸭",
+  "why": [
+   "leaf-top:北京烤鸭",
+   "leaf-top:京菜"
+  ]
+ },
+ {
+  "id": 1197,
+  "name": "el Willy(中山东二路店)",
+  "tier": "奢华",
+  "price_avg": 500,
+  "leaf": "西班牙菜",
+  "why": [
+   "leaf-top:西班牙菜",
+   "leaf-top:伊比利亚火腿",
+   "leaf-top:Tapas"
+  ]
+ },
+ {
+  "id": 1261,
+  "name": "东湖宾馆北欧料理(瑞典主厨)",
+  "tier": "奢华",
+  "price_avg": 500,
+  "leaf": "北欧菜",
+  "why": [
+   "leaf-top:北欧菜",
+   "leaf-top:新北欧料理"
+  ]
+ },
+ {
+  "id": 553,
+  "name": "湘翁(北外滩来福士店)",
+  "tier": "奢华",
+  "price_avg": 538,
+  "leaf": "湘菜",
+  "why": [
+   "leaf-top:湘菜",
+   "leaf-top:长沙菜"
+  ]
+ },
+ {
+  "id": 654,
+  "name": "广舟(巨鹿店)",
+  "tier": "奢华",
+  "price_avg": 550,
+  "leaf": "广府菜(广州)",
+  "why": [
+   "leaf-top:广府菜(广州)"
+  ]
+ },
+ {
+  "id": 838,
+  "name": "陈公馆·Champion Tower(黄浦店)",
+  "tier": "奢华",
+  "price_avg": 550,
+  "leaf": "宁波菜",
+  "why": [
+   "leaf-top:宁波菜"
+  ]
+ },
+ {
+  "id": 1633,
+  "name": "宫宴Gongyan(北京西路店)",
+  "tier": "奢华",
+  "price_avg": 553,
+  "leaf": "宫廷官府菜",
+  "why": [
+   "leaf-top:宫廷官府菜"
+  ]
+ },
+ {
+  "id": 37,
+  "name": "天嘉(天妇罗专门店)",
+  "tier": "奢华",
+  "price_avg": 600,
+  "leaf": "天妇罗",
+  "why": [
+   "leaf-top:天妇罗"
+  ]
+ },
+ {
+  "id": 480,
+  "name": "柴门荟(BFC外滩金融中心店)",
+  "tier": "奢华",
+  "price_avg": 600,
+  "leaf": "官府菜/蓉派川菜",
+  "why": [
+   "leaf-top:官府菜/蓉派川菜"
+  ]
+ },
+ {
+  "id": 656,
+  "name": "家全七福(静安店)",
+  "tier": "奢华",
+  "price_avg": 600,
+  "leaf": "广府菜(广州)",
+  "why": [
+   "leaf-top:广府菜(广州)"
+  ]
+ },
+ {
+  "id": 508,
+  "name": "逸道(益丰·外滩源店)",
+  "tier": "奢华",
+  "price_avg": 600,
+  "leaf": "苏菜",
+  "why": [
+   "leaf-top:苏菜",
+   "leaf-top:淮扬菜"
+  ]
+ },
+ {
+  "id": 782,
+  "name": "香聚江南灶(前滩香格里拉店)",
+  "tier": "奢华",
+  "price_avg": 600,
+  "leaf": "淮扬菜",
+  "why": [
+   "leaf-top:淮扬菜"
+  ]
+ },
+ {
+  "id": 1177,
+  "name": "Mercato by Jean-Georges",
+  "tier": "奢华",
+  "price_avg": 600,
+  "leaf": "Osteria",
+  "why": [
+   "leaf-top:Osteria",
+   "leaf-top:意餐",
+   "leaf-top:佛罗伦萨牛排",
+   "leaf-top:那不勒斯披萨"
+  ]
+ },
+ {
+  "id": 1210,
+  "name": "KIRILLITSA 西里尔俄罗斯餐厅",
+  "tier": "奢华",
+  "price_avg": 600,
+  "leaf": "俄餐",
+  "why": [
+   "leaf-top:俄餐",
+   "leaf-top:红菜汤"
+  ]
+ },
+ {
+  "id": 1254,
+  "name": "Shanghai Tavern(上海艾迪逊酒店)",
+  "tier": "奢华",
+  "price_avg": 600,
+  "leaf": "英国菜",
+  "why": [
+   "leaf-top:英国菜",
+   "leaf-top:英式早餐"
+  ]
+ },
+ {
+  "id": 1919,
+  "name": "菁禧荟(长宁)",
+  "tier": "奢华",
+  "price_avg": 600,
+  "leaf": "",
+  "why": [
+   "award"
+  ]
+ },
+ {
+  "id": 1977,
+  "name": "老乾杯(外滩店)",
+  "tier": "奢华",
+  "price_avg": 610,
+  "leaf": "烧肉",
+  "why": [
+   "leaf-top:烧肉"
+  ]
+ },
+ {
+  "id": 539,
+  "name": "雍颐庭",
+  "tier": "奢华",
+  "price_avg": 650,
+  "leaf": "淮扬菜",
+  "why": [
+   "leaf-top:淮扬菜"
+  ]
+ },
+ {
+  "id": 1,
+  "name": "晴川sushi（午市）",
+  "tier": "奢华",
+  "price_avg": 680,
+  "leaf": "寿司",
+  "why": [
+   "leaf-top:寿司",
+   "regression"
+  ]
+ },
+ {
+  "id": 13,
+  "name": "龍響炉端烧(嘉善老市店)",
+  "tier": "奢华",
+  "price_avg": 700,
+  "leaf": "炉端烧",
+  "why": [
+   "leaf-top:炉端烧"
+  ]
+ },
+ {
+  "id": 903,
+  "name": "遇外滩SKYLINE(北外滩来福士店)",
+  "tier": "奢华",
+  "price_avg": 700,
+  "leaf": "闽菜",
+  "why": [
+   "leaf-top:闽菜",
+   "leaf-top:福州菜"
+  ]
+ },
+ {
+  "id": 1974,
+  "name": "沼田双",
+  "tier": "奢华",
+  "price_avg": 800,
+  "leaf": "天妇罗",
+  "why": [
+   "leaf-top:天妇罗"
+  ]
+ },
+ {
+  "id": 696,
+  "name": "Hakkasan(外滩店)",
+  "tier": "奢华",
+  "price_avg": 800,
+  "leaf": "客家菜",
+  "why": [
+   "leaf-top:客家菜"
+  ]
+ },
+ {
+  "id": 1376,
+  "name": "新荣记(前滩太古里店)",
+  "tier": "奢华",
+  "price_avg": 800,
+  "leaf": "台州菜",
+  "why": [
+   "leaf-top:台州菜"
+  ]
+ },
+ {
+  "id": 1145,
+  "name": "Phénix 斐霓丝餐厅酒吧",
+  "tier": "奢华",
+  "price_avg": 800,
+  "leaf": "法餐",
+  "why": [
+   "leaf-top:法餐"
+  ]
+ },
+ {
+  "id": 1873,
+  "name": "Stone Sal 言盐西餐厅(东湖路店)",
+  "tier": "奢华",
+  "price_avg": 800,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 41,
+  "name": "山茶花铁板烧",
+  "tier": "奢华",
+  "price_avg": 826,
+  "leaf": "铁板烧",
+  "why": [
+   "leaf-top:铁板烧"
+  ]
+ },
+ {
+  "id": 524,
+  "name": "遇外滩(BFC外滩金融中心店)",
+  "tier": "奢华",
+  "price_avg": 829,
+  "leaf": "闽菜",
+  "why": [
+   "leaf-top:闽菜",
+   "leaf-top:福州菜"
+  ]
+ },
+ {
+  "id": 1382,
+  "name": "宝丽轩",
+  "tier": "奢华",
+  "price_avg": 839,
+  "leaf": "",
+  "why": [
+   "award"
+  ]
+ },
+ {
+  "id": 523,
+  "name": "遇外滩(新天地店)",
+  "tier": "奢华",
+  "price_avg": 846,
+  "leaf": "闽菜",
+  "why": [
+   "leaf-top:闽菜",
+   "award"
+  ]
+ },
+ {
+  "id": 871,
+  "name": "新荣记(南京西路店)",
+  "tier": "奢华",
+  "price_avg": 873,
+  "leaf": "台州菜",
+  "why": [
+   "leaf-top:台州菜"
+  ]
+ },
+ {
+  "id": 4,
+  "name": "御千代（王雷师傅）",
+  "tier": "奢华",
+  "price_avg": 880,
+  "leaf": "铁板烧",
+  "why": [
+   "leaf-top:铁板烧"
+  ]
+ },
+ {
+  "id": 496,
+  "name": "唐阁(新天地朗廷酒店)",
+  "tier": "奢华",
+  "price_avg": 880,
+  "leaf": "广府菜(广州)",
+  "why": [
+   "leaf-top:广府菜(广州)",
+   "award"
+  ]
+ },
+ {
+  "id": 1905,
+  "name": "EIGHT UNDER",
+  "tier": "奢华",
+  "price_avg": 888,
+  "leaf": "融合菜/Fusion",
+  "why": [
+   "leaf-top:融合菜/Fusion"
+  ]
+ },
+ {
+  "id": 5,
+  "name": "Sushi Oyama 鮨大山",
+  "tier": "奢华",
+  "price_avg": 900,
+  "leaf": "寿司",
+  "why": [
+   "leaf-top:寿司",
+   "leaf-top:日料/日本料理",
+   "leaf-top:Omakase 板前"
+  ]
+ },
+ {
+  "id": 494,
+  "name": "菁禧荟(BFC外滩店)",
+  "tier": "奢华",
+  "price_avg": 900,
+  "leaf": "粤菜",
+  "why": [
+   "leaf-top:粤菜",
+   "leaf-top:潮汕菜"
+  ]
+ },
+ {
+  "id": 497,
+  "name": "明阁(虹桥康得思酒店)",
+  "tier": "奢华",
+  "price_avg": 910,
+  "leaf": "粤菜",
+  "why": [
+   "leaf-top:粤菜"
+  ]
+ },
+ {
+  "id": 1472,
+  "name": "菁禧荟SELECTION BY DU(北外滩来福士店)",
+  "tier": "奢华",
+  "price_avg": 979,
+  "leaf": "潮汕菜",
+  "why": [
+   "leaf-top:潮汕菜"
+  ]
+ },
+ {
+  "id": 3,
+  "name": "岩田割烹鮨",
+  "tier": "奢华",
+  "price_avg": 980,
+  "leaf": "寿司",
+  "why": [
+   "leaf-top:寿司"
+  ]
+ },
+ {
+  "id": 1322,
+  "name": "鸟山鸣·薪火烧鸟",
+  "tier": "奢华",
+  "price_avg": 980,
+  "leaf": "烧鸟",
+  "why": [
+   "leaf-top:烧鸟"
+  ]
+ },
+ {
+  "id": 1970,
+  "name": "Torikaze",
+  "tier": "奢华",
+  "price_avg": 1000,
+  "leaf": "烧鸟",
+  "why": [
+   "leaf-top:烧鸟"
+  ]
+ },
+ {
+  "id": 1447,
+  "name": "南兴园 NAN·XING·YUAN",
+  "tier": "奢华",
+  "price_avg": 1000,
+  "leaf": "川菜",
+  "why": [
+   "leaf-top:川菜",
+   "leaf-top:官府菜/蓉派川菜"
+  ]
+ },
+ {
+  "id": 966,
+  "name": "品粹1788",
+  "tier": "奢华",
+  "price_avg": 1000,
+  "leaf": "徽菜",
+  "why": [
+   "leaf-top:徽菜"
+  ]
+ },
+ {
+  "id": 1143,
+  "name": "Le Comptoir de Pierre Gagnaire",
+  "tier": "奢华",
+  "price_avg": 1000,
+  "leaf": "法餐",
+  "why": [
+   "leaf-top:法餐",
+   "leaf-top:法餐Fine Dining"
+  ]
+ },
+ {
+  "id": 717,
+  "name": "吉品轩(伯衡55店)",
+  "tier": "奢华",
+  "price_avg": 1000,
+  "leaf": "",
+  "why": [
+   "award"
+  ]
+ },
+ {
+  "id": 9,
+  "name": "宫鸠（华山路）",
+  "tier": "奢华",
+  "price_avg": 1100,
+  "leaf": "烧鸟",
+  "why": [
+   "leaf-top:烧鸟",
+   "regression"
+  ]
+ },
+ {
+  "id": 1214,
+  "name": "Wolfgang's Steakhouse 沃夫冈牛排馆",
+  "tier": "奢华",
+  "price_avg": 1100,
+  "leaf": "美式牛排",
+  "why": [
+   "leaf-top:美式牛排",
+   "leaf-top:美餐"
+  ]
+ },
+ {
+  "id": 1383,
+  "name": "福和慧",
+  "tier": "奢华",
+  "price_avg": 1191,
+  "leaf": "",
+  "why": [
+   "award"
+  ]
+ },
+ {
+  "id": 1347,
+  "name": "nabi",
+  "tier": "奢华",
+  "price_avg": 1200,
+  "leaf": "韩餐",
+  "why": [
+   "leaf-top:韩餐",
+   "leaf-top:融合菜/Fusion",
+   "regression"
+  ]
+ },
+ {
+  "id": 1137,
+  "name": "Jean Georges 上海",
+  "tier": "奢华",
+  "price_avg": 1200,
+  "leaf": "法餐",
+  "why": [
+   "leaf-top:法餐",
+   "leaf-top:法餐Fine Dining"
+  ]
+ },
+ {
+  "id": 1217,
+  "name": "Morton's The Steakhouse 莫尔顿牛排坊",
+  "tier": "奢华",
+  "price_avg": 1200,
+  "leaf": "美式牛排",
+  "why": [
+   "leaf-top:美式牛排",
+   "leaf-top:美餐"
+  ]
+ },
+ {
+  "id": 718,
+  "name": "壹零贰小馆",
+  "tier": "奢华",
+  "price_avg": 1200,
+  "leaf": "",
+  "why": [
+   "award"
+  ]
+ },
+ {
+  "id": 1849,
+  "name": "叶叶菩提(太原别墅店)",
+  "tier": "奢华",
+  "price_avg": 1260,
+  "leaf": "融合菜/Fusion",
+  "why": [
+   "leaf-top:融合菜/Fusion"
+  ]
+ },
+ {
+  "id": 1842,
+  "name": "Cheeva Thai",
+  "tier": "奢华",
+  "price_avg": 1280,
+  "leaf": "泰餐",
+  "why": [
+   "leaf-top:泰餐",
+   "regression"
+  ]
+ },
+ {
+  "id": 1386,
+  "name": "Fabula",
+  "tier": "奢华",
+  "price_avg": 1280,
+  "leaf": "",
+  "why": [
+   "award"
+  ]
+ },
+ {
+  "id": 1007,
+  "name": "福1015(愚园路店)",
+  "tier": "奢华",
+  "price_avg": 1300,
+  "leaf": "海派融合",
+  "why": [
+   "leaf-top:海派融合",
+   "leaf-top:本帮菜"
+  ]
+ },
+ {
+  "id": 1898,
+  "name": "之舞",
+  "tier": "奢华",
+  "price_avg": 1400,
+  "leaf": "创新菜",
+  "why": [
+   "leaf-top:创新菜"
+  ]
+ },
+ {
+  "id": 1316,
+  "name": "空蝉怀石料理(益丰·外滩源店)",
+  "tier": "奢华",
+  "price_avg": 1500,
+  "leaf": "怀石",
+  "why": [
+   "leaf-top:怀石"
+  ]
+ },
+ {
+  "id": 1141,
+  "name": "Maison Lameloise 莱美露滋",
+  "tier": "奢华",
+  "price_avg": 1500,
+  "leaf": "法餐",
+  "why": [
+   "leaf-top:法餐",
+   "leaf-top:法餐Fine Dining"
+  ]
+ },
+ {
+  "id": 1175,
+  "name": "8½ Otto e Mezzo Bombana",
+  "tier": "奢华",
+  "price_avg": 1500,
+  "leaf": "Osteria",
+  "why": [
+   "leaf-top:Osteria",
+   "leaf-top:意餐",
+   "award"
+  ]
+ },
+ {
+  "id": 1887,
+  "name": "nagi 凪",
+  "tier": "奢华",
+  "price_avg": 1680,
+  "leaf": "",
+  "why": [
+   "regression"
+  ]
+ },
+ {
+  "id": 1976,
+  "name": "Narisawa Shanghai",
+  "tier": "奢华",
+  "price_avg": 1880,
+  "leaf": "怀石",
+  "why": [
+   "leaf-top:怀石"
+  ]
+ },
+ {
+  "id": 1841,
+  "name": "VIVANT by Johnny Pham",
+  "tier": "奢华",
+  "price_avg": 1880,
+  "leaf": "",
+  "why": [
+   "award"
+  ]
+ },
+ {
+  "id": 1391,
+  "name": "凌珑 Ling Long",
+  "tier": "奢华",
+  "price_avg": 1980,
+  "leaf": "创新菜",
+  "why": [
+   "leaf-top:创新菜",
+   "award"
+  ]
+ },
+ {
+  "id": 759,
+  "name": "荣府宴(南阳路店)",
+  "tier": "奢华",
+  "price_avg": 1996,
+  "leaf": "浙菜",
+  "why": [
+   "leaf-top:浙菜",
+   "leaf-top:台州菜",
+   "award"
+  ]
+ },
+ {
+  "id": 719,
+  "name": "头灶(上海商城店)",
+  "tier": "奢华",
+  "price_avg": 2000,
+  "leaf": "粤菜",
+  "why": [
+   "leaf-top:粤菜",
+   "award"
+  ]
+ },
+ {
+  "id": 1173,
+  "name": "Da Vittorio Shanghai",
+  "tier": "奢华",
+  "price_avg": 2000,
+  "leaf": "Osteria",
+  "why": [
+   "leaf-top:Osteria",
+   "leaf-top:意餐",
+   "award"
+  ]
+ },
+ {
+  "id": 38,
+  "name": "天吉·天遊峰",
+  "tier": "奢华",
+  "price_avg": 2180,
+  "leaf": "日料/日本料理",
+  "why": [
+   "leaf-top:日料/日本料理",
+   "leaf-top:Omakase 板前",
+   "leaf-top:天妇罗"
+  ]
+ },
+ {
+  "id": 6,
+  "name": "吉兆 KITCHO",
+  "tier": "奢华",
+  "price_avg": 2460,
+  "leaf": "寿司",
+  "why": [
+   "leaf-top:寿司",
+   "leaf-top:日料/日本料理",
+   "leaf-top:Omakase 板前",
+   "leaf-top:怀石",
+   "regression"
+  ]
+ },
+ {
+  "id": 1381,
+  "name": "泰安门 Taian Table",
+  "tier": "奢华",
+  "price_avg": 2700,
+  "leaf": "",
+  "why": [
+   "award"
+  ]
+ }
+]

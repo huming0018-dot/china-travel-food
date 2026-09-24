@@ -1,0 +1,1230 @@
+{
+ "hit": [
+  {
+   "name": "吉品轩",
+   "slug": "ji-pin-court",
+   "distinction": "二星",
+   "cuisine": "粤菜",
+   "matched_id": 717,
+   "matched_status": "active"
+  },
+  {
+   "name": "Obscura",
+   "slug": "obscura",
+   "distinction": "一星",
+   "cuisine": "创新菜",
+   "matched_id": 1392,
+   "matched_status": "active"
+  },
+  {
+   "name": "Vivant by Johnny Pham",
+   "slug": "vivant-by-johnny-pham",
+   "distinction": "一星",
+   "cuisine": "时尚法国菜",
+   "matched_id": 1841,
+   "matched_status": "active"
+  },
+  {
+   "name": "雍福会",
+   "slug": "yongfoo-elite",
+   "distinction": "入选",
+   "cuisine": "沪菜",
+   "matched_id": 1008,
+   "matched_status": "active"
+  },
+  {
+   "name": "Mercato",
+   "slug": "mercato-506693",
+   "distinction": "入选",
+   "cuisine": "意大利菜",
+   "matched_id": 1177,
+   "matched_status": "active"
+  },
+  {
+   "name": "泰安门",
+   "slug": "taian-table",
+   "distinction": "三星",
+   "cuisine": "创新菜",
+   "matched_id": 1381,
+   "matched_status": "active"
+  },
+  {
+   "name": "福和慧",
+   "slug": "fu-he-hui",
+   "distinction": "二星",
+   "cuisine": "素食",
+   "matched_id": 1383,
+   "matched_status": "active"
+  },
+  {
+   "name": "菁禧荟 (长宁)",
+   "slug": "amazing-chinese-cuisine-changning",
+   "distinction": "二星",
+   "cuisine": "潮州菜",
+   "matched_id": 494,
+   "matched_status": "active"
+  },
+  {
+   "name": "荣府宴",
+   "slug": "the-house-of-rong",
+   "distinction": "二星",
+   "cuisine": "台州菜",
+   "matched_id": 759,
+   "matched_status": "active"
+  },
+  {
+   "name": "Fabula",
+   "slug": "fabula",
+   "distinction": "一星",
+   "cuisine": "创新菜",
+   "matched_id": 1386,
+   "matched_status": "active"
+  },
+  {
+   "name": "新荣记 (南京西路)",
+   "slug": "xin-rong-ji-west-nanjing-road",
+   "distinction": "一星",
+   "cuisine": "台州菜",
+   "matched_id": 871,
+   "matched_status": "active"
+  },
+  {
+   "name": "家全七福",
+   "slug": "seventh-son-jingan",
+   "distinction": "一星",
+   "cuisine": "粤菜",
+   "matched_id": 656,
+   "matched_status": "active"
+  },
+  {
+   "name": "le Comptoir de Pierre Gagnaire",
+   "slug": "le-comptoir-de-pierre-gagnaire",
+   "distinction": "一星",
+   "cuisine": "时尚法国菜",
+   "matched_id": 1143,
+   "matched_status": "active"
+  },
+  {
+   "name": "老正兴",
+   "slug": "lao-zheng-xing-huangpu",
+   "distinction": "一星",
+   "cuisine": "沪菜",
+   "matched_id": 1004,
+   "matched_status": "active"
+  },
+  {
+   "name": "美 · 大董",
+   "slug": "gastro-esthetics-at-dadong",
+   "distinction": "一星",
+   "cuisine": "时尚中国菜",
+   "matched_id": 1049,
+   "matched_status": "active"
+  },
+  {
+   "name": "三月醉淮扬 (静安)",
+   "slug": "huaiyang-delights-jingan",
+   "distinction": "一星",
+   "cuisine": "淮扬菜",
+   "matched_id": 511,
+   "matched_status": "active"
+  },
+  {
+   "name": "人和馆 (徐汇)",
+   "slug": "ren-he-guan-zhaojiabang-road",
+   "distinction": "一星",
+   "cuisine": "沪菜",
+   "matched_id": 1594,
+   "matched_status": "active"
+  },
+  {
+   "name": "荣家黄鱼面 (静安)",
+   "slug": "rongjia-noodle-soup-with-yellow-croaker",
+   "distinction": "必比登",
+   "cuisine": "面食",
+   "matched_id": 1503,
+   "matched_status": "active"
+  },
+  {
+   "name": "何洪记",
+   "slug": "ho-hung-kee-570572",
+   "distinction": "必比登",
+   "cuisine": "粥面",
+   "matched_id": 704,
+   "matched_status": "active"
+  },
+  {
+   "name": "聪菜馆",
+   "slug": "cong-s-kitchen",
+   "distinction": "必比登",
+   "cuisine": "沪菜",
+   "matched_id": 1843,
+   "matched_status": "active"
+  },
+  {
+   "name": "Polux",
+   "slug": "polux",
+   "distinction": "必比登",
+   "cuisine": "法国菜",
+   "matched_id": 1152,
+   "matched_status": "active"
+  },
+  {
+   "name": "荣小馆 (黄浦)",
+   "slug": "rong-cuisine-huangpu",
+   "distinction": "必比登",
+   "cuisine": "台州菜",
+   "matched_id": 1502,
+   "matched_status": "active"
+  },
+  {
+   "name": "扬州饭店 (黄浦)",
+   "slug": "yangzhou-fan-dian-huangpu",
+   "distinction": "必比登",
+   "cuisine": "淮扬菜",
+   "matched_id": 503,
+   "matched_status": "active"
+  },
+  {
+   "name": "井梅无锡面馆 (延平路)",
+   "slug": "jing-mei-wu-xi-si-fang-mian-guan",
+   "distinction": "必比登",
+   "cuisine": "面食",
+   "matched_id": 762,
+   "matched_status": "active"
+  },
+  {
+   "name": "瓯越尊鲜",
+   "slug": "ou-yue-zun-xian",
+   "distinction": "必比登",
+   "cuisine": "浙江菜",
+   "matched_id": 867,
+   "matched_status": "active"
+  },
+  {
+   "name": "云和面馆 (黄浦)",
+   "slug": "yunhe-noodle-huangpu",
+   "distinction": "必比登",
+   "cuisine": "面食",
+   "matched_id": 755,
+   "matched_status": "active"
+  },
+  {
+   "name": "Nabi",
+   "slug": "nabi",
+   "distinction": "入选",
+   "cuisine": "时尚韩国菜",
+   "matched_id": 1347,
+   "matched_status": "active"
+  },
+  {
+   "name": "1929 by Guillaume Galliot",
+   "slug": "1929-by-guillaume-galliot",
+   "distinction": "入选",
+   "cuisine": "时尚法国菜",
+   "matched_id": 1147,
+   "matched_status": "active"
+  },
+  {
+   "name": "尚牛社会 (静安)",
+   "slug": "beef-liberty-west-nanjing-road",
+   "distinction": "入选",
+   "cuisine": "美国菜",
+   "matched_id": 1234,
+   "matched_status": "active"
+  },
+  {
+   "name": "闽和南欢席",
+   "slug": "min-he-nan-huan-xi",
+   "distinction": "入选",
+   "cuisine": "闽菜",
+   "matched_id": 521,
+   "matched_status": "active"
+  },
+  {
+   "name": "Mercado 505",
+   "slug": "mercado-505",
+   "distinction": "入选",
+   "cuisine": "西班牙菜",
+   "matched_id": 1196,
+   "matched_status": "active"
+  },
+  {
+   "name": "南兴园",
+   "slug": "nan-xing-yuan",
+   "distinction": "入选",
+   "cuisine": "川菜",
+   "matched_id": 478,
+   "matched_status": "active"
+  },
+  {
+   "name": "恒悦轩",
+   "slug": "hang-yuen-hin-xuhui",
+   "distinction": "入选",
+   "cuisine": "粤菜",
+   "matched_id": 670,
+   "matched_status": "active"
+  },
+  {
+   "name": "顶特勒粥面馆",
+   "slug": "ding-te-le-zhou-mian-guan",
+   "distinction": "入选",
+   "cuisine": "粥面",
+   "matched_id": 1821,
+   "matched_status": "active"
+  },
+  {
+   "name": "席作 · 福建会馆",
+   "slug": "hokkien-huay-kuan",
+   "distinction": "入选",
+   "cuisine": "闽菜",
+   "matched_id": 525,
+   "matched_status": "active"
+  },
+  {
+   "name": "东平潮",
+   "slug": "dong-ping-chao",
+   "distinction": "入选",
+   "cuisine": "潮州菜",
+   "matched_id": 684,
+   "matched_status": "active"
+  },
+  {
+   "name": "8 ½ Otto e Mezzo Bombana",
+   "slug": "8-%C2%BD-otto-e-mezzo-bombana",
+   "distinction": "二星",
+   "cuisine": "意大利菜",
+   "matched_id": 1175,
+   "matched_status": "active"
+  },
+  {
+   "name": "雍颐庭",
+   "slug": "yong-yi-ting",
+   "distinction": "一星",
+   "cuisine": "江浙菜",
+   "matched_id": 539,
+   "matched_status": "active"
+  },
+  {
+   "name": "三号黄浦会",
+   "slug": "canton-table",
+   "distinction": "一星",
+   "cuisine": "粤菜",
+   "matched_id": 1384,
+   "matched_status": "active"
+  },
+  {
+   "name": "成隆行蟹王府 (黄浦)",
+   "slug": "cheng-long-hang-huangpu",
+   "distinction": "一星",
+   "cuisine": "沪菜",
+   "matched_id": 1385,
+   "matched_status": "active"
+  },
+  {
+   "name": "莱美露滋",
+   "slug": "maison-lameloise-563686",
+   "distinction": "一星",
+   "cuisine": "时尚法国菜",
+   "matched_id": 1141,
+   "matched_status": "active"
+  },
+  {
+   "name": "龚禧龚禧 (浦东新区)",
+   "slug": "gongxi-gongxi-pudong",
+   "distinction": "入选",
+   "cuisine": "宁波菜",
+   "matched_id": 839,
+   "matched_status": "active"
+  },
+  {
+   "name": "Jean Georges",
+   "slug": "jean-georges-506640",
+   "distinction": "入选",
+   "cuisine": "时尚法国菜",
+   "matched_id": 1137,
+   "matched_status": "active"
+  },
+  {
+   "name": "Pop",
+   "slug": "pop",
+   "distinction": "入选",
+   "cuisine": "时尚欧陆菜",
+   "matched_id": 1150,
+   "matched_status": "active"
+  },
+  {
+   "name": "Hakkasan",
+   "slug": "hakkasan-1200248",
+   "distinction": "入选",
+   "cuisine": "时尚中国菜",
+   "matched_id": 696,
+   "matched_status": "active"
+  },
+  {
+   "name": "Shanghai Tavern",
+   "slug": "shanghai-tavern",
+   "distinction": "入选",
+   "cuisine": "时尚欧陆菜",
+   "matched_id": 1254,
+   "matched_status": "active"
+  },
+  {
+   "name": "皇朝会",
+   "slug": "royal-china-club-506535",
+   "distinction": "入选",
+   "cuisine": "粤菜",
+   "matched_id": 715,
+   "matched_status": "active"
+  },
+  {
+   "name": "御宝轩",
+   "slug": "imperial-treasure-fine-chinese-cuisine-huangpu",
+   "distinction": "二星",
+   "cuisine": "粤菜",
+   "matched_id": 495,
+   "matched_status": "active"
+  },
+  {
+   "name": "Da Vittorio",
+   "slug": "da-vittorio-570570",
+   "distinction": "二星",
+   "cuisine": "意大利菜",
+   "matched_id": 1173,
+   "matched_status": "active"
+  },
+  {
+   "name": "宝丽轩",
+   "slug": "bao-li-xuan",
+   "distinction": "二星",
+   "cuisine": "粤菜",
+   "matched_id": 1382,
+   "matched_status": "active"
+  },
+  {
+   "name": "Il Ristorante - Niko Romito",
+   "slug": "il-ristorante-niko-romito-563683",
+   "distinction": "一星",
+   "cuisine": "意大利菜",
+   "matched_id": 1389,
+   "matched_status": "active"
+  },
+  {
+   "name": "逸龙阁",
+   "slug": "yi-long-court",
+   "distinction": "一星",
+   "cuisine": "粤菜",
+   "matched_id": 716,
+   "matched_status": "active"
+  },
+  {
+   "name": "遇外滩 (中山东二路)",
+   "slug": "meet-the-bund",
+   "distinction": "一星",
+   "cuisine": "闽菜",
+   "matched_id": 523,
+   "matched_status": "active"
+  },
+  {
+   "name": "甬府小鲜 (浦东新区)",
+   "slug": "yongfu-mini",
+   "distinction": "必比登",
+   "cuisine": "宁波菜",
+   "matched_id": 536,
+   "matched_status": "active"
+  },
+  {
+   "name": "绿波廊",
+   "slug": "lu-bo-lang",
+   "distinction": "必比登",
+   "cuisine": "沪菜",
+   "matched_id": 1006,
+   "matched_status": "active"
+  },
+  {
+   "name": "南翔馒头店",
+   "slug": "nanxiang-steamed-bun-city-god-temple",
+   "distinction": "必比登",
+   "cuisine": "点心",
+   "matched_id": 1584,
+   "matched_status": "active"
+  },
+  {
+   "name": "豪生酒家",
+   "slug": "hao-sheng",
+   "distinction": "必比登",
+   "cuisine": "沪菜",
+   "matched_id": 1844,
+   "matched_status": "active"
+  },
+  {
+   "name": "大壶春 (四川中路)",
+   "slug": "da-hu-chun-middle-sichuan-road",
+   "distinction": "必比登",
+   "cuisine": "点心",
+   "matched_id": 1581,
+   "matched_status": "active"
+  },
+  {
+   "name": "柴门荟 (浦东)",
+   "slug": "chaimen-hui-1205571",
+   "distinction": "入选",
+   "cuisine": "川菜",
+   "matched_id": 479,
+   "matched_status": "active"
+  },
+  {
+   "name": "泓0871",
+   "slug": "hong-0871",
+   "distinction": "入选",
+   "cuisine": "滇菜",
+   "matched_id": 1615,
+   "matched_status": "active"
+  },
+  {
+   "name": "德兴馆 (广东路)",
+   "slug": "de-xing-guan-guangdong-road",
+   "distinction": "入选",
+   "cuisine": "沪菜",
+   "matched_id": 1000,
+   "matched_status": "active"
+  }
+ ],
+ "missing": [
+  {
+   "name": "唐阁",
+   "slug": "t-ang-court-506725",
+   "distinction": "二星",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "鲁采 (黄浦)",
+   "slug": "lu-style-1203592",
+   "distinction": "一星",
+   "cuisine": "鲁菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "东方景宴",
+   "slug": "oriental-sense-palate",
+   "distinction": "一星",
+   "cuisine": "潮州菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Narisawa",
+   "slug": "narisawa-1209925",
+   "distinction": "一星",
+   "cuisine": "创新菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "1515牛排馆",
+   "slug": "1515-west-chophouse",
+   "distinction": "入选",
+   "cuisine": "扒房",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "老兴鲜 (黄浦)",
+   "slug": "lao-xing-xian",
+   "distinction": "入选",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "台城镂月",
+   "slug": "toi-sihng-lauh-yuht",
+   "distinction": "入选",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "食光",
+   "slug": "scarpetta",
+   "distinction": "入选",
+   "cuisine": "意大利菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "松涧",
+   "slug": "the-pine",
+   "distinction": "入选",
+   "cuisine": "时尚欧陆菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Torikaze",
+   "slug": "torikaze",
+   "distinction": "入选",
+   "cuisine": "鸡肉串烧",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "言盐",
+   "slug": "stonesal",
+   "distinction": "入选",
+   "cuisine": "扒房",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "夏宮",
+   "slug": "summer-palace-506733",
+   "distinction": "入选",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Nuits",
+   "slug": "nuits",
+   "distinction": "入选",
+   "cuisine": "时尚法国菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "头灶",
+   "slug": "tou-zao",
+   "distinction": "二星",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "喜粤8号 (黄浦）",
+   "slug": "canton-8-runan-street",
+   "distinction": "二星",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "甬府 (黄浦)",
+   "slug": "yong-fu",
+   "distinction": "一星",
+   "cuisine": "宁波菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "福一零一五",
+   "slug": "fu-1015",
+   "distinction": "一星",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "屋有鲜",
+   "slug": "wu-you-xian",
+   "distinction": "一星",
+   "cuisine": "点心",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "鹿园 (长宁)",
+   "slug": "moose-changning",
+   "distinction": "一星",
+   "cuisine": "江浙菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "福一零八八",
+   "slug": "fu-1088",
+   "distinction": "一星",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "大董 (徐汇)",
+   "slug": "da-dong-xuhui",
+   "distinction": "一星",
+   "cuisine": "时尚中国菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "景煊",
+   "slug": "sole",
+   "distinction": "一星",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "利苑 (徐汇)",
+   "slug": "lei-garden-xuhui",
+   "distinction": "一星",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "福一零三九",
+   "slug": "fu-1039",
+   "distinction": "一星",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "菰城宴",
+   "slug": "the-taste-of-huzhou",
+   "distinction": "必比登",
+   "cuisine": "面食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "老地方面馆",
+   "slug": "lao-di-fang-mian-guan",
+   "distinction": "必比登",
+   "cuisine": "面食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "米泰",
+   "slug": "mi-thai-an-fu-road",
+   "distinction": "必比登",
+   "cuisine": "泰国菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "兰心 (进贤路)",
+   "slug": "lan-xin-jinxian-road",
+   "distinction": "必比登",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "春",
+   "slug": "chun",
+   "distinction": "必比登",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "茂隆",
+   "slug": "mao-long",
+   "distinction": "必比登",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "乔艾莱莱小笼 (黄浦)",
+   "slug": "qiao-ai-lai-lai-xiao-long-huangpu",
+   "distinction": "必比登",
+   "cuisine": "点心",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "小陶面馆",
+   "slug": "xiao-tao-mian-guan",
+   "distinction": "必比登",
+   "cuisine": "面食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "临湖素食",
+   "slug": "the-lakeside-veggie",
+   "distinction": "必比登",
+   "cuisine": "素食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "瑰禧",
+   "slug": "blossom-1246455",
+   "distinction": "必比登",
+   "cuisine": "潮州菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "157食坊",
+   "slug": "157-shi-fang",
+   "distinction": "必比登",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "逸采 (静安)",
+   "slug": "easeful-cuisine",
+   "distinction": "必比登",
+   "cuisine": "江浙菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "渔都老味面",
+   "slug": "yu-du-lao-wei-mian-huangpu",
+   "distinction": "必比登",
+   "cuisine": "面食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "渔哥 · 湛江 (静安)",
+   "slug": "yu-ge-zhan-jiang-jingan",
+   "distinction": "必比登",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "瓯叙",
+   "slug": "wenzhou-said",
+   "distinction": "入选",
+   "cuisine": "浙江菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Aster by Joshua Paris",
+   "slug": "aster-by-joshua-paris",
+   "distinction": "入选",
+   "cuisine": "时尚欧陆菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "之舞",
+   "slug": "la-scene-ronde",
+   "distinction": "入选",
+   "cuisine": "创新菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Cellar to Table",
+   "slug": "cellar-to-table",
+   "distinction": "入选",
+   "cuisine": "意大利菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "海味观 (静安)",
+   "slug": "hai-wei-guan",
+   "distinction": "入选",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "上海总会",
+   "slug": "shanghai-club",
+   "distinction": "入选",
+   "cuisine": "江浙菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "上海餐厅",
+   "slug": "shanghai",
+   "distinction": "入选",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "宏玉方",
+   "slug": "hong-yu-fang",
+   "distinction": "入选",
+   "cuisine": "点心",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Trine",
+   "slug": "trine",
+   "distinction": "入选",
+   "cuisine": "时尚欧陆菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "馨源楼",
+   "slug": "xin-yuan-lou",
+   "distinction": "入选",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Scilla",
+   "slug": "scilla",
+   "distinction": "入选",
+   "cuisine": "地中海菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "永 · 江臻",
+   "slug": "yong-jiang-zhen",
+   "distinction": "入选",
+   "cuisine": "江浙菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "艾利爵士",
+   "slug": "sir-elly-s",
+   "distinction": "入选",
+   "cuisine": "意大利菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "夜上海",
+   "slug": "ye-shanghai",
+   "distinction": "入选",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "味香斋 (雁荡路)",
+   "slug": "wei-xiang-zhai",
+   "distinction": "入选",
+   "cuisine": "面食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "古铜法式餐厅",
+   "slug": "cuivre",
+   "distinction": "入选",
+   "cuisine": "时尚法国菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "滇道 (静安)",
+   "slug": "legend-taste-jingan",
+   "distinction": "入选",
+   "cuisine": "滇菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "徐记海鲜 (徐汇)",
+   "slug": "xuji-seafood-xuhui",
+   "distinction": "入选",
+   "cuisine": "海鲜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "永丰面馆 (黄浦)",
+   "slug": "yong-feng-mian-guan",
+   "distinction": "入选",
+   "cuisine": "面食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "迷上",
+   "slug": "mi-shang",
+   "distinction": "入选",
+   "cuisine": "意大利菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "随堂里",
+   "slug": "sui-tang-li",
+   "distinction": "入选",
+   "cuisine": "时尚中国菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "永兴",
+   "slug": "yong-xing",
+   "distinction": "入选",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Shaughnessy",
+   "slug": "shaughnessy",
+   "distinction": "入选",
+   "cuisine": "扒房",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "鹿园 (浦东新区)",
+   "slug": "moose-pudong",
+   "distinction": "一星",
+   "cuisine": "江浙菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "皖宴 (长宁)",
+   "slug": "wan-yan",
+   "distinction": "入选",
+   "cuisine": "徽菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "壳里",
+   "slug": "coquille",
+   "distinction": "入选",
+   "cuisine": "法国菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "沼田双",
+   "slug": "numata-sou-1215509",
+   "distinction": "入选",
+   "cuisine": "天妇罗",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "翡翠36",
+   "slug": "jade-on-36",
+   "distinction": "入选",
+   "cuisine": "时尚法国菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Mr & Mrs Bund",
+   "slug": "mr-mrs-bund",
+   "distinction": "入选",
+   "cuisine": "时尚法国菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "晟永兴 (黄浦)",
+   "slug": "sheng-yong-xing",
+   "distinction": "一星",
+   "cuisine": "京菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "金轩",
+   "slug": "jin-xuan",
+   "distinction": "一星",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "利苑 (浦东新区)",
+   "slug": "lei-garden-pudong",
+   "distinction": "一星",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "凌珑",
+   "slug": "ling-long-1209951",
+   "distinction": "一星",
+   "cuisine": "创新菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "甬府 (虹口)",
+   "slug": "yong-fu-hongkou",
+   "distinction": "一星",
+   "cuisine": "宁波菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "和膳面家",
+   "slug": "he-shan-mian-jia",
+   "distinction": "必比登",
+   "cuisine": "面食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "坛",
+   "slug": "tan-1246400",
+   "distinction": "必比登",
+   "cuisine": "川菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "功德林 (南京西路)",
+   "slug": "gong-de-lin-jingan",
+   "distinction": "必比登",
+   "cuisine": "素食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "川粤海棠 (长宁)",
+   "slug": "chuan-yue-hai-tang-changning",
+   "distinction": "入选",
+   "cuisine": "川菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "白茸",
+   "slug": "bai-rong",
+   "distinction": "入选",
+   "cuisine": "鲁菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "老干杯 (黄浦)",
+   "slug": "kanpai-classic-506687",
+   "distinction": "入选",
+   "cuisine": "烧烤",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "外滩 · 林家一",
+   "slug": "lin-family-of-one-the-bund",
+   "distinction": "入选",
+   "cuisine": "台州菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "云",
+   "slug": "les-nuages",
+   "distinction": "入选",
+   "cuisine": "创新菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "徽季",
+   "slug": "hui-ji",
+   "distinction": "入选",
+   "cuisine": "徽菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "临江宴",
+   "slug": "lin-jiang-yan",
+   "distinction": "入选",
+   "cuisine": "江浙菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "悦轩",
+   "slug": "dining-room-1196349",
+   "distinction": "入选",
+   "cuisine": "江浙菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "福承",
+   "slug": "fucheng",
+   "distinction": "入选",
+   "cuisine": "闽菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "扒",
+   "slug": "the-meat",
+   "distinction": "入选",
+   "cuisine": "扒房",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "逸道 (北京东路)",
+   "slug": "tea-culture-east-beijing-road",
+   "distinction": "入选",
+   "cuisine": "淮扬菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "明阁 (闵行)",
+   "slug": "ming-court-570629",
+   "distinction": "一星",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "粤海棠",
+   "slug": "yue-hai-tang",
+   "distinction": "一星",
+   "cuisine": "粤菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "周舍 (闵行)",
+   "slug": "zhou-she-minhang",
+   "distinction": "一星",
+   "cuisine": "沪菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "宁海食府",
+   "slug": "ning-hai-shi-fu",
+   "distinction": "必比登",
+   "cuisine": "宁波菜",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "阿勇面馆 (东书房路)",
+   "slug": "a-yong-mian-guan-dongshufang-road",
+   "distinction": "必比登",
+   "cuisine": "面食",
+   "matched_id": null,
+   "matched_status": null
+  },
+  {
+   "name": "Arva",
+   "slug": "arva-563644",
+   "distinction": "入选",
+   "cuisine": "意大利菜",
+   "matched_id": null,
+   "matched_status": null
+  }
+ ]
+}

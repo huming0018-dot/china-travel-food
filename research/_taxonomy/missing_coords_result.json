@@ -10,72 +10,6 @@
     }
   },
   {
-    "rid": 1840,
-    "name": "醉东 Oriental House(静安嘉里店)",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "静安嘉里中心商场",
-    "address": "上海市静安区南京西路1515号",
-    "tel": null,
-    "lat": 31.22293,
-    "lng": 121.449963
-  },
-  {
-    "rid": 1841,
-    "name": "VIVANT by Johnny Pham",
-    "status": "ok",
-    "method": "suggestion:name_unique",
-    "matched_title": "VIVANT by JohnnyPham",
-    "address": "上海市黄浦区南京东路街道北海路279号",
-    "tel": null,
-    "lat": 31.230217,
-    "lng": 121.477852
-  },
-  {
-    "rid": 1842,
-    "name": "Cheeva Thai",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "Cheeva Thai",
-    "address": "上海市徐汇区湖南路街道永福路125号永福里3号楼3楼302号",
-    "tel": null,
-    "lat": 31.209859,
-    "lng": 121.443852
-  },
-  {
-    "rid": 1843,
-    "name": "聪菜馆",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "聪菜馆(六合大厦店)",
-    "address": "上海市黄浦区六合路158号(六合大厦1F)",
-    "tel": null,
-    "lat": 31.237142,
-    "lng": 121.474627
-  },
-  {
-    "rid": 1844,
-    "name": "豪生酒家",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "豪生酒家(徐家汇)",
-    "address": "上海市徐汇区天平路街道广元路156号",
-    "tel": null,
-    "lat": 31.199173,
-    "lng": 121.439786
-  },
-  {
-    "rid": 1845,
-    "name": "黄公子",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "黄公子(天平路店)",
-    "address": "上海市徐汇区徐家汇街道天平路320弄21号1-2层",
-    "tel": null,
-    "lat": 31.196305,
-    "lng": 121.439396
-  },
-  {
     "rid": 1846,
     "name": "AmoyA",
     "status": "low_confidence",
@@ -84,77 +18,6 @@
       "lng": 121.448865,
       "lat": 31.215764
     }
-  },
-  {
-    "rid": 1847,
-    "name": "来去Laichill",
-    "status": "ok_fallback",
-    "method": "geocoder",
-    "matched_title": "五原路281弄16号",
-    "lat": 31.211318,
-    "lng": 121.443237,
-    "reliability": 7
-  },
-  {
-    "rid": 1848,
-    "name": "作故私房菜",
-    "status": "ok",
-    "method": "suggestion:name_unique",
-    "matched_title": "作故私房菜",
-    "address": "上海市长宁区新华路街道番禺路232号院内",
-    "tel": null,
-    "lat": 31.20655,
-    "lng": 121.429209
-  },
-  {
-    "rid": 1849,
-    "name": "叶叶菩提(太原别墅店)",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "叶叶菩提(太原别墅店)",
-    "address": "上海市徐汇区天平路街道太原路160号太原别墅6号楼一层",
-    "tel": null,
-    "lat": 31.206325,
-    "lng": 121.454399
-  },
-  {
-    "rid": 1850,
-    "name": "田咖啡",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "田咖啡",
-    "address": "上海市徐汇区湖南路街道新乐路70弄66号201室",
-    "tel": null,
-    "lat": 31.218165,
-    "lng": 121.455868
-  },
-  {
-    "rid": 1851,
-    "name": "ONIRICO CAFÉ",
-    "status": "ok",
-    "method": "suggestion:addr_match",
-    "matched_title": "ONIRICOCAFÉ",
-    "address": "上海市黄浦区思南路32号",
-    "tel": null,
-    "lat": 31.218332,
-    "lng": 121.466032
-  },
-  {
-    "rid": 1852,
-    "name": "DOU COFFEE ROASTERS(嘉善路店)",
-    "status": "ok",
-    "method": "suggestion:addr_match",
-    "matched_title": "DOU COFFEE ROASTERS(嘉善路店)",
-    "address": "上海市徐汇区天平路街道嘉善路121号",
-    "tel": null,
-    "lat": 31.209971,
-    "lng": 121.45942
-  },
-  {
-    "rid": 1853,
-    "name": "苹果花园(南泉路店)",
-    "status": "multi_no_point",
-    "note": "一条记录含多分店/多址，无单点坐标，需拆分"
   },
   {
     "rid": 1854,
@@ -167,174 +30,1111 @@
     }
   },
   {
-    "rid": 1855,
-    "name": "银座仁志川(兴业太古汇店)",
+    "rid": 1871,
+    "name": "1515牛排馆·酒吧",
     "status": "ok",
     "method": "suggestion:addr_exact",
-    "matched_title": "银座仁志川·生吐司创意餐厅(兴业太古汇店)",
-    "address": "上海市静安区南京西路789号兴业太古汇LG201(靠近地铁13号线7号出口)",
+    "matched_title": "1515牛排馆·酒吧(静安寺)",
+    "address": "上海市静安区延安中路1218号香格里拉大酒店4层(近铜仁路)",
     "tel": null,
-    "lat": 31.228492,
-    "lng": 121.462828
+    "lat": 31.223023,
+    "lng": 121.450551
   },
   {
-    "rid": 1856,
-    "name": "泽田本家铜锣烧(上海店)",
-    "status": "low_confidence",
-    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
-    "cand": {
-      "lng": 121.436307,
-      "lat": 31.188334
-    }
-  },
-  {
-    "rid": 1857,
-    "name": "野人先生Gelato(徐汇旗舰店)",
-    "status": "low_confidence",
-    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
-    "cand": {
-      "lng": 121.454103,
-      "lat": 31.216279
-    }
-  },
-  {
-    "rid": 1858,
-    "name": "和果子本铺四葉",
+    "rid": 1872,
+    "name": "夏宫",
     "status": "ok",
     "method": "suggestion:addr_exact",
-    "matched_title": "和菓子本铺",
-    "address": "上海市长宁区荣华西道99弄11-12号1楼2室",
+    "matched_title": "夏小馆·夏宫中餐厅(静安香格里拉店)",
+    "address": "上海市静安区延安中路1218号上海静安香格里拉大酒店3层(近铜仁路)",
     "tel": null,
-    "lat": 31.194245,
-    "lng": 121.392867
+    "lat": 31.22298,
+    "lng": 121.450512
   },
   {
-    "rid": 1859,
-    "name": "The Odd Couple",
+    "rid": 1873,
+    "name": "Stone Sal 言盐西餐厅(东湖路店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "Stone Sal 言盐西餐厅(东湖路店)",
+    "address": "上海市徐汇区湖南路街道东湖路9号上海地产大厦裙房1M号",
+    "tel": null,
+    "lat": 31.216316,
+    "lng": 121.453581
+  },
+  {
+    "rid": 1874,
+    "name": "云 LES NUAGES",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "LES NUAGES 云(北外滩来福士广场店)",
+    "address": "上海市虹口区东大名路999号来福士东塔57层(提篮桥地铁站3号口旁)",
+    "tel": null,
+    "lat": 31.252693,
+    "lng": 121.508019
+  },
+  {
+    "rid": 1875,
+    "name": "The MEAT·扒",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "The MEAT 扒餐厅(浦东嘉里大酒店)",
+    "address": "上海市浦东新区花木街道花木路1388号上海浦东嘉里大酒店2楼(近芳甸路)门店点餐正常",
+    "tel": null,
+    "lat": 31.213064,
+    "lng": 121.56335
+  },
+  {
+    "rid": 1876,
+    "name": "屋有鲜",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "屋有鲜",
+    "address": "上海市黄浦区瑞金二路街道茂名南路7号103",
+    "tel": null,
+    "lat": 31.22265,
+    "lng": 121.460617
+  },
+  {
+    "rid": 1877,
+    "name": "晟永兴(外滩店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "晟永興(外滩店)",
+    "address": "上海市黄浦区广东路20号外滩五号5楼东侧",
+    "tel": null,
+    "lat": 31.234368,
+    "lng": 121.490568
+  },
+  {
+    "rid": 1878,
+    "name": "Mr & Mrs Bund",
     "status": "ok_fallback",
     "method": "geocoder",
-    "matched_title": "上海新天地北里",
-    "lat": 31.2207,
-    "lng": 121.474773,
+    "matched_title": "外滩18号",
+    "lat": 31.238406,
+    "lng": 121.489571,
     "reliability": 7
   },
   {
-    "rid": 1860,
-    "name": "ZION",
+    "rid": 1879,
+    "name": "随堂里",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "随堂里",
+    "address": "上海市静安区石门一路366号居舍·公寓",
+    "tel": null,
+    "lat": 31.229649,
+    "lng": 121.463508
+  },
+  {
+    "rid": 1880,
+    "name": "临江宴",
+    "status": "ambiguous",
+    "candidates": [
+      {
+        "title": "临江宴(陆家嘴店)",
+        "address": "上海市浦东新区富城路216号(陆家嘴地铁站9B口步行460米)",
+        "lat": 31.231745,
+        "lng": 121.501501
+      },
+      {
+        "title": "临江宴·宴会厅(陆家嘴店)",
+        "address": "上海市浦东新区陆家嘴街道富城路216号",
+        "lat": 31.231731,
+        "lng": 121.501433
+      }
+    ]
+  },
+  {
+    "rid": 1881,
+    "name": "粤海棠·wineapp",
     "status": "ok",
     "method": "suggestion:name_unique",
-    "matched_title": "Zion",
-    "address": "上海市静安区大沽路378号-3",
+    "matched_title": "粤海棠·wineapp",
+    "address": "上海市闵行区万金中心2号楼",
     "tel": null,
-    "lat": 31.225605,
-    "lng": 121.466363
+    "lat": 31.160472,
+    "lng": 121.355351
   },
   {
-    "rid": 1861,
-    "name": "La Burg 勒博格金砖俱乐部南非餐吧",
+    "rid": 1882,
+    "name": "The Pine 松涧",
     "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "La Burg勒博格金砖俱乐部南非餐吧(月星国际家居店)",
-    "address": "上海市普陀区澳门路168号月星家居茂五楼WD11号",
+    "method": "suggestion:name_unique",
+    "matched_title": "The Pine 松涧",
+    "address": "上海市徐汇区湖南路街道长乐路长乐路339弄小区附近",
     "tel": null,
-    "lat": 31.24851,
-    "lng": 121.445695
+    "lat": 31.219787,
+    "lng": 121.456558
   },
   {
-    "rid": 1862,
-    "name": "COLCA 秘鲁西班牙餐厅(衡山路店)",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "COLCA秘鲁西班牙餐厅(衡山路店)",
-    "address": "上海市徐汇区衡山路199号2201室(衡山路地铁站1号口步行150米)",
-    "tel": null,
-    "lat": 31.205038,
-    "lng": 121.44712
-  },
-  {
-    "rid": 1863,
-    "name": "拉蒂娜·巴西牛排馆 Latina(陆家嘴旗舰店)",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "拉蒂娜·巴西牛排馆Latina·Brazilian Steakhouse(陆家嘴旗舰店)",
-    "address": "上海市浦东新区陆家嘴环路165号2层(香格里拉酒店对面近名商路)",
-    "tel": null,
-    "lat": 31.235243,
-    "lng": 121.501107
-  },
-  {
-    "rid": 1864,
-    "name": "El Bodegon 阿根廷餐厅(常熟路店)",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "El Bodegon阿根廷秘鲁餐厅(常熟路店)",
-    "address": "上海市静安区常熟路83号神州商务大楼4层",
-    "tel": null,
-    "lat": 31.217273,
-    "lng": 121.447885
-  },
-  {
-    "rid": 1865,
-    "name": "Tacolicious(同乐坊店)",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "Tacolicious(余姚路店)",
-    "address": "上海市静安区余姚路34号104-105室",
-    "tel": null,
-    "lat": 31.236325,
-    "lng": 121.443665
-  },
-  {
-    "rid": 1866,
-    "name": "Flambe Bistro 奥地利餐厅(湖滨道店)",
-    "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "Flambe Bistro·奥地利餐厅(湖滨道店)",
-    "address": "上海市黄浦区淮海中路街道湖滨路150号湖滨道购物中心1层L1-E03(星巴克对面)",
-    "tel": null,
-    "lat": 31.220974,
-    "lng": 121.479376
-  },
-  {
-    "rid": 1867,
-    "name": "Greek Taverna Milos 米洛洛斯希腊餐厅(老外街店)",
+    "rid": 1883,
+    "name": "永·江臻",
     "status": "ok_fallback",
     "method": "geocoder",
-    "matched_title": "上海老外街景区",
-    "lat": 31.190632,
-    "lng": 121.38909,
+    "matched_title": "思南公馆63号楼",
+    "lat": 31.214507,
+    "lng": 121.469384,
     "reliability": 7
   },
   {
-    "rid": 1868,
-    "name": "Delight Food 比利时啤酒餐厅(老外街店)",
+    "rid": 1884,
+    "name": "徽季",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "徽季(陆家嘴店)",
+    "address": "上海市浦东新区潍坊新村街道世纪大道1788号陆家嘴金控广场V2号别墅(竹林路上近浦电路)",
+    "tel": null,
+    "lat": 31.221837,
+    "lng": 121.535434
+  },
+  {
+    "rid": 1885,
+    "name": "福廬 FULL HOUSE",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "福庐 FULL HOUSE(恒基688广场店)",
+    "address": "上海市静安区石门二路街道南京西路688广场L106A",
+    "tel": null,
+    "lat": 31.231871,
+    "lng": 121.464646
+  },
+  {
+    "rid": 1886,
+    "name": "老兴鲜(黄浦店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "老兴鲜(黄浦店)",
+    "address": "上海市黄浦区淮海中路918号百盛购物中心(淮海路店)F5",
+    "tel": null,
+    "lat": 31.217423,
+    "lng": 121.459245
+  },
+  {
+    "rid": 1892,
+    "name": "帅帅精致家常味(长乐路店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "帅帅精致家常味(长乐路店)",
+    "address": "上海市黄浦区瑞金二路街道长乐路175-4号(近地铁13号线淮海中路站3号口,锦江饭店旁)",
+    "tel": null,
+    "lat": 31.22078,
+    "lng": 121.461016
+  },
+  {
+    "rid": 1893,
+    "name": "光头生煎(山阴路店)",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "光头生煎(山阴路店)",
+    "address": "上海市虹口区四川北路街道山阴路139-141号",
+    "tel": null,
+    "lat": 31.266166,
+    "lng": 121.484828
+  },
+  {
+    "rid": 1894,
+    "name": "来来来·泰国街边排档(长乐路店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "来来来·泰国街边排档",
+    "address": "上海市黄浦区瑞金二路街道长乐路225号",
+    "tel": null,
+    "lat": 31.220214,
+    "lng": 121.458378
+  },
+  {
+    "rid": 1895,
+    "name": "RONG融",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "Rong融餐厅",
+    "address": "上海市徐汇区天平路街道岳阳路221号1层A2室-2",
+    "tel": null,
+    "lat": 31.203431,
+    "lng": 121.453102
+  },
+  {
+    "rid": 1896,
+    "name": "翡翠36",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "翡翠36餐厅(浦东香格里拉店)",
+    "address": "上海市浦东新区陆家嘴街道富城路33号香格里拉大酒店紫金楼36楼(近名商路)",
+    "tel": null,
+    "lat": 31.235994,
+    "lng": 121.499702
+  },
+  {
+    "rid": 1897,
+    "name": "Aster by Joshua Paris",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "Aster by Joshua Paris",
+    "address": "上海市静安区静安寺街道永源路150号208室(正对草坪A栋独立电梯直达二楼)",
+    "tel": null,
+    "lat": 31.220563,
+    "lng": 121.439784
+  },
+  {
+    "rid": 1898,
+    "name": "之舞",
     "status": "ok_fallback",
     "method": "geocoder",
-    "matched_title": "坎爷火锅老外街店",
-    "lat": 31.191522,
-    "lng": 121.388355,
+    "matched_title": "久丹·烧鸟",
+    "lat": 31.218572,
+    "lng": 121.461351,
     "reliability": 7
   },
   {
-    "rid": 1869,
-    "name": "麺屋KING",
+    "rid": 1899,
+    "name": "古铜法式餐厅",
     "status": "ok",
-    "method": "suggestion:addr_exact",
-    "matched_title": "麺屋KING",
-    "address": "上海市长宁区华阳路街道定西路1118号武夷坊停车场(近武夷路)",
+    "method": "suggestion:addr_match",
+    "matched_title": "Restaurant Cuivre古铜法式餐厅(鸿艺豪苑店)",
+    "address": "上海市徐汇区淮海中路1502-1号(上海图书馆地铁站2号口步行130米)",
     "tel": null,
-    "lat": 31.212472,
-    "lng": 121.423572
+    "lat": 31.20905,
+    "lng": 121.445712
   },
   {
-    "rid": 1870,
-    "name": "纹兵卫手打荞麦面日料(天山店)",
+    "rid": 1900,
+    "name": "Shaughnessy",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "SHAUGHNESSY 尚纳斯",
+    "address": "上海市黄浦区淮海东路49号-22楼",
+    "tel": null,
+    "lat": 31.226766,
+    "lng": 121.482633
+  },
+  {
+    "rid": 1901,
+    "name": "Arva",
     "status": "ok",
     "method": "suggestion:addr_exact",
-    "matched_title": "纹兵卫·手打荞麦面日料(天山店)",
-    "address": "上海市长宁区天山路街道天山路765号103室内(虹桥公寓1楼近古北路)",
+    "matched_title": "ARVA意大利餐厅",
+    "address": "上海市闵行区马桥镇元江路6161号养云安缦酒店1楼",
     "tel": null,
-    "lat": 31.211103,
-    "lng": 121.402112
+    "lat": 31.031916,
+    "lng": 121.348172
+  },
+  {
+    "rid": 1902,
+    "name": "Ortensia Shanghai",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "ORTENSIA Shanghai",
+    "address": "上海市静安区茂名北路188弄张园W14-ABC",
+    "tel": null,
+    "lat": 31.22789,
+    "lng": 121.460114
+  },
+  {
+    "rid": 1903,
+    "name": "Endo",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "De Artan",
+    "address": "上海市长宁区华阳路街道武夷路320弄武夷MIX320(原endo)",
+    "tel": null,
+    "lat": 31.212523,
+    "lng": 121.424141
+  },
+  {
+    "rid": 1904,
+    "name": "Hide the Smoked Room",
+    "status": "ok",
+    "method": "suggestion:name_unique",
+    "matched_title": "Hide THE SMOKED ROOM",
+    "address": "上海市徐汇区太原路与汾阳路交叉口正西方向98米左右",
+    "tel": null,
+    "lat": 31.210678,
+    "lng": 121.452915
+  },
+  {
+    "rid": 1905,
+    "name": "EIGHT UNDER",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "永康路73号",
+    "lat": 31.210935,
+    "lng": 121.457955,
+    "reliability": 7
+  },
+  {
+    "rid": 1906,
+    "name": "艾利爵士餐厅",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "SIR ELLYS TERRACE艾利爵士露台",
+    "address": "上海市黄浦区中山东一路32号上海半岛酒店14楼",
+    "tel": null,
+    "lat": 31.241441,
+    "lng": 121.489305
+  },
+  {
+    "rid": 1907,
+    "name": "Tuttu",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "Tuttu",
+    "address": "上海市静安区延平路446弄1号",
+    "tel": null,
+    "lat": 31.233687,
+    "lng": 121.437661
+  },
+  {
+    "rid": 1908,
+    "name": "夜上海",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "夜上海魔都酒吧",
+    "address": "上海市黄浦区淮海中路街道黄陂南路香港广场南座",
+    "tel": null,
+    "lat": 31.222561,
+    "lng": 121.474937
+  },
+  {
+    "rid": 1909,
+    "name": "上海餐厅",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "王宝和上海餐厅(九江路店)",
+    "address": "上海市黄浦区九江路555号王宝和大酒店2楼(近福建中路)",
+    "tel": null,
+    "lat": 31.234825,
+    "lng": 121.480609
+  },
+  {
+    "rid": 1910,
+    "name": "利苑(徐汇)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "利苑(环贸iapm店)",
+    "address": "上海市徐汇区湖南路街道淮海中路999号环贸广场L4-401(近陕西南路)",
+    "tel": null,
+    "lat": 31.216182,
+    "lng": 121.458502
+  },
+  {
+    "rid": 1911,
+    "name": "台城镂月",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "台城镂月·台山广府菜(徐家汇路店)",
+    "address": "上海市黄浦区打浦桥街道徐家汇路268号凯德晶萃5楼517号(糖水川菜左侧)",
+    "tel": null,
+    "lat": 31.210891,
+    "lng": 121.477701
+  },
+  {
+    "rid": 1912,
+    "name": "瑰禧",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "瑰禧Blossom",
+    "address": "上海市静安区南京西路街道南京西路1266号恒隆广场501号",
+    "tel": null,
+    "lat": 31.227369,
+    "lng": 121.453431
+  },
+  {
+    "rid": 1913,
+    "name": "海味观(静安)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "海味观(静安店)",
+    "address": "上海市静安区江宁路街道康定路18号",
+    "tel": null,
+    "lat": 31.236854,
+    "lng": 121.45489
+  },
+  {
+    "rid": 1914,
+    "name": "上海总会",
+    "status": "ambiguous",
+    "candidates": [
+      {
+        "title": "上海总会SHANGHAICLUB(兴业太古汇店)",
+        "address": "上海市静安区南京西路789号兴业太古汇F4",
+        "lat": 31.228588,
+        "lng": 121.463288
+      },
+      {
+        "title": "上海总会SHANGHAICLUB·宴会厅",
+        "address": "上海市静安区南京西路789号兴业太古汇F418",
+        "lat": 31.228563,
+        "lng": 121.463081
+      }
+    ]
+  },
+  {
+    "rid": 1915,
+    "name": "馨源楼",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "馨源楼",
+    "address": "上海市黄浦区瑞金二路街道瑞金二路118号瑞金洲际酒店4号楼(近复兴中路)",
+    "tel": null,
+    "lat": 31.214049,
+    "lng": 121.463856
+  },
+  {
+    "rid": 1916,
+    "name": "川粤海棠(长宁)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "川粤海棠(星厨主理·上海荟聚店)",
+    "address": "上海市长宁区新泾镇金钟路788号上海荟聚4楼A01号(微风露台)",
+    "tel": null,
+    "lat": 31.221653,
+    "lng": 121.355682
+  },
+  {
+    "rid": 1917,
+    "name": "外滩·林家一",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "外滩林家一·南派台州菜(外滩·中央大楼店)",
+    "address": "上海市黄浦区外滩街道南京东路123号4楼整层",
+    "tel": null,
+    "lat": 31.238279,
+    "lng": 121.48757
+  },
+  {
+    "rid": 1918,
+    "name": "周舍(闵行)",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "丽宝广场3号楼",
+    "lat": 31.195091,
+    "lng": 121.311234,
+    "reliability": 7
+  },
+  {
+    "rid": 1919,
+    "name": "菁禧荟(长宁)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "菁禧荟(虹桥店)",
+    "address": "上海市长宁区仙霞新村街道虹桥路1665号B5幢别墅(星空广场隔壁)",
+    "tel": null,
+    "lat": 31.200614,
+    "lng": 121.393153
+  },
+  {
+    "rid": 1920,
+    "name": "东方景宴",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "思南公馆-57号楼",
+    "lat": 31.214716,
+    "lng": 121.468803,
+    "reliability": 7
+  },
+  {
+    "rid": 1921,
+    "name": "鹿园MOOSE(浦东店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "鹿园 MOOSE(浦东店)",
+    "address": "上海市浦东新区陆家嘴街道浦东南路899号上海陆家嘴中心9层908-909号",
+    "tel": null,
+    "lat": 31.231475,
+    "lng": 121.515778
+  },
+  {
+    "rid": 1922,
+    "name": "悦轩(上海柏悦酒店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "上海柏悦酒店悦轩中餐厅",
+    "address": "上海市浦东新区陆家嘴街道世纪大道100号上海环球金融中心87楼凯悦酒店",
+    "tel": null,
+    "lat": 31.234521,
+    "lng": 121.507239
+  },
+  {
+    "rid": 1923,
+    "name": "鮨琉璃",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "鮨 琉璃(禧瑞广场店)",
+    "address": "上海市长宁区虹桥街道延安西路2088号禧瑞广场1层B125室(田口 、金澜私邸隔壁)",
+    "tel": null,
+    "lat": 31.202139,
+    "lng": 121.406994
+  },
+  {
+    "rid": 1924,
+    "name": "三佰杯",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "三佰杯(华山路店)",
+    "address": "上海市静安区华山路328号一层109商铺",
+    "tel": null,
+    "lat": 31.218384,
+    "lng": 121.446058
+  },
+  {
+    "rid": 1925,
+    "name": "MIYARAKU宫楽",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "MIYARAKU 宫楽怀石料理Omakase",
+    "address": "上海市静安区静安寺街道长乐路920弄1号",
+    "tel": null,
+    "lat": 31.215779,
+    "lng": 121.446257
+  },
+  {
+    "rid": 1926,
+    "name": "OnCue",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "ONCUE",
+    "address": "上海市虹口区嘉兴路街道沙泾路10号1幢105",
+    "tel": null,
+    "lat": 31.254662,
+    "lng": 121.492004
+  },
+  {
+    "rid": 1928,
+    "name": "奈良本寿司",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "永嘉路557号",
+    "lat": 31.205011,
+    "lng": 121.450513,
+    "reliability": 7
+  },
+  {
+    "rid": 1929,
+    "name": "吾观·私宴",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "上海仲裁委员会钢铁服务业仲裁中心",
+    "lat": 31.288449,
+    "lng": 121.490537,
+    "reliability": 7
+  },
+  {
+    "rid": 1930,
+    "name": "思南海派私房菜",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "思南公馆",
+    "lat": 31.21468,
+    "lng": 121.468793,
+    "reliability": 7
+  },
+  {
+    "rid": 1931,
+    "name": "La Jade",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "上海城中希尔顿酒店",
+    "lat": 31.217593,
+    "lng": 121.437159,
+    "reliability": 7
+  },
+  {
+    "rid": 1932,
+    "name": "洋房333",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "长乐花园·洋房333",
+    "address": "上海市徐汇区湖南街道长乐路333号",
+    "tel": null,
+    "lat": 31.219779,
+    "lng": 121.456561
+  },
+  {
+    "rid": 1933,
+    "name": "huma 1095",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "huma1095",
+    "address": "上海市长宁区江苏路街道愚园路1095号",
+    "tel": null,
+    "lat": 31.218553,
+    "lng": 121.428603
+  },
+  {
+    "rid": 1934,
+    "name": "季福楼",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "季福楼JHOUSE",
+    "address": "上海市静安区静安寺街道巨鹿路889号11-12栋",
+    "tel": null,
+    "lat": 31.217553,
+    "lng": 121.448143
+  },
+  {
+    "rid": 1935,
+    "name": "九福里",
+    "status": "ok",
+    "method": "suggestion:name_unique",
+    "matched_title": "九福里",
+    "address": "上海市黄浦区南京东路街道江阴路同益里江阴路88弄小区",
+    "tel": null,
+    "lat": 31.229778,
+    "lng": 121.469017
+  },
+  {
+    "rid": 1936,
+    "name": "乾璟荟",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "幸福里A座",
+    "lat": 31.204335,
+    "lng": 121.430378,
+    "reliability": 7
+  },
+  {
+    "rid": 1937,
+    "name": "上式楼",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "九洲生活广场",
+    "lat": 31.187445,
+    "lng": 121.387485,
+    "reliability": 7
+  },
+  {
+    "rid": 1938,
+    "name": "瑞香苑一号",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.35226,
+      "lat": 31.279348
+    }
+  },
+  {
+    "rid": 1939,
+    "name": "北外滩隐世融合私宴",
+    "status": "low_confidence",
+    "note": "geocoder可靠度仅3，坐标留空待精确拾取",
+    "cand": {
+      "lng": 121.494571,
+      "lat": 31.230081
+    }
+  },
+  {
+    "rid": 1940,
+    "name": "兰亭集私房菜",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "兰亭集私房菜徐家汇店(兰亭集私房菜)",
+    "address": "上海市徐汇区永嘉路335弄1楼",
+    "tel": null,
+    "lat": 31.208766,
+    "lng": 121.457471
+  },
+  {
+    "rid": 1941,
+    "name": "赉安·海派中式板前料理",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "永嘉路557号",
+    "lat": 31.205011,
+    "lng": 121.450513,
+    "reliability": 7
+  },
+  {
+    "rid": 1942,
+    "name": "繁花滨江私宴",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "繁花·滨江私宴(杨浦滨江店)",
+    "address": "上海市杨浦区平凉路街道安浦路579号沪上·繁花酒店(北外滩滨江店)2楼(近丹阳路地铁2号口)",
+    "tel": null,
+    "lat": 31.252157,
+    "lng": 121.534917
+  },
+  {
+    "rid": 1943,
+    "name": "林家一·山海宴",
+    "status": "ok_fallback",
+    "method": "geocoder",
+    "matched_title": "国华金融中心-A座",
+    "lat": 31.254636,
+    "lng": 121.497933,
+    "reliability": 7
+  },
+  {
+    "rid": 1944,
+    "name": "永兴餐厅",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "永兴餐厅(复兴中路店)",
+    "address": "上海市黄浦区瑞金二路街道复兴中路626弄1号(近茂名路)",
+    "tel": null,
+    "lat": 31.214738,
+    "lng": 121.463688
+  },
+  {
+    "rid": 1945,
+    "name": "春餐厅",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "春餐厅(淮海路)",
+    "address": "上海市黄浦区进贤路124号(陕西南路地铁站3号口步行470米)",
+    "tel": null,
+    "lat": 31.221659,
+    "lng": 121.459912
+  },
+  {
+    "rid": 1946,
+    "name": "功德林(南京西路店)",
+    "status": "ambiguous",
+    "candidates": [
+      {
+        "title": "功德林净素食品专卖店(南京西路店)",
+        "address": "上海市黄浦区南京西路445号(人民广场地铁站11号口步行330米)",
+        "lat": 31.230824,
+        "lng": 121.46855
+      },
+      {
+        "title": "功德林小卖部",
+        "address": "上海市黄浦区南京西路445号(人民广场地铁站11号口步行370米)",
+        "lat": 31.230818,
+        "lng": 121.468435
+      }
+    ]
+  },
+  {
+    "rid": 1947,
+    "name": "云和面馆(黄浦)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "云和面馆",
+    "address": "上海市黄浦区瑞金二路街道长乐路344号(新锦江大酒店对面)",
+    "tel": null,
+    "lat": 31.221248,
+    "lng": 121.462673
+  },
+  {
+    "rid": 1948,
+    "name": "老兴鲜(黄浦)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "老兴鲜(黄浦店)",
+    "address": "上海市黄浦区淮海中路918号百盛购物中心(淮海路店)F5",
+    "tel": null,
+    "lat": 31.217423,
+    "lng": 121.459245
+  },
+  {
+    "rid": 1949,
+    "name": "菰城宴",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "菰城宴·大锅红烧羊肉面(轻工大木桥小区店)",
+    "address": "上海市徐汇区斜土路街道斜土路1422弄-12号(近轻工大木桥小区西北门)",
+    "tel": null,
+    "lat": 31.197726,
+    "lng": 121.461557
+  },
+  {
+    "rid": 1950,
+    "name": "老地方面馆",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "老地方面馆(思南路店)",
+    "address": "上海市黄浦区思南路107号(打浦桥地铁站1号口步行420米)",
+    "tel": null,
+    "lat": 31.209311,
+    "lng": 121.470607
+  },
+  {
+    "rid": 1951,
+    "name": "小陶面馆",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "小陶面馆(嘉善路店)",
+    "address": "上海市徐汇区嘉善路222号一楼",
+    "tel": null,
+    "lat": 31.208939,
+    "lng": 121.459625
+  },
+  {
+    "rid": 1952,
+    "name": "临湖素食",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "临湖素食·焱格格(保利时光里店)",
+    "address": "上海市徐汇区瑞平路230号保利时光里2层016-017号(龙华中路站5号口)",
+    "tel": null,
+    "lat": 31.181492,
+    "lng": 121.454476
+  },
+  {
+    "rid": 1953,
+    "name": "157食坊",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "157食坊",
+    "address": "上海市长宁区新华路街道凯旋路1398号长宁国际T10栋101-102室",
+    "tel": null,
+    "lat": 31.199661,
+    "lng": 121.421276
+  },
+  {
+    "rid": 1954,
+    "name": "逸采(静安)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "逸采EASEFUL CUISINE(静安店)",
+    "address": "上海市静安区陕西南路90号2楼",
+    "tel": null,
+    "lat": 31.221453,
+    "lng": 121.456877
+  },
+  {
+    "rid": 1955,
+    "name": "渔都老味面",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "渔都老味面·深夜食堂·舟山海鲜面(丽园路店)",
+    "address": "上海市黄浦区打浦桥街道丽园路501号A8-103室",
+    "tel": null,
+    "lat": 31.207848,
+    "lng": 121.481717
+  },
+  {
+    "rid": 1956,
+    "name": "渔哥·湛江(静安)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "渔哥·湛江·宵夜(延安西路店)",
+    "address": "上海市静安区延安西路358号美丽园大厦A栋一楼",
+    "tel": null,
+    "lat": 31.21868,
+    "lng": 121.439144
+  },
+  {
+    "rid": 1957,
+    "name": "宏玉方",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "宏玉方(南六店)",
+    "address": "上海市黄浦区老西门街道西藏南路686号南六商场B1-06(近地铁8、10号线老西门站3号口)",
+    "tel": null,
+    "lat": 31.216933,
+    "lng": 121.483349
+  },
+  {
+    "rid": 1958,
+    "name": "滇道(静安)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "滇道云南特色料理(康定路店)",
+    "address": "上海市静安区曹家渡街道康定路1025号(近武宁南路)",
+    "tel": null,
+    "lat": 31.230587,
+    "lng": 121.437417
+  },
+  {
+    "rid": 1959,
+    "name": "徐记海鲜(徐汇)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "徐记海鲜(肇嘉浜店)",
+    "address": "上海市徐汇区肇嘉浜路500号(肇嘉浜路地铁站2号口步行470米)",
+    "tel": null,
+    "lat": 31.20118,
+    "lng": 121.454451
+  },
+  {
+    "rid": 1960,
+    "name": "永丰面馆(黄浦)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "永丰面馆(汉口路店)",
+    "address": "上海市黄浦区汉口路320号(南京东路地铁站4号口步行220米)",
+    "tel": null,
+    "lat": 31.235677,
+    "lng": 121.484115
+  },
+  {
+    "rid": 1961,
+    "name": "和膳面家",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "和膳面家·现炒浇头面(北海新苑店)",
+    "address": "上海市静安区彭浦镇沪太路1190号北海新苑",
+    "tel": null,
+    "lat": 31.277803,
+    "lng": 121.426653
+  },
+  {
+    "rid": 1962,
+    "name": "宁海食府",
+    "status": "ok",
+    "method": "suggestion:addr_match",
+    "matched_title": "宁海食府(虹桥万科高铁机场店)",
+    "address": "上海市闵行区申长路988弄万科中心负2层15D号",
+    "tel": null,
+    "lat": 31.19578,
+    "lng": 121.314924
+  },
+  {
+    "rid": 1963,
+    "name": "阿勇面馆(东书房路)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "阿勇面馆(东书房路店)",
+    "address": "上海市浦东新区东书房路309号",
+    "tel": null,
+    "lat": 31.166486,
+    "lng": 121.535105
+  },
+  {
+    "rid": 1964,
+    "name": "坛·四川料理",
+    "status": "ok",
+    "method": "suggestion:name_unique",
+    "matched_title": "坛四川料理",
+    "address": "上海市黄浦区豫园街道豫园商城九曲桥中心广场松运楼106号,一层、二层",
+    "tel": null,
+    "lat": 31.226409,
+    "lng": 121.491776
+  },
+  {
+    "rid": 1965,
+    "name": "味香斋(雁荡路店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "味香斋(雁荡路店)",
+    "address": "上海市黄浦区瑞金二路街道雁荡路14号(近淮海中路)",
+    "tel": null,
+    "lat": 31.220835,
+    "lng": 121.469942
+  },
+  {
+    "rid": 1966,
+    "name": "福和面馆(昆山花园路总店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "福和面馆(上海昆山花园路总店)",
+    "address": "上海市虹口区天潼路328号1层112室(近乍浦路与武昌路交叉口)",
+    "tel": null,
+    "lat": 31.246691,
+    "lng": 121.487421
+  },
+  {
+    "rid": 1968,
+    "name": "迷上 Mi Shang",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "迷上PRADA荣宅",
+    "address": "上海市静安区陕西北路186号荣宅二楼",
+    "tel": null,
+    "lat": 31.226874,
+    "lng": 121.455754
+  },
+  {
+    "rid": 1969,
+    "name": "食光",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "Scarpetta Trattoria食光· 意大利餐厅",
+    "address": "上海市黄浦区蒙自路33号(近徐家汇路,地铁9,13号线马当路站3号口)",
+    "tel": null,
+    "lat": 31.20834,
+    "lng": 121.476941
+  },
+  {
+    "rid": 1970,
+    "name": "Torikaze",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "TORIKAZE鳥かぜ",
+    "address": "上海市徐汇区复兴中路1331号3号楼102商铺",
+    "tel": null,
+    "lat": 31.211034,
+    "lng": 121.452429
+  },
+  {
+    "rid": 1971,
+    "name": "Cellar to Table",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "Cellar To Table·CTT(东湖路店)",
+    "address": "上海市徐汇区湖南路街道东湖路20号一层1A室",
+    "tel": null,
+    "lat": 31.216405,
+    "lng": 121.454858
+  },
+  {
+    "rid": 1972,
+    "name": "Trine",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "TRINE(锦和越界永嘉庭店)",
+    "address": "上海市徐汇区天平路街道永嘉路570号越界永嘉庭1号楼4楼",
+    "tel": null,
+    "lat": 31.205667,
+    "lng": 121.450968
+  },
+  {
+    "rid": 1973,
+    "name": "Scilla",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "Scilla",
+    "address": "上海市长宁区新华路街道番禺路504号(交通大学地铁站5号口步行450米)",
+    "tel": null,
+    "lat": 31.201698,
+    "lng": 121.429916
+  },
+  {
+    "rid": 1974,
+    "name": "沼田双",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "沼田双天妇罗",
+    "address": "上海市黄浦区小东门街道中山东二路558号北区N1幢一楼107a(靠近人民路)",
+    "tel": null,
+    "lat": 31.226786,
+    "lng": 121.4973
+  },
+  {
+    "rid": 1975,
+    "name": "Hulu Sushi 葫芦寿司",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "Hulu Sushi 葫芦寿司",
+    "address": "上海市长宁区幸福路110号101单元门内",
+    "tel": null,
+    "lat": 31.204982,
+    "lng": 121.431349
+  },
+  {
+    "rid": 1976,
+    "name": "Narisawa Shanghai",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "NARISAWA SHANGHAI(天安广场店)",
+    "address": "上海市普陀区莫干山路600号天安千树7楼705室",
+    "tel": null,
+    "lat": 31.249034,
+    "lng": 121.445992
+  },
+  {
+    "rid": 1977,
+    "name": "老乾杯(外滩店)",
+    "status": "ok",
+    "method": "suggestion:addr_exact",
+    "matched_title": "老乾杯(外滩本店)",
+    "address": "上海市黄浦区广东路20号外滩5号楼5楼",
+    "tel": null,
+    "lat": 31.234393,
+    "lng": 121.490641
   }
 ]

@@ -1,0 +1,107 @@
+{
+  "task": "social-graph-bfs-discovery",
+  "city": "上海",
+  "run_date": "2026-09-24",
+  "converged": false,
+  "convergence_note": "未收敛——frontier 未清空。本轮以 general_search + web.fetch + 海外食评网站(可脚本)为主通道完成 3 轮 BFS；小红书/抖音评论区需登录态与验证码，按边界交真人未硬闯，故'内容→评论区'这条最高价值二级边未真正逐节点通读，frontier 仍有余量(见 pending_human)。连续两轮新增候选主要来自综艺轴与 omakase 新开店，老饕长尾层未饱和。",
+  "db_baseline": {
+    "db_restaurants_total": 1390,
+    "exclusion_basis": "common.py fetch_all(restaurants) 全量拉取，按 norm_name 子串匹配排除已收录"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "phase": "seed_init",
+      "popped_nodes": 7,
+      "nodes": [
+        "Sophie Serves Up(sophieservesup.com,海外中文老饕食评)",
+        "Nomfluence/rachelgouk.com(海外上海食评)",
+        "一饭封神(腾讯视频综艺,G层种子)",
+        "That's Shanghai(thatsmags.com,海外媒体)",
+        "chinaloveforyou.com(expats本地美食指南)",
+        "B站美食UP(岩田omakase视频 BV1ibhVzfEu7)",
+        "光明网/澎湃餐饮报道(关店与行业信号层)"
+      ],
+      "new_candidates": [],
+      "frontier_left": 7,
+      "source_platform_distribution": {"web_search": 3, "overseas_media": 2, "video": 1, "news": 1}
+    },
+    {
+      "round": 1,
+      "phase": "人→内容 / A层老饕私藏",
+      "query_matrix": ["上海 美食 老饕 私藏 不网红", "上海 苍蝇馆子 本地人带路"],
+      "popped_nodes": 6,
+      "new_candidates": ["福和面馆", "雲和面馆YUNHE", "阿明小菜", "四如春食府", "鲜得来", "莱莱小笼", "舒蔡记生煎", "肥姚仔大排档", "刘栋梁大排档", "捡角台湾食堂", "山缓缓火锅", "盖饭邦长沙菜馆", "玖玖小炒", "光头生煎"],
+      "new_candidate_names_list": ["福和面馆(虹口总店)", "光头生煎(山阴路)", "玖玖小炒(兴安路)", "阿明小菜", "山缓缓火锅", "捡角台湾食堂"],
+      "frontier_left": 9,
+      "source_platform_distribution": {"抖音": 5, "携程UGC": 5, "政府/媒体": 2, "expats": 1}
+    },
+    {
+      "round": 2,
+      "phase": "G层综艺→主厨→餐厅 / 店→店",
+      "query_matrix": ["一饭封神 帅晓剑", "一饭封神2 上海餐厅8家", "一饭封神2 大厨及餐厅"],
+      "popped_nodes": 8,
+      "new_candidates": ["帅帅精致家常味", "南兴园", "PAC(邓华东平价店)", "安和隐世SENSE", "Ambre Ciel珀", "黄启云私房牛肉面", "Obscura唐香", "桂满陇", "来来来泰国街边排档", "不吃素(胶州路)", "杜九月饭店", "名厨本帮馆", "芝兰点心", "料理蜀王", "蝶园"],
+      "frontier_left": 11,
+      "source_platform_distribution": {"抖音": 6, "媒体(澎湃/新浪/中华网)": 4, "名厨网站": 1}
+    },
+    {
+      "round": 3,
+      "phase": "I层名单比对 + omakase老饕层 + 回归缺口追踪",
+      "query_matrix": ["Stone Sal言盐 米其林", "鮨照 Sushi Teru", "上海omakase 老饕 私藏 预约", "上海 煮干拉面 nagi"],
+      "popped_nodes": 7,
+      "new_candidates": ["Stone Sal言盐", "鮨直輝SushiNaoki", "月百姿TsukiHyakushi", "鮨莲", "鮨清和", "SushiOyamA大山", "TheDome", "鮨冠", "鮨东", "鮨松野", "鮨心廻", "鮨天照", "岩田割烹鮨", "nagi煮干拉面凪"],
+      "frontier_left": 12,
+      "source_platform_distribution": {"米其林官网": 1, "携程UGC": 6, "海外食评(Nomfluence/Sugarednspiced)": 3, "B站": 1, "旧资料": 1}
+    },
+    {
+      "round": 4,
+      "phase": "候选→DB比对去重 + 证据硬门深采",
+      "popped_nodes": 30,
+      "new_candidates_after_db_filter": 5,
+      "deep_verified_to_raw": ["帅帅精致家常味", "StoneSal言盐", "福和面馆(总店)", "光头生煎", "来来来泰国街边排档"],
+      "held_back_存疑": ["鮨直輝SushiNaoki(古北路1838号vs虹梅路3911号地址冲突/缺含菜名堂食原话)", "安和隐世SENSE(安和隐世为杭州湘湖品牌,上海店地址未坐实)", "nagi煮干拉面凪(沪店仅2016/2018旧文,疑已闭店)", "鮨照SushiTeru(未在任何在营索引中捞到独立门店,疑闭店/改名)", "月百姿/鮨莲/鮨清和/TheDome等(携程promo笔记为主,软广告疑重,未过≥2堂食原话门)"],
+      "frontier_left": 12,
+      "source_platform_distribution": {}
+    }
+  ],
+  "totals": {
+    "seed_bloggers": 7,
+    "nodes_popped_total": 36,
+    "raw_candidates_total": 30,
+    "already_in_db": 15,
+    "new_to_raw": 5,
+    "held_as_suspect": 10,
+    "frontier_cleared": false
+  },
+  "regression_check": {
+    "already_in_db_mechanism_validated": {
+      "宫鸠": "库内(宫鸠华山路) — 本轮未重新遍历到,记为既有收录",
+      "大志": "库内(大志/king大志)",
+      "吉兆": "库内(吉兆KITCHO)",
+      "晴川": "库内(晴川sushi午市)",
+      "鸟鸟炒菜店": "库内(南昌路)",
+      "张记川味苑": "库内(定西路)",
+      "聪菜馆": "库内",
+      "泓0871": "库内",
+      "nabi": "库内(前序v3轮已命中)",
+      "jelu/Jellooo": "库内",
+      "yaya's": "库内",
+      "nono's": "库内"
+    },
+    "newly_discovered_this_run": {
+      "帅帅精致家常味": {"hit": true, "first_path": "G层综艺《一饭封神》→主厨帅晓剑→其主理餐厅(长乐路175-4)", "round": 2, "delivered_to_raw": true},
+      "言盐StoneSal": {"hit": true, "first_path": "I层米其林官方名单slug=stonesal + 牛排老饕查询矩阵", "round": 3, "delivered_to_raw": true}
+    },
+    "regression_miss_breakpoints": {
+      "鮨照SushiTeru": "断点: omakase老饕层本轮捞到大量'鮨X'新店(鮨莲/鮨清和/月百姿/鮨直輝等),但无一与'鮨照'对名;图上最近的Sushi Teru字样实际指向鮨直輝Naoki。推断:鮨照或已闭店/改名,需真人在大众点评/地图POI层确认现状。",
+      "nagi煮干拉面凪": "断点: 查询矩阵'煮干拉面'只命中日本官网与2016 Thatsmags/2018 clifehack的沪店旧评,无2024+在营信号;推断上海店已闭。机制缺口=缺'地图POI按品类全量'这层(本轮未跑高德POI脚本),应补。"
+    }
+  },
+  "pending_human": [
+    "小红书登录态: 未登录无法进笔记通读评论区——这是方法论标注的最高价值二级来源,本轮未采;建议真人登录后从 Sophie Serves Up 提及店的笔记评论区二次溯源",
+    "抖音团购挂车视频需真人判定软广程度",
+    "鮨照/nagi 现状需大众点评+高德POI层人工核实",
+    "安和隐世SENSE上海店地址需坐实(疑杭州品牌外溢)"
+  ]
+}

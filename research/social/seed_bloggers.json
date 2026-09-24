@@ -1,0 +1,104 @@
+{
+  "note": "本轮图遍历种子节点清单。粉丝数/主页URL凡未坐实者留空(宁空不假)。平台以实际可触达为准;小红书/抖音登录态交真人,本轮以可脚本化的海外食评站/媒体/综艺轴为种子起点。",
+  "seeds": [
+    {
+      "platform": "公众号/独立站",
+      "nickname": "Sophie Serves Up",
+      "follower_count": null,
+      "homepage_url": "https://www.sophieservesup.com/",
+      "type": "深度食评",
+      "why_seed": "海外中文老饕食评,长文多带具体菜名,前序v3轮即从其正文捞出yayas/nonos;本轮再捞福和面馆/泰餐",
+      "known_recommended": [
+        "Yayas Pasta Bar",
+        "Nonos",
+        "福和面馆",
+        "上海泰餐"
+      ]
+    },
+    {
+      "platform": "独立站/海外媒体",
+      "nickname": "Nomfluence (Rachele Gouk)",
+      "follower_count": null,
+      "homepage_url": "https://rachelgouk.com/best-japanese-omakase-restaurants-in-shanghai/",
+      "type": "海外美食媒体",
+      "why_seed": "上海omakase/高端餐厅年度盘点,带主厨背景与双地址,捞到鮨直輝/Sushi Oyama",
+      "known_recommended": [
+        "鮨直輝Sushi Naoki",
+        "Sushi Oyama"
+      ]
+    },
+    {
+      "platform": "电视综艺(G层)",
+      "nickname": "一饭封神(腾讯视频)",
+      "follower_count": null,
+      "homepage_url": "https://v.qq.com/",
+      "type": "综艺-主厨-餐厅",
+      "why_seed": "谢霆锋美食竞技综艺,节目到参赛大厨再到其主理餐厅图遍历;本轮捞出帅帅/南兴园/安和隐世/Ambre Ciel/来来来",
+      "known_recommended": [
+        "帅帅精致家常味",
+        "南兴园",
+        "安和隐世SENSE",
+        "Ambre Ciel珀",
+        "来来来泰国排档",
+        "黄启云私房牛肉面"
+      ]
+    },
+    {
+      "platform": "海外媒体",
+      "nickname": "Thats Shanghai (thatsmags)",
+      "follower_count": null,
+      "homepage_url": "https://www.thatsmags.com/shanghai",
+      "type": "海外美食媒体",
+      "why_seed": "上海英文餐厅评测,历史上覆盖拉面/西餐;本轮用于nagi旧证",
+      "known_recommended": [
+        "Ramen Nagi(2016旧评)"
+      ]
+    },
+    {
+      "platform": "独立站/expats",
+      "nickname": "Chinaloveforyou",
+      "follower_count": null,
+      "homepage_url": "https://chinaloveforyou.com/shanghai-local-food-guide/",
+      "type": "expats本地美食指南",
+      "why_seed": "本地无网红老店英文指南,捞到山阴路光头生煎等社区店",
+      "known_recommended": [
+        "光头生煎",
+        "光头面馆"
+      ]
+    },
+    {
+      "platform": "B站",
+      "nickname": "美食区UP(岩田omakase视频)",
+      "follower_count": null,
+      "homepage_url": "https://www.bilibili.com/video/BV1ibhVzfEu7/",
+      "type": "探店/测评",
+      "why_seed": "熟客制无联系方式omakase(岩田)深采,代表老饕私藏层;UP主主页合集未展开(需登录)",
+      "known_recommended": [
+        "岩田割烹鮨"
+      ]
+    },
+    {
+      "platform": "新闻媒体(信号层)",
+      "nickname": "澎湃美食湃客/光明网餐饮",
+      "follower_count": null,
+      "homepage_url": "https://www.thepaper.cn/",
+      "type": "人物/关店信号",
+      "why_seed": "主厨人物长篇与关店汇总,用于背书与status核验",
+      "known_recommended": [
+        "帅帅精致家常味(人物)"
+      ]
+    }
+  ],
+  "seeds_pending_login": [
+    {
+      "platform": "小红书",
+      "nickname": "待真人登录后从上海老饕私藏不网红高赞笔记按最多收藏补选5-10个食评博主",
+      "note": "本轮未登录,评论区二级边未采"
+    },
+    {
+      "platform": "抖音",
+      "nickname": "待真人识别非团购挂车的本地探店老饕号3-5个",
+      "note": "本轮通用搜索仅触达分享页,未进博主主页合集"
+    }
+  ]
+}

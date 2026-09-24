@@ -1,0 +1,32 @@
+{
+  "note": "品牌实体注册表（brand registry）：canonical 正名 + en/aliases 用于精确匹配品牌，branches 用 id/区/地址锚定具体分店。逐家核实扩充；对齐器 entity_align.py 优先用本表，未覆盖才走保守字符串匹配。",
+  "version": "v2",
+  "updated": "2026-09-24",
+  "brands": [
+    {"canonical": "唐阁", "en": ["T'ang Court", "Tang Court"], "group": "朗廷酒店", "branches": [{"id": 496, "district": "黄浦区"}]},
+    {"canonical": "凌珑", "en": ["Ling Long"], "aliases": ["玲珑", "LingLong"], "branches": [{"id": 1391}]},
+    {"canonical": "白茸", "en": ["Bai Rong"], "aliases": ["佰荣", "白荣", "百荣"], "branches": [{"id": 815}]},
+    {"canonical": "甬府", "en": ["Yong Fu"], "branches": [{"id": 538, "district": "黄浦区"}]},
+    {"canonical": "鹿园", "en": ["MOOSE", "Moose"], "aliases": ["鹿园MOOSE"], "branches": [{"id": 540, "district": "长宁区"}, {"id": null, "district": "浦东新区", "note": "浦东陆家嘴中心店缺，已补raw"}]},
+    {"canonical": "大董", "en": ["Da Dong"], "branches": [{"id": 823, "district": "徐汇区"}]},
+    {"canonical": "利苑", "en": ["Lei Garden"], "branches": [{"id": 493, "district": "浦东新区"}, {"id": null, "district": "徐汇区", "note": "徐汇店缺，已补raw"}]},
+    {"canonical": "喜粤8号", "en": ["Canton 8"], "branches": [{"id": 713, "district": "黄浦区"}]},
+    {"canonical": "头灶", "en": [], "branches": [{"id": 719}]},
+    {"canonical": "景煊", "en": ["SOLE", "Sole"], "branches": [{"id": 722}]},
+    {"canonical": "兰心", "en": [], "branches": [{"id": 998}]},
+    {"canonical": "茂隆", "en": [], "branches": [{"id": 999}]},
+    {"canonical": "瓯叙", "en": [], "branches": [{"id": 862}]},
+    {"canonical": "皖宴", "en": ["Wan Yan"], "branches": [{"id": 568, "district": "长宁区"}]},
+    {"canonical": "壳里", "en": ["Coquille"], "branches": [{"id": 1714}]},
+    {"canonical": "金轩", "en": ["Jin Xuan"], "branches": [{"id": 1390}]},
+    {"canonical": "福承", "en": [], "branches": [{"id": 904}]},
+    {"canonical": "明阁", "en": ["Ming Court"], "branches": [{"id": 497}]},
+    {"canonical": "福1015", "en": ["Fu 1015"], "aliases": ["福一零一五"], "group": "福系列", "branches": [{"id": 1007, "district": "长宁区"}]},
+    {"canonical": "福1088", "en": ["Fu 1088"], "aliases": ["福一零八八"], "group": "福系列", "branches": [{"id": 1388, "district": "长宁区"}]},
+    {"canonical": "福1039", "en": ["Fu 1039"], "aliases": ["福一零三九"], "group": "福系列", "branches": [{"id": 1387, "district": "长宁区"}]},
+    {"canonical": "Maison Lameloise 莱美露滋", "en": ["Maison Lameloise", "Lameloise"], "aliases": ["莱美露滋", "Maison Lameloise Shanghai"], "group": "香格纳集团", "branches": [{"id": 1141, "district": "浦东新区"}]},
+    {"canonical": "Mi Thai", "en": ["Mi Thai", "MiThai"], "aliases": ["米泰", "Mi Thai(安福路店)"], "branches": [{"id": 1100, "district": "徐汇区"}]},
+    {"canonical": "莱莱小笼", "en": ["Qiao Ai Lai Lai Xiao Long"], "aliases": ["乔艾莱莱小笼", "莱莱小笼·乔艾", "乔艾莱莱小笼(黄浦)"], "branches": [{"id": 1586, "district": "黄浦区"}]},
+    {"canonical": "云和面馆", "en": ["YUNHE NOODLE"], "aliases": ["云和面馆YUNHENOODLE"], "branches": [{"id": 755, "district": "长宁区"}, {"id": null, "district": "黄浦区", "note": "黄浦店缺，已补raw"}]}
+  ]
+}

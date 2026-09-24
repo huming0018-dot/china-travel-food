@@ -15,6 +15,9 @@
     {"name": "nabi", "aliases": ["nabi餐厅", "nabi翡悦里"], "scene": "场景·咖啡/bistro", "expected_path": "图遍历/老饕合集", "hit": true, "first_hit_source": "v3咖啡bistro验证 R2 店→店(WULI同集团Tom Ryu/柳泰赫+JEJU前东家+翡悦里园区矩阵); 查询矩阵'韩餐 高端 预约制'抖音10大超难约排名第6", "hit_round": 2, "hit_path": "店→店+查询矩阵"},
     {"name": "jelu", "aliases": ["Jellooo", "Jelu", "吉鹿", "捷鹿", "J-LU"], "scene": "场景·咖啡/bistro", "expected_path": "图遍历/评论区", "hit": true, "first_hit_source": "v3咖啡bistro验证 R2 店→店(EHB前身罗昊×Esben 2025.9停业→Jellooo接棒/好利来系/BLACKSWAN姊妹); TimeOut北欧餐酒馆专题", "hit_round": 2, "hit_path": "店→店+查询矩阵"},
     {"name": "yaya's", "aliases": ["Yaya's Pasta Bar", "yaya's意面", "yayas pasta"], "scene": "场景·bistro/意面", "expected_path": "图遍历/老饕", "hit": true, "first_hit_source": "v3咖啡bistro验证 R1 人→内容(从gula bistro种子出发→抖音Franklin/Next Bottle主理人'主厨去哪吃'视频直接推荐'第一个想到yayas')", "hit_round": 1, "hit_path": "人→内容(老饕合集)"},
-    {"name": "nono's", "aliases": ["Nono's Ristorante", "nono's永福路", "nonos意面"], "scene": "场景·bistro", "expected_path": "图遍历/评论区", "hit": true, "first_hit_source": "v3咖啡bistro验证 R1 文章对比(Sophie Serves Up正文'Nono's...not as strongly as Yaya's'); 店→店确认Yaya's姊妹店(主厨Chris+侍酒师Franklin)", "hit_round": 1, "hit_path": "内容→评论区/文章对比+店→店"}
+    {"name": "nono's", "aliases": ["Nono's Ristorante", "nono's永福路", "nonos意面"], "scene": "场景·bistro", "expected_path": "图遍历/评论区", "hit": true, "first_hit_source": "v3咖啡bistro验证 R1 文章对比(Sophie Serves Up正文'Nono's...not as strongly as Yaya's'); 店→店确认Yaya's姊妹店(主厨Chris+侍酒师Franklin)", "hit_round": 1, "hit_path": "内容→评论区/文章对比+店→店"},
+    {"name": "nagi", "aliases": ["すごい煮干ラーメン凪", "煮干拉面凪", "Nagi拉面", "拉面凪"], "scene": "日料·拉面(煮干)", "expected_path": "地图POI全量/查询矩阵(煮干拉面)", "hit": false, "first_hit_source": null},
+    {"name": "鮨照", "aliases": ["鮨照寿司", "Sushi Teru", "鮨照 omakase"], "scene": "日料·Omakase板前", "expected_path": "权威名单/Omakase叶子网格", "hit": false, "first_hit_source": null},
+    {"name": "言盐", "aliases": ["Stone Sal", "Stone Sal 言盐", "言盐干式熟成牛排"], "scene": "北美·牛排馆(扒房)", "expected_path": "权威名单全量比对(米其林入选slug=stonesal)", "hit": false, "first_hit_source": null}
   ]
 }

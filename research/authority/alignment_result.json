@@ -1,0 +1,1243 @@
+{
+ "matched": [
+  {
+   "name": "唐阁",
+   "distinction": "二星",
+   "brand": "唐阁",
+   "district": null,
+   "matched_id": 496,
+   "confidence": "high"
+  },
+  {
+   "name": "吉品轩",
+   "distinction": "二星",
+   "brand": "吉品轩",
+   "district": null,
+   "matched_id": 717,
+   "confidence": "medium"
+  },
+  {
+   "name": "鲁采 (黄浦)",
+   "distinction": "一星",
+   "brand": "鲁采",
+   "district": "黄浦区",
+   "matched_id": 463,
+   "confidence": "medium"
+  },
+  {
+   "name": "Obscura",
+   "distinction": "一星",
+   "brand": "Obscura",
+   "district": null,
+   "matched_id": 1392,
+   "confidence": "medium"
+  },
+  {
+   "name": "Vivant by Johnny Pham",
+   "distinction": "一星",
+   "brand": "Vivant by Johnny Pham",
+   "district": null,
+   "matched_id": 1841,
+   "confidence": "medium"
+  },
+  {
+   "name": "雍福会",
+   "distinction": "入选",
+   "brand": "雍福会",
+   "district": null,
+   "matched_id": 1008,
+   "confidence": "medium"
+  },
+  {
+   "name": "Mercato",
+   "distinction": "入选",
+   "brand": "Mercato",
+   "district": null,
+   "matched_id": 1177,
+   "confidence": "medium"
+  },
+  {
+   "name": "泰安门",
+   "distinction": "三星",
+   "brand": "泰安门",
+   "district": null,
+   "matched_id": 1381,
+   "confidence": "medium"
+  },
+  {
+   "name": "福和慧",
+   "distinction": "二星",
+   "brand": "福和慧",
+   "district": null,
+   "matched_id": 1383,
+   "confidence": "medium"
+  },
+  {
+   "name": "头灶",
+   "distinction": "二星",
+   "brand": "头灶",
+   "district": null,
+   "matched_id": 719,
+   "confidence": "high"
+  },
+  {
+   "name": "荣府宴",
+   "distinction": "二星",
+   "brand": "荣府宴",
+   "district": null,
+   "matched_id": 759,
+   "confidence": "medium"
+  },
+  {
+   "name": "喜粤8号 (黄浦）",
+   "distinction": "二星",
+   "brand": "喜粤8号",
+   "district": "黄浦区",
+   "matched_id": 713,
+   "confidence": "high"
+  },
+  {
+   "name": "Fabula",
+   "distinction": "一星",
+   "brand": "Fabula",
+   "district": null,
+   "matched_id": 1386,
+   "confidence": "medium"
+  },
+  {
+   "name": "甬府 (黄浦)",
+   "distinction": "一星",
+   "brand": "甬府",
+   "district": "黄浦区",
+   "matched_id": 538,
+   "confidence": "high"
+  },
+  {
+   "name": "鹿园 (长宁)",
+   "distinction": "一星",
+   "brand": "鹿园",
+   "district": "长宁区",
+   "matched_id": 540,
+   "confidence": "high"
+  },
+  {
+   "name": "le Comptoir de Pierre Gagnaire",
+   "distinction": "一星",
+   "brand": "le Comptoir de Pierre Gagnaire",
+   "district": null,
+   "matched_id": 1143,
+   "confidence": "medium"
+  },
+  {
+   "name": "美 · 大董",
+   "distinction": "一星",
+   "brand": "美 · 大董",
+   "district": null,
+   "matched_id": 1049,
+   "confidence": "medium"
+  },
+  {
+   "name": "大董 (徐汇)",
+   "distinction": "一星",
+   "brand": "大董",
+   "district": "徐汇区",
+   "matched_id": 1562,
+   "confidence": "medium"
+  },
+  {
+   "name": "三月醉淮扬 (静安)",
+   "distinction": "一星",
+   "brand": "三月醉淮扬",
+   "district": "静安区",
+   "matched_id": 511,
+   "confidence": "medium"
+  },
+  {
+   "name": "人和馆 (徐汇)",
+   "distinction": "一星",
+   "brand": "人和馆",
+   "district": "徐汇区",
+   "matched_id": 1594,
+   "confidence": "medium"
+  },
+  {
+   "name": "景煊",
+   "distinction": "一星",
+   "brand": "景煊",
+   "district": null,
+   "matched_id": 722,
+   "confidence": "high"
+  },
+  {
+   "name": "荣家黄鱼面 (静安)",
+   "distinction": "必比登",
+   "brand": "荣家黄鱼面",
+   "district": "静安区",
+   "matched_id": 1503,
+   "confidence": "medium"
+  },
+  {
+   "name": "何洪记",
+   "distinction": "必比登",
+   "brand": "何洪记",
+   "district": null,
+   "matched_id": 704,
+   "confidence": "medium"
+  },
+  {
+   "name": "兰心 (进贤路)",
+   "distinction": "必比登",
+   "brand": "兰心",
+   "district": null,
+   "matched_id": 998,
+   "confidence": "high"
+  },
+  {
+   "name": "聪菜馆",
+   "distinction": "必比登",
+   "brand": "聪菜馆",
+   "district": null,
+   "matched_id": 1843,
+   "confidence": "medium"
+  },
+  {
+   "name": "荣小馆 (黄浦)",
+   "distinction": "必比登",
+   "brand": "荣小馆",
+   "district": "黄浦区",
+   "matched_id": 1502,
+   "confidence": "medium"
+  },
+  {
+   "name": "扬州饭店 (黄浦)",
+   "distinction": "必比登",
+   "brand": "扬州饭店",
+   "district": "黄浦区",
+   "matched_id": 503,
+   "confidence": "medium"
+  },
+  {
+   "name": "茂隆",
+   "distinction": "必比登",
+   "brand": "茂隆",
+   "district": null,
+   "matched_id": 999,
+   "confidence": "high"
+  },
+  {
+   "name": "井梅无锡面馆 (延平路)",
+   "distinction": "必比登",
+   "brand": "井梅无锡面馆",
+   "district": null,
+   "matched_id": 762,
+   "confidence": "medium"
+  },
+  {
+   "name": "瓯越尊鲜",
+   "distinction": "必比登",
+   "brand": "瓯越尊鲜",
+   "district": null,
+   "matched_id": 867,
+   "confidence": "medium"
+  },
+  {
+   "name": "瓯叙",
+   "distinction": "入选",
+   "brand": "瓯叙",
+   "district": null,
+   "matched_id": 862,
+   "confidence": "high"
+  },
+  {
+   "name": "Nabi",
+   "distinction": "入选",
+   "brand": "Nabi",
+   "district": null,
+   "matched_id": 1347,
+   "confidence": "medium"
+  },
+  {
+   "name": "1929 by Guillaume Galliot",
+   "distinction": "入选",
+   "brand": "1929 by Guillaume Galliot",
+   "district": null,
+   "matched_id": 1147,
+   "confidence": "medium"
+  },
+  {
+   "name": "尚牛社会 (静安)",
+   "distinction": "入选",
+   "brand": "尚牛社会",
+   "district": "静安区",
+   "matched_id": 1234,
+   "confidence": "medium"
+  },
+  {
+   "name": "闽和南欢席",
+   "distinction": "入选",
+   "brand": "闽和南欢席",
+   "district": null,
+   "matched_id": 521,
+   "confidence": "medium"
+  },
+  {
+   "name": "Mercado 505",
+   "distinction": "入选",
+   "brand": "Mercado 505",
+   "district": null,
+   "matched_id": 1196,
+   "confidence": "medium"
+  },
+  {
+   "name": "恒悦轩",
+   "distinction": "入选",
+   "brand": "恒悦轩",
+   "district": null,
+   "matched_id": 670,
+   "confidence": "medium"
+  },
+  {
+   "name": "顶特勒粥面馆",
+   "distinction": "入选",
+   "brand": "顶特勒粥面馆",
+   "district": null,
+   "matched_id": 1821,
+   "confidence": "medium"
+  },
+  {
+   "name": "席作 · 福建会馆",
+   "distinction": "入选",
+   "brand": "席作 · 福建会馆",
+   "district": null,
+   "matched_id": 525,
+   "confidence": "medium"
+  },
+  {
+   "name": "东平潮",
+   "distinction": "入选",
+   "brand": "东平潮",
+   "district": null,
+   "matched_id": 684,
+   "confidence": "medium"
+  },
+  {
+   "name": "8 ½ Otto e Mezzo Bombana",
+   "distinction": "二星",
+   "brand": "8 ½ Otto e Mezzo Bombana",
+   "district": null,
+   "matched_id": 1175,
+   "confidence": "medium"
+  },
+  {
+   "name": "雍颐庭",
+   "distinction": "一星",
+   "brand": "雍颐庭",
+   "district": null,
+   "matched_id": 539,
+   "confidence": "medium"
+  },
+  {
+   "name": "三号黄浦会",
+   "distinction": "一星",
+   "brand": "三号黄浦会",
+   "district": null,
+   "matched_id": 1384,
+   "confidence": "medium"
+  },
+  {
+   "name": "成隆行蟹王府 (黄浦)",
+   "distinction": "一星",
+   "brand": "成隆行蟹王府",
+   "district": "黄浦区",
+   "matched_id": 1385,
+   "confidence": "medium"
+  },
+  {
+   "name": "皖宴 (长宁)",
+   "distinction": "入选",
+   "brand": "皖宴",
+   "district": "长宁区",
+   "matched_id": 568,
+   "confidence": "high"
+  },
+  {
+   "name": "龚禧龚禧 (浦东新区)",
+   "distinction": "入选",
+   "brand": "龚禧龚禧",
+   "district": "浦东新区",
+   "matched_id": 839,
+   "confidence": "medium"
+  },
+  {
+   "name": "Jean Georges",
+   "distinction": "入选",
+   "brand": "Jean Georges",
+   "district": null,
+   "matched_id": 1137,
+   "confidence": "medium"
+  },
+  {
+   "name": "Pop",
+   "distinction": "入选",
+   "brand": "Pop",
+   "district": null,
+   "matched_id": 1150,
+   "confidence": "medium"
+  },
+  {
+   "name": "壳里",
+   "distinction": "入选",
+   "brand": "壳里",
+   "district": null,
+   "matched_id": 1714,
+   "confidence": "high"
+  },
+  {
+   "name": "Hakkasan",
+   "distinction": "入选",
+   "brand": "Hakkasan",
+   "district": null,
+   "matched_id": 696,
+   "confidence": "medium"
+  },
+  {
+   "name": "Shanghai Tavern",
+   "distinction": "入选",
+   "brand": "Shanghai Tavern",
+   "district": null,
+   "matched_id": 1254,
+   "confidence": "medium"
+  },
+  {
+   "name": "皇朝会",
+   "distinction": "入选",
+   "brand": "皇朝会",
+   "district": null,
+   "matched_id": 715,
+   "confidence": "medium"
+  },
+  {
+   "name": "御宝轩",
+   "distinction": "二星",
+   "brand": "御宝轩",
+   "district": null,
+   "matched_id": 495,
+   "confidence": "medium"
+  },
+  {
+   "name": "Da Vittorio",
+   "distinction": "二星",
+   "brand": "Da Vittorio",
+   "district": null,
+   "matched_id": 1173,
+   "confidence": "medium"
+  },
+  {
+   "name": "宝丽轩",
+   "distinction": "二星",
+   "brand": "宝丽轩",
+   "district": null,
+   "matched_id": 1382,
+   "confidence": "medium"
+  },
+  {
+   "name": "金轩",
+   "distinction": "一星",
+   "brand": "金轩",
+   "district": null,
+   "matched_id": 1390,
+   "confidence": "high"
+  },
+  {
+   "name": "逸龙阁",
+   "distinction": "一星",
+   "brand": "逸龙阁",
+   "district": null,
+   "matched_id": 716,
+   "confidence": "medium"
+  },
+  {
+   "name": "利苑 (浦东新区)",
+   "distinction": "一星",
+   "brand": "利苑",
+   "district": "浦东新区",
+   "matched_id": 493,
+   "confidence": "high"
+  },
+  {
+   "name": "凌珑",
+   "distinction": "一星",
+   "brand": "凌珑",
+   "district": null,
+   "matched_id": 1391,
+   "confidence": "high"
+  },
+  {
+   "name": "甬府 (虹口)",
+   "distinction": "一星",
+   "brand": "甬府",
+   "district": "虹口区",
+   "matched_id": 542,
+   "confidence": "medium"
+  },
+  {
+   "name": "甬府小鲜 (浦东新区)",
+   "distinction": "必比登",
+   "brand": "甬府小鲜",
+   "district": "浦东新区",
+   "matched_id": 536,
+   "confidence": "medium"
+  },
+  {
+   "name": "绿波廊",
+   "distinction": "必比登",
+   "brand": "绿波廊",
+   "district": null,
+   "matched_id": 1006,
+   "confidence": "medium"
+  },
+  {
+   "name": "南翔馒头店",
+   "distinction": "必比登",
+   "brand": "南翔馒头店",
+   "district": null,
+   "matched_id": 1584,
+   "confidence": "medium"
+  },
+  {
+   "name": "豪生酒家",
+   "distinction": "必比登",
+   "brand": "豪生酒家",
+   "district": null,
+   "matched_id": 1844,
+   "confidence": "medium"
+  },
+  {
+   "name": "大壶春 (四川中路)",
+   "distinction": "必比登",
+   "brand": "大壶春",
+   "district": null,
+   "matched_id": 1581,
+   "confidence": "medium"
+  },
+  {
+   "name": "白茸",
+   "distinction": "入选",
+   "brand": "白茸",
+   "district": null,
+   "matched_id": 815,
+   "confidence": "high"
+  },
+  {
+   "name": "福承",
+   "distinction": "入选",
+   "brand": "福承",
+   "district": null,
+   "matched_id": 904,
+   "confidence": "high"
+  },
+  {
+   "name": "逸道 (北京东路)",
+   "distinction": "入选",
+   "brand": "逸道",
+   "district": null,
+   "matched_id": 508,
+   "confidence": "medium"
+  },
+  {
+   "name": "柴门荟 (浦东)",
+   "distinction": "入选",
+   "brand": "柴门荟",
+   "district": "浦东新区",
+   "matched_id": 479,
+   "confidence": "medium"
+  },
+  {
+   "name": "泓0871",
+   "distinction": "入选",
+   "brand": "泓0871",
+   "district": null,
+   "matched_id": 1615,
+   "confidence": "medium"
+  },
+  {
+   "name": "明阁 (闵行)",
+   "distinction": "一星",
+   "brand": "明阁",
+   "district": "闵行区",
+   "matched_id": 497,
+   "confidence": "high"
+  },
+  {
+   "name": "德兴馆 (广东路)",
+   "distinction": "入选",
+   "brand": "德兴馆",
+   "district": null,
+   "matched_id": 1000,
+   "confidence": "medium"
+  }
+ ],
+ "need_review": [
+  {
+   "name": "新荣记 (南京西路)",
+   "distinction": "一星",
+   "reason": "自动匹配多候选",
+   "candidates": [
+    871,
+    1370,
+    1376,
+    1377,
+    1380
+   ]
+  },
+  {
+   "name": "家全七福",
+   "distinction": "一星",
+   "reason": "自动匹配多候选",
+   "candidates": [
+    656,
+    1468
+   ]
+  },
+  {
+   "name": "老正兴",
+   "distinction": "一星",
+   "reason": "自动匹配多候选",
+   "candidates": [
+    1004,
+    1592
+   ]
+  },
+  {
+   "name": "Polux",
+   "distinction": "必比登",
+   "reason": "自动匹配多候选",
+   "candidates": [
+    1152,
+    1810
+   ]
+  },
+  {
+   "name": "南兴园",
+   "distinction": "入选",
+   "reason": "自动匹配多候选",
+   "candidates": [
+    478,
+    1447
+   ]
+  },
+  {
+   "name": "Il Ristorante - Niko Romito",
+   "distinction": "一星",
+   "reason": "自动匹配多候选",
+   "candidates": [
+    1389,
+    1746
+   ]
+  },
+  {
+   "name": "遇外滩 (中山东二路)",
+   "distinction": "一星",
+   "reason": "自动匹配多候选",
+   "candidates": [
+    523,
+    524,
+    903
+   ]
+  }
+ ],
+ "unmatched": [
+  {
+   "name": "东方景宴",
+   "distinction": "一星",
+   "brand": "东方景宴",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Narisawa",
+   "distinction": "一星",
+   "brand": "Narisawa",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "1515牛排馆",
+   "distinction": "入选",
+   "brand": "1515牛排馆",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "老兴鲜 (黄浦)",
+   "distinction": "入选",
+   "brand": "老兴鲜",
+   "district": "黄浦区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "台城镂月",
+   "distinction": "入选",
+   "brand": "台城镂月",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "食光",
+   "distinction": "入选",
+   "brand": "食光",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "松涧",
+   "distinction": "入选",
+   "brand": "松涧",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Torikaze",
+   "distinction": "入选",
+   "brand": "Torikaze",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "言盐",
+   "distinction": "入选",
+   "brand": "言盐",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "夏宮",
+   "distinction": "入选",
+   "brand": "夏宮",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Nuits",
+   "distinction": "入选",
+   "brand": "Nuits",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "菁禧荟 (长宁)",
+   "distinction": "二星",
+   "brand": "菁禧荟",
+   "district": "长宁区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "福一零一五",
+   "distinction": "一星",
+   "brand": "福一零一五",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "屋有鲜",
+   "distinction": "一星",
+   "brand": "屋有鲜",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "福一零八八",
+   "distinction": "一星",
+   "brand": "福一零八八",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "利苑 (徐汇)",
+   "distinction": "一星",
+   "brand": "利苑",
+   "district": "徐汇区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "福一零三九",
+   "distinction": "一星",
+   "brand": "福一零三九",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "菰城宴",
+   "distinction": "必比登",
+   "brand": "菰城宴",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "老地方面馆",
+   "distinction": "必比登",
+   "brand": "老地方面馆",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "米泰",
+   "distinction": "必比登",
+   "brand": "米泰",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "春",
+   "distinction": "必比登",
+   "brand": "春",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "乔艾莱莱小笼 (黄浦)",
+   "distinction": "必比登",
+   "brand": "乔艾莱莱小笼",
+   "district": "黄浦区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "小陶面馆",
+   "distinction": "必比登",
+   "brand": "小陶面馆",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "临湖素食",
+   "distinction": "必比登",
+   "brand": "临湖素食",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "瑰禧",
+   "distinction": "必比登",
+   "brand": "瑰禧",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "157食坊",
+   "distinction": "必比登",
+   "brand": "157食坊",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "逸采 (静安)",
+   "distinction": "必比登",
+   "brand": "逸采",
+   "district": "静安区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "渔都老味面",
+   "distinction": "必比登",
+   "brand": "渔都老味面",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "渔哥 · 湛江 (静安)",
+   "distinction": "必比登",
+   "brand": "渔哥 · 湛江",
+   "district": "静安区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "云和面馆 (黄浦)",
+   "distinction": "必比登",
+   "brand": "云和面馆",
+   "district": "黄浦区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Aster by Joshua Paris",
+   "distinction": "入选",
+   "brand": "Aster by Joshua Paris",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "之舞",
+   "distinction": "入选",
+   "brand": "之舞",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Cellar to Table",
+   "distinction": "入选",
+   "brand": "Cellar to Table",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "海味观 (静安)",
+   "distinction": "入选",
+   "brand": "海味观",
+   "district": "静安区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "上海总会",
+   "distinction": "入选",
+   "brand": "上海总会",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "上海餐厅",
+   "distinction": "入选",
+   "brand": "上海餐厅",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "宏玉方",
+   "distinction": "入选",
+   "brand": "宏玉方",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Trine",
+   "distinction": "入选",
+   "brand": "Trine",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "馨源楼",
+   "distinction": "入选",
+   "brand": "馨源楼",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Scilla",
+   "distinction": "入选",
+   "brand": "Scilla",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "永 · 江臻",
+   "distinction": "入选",
+   "brand": "永 · 江臻",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "艾利爵士",
+   "distinction": "入选",
+   "brand": "艾利爵士",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "夜上海",
+   "distinction": "入选",
+   "brand": "夜上海",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "味香斋 (雁荡路)",
+   "distinction": "入选",
+   "brand": "味香斋",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "古铜法式餐厅",
+   "distinction": "入选",
+   "brand": "古铜法式餐厅",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "滇道 (静安)",
+   "distinction": "入选",
+   "brand": "滇道",
+   "district": "静安区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "徐记海鲜 (徐汇)",
+   "distinction": "入选",
+   "brand": "徐记海鲜",
+   "district": "徐汇区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "永丰面馆 (黄浦)",
+   "distinction": "入选",
+   "brand": "永丰面馆",
+   "district": "黄浦区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "迷上",
+   "distinction": "入选",
+   "brand": "迷上",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "随堂里",
+   "distinction": "入选",
+   "brand": "随堂里",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "永兴",
+   "distinction": "入选",
+   "brand": "永兴",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Shaughnessy",
+   "distinction": "入选",
+   "brand": "Shaughnessy",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "鹿园 (浦东新区)",
+   "distinction": "一星",
+   "brand": "鹿园",
+   "district": "浦东新区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "莱美露滋",
+   "distinction": "一星",
+   "brand": "莱美露滋",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "沼田双",
+   "distinction": "入选",
+   "brand": "沼田双",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "翡翠36",
+   "distinction": "入选",
+   "brand": "翡翠36",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Mr & Mrs Bund",
+   "distinction": "入选",
+   "brand": "Mr & Mrs Bund",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "晟永兴 (黄浦)",
+   "distinction": "一星",
+   "brand": "晟永兴",
+   "district": "黄浦区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "和膳面家",
+   "distinction": "必比登",
+   "brand": "和膳面家",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "坛",
+   "distinction": "必比登",
+   "brand": "坛",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "功德林 (南京西路)",
+   "distinction": "必比登",
+   "brand": "功德林",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "川粤海棠 (长宁)",
+   "distinction": "入选",
+   "brand": "川粤海棠",
+   "district": "长宁区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "老干杯 (黄浦)",
+   "distinction": "入选",
+   "brand": "老干杯",
+   "district": "黄浦区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "外滩 · 林家一",
+   "distinction": "入选",
+   "brand": "外滩 · 林家一",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "云",
+   "distinction": "入选",
+   "brand": "云",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "徽季",
+   "distinction": "入选",
+   "brand": "徽季",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "临江宴",
+   "distinction": "入选",
+   "brand": "临江宴",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "悦轩",
+   "distinction": "入选",
+   "brand": "悦轩",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "扒",
+   "distinction": "入选",
+   "brand": "扒",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "粤海棠",
+   "distinction": "一星",
+   "brand": "粤海棠",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "周舍 (闵行)",
+   "distinction": "一星",
+   "brand": "周舍",
+   "district": "闵行区",
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "宁海食府",
+   "distinction": "必比登",
+   "brand": "宁海食府",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "阿勇面馆 (东书房路)",
+   "distinction": "必比登",
+   "brand": "阿勇面馆",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  },
+  {
+   "name": "Arva",
+   "distinction": "入选",
+   "brand": "Arva",
+   "district": null,
+   "matched_id": null,
+   "confidence": null
+  }
+ ]
+}

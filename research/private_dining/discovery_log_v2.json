@@ -1,0 +1,95 @@
+{
+  "slice": "B_private_dining_v2",
+  "generated": "2026-09-24",
+  "method": "在v1基础上扩充，重点发现楼中店/小区店/预约制/无菜单/主厨发办型私房菜",
+  "rounds": [
+    {
+      "round": 1,
+      "query_group": "上海 私房菜 2025 2026 推荐 楼中店 预约制 无菜单",
+      "platform": "general_search",
+      "new_candidates": 8,
+      "notes": "捞出北外滩隐世私宴、季福楼、洋房333、Ortensia、Obscura(库内)、La Jade、南簪(v1 lead)"
+    },
+    {
+      "round": 2,
+      "query_group": "上海 私宴 主厨发办 chef's table 隐藏 小洋楼",
+      "platform": "general_search",
+      "new_candidates": 6,
+      "notes": "捞出东方融宴(v1 lead)、洋房333、Ortensia、Obscura(库内)、RONG线索、新天地980私宴"
+    },
+    {
+      "round": 3,
+      "query_group": "上海 小区里的餐厅 居民楼 私房菜 宝藏 不接待散客",
+      "platform": "general_search",
+      "new_candidates": 5,
+      "notes": "捞出一号餐厅(v1 lead)、九福里、乾璟荟、上式楼、瑞香苑一号"
+    },
+    {
+      "round": 4,
+      "query_group": "上海 日式 私房 割烹 怀石 板前 预约制",
+      "platform": "general_search",
+      "new_candidates": 7,
+      "notes": "捞出岩田(库内)、鮨心和、奈良本、ITAMOCHI/鮨琉璃、鮨匠、弥生、鮨处晓月"
+    },
+    {
+      "round": 5,
+      "query_group": "上海 法餐 意餐 私房 Bistro chef's table",
+      "platform": "general_search",
+      "new_candidates": 5,
+      "notes": "捞出Tuttu、OnCue、EIGHT UNDER(v1 lead)、头灶(库内)、huma 1095"
+    },
+    {
+      "round": 6,
+      "query_group": "TimeOut上海 私宴 私房菜 2025 2026",
+      "platform": "web.fetch",
+      "new_candidates": 8,
+      "notes": "深读TimeOut features/105570(8家需预约): La Jade/NABI(库内)/ft.Benshi/三佰杯/永福小院/Endo/2乙/Enterry(closed)；features/7400: Hide the Smoked Room/MIYARAKU宫楽"
+    },
+    {
+      "round": 7,
+      "query_group": "SmartShanghai chef's tables",
+      "platform": "web.fetch",
+      "new_candidates": 5,
+      "notes": "深读SmartShanghai: Taian Table(库内)/EIGHT UNDER/NABI(库内)/Ling Long(库内)/Obscura(库内)"
+    },
+    {
+      "round": 8,
+      "query_group": "RONG/Ortensia/ITAMOCHI 深采",
+      "platform": "web.fetch",
+      "new_candidates": 0,
+      "notes": "深读TastyTrip RONG全文、Rolling Grace Ortensia全文、网易鮨琉璃全文，提取食客原话与菜品"
+    },
+    {
+      "round": 9,
+      "query_group": "川菜/淮扬/素菜/泰餐私房",
+      "platform": "general_search",
+      "new_candidates": 3,
+      "notes": "平川(库内#583)SEO垃圾文排除；叶叶菩提长宁店(v1已有太原店)；繁花滨江/林家一/德悦悦品"
+    }
+  ],
+  "source_distribution": {
+    "抖音/抖音探店": 14,
+    "携程笔记/Trip": 6,
+    "TimeOut上海(中英)": 5,
+    "SmartShanghai": 1,
+    "TastyTrip": 1,
+    "Rolling Grace": 1,
+    "网易/上海去哪吃": 1,
+    "上海文旅推广网": 2,
+    "企查查": 1,
+    "Travel of China": 1,
+    "微头条": 1
+  },
+  "totals": {
+    "total_candidates": 35,
+    "raw_written": 28,
+    "strong_evidence_2quotes_2sources": 4,
+    "questionable_thin_evidence": 24,
+    "excluded_already_in_db": 12,
+    "excluded_v1_already_produced": 13,
+    "excluded_other": 3
+  },
+  "excluded_in_db": ["岩田割烹鮨#3", "甬府系#531/536/538/542/840/936/1504", "平川#583", "头灶#719", "荣申府#721", "梅府家宴#744", "福1015#1007", "福1039#1387", "福1088#1388", "nabi#1347", "Obscura#1392", "醉东#1840", "WULI#1838", "申粤轩#655"],
+  "excluded_v1": ["Cheeva Thai", "聪菜馆", "豪生酒家", "黄公子", "AmoyA", "来去Laichill", "作故", "叶叶菩提(太原别墅店)", "皖宴", "澄园", "耘粹坊", "弄堂大叔", "华光花园小料理"],
+  "notes": "v2重点扩充了日料板前(鮨心和/奈良本/鮨琉璃/宫楽)、西餐chef's table(La Jade/RONG/Ortensia/Tuttu/EIGHT)、宁波bistro(三佰杯/OnCue)、居民楼私房(九福里/乾璟荟/瑞香苑/上式楼)。私房菜天然UGC薄，24家存疑需真人登录小红书/点评补证。"
+}

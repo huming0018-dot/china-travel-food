@@ -85,7 +85,7 @@
 ## 四、米其林 / 黑珍珠权威名单全量比对闭环（治 Cheeva Thai 类缺失）
 
 **权威源**：
-- 米其林：`https://guide.michelin.com/cn/zh/shanghai-municipality/shanghai`（分页全量：三星/二星/一星/必比登/入选）
+- 米其林：`https://guide.michelin.com/sg/zh_CN/shanghai-municipality/shanghai/restaurants`（实测可访问前缀 /sg/zh_CN/，分页 /page/N，全量：三星/二星/一星/必比登/入选；纯 requests 被反爬 202，须 browser 采集）
 - 黑珍珠：官方名单（一钻/二钻/三钻）
 
 **闭环流程**：
@@ -181,6 +181,15 @@
 
 ### A4 综合面坊·居酒屋面（挂"面"食材 + 形式）
 研串面坊、维心日面、利通面屋、玖杯面屋
+
+---
+
+## 附录 B · 日料 Omakase 板前单列（亚洲·日本）
+
+- **Omakase（おまかせ，厨师发办）**：板前落座、无固定菜单、按当日食材由主厨逐贯/逐道发办，是与"寿司（可单点 / 含桌位）"不同的业态，**单列为菜系叶子「Omakase 板前」（cid 325，与寿司 86 同级，parent=日料）**。
+- 与"怀石 / 会席"区分：怀石(97)是多道式正餐、有席位顺序与程式；Omakase 以板前一贯出餐、即时互动为主。
+- 挂法：寿司 omakase 专门店（如鮨照类）挂「Omakase 板前」+「寿司」；板前烧肉 / 天妇罗 / 铁板烧 omakase 同理多挂对应叶子。
+- 以单点 / 固定套餐为主、非厨师发办的寿司店仅挂寿司，不挂 Omakase。
 
 ---
 
