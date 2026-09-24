@@ -5,6 +5,7 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { supabase, Restaurant, Cuisine, Review } from '@/lib/supabase';
 import { parseLngLat, parseLatLng } from '@/lib/geo';
+import { safeText } from '@/lib/format';
 import { useFavorites } from '@/lib/favorites';
 import { useAuth } from '@/lib/auth';
 
@@ -250,12 +251,15 @@ export default function RestaurantDetail() {
           <h1 className="serif text-4xl md:text-5xl font-medium leading-tight mb-3">{r.name}</h1>
           {r.name_en && <p className="text-mocha-faint italic text-sm">{r.name_en}</p>}
           <div className="flex items-center gap-4 md:gap-6 mt-6 flex-wrap">
-            <span className={`tag ${tierClass(r.tier)}`}>{r.tier || '—'}</span>
+            <span title="绝对价位档" className={`tag ${tierClass(r.tier)}`}>{r.tier || '—'}</span>
+            {r.price_position && (
+              <span title="品类内相对档" className="text-xs text-mocha-soft">本品类档 · <span className="font-medium text-mocha">{r.price_position}</span></span>
+            )}
             <div className="serif text-xl font-medium">
               {r.price_avg ? `¥${r.price_avg}` : '—'}<span className="text-sm text-mocha-faint"> / 人</span>
             </div>
             {(r.business_area || r.district) && (
-              <div className="text-sm text-mocha-soft">📍 {[r.business_area, r.district].filter(Boolean).join(' · ')}</div>
+              <div className="text-sm text-mocha-soft">📍 {[safeText(r.business_area), r.district].filter(Boolean).join(' · ')}</div>
             )}
             {lngLat && (
               <a
@@ -285,6 +289,9 @@ export default function RestaurantDetail() {
             <InfoRow label="折扣/团购" value={r.discount_info} />
             {namesByDim.形式.length > 0 && <InfoRow label="业态" value={namesByDim.形式.join('、')} />}
             {r.investor_info && <InfoRow label="投资人/公司" value={r.investor_info} />}
+            {r.chain_type && <InfoRow label="连锁类型" value={r.chain_type} />}
+            {r.central_kitchen && <InfoRow label="中央厨房" value={r.central_kitchen} />}
+            {r.premade_risk && <InfoRow label="预制菜风险" value={r.premade_risk} />}
           </div>
           {dataAge !== null && (
             <div className="mt-6 pt-5 border-t border-line flex items-center gap-2">
@@ -361,7 +368,7 @@ export default function RestaurantDetail() {
           {r.evidence_summary && (
             <div className="mt-8 p-5 bg-white border border-line rounded-xl">
               <div className="kicker text-mocha-faint mb-2">EVIDENCE / 食客证据</div>
-              <p className="text-sm text-mocha-soft leading-relaxed whitespace-pre-line">{r.evidence_summary}</p>
+              <p className="text-sm text-mocha-soft leading-relaxed whitespace-pre-line">{safeText(r.evidence_summary)}</p>
             </div>
           )}
         </section>
@@ -469,11 +476,12 @@ export default function RestaurantDetail() {
   );
 }
 
-function InfoRow({ label, value }: { label: string; value?: string }) {
+function InfoRow({ label, value }: { label: string; value?: any }) {
+  const text = safeText(value);
   return (
     <div className="flex items-start gap-4">
       <span className="kicker text-mocha-faint w-16 flex-shrink-0 pt-0.5">{label}</span>
-      <span className="text-sm text-mocha-soft break-words">{value && value !== '—' ? value : '—'}</span>
+      <span className="text-sm text-mocha-soft break-words">{text && text !== '—' ? text : '—'}</span>
     </div>
   );
 }

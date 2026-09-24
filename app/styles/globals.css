@@ -168,6 +168,16 @@ body {
 .price-chip[data-active="true"][data-tier="高档"] { background:#F0DDD0; color:#9A4528; border-color:#D4845E; }
 .price-chip[data-active="true"][data-tier="奢华"] { background:#2A1F1A; color:#DCC085; border-color:#2A1F1A; }
 
+/* 排序分段按钮 */
+.sort-seg { background:#fff; border-color:var(--line); color:#6B5A4C; }
+.sort-seg:hover { border-color:#D4845E; color:#B85C38; }
+.sort-seg[data-active="true"] { background:var(--terracotta); border-color:var(--terracotta); color:#fff; }
+
+/* 三级子流派分段按钮 */
+.sub-seg { background:#FBF8F2; border-color:var(--line); color:#6B5A4C; }
+.sub-seg:hover { border-color:#D4845E; color:#B85C38; }
+.sub-seg[data-active="true"] { background:var(--terracotta); border-color:var(--terracotta); color:#fff; }
+
 /* 筛选抽屉动画 */
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-6px); }

@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { supabase, Restaurant, Cuisine } from '@/lib/supabase';
+import { safeText } from '@/lib/format';
 
-// 五档价位（上海口径，按人均自动归档）
+// 五档价位（上海口径，按人均自动归档；仅用于价格过滤，品类内高低另看 price_position）
 const TIERS = [
   { key: '经济', range: '< ¥50' },
   { key: '平价', range: '¥50–99' },
@@ -15,10 +16,13 @@ const TIERS = [
 
 // 一级根：地图认知顺序（中餐独立；其余按大陆→国家；非正餐为场景；融合菜单列）
 const ROOTS = ['中餐', '亚洲', '欧洲', '非洲', '北美洲', '南美洲', '融合菜', '非正餐'];
+// 正餐根（用于判断"挂了食材的是正餐大餐厅还是食材专门店"）
+const DINER_ROOTS = ROOTS.filter((r) => r !== '非正餐');
 const PAGE = 120;
 
-const tierClass = (t?: string) =>
-  ({ 经济: 'tag-budget', 平价: 'tag-value', 中档: 'tag-mid', 高档: 'tag-fine', 奢华: 'tag-luxury' } as Record<string, string>)[t || ''] ||
+// 卡片档标签：品类内相对档（咖啡/面包/小吃不套用正餐绝对档）
+const positionClass = (p?: string) =>
+  ({ 入门: 'tag-budget', 主流: 'tag-value', 进阶: 'tag-mid', 高端: 'tag-fine', 旗舰: 'tag-luxury' } as Record<string, string>)[p || ''] ||
   'tag-budget';
 
 // 分页拉全（关联表已超 1000 行，必须分页，否则筛选漏店）
@@ -50,13 +54,16 @@ export default function RestaurantsPage() {
 
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState<'score' | 'price_asc' | 'price_desc'>('score');
-  const [root, setRoot] = useState('中餐');          // 一级根 Tab
-  const [flavor, setFlavor] = useState<string | null>(null); // 选中的菜系 name（叶子或中间层）
+  const [root, setRoot] = useState('中餐');              // 一级根 Tab
+  const [flavor, setFlavor] = useState<string | null>(null); // 二级菜系 name
+  const [subFlavor, setSubFlavor] = useState<string | null>(null); // 三级子流派 name（在二级基础上再筛）
   const [tiers, setTiers] = useState<Set<string>>(new Set());
   const [district, setDistrict] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(null);
   const [tagSel, setTagSel] = useState<Set<number>>(new Set()); // 业态/认证/标签/食材 多选
   const [showFilters, setShowFilters] = useState(false);
+  const [showSecondary, setShowSecondary] = useState(false);   // 展开"菜单含该食材的正餐大店"
+  const [hideChain, setHideChain] = useState(false);           // 隐藏工业化连锁/预制菜
   const [shown, setShown] = useState(PAGE);
 
   useEffect(() => {
@@ -79,16 +86,17 @@ export default function RestaurantsPage() {
     [cuisines]
   );
 
-  // URL ?cuisine= 自动定位（虚拟根或具体菜系）
+  // URL ?cuisine=&sub= 自动定位（虚拟根或具体菜系）
   useEffect(() => {
     if (router.query.cuisine && cuisines.length) {
       const name = decodeURIComponent(router.query.cuisine as string);
-      if (ROOTS.includes(name)) { setRoot(name); setFlavor(name); return; }
-      const c = cuisines.find((x) => x.name === name && x.dimension === '菜系');
-      if (c) {
-        setFlavor(name);
-        setRoot(topLevel(c, cuisines));
+      const sub = router.query.sub ? decodeURIComponent(router.query.sub as string) : null;
+      if (ROOTS.includes(name)) { setRoot(name); setFlavor(name); }
+      else {
+        const c = cuisines.find((x) => x.name === name && x.dimension === '菜系');
+        if (c) { setFlavor(name); setRoot(topLevel(c, cuisines)); }
       }
+      if (sub) setSubFlavor(sub);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query, cuisines]);
@@ -110,8 +118,6 @@ export default function RestaurantsPage() {
   }, [rc]);
 
   const rCuisineNames = useMemo(() => {
-    const id2name: Record<number, string> = {};
-    cuisines.forEach((c) => { id2name[c.id] = c.name; });
     const m: Record<number, string[]> = {};
     rc.forEach((x) => {
       const c = cuisines.find((z) => z.id === x.cuisine_id);
@@ -142,20 +148,45 @@ export default function RestaurantsPage() {
     return ids;
   }, [cuisines]);
 
-  // 选中某菜系：同步根 Tab + 地址栏；再次点同一标签则取消
+  // 归属于"正餐根"的全部菜系标签 id（用于区分食材专门店 vs 菜单含食材的正餐大店）
+  const dinerCuisineIds = useMemo(() => {
+    const s = new Set<number>();
+    DINER_ROOTS.forEach((rname) => collectFlavorIds(rname).forEach((id) => s.add(id)));
+    return s;
+  }, [collectFlavorIds]);
+  const isDinerRestaurant = useCallback(
+    (r: Restaurant) => (rTagIds[r.id] ? Array.from(rTagIds[r.id]).some((id) => dinerCuisineIds.has(id)) : false),
+    [rTagIds, dinerCuisineIds]
+  );
+
+  // 选中二级菜系：同步根 Tab + 地址栏；再点同一二级（且无三级）则取消
   const selectFlavor = useCallback((name: string) => {
     const c = cuisines.find((x) => x.name === name && x.dimension === '菜系');
-    const next = flavor === name ? null : name;
-    setFlavor(next);
+    if (flavor === name && !subFlavor) {
+      setFlavor(null); setSubFlavor(null);
+      router.replace('/restaurants', undefined, { shallow: true });
+      return;
+    }
+    setFlavor(name); setSubFlavor(null);
     if (c) setRoot(topLevel(c, cuisines));
-    if (next) router.replace(`/restaurants?cuisine=${encodeURIComponent(next)}`, undefined, { shallow: true });
-    else router.replace('/restaurants', undefined, { shallow: true });
-  }, [cuisines, flavor, router]);
+    router.replace(`/restaurants?cuisine=${encodeURIComponent(name)}`, undefined, { shallow: true });
+  }, [cuisines, flavor, subFlavor, router]);
+
+  // 选中三级子流派：再点同一三级即撤销（回到只筛二级），二级与三级行不消失
+  const selectSub = useCallback((name: string) => {
+    const next = subFlavor === name ? null : name;
+    setSubFlavor(next);
+    if (flavor) {
+      const base = `/restaurants?cuisine=${encodeURIComponent(flavor)}`;
+      router.replace(next ? `${base}&sub=${encodeURIComponent(next)}` : base, undefined, { shallow: true });
+    }
+  }, [subFlavor, flavor, router]);
 
   // 切换一级根：立即按该根筛选（虚拟根同样可由 collectFlavorIds 收集子孙）
   const selectRoot = useCallback((rname: string) => {
     setRoot(rname);
     setFlavor(rname);
+    setSubFlavor(null);
     router.replace(`/restaurants?cuisine=${encodeURIComponent(rname)}`, undefined, { shallow: true });
   }, [router]);
 
@@ -179,7 +210,7 @@ export default function RestaurantsPage() {
     [childrenOf, root, subtreeCount]
   );
 
-  // 选中菜系的三级子流派（flavor 为虚拟根时不展开，避免与二级重复）
+  // 二级菜系的三级子流派（flavor 为虚拟根时不展开；选中三级叶子后 flavor 不变、本行不消失）
   const flavorChildren = useMemo(() => {
     if (!flavor || ROOTS.includes(flavor)) return [];
     return childrenOf(flavor).sort((a, b) => subtreeCount(b.name) - subtreeCount(a.name));
@@ -237,36 +268,61 @@ export default function RestaurantsPage() {
   const activeFilterCount =
     tiers.size + (district ? 1 : 0) + (location ? 1 : 0) + tagSel.size + (flavor ? 1 : 0) + (search ? 1 : 0);
 
-  // ---- 筛选 ----
-  const filtered = useMemo(() => {
+  const doSort = (arr: Restaurant[]) => {
+    if (sortBy === 'score') arr.sort((a, b) => (b.score_total || 0) - (a.score_total || 0));
+    else if (sortBy === 'price_asc') arr.sort((a, b) => (a.price_avg ?? 9999) - (b.price_avg ?? 9999));
+    else arr.sort((a, b) => (b.price_avg ?? 0) - (a.price_avg ?? 0));
+    return arr;
+  };
+
+  // ---- 筛选 + 排序：返回主营结果 main 与"菜单含食材的正餐大店" secondary ----
+  const view = useMemo(() => {
     let result = [...restaurants];
     result = result.filter((r) => r.status !== 'closed' && r.status !== '关店');
+    if (hideChain) result = result.filter((r) => r.premade_risk !== '高' && r.premade_risk !== '疑似');
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       result = result.filter((r) =>
         r.name.toLowerCase().includes(q) ||
-        (r.address || '').toLowerCase().includes(q) ||
-        (r.business_area || '').toLowerCase().includes(q) ||
+        safeText(r.address).toLowerCase().includes(q) ||
+        safeText(r.business_area).toLowerCase().includes(q) ||
         (Array.isArray(r.signature_dishes) && r.signature_dishes.some((d) => d.toLowerCase().includes(q)))
       );
     }
-    if (flavor) {
-      const ids = collectFlavorIds(flavor);
+    // 菜系：三级优先，否则二级/根
+    const activeFlavor = subFlavor || flavor;
+    if (activeFlavor) {
+      const ids = collectFlavorIds(activeFlavor);
       result = result.filter((r) => rTagIds[r.id] && Array.from(ids).some((id) => rTagIds[r.id].has(id)));
     }
     if (tiers.size) result = result.filter((r) => r.tier && tiers.has(r.tier));
     if (district) result = result.filter((r) => r.district === district);
     if (location) result = result.filter((r) => r.business_area === location);
-    Object.values(tagGroups).forEach((group) => {
+    // 标签组（食材组单独处理）
+    let ingredientGroup: Set<number> | null = null;
+    Object.entries(tagGroups).forEach(([dim, group]) => {
+      if (dim === '食材') { ingredientGroup = group; return; }
       result = result.filter((r) => rTagIds[r.id] && Array.from(group).some((id) => rTagIds[r.id].has(id)));
     });
-    if (sortBy === 'score') result.sort((a, b) => (b.score_total || 0) - (a.score_total || 0));
-    else if (sortBy === 'price_asc') result.sort((a, b) => (a.price_avg || 9999) - (b.price_avg || 9999));
-    else result.sort((a, b) => (b.price_avg || 0) - (a.price_avg || 0));
-    return result;
-  }, [restaurants, search, flavor, tiers, district, location, tagGroups, sortBy, rTagIds, collectFlavorIds]);
+    // 食材：主营专门店优先；菜单含该食材的正餐大店折叠
+    let secondary: Restaurant[] = [];
+    if (ingredientGroup) {
+      const g = ingredientGroup;
+      result = result.filter((r) => rTagIds[r.id] && (Array.from(g) as number[]).some((id) => rTagIds[r.id].has(id)));
+      secondary = result.filter((r) => isDinerRestaurant(r));
+      result = result.filter((r) => !isDinerRestaurant(r));
+    }
+    doSort(result); doSort(secondary);
+    return { main: result, secondary };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [restaurants, search, hideChain, flavor, subFlavor, tiers, district, location, tagGroups, sortBy, rTagIds, collectFlavorIds, isDinerRestaurant]);
 
-  useEffect(() => { setShown(PAGE); }, [search, flavor, tiers, district, location, tagSel, sortBy]);
+  const filtered = view.main;
+  const secondaryList = view.secondary;
+  const hasIngredient = !!tagGroups['食材'];
+
+  useEffect(() => { setShown(PAGE); setShowSecondary(false); },
+    [search, hideChain, flavor, subFlavor, tiers, district, location, tagSel, sortBy]);
 
   const toggleTier = (k: string) => setTiers((prev) => {
     const n = new Set(prev);
@@ -281,14 +337,14 @@ export default function RestaurantsPage() {
   const tagName = (id: number) => cuisines.find((c) => c.id === id)?.name || '';
 
   const clearAll = () => {
-    setSearch(''); setFlavor(null); setTiers(new Set()); setDistrict(null);
+    setSearch(''); setFlavor(null); setSubFlavor(null); setTiers(new Set()); setDistrict(null);
     setLocation(null); setTagSel(new Set());
     router.replace('/restaurants', undefined, { shallow: true });
   };
 
   const renderFlavorTag = (c: Cuisine) => {
     const n = subtreeCount(c.name);
-    const active = flavor === c.name;
+    const active = flavor === c.name && !subFlavor;
     const empty = n === 0;
     return (
       <button
@@ -318,6 +374,12 @@ export default function RestaurantsPage() {
     );
   };
 
+  const SORTS = [
+    { key: 'score', label: '评分最高' },
+    { key: 'price_asc', label: '人均低→高' },
+    { key: 'price_desc', label: '人均高→低' },
+  ] as const;
+
   if (loading) return (
     <div className="min-h-screen bg-cream-50 flex items-center justify-center"><div className="spinner" /></div>
   );
@@ -332,14 +394,14 @@ export default function RestaurantsPage() {
             <span>←</span><span className="serif text-base font-medium">首页</span>
           </Link>
           <div className="flex items-center gap-4">
-            <span className="kicker text-mocha-faint">{filtered.length} 家餐厅</span>
+            <span className="kicker text-mocha-faint">{filtered.length + secondaryList.length} 家餐厅</span>
             <Link href="/map" className="kicker text-mocha-soft hover:text-mocha transition">地图</Link>
           </div>
         </div>
       </header>
 
       <div className="max-w-6xl mx-auto px-6 py-6">
-        {/* 搜索 + 排序 + 筛选 */}
+        {/* 搜索 + 筛选 */}
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <div className="relative flex-1 min-w-[220px]">
             <input
@@ -359,12 +421,22 @@ export default function RestaurantsPage() {
             )}
             <span className="text-2xs">{showFilters ? '▲' : '▼'}</span>
           </button>
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-2 py-2 bg-transparent border-b border-line text-xs outline-none cursor-pointer text-mocha-soft">
-            <option value="score">评分最高</option>
-            <option value="price_asc">人均从低到高</option>
-            <option value="price_desc">人均从高到低</option>
-          </select>
+        </div>
+
+        {/* 排序：分段按钮，明确可见可点 */}
+        <div className="flex items-center gap-2 mb-4 flex-wrap">
+          <span className="kicker text-mocha-faint mr-1">排序</span>
+          {SORTS.map((s) => (
+            <button key={s.key} onClick={() => setSortBy(s.key)}
+              data-active={sortBy === s.key}
+              className="sort-seg px-3 py-1.5 rounded-full text-xs border transition-all whitespace-nowrap">
+              {s.label}
+            </button>
+          ))}
+          <button onClick={() => setHideChain((v) => !v)} data-active={hideChain}
+            className="sort-seg px-3 py-1.5 rounded-full text-xs border transition-all whitespace-nowrap ml-2">
+            隐藏连锁/预制
+          </button>
         </div>
 
         {/* 价位条 */}
@@ -423,21 +495,21 @@ export default function RestaurantsPage() {
             )}
           </div>
 
-          {/* 三级子流派 */}
+          {/* 三级子流派（选中三级叶子后本行仍在；"全部"与各三级均可再点撤销） */}
           {flavorChildren.length > 0 && (
             <div className="flex items-start gap-3 flex-wrap pt-3 border-t border-dashed border-line">
               <span className="kicker text-mocha-faint shrink-0 pt-1.5">{flavor}</span>
               <div className="flex flex-wrap gap-1.5 flex-1">
-                <button onClick={() => selectFlavor(flavor!)}
-                  className="px-2.5 py-1 text-xs rounded-full bg-terracotta/10 text-terracotta border border-terracotta/30">
+                <button onClick={() => subFlavor && selectSub(subFlavor)}
+                  data-active={!subFlavor}
+                  className="sub-seg px-2.5 py-1 text-xs rounded-full border transition">
                   全部{flavor}
                 </button>
                 {flavorChildren.map((c) => (
-                  <button key={c.id} onClick={() => selectFlavor(c.name)}
-                    className={`px-2.5 py-1 text-xs rounded-full transition ${
-                      flavor === c.name ? 'bg-terracotta text-white' : 'bg-cream-100 text-mocha-soft hover:text-terracotta'
-                    }`}>
-                    {c.name}{subtreeCount(c.name) > 0 && <span className="ml-1 text-2xs text-mocha-faint">{subtreeCount(c.name)}</span>}
+                  <button key={c.id} onClick={() => selectSub(c.name)}
+                    data-active={subFlavor === c.name}
+                    className="sub-seg px-2.5 py-1 text-xs rounded-full border transition">
+                    {c.name}{subtreeCount(c.name) > 0 && <span className="ml-1 text-2xs opacity-70">{subtreeCount(c.name)}</span>}
                   </button>
                 ))}
               </div>
@@ -463,7 +535,7 @@ export default function RestaurantsPage() {
                     <button className="flag" data-on={!location} onClick={() => setLocation(null)}>全部商圈</button>
                     {locations.map((l) => (
                       <button key={l} className="flag" data-on={location === l} onClick={() => setLocation(l === location ? null : l)}>
-                        {l}
+                        {safeText(l)}
                       </button>
                     ))}
                   </div>
@@ -485,7 +557,7 @@ export default function RestaurantsPage() {
 
             {ingredientTags.length > 0 && (
               <div className="space-y-2">
-                <span className="kicker text-mocha-faint">食材 · 吃什么</span>
+                <span className="kicker text-mocha-faint">食材 · 吃什么（默认只看主营专门店）</span>
                 <div className="flex flex-wrap gap-1.5">{ingredientTags.map(renderFlag)}</div>
               </div>
             )}
@@ -503,7 +575,8 @@ export default function RestaurantsPage() {
             <span className="kicker text-mocha-faint">已选</span>
             {flavor && (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-terracotta text-white text-xs rounded-full">
-                {flavor}<button onClick={() => setFlavor(null)}>✕</button>
+                {flavor}{subFlavor ? ` · ${subFlavor}` : ''}
+                <button onClick={() => { if (subFlavor) selectSub(subFlavor); else { setFlavor(null); } }}>✕</button>
               </span>
             )}
             {Array.from(tiers).map((t) => (
@@ -535,8 +608,8 @@ export default function RestaurantsPage() {
           </div>
         )}
 
-        {/* 餐厅列表 */}
-        {filtered.length === 0 ? (
+        {/* 餐厅列表（主营） */}
+        {filtered.length === 0 && secondaryList.length === 0 ? (
           <div className="text-center py-20">
             <p className="serif text-2xl text-mocha-faint mb-2">没有找到</p>
             <p className="text-sm text-mocha-faint">试试调整筛选条件</p>
@@ -544,48 +617,29 @@ export default function RestaurantsPage() {
           </div>
         ) : (
           <>
-            <div className="border-t border-line">
-              {filtered.slice(0, shown).map((r, idx) => {
-                const names = rCuisineNames[r.id] || [];
-                const tags = rTagIds[r.id];
-                const isMichelin = tags?.has(159);
-                const isBlackPearl = tags?.has(160);
-                return (
-                  <Link key={r.id} href={`/restaurants/${r.id}`}
-                    className="group flex items-center gap-4 md:gap-6 py-4 border-b border-line hover:bg-white transition -mx-6 px-6">
-                    <span className="numeral text-xl text-mocha-faint w-8 flex-shrink-0 hidden sm:block">{String(idx + 1).padStart(2, '0')}</span>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="serif text-base font-medium group-hover:italic transition truncate flex items-center gap-2">
-                        <span className="truncate">{r.name}</span>
-                        {isMichelin && <span title="米其林星级" className="text-2xs font-sans not-italic bg-mocha text-mustard-soft px-1.5 py-0.5 rounded shrink-0">★ 米其林</span>}
-                        {isBlackPearl && <span title="黑珍珠餐厅" className="text-2xs font-sans not-italic bg-[#3a2a24] text-[#D8B98E] px-1.5 py-0.5 rounded shrink-0">◆ 黑珍珠</span>}
-                      </h3>
-                      <div className="flex items-center gap-2 mt-1 flex-wrap">
-                        {names.slice(0, 2).map((cn, i) => (
-                          <span key={i} className="kicker text-mocha-faint">{cn}</span>
-                        ))}
-                        {(r.business_area || r.district) && (
-                          <span className="kicker text-mocha-mute">· {r.business_area ? `${r.business_area} · ` : ''}{r.district}</span>
-                        )}
-                      </div>
+            <RestaurantRows rows={filtered.slice(0, shown)} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={0} />
+
+            {/* 食材：菜单含该食材的正餐大店（折叠） */}
+            {hasIngredient && secondaryList.length > 0 && (
+              <div className="border-t border-line pt-6 mt-2">
+                {showSecondary ? (
+                  <>
+                    <p className="kicker text-mocha-faint mb-2">另有 {secondaryList.length} 家菜单含此食材的餐厅</p>
+                    <RestaurantRows rows={secondaryList} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={filtered.length} />
+                    <div className="text-center pt-4">
+                      <button onClick={() => setShowSecondary(false)} className="text-2xs text-mocha-faint underline">收起</button>
                     </div>
-                    <div className="hidden lg:block flex-1 min-w-0">
-                      {Array.isArray(r.signature_dishes) && r.signature_dishes.length > 0 && (
-                        <p className="text-xs text-mocha-soft truncate">{r.signature_dishes.slice(0, 3).join(' · ')}</p>
-                      )}
-                    </div>
-                    <span className={`tag ${tierClass(r.tier)} flex-shrink-0`}>{r.tier || '—'}</span>
-                    <span className="serif text-base font-medium w-16 text-right flex-shrink-0 tabular-nums">
-                      {r.price_avg ? `¥${r.price_avg}` : '—'}
-                    </span>
-                    <div className="w-12 text-right flex-shrink-0">
-                      {r.score_total ? <span className="serif text-base font-medium tabular-nums">{r.score_total.toFixed(1)}</span>
-                        : <span className="text-mocha-faint text-xs">—</span>}
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
+                  </>
+                ) : (
+                  <div className="text-center">
+                    <button onClick={() => setShowSecondary(true)} className="btn btn-outline">
+                      另有 {secondaryList.length} 家菜单含此食材的餐厅（非主营）
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
             {filtered.length > shown && (
               <div className="text-center py-8">
                 <button onClick={() => setShown((s) => s + PAGE)} className="btn btn-outline">
@@ -596,6 +650,61 @@ export default function RestaurantsPage() {
           </>
         )}
       </div>
+    </div>
+  );
+}
+
+function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx }: {
+  rows: Restaurant[];
+  rCuisineNames: Record<number, string[]>;
+  rTagIds: Record<number, Set<number>>;
+  startIdx: number;
+}) {
+  return (
+    <div className="border-t border-line">
+      {rows.map((r, i) => {
+        const idx = startIdx + i;
+        const names = rCuisineNames[r.id] || [];
+        const tags = rTagIds[r.id];
+        const isMichelin = tags?.has(159);
+        const isBlackPearl = tags?.has(160);
+        return (
+          <Link key={r.id} href={`/restaurants/${r.id}`}
+            className="group flex items-center gap-4 md:gap-6 py-4 border-b border-line hover:bg-white transition -mx-6 px-6">
+            <span className="numeral text-xl text-mocha-faint w-8 flex-shrink-0 hidden sm:block">{String(idx + 1).padStart(2, '0')}</span>
+            <div className="flex-1 min-w-0">
+              <h3 className="serif text-base font-medium group-hover:italic transition truncate flex items-center gap-2">
+                <span className="truncate">{r.name}</span>
+                {isMichelin && <span title="米其林星级" className="text-2xs font-sans not-italic bg-mocha text-mustard-soft px-1.5 py-0.5 rounded shrink-0">★ 米其林</span>}
+                {isBlackPearl && <span title="黑珍珠餐厅" className="text-2xs font-sans not-italic bg-[#3a2a24] text-[#D8B98E] px-1.5 py-0.5 rounded shrink-0">◆ 黑珍珠</span>}
+                {r.premade_risk === '高' && <span title="预制菜高风险，不进宝藏精选" className="text-2xs font-sans not-italic bg-[#F6D9C8] text-[#BC4B1E] px-1.5 py-0.5 rounded shrink-0">预制菜</span>}
+                {r.premade_risk === '疑似' && <span title="工业化连锁" className="text-2xs font-sans not-italic bg-[#E7E0D8] text-[#7A6A5C] px-1.5 py-0.5 rounded shrink-0">连锁</span>}
+              </h3>
+              <div className="flex items-center gap-2 mt-1 flex-wrap">
+                {names.slice(0, 2).map((cn, k) => (
+                  <span key={k} className="kicker text-mocha-faint">{cn}</span>
+                ))}
+                {(safeText(r.business_area) || r.district) && (
+                  <span className="kicker text-mocha-mute">· {safeText(r.business_area) ? `${safeText(r.business_area)} · ` : ''}{r.district}</span>
+                )}
+              </div>
+            </div>
+            <div className="hidden lg:block flex-1 min-w-0">
+              {Array.isArray(r.signature_dishes) && r.signature_dishes.length > 0 && (
+                <p className="text-xs text-mocha-soft truncate">{r.signature_dishes.slice(0, 3).join(' · ')}</p>
+              )}
+            </div>
+            <span title="品类内相对档" className={`tag ${positionClass(r.price_position)} flex-shrink-0`}>{r.price_position || r.tier || '—'}</span>
+            <span className="serif text-base font-medium w-16 text-right flex-shrink-0 tabular-nums">
+              {r.price_avg ? `¥${r.price_avg}` : '—'}
+            </span>
+            <div className="w-12 text-right flex-shrink-0">
+              {r.score_total ? <span className="serif text-base font-medium tabular-nums">{r.score_total.toFixed(1)}</span>
+                : <span className="text-mocha-faint text-xs">—</span>}
+            </div>
+          </Link>
+        );
+      })}
     </div>
   );
 }

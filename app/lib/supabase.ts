@@ -33,6 +33,12 @@ export interface Restaurant {
   data_updated_at?: string;
   created_at?: string;
   updated_at?: string;
+  closed_date?: string;
+  closed_source?: string;
+  chain_type?: string;        // 连锁类型：直营/加盟/单店/工业化
+  central_kitchen?: boolean; // 中央厨房
+  premade_risk?: string;     // 预制菜风险
+  price_position?: string;   // 品类内相对档：入门/主流/进阶/高端/旗舰
 }
 
 export interface Cuisine {
