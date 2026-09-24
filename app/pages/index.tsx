@@ -306,11 +306,11 @@ export default function Home() {
           <div className="lg:col-span-8">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {[
-                { label: '客观评分', weight: '40', desc: '平台分×可信度', color: 'bg-terracotta text-white' },
-                { label: '食客实测', weight: '30', desc: '只计堂食点评', color: 'bg-moss text-white' },
-                { label: '口味权重', weight: '20', desc: '食材/技法/呈现', color: 'bg-mustard text-mocha' },
-                { label: '行业背书', weight: '10', desc: '名厨/老店/传承', color: 'bg-cream-200 text-mocha' },
-                { label: '软广扣分', weight: '−30', desc: '营销痕迹/水军', color: 'bg-mocha text-terracotta-soft' },
+                { label: '口味权重', weight: '35', desc: '食材/技法/呈现', color: 'bg-terracotta text-white' },
+                { label: '客观评分', weight: '25', desc: '平台分×可信度', color: 'bg-moss text-white' },
+                { label: '食客实测', weight: '25', desc: '只计堂食点评', color: 'bg-mustard text-mocha' },
+                { label: '行业背书', weight: '15', desc: '名厨/老店/传承', color: 'bg-cream-200 text-mocha' },
+                { label: '软广扣分', weight: '−25', desc: '营销痕迹/水军', color: 'bg-mocha text-terracotta-soft' },
               ].map((item, i) => (
                 <div key={i} className={`${item.color} rounded-2xl p-5`}>
                   <div className="serif text-3xl font-light mb-2">{item.weight}<span className="text-sm opacity-60">%</span></div>

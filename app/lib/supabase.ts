@@ -35,9 +35,10 @@ export interface Restaurant {
   updated_at?: string;
   closed_date?: string;
   closed_source?: string;
-  chain_type?: string;        // 连锁类型：直营/加盟/单店/工业化
+  chain_type?: string;        // 连锁类型：独立店/小型连锁/大型连锁/资本化连锁
   central_kitchen?: boolean; // 中央厨房
   premade_risk?: string;     // 预制菜风险
+  is_chain_standardized?: boolean | null; // 标准化连锁派生列（008），前端隐藏/角标依据
   price_position?: string;   // 品类内相对档：入门/主流/进阶/高端/旗舰
 }
 

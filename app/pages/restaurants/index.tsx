@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { supabase, Restaurant, Cuisine } from '@/lib/supabase';
 import { safeText } from '@/lib/format';
@@ -17,6 +17,8 @@ const TIERS = [
 // 一级根：地图认知顺序（中餐独立；其余按大陆→国家；非正餐为场景；融合菜单列）
 const ROOTS = ['中餐', '亚洲', '欧洲', '非洲', '北美洲', '南美洲', '融合菜', '非正餐'];
 const PAGE = 120;
+// 详情页返回时恢复筛选与滚动位置的快照键（sessionStorage）
+const RETURN_KEY = 'restaurants:returnState';
 
 // 卡片档标签：品类内相对档（咖啡/面包/小吃不套用正餐绝对档）
 const positionClass = (p?: string) =>
@@ -173,6 +175,13 @@ export default function RestaurantsPage() {
     return ids;
   }, [cuisines]);
 
+  // 非正餐（咖啡/面包/甜品/Bar/茶饮 全部子孙）id：连锁是这些业态的常态，隐藏连锁时豁免。
+  const nonDinerIds = useMemo(() => collectFlavorIds('非正餐'), [collectFlavorIds]);
+  const isNonDiner = useCallback((r: Restaurant): boolean => {
+    const t = rTagIds[r.id];
+    return !!t && Array.from(nonDinerIds).some((id) => t.has(id));
+  }, [rTagIds, nonDinerIds]);
+
   // 食材主营判定见模块级 INGREDIENT_SPECIALTY：分区依据是"该食材是否为店的主营菜系"。
 
   // 选中二级菜系：同步根 Tab + 地址栏；再点同一二级（且无三级）则取消
@@ -295,7 +304,7 @@ export default function RestaurantsPage() {
   const view = useMemo(() => {
     let result = [...restaurants];
     result = result.filter((r) => r.status !== 'closed' && r.status !== '关店');
-    if (hideChain) result = result.filter((r) => r.premade_risk !== '高' && r.premade_risk !== '疑似');
+    if (hideChain) result = result.filter((r) => !r.is_chain_standardized || isNonDiner(r));
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       result = result.filter((r) =>
@@ -340,7 +349,7 @@ export default function RestaurantsPage() {
     doSort(result); doSort(secondary);
     return { main: result, secondary };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [restaurants, search, hideChain, flavor, subFlavor, tiers, district, location, tagGroups, sortBy, rTagIds, rCuisineNames, cuisines, collectFlavorIds]);
+  }, [restaurants, search, hideChain, flavor, subFlavor, tiers, district, location, tagGroups, sortBy, rTagIds, rCuisineNames, cuisines, collectFlavorIds, isNonDiner]);
 
   const filtered = view.main;
   const secondaryList = view.secondary;
@@ -348,6 +357,54 @@ export default function RestaurantsPage() {
 
   useEffect(() => { setShown(PAGE); setShowSecondary(false); },
     [search, hideChain, flavor, subFlavor, tiers, district, location, tagSel, sortBy]);
+
+  // 详情页"更多餐厅"带 ?return=1 返回：恢复筛选快照与滚动位置
+  const restoredRef = useRef(false);
+  useEffect(() => {
+    if (restoredRef.current) return;
+    if (router.query.return !== '1' || loading || !restaurants.length) return;
+    restoredRef.current = true;
+    let snap: any = null;
+    try { snap = JSON.parse(sessionStorage.getItem(RETURN_KEY) || 'null'); } catch { snap = null; }
+    if (snap) {
+      setSearch(snap.search || '');
+      setSortBy(snap.sortBy || 'score');
+      setRoot(snap.root || '中餐');
+      setFlavor(snap.flavor || null);
+      setSubFlavor(snap.subFlavor || null);
+      setTiers(new Set(snap.tiers || []));
+      setDistrict(snap.district || null);
+      setLocation(snap.location || null);
+      setTagSel(new Set(snap.tagSel || []));
+      setHideChain(!!snap.hideChain);
+      const y = Number(snap.scrollY) || 0;
+      // 列表行高约 73px，先展开足够条数再恢复滚动，避免被"加载更多"截断
+      setShown(Math.max(PAGE, Math.ceil(y / 73) + 12));
+      // 列表首次渲染 + Next.js 内置滚动恢复（导航后会把页面拉回顶部）都会干扰：
+      // 在约 4 秒内持续纠正到目标位置；用户一旦手动滚轮/触摸则立即停止，尊重用户操作。
+      let tries = 0;
+      let userInterrupted = false;
+      const onInterrupt = () => { userInterrupted = true; };
+      window.addEventListener('wheel', onInterrupt, { passive: true });
+      window.addEventListener('touchstart', onInterrupt, { passive: true });
+      const cleanup = () => {
+        window.removeEventListener('wheel', onInterrupt);
+        window.removeEventListener('touchstart', onInterrupt);
+      };
+      const tryScroll = () => {
+        if (userInterrupted) { cleanup(); return; }
+        const enough = document.documentElement.scrollHeight >= y + window.innerHeight * 0.5;
+        if (enough && Math.abs(window.scrollY - y) > 6) {
+          window.scrollTo({ top: y, behavior: 'auto' });
+        }
+        tries += 1;
+        if (tries < 20) setTimeout(tryScroll, 200);
+        else cleanup();
+      };
+      setTimeout(tryScroll, 120);
+    }
+    router.replace('/restaurants', undefined, { shallow: true });
+  }, [router.query.return, loading, restaurants.length, router]);
 
   const toggleTier = (k: string) => setTiers((prev) => {
     const n = new Set(prev);
@@ -360,6 +417,17 @@ export default function RestaurantsPage() {
     return n;
   });
   const tagName = (id: number) => cuisines.find((c) => c.id === id)?.name || '';
+
+  // 进详情前保存完整筛选快照 + 滚动位置（供"更多餐厅"返回恢复）
+  const saveReturn = useCallback(() => {
+    try {
+      sessionStorage.setItem(RETURN_KEY, JSON.stringify({
+        v: 1, search, sortBy, root, flavor, subFlavor,
+        tiers: Array.from(tiers), district, location,
+        tagSel: Array.from(tagSel), hideChain, scrollY: window.scrollY,
+      }));
+    } catch { /* 隐私模式等忽略 */ }
+  }, [search, sortBy, root, flavor, subFlavor, tiers, district, location, tagSel, hideChain]);
 
   const clearAll = () => {
     setSearch(''); setFlavor(null); setSubFlavor(null); setTiers(new Set()); setDistrict(null);
@@ -642,7 +710,7 @@ export default function RestaurantsPage() {
           </div>
         ) : (
           <>
-            <RestaurantRows rows={filtered.slice(0, shown)} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={0} />
+            <RestaurantRows rows={filtered.slice(0, shown)} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={0} isNonDiner={isNonDiner} onOpen={saveReturn} />
 
             {/* 食材：菜单含该食材的正餐大店（折叠） */}
             {hasIngredient && secondaryList.length > 0 && (
@@ -650,7 +718,7 @@ export default function RestaurantsPage() {
                 {showSecondary ? (
                   <>
                     <p className="kicker text-mocha-faint mb-2">另有 {secondaryList.length} 家菜单含此食材的餐厅</p>
-                    <RestaurantRows rows={secondaryList} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={filtered.length} />
+                    <RestaurantRows rows={secondaryList} rCuisineNames={rCuisineNames} rTagIds={rTagIds} startIdx={filtered.length} isNonDiner={isNonDiner} onOpen={saveReturn} />
                     <div className="text-center pt-4">
                       <button onClick={() => setShowSecondary(false)} className="text-2xs text-mocha-faint underline">收起</button>
                     </div>
@@ -679,11 +747,13 @@ export default function RestaurantsPage() {
   );
 }
 
-function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx }: {
+function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx, isNonDiner, onOpen }: {
   rows: Restaurant[];
   rCuisineNames: Record<number, string[]>;
   rTagIds: Record<number, Set<number>>;
   startIdx: number;
+  isNonDiner: (r: Restaurant) => boolean;
+  onOpen: () => void;
 }) {
   return (
     <div className="border-t border-line">
@@ -694,7 +764,7 @@ function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx }: {
         const isMichelin = tags?.has(159);
         const isBlackPearl = tags?.has(160);
         return (
-          <Link key={r.id} href={`/restaurants/${r.id}`}
+          <Link key={r.id} href={`/restaurants/${r.id}`} onClick={onOpen}
             className="group flex items-center gap-4 md:gap-6 py-4 border-b border-line hover:bg-white transition -mx-6 px-6">
             <span className="numeral text-xl text-mocha-faint w-8 flex-shrink-0 hidden sm:block">{String(idx + 1).padStart(2, '0')}</span>
             <div className="flex-1 min-w-0">
@@ -703,7 +773,7 @@ function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx }: {
                 {isMichelin && <span title="米其林星级" className="text-2xs font-sans not-italic bg-mocha text-mustard-soft px-1.5 py-0.5 rounded shrink-0">★ 米其林</span>}
                 {isBlackPearl && <span title="黑珍珠餐厅" className="text-2xs font-sans not-italic bg-[#3a2a24] text-[#D8B98E] px-1.5 py-0.5 rounded shrink-0">◆ 黑珍珠</span>}
                 {r.premade_risk === '高' && <span title="预制菜高风险，不进宝藏精选" className="text-2xs font-sans not-italic bg-[#F6D9C8] text-[#BC4B1E] px-1.5 py-0.5 rounded shrink-0">预制菜</span>}
-                {r.premade_risk === '疑似' && <span title="工业化连锁" className="text-2xs font-sans not-italic bg-[#E7E0D8] text-[#7A6A5C] px-1.5 py-0.5 rounded shrink-0">连锁</span>}
+                {r.is_chain_standardized && !isNonDiner(r) && <span title="标准化连锁，可在上方一键隐藏" className="text-2xs font-sans not-italic bg-[#E7E0D8] text-[#7A6A5C] px-1.5 py-0.5 rounded shrink-0">连锁</span>}
               </h3>
               <div className="flex items-center gap-2 mt-1 flex-wrap">
                 {names.slice(0, 2).map((cn, k) => (

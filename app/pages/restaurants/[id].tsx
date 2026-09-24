@@ -15,10 +15,10 @@ const TileLayer = dynamic(() => import('react-leaflet').then((m) => m.TileLayer)
 const Marker = dynamic(() => import('react-leaflet').then((m) => m.Marker), { ssr: false });
 
 const SCORE_BARS = [
-  { key: 'score_objective', label: '客观评分', desc: '平台分×可信度', max: 40 },
-  { key: 'score_diner', label: '食客评分', desc: '只计堂食实测', max: 30 },
-  { key: 'score_taste', label: '口味评分', desc: '食材/技法/呈现', max: 20 },
-  { key: 'score_endorsement', label: '背书评分', desc: '名厨/老店/传承', max: 10 },
+  { key: 'score_taste', label: '口味评分', desc: '食材/技法/呈现 · 权重35%', max: 100 },
+  { key: 'score_objective', label: '客观评分', desc: '平台分×可信度 · 权重25%', max: 100 },
+  { key: 'score_diner', label: '食客评分', desc: '只计堂食实测 · 权重25%', max: 100 },
+  { key: 'score_endorsement', label: '背书评分', desc: '名厨/老店/传承 · 权重15%', max: 100 },
 ];
 
 const tierClass = (t?: string) =>
@@ -216,7 +216,7 @@ export default function RestaurantDetail() {
 
       <header className="border-b border-line sticky top-0 z-50 bg-cream-50/90 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/restaurants" className="flex items-center gap-2 text-mocha hover:text-mocha-soft transition">
+          <Link href="/restaurants?return=1" className="flex items-center gap-2 text-mocha hover:text-mocha-soft transition">
             <span>←</span><span className="serif text-base font-medium">返回列表</span>
           </Link>
           {user && (
@@ -475,7 +475,7 @@ export default function RestaurantDetail() {
         </section>
 
         <div className="flex gap-4 pt-8 border-t border-line">
-          <Link href="/restaurants" className="btn btn-outline flex-1">← 更多餐厅</Link>
+          <Link href="/restaurants?return=1" className="btn btn-outline flex-1">← 更多餐厅</Link>
           <Link href="/map" className="btn btn-primary flex-1">地图查看</Link>
         </div>
       </div>
