@@ -1,0 +1,6 @@
+# 云端采集运行包依赖（镜像内 pip 安装）
+# 锁定 1.49.0 以匹配官方镜像 mcr.microsoft.com/playwright/python:v1.49.0-noble 预装的 Chromium
+playwright==1.49.0
+requests>=2.31
+# common.py 的繁简转换用 OpenCC；纯 Python 实现最易在容器内安装
+opencc-python-reimplemented>=0.1.7

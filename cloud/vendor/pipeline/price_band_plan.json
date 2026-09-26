@@ -1,0 +1,148 @@
+[
+  {
+    "id": 1162,
+    "name": "Luneurs(洛克·外滩源店)",
+    "price": 80,
+    "patch": {
+      "price_scene": "甜品",
+      "price_band": 5
+    }
+  },
+  {
+    "id": 1274,
+    "name": "RAC",
+    "price": 90,
+    "patch": {
+      "price_scene": "面包",
+      "price_band": 5
+    }
+  },
+  {
+    "id": 1311,
+    "name": "辻利TSUJIRI(日月光店)",
+    "price": 40,
+    "patch": {
+      "price_scene": "咖啡茶饮",
+      "price_band": 2
+    }
+  },
+  {
+    "id": 1313,
+    "name": "九十葉·抹茶专门店(新天地店)",
+    "price": 32,
+    "patch": {
+      "price_scene": "咖啡茶饮"
+    }
+  },
+  {
+    "id": 1314,
+    "name": "鲨鱼冰屋Kooriya Shark(常熟路店)",
+    "price": 71,
+    "patch": {
+      "price_scene": "甜品",
+      "price_band": 4
+    }
+  },
+  {
+    "id": 1315,
+    "name": "Sobre日式刨冰",
+    "price": 57,
+    "patch": {
+      "price_scene": "甜品",
+      "price_band": 3
+    }
+  },
+  {
+    "id": 1353,
+    "name": "AL'S DINER",
+    "price": 100,
+    "patch": {
+      "price_scene": "甜品",
+      "price_band": 5
+    }
+  },
+  {
+    "id": 1366,
+    "name": "米仓POP",
+    "price": 70,
+    "patch": {
+      "price_scene": "甜品",
+      "price_band": 4
+    }
+  },
+  {
+    "id": 1379,
+    "name": "La Creperie(桃江路店)",
+    "price": 120,
+    "patch": {
+      "price_scene": "甜品",
+      "price_band": 5
+    }
+  },
+  {
+    "id": 1574,
+    "name": "FIFTYLAN(CP静安店)",
+    "price": 18,
+    "patch": {
+      "price_scene": "咖啡茶饮"
+    }
+  },
+  {
+    "id": 1575,
+    "name": "鲜芋仙(日月光店)",
+    "price": 30,
+    "patch": {
+      "price_scene": "甜品"
+    }
+  },
+  {
+    "id": 1697,
+    "name": "Gluglu(愚园路店)",
+    "price": 35,
+    "patch": {
+      "price_scene": "甜品"
+    }
+  },
+  {
+    "id": 1725,
+    "name": "RAC BAR（安福路店）",
+    "price": 120,
+    "patch": {
+      "price_scene": "甜品",
+      "price_band": 5
+    }
+  },
+  {
+    "id": 1737,
+    "name": "Matcha Love 抹艾茶",
+    "price": 50,
+    "patch": {
+      "price_scene": "咖啡茶饮"
+    }
+  },
+  {
+    "id": 1740,
+    "name": "西园抹茶专卖店（大悦城店）",
+    "price": 40,
+    "patch": {
+      "price_scene": "咖啡茶饮"
+    }
+  },
+  {
+    "id": 1797,
+    "name": "蜂蜜草 Honey N' Clover（吴兴路店）",
+    "price": 108,
+    "patch": {
+      "price_scene": "面包",
+      "price_band": 5
+    }
+  },
+  {
+    "id": 1803,
+    "name": "上海柏悦酒店 大堂客厅",
+    "price": 400,
+    "patch": {
+      "price_scene": "甜品"
+    }
+  }
+]

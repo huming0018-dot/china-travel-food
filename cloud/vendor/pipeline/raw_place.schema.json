@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://china-travel/city-food-guide/raw_place.schema.json",
+  "title": "RawPlace — 单店原始采集证据（模型产出，一家店一行 JSONL）",
+  "description": "模型负责发现与判断，按本契约产出原始证据；清洗/校验/去重/入库由 stage1-4 脚本完成。所有'好吃/评分/关店/品牌归属'都必须可溯源，指不出来源的字段留空并在 notes 声明，禁止编造。",
+  "type": "object",
+  "required": [
+    "name", "district", "address", "price_avg", "signature_dishes",
+    "cuisine_paths", "form", "status", "evidence", "sources", "data_updated_at"
+  ],
+  "properties": {
+    "name": { "type": "string", "description": "店名（含分店名）。菜品名/套餐名永不是餐厅。" },
+    "name_en": { "type": ["string", "null"], "description": "外文/英文名，如 Yaya's Pasta Bar、nabi、Jellooo。" },
+    "match_restaurant_id": { "type": ["integer", "null"], "description": "人工实体裁决锚定。当本店与库内同店存在'同店异写/分店名差异/地址写法不同'导致 stage2 自动去重失灵时，填库内同店 id，stage2 直接判 update（优先于名字/地址模糊匹配）。连锁同名异址分店不要填（应各自独立）。" },
+
+    "brand_group": { "type": ["string", "null"], "description": "品牌系/餐饮集团/主理人，如 新荣记集团、Yaya's团队(Chris Zhu)。必须经交叉核实，不确定留空。" },
+    "brand_confirmed": { "type": "boolean", "description": "品牌归属是否经企查查/官网/权威媒体核实，默认 false。", "default": false },
+    "scene": { "type": ["string", "null"], "description": "场景垂直：精品咖啡/甜品烘焙/Brunch/Bistro餐酒/自然酒吧/下午茶/正餐/夜宵 等。" },
+
+    "cuisine_paths": {
+      "type": "array", "minItems": 1,
+      "description": "分类路径，按食客地图认知，叶子+其父链。日料归'亚洲菜'，客家/潮汕/港式/广府/顺德归'粤菜'，川菜按地域子流派。例：['亚洲菜','日料','寿司']、['中餐','川菜','自贡盐帮菜']、['西餐','意餐']。",
+      "items": { "type": "array", "items": { "type": "string" }, "minItems": 2 }
+    },
+    "form": { "type": "string", "description": "形式：Finedining/Casual Dining/Bistro/快餐简餐/Brunch/下午茶/私宴会所/自助放题/酒吧清吧/夜宵。Fine Dining 仅人均≥250 套餐制。" },
+    "meals": { "type": "array", "items": { "type": "string" }, "description": ["午餐", "晚餐", "夜宵", "下午茶"], "default": ["午餐", "晚餐"] },
+    "ingredients": { "type": "array", "items": { "type": "string" }, "description": "食材垂直标签 0-3：海鲜/肉禽/面/饭/甜品点心/面包烘焙/蔬菜素食/火锅锅物/烧烤烤串 等。" },
+
+    "awards": {
+      "type": "object",
+      "properties": {
+        "michelin": { "type": "string", "description": "三星/二星/一星/必比登/入选/无（对照 guide.michelin.com 上海官方页）" },
+        "black_pearl": { "type": "integer", "description": "黑珍珠钻级 1/2/3；0=无", "default": 0 },
+        "source_url": { "type": ["string", "null"], "description": "官方指南链接，证明认证属实" }
+      },
+      "default": { "michelin": "无", "black_pearl": 0 }
+    },
+    "special_tags": { "type": "array", "items": { "type": "string" }, "description": "正交特别标签：素食/纯素、分子/先锋料理、可预订、包间、团购优惠。确有其事才标。" },
+
+    "price_avg": { "type": ["integer", "null"], "description": "人均整数（元）。多来源取中位数。" },
+    "price_range": { "type": ["string", "null"], "description": "如 '¥120-180' 或套餐价。" },
+    "price_sources": {
+      "type": "array", "description": "人均的来源（≥1），用于交叉验证",
+      "items": {
+        "type": "object", "required": ["platform", "value"],
+        "properties": { "platform": { "type": "string" }, "value": { "type": "integer" }, "url": { "type": ["string", "null"] } }
+      }
+    },
+
+    "district": { "type": "string", "description": "上海行政区标准名（XX区）；连锁多区='多区连锁'；无法定位='待确认'。" },
+    "address": { "type": "string", "description": "门牌完整地址，不留空；渠道链：点评→高德→美团→官方公众号→地图标注。" },
+    "business_area": { "type": ["string", "null"], "description": "商圈/地标，如 新天地、静安寺、古北。" },
+    "lat": { "type": ["number", "null"], "description": "纬度（来源直接给则填，否则留空由 geocode 阶段解析，禁止猜）。" },
+    "lng": { "type": ["number", "null"], "description": "经度，同上。" },
+    "coord_source": { "type": ["string", "null"], "description": "坐标来源：tencent(腾讯位置服务坐标拾取器，国内首选)/amap/official/manual/nominatim。腾讯与高德同为 GCJ-02 火星坐标可直接互用；Nominatim 国内被墙。" },
+
+    "phone_raw": { "type": ["string", "null"], "description": "原始电话字符串（脚本会清洗）；查不到留空，禁止编造。" },
+    "booking_method": { "type": ["string", "null"], "description": "预订方式：电话/大众点评/公众号名/小程序/无需预订；总机转接描述写这里。" },
+    "signature_dishes": { "type": "array", "minItems": 2, "description": "3-6 道真实招牌/必点（具体菜名，非店名、非套餐名）。", "items": { "type": "string" } },
+
+    "status": { "type": "string", "enum": ["open", "closed"], "description": "营业/关店。高端/网红店必须搜'店名 关店/停业/闭店/搬迁'核验。" },
+    "closed_date": { "type": ["string", "null"], "description": "关店日期 YYYY-MM-DD（status=closed 必填）。" },
+    "closed_source": { "type": ["string", "null"], "description": "关店信息来源 URL（status=closed 必填）。" },
+
+    "scores": {
+      "type": "object",
+      "description": "反软广评分。四个分项一律填 0-100 的『该维度百分制子分』（与库口径一致，不要填加权后的值）；total 由 stage1 脚本按 0.4/0.3/0.2/0.1 加权并减软广扣分自动计算，无需手填。见 scoring-rubric.md。",
+      "required": ["objective", "diner", "taste", "endorsement", "soft_ad_penalty"],
+      "properties": {
+        "objective": { "type": "number", "minimum": 0, "maximum": 100, "description": "客观子分(0-100)：平台分折算后×可信度系数，再归一到百分制" },
+        "diner": { "type": "number", "minimum": 0, "maximum": 100, "description": "堂食食客证据子分(0-100)" },
+        "taste": { "type": "number", "minimum": 0, "maximum": 100, "description": "口味子分(0-100)" },
+        "endorsement": { "type": "number", "minimum": 0, "maximum": 100, "description": "背书生分子分(0-100)" },
+        "soft_ad_penalty": { "type": "number", "minimum": 0, "maximum": 30, "description": "软广扣分(0-30)，在加权总分中直接扣减" },
+        "platform_credibility": { "type": "number", "minimum": 0.7, "maximum": 1.0, "description": "平台分可信度系数" }
+      }
+    },
+
+    "evidence": {
+      "type": "object", "required": ["diner_quotes", "platform_scores"],
+      "properties": {
+        "diner_quotes": {
+          "type": "array", "minItems": 2,
+          "description": "≥2 条可溯源堂食评价（只计堂食，外卖不计），每条含具体菜品/体验细节；空话不计。",
+          "items": {
+            "type": "object", "required": ["quote", "source", "url"],
+            "properties": {
+              "quote": { "type": "string", "description": "评价原文片段（逐字，含菜名/体验）" },
+              "dish": { "type": ["string", "null"] },
+              "source": { "type": "string", "description": "小红书/大众点评/谷歌/SmartShanghai/抖音 等" },
+              "url": { "type": "string", "description": "原帖/商户页直链（一手信源优先）" },
+              "date": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "platform_scores": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["platform", "score"],
+            "properties": {
+              "platform": { "type": "string" },
+              "score": { "type": "number" },
+              "review_count": { "type": ["integer", "null"] },
+              "url": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "negative_signals": { "type": "array", "items": { "type": "string" }, "description": "差评信号（服务/排队/性价比/品控），正常店必有差评，全好评异常。" },
+        "soft_ad_flags": { "type": "array", "items": { "type": "string" }, "description": "命中的软广信号：模板化文案/博主集中轰炸/差评被压/团购挂车无差评/游客排队。" },
+        "traffic_signals": { "type": "array", "items": { "type": "string" }, "description": "自然流量信号：工作日排队/老客复购/吧台难订/外卖低堂食火。" }
+      }
+    },
+
+    "sources": {
+      "type": "array", "minItems": 2,
+      "description": "≥2 个独立来源（防止单一平台/软广），覆盖官方指南或海外美食媒体或 UGC 至少两类。",
+      "items": {
+        "type": "object", "required": ["title", "url", "type"],
+        "properties": {
+          "title": { "type": "string" },
+          "url": { "type": "string" },
+          "type": { "type": "string", "description": "official_guide/overseas_media/ugc/map/platform/news/brand_official" }
+        }
+      }
+    },
+
+    "data_updated_at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "notes": { "type": ["string", "null"], "description": "待核实项/同名歧义/与他店关系（如 nono's 别与隔壁 Nora's 混）。" }
+  }
+}

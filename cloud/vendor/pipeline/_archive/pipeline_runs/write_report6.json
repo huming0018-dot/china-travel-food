@@ -1,0 +1,1115 @@
+[
+  {
+    "name": "麺処益二郎",
+    "action": "update",
+    "rid": 1320,
+    "rc_added": [
+      3,
+      12,
+      51,
+      57
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1320,
+      "name": "麺処益二郎",
+      "status": "active",
+      "location": "0101000020E6100000F64201DBC1595E408C15359886353F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 65
+    },
+    "ok": true
+  },
+  {
+    "name": "鲤久面屋·横滨家系拉面(金桥啦啦宝都店)",
+    "action": "update",
+    "rid": 1321,
+    "rc_added": [
+      2,
+      3,
+      51,
+      57
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1321,
+      "name": "鲤久面屋·横滨家系拉面(金桥啦啦宝都店)",
+      "status": "active",
+      "location": "0101000020E610000014D1AFAD9F665E40AF5C6F9BA9403F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "鸟山鸣·薪火烧鸟",
+    "action": "update",
+    "rid": 1322,
+    "rc_added": [
+      51,
+      64,
+      162
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1322,
+      "name": "鸟山鸣·薪火烧鸟",
+      "status": "active",
+      "location": "0101000020E6100000B54E5C8E575C5E4093718C648F3C3F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 980
+    },
+    "ok": true
+  },
+  {
+    "name": "银蔵Ginzō·Yakitori烧鸟(新华路店)",
+    "action": "update",
+    "rid": 1323,
+    "rc_added": [
+      51,
+      72,
+      162
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1323,
+      "name": "银蔵Ginzō·Yakitori烧鸟(新华路店)",
+      "status": "active",
+      "location": "0101000020E61000008BE255D6365B5E4035B6D782DE333F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 250
+    },
+    "ok": true
+  },
+  {
+    "name": "玄白·炭烤活鳗(高岛屋首店)",
+    "action": "update",
+    "rid": 1324,
+    "rc_added": [
+      51,
+      57,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1324,
+      "name": "玄白·炭烤活鳗(高岛屋首店)",
+      "status": "active",
+      "location": "0101000020E6100000C6A4BF97C2595E407B4963B48E323F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "鳗葉(世博天地店)",
+    "action": "update",
+    "rid": 1325,
+    "rc_added": [
+      51,
+      57
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1325,
+      "name": "鳗葉(世博天地店)",
+      "status": "active",
+      "location": "0101000020E61000007CD28904535F5E40CD5CE0F2582F3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "KAI FINE开饭·汉堡排(静安寺店)",
+    "action": "update",
+    "rid": 1326,
+    "rc_added": [
+      2,
+      26,
+      51,
+      57,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1326,
+      "name": "KAI FINE开饭·汉堡排(静安寺店)",
+      "status": "active",
+      "location": "0101000020E61000004D10751F805C5E40137EA99F37393F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "Rumor传闻·洋食(新乐路店)",
+    "action": "update",
+    "rid": 1327,
+    "rc_added": [
+      27,
+      51,
+      57,
+      72,
+      190
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1327,
+      "name": "Rumor传闻·洋食(新乐路店)",
+      "status": "active",
+      "location": "0101000020E61000008B6B7C26FB5C5E40A62A6D718D373F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "韦二姐传统螺蛳粉",
+    "action": "update",
+    "rid": 1328,
+    "rc_added": [
+      3,
+      51,
+      57,
+      65,
+      72
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1328,
+      "name": "韦二姐传统螺蛳粉",
+      "status": "active",
+      "location": "0101000020E6100000C097C283665B5E408CF2CCCB61233F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 26
+    },
+    "ok": true
+  },
+  {
+    "name": "阳奶佬螺蛳粉(丽园路店)",
+    "action": "update",
+    "rid": 1329,
+    "rc_added": [
+      3,
+      51,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1329,
+      "name": "阳奶佬螺蛳粉(丽园路店)",
+      "status": "active",
+      "location": "0101000020E610000001DA56B3CE5E5E40321CCF6740353F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 40
+    },
+    "ok": true
+  },
+  {
+    "name": "家味螺蛳粉&烤鱼(安远路店)",
+    "action": "update",
+    "rid": 1330,
+    "rc_added": [
+      51,
+      64,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1330,
+      "name": "家味螺蛳粉&烤鱼(安远路店)",
+      "status": "active",
+      "location": "0101000020E6100000DA70581AF85B5E40FBAF73D3663C3F40",
+      "phone": "02162303772",
+      "tier": "经济",
+      "price_avg": 35
+    },
+    "ok": true
+  },
+  {
+    "name": "山间堂民间瓦缸煨汤馆(淮海店)",
+    "action": "update",
+    "rid": 1331,
+    "rc_added": [
+      3,
+      51,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1331,
+      "name": "山间堂民间瓦缸煨汤馆(淮海店)",
+      "status": "active",
+      "location": "0101000020E6100000DBA337DC475D5E40691CEA7761373F40",
+      "phone": "02154042668",
+      "tier": "平价",
+      "price_avg": 95
+    },
+    "ok": true
+  },
+  {
+    "name": "赣江秋瓦罐煨汤",
+    "action": "update",
+    "rid": 1332,
+    "rc_added": [
+      3,
+      51,
+      65,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1332,
+      "name": "赣江秋瓦罐煨汤",
+      "status": "active",
+      "location": "0101000020E6100000D446753A90645E404548DDCEBE423F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 25
+    },
+    "ok": true
+  },
+  {
+    "name": "老门框爆肚涮肉(古美路店)",
+    "action": "update",
+    "rid": 1333,
+    "rc_added": [],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1333,
+      "name": "老门框爆肚涮肉(古美路店)",
+      "status": "active",
+      "location": "0101000020E61000008D429259BD595E40569C6A2DCC263F40",
+      "phone": "02134510873",
+      "tier": "中档",
+      "price_avg": 106
+    },
+    "ok": true
+  },
+  {
+    "name": "严记老北京涮锅(乌鲁木齐路店)",
+    "action": "update",
+    "rid": 1334,
+    "rc_added": [
+      3,
+      57
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1334,
+      "name": "严记老北京涮锅(乌鲁木齐路店)",
+      "status": "active",
+      "location": "0101000020E610000091D5AD9E935C5E40857AFA08FC353F40",
+      "phone": "02164313886",
+      "tier": "中档",
+      "price_avg": 151
+    },
+    "ok": true
+  },
+  {
+    "name": "羊伙计烤全羊(宝山首店)",
+    "action": "update",
+    "rid": 1335,
+    "rc_added": [
+      3,
+      57,
+      64
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1335,
+      "name": "羊伙计烤全羊(宝山首店)",
+      "status": "active",
+      "location": "0101000020E6100000352A70B20D5B5E40705B5B785E5A3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 173
+    },
+    "ok": true
+  },
+  {
+    "name": "青藏餐厅(爱琴海购物公园店)",
+    "action": "update",
+    "rid": 1336,
+    "rc_added": [
+      3,
+      12,
+      57
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1336,
+      "name": "青藏餐厅(爱琴海购物公园店)",
+      "status": "active",
+      "location": "0101000020E6100000E8667FA0DC575E4028637C98BD2C3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "润园椰礼海南椰子鸡火锅(曹杨路店)",
+    "action": "update",
+    "rid": 1337,
+    "rc_added": [
+      2
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1337,
+      "name": "润园椰礼海南椰子鸡火锅(曹杨路店)",
+      "status": "active",
+      "location": "0101000020E61000006E32AA0CE35A5E40534145D5AF3C3F40",
+      "phone": "02152525688",
+      "tier": "平价",
+      "price_avg": 94
+    },
+    "ok": true
+  },
+  {
+    "name": "辞琼·老海南糟粕醋火锅(月亮湾店)",
+    "action": "update",
+    "rid": 1338,
+    "rc_added": [
+      2,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1338,
+      "name": "辞琼·老海南糟粕醋火锅(月亮湾店)",
+      "status": "active",
+      "location": "0101000020E6100000800BB265F95F5E40117349D576433F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "柒月粉(江苏路店)",
+    "action": "update",
+    "rid": 1339,
+    "rc_added": [
+      51,
+      57,
+      65,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1339,
+      "name": "柒月粉(江苏路店)",
+      "status": "active",
+      "location": "0101000020E6100000615111A7935B5E402F1686C8E9373F40",
+      "phone": "15618193440",
+      "tier": "经济",
+      "price_avg": 35
+    },
+    "ok": true
+  },
+  {
+    "name": "谷堆复古烩面",
+    "action": "update",
+    "rid": 1340,
+    "rc_added": [
+      51,
+      65,
+      73
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1340,
+      "name": "谷堆复古烩面",
+      "status": "active",
+      "location": "0101000020E6100000185B0872505C5E40FB3A70CE883A3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 53
+    },
+    "ok": true
+  },
+  {
+    "name": "一碗兰纯汤牛肉面1号店",
+    "action": "update",
+    "rid": 1341,
+    "rc_added": [
+      3,
+      51,
+      65,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1341,
+      "name": "一碗兰纯汤牛肉面1号店",
+      "status": "active",
+      "location": "0101000020E6100000438D429259595E40E46A64575A2E3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 25
+    },
+    "ok": true
+  },
+  {
+    "name": "伊祥·敦煌楼(中山北路店)",
+    "action": "update",
+    "rid": 1342,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1342,
+      "name": "伊祥·敦煌楼(中山北路店)",
+      "status": "active",
+      "location": "0101000020E61000005DF92CCF835B5E40D15AD1E6383F3F40",
+      "phone": "02163807737",
+      "tier": "平价",
+      "price_avg": 65
+    },
+    "ok": true
+  },
+  {
+    "name": "洪峣爷北京炙子烤肉",
+    "action": "update",
+    "rid": 1344,
+    "rc_added": [
+      35,
+      51
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1344,
+      "name": "洪峣爷北京炙子烤肉",
+      "status": "active",
+      "location": "0101000020E6100000BC24CE8AA85C5E40F06B2409C2393F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "靓靓蒸虾(魔都旗舰店)",
+    "action": "update",
+    "rid": 1345,
+    "rc_added": [
+      51,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1345,
+      "name": "靓靓蒸虾(魔都旗舰店)",
+      "status": "active",
+      "location": "0101000020E6100000917F66101F5B5E40FBE769C020353F40",
+      "phone": "02152918675",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "莲餐厅·湖北菜(愚园路店)",
+    "action": "update",
+    "rid": 1346,
+    "rc_added": [
+      3,
+      51,
+      64
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1346,
+      "name": "莲餐厅·湖北菜(愚园路店)",
+      "status": "active",
+      "location": "0101000020E6100000BB4560AC6F5B5E40EF59D76839383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "NABI",
+    "action": "update",
+    "rid": 1347,
+    "rc_added": [
+      162
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "readback": {
+      "id": 1347,
+      "name": "NABI",
+      "status": "active",
+      "location": "0101000020E6100000E0490B97555B5E4088653387A4363F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 1000
+    },
+    "ok": true
+  },
+  {
+    "name": "Yaya's Pasta Bar",
+    "action": "update",
+    "rid": 1349,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1349,
+      "name": "Yaya's Pasta Bar",
+      "status": "active",
+      "location": "0101000020E6100000DECCE847C35C5E407EC9C6832D3A3F40",
+      "phone": "19921344145",
+      "tier": "中档",
+      "price_avg": 169
+    },
+    "ok": true
+  },
+  {
+    "name": "Nono's",
+    "action": "update",
+    "rid": 1350,
+    "rc_added": [
+      3,
+      51,
+      57,
+      81,
+      162,
+      164
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1350,
+      "name": "Nono's",
+      "status": "active",
+      "location": "0101000020E6100000D50968226C5C5E4064E8D84125363F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 210
+    },
+    "ok": true
+  },
+  {
+    "name": "Jellooo",
+    "action": "update",
+    "rid": 1351,
+    "rc_added": [
+      51,
+      159
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1351,
+      "name": "Jellooo",
+      "status": "active",
+      "location": "0101000020E61000004BE9995E625E5E4078280AF489383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "O'mills Sourdough Bakery & Bistro",
+    "action": "update",
+    "rid": 1352,
+    "rc_added": [
+      26,
+      51,
+      64,
+      65,
+      73,
+      85,
+      163
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1352,
+      "name": "O'mills Sourdough Bakery & Bistro",
+      "status": "active",
+      "location": "0101000020E610000036E50AEF725D5E40F9F884ECBC353F40",
+      "phone": "02164378988",
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "AL'S DINER",
+    "action": "update",
+    "rid": 1353,
+    "rc_added": [
+      72,
+      163,
+      209
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1353,
+      "name": "AL'S DINER",
+      "status": "active",
+      "location": "0101000020E6100000A7E8482EFF5C5E40FE0DDAAB8F373F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "MONA",
+    "action": "update",
+    "rid": 1354,
+    "rc_added": [
+      2,
+      27,
+      51,
+      64,
+      65,
+      77,
+      159,
+      162,
+      190
+    ],
+    "rc_total": 14,
+    "location_set": true,
+    "readback": {
+      "id": 1354,
+      "name": "MONA",
+      "status": "active",
+      "location": "0101000020E6100000B0C91AF5105E5E40B821C66B5E3D3F40",
+      "phone": "02162563778",
+      "tier": "高档",
+      "price_avg": 250
+    },
+    "ok": true
+  },
+  {
+    "name": "Dugout Brunch & Bistro",
+    "action": "update",
+    "rid": 1355,
+    "rc_added": [
+      26,
+      64,
+      65,
+      77,
+      163
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1355,
+      "name": "Dugout Brunch & Bistro",
+      "status": "active",
+      "location": "0101000020E6100000A8380EBC5A5F5E40BA69334E433C3F40",
+      "phone": "13585947489",
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "WARO ROWA",
+    "action": "update",
+    "rid": 1356,
+    "rc_added": [
+      51,
+      57,
+      65,
+      72,
+      163
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1356,
+      "name": "WARO ROWA",
+      "status": "active",
+      "location": "0101000020E61000004A969350FA5C5E4034BF9A03043B3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "Madison",
+    "action": "update",
+    "rid": 1357,
+    "rc_added": [
+      26,
+      64,
+      77,
+      163
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1357,
+      "name": "Madison",
+      "status": "active",
+      "location": "0101000020E610000087DBA161315D5E405264ADA1D4363F40",
+      "phone": "02164370136",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Table a Deli",
+    "action": "update",
+    "rid": 1358,
+    "rc_added": [
+      26,
+      57,
+      65,
+      77,
+      163
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1358,
+      "name": "Table a Deli",
+      "status": "active",
+      "location": "0101000020E610000027F56569A75C5E400FD1E80E623B3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "Vinism Wine Bar",
+    "action": "update",
+    "rid": 1359,
+    "rc_added": [
+      26,
+      51,
+      65,
+      81,
+      162,
+      164
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1359,
+      "name": "Vinism Wine Bar",
+      "status": "active",
+      "location": "0101000020E6100000C172840CE45B5E4046ED7E15E0373F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 250
+    },
+    "ok": true
+  },
+  {
+    "name": "SOiF",
+    "action": "update",
+    "rid": 1360,
+    "rc_added": [
+      51,
+      65,
+      81,
+      162,
+      164
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1360,
+      "name": "SOiF",
+      "status": "active",
+      "location": "0101000020E61000002E573F36C95C5E40D4EE5701BE3B3F40",
+      "phone": "02152665536",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "Mavis966",
+    "action": "update",
+    "rid": 1361,
+    "rc_added": [
+      27,
+      65,
+      162,
+      164
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1361,
+      "name": "Mavis966",
+      "status": "active",
+      "location": "0101000020E61000000CB08F4E5D5C5E405D35CF11F93A3F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Nora's Wine Shop & Bar",
+    "action": "update",
+    "rid": 1362,
+    "rc_added": [
+      51,
+      81,
+      162,
+      164
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1362,
+      "name": "Nora's Wine Shop & Bar",
+      "status": "active",
+      "location": "0101000020E6100000D50968226C5C5E4064E8D84125363F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "DTE down to earth",
+    "action": "update",
+    "rid": 1363,
+    "rc_added": [
+      81,
+      162,
+      164
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1363,
+      "name": "DTE down to earth",
+      "status": "active",
+      "location": "0101000020E610000037A8FDD64E5C5E40D940BAD8B43A3F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Le Saleya Bar à Vin",
+    "action": "update",
+    "rid": 1364,
+    "rc_added": [
+      26,
+      81,
+      162,
+      164
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1364,
+      "name": "Le Saleya Bar à Vin",
+      "status": "active",
+      "location": "0101000020E6100000A9F8BF232A5D5E40ED0E290648383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "龍满·云贵川bistro小酒馆",
+    "action": "update",
+    "rid": 1365,
+    "rc_added": [
+      2,
+      26,
+      162,
+      164
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1365,
+      "name": "龍满·云贵川bistro小酒馆",
+      "status": "active",
+      "location": "0101000020E6100000B8904770235A5E405680EF366F303F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "米仓POP",
+    "action": "update",
+    "rid": 1366,
+    "rc_added": [
+      65,
+      72,
+      163
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1366,
+      "name": "米仓POP",
+      "status": "active",
+      "location": "0101000020E61000004EF2237EC55C5E404BB1A371A8333F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "Forage Eatery & Wine Bar",
+    "action": "update",
+    "rid": 1367,
+    "rc_added": [
+      26,
+      64,
+      65,
+      85,
+      162
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1367,
+      "name": "Forage Eatery & Wine Bar",
+      "status": "active",
+      "location": "0101000020E61000009AB0FD648C5D5E400516C09481373F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 246
+    },
+    "ok": true
+  },
+  {
+    "name": "La Tavernetta Bar à Vin",
+    "action": "update",
+    "rid": 1368,
+    "rc_added": [
+      162
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1368,
+      "name": "La Tavernetta Bar à Vin",
+      "status": "active",
+      "location": "0101000020E61000000F2BDCF2915C5E4042D13C8045363F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 222
+    },
+    "ok": true
+  },
+  {
+    "name": "Pecher Wine Bar",
+    "action": "update",
+    "rid": 1369,
+    "rc_added": [
+      72,
+      162
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1369,
+      "name": "Pecher Wine Bar",
+      "status": "active",
+      "location": "0101000020E6100000295C8FC2F55D5E401B0DE02D90383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 187
+    },
+    "ok": true
+  },
+  {
+    "name": "1/10 Coffee Roaster(长乐路店)",
+    "action": "update",
+    "rid": 1371,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1371,
+      "name": "1/10 Coffee Roaster(长乐路店)",
+      "status": "active",
+      "location": "0101000020E61000000E164ED2FC5D5E40E54526E0D7383F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45
+    },
+    "ok": true
+  },
+  {
+    "name": "有容乃大 Bigger Than Bigger(北京西路店)",
+    "action": "update",
+    "rid": 1372,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1372,
+      "name": "有容乃大 Bigger Than Bigger(北京西路店)",
+      "status": "active",
+      "location": "0101000020E6100000E40F069E7B5C5E40F94D61A5823A3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50
+    },
+    "ok": true
+  }
+]

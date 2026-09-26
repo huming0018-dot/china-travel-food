@@ -1,0 +1,32 @@
+[
+ {
+  "name": "POP露台餐厅(外滩三号)",
+  "action": "new",
+  "fields": {
+   "name": "POP露台餐厅(外滩三号)",
+   "status": "active",
+   "district": "黄浦区",
+   "business_area": "外滩",
+   "address": "黄浦区中山东一路3号外滩三号7楼",
+   "location": "SRID=4326;POINT(121.490656 31.234154)",
+   "phone": "02163210909",
+   "price_avg": 450,
+   "price_scene": "正餐",
+   "signature_dishes": [
+    "法式鹅肝配苹果泥",
+    "澳洲和牛肋眼",
+    "炭烤海鲜拼盘",
+    "和牛薄片配黑松露",
+    "奶油炖鸡"
+   ],
+   "chain_type": "独立店",
+   "premade_risk": "低",
+   "booking_method": "电话或官方渠道预订；露台及晚餐建议提前数天",
+   "evidence_summary": "{\"quotes\": [{\"quote\": \"连续十年入选米其林指南，欧陆当代菜，外滩三号顶层露台\", \"source\": \"MICHELIN Guide\", \"url\": \"https://guide.michelin.com/sg/zh_CN/shanghai-municipality/shanghai/restaurant/pop\"}, {\"quote\": \"DiningCity 8.9（食物8.4/服务8.9/环境9.5）人均约¥450\", \"source\": \"DiningCity\", \"url\": \"https://www.diningcity.cn/shanghai/restaurant_pop\"}], \"negative\": [], \"soft_ad\": []}",
+   "data_updated_at": "2026-09-25"
+  },
+  "cids_add": [
+   346
+  ]
+ }
+]

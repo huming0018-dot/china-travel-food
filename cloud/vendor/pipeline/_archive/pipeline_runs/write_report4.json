@@ -1,0 +1,1049 @@
+[
+  {
+    "name": "Texas Roadhouse 德州公路牛排馆(世纪汇店)",
+    "action": "update",
+    "rid": 1219,
+    "rc_added": [
+      51,
+      74
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1219,
+      "name": "Texas Roadhouse 德州公路牛排馆(世纪汇店)",
+      "status": "active",
+      "location": "0101000020E6100000CF31207BBD615E40249BABE6393A3F40",
+      "phone": "02150755177",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Maya",
+    "action": "update",
+    "rid": 1220,
+    "rc_added": [
+      64
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1220,
+      "name": "Maya",
+      "status": "active",
+      "location": "0101000020E61000002CD7DB662A5D5E408A929048DB383F40",
+      "phone": "02162896889",
+      "tier": "中档",
+      "price_avg": 140
+    },
+    "ok": true
+  },
+  {
+    "name": "Mayita",
+    "action": "update",
+    "rid": 1221,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1221,
+      "name": "Mayita",
+      "status": "active",
+      "location": "0101000020E6100000145CACA8C15E5E4013B875374F393F40",
+      "phone": "02163343288",
+      "tier": "中档",
+      "price_avg": 140
+    },
+    "ok": true
+  },
+  {
+    "name": "Blue Frog 蓝蛙",
+    "action": "update",
+    "rid": 1222,
+    "rc_added": [
+      209
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1222,
+      "name": "Blue Frog 蓝蛙",
+      "status": "active",
+      "location": "0101000020E6100000A8E507AEF25A5E406268757286323F40",
+      "phone": "02164451777",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "El Luchador",
+    "action": "update",
+    "rid": 1223,
+    "rc_added": [],
+    "rc_total": 5,
+    "location_set": true,
+    "readback": {
+      "id": 1223,
+      "name": "El Luchador",
+      "status": "active",
+      "location": "0101000020E61000006E6B0BCF4B5D5E408F6FEF1AF4353F40",
+      "phone": "02164228653",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "Laya Burger 拉亚汉堡(宜山路店)",
+    "action": "update",
+    "rid": 1224,
+    "rc_added": [
+      72,
+      209
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1224,
+      "name": "Laya Burger 拉亚汉堡(宜山路店)",
+      "status": "active",
+      "location": "0101000020E6100000A94C3107415B5E40FA635A9BC62E3F40",
+      "phone": "02164289177",
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "CHIHUAHUA墨西哥餐厅",
+    "action": "update",
+    "rid": 1225,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1225,
+      "name": "CHIHUAHUA墨西哥餐厅",
+      "status": "active",
+      "location": "0101000020E61000000892770E655C5E401CEA77616B3A3F40",
+      "phone": "13761346347",
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "Tequilaz Mexican Bar",
+    "action": "update",
+    "rid": 1226,
+    "rc_added": [
+      81,
+      164
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1226,
+      "name": "Tequilaz Mexican Bar",
+      "status": "active",
+      "location": "0101000020E6100000B401D880085D5E40D653ABAFAE3A3F40",
+      "phone": "02162713311",
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "Bourbon Cookhouse 玻本美式餐厅酒吧",
+    "action": "update",
+    "rid": 1227,
+    "rc_added": [
+      164,
+      209
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1227,
+      "name": "Bourbon Cookhouse 玻本美式餐厅酒吧",
+      "status": "active",
+      "location": "0101000020E61000009964E42CEC575E40C93B8732542D3F40",
+      "phone": "02164026177",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Tajine Moroccan塔金摩洛哥中东餐厅",
+    "action": "update",
+    "rid": 1228,
+    "rc_added": [
+      35,
+      154
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1228,
+      "name": "Tajine Moroccan塔金摩洛哥中东餐厅",
+      "status": "active",
+      "location": "0101000020E6100000D82AC1E2705F5E40DC9F8B868C3B3F40",
+      "phone": "02163309801",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "Chili's 奇利斯(陆家嘴滨江店)",
+    "action": "update",
+    "rid": 1229,
+    "rc_added": [],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1229,
+      "name": "Chili's 奇利斯(陆家嘴滨江店)",
+      "status": "active",
+      "location": "0101000020E6100000C38366D7BD5F5E4094F6065F983C3F40",
+      "phone": "02168861777",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "Brut Eatery悦璞食堂(肇嘉浜路店)",
+    "action": "update",
+    "rid": 1230,
+    "rc_added": [
+      27,
+      64,
+      72,
+      190
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1230,
+      "name": "Brut Eatery悦璞食堂(肇嘉浜路店)",
+      "status": "active",
+      "location": "0101000020E610000028BB99D18F5D5E4079060DFD13343F40",
+      "phone": "02164086783",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "Money Shops(愚园路店)",
+    "action": "update",
+    "rid": 1231,
+    "rc_added": [
+      64,
+      72,
+      209
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1231,
+      "name": "Money Shops(愚园路店)",
+      "status": "active",
+      "location": "0101000020E6100000A88AA9F4135B5E40E8A38CB800383F40",
+      "phone": "02162125002",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "Crafted 蔻阁梧桐露台西餐厅",
+    "action": "update",
+    "rid": 1232,
+    "rc_added": [
+      209
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1232,
+      "name": "Crafted 蔻阁梧桐露台西餐厅",
+      "status": "active",
+      "location": "0101000020E6100000A0504F1F815C5E404565C39ACA363F40",
+      "phone": "02154270757",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "铁手咖啡制造局Metal Hands(永嘉路店)",
+    "action": "update",
+    "rid": 1233,
+    "rc_added": [
+      51,
+      65,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1233,
+      "name": "铁手咖啡制造局Metal Hands(永嘉路店)",
+      "status": "active",
+      "location": "0101000020E6100000FD101B2C9C5D5E4056F0DB10E3353F40",
+      "phone": "18601684827",
+      "tier": "经济",
+      "price_avg": 48
+    },
+    "ok": true
+  },
+  {
+    "name": "尚牛社会 Beef & Liberty",
+    "action": "update",
+    "rid": 1234,
+    "rc_added": [
+      3,
+      83,
+      209
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1234,
+      "name": "尚牛社会 Beef & Liberty",
+      "status": "active",
+      "location": "0101000020E61000007847C66AF35C5E40B4CA4C69FD393F40",
+      "phone": "02162798177",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "PAIN CHAUD百丘(建国西路店)",
+    "action": "update",
+    "rid": 1235,
+    "rc_added": [
+      26,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1235,
+      "name": "PAIN CHAUD百丘(建国西路店)",
+      "status": "active",
+      "location": "0101000020E61000009D2CB5DE6F5D5E405EBBB4E1B0343F40",
+      "phone": "02133560520",
+      "tier": "平价",
+      "price_avg": 52
+    },
+    "ok": true
+  },
+  {
+    "name": "gluglu面包店(思南路店)",
+    "action": "update",
+    "rid": 1236,
+    "rc_added": [
+      51,
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1236,
+      "name": "gluglu面包店(思南路店)",
+      "status": "active",
+      "location": "0101000020E6100000753A90F5D45D5E40A4C7EF6DFA373F40",
+      "phone": "13262259650",
+      "tier": "经济",
+      "price_avg": 45
+    },
+    "ok": true
+  },
+  {
+    "name": "Shake Shack 奶昔小屋",
+    "action": "update",
+    "rid": 1237,
+    "rc_added": [
+      72,
+      209
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1237,
+      "name": "Shake Shack 奶昔小屋",
+      "status": "active",
+      "location": "0101000020E61000008C868C47A95C5E4009151C5E10393F40",
+      "phone": "02162886177",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "SMAKA咖啡烘焙",
+    "action": "update",
+    "rid": 1238,
+    "rc_added": [
+      51,
+      65,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1238,
+      "name": "SMAKA咖啡烘焙",
+      "status": "active",
+      "location": "0101000020E6100000AA108FC4CB5B5E40AAF1D24D62383F40",
+      "phone": "18116056384",
+      "tier": "平价",
+      "price_avg": 50
+    },
+    "ok": true
+  },
+  {
+    "name": "Element Fresh 新元素",
+    "action": "update",
+    "rid": 1239,
+    "rc_added": [
+      209
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1239,
+      "name": "Element Fresh 新元素",
+      "status": "active",
+      "location": "0101000020E6100000812040868E5C5E40AF777FBC57393F40",
+      "phone": "02162885177",
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "LUNEURS月乐诗冰淇淋咖啡(北外滩来福士店)",
+    "action": "update",
+    "rid": 1240,
+    "rc_added": [
+      26,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": false,
+    "readback": {
+      "id": 1240,
+      "name": "LUNEURS月乐诗冰淇淋咖啡(北外滩来福士店)",
+      "status": "active",
+      "location": null,
+      "phone": "18221541374",
+      "tier": "平价",
+      "price_avg": 55
+    },
+    "ok": true
+  },
+  {
+    "name": "Speak Low彼楼",
+    "action": "update",
+    "rid": 1241,
+    "rc_added": [
+      27,
+      72,
+      85,
+      190
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1241,
+      "name": "Speak Low彼楼",
+      "status": "active",
+      "location": "0101000020E610000077D66EBBD05D5E4006D7DCD1FF363F40",
+      "phone": "02164160133",
+      "tier": "中档",
+      "price_avg": 190
+    },
+    "ok": true
+  },
+  {
+    "name": "The Nest(外滩)",
+    "action": "update",
+    "rid": 1242,
+    "rc_added": [
+      35,
+      154
+    ],
+    "rc_total": 14,
+    "location_set": true,
+    "readback": {
+      "id": 1242,
+      "name": "The Nest(外滩)",
+      "status": "active",
+      "location": "0101000020E61000009775FF58885E5E40CD94D6DF123C3F40",
+      "phone": "02163216177",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "鲜得来排骨年糕(雁荡店)",
+    "action": "update",
+    "rid": 1243,
+    "rc_added": [
+      9,
+      65,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1243,
+      "name": "鲜得来排骨年糕(雁荡店)",
+      "status": "active",
+      "location": "0101000020E610000085CE6BEC125E5E4063B9A5D590383F40",
+      "phone": "02163868377",
+      "tier": "经济",
+      "price_avg": 40
+    },
+    "ok": true
+  },
+  {
+    "name": "Greek Taverna Milos 希腊餐厅(老外街店)",
+    "action": "update",
+    "rid": 1244,
+    "rc_added": [
+      28,
+      35,
+      154
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1244,
+      "name": "Greek Taverna Milos 希腊餐厅(老外街店)",
+      "status": "active",
+      "location": "0101000020E6100000E7FBA9F1D2585E4087FC3383F8303F40",
+      "phone": "02154408530",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "柴爿馄饨",
+    "action": "update",
+    "rid": 1245,
+    "rc_added": [
+      3,
+      51,
+      57,
+      65,
+      77,
+      161
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1245,
+      "name": "柴爿馄饨",
+      "status": "active",
+      "location": "0101000020E6100000014F5AB8AC5E5E4040DD408177363F40",
+      "phone": "13764871884",
+      "tier": "经济",
+      "price_avg": 25
+    },
+    "ok": true
+  },
+  {
+    "name": "黄启云私房牛肉面工坊",
+    "action": "update",
+    "rid": 1246,
+    "rc_added": [
+      3,
+      65,
+      72
+    ],
+    "rc_total": 8,
+    "location_set": false,
+    "readback": {
+      "id": 1246,
+      "name": "黄启云私房牛肉面工坊",
+      "status": "active",
+      "location": null,
+      "phone": "15021036101",
+      "tier": "经济",
+      "price_avg": 45
+    },
+    "ok": true
+  },
+  {
+    "name": "The Fat Olive 欧立威",
+    "action": "update",
+    "rid": 1247,
+    "rc_added": [
+      28,
+      57,
+      164
+    ],
+    "rc_total": 13,
+    "location_set": true,
+    "readback": {
+      "id": 1247,
+      "name": "The Fat Olive 欧立威",
+      "status": "active",
+      "location": "0101000020E6100000C939B187F65C5E4016F9F5436C343F40",
+      "phone": "02164660917",
+      "tier": "高档",
+      "price_avg": 220
+    },
+    "ok": true
+  },
+  {
+    "name": "Efes Turkish & Mediterranean 爱妃丝土耳其餐厅",
+    "action": "update",
+    "rid": 1248,
+    "rc_added": [
+      28,
+      35,
+      154
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1248,
+      "name": "Efes Turkish & Mediterranean 爱妃丝土耳其餐厅",
+      "status": "active",
+      "location": "0101000020E61000007F17B6662B5D5E4042D13C80453A3F40",
+      "phone": "17717330901",
+      "tier": "高档",
+      "price_avg": 250
+    },
+    "ok": true
+  },
+  {
+    "name": "So Mezze by Pasha",
+    "action": "update",
+    "rid": 1249,
+    "rc_added": [
+      28,
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1249,
+      "name": "So Mezze by Pasha",
+      "status": "active",
+      "location": "0101000020E61000002E3883BF5F5B5E408C84B69C4B353F40",
+      "phone": "02162258177",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "ELI FALAFEL 黎巴嫩餐厅(富城路店)",
+    "action": "update",
+    "rid": 1250,
+    "rc_added": [
+      35,
+      72,
+      154
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1250,
+      "name": "ELI FALAFEL 黎巴嫩餐厅(富城路店)",
+      "status": "active",
+      "location": "0101000020E6100000E7C41EDAC75F5E40342F87DD773C3F40",
+      "phone": "02168863177",
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "LEYAS 蕾娅中东美食",
+    "action": "update",
+    "rid": 1251,
+    "rc_added": [
+      35,
+      51,
+      154
+    ],
+    "rc_total": 12,
+    "location_set": false,
+    "readback": {
+      "id": 1251,
+      "name": "LEYAS 蕾娅中东美食",
+      "status": "active",
+      "location": null,
+      "phone": "02163850917",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Otantik",
+    "action": "update",
+    "rid": 1252,
+    "rc_added": [
+      35,
+      51,
+      154
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1252,
+      "name": "Otantik",
+      "status": "active",
+      "location": "0101000020E6100000C939B187F65C5E4016F9F5436C343F40",
+      "phone": "02164669177",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "KAPYA土耳其餐厅",
+    "action": "update",
+    "rid": 1253,
+    "rc_added": [
+      26,
+      35,
+      73,
+      154
+    ],
+    "rc_total": 15,
+    "location_set": true,
+    "readback": {
+      "id": 1253,
+      "name": "KAPYA土耳其餐厅",
+      "status": "active",
+      "location": "0101000020E610000002124DA0885C5E40E38BF67821393F40",
+      "phone": "02162559177",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Shanghai Tavern(上海艾迪逊酒店)",
+    "action": "update",
+    "rid": 1254,
+    "rc_added": [
+      51,
+      71
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1254,
+      "name": "Shanghai Tavern(上海艾迪逊酒店)",
+      "status": "active",
+      "location": "0101000020E61000009775FF58885E5E40CD94D6DF123C3F40",
+      "phone": "02153019999",
+      "tier": "奢华",
+      "price_avg": 600
+    },
+    "ok": true
+  },
+  {
+    "name": "Guinness Social by Butler & White's",
+    "action": "update",
+    "rid": 1255,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1255,
+      "name": "Guinness Social by Butler & White's",
+      "status": "active",
+      "location": "0101000020E610000030B8E68EFE5D5E4014200A664C353F40",
+      "phone": "02164662917",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "The Park Tavern",
+    "action": "update",
+    "rid": 1256,
+    "rc_added": [
+      72,
+      85
+    ],
+    "rc_total": 10,
+    "location_set": false,
+    "readback": {
+      "id": 1256,
+      "name": "The Park Tavern",
+      "status": "active",
+      "location": null,
+      "phone": "02164283177",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "Camden's Fish and Chips",
+    "action": "update",
+    "rid": 1257,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1257,
+      "name": "Camden's Fish and Chips",
+      "status": "active",
+      "location": "0101000020E61000003735D07CCE5D5E400492B06F27393F40",
+      "phone": "02162887177",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "派社 Pie Society",
+    "action": "update",
+    "rid": 1258,
+    "rc_added": [
+      51,
+      64,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1258,
+      "name": "派社 Pie Society",
+      "status": "active",
+      "location": "0101000020E6100000BD8BF7E3F65C5E40D384ED2763343F40",
+      "phone": "02164668177",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "BOR Eatery",
+    "action": "update",
+    "rid": 1260,
+    "rc_added": [
+      64,
+      77,
+      161
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1260,
+      "name": "BOR Eatery",
+      "status": "active",
+      "location": "0101000020E6100000ED0BE8853B5C5E406616A1D80A363F40",
+      "phone": "02164660517",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "东湖宾馆北欧料理(瑞典主厨)",
+    "action": "update",
+    "rid": 1261,
+    "rc_added": [
+      2
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1261,
+      "name": "东湖宾馆北欧料理(瑞典主厨)",
+      "status": "active",
+      "location": "0101000020E61000009148DBF8135D5E40745C8DEC4A373F40",
+      "phone": "02154667177",
+      "tier": "奢华",
+      "price_avg": 500
+    },
+    "ok": true
+  },
+  {
+    "name": "EHB",
+    "action": "update",
+    "rid": 1262,
+    "rc_added": [
+      26
+    ],
+    "rc_total": 9,
+    "location_set": false,
+    "readback": {
+      "id": 1262,
+      "name": "EHB",
+      "status": "closed",
+      "location": null,
+      "phone": "02163858177",
+      "tier": "奢华",
+      "price_avg": 2688
+    },
+    "ok": true
+  },
+  {
+    "name": "北欧森林(安福路)",
+    "action": "update",
+    "rid": 1263,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1263,
+      "name": "北欧森林(安福路)",
+      "status": "active",
+      "location": "0101000020E6100000ED0BE8853B5C5E406616A1D80A363F40",
+      "phone": "02164660817",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "申德勒加油站西餐厅 Schindlers Tankstelle(外滩店)",
+    "action": "update",
+    "rid": 1264,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1264,
+      "name": "申德勒加油站西餐厅 Schindlers Tankstelle(外滩店)",
+      "status": "active",
+      "location": "0101000020E6100000BE4D7FF6235F5E4033C005D9B23C3F40",
+      "phone": "02163510779",
+      "tier": "中档",
+      "price_avg": 176
+    },
+    "ok": true
+  },
+  {
+    "name": "Papas Bierstube 德国乡村餐厅",
+    "action": "update",
+    "rid": 1265,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1265,
+      "name": "Papas Bierstube 德国乡村餐厅",
+      "status": "active",
+      "location": "0101000020E6100000037976F9D6585E40E0641BB803313F40",
+      "phone": "02164658880",
+      "tier": "中档",
+      "price_avg": 154
+    },
+    "ok": true
+  },
+  {
+    "name": "1886 German Restaurant & Bar(Bund 16)",
+    "action": "update",
+    "rid": 1266,
+    "rc_added": [],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1266,
+      "name": "1886 German Restaurant & Bar(Bund 16)",
+      "status": "active",
+      "location": "0101000020E610000022179CC1DF5F5E4095B6B8C6673A3F40",
+      "phone": "02163218866",
+      "tier": "高档",
+      "price_avg": 220
+    },
+    "ok": true
+  },
+  {
+    "name": "TAVOLA 意大利餐厅(陆家嘴滨江)",
+    "action": "update",
+    "rid": 1267,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1267,
+      "name": "TAVOLA 意大利餐厅(陆家嘴滨江)",
+      "status": "active",
+      "location": "0101000020E61000003B38D89B18605E4079573D601E3E3F40",
+      "phone": "02120228288",
+      "tier": "高档",
+      "price_avg": 400
+    },
+    "ok": true
+  },
+  {
+    "name": "Giovanni's 意大利餐厅(虹桥喜来登)",
+    "action": "update",
+    "rid": 1268,
+    "rc_added": [
+      3,
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1268,
+      "name": "Giovanni's 意大利餐厅(虹桥喜来登)",
+      "status": "active",
+      "location": "0101000020E6100000F568AA27F3595E40C44142942F343F40",
+      "phone": "02162758888",
+      "tier": "高档",
+      "price_avg": 300
+    },
+    "ok": true
+  },
+  {
+    "name": "el Efante",
+    "action": "update",
+    "rid": 1269,
+    "rc_added": [
+      51,
+      57
+    ],
+    "rc_total": 10,
+    "location_set": false,
+    "readback": {
+      "id": 1269,
+      "name": "el Efante",
+      "status": "active",
+      "location": null,
+      "phone": "02163855017",
+      "tier": "高档",
+      "price_avg": 280
+    },
+    "ok": true
+  }
+]

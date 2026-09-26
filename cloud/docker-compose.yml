@@ -1,0 +1,18 @@
+# docker-compose.yml — 上海美食图鉴·云端采集常驻服务（生产）
+# 容器内 cron 每 20 分钟跑一轮；电脑/本机是否在线都不影响。
+services:
+  food-cloud:
+    image: food-cloud:local
+    container_name: food-cloud
+    restart: always
+    env_file: ./deploy.env
+    environment:
+      - TZ=Asia/Shanghai
+      - RUN_ON_START=1        # 容器启动立即先跑一轮
+      - BATCH=15              # 每轮采集店数（300031零触发后从10提至15，小批量仍稳）
+    volumes:
+      - fooddata:/app/data                                  # 采集断点/日志持久化
+      - ./xhs_cookies.json:/secrets/xhs_cookies.json:ro     # 登录态（只读挂载，不进镜像）
+
+volumes:
+  fooddata:

@@ -1,0 +1,234 @@
+# 美食图鉴全库质量门审计 · 2026-09-22
+
+餐厅 **987** / 标签 **224** / 关联 **5672**
+- status 分布: {'active': 985, 'closed': 2}
+- tier 分布: {'奢华': 96, '平价': 293, '高档': 160, '中档': 330, '经济': 108}
+
+## 覆盖率
+- 坐标 location: **941/987 = 95%**
+- 电话: 65%；预订方式: 55%；商圈: 88%
+- 评分口径: {'旧口径/残缺待迁移': 475, '百分制子分': 512}
+
+## 认证 / 特别标签挂店数（偏少提示补标）
+- 米其林星级(159): **79**
+- 黑珍珠餐厅(160): **50**
+- 素食/纯素(45): **3**
+- 分子/先锋料理(46): **5**
+- 可预订(165): **266**
+- 团购优惠(166): **0**
+- 包间(167): **8**
+
+## 关店（2）
+CHIC1699远洋私厨(华润时代广场店)(id=905)、EHB(id=1262)
+
+## 超过保鲜周期需复查（0，高端180天/大众90天）
+无
+
+## 🔴 ERROR 0（分类: {}）
+- 无
+
+## 🟡 WARN 218（分类: {'证据过短': 42, '字段空': 76, '无坐标': 44, '缺菜系标签': 37, '缺形式标签': 18, '评分待迁移': 1}）
+- [证据过短] id=1 晴川sushi（午市） evidence_summary<30字
+- [证据过短] id=2 鮨水月（午市） evidence_summary<30字
+- [证据过短] id=3 岩田割烹鮨 evidence_summary<30字
+- [证据过短] id=4 御千代（王雷师傅） evidence_summary<30字
+- [证据过短] id=5 Sushi Oyama 鮨大山 evidence_summary<30字
+- [证据过短] id=6 吉兆 KITCHO evidence_summary<30字
+- [字段空] id=7 披头士烧鸟居酒屋 缺 data_updated_at
+- [证据过短] id=7 披头士烧鸟居酒屋 evidence_summary<30字
+- [证据过短] id=8 酉町·烧鸟专门店 evidence_summary<30字
+- [证据过短] id=9 宫鸠（华山路） evidence_summary<30字
+- [证据过短] id=10 小景门（仇师傅） evidence_summary<30字
+- [字段空] id=11 海宫 缺 data_updated_at
+- [证据过短] id=11 海宫 evidence_summary<30字
+- [证据过短] id=12 炉端一番 evidence_summary<30字
+- [字段空] id=14 金宗咖喱 缺 data_updated_at
+- [证据过短] id=14 金宗咖喱 evidence_summary<30字
+- [字段空] id=15 伽喱博士 Dr.CURRY 缺 data_updated_at
+- [证据过短] id=15 伽喱博士 Dr.CURRY evidence_summary<30字
+- [字段空] id=16 晚餐馆咖喱饭 缺 data_updated_at
+- [证据过短] id=16 晚餐馆咖喱饭 evidence_summary<30字
+- [无坐标] id=16 晚餐馆咖喱饭
+- [字段空] id=18 环七·土佐子 缺 data_updated_at
+- [证据过短] id=18 环七·土佐子 evidence_summary<30字
+- [无坐标] id=18 环七·土佐子
+- [字段空] id=19 一风堂 缺 data_updated_at
+- [证据过短] id=19 一风堂 evidence_summary<30字
+- [字段空] id=23 鳗重 缺 data_updated_at
+- [证据过短] id=23 鳗重 evidence_summary<30字
+- [证据过短] id=24 哲平鳗满 evidence_summary<30字
+- [字段空] id=25 竿屋 缺 data_updated_at
+- [证据过短] id=25 竿屋 evidence_summary<30字
+- [无坐标] id=25 竿屋
+- [字段空] id=26 咕咕 缺 data_updated_at
+- [证据过短] id=26 咕咕 evidence_summary<30字
+- [字段空] id=28 牛New寿喜烧（自助） 缺 data_updated_at
+- [证据过短] id=28 牛New寿喜烧（自助） evidence_summary<30字
+- [无坐标] id=28 牛New寿喜烧（自助）
+- [证据过短] id=29 日和寿喜烧 evidence_summary<30字
+- [证据过短] id=30 大牛寿喜烧（自助顶配） evidence_summary<30字
+- [无坐标] id=30 大牛寿喜烧（自助顶配）
+- [证据过短] id=31 炎珀EMBER evidence_summary<30字
+- [证据过短] id=32 motoya寿喜烧 evidence_summary<30字
+- [字段空] id=34 黑门乐酒天 缺 data_updated_at
+- [证据过短] id=34 黑门乐酒天 evidence_summary<30字
+- [字段空] id=36 天天天妇罗 缺 data_updated_at
+- [证据过短] id=36 天天天妇罗 evidence_summary<30字
+- [字段空] id=39 尚膳天焱 缺 data_updated_at
+- [证据过短] id=39 尚膳天焱 evidence_summary<30字
+- [证据过短] id=40 桃山日本料理铁板烧 evidence_summary<30字
+- [证据过短] id=41 山茶花铁板烧 evidence_summary<30字
+- [字段空] id=42 丸龟制面 缺 data_updated_at
+- [证据过短] id=42 丸龟制面 evidence_summary<30字
+- [字段空] id=43 荞麦道 缺 data_updated_at
+- [证据过短] id=43 荞麦道 evidence_summary<30字
+- [字段空] id=44 纹兵卫（午市套餐） 缺 data_updated_at
+- [证据过短] id=44 纹兵卫（午市套餐） evidence_summary<30字
+- [字段空] id=46 静冈胜政 缺 data_updated_at
+- [证据过短] id=46 静冈胜政 evidence_summary<30字
+- [字段空] id=48 大志/king大志 缺 data_updated_at
+- [证据过短] id=48 大志/king大志 evidence_summary<30字
+- [字段空] id=49 虎丸烧肉 缺 data_updated_at
+- [证据过短] id=49 虎丸烧肉 evidence_summary<30字
+- [证据过短] id=50 三川烧肉Mikawa evidence_summary<30字
+- [证据过短] id=51 AJIYA味屋 evidence_summary<30字
+- [证据过短] id=52 铁屋（古北） evidence_summary<30字
+- [证据过短] id=53 烧肉·至心 evidence_summary<30字
+- [无坐标] id=455 新嘉中心胶东烟火小馆
+- [无坐标] id=463 鲁采LU STYLE(环宇荟店)
+- [无坐标] id=464 鲁采·兴(苏河湾店)
+- [证据过短] id=472 川芙蓉市井老川菜(静安店) evidence_summary<30字
+- [无坐标] id=477 辛香汇·锦里(静安大悦城店)
+- [无坐标] id=514 闽燕记·臻味府(中海环宇荟店)
+- [无坐标] id=542 甬府·北外滩
+- [无坐标] id=553 湘翁(北外滩来福士店)
+- [无坐标] id=555 湘粤王府宴(浦东长河国际店)
+- [无坐标] id=562 安徽省驻沪办招待所餐厅
+- [无坐标] id=567 徽膳坊·徽菜(九亭店)
+- [无坐标] id=569 皖宴(苏河湾店)
+- [字段空] id=574 邻里川菜馆 缺 data_updated_at
+- [字段空] id=575 自贡盐帮菜馆(七莘路店) 缺 data_updated_at
+- [字段空] id=576 锦盐记川菜小馆(莘朱路店) 缺 data_updated_at
+- [字段空] id=577 蜀湘记(古美路店) 缺 data_updated_at
+- [字段空] id=578 辣味鲜老刘特色菜 缺 data_updated_at
+- [字段空] id=579 本来川菜(陕西南路店) 缺 data_updated_at
+- [字段空] id=580 本甄精品川菜(新天地店) 缺 data_updated_at
+- [字段空] id=581 蜀韵精品川菜·盐帮菜(九亭中心店) 缺 data_updated_at
+- [字段空] id=582 JSL三椒·川南小馆(虹桥南丰城店) 缺 data_updated_at
+- [无坐标] id=584 鲤香(板前)
+- [字段空] id=585 九老汉·川渝江湖菜(恒丰路店) 缺 data_updated_at
+- [字段空] id=586 李老幺重庆大排档(松东路店) 缺 data_updated_at
+- [字段空] id=587 东泰荟·江湖菜(火车站店) 缺 data_updated_at
+- [无坐标] id=587 东泰荟·江湖菜(火车站店)
+- [字段空] id=588 对酒当歌·地道川菜(南丹东路店) 缺 data_updated_at
+- [字段空] id=589 有滋有味·农家川菜(北外滩店) 缺 data_updated_at
+- [字段空] id=590 阳哥儿·重庆芋儿肥肠鸡(元善里店) 缺 data_updated_at
+- [字段空] id=591 重记袍哥·肥肠芋儿鸡(天津路店) 缺 data_updated_at
+- [字段空] id=592 破店小酒馆(昌里三钢里店) 缺 data_updated_at
+- [字段空] id=593 老吴川菜馆 缺 data_updated_at
+- [字段空] id=594 竹屋川菜 缺 data_updated_at
+- [字段空] id=595 椒点·川粤精品 缺 data_updated_at
+- [字段空] id=600 巴国布衣(世博店) 缺 data_updated_at
+- [字段空] id=601 张记川菜苑(定西路店) 缺 data_updated_at
+- [字段空] id=602 三木川菜(真如古镇店) 缺 data_updated_at
+- [字段空] id=603 有根葱不改良老火锅(徐汇全国首店) 缺 data_updated_at
+- [字段空] id=604 渝利火锅(96广场店) 缺 data_updated_at
+- [字段空] id=605 淑芬串串公司(定西路中山公园店) 缺 data_updated_at
+- [字段空] id=606 红料理 缺 data_updated_at
+- [字段空] id=607 十八梯邓凳面(愚园路店) 缺 data_updated_at
+- [字段空] id=608 程胖妹面庄(原高胖妹面庄) 缺 data_updated_at
+- [字段空] id=609 开县徐妈串串火锅馆(人民广场店) 缺 data_updated_at
+- [字段空] id=610 江边城外烤全鱼(百联中环店) 缺 data_updated_at
+- [字段空] id=611 桂釜山城重庆小面(武宁路店) 缺 data_updated_at
+- [字段空] id=612 恒香渝重庆小面(长阳路店) 缺 data_updated_at
+- [字段空] id=613 山城印象重庆小面(灵山路店) 缺 data_updated_at
+- [字段空] id=614 我们屋头串串(老闵行) 缺 data_updated_at
+- [无坐标] id=614 我们屋头串串(老闵行)
+- [字段空] id=615 巴山蜀水刘家厨 缺 data_updated_at
+- [字段空] id=616 弄堂川菜 缺 data_updated_at
+- [字段空] id=618 对酒当歌·地道川菜(南京东路店) 缺 data_updated_at
+- [字段空] id=619 贾温柔迷踪菜 缺 data_updated_at
+- [字段空] id=620 刘栋梁大排档(大学路店) 缺 data_updated_at
+- [字段空] id=621 袍哥川小馆·肥肠鸡(天钥桥路店) 缺 data_updated_at
+- [字段空] id=622 沪小川肥肠烤鱼泡椒牛蛙(定西路店) 缺 data_updated_at
+- [字段空] id=623 本来川菜(中骏广场店) 缺 data_updated_at
+- [字段空] id=624 成都鱼庄·石锅烤鱼(华发路店) 缺 data_updated_at
+- [字段空] id=625 老吴家川菜(昭化路店) 缺 data_updated_at
+- [字段空] id=626 火辣土菜馆(浦东大道店) 缺 data_updated_at
+- [字段空] id=627 友谊川味馆(苍梧路店) 缺 data_updated_at
+- [字段空] id=628 三木川菜 缺 data_updated_at
+- [字段空] id=629 民间川菜(尚大国际店) 缺 data_updated_at
+- [字段空] id=635 金孔雀(国金中心店) 缺 data_updated_at
+- [字段空] id=636 翠蝶川菜(BFC外滩金融中心店) 缺 data_updated_at
+- [字段空] id=637 映水芙蓉·叙川(大丸百货店) 缺 data_updated_at
+- [字段空] id=638 孔雀川菜(港汇恒隆广场店) 缺 data_updated_at
+- [字段空] id=639 翠蝶川菜(北外滩来福士店) 缺 data_updated_at
+- [无坐标] id=639 翠蝶川菜(北外滩来福士店)
+- [字段空] id=640 翠蝶川菜(One ITC店) 缺 data_updated_at
+- [字段空] id=642 蜀当家·盐帮川菜(上海首店) 缺 data_updated_at
+- [无坐标] id=642 蜀当家·盐帮川菜(上海首店)
+- [无坐标] id=659 广太公顺德小馆(锦西路店)
+- [无坐标] id=775 洋火徐州鲜货烧烤(繁兴路店)
+- [无坐标] id=779 沪传奇地锅(沪闵路店)
+- [无坐标] id=780 东润邻里徐州羊肉小馆
+- [无坐标] id=801 郭姐·威海渔村(中山公园/定西路店)
+- [无坐标] id=803 威海小海鲜(通河新村/宝山店)
+- [无坐标] id=858 糯米帝·温州糯米饭(徐汇店)
+- [无坐标] id=886 席上·福建料理Hokkien Cuisine
+- [无坐标] id=903 遇外滩SKYLINE(北外滩来福士店)
+- [无坐标] id=921 粉醉牛·湖南米粉(中山西路店)
+- [无坐标] id=973 陕现·西安小馆(西岸凤巢店)
+- [无坐标] id=1035 阿卡哥哥·喀什葛尔手抓饭(静安店)
+- [无坐标] id=1061 楚褚热干面(宝山万达店)
+- [无坐标] id=1105 清迈排挡(北外滩来福士店)
+- [无坐标] id=1202 Tomatito
+- [缺菜系标签] id=1230 Brut Eatery悦璞食堂(肇嘉浜路店)
+- [缺菜系标签] id=1231 Money Shops(愚园路店)
+- [无坐标] id=1240 LUNEURS月乐诗冰淇淋咖啡(北外滩来福士店)
+- [缺菜系标签] id=1243 鲜得来排骨年糕(雁荡店)
+- [缺菜系标签] id=1245 柴爿馄饨
+- [缺菜系标签] id=1246 黄启云私房牛肉面工坊
+- [无坐标] id=1246 黄启云私房牛肉面工坊
+- [无坐标] id=1251 LEYAS 蕾娅中东美食
+- [无坐标] id=1256 The Park Tavern
+- [无坐标] id=1269 el Efante
+- [缺菜系标签] id=1274 RAC
+- [缺菜系标签] id=1278 SunFlour阳光粮品(安福路店)
+- [缺形式标签] id=1279 老麦咖啡馆TheCottageBar(武康大楼店)
+- [缺菜系标签] id=1280 Alimentari早午餐(安福路店)
+- [缺菜系标签] id=1281 MEL BOURNE Brunch&Bistro猫尔本(静安店)
+- [缺菜系标签] id=1290 沪西老弄堂面馆(定西路店)
+- [缺菜系标签] id=1291 马新文拉面店(广西北路店)
+- [缺菜系标签] id=1292 大拇指面馆(高平路店)
+- [无坐标] id=1321 鲤久面屋·横滨家系拉面(金桥啦啦宝都店)
+- [缺菜系标签] id=1352 O'mills Sourdough Bakery & Bistro
+- [缺菜系标签] id=1353 AL'S DINER
+- [缺菜系标签] id=1355 Dugout Brunch & Bistro
+- [缺菜系标签] id=1356 WARO ROWA
+- [缺菜系标签] id=1357 Madison
+- [缺菜系标签] id=1358 Table a Deli
+- [缺菜系标签] id=1366 米仓POP
+- [无坐标] id=1375 aftertaste回味(江勇路店)
+- [无坐标] id=1380 新荣记(滨江店)
+- [缺菜系标签] id=1381 泰安门 Taian Table
+- [缺形式标签] id=1381 泰安门 Taian Table
+- [缺菜系标签] id=1382 宝丽轩
+- [缺形式标签] id=1382 宝丽轩
+- [缺菜系标签] id=1383 福和慧
+- [缺形式标签] id=1383 福和慧
+- [缺菜系标签] id=1384 三号黄浦会 Canton Table
+- [缺形式标签] id=1384 三号黄浦会 Canton Table
+- [缺菜系标签] id=1385 成隆行蟹王府(九江路店)
+- [缺形式标签] id=1385 成隆行蟹王府(九江路店)
+- [缺菜系标签] id=1386 Fabula
+- [缺形式标签] id=1386 Fabula
+- [缺菜系标签] id=1387 福1039
+- [缺形式标签] id=1387 福1039
+- [缺菜系标签] id=1388 福1088
+- [缺形式标签] id=1388 福1088
+- [缺菜系标签] id=1389 il Ristorante - Niko Romito
+- [缺形式标签] id=1389 il Ristorante - Niko Romito
+- …另有 18 条，分类计数见标题
+
+## ℹ️ INFO 1
+- 同名异址(连锁分店,保留) BLAZ x2 ids=[1158, 1408]

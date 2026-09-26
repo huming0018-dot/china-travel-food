@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Le Comptoir de Pierre Gagnaire",
+    "action": "update",
+    "rid": 1143,
+    "rc_added": [],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1143,
+      "name": "Le Comptoir de Pierre Gagnaire",
+      "status": "active",
+      "location": "0101000020E6100000687A89B14C5D5E4050E3DEFC86353F40",
+      "phone": "02154666668",
+      "tier": "奢华",
+      "price_avg": 1000
+    },
+    "ok": true
+  },
+  {
+    "name": "Land of Butterful & Creamorous",
+    "action": "update",
+    "rid": 1168,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1168,
+      "name": "Land of Butterful & Creamorous",
+      "status": "active",
+      "location": "0101000020E61000009CA73AE4665E5E40B438639813383F40",
+      "phone": "02153861677",
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "Hard Rock Cafe 硬石餐厅(上海)",
+    "action": "update",
+    "rid": 1272,
+    "rc_added": [],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1272,
+      "name": "Hard Rock Cafe 硬石餐厅(上海)",
+      "status": "active",
+      "location": "0101000020E6100000BA4E232D955E5E40F14927124C393F40",
+      "phone": "02163268177",
+      "tier": "高档",
+      "price_avg": 250
+    },
+    "ok": true
+  },
+  {
+    "name": "Sip bistro&bar",
+    "action": "update",
+    "rid": 1289,
+    "rc_added": [
+      26,
+      73
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1289,
+      "name": "Sip bistro&bar",
+      "status": "active",
+      "location": "0101000020E61000003543AA285E5C5E40B5DE6FB4E33A3F40",
+      "phone": "02162549667",
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  }
+]

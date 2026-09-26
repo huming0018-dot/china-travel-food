@@ -1,0 +1,1238 @@
+{
+ "expected_total": 156,
+ "collected_total": 154,
+ "restaurants": [
+  {
+   "slug": "1515-west-chophouse",
+   "name": "1515牛排馆",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/1515-west-chophouse",
+   "match_conf": "strong",
+   "matched_id": 1214,
+   "matched_status": "active"
+  },
+  {
+   "slug": "157-shi-fang",
+   "name": "157食坊",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/157-shi-fang",
+   "match_conf": "exact",
+   "matched_id": 1953,
+   "matched_status": "active"
+  },
+  {
+   "slug": "1929-by-guillaume-galliot",
+   "name": "1929 by Guillaume Galliot",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/1929-by-guillaume-galliot",
+   "match_conf": "exact",
+   "matched_id": 1147,
+   "matched_status": "active"
+  },
+  {
+   "slug": "8-%C2%BD-otto-e-mezzo-bombana",
+   "name": "8 ½ Otto e Mezzo Bombana",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/8-%C2%BD-otto-e-mezzo-bombana",
+   "match_conf": "exact",
+   "matched_id": 1175,
+   "matched_status": "active"
+  },
+  {
+   "slug": "a-yong-mian-guan-dongshufang-road",
+   "name": "阿勇面馆 (东书房路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/a-yong-mian-guan-dongshufang-road",
+   "match_conf": "exact",
+   "matched_id": 1963,
+   "matched_status": "active"
+  },
+  {
+   "slug": "amazing-chinese-cuisine-changning",
+   "name": "菁禧荟 (长宁)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/amazing-chinese-cuisine-changning",
+   "match_conf": "exact",
+   "matched_id": 494,
+   "matched_status": "active"
+  },
+  {
+   "slug": "arva-563644",
+   "name": "Arva",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/arva-563644",
+   "match_conf": "exact",
+   "matched_id": 1901,
+   "matched_status": "active"
+  },
+  {
+   "slug": "aster-by-joshua-paris",
+   "name": "Aster by Joshua Paris",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/aster-by-joshua-paris",
+   "match_conf": "exact",
+   "matched_id": 1897,
+   "matched_status": "active"
+  },
+  {
+   "slug": "bai-rong",
+   "name": "白茸",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/bai-rong",
+   "match_conf": "strong",
+   "matched_id": 812,
+   "matched_status": "active"
+  },
+  {
+   "slug": "bao-li-xuan",
+   "name": "宝丽轩",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/bao-li-xuan",
+   "match_conf": "exact",
+   "matched_id": 1382,
+   "matched_status": "active"
+  },
+  {
+   "slug": "beef-liberty-west-nanjing-road",
+   "name": "尚牛社会 (静安)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/beef-liberty-west-nanjing-road",
+   "match_conf": "exact",
+   "matched_id": 1234,
+   "matched_status": "active"
+  },
+  {
+   "slug": "blossom-1246455",
+   "name": "瑰禧",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/blossom-1246455",
+   "match_conf": "exact",
+   "matched_id": 1912,
+   "matched_status": "active"
+  },
+  {
+   "slug": "canton-8-runan-street",
+   "name": "喜粤8号 (黄浦）",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/canton-8-runan-street",
+   "match_conf": "exact",
+   "matched_id": 713,
+   "matched_status": "active"
+  },
+  {
+   "slug": "canton-table",
+   "name": "三号黄浦会",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/canton-table",
+   "match_conf": "exact",
+   "matched_id": 1384,
+   "matched_status": "active"
+  },
+  {
+   "slug": "cellar-to-table",
+   "name": "Cellar to Table",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/cellar-to-table",
+   "match_conf": "exact",
+   "matched_id": 1971,
+   "matched_status": "active"
+  },
+  {
+   "slug": "chaimen-hui-1205571",
+   "name": "柴门荟 (浦东)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/chaimen-hui-1205571",
+   "match_conf": "exact",
+   "matched_id": 479,
+   "matched_status": "active"
+  },
+  {
+   "slug": "cheng-long-hang-huangpu",
+   "name": "成隆行蟹王府 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/cheng-long-hang-huangpu",
+   "match_conf": "exact",
+   "matched_id": 1385,
+   "matched_status": "active"
+  },
+  {
+   "slug": "chuan-yue-hai-tang-changning",
+   "name": "川粤海棠 (长宁)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/chuan-yue-hai-tang-changning",
+   "match_conf": "exact",
+   "matched_id": 1916,
+   "matched_status": "active"
+  },
+  {
+   "slug": "chun",
+   "name": "春",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/chun",
+   "match_conf": "exact",
+   "matched_id": 1945,
+   "matched_status": "active"
+  },
+  {
+   "slug": "cong-s-kitchen",
+   "name": "聪菜馆",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/cong-s-kitchen",
+   "match_conf": "exact",
+   "matched_id": 1843,
+   "matched_status": "active"
+  },
+  {
+   "slug": "coquille",
+   "name": "壳里",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/coquille",
+   "match_conf": "strong",
+   "matched_id": 1714,
+   "matched_status": "active"
+  },
+  {
+   "slug": "cuivre",
+   "name": "古铜法式餐厅",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/cuivre",
+   "match_conf": "exact",
+   "matched_id": 1899,
+   "matched_status": "active"
+  },
+  {
+   "slug": "da-dong-xuhui",
+   "name": "大董 (徐汇)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/da-dong-xuhui",
+   "match_conf": "exact",
+   "matched_id": 1561,
+   "matched_status": "active"
+  },
+  {
+   "slug": "da-hu-chun-middle-sichuan-road",
+   "name": "大壶春 (四川中路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/da-hu-chun-middle-sichuan-road",
+   "match_conf": "exact",
+   "matched_id": 1581,
+   "matched_status": "active"
+  },
+  {
+   "slug": "da-vittorio-570570",
+   "name": "Da Vittorio",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/da-vittorio-570570",
+   "match_conf": "strong",
+   "matched_id": 1173,
+   "matched_status": "active"
+  },
+  {
+   "slug": "de-xing-guan-guangdong-road",
+   "name": "德兴馆 (广东路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/de-xing-guan-guangdong-road",
+   "match_conf": "exact",
+   "matched_id": 1000,
+   "matched_status": "active"
+  },
+  {
+   "slug": "ding-te-le-zhou-mian-guan",
+   "name": "顶特勒粥面馆",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/ding-te-le-zhou-mian-guan",
+   "match_conf": "exact",
+   "matched_id": 1821,
+   "matched_status": "active"
+  },
+  {
+   "slug": "dining-room-1196349",
+   "name": "悦轩",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/dining-room-1196349",
+   "match_conf": "exact",
+   "matched_id": 1922,
+   "matched_status": "active"
+  },
+  {
+   "slug": "dong-ping-chao",
+   "name": "东平潮",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/dong-ping-chao",
+   "match_conf": "strong",
+   "matched_id": 684,
+   "matched_status": "active"
+  },
+  {
+   "slug": "easeful-cuisine",
+   "name": "逸采 (静安)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/easeful-cuisine",
+   "match_conf": "exact",
+   "matched_id": 1954,
+   "matched_status": "active"
+  },
+  {
+   "slug": "fabula",
+   "name": "Fabula",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/fabula",
+   "match_conf": "exact",
+   "matched_id": 1386,
+   "matched_status": "active"
+  },
+  {
+   "slug": "fu-1015",
+   "name": "福一零一五",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/fu-1015",
+   "match_conf": "exact",
+   "matched_id": 1007,
+   "matched_status": "active"
+  },
+  {
+   "slug": "fu-1039",
+   "name": "福一零三九",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/fu-1039",
+   "match_conf": "exact",
+   "matched_id": 1387,
+   "matched_status": "active"
+  },
+  {
+   "slug": "fu-1088",
+   "name": "福一零八八",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/fu-1088",
+   "match_conf": "exact",
+   "matched_id": 1388,
+   "matched_status": "active"
+  },
+  {
+   "slug": "fu-he-hui",
+   "name": "福和慧",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/fu-he-hui",
+   "match_conf": "exact",
+   "matched_id": 1383,
+   "matched_status": "active"
+  },
+  {
+   "slug": "fucheng",
+   "name": "福承",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/fucheng",
+   "match_conf": "exact",
+   "matched_id": 904,
+   "matched_status": "active"
+  },
+  {
+   "slug": "gastro-esthetics-at-dadong",
+   "name": "美 · 大董",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/gastro-esthetics-at-dadong",
+   "match_conf": "exact",
+   "matched_id": 1049,
+   "matched_status": "active"
+  },
+  {
+   "slug": "gong-de-lin-jingan",
+   "name": "功德林 (南京西路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/gong-de-lin-jingan",
+   "match_conf": "exact",
+   "matched_id": 1946,
+   "matched_status": "active"
+  },
+  {
+   "slug": "gongxi-gongxi-pudong",
+   "name": "龚禧龚禧 (浦东新区)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/gongxi-gongxi-pudong",
+   "match_conf": "strong",
+   "matched_id": 839,
+   "matched_status": "active"
+  },
+  {
+   "slug": "hai-wei-guan",
+   "name": "海味观 (静安)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/hai-wei-guan",
+   "match_conf": "exact",
+   "matched_id": 1913,
+   "matched_status": "active"
+  },
+  {
+   "slug": "hakkasan-1200248",
+   "name": "Hakkasan",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/hakkasan-1200248",
+   "match_conf": "exact",
+   "matched_id": 696,
+   "matched_status": "active"
+  },
+  {
+   "slug": "hang-yuen-hin-xuhui",
+   "name": "恒悦轩",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/hang-yuen-hin-xuhui",
+   "match_conf": "strong",
+   "matched_id": 670,
+   "matched_status": "active"
+  },
+  {
+   "slug": "hao-sheng",
+   "name": "豪生酒家",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/hao-sheng",
+   "match_conf": "exact",
+   "matched_id": 1844,
+   "matched_status": "active"
+  },
+  {
+   "slug": "he-shan-mian-jia",
+   "name": "和膳面家",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/he-shan-mian-jia",
+   "match_conf": "exact",
+   "matched_id": 1961,
+   "matched_status": "active"
+  },
+  {
+   "slug": "ho-hung-kee-570572",
+   "name": "何洪记",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/ho-hung-kee-570572",
+   "match_conf": "exact",
+   "matched_id": 704,
+   "matched_status": "active"
+  },
+  {
+   "slug": "hokkien-huay-kuan",
+   "name": "席作 · 福建会馆",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/hokkien-huay-kuan",
+   "match_conf": "exact",
+   "matched_id": 525,
+   "matched_status": "active"
+  },
+  {
+   "slug": "hong-0871",
+   "name": "泓0871",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/hong-0871",
+   "match_conf": "strong",
+   "matched_id": 1615,
+   "matched_status": "active"
+  },
+  {
+   "slug": "hong-yu-fang",
+   "name": "宏玉方",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/hong-yu-fang",
+   "match_conf": "exact",
+   "matched_id": 1957,
+   "matched_status": "active"
+  },
+  {
+   "slug": "huaiyang-delights-jingan",
+   "name": "三月醉淮扬 (静安)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/huaiyang-delights-jingan",
+   "match_conf": "exact",
+   "matched_id": 511,
+   "matched_status": "active"
+  },
+  {
+   "slug": "hui-ji",
+   "name": "徽季",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/hui-ji",
+   "match_conf": "exact",
+   "matched_id": 1884,
+   "matched_status": "active"
+  },
+  {
+   "slug": "il-ristorante-niko-romito-563683",
+   "name": "Il Ristorante - Niko Romito",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/il-ristorante-niko-romito-563683",
+   "match_conf": "exact",
+   "matched_id": 1389,
+   "matched_status": "active"
+  },
+  {
+   "slug": "imperial-treasure-fine-chinese-cuisine-huangpu",
+   "name": "御宝轩",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/imperial-treasure-fine-chinese-cuisine-huangpu",
+   "match_conf": "exact",
+   "matched_id": 495,
+   "matched_status": "active"
+  },
+  {
+   "slug": "jade-on-36",
+   "name": "翡翠36",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/jade-on-36",
+   "match_conf": "exact",
+   "matched_id": 1896,
+   "matched_status": "active"
+  },
+  {
+   "slug": "jean-georges-506640",
+   "name": "Jean Georges",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/jean-georges-506640",
+   "match_conf": "exact",
+   "matched_id": 1137,
+   "matched_status": "active"
+  },
+  {
+   "slug": "ji-pin-court",
+   "name": "吉品轩",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/ji-pin-court",
+   "match_conf": "exact",
+   "matched_id": 717,
+   "matched_status": "active"
+  },
+  {
+   "slug": "jin-xuan",
+   "name": "金轩",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/jin-xuan",
+   "match_conf": "exact",
+   "matched_id": 1390,
+   "matched_status": "active"
+  },
+  {
+   "slug": "jing-mei-wu-xi-si-fang-mian-guan",
+   "name": "井梅无锡面馆 (延平路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/jing-mei-wu-xi-si-fang-mian-guan",
+   "match_conf": "exact",
+   "matched_id": 762,
+   "matched_status": "active"
+  },
+  {
+   "slug": "kanpai-classic-506687",
+   "name": "老干杯 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/kanpai-classic-506687",
+   "match_conf": "exact",
+   "matched_id": 1977,
+   "matched_status": "active"
+  },
+  {
+   "slug": "la-scene-ronde",
+   "name": "之舞",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/la-scene-ronde",
+   "match_conf": "exact",
+   "matched_id": 1898,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lan-xin-jinxian-road",
+   "name": "兰心 (进贤路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lan-xin-jinxian-road",
+   "match_conf": "strong",
+   "matched_id": 998,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lao-di-fang-mian-guan",
+   "name": "老地方面馆",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lao-di-fang-mian-guan",
+   "match_conf": "exact",
+   "matched_id": 1950,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lao-xing-xian",
+   "name": "老兴鲜 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lao-xing-xian",
+   "match_conf": "exact",
+   "matched_id": 1886,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lao-zheng-xing-huangpu",
+   "name": "老正兴",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lao-zheng-xing-huangpu",
+   "match_conf": "exact",
+   "matched_id": 1592,
+   "matched_status": "active"
+  },
+  {
+   "slug": "le-comptoir-de-pierre-gagnaire",
+   "name": "le Comptoir de Pierre Gagnaire",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/le-comptoir-de-pierre-gagnaire",
+   "match_conf": "exact",
+   "matched_id": 1143,
+   "matched_status": "active"
+  },
+  {
+   "slug": "legend-taste-jingan",
+   "name": "滇道 (静安)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/legend-taste-jingan",
+   "match_conf": "exact",
+   "matched_id": 1958,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lei-garden-pudong",
+   "name": "利苑 (浦东新区)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lei-garden-pudong",
+   "match_conf": "exact",
+   "matched_id": 1910,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lei-garden-xuhui",
+   "name": "利苑 (徐汇)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lei-garden-xuhui",
+   "match_conf": "exact",
+   "matched_id": 1910,
+   "matched_status": "active"
+  },
+  {
+   "slug": "les-nuages",
+   "name": "云",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/les-nuages",
+   "match_conf": "exact",
+   "matched_id": 1874,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lin-family-of-one-the-bund",
+   "name": "外滩 · 林家一",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lin-family-of-one-the-bund",
+   "match_conf": "exact",
+   "matched_id": 1917,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lin-jiang-yan",
+   "name": "临江宴",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lin-jiang-yan",
+   "match_conf": "exact",
+   "matched_id": 1880,
+   "matched_status": "active"
+  },
+  {
+   "slug": "ling-long-1209951",
+   "name": "凌珑",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/ling-long-1209951",
+   "match_conf": "exact",
+   "matched_id": 1391,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lu-bo-lang",
+   "name": "绿波廊",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lu-bo-lang",
+   "match_conf": "exact",
+   "matched_id": 1006,
+   "matched_status": "active"
+  },
+  {
+   "slug": "lu-style-1203592",
+   "name": "鲁采 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/lu-style-1203592",
+   "match_conf": "strong",
+   "matched_id": 463,
+   "matched_status": "active"
+  },
+  {
+   "slug": "maison-lameloise-563686",
+   "name": "莱美露滋",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/maison-lameloise-563686",
+   "match_conf": "exact",
+   "matched_id": 1141,
+   "matched_status": "active"
+  },
+  {
+   "slug": "mao-long",
+   "name": "茂隆",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/mao-long",
+   "match_conf": "strong",
+   "matched_id": 999,
+   "matched_status": "active"
+  },
+  {
+   "slug": "meet-the-bund",
+   "name": "遇外滩 (中山东二路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/meet-the-bund",
+   "match_conf": "exact",
+   "matched_id": 523,
+   "matched_status": "active"
+  },
+  {
+   "slug": "mercado-505",
+   "name": "Mercado 505",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/mercado-505",
+   "match_conf": "exact",
+   "matched_id": 1196,
+   "matched_status": "active"
+  },
+  {
+   "slug": "mercato-506693",
+   "name": "Mercato",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/mercato-506693",
+   "match_conf": "exact",
+   "matched_id": 1177,
+   "matched_status": "active"
+  },
+  {
+   "slug": "mi-shang",
+   "name": "迷上",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/mi-shang",
+   "match_conf": "exact",
+   "matched_id": 1968,
+   "matched_status": "active"
+  },
+  {
+   "slug": "mi-thai-an-fu-road",
+   "name": "米泰",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/mi-thai-an-fu-road",
+   "match_conf": "exact",
+   "matched_id": 1100,
+   "matched_status": "active"
+  },
+  {
+   "slug": "min-he-nan-huan-xi",
+   "name": "闽和南欢席",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/min-he-nan-huan-xi",
+   "match_conf": "exact",
+   "matched_id": 521,
+   "matched_status": "active"
+  },
+  {
+   "slug": "ming-court-570629",
+   "name": "明阁 (闵行)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/ming-court-570629",
+   "match_conf": "exact",
+   "matched_id": 497,
+   "matched_status": "active"
+  },
+  {
+   "slug": "moose-changning",
+   "name": "鹿园 (长宁)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/moose-changning",
+   "match_conf": "exact",
+   "matched_id": 1921,
+   "matched_status": "active"
+  },
+  {
+   "slug": "moose-pudong",
+   "name": "鹿园 (浦东新区)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/moose-pudong",
+   "match_conf": "exact",
+   "matched_id": 1921,
+   "matched_status": "active"
+  },
+  {
+   "slug": "mr-mrs-bund",
+   "name": "Mr & Mrs Bund",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/mr-mrs-bund",
+   "match_conf": "exact",
+   "matched_id": 1878,
+   "matched_status": "active"
+  },
+  {
+   "slug": "nabi",
+   "name": "Nabi",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/nabi",
+   "match_conf": "exact",
+   "matched_id": 1347,
+   "matched_status": "active"
+  },
+  {
+   "slug": "nan-xing-yuan",
+   "name": "南兴园",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/nan-xing-yuan",
+   "match_conf": "exact",
+   "matched_id": 478,
+   "matched_status": "active"
+  },
+  {
+   "slug": "nanxiang-steamed-bun-city-god-temple",
+   "name": "南翔馒头店",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/nanxiang-steamed-bun-city-god-temple",
+   "match_conf": "exact",
+   "matched_id": 1584,
+   "matched_status": "active"
+  },
+  {
+   "slug": "narisawa-1209925",
+   "name": "Narisawa",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/narisawa-1209925",
+   "match_conf": "exact",
+   "matched_id": 1976,
+   "matched_status": "active"
+  },
+  {
+   "slug": "ning-hai-shi-fu",
+   "name": "宁海食府",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/ning-hai-shi-fu",
+   "match_conf": "exact",
+   "matched_id": 1962,
+   "matched_status": "active"
+  },
+  {
+   "slug": "nuits",
+   "name": "Nuits",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/nuits",
+   "match_conf": "exact",
+   "matched_id": 1967,
+   "matched_status": "closed"
+  },
+  {
+   "slug": "numata-sou-1215509",
+   "name": "沼田双",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/numata-sou-1215509",
+   "match_conf": "exact",
+   "matched_id": 1974,
+   "matched_status": "active"
+  },
+  {
+   "slug": "obscura",
+   "name": "Obscura",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/obscura",
+   "match_conf": "exact",
+   "matched_id": 1392,
+   "matched_status": "active"
+  },
+  {
+   "slug": "oriental-sense-palate",
+   "name": "东方景宴",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/oriental-sense-palate",
+   "match_conf": "exact",
+   "matched_id": 1920,
+   "matched_status": "active"
+  },
+  {
+   "slug": "ou-yue-zun-xian",
+   "name": "瓯越尊鲜",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/ou-yue-zun-xian",
+   "match_conf": "exact",
+   "matched_id": 867,
+   "matched_status": "active"
+  },
+  {
+   "slug": "polux",
+   "name": "Polux",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/polux",
+   "match_conf": "exact",
+   "matched_id": 1152,
+   "matched_status": "active"
+  },
+  {
+   "slug": "pop",
+   "name": "Pop",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/pop",
+   "match_conf": "strong",
+   "matched_id": 1984,
+   "matched_status": "active"
+  },
+  {
+   "slug": "qiao-ai-lai-lai-xiao-long-huangpu",
+   "name": "乔艾莱莱小笼 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/qiao-ai-lai-lai-xiao-long-huangpu",
+   "match_conf": "strong",
+   "matched_id": 1586,
+   "matched_status": "active"
+  },
+  {
+   "slug": "ren-he-guan-zhaojiabang-road",
+   "name": "人和馆 (徐汇)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/ren-he-guan-zhaojiabang-road",
+   "match_conf": "exact",
+   "matched_id": 1594,
+   "matched_status": "active"
+  },
+  {
+   "slug": "rong-cuisine-huangpu",
+   "name": "荣小馆 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/rong-cuisine-huangpu",
+   "match_conf": "exact",
+   "matched_id": 1502,
+   "matched_status": "active"
+  },
+  {
+   "slug": "rongjia-noodle-soup-with-yellow-croaker",
+   "name": "荣家黄鱼面 (静安)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/rongjia-noodle-soup-with-yellow-croaker",
+   "match_conf": "exact",
+   "matched_id": 1503,
+   "matched_status": "active"
+  },
+  {
+   "slug": "royal-china-club-506535",
+   "name": "皇朝会",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/royal-china-club-506535",
+   "match_conf": "exact",
+   "matched_id": 715,
+   "matched_status": "active"
+  },
+  {
+   "slug": "scarpetta",
+   "name": "食光",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/scarpetta",
+   "match_conf": "exact",
+   "matched_id": 1969,
+   "matched_status": "active"
+  },
+  {
+   "slug": "scilla",
+   "name": "Scilla",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/scilla",
+   "match_conf": "exact",
+   "matched_id": 1973,
+   "matched_status": "active"
+  },
+  {
+   "slug": "seventh-son-jingan",
+   "name": "家全七福",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/seventh-son-jingan",
+   "match_conf": "exact",
+   "matched_id": 656,
+   "matched_status": "active"
+  },
+  {
+   "slug": "shanghai",
+   "name": "上海餐厅",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/shanghai",
+   "match_conf": "exact",
+   "matched_id": 1909,
+   "matched_status": "active"
+  },
+  {
+   "slug": "shanghai-club",
+   "name": "上海总会",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/shanghai-club",
+   "match_conf": "exact",
+   "matched_id": 1914,
+   "matched_status": "active"
+  },
+  {
+   "slug": "shanghai-tavern",
+   "name": "Shanghai Tavern",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/shanghai-tavern",
+   "match_conf": "exact",
+   "matched_id": 1254,
+   "matched_status": "active"
+  },
+  {
+   "slug": "shaughnessy",
+   "name": "Shaughnessy",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/shaughnessy",
+   "match_conf": "exact",
+   "matched_id": 1900,
+   "matched_status": "active"
+  },
+  {
+   "slug": "sheng-yong-xing",
+   "name": "晟永兴 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/sheng-yong-xing",
+   "match_conf": "exact",
+   "matched_id": 1877,
+   "matched_status": "active"
+  },
+  {
+   "slug": "sir-elly-s",
+   "name": "艾利爵士",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/sir-elly-s",
+   "match_conf": "exact",
+   "matched_id": 1906,
+   "matched_status": "active"
+  },
+  {
+   "slug": "sole",
+   "name": "景煊",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/sole",
+   "match_conf": "strong",
+   "matched_id": 722,
+   "matched_status": "active"
+  },
+  {
+   "slug": "stonesal",
+   "name": "言盐",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/stonesal",
+   "match_conf": "strong",
+   "matched_id": 1873,
+   "matched_status": "active"
+  },
+  {
+   "slug": "sui-tang-li",
+   "name": "随堂里",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/sui-tang-li",
+   "match_conf": "exact",
+   "matched_id": 1879,
+   "matched_status": "active"
+  },
+  {
+   "slug": "summer-palace-506733",
+   "name": "夏宮",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/summer-palace-506733",
+   "match_conf": "exact",
+   "matched_id": 1872,
+   "matched_status": "active"
+  },
+  {
+   "slug": "t-ang-court-506725",
+   "name": "唐阁",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/t-ang-court-506725",
+   "match_conf": "exact",
+   "matched_id": 496,
+   "matched_status": "active"
+  },
+  {
+   "slug": "taian-table",
+   "name": "泰安门",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/taian-table",
+   "match_conf": "exact",
+   "matched_id": 1381,
+   "matched_status": "active"
+  },
+  {
+   "slug": "tan-1246400",
+   "name": "坛",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/tan-1246400",
+   "match_conf": "strong",
+   "matched_id": 1964,
+   "matched_status": "active"
+  },
+  {
+   "slug": "tea-culture-east-beijing-road",
+   "name": "逸道 (北京东路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/tea-culture-east-beijing-road",
+   "match_conf": "exact",
+   "matched_id": 508,
+   "matched_status": "active"
+  },
+  {
+   "slug": "the-house-of-rong",
+   "name": "荣府宴",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/the-house-of-rong",
+   "match_conf": "exact",
+   "matched_id": 759,
+   "matched_status": "active"
+  },
+  {
+   "slug": "the-lakeside-veggie",
+   "name": "临湖素食",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/the-lakeside-veggie",
+   "match_conf": "exact",
+   "matched_id": 1952,
+   "matched_status": "active"
+  },
+  {
+   "slug": "the-meat",
+   "name": "扒",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/the-meat",
+   "match_conf": "exact",
+   "matched_id": 1875,
+   "matched_status": "active"
+  },
+  {
+   "slug": "the-pine",
+   "name": "松涧",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/the-pine",
+   "match_conf": "exact",
+   "matched_id": 1882,
+   "matched_status": "active"
+  },
+  {
+   "slug": "the-taste-of-huzhou",
+   "name": "菰城宴",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/the-taste-of-huzhou",
+   "match_conf": "exact",
+   "matched_id": 1949,
+   "matched_status": "active"
+  },
+  {
+   "slug": "toi-sihng-lauh-yuht",
+   "name": "台城镂月",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/toi-sihng-lauh-yuht",
+   "match_conf": "exact",
+   "matched_id": 1911,
+   "matched_status": "active"
+  },
+  {
+   "slug": "torikaze",
+   "name": "Torikaze",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/torikaze",
+   "match_conf": "exact",
+   "matched_id": 1970,
+   "matched_status": "active"
+  },
+  {
+   "slug": "tou-zao",
+   "name": "头灶",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/tou-zao",
+   "match_conf": "exact",
+   "matched_id": 719,
+   "matched_status": "active"
+  },
+  {
+   "slug": "trine",
+   "name": "Trine",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/trine",
+   "match_conf": "exact",
+   "matched_id": 1972,
+   "matched_status": "active"
+  },
+  {
+   "slug": "vivant-by-johnny-pham",
+   "name": "Vivant by Johnny Pham",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/vivant-by-johnny-pham",
+   "match_conf": "exact",
+   "matched_id": 1841,
+   "matched_status": "active"
+  },
+  {
+   "slug": "wan-yan",
+   "name": "皖宴 (长宁)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/wan-yan",
+   "match_conf": "exact",
+   "matched_id": 568,
+   "matched_status": "active"
+  },
+  {
+   "slug": "wang-lu",
+   "name": "望庐 (浦东)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/wang-lu",
+   "match_conf": "strong",
+   "matched_id": 1982,
+   "matched_status": "active"
+  },
+  {
+   "slug": "wei-xiang-zhai",
+   "name": "味香斋 (雁荡路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/wei-xiang-zhai",
+   "match_conf": "exact",
+   "matched_id": 1965,
+   "matched_status": "active"
+  },
+  {
+   "slug": "wenzhou-said",
+   "name": "瓯叙",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/wenzhou-said",
+   "match_conf": "strong",
+   "matched_id": 862,
+   "matched_status": "active"
+  },
+  {
+   "slug": "wu-you-xian",
+   "name": "屋有鲜",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/wu-you-xian",
+   "match_conf": "exact",
+   "matched_id": 1876,
+   "matched_status": "active"
+  },
+  {
+   "slug": "xiao-tao-mian-guan",
+   "name": "小陶面馆",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/xiao-tao-mian-guan",
+   "match_conf": "exact",
+   "matched_id": 1951,
+   "matched_status": "active"
+  },
+  {
+   "slug": "xin-rong-ji-west-nanjing-road",
+   "name": "新荣记 (南京西路)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/xin-rong-ji-west-nanjing-road",
+   "match_conf": "exact",
+   "matched_id": 871,
+   "matched_status": "active"
+  },
+  {
+   "slug": "xin-yuan-lou",
+   "name": "馨源楼",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/xin-yuan-lou",
+   "match_conf": "exact",
+   "matched_id": 1915,
+   "matched_status": "active"
+  },
+  {
+   "slug": "xuji-seafood-xuhui",
+   "name": "徐记海鲜 (徐汇)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/xuji-seafood-xuhui",
+   "match_conf": "exact",
+   "matched_id": 1959,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yangzhou-fan-dian-huangpu",
+   "name": "扬州饭店 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yangzhou-fan-dian-huangpu",
+   "match_conf": "exact",
+   "matched_id": 503,
+   "matched_status": "active"
+  },
+  {
+   "slug": "ye-shanghai",
+   "name": "夜上海",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/ye-shanghai",
+   "match_conf": "exact",
+   "matched_id": 1908,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yi-long-court",
+   "name": "逸龙阁",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yi-long-court",
+   "match_conf": "exact",
+   "matched_id": 716,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yong-feng-mian-guan",
+   "name": "永丰面馆 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yong-feng-mian-guan",
+   "match_conf": "exact",
+   "matched_id": 1960,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yong-fu",
+   "name": "甬府 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yong-fu",
+   "match_conf": "exact",
+   "matched_id": 538,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yong-fu-hongkou",
+   "name": "甬府 (虹口)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yong-fu-hongkou",
+   "match_conf": "exact",
+   "matched_id": 538,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yong-jiang-zhen",
+   "name": "永 · 江臻",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yong-jiang-zhen",
+   "match_conf": "exact",
+   "matched_id": 1883,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yong-xing",
+   "name": "永兴",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yong-xing",
+   "match_conf": "exact",
+   "matched_id": 1944,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yong-yi-ting",
+   "name": "雍颐庭",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yong-yi-ting",
+   "match_conf": "exact",
+   "matched_id": 539,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yongfoo-elite",
+   "name": "雍福会",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yongfoo-elite",
+   "match_conf": "exact",
+   "matched_id": 1008,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yongfu-mini",
+   "name": "甬府小鲜 (浦东新区)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yongfu-mini",
+   "match_conf": "exact",
+   "matched_id": 536,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yu-du-lao-wei-mian-huangpu",
+   "name": "渔都老味面",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yu-du-lao-wei-mian-huangpu",
+   "match_conf": "exact",
+   "matched_id": 1955,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yu-ge-zhan-jiang-jingan",
+   "name": "渔哥 · 湛江 (静安)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yu-ge-zhan-jiang-jingan",
+   "match_conf": "exact",
+   "matched_id": 1956,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yue-hai-tang",
+   "name": "粤海棠",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yue-hai-tang",
+   "match_conf": "exact",
+   "matched_id": 1881,
+   "matched_status": "active"
+  },
+  {
+   "slug": "yunhe-noodle-huangpu",
+   "name": "云和面馆 (黄浦)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/yunhe-noodle-huangpu",
+   "match_conf": "exact",
+   "matched_id": 1947,
+   "matched_status": "active"
+  },
+  {
+   "slug": "zhou-she-minhang",
+   "name": "周舍 (闵行)",
+   "url": "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/zhou-she-minhang",
+   "match_conf": "exact",
+   "matched_id": 1918,
+   "matched_status": "active"
+  }
+ ]
+}

@@ -1,0 +1,1097 @@
+[
+  {
+    "name": "椰子不语椰子鸡火锅(淮海店)",
+    "action": "update",
+    "rid": 1067,
+    "rc_added": [
+      2,
+      3,
+      57,
+      64
+    ],
+    "rc_total": 13,
+    "location_set": true,
+    "readback": {
+      "id": 1067,
+      "name": "椰子不语椰子鸡火锅(淮海店)",
+      "status": "active",
+      "location": "0101000020E61000002BA1BB24CE5A5E4040C05AB56B023F40",
+      "phone": "02164087199",
+      "tier": "中档",
+      "price_avg": 135
+    },
+    "ok": true
+  },
+  {
+    "name": "冷三先生(虹莘路店)",
+    "action": "update",
+    "rid": 1068,
+    "rc_added": [
+      3,
+      51,
+      57,
+      64
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1068,
+      "name": "冷三先生(虹莘路店)",
+      "status": "active",
+      "location": "0101000020E6100000A48AE255D6575E407A7077D66E2B3F40",
+      "phone": "17721446072",
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "嗲嗲的椰子鸡·太琼糟粕醋(百联又一城店)",
+    "action": "update",
+    "rid": 1069,
+    "rc_added": [
+      3,
+      57,
+      64
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1069,
+      "name": "嗲嗲的椰子鸡·太琼糟粕醋(百联又一城店)",
+      "status": "active",
+      "location": "0101000020E610000095490D6D00615E40E0D8B3E7324D3F40",
+      "phone": "02165481304",
+      "tier": "中档",
+      "price_avg": 129
+    },
+    "ok": true
+  },
+  {
+    "name": "牛信亭炭火烤肉·韩式料理(虹泉路店)",
+    "action": "update",
+    "rid": 1070,
+    "rc_added": [
+      51,
+      57,
+      64,
+      154,
+      209
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1070,
+      "name": "牛信亭炭火烤肉·韩式料理(虹泉路店)",
+      "status": "active",
+      "location": "0101000020E6100000CD3AE3FBE2575E40927538BA4A2B3F40",
+      "phone": "17621015171",
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "扎西达娲藏文化演艺餐厅(徐汇绿地缤纷城店)",
+    "action": "update",
+    "rid": 1071,
+    "rc_added": [
+      12,
+      57
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1071,
+      "name": "扎西达娲藏文化演艺餐厅(徐汇绿地缤纷城店)",
+      "status": "active",
+      "location": "0101000020E6100000950ED6FF395E5E40BC1FB75F3E313F40",
+      "phone": "02131597715",
+      "tier": "平价",
+      "price_avg": 98
+    },
+    "ok": true
+  },
+  {
+    "name": "多杰拉姆藏餐吧(朱家角店)",
+    "action": "update",
+    "rid": 1072,
+    "rc_added": [
+      2,
+      12
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1072,
+      "name": "多杰拉姆藏餐吧(朱家角店)",
+      "status": "active",
+      "location": "0101000020E6100000F3599E0777435E40A39410ACAA1B3F40",
+      "phone": "02152988005",
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "喜来稀肉(虹泉路店)",
+    "action": "update",
+    "rid": 1073,
+    "rc_added": [
+      57
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1073,
+      "name": "喜来稀肉(虹泉路店)",
+      "status": "active",
+      "location": "0101000020E6100000DC847B65DE575E40C8EA56CF492B3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 112
+    },
+    "ok": true
+  },
+  {
+    "name": "陆丝芬·柳州原汤螺蛳粉(淮海中路店)",
+    "action": "update",
+    "rid": 1074,
+    "rc_added": [
+      3,
+      65,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1074,
+      "name": "陆丝芬·柳州原汤螺蛳粉(淮海中路店)",
+      "status": "active",
+      "location": "0101000020E6100000D7868A71FE5D5E4027A435069D383F40",
+      "phone": "15177753912",
+      "tier": "经济",
+      "price_avg": 42
+    },
+    "ok": true
+  },
+  {
+    "name": "青春贝壳韩国烤肉(旗舰店)",
+    "action": "update",
+    "rid": 1075,
+    "rc_added": [
+      154
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1075,
+      "name": "青春贝壳韩国烤肉(旗舰店)",
+      "status": "active",
+      "location": "0101000020E61000003C873254C5595E40DD2230D637303F40",
+      "phone": "02160933771",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "文家粉楼(静安大悦城店)",
+    "action": "update",
+    "rid": 1076,
+    "rc_added": [
+      3,
+      65,
+      72
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1076,
+      "name": "文家粉楼(静安大悦城店)",
+      "status": "active",
+      "location": "0101000020E61000006DC9AA08375E5E409D2D20B41E3E3F40",
+      "phone": "02161076166",
+      "tier": "平价",
+      "price_avg": 75
+    },
+    "ok": true
+  },
+  {
+    "name": "正三熙小木屋烤肉(虹泉路一号店)",
+    "action": "update",
+    "rid": 1077,
+    "rc_added": [
+      51,
+      154
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1077,
+      "name": "正三熙小木屋烤肉(虹泉路一号店)",
+      "status": "active",
+      "location": "0101000020E6100000711C78B5DC575E40B779E3A4302B3F40",
+      "phone": "02154337255",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "赣南粉局·江西锅气炒粉(久光中心店)",
+    "action": "update",
+    "rid": 1078,
+    "rc_added": [
+      3,
+      65,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1078,
+      "name": "赣南粉局·江西锅气炒粉(久光中心店)",
+      "status": "active",
+      "location": "0101000020E6100000698F17D2E15C5E407D259012BB463F40",
+      "phone": "15821264871",
+      "tier": "经济",
+      "price_avg": 35
+    },
+    "ok": true
+  },
+  {
+    "name": "孔德洞真味酱蟹",
+    "action": "update",
+    "rid": 1079,
+    "rc_added": [
+      57,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1079,
+      "name": "孔德洞真味酱蟹",
+      "status": "active",
+      "location": "0101000020E61000001572A59E05585E40484E266E152C3F40",
+      "phone": "02154386817",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "掌柜的店·河南菜(日月光店)",
+    "action": "update",
+    "rid": 1080,
+    "rc_added": [
+      3,
+      51
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1080,
+      "name": "掌柜的店·河南菜(日月光店)",
+      "status": "active",
+      "location": "0101000020E6100000116E32AA0C5E5E4015C9570229353F40",
+      "phone": "02133562205",
+      "tier": "平价",
+      "price_avg": 88
+    },
+    "ok": true
+  },
+  {
+    "name": "草家真味酱蟹(天乐广场店)",
+    "action": "update",
+    "rid": 1081,
+    "rc_added": [
+      51,
+      57,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1081,
+      "name": "草家真味酱蟹(天乐广场店)",
+      "status": "active",
+      "location": "0101000020E61000001572A59E05585E40484E266E152C3F40",
+      "phone": "13564666418",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "荣豫·河南菜(ONE上海张园店)",
+    "action": "update",
+    "rid": 1082,
+    "rc_added": [
+      3,
+      57,
+      64
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1082,
+      "name": "荣豫·河南菜(ONE上海张园店)",
+      "status": "active",
+      "location": "0101000020E6100000AE122C0E675D5E4069368FC3603A3F40",
+      "phone": "02163339210",
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "韩味岛酱蟹(天乐广场店)",
+    "action": "update",
+    "rid": 1083,
+    "rc_added": [
+      12,
+      51,
+      57,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1083,
+      "name": "韩味岛酱蟹(天乐广场店)",
+      "status": "active",
+      "location": "0101000020E61000001572A59E05585E40484E266E152C3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "熹PEONY中原会馆(尚浦汇店)",
+    "action": "update",
+    "rid": 1084,
+    "rc_added": [
+      2,
+      3,
+      64,
+      65
+    ],
+    "rc_total": 14,
+    "location_set": true,
+    "readback": {
+      "id": 1084,
+      "name": "熹PEONY中原会馆(尚浦汇店)",
+      "status": "active",
+      "location": "0101000020E6100000F2EA1C03B2605E402C0FD253E4503F40",
+      "phone": "13817234412",
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  },
+  {
+    "name": "富乐满韩国正宗炸鸡(虹泉路店)",
+    "action": "update",
+    "rid": 1085,
+    "rc_added": [
+      3,
+      51,
+      64,
+      72
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1085,
+      "name": "富乐满韩国正宗炸鸡(虹泉路店)",
+      "status": "active",
+      "location": "0101000020E610000038F4160FEF575E4041F163CC5D2B3F40",
+      "phone": "02134323051",
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "大翰宫·蒙古包烤全羊(七宝店)",
+    "action": "update",
+    "rid": 1086,
+    "rc_added": [
+      12
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1086,
+      "name": "大翰宫·蒙古包烤全羊(七宝店)",
+      "status": "active",
+      "location": "0101000020E61000009E5C5320B3555E40FDF49F353F2A3F40",
+      "phone": "02133882976",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "bb.q Chicken比比客(虹泉路店)",
+    "action": "update",
+    "rid": 1087,
+    "rc_added": [
+      3,
+      64,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1087,
+      "name": "bb.q Chicken比比客(虹泉路店)",
+      "status": "active",
+      "location": "0101000020E61000003485CE6BEC575E403A234A7B832B3F40",
+      "phone": "02154886225",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "家在塔啦·烤全羊·蒙古包餐厅(天钥桥路店)",
+    "action": "update",
+    "rid": 1088,
+    "rc_added": [
+      2,
+      12,
+      51
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1088,
+      "name": "家在塔啦·烤全羊·蒙古包餐厅(天钥桥路店)",
+      "status": "active",
+      "location": "0101000020E61000005D1ABFF04A5C5E4025EA059FE6303F40",
+      "phone": "02164177277",
+      "tier": "中档",
+      "price_avg": 127
+    },
+    "ok": true
+  },
+  {
+    "name": "多乐房土豆汤(虹泉路店)",
+    "action": "update",
+    "rid": 1089,
+    "rc_added": [
+      2,
+      3,
+      57,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1089,
+      "name": "多乐房土豆汤(虹泉路店)",
+      "status": "active",
+      "location": "0101000020E61000003485CE6BEC575E403A234A7B832B3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 95
+    },
+    "ok": true
+  },
+  {
+    "name": "额尔敦传统涮(延安中路店)",
+    "action": "update",
+    "rid": 1090,
+    "rc_added": [
+      2,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1090,
+      "name": "额尔敦传统涮(延安中路店)",
+      "status": "active",
+      "location": "0101000020E6100000ED478AC8B05C5E40AE635C7171383F40",
+      "phone": "02161331157",
+      "tier": "中档",
+      "price_avg": 126
+    },
+    "ok": true
+  },
+  {
+    "name": "万寿亭参鸡汤(虹泉路店)",
+    "action": "update",
+    "rid": 1091,
+    "rc_added": [
+      3,
+      57,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1091,
+      "name": "万寿亭参鸡汤(虹泉路店)",
+      "status": "active",
+      "location": "0101000020E6100000A48AE255D6575E407A7077D66E2B3F40",
+      "phone": "13817548319",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "济州食堂by钟路商会(虹泉路店)",
+    "action": "update",
+    "rid": 1092,
+    "rc_added": [
+      3,
+      57,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1092,
+      "name": "济州食堂by钟路商会(虹泉路店)",
+      "status": "active",
+      "location": "0101000020E61000003485CE6BEC575E403A234A7B832B3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "巴屋巴屋正宗韩国料理",
+    "action": "update",
+    "rid": 1093,
+    "rc_added": [
+      3,
+      51,
+      64,
+      65,
+      154
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1093,
+      "name": "巴屋巴屋正宗韩国料理",
+      "status": "active",
+      "location": "0101000020E6100000E0F60489ED575E40A0F99CBB5D2B3F40",
+      "phone": "02134530720",
+      "tier": "平价",
+      "price_avg": 95
+    },
+    "ok": true
+  },
+  {
+    "name": "青鹤谷烤肉(虹泉路店)",
+    "action": "update",
+    "rid": 1094,
+    "rc_added": [
+      51,
+      154
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1094,
+      "name": "青鹤谷烤肉(虹泉路店)",
+      "status": "active",
+      "location": "0101000020E61000003485CE6BEC575E403A234A7B832B3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 140
+    },
+    "ok": true
+  },
+  {
+    "name": "姜虎东白丁(上海店)",
+    "action": "update",
+    "rid": 1095,
+    "rc_added": [
+      64
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1095,
+      "name": "姜虎东白丁(上海店)",
+      "status": "active",
+      "location": "0101000020E61000003485CE6BEC575E403A234A7B832B3F40",
+      "phone": "02155663557",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "四面泰(环贸iapm店)",
+    "action": "update",
+    "rid": 1096,
+    "rc_added": [
+      51,
+      57
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1096,
+      "name": "四面泰(环贸iapm店)",
+      "status": "active",
+      "location": "0101000020E610000018416326515D5E406F6589CE32373F40",
+      "phone": "02133687377",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "Home Thai(K11店)",
+    "action": "update",
+    "rid": 1097,
+    "rc_added": [
+      3,
+      51,
+      57,
+      65
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1097,
+      "name": "Home Thai(K11店)",
+      "status": "active",
+      "location": "0101000020E6100000603B18B14F5E5E403B8C497F2F393F40",
+      "phone": "15821995463",
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  },
+  {
+    "name": "富贵椰Thai Bistro & Eatery(丰盛里店)",
+    "action": "update",
+    "rid": 1098,
+    "rc_added": [
+      26,
+      57,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1098,
+      "name": "富贵椰Thai Bistro & Eatery(丰盛里店)",
+      "status": "active",
+      "location": "0101000020E6100000C24D4695615D5E40E17D552E543A3F40",
+      "phone": "15618383183",
+      "tier": "中档",
+      "price_avg": 140
+    },
+    "ok": true
+  },
+  {
+    "name": "POETS泰狮(徐家汇店)",
+    "action": "update",
+    "rid": 1099,
+    "rc_added": [
+      3,
+      57
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1099,
+      "name": "POETS泰狮(徐家汇店)",
+      "status": "active",
+      "location": "0101000020E610000012C2A38D235C5E404E5E64027E313F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "Mi Thai(安福路店)",
+    "action": "update",
+    "rid": 1100,
+    "rc_added": [
+      3,
+      57
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1100,
+      "name": "Mi Thai(安福路店)",
+      "status": "active",
+      "location": "0101000020E61000000A65E1EB6B5C5E40DDCF29C8CF363F40",
+      "phone": "02154039209",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "Hidden Thai Bistro",
+    "action": "update",
+    "rid": 1101,
+    "rc_added": [
+      26,
+      57,
+      64,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1101,
+      "name": "Hidden Thai Bistro",
+      "status": "active",
+      "location": "0101000020E6100000198EE733A05C5E4009151C5E10393F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "Akanee Thai Izakaya(愚园路)",
+    "action": "update",
+    "rid": 1102,
+    "rc_added": [
+      26,
+      51,
+      65,
+      72
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1102,
+      "name": "Akanee Thai Izakaya(愚园路)",
+      "status": "active",
+      "location": "0101000020E61000006DAAEE91CD5B5E40454948A46D383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  },
+  {
+    "name": "Zaafran(素凯泰酒店)",
+    "action": "update",
+    "rid": 1103,
+    "rc_added": [
+      3,
+      57,
+      65,
+      72
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1103,
+      "name": "Zaafran(素凯泰酒店)",
+      "status": "active",
+      "location": "0101000020E61000008E76DCF0BB5D5E4000E2AE5E453A3F40",
+      "phone": "02162198866",
+      "tier": "高档",
+      "price_avg": 350
+    },
+    "ok": true
+  },
+  {
+    "name": "泰北清迈小馆(虹桥路店)",
+    "action": "update",
+    "rid": 1104,
+    "rc_added": [
+      3,
+      51
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1104,
+      "name": "泰北清迈小馆(虹桥路店)",
+      "status": "active",
+      "location": "0101000020E6100000E6762FF7C9585E40DD5B9198A0323F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "清迈排挡(北外滩来福士店)",
+    "action": "update",
+    "rid": 1105,
+    "rc_added": [
+      3,
+      64,
+      65,
+      74
+    ],
+    "rc_total": 10,
+    "location_set": false,
+    "readback": {
+      "id": 1105,
+      "name": "清迈排挡(北外滩来福士店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "船面专门店(美罗城店)",
+    "action": "update",
+    "rid": 1106,
+    "rc_added": [
+      3,
+      57,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1106,
+      "name": "船面专门店(美罗城店)",
+      "status": "active",
+      "location": "0101000020E610000012C2A38D235C5E404E5E64027E313F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 60
+    },
+    "ok": true
+  },
+  {
+    "name": "大学路泰餐(大学路店)",
+    "action": "update",
+    "rid": 1107,
+    "rc_added": [
+      3,
+      51,
+      57,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1107,
+      "name": "大学路泰餐(大学路店)",
+      "status": "active",
+      "location": "0101000020E61000006E30D46185605E40689604A8A94D3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "清迈瓦罐火锅",
+    "action": "update",
+    "rid": 1109,
+    "rc_added": [
+      2,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1109,
+      "name": "清迈瓦罐火锅",
+      "status": "active",
+      "location": "0101000020E610000087A757CA325D5E40EF2076A6D0353F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "Rasa Rasa越南料理&串烧(新天地店)",
+    "action": "update",
+    "rid": 1110,
+    "rc_added": [
+      51,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1110,
+      "name": "Rasa Rasa越南料理&串烧(新天地店)",
+      "status": "active",
+      "location": "0101000020E6100000B54E5C8E575E5E409833DB15FA383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "FAT PHO大發越南粉(丰盛里店)",
+    "action": "update",
+    "rid": 1111,
+    "rc_added": [
+      3,
+      65,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1111,
+      "name": "FAT PHO大發越南粉(丰盛里店)",
+      "status": "active",
+      "location": "0101000020E6100000C24D4695615D5E40E17D552E543A3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "FAT PHO大發越南粉(新天地店)",
+    "action": "update",
+    "rid": 1112,
+    "rc_added": [
+      3,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1112,
+      "name": "FAT PHO大發越南粉(新天地店)",
+      "status": "active",
+      "location": "0101000020E6100000B54E5C8E575E5E409833DB15FA383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 67
+    },
+    "ok": true
+  },
+  {
+    "name": "西贡妈妈Saigon Mama(上海商城店)",
+    "action": "update",
+    "rid": 1113,
+    "rc_added": [
+      3,
+      35,
+      57,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1113,
+      "name": "西贡妈妈Saigon Mama(上海商城店)",
+      "status": "active",
+      "location": "0101000020E61000007847C66AF35C5E40B4CA4C69FD393F40",
+      "phone": "02162890522",
+      "tier": "平价",
+      "price_avg": 84
+    },
+    "ok": true
+  },
+  {
+    "name": "西贡妈妈Saigon Mama(港汇恒隆店)",
+    "action": "update",
+    "rid": 1114,
+    "rc_added": [
+      3,
+      57,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1114,
+      "name": "西贡妈妈Saigon Mama(港汇恒隆店)",
+      "status": "active",
+      "location": "0101000020E6100000A8E507AEF25A5E406268757286323F40",
+      "phone": "02164470777",
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "PhoToShop福秀·越南餐厅",
+    "action": "update",
+    "rid": 1115,
+    "rc_added": [
+      3,
+      64,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1115,
+      "name": "PhoToShop福秀·越南餐厅",
+      "status": "active",
+      "location": "0101000020E6100000F8A57EDE545C5E401C78B5DC99393F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "越厨西贡Saigon Bistrot(陆家嘴中心店)",
+    "action": "update",
+    "rid": 1116,
+    "rc_added": [
+      26,
+      65,
+      73
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1116,
+      "name": "越厨西贡Saigon Bistrot(陆家嘴中心店)",
+      "status": "active",
+      "location": "0101000020E61000000D198F5209615E40725298F7383B3F40",
+      "phone": "02158777887",
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "阮千金·法式越南菜",
+    "action": "update",
+    "rid": 1117,
+    "rc_added": [
+      26,
+      51,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1117,
+      "name": "阮千金·法式越南菜",
+      "status": "active",
+      "location": "0101000020E6100000B5C5353E935C5E404F3C670B08393F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  }
+]

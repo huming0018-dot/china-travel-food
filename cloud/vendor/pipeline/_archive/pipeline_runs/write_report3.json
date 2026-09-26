@@ -1,0 +1,1002 @@
+[
+  {
+    "name": "MAKAN阿拉伯餐厅",
+    "action": "update",
+    "rid": 1169,
+    "rc_added": [
+      64
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1169,
+      "name": "MAKAN阿拉伯餐厅",
+      "status": "active",
+      "location": "0101000020E61000009775FF58885E5E40CD94D6DF123C3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "VERIE BAKEHOUSE(马当路店)",
+    "action": "update",
+    "rid": 1170,
+    "rc_added": [
+      51,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1170,
+      "name": "VERIE BAKEHOUSE(马当路店)",
+      "status": "active",
+      "location": "0101000020E61000009752978C635E5E4067D65240DA373F40",
+      "phone": "02153860717",
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "Eli Falafel(人民广场店)",
+    "action": "update",
+    "rid": 1171,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1171,
+      "name": "Eli Falafel(人民广场店)",
+      "status": "active",
+      "location": "0101000020E6100000CE55F31C915E5E401711C5E40D3C3F40",
+      "phone": "02163085881",
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "Brothers Kebab(奉贤路店)",
+    "action": "update",
+    "rid": 1172,
+    "rc_added": [
+      57,
+      65
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1172,
+      "name": "Brothers Kebab(奉贤路店)",
+      "status": "active",
+      "location": "0101000020E6100000E95F92CA145D5E4027F56569A73A3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 72
+    },
+    "ok": true
+  },
+  {
+    "name": "Da Vittorio Shanghai",
+    "action": "update",
+    "rid": 1173,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1173,
+      "name": "Da Vittorio Shanghai",
+      "status": "active",
+      "location": "0101000020E610000006668522DD5F5E4024ED461FF3393F40",
+      "phone": "02163218898",
+      "tier": "奢华",
+      "price_avg": 2000
+    },
+    "ok": true
+  },
+  {
+    "name": "Brothers Kebab(长寿路店)",
+    "action": "update",
+    "rid": 1174,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1174,
+      "name": "Brothers Kebab(长寿路店)",
+      "status": "active",
+      "location": "0101000020E610000053EA92718C5B5E400EF8FC30423C3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75
+    },
+    "ok": true
+  },
+  {
+    "name": "8½ Otto e Mezzo Bombana",
+    "action": "update",
+    "rid": 1175,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1175,
+      "name": "8½ Otto e Mezzo Bombana",
+      "status": "active",
+      "location": "0101000020E61000005FB35C363A5F5E40508A56EE053E3F40",
+      "phone": "02160872890",
+      "tier": "奢华",
+      "price_avg": 1500
+    },
+    "ok": true
+  },
+  {
+    "name": "Mercato by Jean-Georges",
+    "action": "update",
+    "rid": 1177,
+    "rc_added": [
+      71,
+      190
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1177,
+      "name": "Mercato by Jean-Georges",
+      "status": "active",
+      "location": "0101000020E610000004543882545F5E4020EC14AB063D3F40",
+      "phone": "02163219922",
+      "tier": "奢华",
+      "price_avg": 600
+    },
+    "ok": true
+  },
+  {
+    "name": "Habibi中东餐厅",
+    "action": "update",
+    "rid": 1178,
+    "rc_added": [
+      81,
+      164,
+      209
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1178,
+      "name": "Habibi中东餐厅",
+      "status": "active",
+      "location": "0101000020E61000001DAA29C93A5D5E40556B6116DA353F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "BOTTEGA 意库",
+    "action": "update",
+    "rid": 1179,
+    "rc_added": [],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1179,
+      "name": "BOTTEGA 意库",
+      "status": "active",
+      "location": "0101000020E61000009EB30584D65C5E400A9FAD8383393F40",
+      "phone": "02162887757",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "Shiraz波斯餐厅",
+    "action": "update",
+    "rid": 1180,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1180,
+      "name": "Shiraz波斯餐厅",
+      "status": "active",
+      "location": "0101000020E6100000037976F9D6585E40E0641BB803313F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  },
+  {
+    "name": "Mammamia 玛米亚",
+    "action": "update",
+    "rid": 1181,
+    "rc_added": [
+      64,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1181,
+      "name": "Mammamia 玛米亚",
+      "status": "active",
+      "location": "0101000020E6100000BD1DE1B4E05C5E403ACFD8976C383F40",
+      "phone": "02162888177",
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "Barbarossa",
+    "action": "update",
+    "rid": 1182,
+    "rc_added": [
+      209
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1182,
+      "name": "Barbarossa",
+      "status": "active",
+      "location": "0101000020E6100000D00F2384475E5E40C84109336D3B3F40",
+      "phone": "02163180220",
+      "tier": "高档",
+      "price_avg": 220
+    },
+    "ok": true
+  },
+  {
+    "name": "TOPO EXPRESS",
+    "action": "update",
+    "rid": 1183,
+    "rc_added": [
+      51,
+      64,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1183,
+      "name": "TOPO EXPRESS",
+      "status": "active",
+      "location": "0101000020E6100000BD8BF7E3F65C5E40D384ED2763343F40",
+      "phone": "02164370677",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "Hoxa Bistro沙美大楼",
+    "action": "update",
+    "rid": 1184,
+    "rc_added": [
+      26,
+      35,
+      65,
+      154
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1184,
+      "name": "Hoxa Bistro沙美大楼",
+      "status": "active",
+      "location": "0101000020E6100000DDB419A7215F5E40B6679604A83D3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "PIZZENELLA",
+    "action": "update",
+    "rid": 1185,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1185,
+      "name": "PIZZENELLA",
+      "status": "active",
+      "location": "0101000020E61000001D56B8E5235D5E4087342A70B2353F40",
+      "phone": "02164665077",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "罗宋娃娃正宗俄罗斯菜",
+    "action": "update",
+    "rid": 1186,
+    "rc_added": [
+      30,
+      35,
+      65,
+      154
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1186,
+      "name": "罗宋娃娃正宗俄罗斯菜",
+      "status": "active",
+      "location": "0101000020E6100000B4CC22145B5B5E4012F8C3CF7F373F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 95
+    },
+    "ok": true
+  },
+  {
+    "name": "Mozzarella e Vino",
+    "action": "update",
+    "rid": 1187,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1187,
+      "name": "Mozzarella e Vino",
+      "status": "active",
+      "location": "0101000020E6100000A088450C3B5F5E4082C98D226B3D3F40",
+      "phone": "02163212617",
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  },
+  {
+    "name": "Khachapuri格鲁吉亚美食",
+    "action": "update",
+    "rid": 1188,
+    "rc_added": [
+      35,
+      65,
+      154
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1188,
+      "name": "Khachapuri格鲁吉亚美食",
+      "status": "active",
+      "location": "0101000020E61000004C6F7F2E1A5C5E4088635DDC463B3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "ALLORA 意大利西餐厅(外滩店)",
+    "action": "update",
+    "rid": 1189,
+    "rc_added": [
+      51,
+      190
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1189,
+      "name": "ALLORA 意大利西餐厅(外滩店)",
+      "status": "active",
+      "location": "0101000020E610000055682096CD5F5E40A14D0E9F743A3F40",
+      "phone": "02163217817",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "撒马尔罕乌兹别克餐厅",
+    "action": "update",
+    "rid": 1190,
+    "rc_added": [
+      12,
+      65
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1190,
+      "name": "撒马尔罕乌兹别克餐厅",
+      "status": "active",
+      "location": "0101000020E6100000D107CBD8D0595E4019E42EC214313F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "Osteria Garden 生蚝花园餐厅",
+    "action": "update",
+    "rid": 1191,
+    "rc_added": [
+      51,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1191,
+      "name": "Osteria Garden 生蚝花园餐厅",
+      "status": "active",
+      "location": "0101000020E610000071AE6186C65C5E40CCD4247843363F40",
+      "phone": "02164668817",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "丝路驿站中亚餐厅",
+    "action": "update",
+    "rid": 1192,
+    "rc_added": [
+      12,
+      35,
+      57,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1192,
+      "name": "丝路驿站中亚餐厅",
+      "status": "active",
+      "location": "0101000020E610000043C6A354C2565E405AF3E32F2D2A3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "Grappa's 意大利餐厅",
+    "action": "update",
+    "rid": 1193,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1193,
+      "name": "Grappa's 意大利餐厅",
+      "status": "active",
+      "location": "0101000020E61000007C444C89245E5E40D34ECDE5063B3F40",
+      "phone": "02163277517",
+      "tier": "高档",
+      "price_avg": 220
+    },
+    "ok": true
+  },
+  {
+    "name": "Vesta 意式餐厅",
+    "action": "update",
+    "rid": 1194,
+    "rc_added": [
+      51,
+      190
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1194,
+      "name": "Vesta 意式餐厅",
+      "status": "active",
+      "location": "0101000020E6100000A4AB74779D5B5E40512D228AC9373F40",
+      "phone": "02162535817",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "何东故居披萨(襄阳店)",
+    "action": "update",
+    "rid": 1195,
+    "rc_added": [
+      57,
+      64
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1195,
+      "name": "何东故居披萨(襄阳店)",
+      "status": "active",
+      "location": "0101000020E610000020D5B0DF135D5E403BE2900DA4373F40",
+      "phone": "02162480917",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "Mercado 505 Gourmet Restaurant",
+    "action": "update",
+    "rid": 1196,
+    "rc_added": [
+      57
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1196,
+      "name": "Mercado 505 Gourmet Restaurant",
+      "status": "active",
+      "location": "0101000020E61000008A3C49BA665C5E4022FAB5F5D3373F40",
+      "phone": "02162493817",
+      "tier": "高档",
+      "price_avg": 400
+    },
+    "ok": true
+  },
+  {
+    "name": "el Willy(中山东二路店)",
+    "action": "update",
+    "rid": 1197,
+    "rc_added": [
+      51,
+      57,
+      71
+    ],
+    "rc_total": 13,
+    "location_set": true,
+    "readback": {
+      "id": 1197,
+      "name": "el Willy(中山东二路店)",
+      "status": "active",
+      "location": "0101000020E6100000BC07E8BE9C5F5E40FD6662BA103B3F40",
+      "phone": "02154045757",
+      "tier": "奢华",
+      "price_avg": 500
+    },
+    "ok": true
+  },
+  {
+    "name": "CRAZYONES 克芮旺斯(前滩店)",
+    "action": "update",
+    "rid": 1198,
+    "rc_added": [
+      57
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1198,
+      "name": "CRAZYONES 克芮旺斯(前滩店)",
+      "status": "active",
+      "location": "0101000020E61000005F984C158C5E5E405070B1A206273F40",
+      "phone": "02150750517",
+      "tier": "中档",
+      "price_avg": 105
+    },
+    "ok": true
+  },
+  {
+    "name": "CRAZYONES 克芮旺斯(合生汇店)",
+    "action": "update",
+    "rid": 1199,
+    "rc_added": [
+      57
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1199,
+      "name": "CRAZYONES 克芮旺斯(合生汇店)",
+      "status": "active",
+      "location": "0101000020E6100000F3203D450E615E40DA740470B34C3F40",
+      "phone": "02165100517",
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "EL Bodegon",
+    "action": "update",
+    "rid": 1200,
+    "rc_added": [
+      12,
+      57,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1200,
+      "name": "EL Bodegon",
+      "status": "active",
+      "location": "0101000020E610000063096B63EC5C5E40377007EA943B3F40",
+      "phone": "02162530617",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "Brownstone Tapas & Lounge",
+    "action": "update",
+    "rid": 1201,
+    "rc_added": [
+      57,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1201,
+      "name": "Brownstone Tapas & Lounge",
+      "status": "active",
+      "location": "0101000020E61000007F17B6662B5D5E4042D13C80453A3F40",
+      "phone": "02162475517",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Tomatito",
+    "action": "update",
+    "rid": 1202,
+    "rc_added": [
+      3,
+      57
+    ],
+    "rc_total": 10,
+    "location_set": false,
+    "readback": {
+      "id": 1202,
+      "name": "Tomatito",
+      "status": "active",
+      "location": null,
+      "phone": "02163851617",
+      "tier": "高档",
+      "price_avg": 260
+    },
+    "ok": true
+  },
+  {
+    "name": "宝莱纳餐厅(北外滩店)",
+    "action": "update",
+    "rid": 1203,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1203,
+      "name": "宝莱纳餐厅(北外滩店)",
+      "status": "active",
+      "location": "0101000020E61000005B5CE333D95F5E4051DD5CFC6D3F3F40",
+      "phone": "02165235757",
+      "tier": "高档",
+      "price_avg": 300
+    },
+    "ok": true
+  },
+  {
+    "name": "德国瀚克硕啤酒花园餐厅 Hacker-Pschorr",
+    "action": "update",
+    "rid": 1204,
+    "rc_added": [],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1204,
+      "name": "德国瀚克硕啤酒花园餐厅 Hacker-Pschorr",
+      "status": "active",
+      "location": "0101000020E6100000FFCEF6E80D625E400E4FAF9465403F40",
+      "phone": "02132201717",
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  },
+  {
+    "name": "宝莱纳餐厅(长宁来福士店)",
+    "action": "update",
+    "rid": 1205,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1205,
+      "name": "宝莱纳餐厅(长宁来福士店)",
+      "status": "active",
+      "location": "0101000020E61000009F3C2CD49A5A5E4038D89B1892373F40",
+      "phone": "02162609717",
+      "tier": "高档",
+      "price_avg": 280
+    },
+    "ok": true
+  },
+  {
+    "name": "宝莱纳餐厅(西岸梦中心店)",
+    "action": "update",
+    "rid": 1206,
+    "rc_added": [],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1206,
+      "name": "宝莱纳餐厅(西岸梦中心店)",
+      "status": "active",
+      "location": "0101000020E6100000DF1797AAB45D5E40D50627A25F2F3F40",
+      "phone": "02164579717",
+      "tier": "高档",
+      "price_avg": 280
+    },
+    "ok": true
+  },
+  {
+    "name": "宝莱纳餐厅(新天地店)",
+    "action": "update",
+    "rid": 1207,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1207,
+      "name": "宝莱纳餐厅(新天地店)",
+      "status": "active",
+      "location": "0101000020E61000004BE9995E625E5E4078280AF489383F40",
+      "phone": "02163857717",
+      "tier": "高档",
+      "price_avg": 280
+    },
+    "ok": true
+  },
+  {
+    "name": "德国啤酒屋(安亭路老洋房)",
+    "action": "update",
+    "rid": 1208,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1208,
+      "name": "德国啤酒屋(安亭路老洋房)",
+      "status": "active",
+      "location": "0101000020E6100000459BE3DC265D5E4008E753C72A353F40",
+      "phone": "02164747717",
+      "tier": "高档",
+      "price_avg": 220
+    },
+    "ok": true
+  },
+  {
+    "name": "飞象西餐厅",
+    "action": "update",
+    "rid": 1209,
+    "rc_added": [
+      3,
+      51
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1209,
+      "name": "飞象西餐厅",
+      "status": "active",
+      "location": "0101000020E6100000A1A014ADDC5C5E407B4FE5B4A7483F40",
+      "phone": "02156651717",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "KIRILLITSA 西里尔俄罗斯餐厅",
+    "action": "update",
+    "rid": 1210,
+    "rc_added": [
+      3,
+      159
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1210,
+      "name": "KIRILLITSA 西里尔俄罗斯餐厅",
+      "status": "active",
+      "location": "0101000020E6100000749A05DA1D5F5E402DB308C5563C3F40",
+      "phone": "02163218177",
+      "tier": "奢华",
+      "price_avg": 600
+    },
+    "ok": true
+  },
+  {
+    "name": "俄士厨房(环球港店)",
+    "action": "update",
+    "rid": 1211,
+    "rc_added": [
+      35,
+      154
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1211,
+      "name": "俄士厨房(环球港店)",
+      "status": "active",
+      "location": "0101000020E6100000C554FA09675A5E40DD5ED218AD3B3F40",
+      "phone": "02162669177",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "HELLO KIEV 乌克兰主题餐厅(世博源店)",
+    "action": "update",
+    "rid": 1212,
+    "rc_added": [
+      3
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1212,
+      "name": "HELLO KIEV 乌克兰主题餐厅(世博源店)",
+      "status": "active",
+      "location": "0101000020E6100000933A014D845F5E40C976BE9F1A2F3F40",
+      "phone": "02131119177",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "哈尔滨餐厅(海派俄式)",
+    "action": "update",
+    "rid": 1213,
+    "rc_added": [
+      3,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1213,
+      "name": "哈尔滨餐厅(海派俄式)",
+      "status": "active",
+      "location": "0101000020E61000005C936E4BE45E5E405D4E098849403F40",
+      "phone": "02163248177",
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "Wolfgang's Steakhouse 沃夫冈牛排馆",
+    "action": "update",
+    "rid": 1214,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1214,
+      "name": "Wolfgang's Steakhouse 沃夫冈牛排馆",
+      "status": "active",
+      "location": "0101000020E610000048A643A7E75F5E4055A69883A03F3F40",
+      "phone": "02155829715",
+      "tier": "奢华",
+      "price_avg": 1100
+    },
+    "ok": true
+  },
+  {
+    "name": "Cantina Agave(富民路店)",
+    "action": "update",
+    "rid": 1215,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1215,
+      "name": "Cantina Agave(富民路店)",
+      "status": "active",
+      "location": "0101000020E61000009E0AB8E7F95C5E40AB21718FA5373F40",
+      "phone": "02161701310",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "El Santo Tacos&Tequila(158坊店)",
+    "action": "update",
+    "rid": 1216,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1216,
+      "name": "El Santo Tacos&Tequila(158坊店)",
+      "status": "active",
+      "location": "0101000020E610000009A87004A95D5E4060730E9E09353F40",
+      "phone": "02163332181",
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "Morton's The Steakhouse 莫尔顿牛排坊",
+    "action": "update",
+    "rid": 1217,
+    "rc_added": [],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1217,
+      "name": "Morton's The Steakhouse 莫尔顿牛排坊",
+      "status": "active",
+      "location": "0101000020E6100000E97C789620605E40A1698995D13C3F40",
+      "phone": "02160758888",
+      "tier": "奢华",
+      "price_avg": 1200
+    },
+    "ok": true
+  },
+  {
+    "name": "LOS PACOS帕库墨西哥餐厅(上生新所店)",
+    "action": "update",
+    "rid": 1218,
+    "rc_added": [],
+    "rc_total": 5,
+    "location_set": true,
+    "readback": {
+      "id": 1218,
+      "name": "LOS PACOS帕库墨西哥餐厅(上生新所店)",
+      "status": "active",
+      "location": "0101000020E61000002E3883BF5F5B5E408C84B69C4B353F40",
+      "phone": "02152580678",
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "name": "POP露台餐厅(外滩三号)",
+    "action": "new",
+    "rid": 1984,
+    "rc_added": [
+      346
+    ],
+    "rc_total": 1,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1984,
+      "name": "POP露台餐厅(外滩三号)",
+      "status": "active",
+      "location": "0101000020E610000084656CE8665F5E40433A3C84F13B3F40",
+      "phone": "02163210909",
+      "tier": "高档",
+      "price_avg": 450,
+      "score_total": null,
+      "score_objective": null,
+      "score_diner": null,
+      "score_taste": null,
+      "score_endorsement": null
+    },
+    "ok": true
+  }
+]

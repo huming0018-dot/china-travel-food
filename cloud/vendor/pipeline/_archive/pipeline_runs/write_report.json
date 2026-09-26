@@ -1,0 +1,214 @@
+[
+  {
+    "name": "Bar Leone",
+    "action": "new",
+    "rid": 1742,
+    "rc_added": [
+      49,
+      81,
+      163,
+      164
+    ],
+    "rc_total": 4,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1742,
+      "name": "Bar Leone",
+      "status": "active",
+      "location": "0101000020E610000000E65AB4005E5E40F41ABB44F5363F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 300,
+      "score_total": 69.9,
+      "score_objective": 82.0,
+      "score_diner": 72.0,
+      "score_taste": 80.0,
+      "score_endorsement": 95.0
+    },
+    "ok": true
+  },
+  {
+    "name": "明日酿造/明日酒馆",
+    "action": "new",
+    "rid": 1743,
+    "rc_added": [
+      49,
+      81,
+      163,
+      164
+    ],
+    "rc_total": 4,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1743,
+      "name": "明日酿造/明日酒馆",
+      "status": "active",
+      "location": "0101000020E6100000207BBDFBE35D5E405EB9DE36533D3F40",
+      "phone": "02163770228",
+      "tier": "中档",
+      "price_avg": 120,
+      "score_total": 62.1,
+      "score_objective": 70.0,
+      "score_diner": 65.0,
+      "score_taste": 68.0,
+      "score_endorsement": 60.0
+    },
+    "ok": true
+  },
+  {
+    "name": "半醉山岚",
+    "action": "new",
+    "rid": 1744,
+    "rc_added": [
+      5,
+      64,
+      73,
+      78,
+      121,
+      163,
+      164
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1744,
+      "name": "半醉山岚",
+      "status": "active",
+      "location": "0101000020E610000005A4FD0FB05C5E4061FC34EECD373F40",
+      "phone": "19121819084",
+      "tier": "高档",
+      "price_avg": 200,
+      "score_total": 56.5,
+      "score_objective": 68.0,
+      "score_diner": 66.0,
+      "score_taste": 70.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Flipper's 奇迹舒芙蕾（金桥EKA天物店）",
+    "action": "new",
+    "rid": 1745,
+    "rc_added": [
+      65,
+      67,
+      77,
+      98,
+      161,
+      162
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1745,
+      "name": "Flipper's 奇迹舒芙蕾（金桥EKA天物店）",
+      "status": "active",
+      "location": "0101000020E6100000A1BDFA78E8645E404030478FDF433F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 99,
+      "score_total": 59.1,
+      "score_objective": 68.0,
+      "score_diner": 70.0,
+      "score_taste": 72.0,
+      "score_endorsement": 65.0
+    },
+    "ok": true
+  },
+  {
+    "name": "上海宝格丽酒店 Il Ristorante – Niko Romito",
+    "action": "new",
+    "rid": 1746,
+    "rc_added": [
+      27,
+      64,
+      67,
+      159,
+      161,
+      162,
+      163
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1746,
+      "name": "上海宝格丽酒店 Il Ristorante – Niko Romito",
+      "status": "active",
+      "location": "0101000020E6100000FB05BB61DB5E5E40E4F6CB272B3E3F40",
+      "phone": "02136067788",
+      "tier": "奢华",
+      "price_avg": 688,
+      "score_total": 67.7,
+      "score_objective": 78.0,
+      "score_diner": 70.0,
+      "score_taste": 75.0,
+      "score_endorsement": 85.0
+    },
+    "ok": true
+  },
+  {
+    "name": "When Pigs Fly当猪飞(愚园路店)",
+    "action": "new",
+    "rid": 1747,
+    "rc_added": [
+      48,
+      68,
+      74,
+      77,
+      162
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1747,
+      "name": "When Pigs Fly当猪飞(愚园路店)",
+      "status": "active",
+      "location": "0101000020E6100000B77C24253D5B5E4092AD2EA704383F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 18,
+      "score_total": 69.1,
+      "score_objective": 72.0,
+      "score_diner": 78.0,
+      "score_taste": 72.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  },
+  {
+    "name": "Spiceman辣男Gelato(思南路店)",
+    "action": "new",
+    "rid": 1748,
+    "rc_added": [
+      48,
+      67,
+      74,
+      77
+    ],
+    "rc_total": 4,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1748,
+      "name": "Spiceman辣男Gelato(思南路店)",
+      "status": "active",
+      "location": "0101000020E6100000D690B8C7D25D5E4044F9821612383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 52,
+      "score_total": 68.3,
+      "score_objective": 74.0,
+      "score_diner": 78.0,
+      "score_taste": 74.0,
+      "score_endorsement": 55.0
+    },
+    "ok": true
+  }
+]

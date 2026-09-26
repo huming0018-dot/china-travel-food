@@ -1,0 +1,1024 @@
+[
+  {
+    "name": "爱在河内越南餐厅",
+    "action": "update",
+    "rid": 1118,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1118,
+      "name": "爱在河内越南餐厅",
+      "status": "active",
+      "location": "0101000020E610000065389ECF805C5E40EED11BEE233B3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "印象芽庄越式餐厅(新华路店)",
+    "action": "update",
+    "rid": 1119,
+    "rc_added": [
+      51,
+      57
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1119,
+      "name": "印象芽庄越式餐厅(新华路店)",
+      "status": "active",
+      "location": "0101000020E610000021CCED5EEE5A5E400A4CA7751B343F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 81
+    },
+    "ok": true
+  },
+  {
+    "name": "普榄越南餐厅(啦啦宝都店)",
+    "action": "update",
+    "rid": 1120,
+    "rc_added": [
+      3,
+      65
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1120,
+      "name": "普榄越南餐厅(啦啦宝都店)",
+      "status": "active",
+      "location": "0101000020E6100000198EE733A0665E40F870C971A7403F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "越南美食安宫AoBaBa",
+    "action": "update",
+    "rid": 1121,
+    "rc_added": [
+      65,
+      209
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1121,
+      "name": "越南美食安宫AoBaBa",
+      "status": "active",
+      "location": "0101000020E61000000E4B033FAA585E40BB26A43506353F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "越洋越南菜",
+    "action": "update",
+    "rid": 1122,
+    "rc_added": [
+      51,
+      64,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1122,
+      "name": "越洋越南菜",
+      "status": "active",
+      "location": "0101000020E610000087A757CA325D5E40EF2076A6D0353F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 95
+    },
+    "ok": true
+  },
+  {
+    "name": "PHO LA越南粉",
+    "action": "update",
+    "rid": 1123,
+    "rc_added": [
+      3,
+      65,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1123,
+      "name": "PHO LA越南粉",
+      "status": "active",
+      "location": "0101000020E61000004C6F7F2E1A5C5E4088635DDC463B3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75
+    },
+    "ok": true
+  },
+  {
+    "name": "西贡Saigon越南菜(中环广场店)",
+    "action": "update",
+    "rid": 1124,
+    "rc_added": [
+      51,
+      57,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1124,
+      "name": "西贡Saigon越南菜(中环广场店)",
+      "status": "active",
+      "location": "0101000020E610000048C2BE9D445E5E405CAAD216D7383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "星洲小馆·新加坡菜(太阳宫店)",
+    "action": "update",
+    "rid": 1125,
+    "rc_added": [
+      57,
+      64,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1125,
+      "name": "星洲小馆·新加坡菜(太阳宫店)",
+      "status": "active",
+      "location": "0101000020E6100000234E27D9EA5F5E4092AF045262433F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "星洲小馆·新加坡料理(田子坊店)",
+    "action": "update",
+    "rid": 1126,
+    "rc_added": [
+      57,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1126,
+      "name": "星洲小馆·新加坡料理(田子坊店)",
+      "status": "active",
+      "location": "0101000020E610000090C01F7EFE5D5E40D4B5F63E55353F40",
+      "phone": "02164183028",
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "芽笼芽笼新加坡餐厅(浦东嘉里城店)",
+    "action": "update",
+    "rid": 1127,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1127,
+      "name": "芽笼芽笼新加坡餐厅(浦东嘉里城店)",
+      "status": "active",
+      "location": "0101000020E61000005DA3E5400F645E404AB54FC763363F40",
+      "phone": "13262919778",
+      "tier": "平价",
+      "price_avg": 95
+    },
+    "ok": true
+  },
+  {
+    "name": "芽笼芽笼新加坡餐厅(来福士广场店)",
+    "action": "update",
+    "rid": 1128,
+    "rc_added": [
+      57,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1128,
+      "name": "芽笼芽笼新加坡餐厅(来福士广场店)",
+      "status": "active",
+      "location": "0101000020E6100000E23FDD40815E5E40A0504F1F813B3F40",
+      "phone": "15700534150",
+      "tier": "平价",
+      "price_avg": 87
+    },
+    "ok": true
+  },
+  {
+    "name": "钨节路新加坡餐厅",
+    "action": "update",
+    "rid": 1129,
+    "rc_added": [
+      57,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1129,
+      "name": "钨节路新加坡餐厅",
+      "status": "active",
+      "location": "0101000020E61000000892770E655C5E401CEA77616B3A3F40",
+      "phone": "02162181765",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "Secret Flavor(马来清真)",
+    "action": "update",
+    "rid": 1130,
+    "rc_added": [
+      3,
+      51,
+      57,
+      64,
+      65
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1130,
+      "name": "Secret Flavor(马来清真)",
+      "status": "active",
+      "location": "0101000020E6100000F3E84658545A5E4016FC36C478313F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "兴兴东南亚饮食阁",
+    "action": "update",
+    "rid": 1131,
+    "rc_added": [
+      51,
+      64,
+      65,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1131,
+      "name": "兴兴东南亚饮食阁",
+      "status": "active",
+      "location": "0101000020E61000000664AF777F575E404359F8FA5A2F3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "金椰壳(印力中心店)",
+    "action": "update",
+    "rid": 1132,
+    "rc_added": [
+      3,
+      64,
+      65
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1132,
+      "name": "金椰壳(印力中心店)",
+      "status": "active",
+      "location": "0101000020E610000078279F1EDB5B5E40AA807B9E3F413F40",
+      "phone": "02162529986",
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  },
+  {
+    "name": "南洋南香·东南亚美食(16铺店)",
+    "action": "update",
+    "rid": 1133,
+    "rc_added": [
+      57,
+      64,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1133,
+      "name": "南洋南香·东南亚美食(16铺店)",
+      "status": "active",
+      "location": "0101000020E6100000B1A547533D5D5E40D55A9885763A3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "Docks河畔餐厅(静安英迪格)",
+    "action": "update",
+    "rid": 1134,
+    "rc_added": [
+      26,
+      57,
+      65,
+      183
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1134,
+      "name": "Docks河畔餐厅(静安英迪格)",
+      "status": "active",
+      "location": "0101000020E6100000A393A5D6FB5C5E403259DC7F643E3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "Garuda巴东印尼餐厅",
+    "action": "update",
+    "rid": 1135,
+    "rc_added": [
+      35,
+      57,
+      65,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1135,
+      "name": "Garuda巴东印尼餐厅",
+      "status": "active",
+      "location": "0101000020E6100000AE47E17A145A5E40984D8061F9333F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "娘惹情",
+    "action": "update",
+    "rid": 1136,
+    "rc_added": [
+      57,
+      65,
+      183
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1136,
+      "name": "娘惹情",
+      "status": "active",
+      "location": "0101000020E61000006DE179A9D85D5E408DF161F6B2393F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "Jean Georges 上海",
+    "action": "update",
+    "rid": 1137,
+    "rc_added": [
+      209
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1137,
+      "name": "Jean Georges 上海",
+      "status": "active",
+      "location": "0101000020E6100000959C137B685F5E40F3E32F2DEA3B3F40",
+      "phone": "02163217733",
+      "tier": "奢华",
+      "price_avg": 1200
+    },
+    "ok": true
+  },
+  {
+    "name": "Masala Art Indian Cuisine(大沽路店)",
+    "action": "update",
+    "rid": 1138,
+    "rc_added": [
+      51,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1138,
+      "name": "Masala Art Indian Cuisine(大沽路店)",
+      "status": "active",
+      "location": "0101000020E6100000711C78B5DC5D5E40ADF71BEDB8393F40",
+      "phone": "02163273571",
+      "tier": "中档",
+      "price_avg": 186
+    },
+    "ok": true
+  },
+  {
+    "name": "L'Atelier de Joël Robuchon 乔尔·卢布松美食坊",
+    "action": "update",
+    "rid": 1139,
+    "rc_added": [
+      3,
+      51
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1139,
+      "name": "L'Atelier de Joël Robuchon 乔尔·卢布松美食坊",
+      "status": "active",
+      "location": "0101000020E610000004543882545F5E4020EC14AB063D3F40",
+      "phone": "02160718888",
+      "tier": "奢华",
+      "price_avg": 1600
+    },
+    "ok": true
+  },
+  {
+    "name": "RANGOLI蓝果丽印度餐厅(古北SOHO店)",
+    "action": "update",
+    "rid": 1140,
+    "rc_added": [
+      209
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1140,
+      "name": "RANGOLI蓝果丽印度餐厅(古北SOHO店)",
+      "status": "active",
+      "location": "0101000020E610000038BD8BF7E3595E402670EB6E9E323F40",
+      "phone": "02164330699",
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "Maison Lameloise 莱美露滋",
+    "action": "update",
+    "rid": 1141,
+    "rc_added": [],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1141,
+      "name": "Maison Lameloise 莱美露滋",
+      "status": "active",
+      "location": "0101000020E61000007C8159A148605E4025CADE52CE3B3F40",
+      "phone": "02168865888",
+      "tier": "奢华",
+      "price_avg": 1500
+    },
+    "ok": true
+  },
+  {
+    "name": "KLAY Modern Indian Restaurant(北京西路店)",
+    "action": "update",
+    "rid": 1142,
+    "rc_added": [
+      26,
+      57
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1142,
+      "name": "KLAY Modern Indian Restaurant(北京西路店)",
+      "status": "active",
+      "location": "0101000020E6100000FFE7305F5E5D5E40F302ECA3533B3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  },
+  {
+    "name": "虹盐RED SALT新派印巴餐厅(禧瑞广场店)",
+    "action": "update",
+    "rid": 1144,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1144,
+      "name": "虹盐RED SALT新派印巴餐厅(禧瑞广场店)",
+      "status": "active",
+      "location": "0101000020E610000028999CDA195A5E40EC8497E0D4333F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 124
+    },
+    "ok": true
+  },
+  {
+    "name": "Phénix 斐霓丝餐厅酒吧",
+    "action": "update",
+    "rid": 1145,
+    "rc_added": [
+      164
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1145,
+      "name": "Phénix 斐霓丝餐厅酒吧",
+      "status": "active",
+      "location": "0101000020E61000008E76DCF0BB5D5E4000E2AE5E453A3F40",
+      "phone": "02152988888",
+      "tier": "奢华",
+      "price_avg": 800
+    },
+    "ok": true
+  },
+  {
+    "name": "Kaveen's Kitchen印度餐厅(虹桥店)",
+    "action": "update",
+    "rid": 1146,
+    "rc_added": [
+      57
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1146,
+      "name": "Kaveen's Kitchen印度餐厅(虹桥店)",
+      "status": "active",
+      "location": "0101000020E610000089230F44165A5E40A8565F5D15343F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "1929 by Guillaume Galliot",
+    "action": "update",
+    "rid": 1147,
+    "rc_added": [
+      73
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1147,
+      "name": "1929 by Guillaume Galliot",
+      "status": "active",
+      "location": "0101000020E61000003E7958A8355D5E40C1ABE5CE4C383F40",
+      "phone": "02154043896",
+      "tier": "奢华",
+      "price_avg": 800
+    },
+    "ok": true
+  },
+  {
+    "name": "Indian Kitchen(南印)",
+    "action": "update",
+    "rid": 1148,
+    "rc_added": [
+      3
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1148,
+      "name": "Indian Kitchen(南印)",
+      "status": "active",
+      "location": "0101000020E6100000037976F9D6585E40E0641BB803313F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 100
+    },
+    "ok": true
+  },
+  {
+    "name": "Dakshin南印餐厅",
+    "action": "update",
+    "rid": 1149,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1149,
+      "name": "Dakshin南印餐厅",
+      "status": "active",
+      "location": "0101000020E610000043C6A354C2565E405AF3E32F2D2A3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "POPOT 博朴(徐汇店)",
+    "action": "update",
+    "rid": 1150,
+    "rc_added": [
+      51,
+      64,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1150,
+      "name": "POPOT 博朴(徐汇店)",
+      "status": "active",
+      "location": "0101000020E61000008A9125732C5C5E4059198D7C5E313F40",
+      "phone": "02154488097",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "Dev Bhoomi Curry House",
+    "action": "update",
+    "rid": 1151,
+    "rc_added": [
+      65,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1151,
+      "name": "Dev Bhoomi Curry House",
+      "status": "active",
+      "location": "0101000020E610000043C6A354C2565E405AF3E32F2D2A3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "POLUX",
+    "action": "update",
+    "rid": 1152,
+    "rc_added": [
+      3
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1152,
+      "name": "POLUX",
+      "status": "active",
+      "location": "0101000020E61000009752978C635E5E4067D65240DA373F40",
+      "phone": "02153069186",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "Bombay Bistro",
+    "action": "update",
+    "rid": 1153,
+    "rc_added": [
+      26,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1153,
+      "name": "Bombay Bistro",
+      "status": "active",
+      "location": "0101000020E6100000D73043E3895D5E4085CFD6C1C13A3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "SHADOWS(安福路店)",
+    "action": "update",
+    "rid": 1154,
+    "rc_added": [
+      57,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1154,
+      "name": "SHADOWS(安福路店)",
+      "status": "active",
+      "location": "0101000020E61000001C0B0A83325C5E407E5358A9A0363F40",
+      "phone": "02164376617",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Indian Curry Hut",
+    "action": "update",
+    "rid": 1155,
+    "rc_added": [
+      65,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1155,
+      "name": "Indian Curry Hut",
+      "status": "active",
+      "location": "0101000020E6100000F790F0BDBF5B5E4035D07CCEDD023F40",
+      "phone": "18402168814",
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "LE VERRE à vin by MIG",
+    "action": "update",
+    "rid": 1156,
+    "rc_added": [
+      164
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1156,
+      "name": "LE VERRE à vin by MIG",
+      "status": "active",
+      "location": "0101000020E6100000B32781CD395C5E406BD44334BA3B3F40",
+      "phone": "02162538078",
+      "tier": "高档",
+      "price_avg": 220
+    },
+    "ok": true
+  },
+  {
+    "name": "Vedas Indian Restaurant",
+    "action": "update",
+    "rid": 1157,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1157,
+      "name": "Vedas Indian Restaurant",
+      "status": "active",
+      "location": "0101000020E6100000037976F9D6585E40E0641BB803313F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 140
+    },
+    "ok": true
+  },
+  {
+    "name": "BLAZ",
+    "action": "update",
+    "rid": 1158,
+    "rc_added": [],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1158,
+      "name": "BLAZ",
+      "status": "active",
+      "location": "0101000020E6100000E8DCED7A695C5E401F9DBAF259363F40",
+      "phone": "02164377517",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Delhi Darbar",
+    "action": "update",
+    "rid": 1159,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1159,
+      "name": "Delhi Darbar",
+      "status": "active",
+      "location": "0101000020E6100000AE47E17A145A5E40984D8061F9333F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "mignon9",
+    "action": "update",
+    "rid": 1160,
+    "rc_added": [
+      3,
+      57,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1160,
+      "name": "mignon9",
+      "status": "active",
+      "location": "0101000020E6100000BC75FEEDB25C5E4078D503E621373F40",
+      "phone": "02164660186",
+      "tier": "高档",
+      "price_avg": 220
+    },
+    "ok": true
+  },
+  {
+    "name": "Punjabi Bistro旁遮普",
+    "action": "update",
+    "rid": 1161,
+    "rc_added": [
+      26
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1161,
+      "name": "Punjabi Bistro旁遮普",
+      "status": "active",
+      "location": "0101000020E61000007F17B6662B5D5E4042D13C80453A3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "Luneurs(洛克·外滩源店)",
+    "action": "update",
+    "rid": 1162,
+    "rc_added": [
+      77,
+      161,
+      183
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1162,
+      "name": "Luneurs(洛克·外滩源店)",
+      "status": "active",
+      "location": "0101000020E610000056EF703B345F5E4044C02154A93D3F40",
+      "phone": "02163215517",
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "安比斯印度餐厅",
+    "action": "update",
+    "rid": 1163,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1163,
+      "name": "安比斯印度餐厅",
+      "status": "active",
+      "location": "0101000020E6100000EBFD463B6E5D5E40529CA38E8E373F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "Pain Chaud(建国西路店)",
+    "action": "update",
+    "rid": 1164,
+    "rc_added": [
+      51,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1164,
+      "name": "Pain Chaud(建国西路店)",
+      "status": "active",
+      "location": "0101000020E61000009D2CB5DE6F5D5E405EBBB4E1B0343F40",
+      "phone": "02164668017",
+      "tier": "平价",
+      "price_avg": 60
+    },
+    "ok": true
+  },
+  {
+    "name": "Otantik黎凡特美食(吴江路店)",
+    "action": "update",
+    "rid": 1165,
+    "rc_added": [
+      65,
+      209
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1165,
+      "name": "Otantik黎凡特美食(吴江路店)",
+      "status": "active",
+      "location": "0101000020E6100000E78A5242B05D5E40286211C30E3B3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "La Boulangerie by Pierre Gagnaire",
+    "action": "update",
+    "rid": 1166,
+    "rc_added": [
+      51,
+      72,
+      159
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1166,
+      "name": "La Boulangerie by Pierre Gagnaire",
+      "status": "active",
+      "location": "0101000020E6100000C939B187F65C5E4016F9F5436C343F40",
+      "phone": "02164379877",
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "Otantik黎凡特美食(西藏中路店)",
+    "action": "update",
+    "rid": 1167,
+    "rc_added": [],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1167,
+      "name": "Otantik黎凡特美食(西藏中路店)",
+      "status": "active",
+      "location": "0101000020E6100000B3D2A414745E5E404568041BD73B3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 160
+    },
+    "ok": true
+  }
+]

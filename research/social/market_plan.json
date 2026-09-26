@@ -1,0 +1,216 @@
+[
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "酥鱼坊(蒙西小区店)",
+    "fields": {
+      "name": "酥鱼坊(蒙西小区店)",
+      "price_avg": 36,
+      "price_range": "¥30-40",
+      "address": "蒙自西路2号蒙西菜场沿街",
+      "district": "黄浦区",
+      "business_area": "打浦桥/蒙西菜场",
+      "booking_method": "到店购买",
+      "signature_dishes": [
+        "五香熏鱼",
+        "现炸青鱼块",
+        "椒盐鱼排"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 78.0,
+      "score_taste": 82.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "酥鱼坊位于黄浦区蒙自西路2号蒙西菜场沿街铺位（马当路地铁站3号口步行约190米），是蒙西菜场'四大金刚'之一，被媒体与本地老饕称为'上海市中心最好吃的菜场'内的隐藏王者。店铺坚持活鱼当天现宰、现切、现炸，选用新鲜青鱼，鱼按前段、中段、尾段分区售卖，价格略有差异。招牌五香熏鱼外皮酥酥脆脆、略带本帮甜口，汁水收得紧，不管下饭还是下酒都合适。营业时段为07:00-12:00及14:00-18:00，中午休息，常年有阿姨爷叔排队。上海文旅推广网、上观新闻、中华网等多家媒体曾报道胡彦斌逛蒙西菜场打卡该店。高德评分4.2，人均约36元，属真材实料的社区熟食档口。\n— 食客堂食原话 —\n1. [抖音] 第一家酥鱼坊。活鱼当天现宰、现切、现炸，新鲜肉眼可见，吃着超安心，地道老上海味道，闭眼冲不踩雷 (https://www.iesdouyin.com/share/video/7663441967405223177)\n2. [抖音] 第三家酥鱼坊，3分钟卖掉1整锅现炸熏鱼，阿姨爷叔排队比上班还准时，青鱼中段现杀现炸，外皮脆到咬开会响，里面肉还嫩着，本帮甜口糖醋汁收得紧 (https://www.iesdouyin.com/share/video/7663441967405223177)\n差评/风险：中午休息，下午才复业；热门部位午后常售罄",
+      "status": "active",
+      "data_updated_at": "2026-09-26",
+      "location": "SRID=4326;POINT(121.4763 31.2076)"
+    },
+    "cids_add": [
+      9,
+      64,
+      74,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [
+      "[\"need_create\", \"熟食卤味\", \"菜系\", \"上海本帮菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "source 自填类型 news 与 URL 判定 other 不符: 中华网-胡彦斌野餐美食都来自菜市场"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "阿模灵鸡粥(蒙西菜市场店)",
+    "fields": {
+      "name": "阿模灵鸡粥(蒙西菜市场店)",
+      "price_avg": 32,
+      "price_range": "¥25-45",
+      "address": "蒙自西路2号蒙西菜市场A-3号",
+      "district": "黄浦区",
+      "business_area": "打浦桥/蒙西菜场",
+      "booking_method": "到店购买",
+      "signature_dishes": [
+        "酒酿糟鸡",
+        "白斩三黄鸡",
+        "鸡粥",
+        "鸡胗",
+        "免费鸡汤"
+      ],
+      "score_objective": 78.0,
+      "score_diner": 82.0,
+      "score_taste": 83.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "阿模灵鸡粥(蒙西菜市场店)位于黄浦区蒙自西路2号蒙西菜市场A-3号档口，营业08:00-18:00，是蒙西菜场'四大金刚'之一。店老板原是上海小南国做产品研发的老师傅，三年多前在此开鸡粥店。店里选用定点饲养的三黄鸡，每天清早直送到店，坚持传统老工艺还原鸡的汁冻，加老配方调料，绝不含鸡精味精，当天做当天卖，一日四档（08:00/10:30/13:30/16:30），卖完即止。招牌鸡粥浓稠鲜美，内含鸡胗，吃前需搅匀酱汁；白斩三黄鸡皮黄肉嫩、骨带血丝；酒酿糟鸡为改良糟卤，加酒酿与枸杞，是熟客必点。熟客自带小锅请店员盛免费鸡汤回家下面条。高德评分4.5，人均约32元。澎湃新闻、上观新闻、腾讯新闻等多家媒体报道其小南国老师傅背景与三黄鸡选材。\n— 食客堂食原话 —\n1. [抖音] 今天给大家推荐的美食在蒙自西路2号蒙西菜场的阿模灵鸡粥店……酒酿糟鸡四分之一白斩鸡，免费提供鸡汤，需自带容器靠近鸡腿部分32元……酒酿糟鸡在糟卤上做了改良，用了酒酿 (https://www.iesdouyin.com/share/video/7300935502679543050)\n2. [抖音] 第二家阿模灵，小南国老师傅出来开的，三黄鸡每天清早直送，鸡粥浓稠里面有鸡胗，秋冬喝一碗暖到心里，熟客都自带锅来舀免费鸡汤回去下面条 (https://www.iesdouyin.com/share/video/7663441967405223177)\n差评/风险：菜场档口环境简陋；下午售完即收摊，一日四档卖完为止",
+      "status": "active",
+      "data_updated_at": "2026-09-26",
+      "location": "SRID=4326;POINT(121.4764 31.2076)"
+    },
+    "cids_add": [
+      9,
+      65,
+      74,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [
+      "[\"need_create\", \"快餐\", \"菜系\", \"上海本帮菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "source 自填类型 map 与 URL 判定 other 不符: 360地图-阿模灵鸡粥蒙西店"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "妃灵蛋糕(蒙西菜场店)",
+    "fields": {
+      "name": "妃灵蛋糕(蒙西菜场店)",
+      "price_avg": 28,
+      "price_range": "¥20-35",
+      "address": "蒙自西路2号蒙西菜场底层",
+      "district": "黄浦区",
+      "business_area": "打浦桥/蒙西菜场",
+      "booking_method": "到店购买",
+      "signature_dishes": [
+        "鲜奶油蛋糕",
+        "奶油小方",
+        "招牌千层"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 76.0,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "妃灵蛋糕位于黄浦区蒙自西路2号蒙西菜场底层，营业时间9:00-18:00，人均约28元，是蒙西菜场'四大金刚'中唯一的甜品档。食客与上观新闻报道称其奶油品质堪比上海四季酒店同等级奶油，因开在菜场租金低而价格亲民，每天9点开门、基本下午就卖光。招牌为鲜奶油蛋糕与小方类甜点，奶油不腻、蛋体松软，被阿姨爷叔和附近上班族称为'菜场里的甜品隐藏款'。上观新闻（jfdaily）在胡彦斌逛吃蒙西菜场报道中明确列出妃灵蛋糕地址与营业时间。作为社区菜场甜品档，其卖点是真材实料的动物奶油与高性价比，而非网红包装。\n— 食客堂食原话 —\n1. [抖音] 第二家妃灵蛋糕。上海四季酒店同品质的奶油蛋糕，可能是开在菜场的关系，价格也很划算，每天9点开门，基本下午就能卖光 (https://www.iesdouyin.com/share/video/7663441967405223177)\n2. [抖音] 菜场门口的妃灵蛋糕是隐藏彩蛋，奶油是动物奶油不齁甜，蛋糕体松软像刚蒸出来的，下午去经常只剩最后两个，阿姨们一买就是一盒 (https://www.iesdouyin.com/share/video/7663441967405223177)\n差评/风险：下午常售罄，去晚买不到；菜场档口无堂食座位",
+      "status": "active",
+      "data_updated_at": "2026-09-26",
+      "location": "SRID=4326;POINT(121.4763 31.2076)"
+    },
+    "cids_add": [
+      67,
+      74,
+      77,
+      162,
+      302
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "潘记老面羌饼(嘉陵菜场店)",
+    "fields": {
+      "name": "潘记老面羌饼(嘉陵菜场店)",
+      "price_avg": 8,
+      "price_range": "¥5-12",
+      "address": "嘉陵路508号嘉陵菜场门口",
+      "district": "徐汇区",
+      "business_area": "长桥/嘉陵菜场",
+      "booking_method": "到店购买",
+      "signature_dishes": [
+        "老面羌饼",
+        "芝麻葱香羌饼",
+        "咸口羌饼"
+      ],
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "潘记老面羌饼位于徐汇区嘉陵路508号嘉陵菜场门口头号摊（长桥街道，地铁15号线华东理工大学站2号口步行约3分钟），是嘉陵菜场'早餐碳水一条街'最出名的摊位。羌饼用老面发酵，个头如生煎锅般大，出炉即被抢光，外皮撒满芝麻与葱花，咬下去外脆内软、梗啾啾有嚼劲，面香浓郁。食客对比蒙西菜场羌饼后评价：'潘记一整个梗啾啾的，更chewy and fluffy'，与沪食光的柔软扎实路线形成区分。每天早上阿姨爷叔排长队，下午5点整条早餐街只剩他家还在排队。Bilibili、携程、抖音均有本地早餐UP主专门打卡。人均仅约8元，是上海本地碳水社区店的典型代表。\n— 食客堂食原话 —\n1. [抖音] 然后是万众期待的老面羌饼，这个超绝回弹力，这好有嚼劲……潘记就一整个梗啾啾的，更chewy and fluffy (https://www.iesdouyin.com/share/video/7649363985163255461)\n2. [携程] 潘记老面羌饼（门口头号摊）：每天早上人太多，整条早餐街就数他家排队最长，老面发酵的羌饼外皮芝麻葱花煎得酥脆，里面松软有嚼劲 (https://m.ctrip.com/webapp/you/community/detail?articleId=289193766&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165)\n差评/风险：有食客认为味道普通，比不上沪食光；只卖上午，午后收摊",
+      "status": "active",
+      "data_updated_at": "2026-09-26",
+      "location": "SRID=4326;POINT(121.438 31.148)"
+    },
+    "cids_add": [
+      9,
+      51,
+      74,
+      162
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [
+      "[\"need_create\", \"面点\", \"菜系\", \"上海本帮菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "胡老头鱼丸(鞍山菜市场店)",
+    "fields": {
+      "name": "胡老头鱼丸(鞍山菜市场店)",
+      "price_avg": 29,
+      "price_range": "¥18-35",
+      "address": "鞍山路101号阳普鞍山菜市场内",
+      "district": "杨浦区",
+      "business_area": "鞍山新村/控江",
+      "phone": "02155571717",
+      "booking_method": "到店购买",
+      "signature_dishes": [
+        "手工青鱼丸",
+        "鱼丸汤",
+        "白斩鸡(夏季限定)"
+      ],
+      "score_objective": 76.0,
+      "score_diner": 78.0,
+      "score_taste": 80.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "胡老头鱼丸(鞍山菜市场店)位于杨浦区鞍山路101号阳普鞍山菜市场内，营业08:30-11:30及15:00-17:30，是杨浦熟食界开了十年的老店。明星单品手工鱼丸为街坊四邻公认，选用青鱼新鲜手捶，口感弹牙有鱼鲜，鱼丸汤清味厚；夏季限定白斩鸡亦为杨浦土著口碑单品。鱼丸为季节限定售卖，通常从10月底持续至次年5月。该品牌在杨浦有多家分店（中原路207号、殷行路489号、隆昌路720号等），均围绕菜场与社区布点，电话统一021-55571717。上海本地宝、城市吧、腾讯新闻（寻味杨浦专题）均报道其十年老店地位与手工鱼丸工艺。高德评分4.1-4.4，人均约18-29元，是典型的社区菜场熟食档，靠街坊复购经营。\n— 食客堂食原话 —\n1. [抖音] 寻味杨浦烟火小店：胡老头鱼丸(鞍山菜市场店)。最后一个月，鱼丸为季节限定售卖，通常从10月底持续至次年5月。本地滋味应季上市，人间烟火气，最抚凡人心 (https://www.iesdouyin.com/share/video/7624718894192503529)\n2. [抖音] 中原路胡老头鱼丸，仅限夏天的白斩鸡……杨浦区土著跟你们说，中原路胡老头鱼丸是杨浦人不能有事的店，夏天的白斩鸡是限定款 (https://www.iesdouyin.com/share/video/7677784153937260175)\n差评/风险：只做上午和下午两档，中午休息；鱼丸为季节限定，夏季无鱼丸",
+      "status": "active",
+      "data_updated_at": "2026-09-26",
+      "location": "SRID=4326;POINT(121.517 31.277)"
+    },
+    "cids_add": [
+      9,
+      64,
+      74,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [
+      "[\"need_create\", \"熟食卤味\", \"菜系\", \"上海本帮菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  }
+]

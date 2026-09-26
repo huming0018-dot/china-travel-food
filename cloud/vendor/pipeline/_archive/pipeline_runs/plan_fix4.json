@@ -1,0 +1,194 @@
+[
+  {
+    "action": "update",
+    "restaurant_id": 1143,
+    "name": "Le Comptoir de Pierre Gagnaire",
+    "fields": {
+      "name": "Le Comptoir de Pierre Gagnaire",
+      "name_en": "Le Comptoir de Pierre Gagnaire",
+      "tier": "奢华",
+      "price_avg": 1000,
+      "price_range": "¥900-1200",
+      "address": "徐汇区永嘉路300号嘉佩乐酒店石库门内",
+      "district": "徐汇区",
+      "business_area": "建国西路/衡山路",
+      "phone": "02154666668",
+      "booking_method": "电话/酒店预订",
+      "signature_dishes": [
+        "石库门下午茶套餐",
+        "鸽胸配甜菜",
+        "布雷斯鸡",
+        "法国奶酪盘"
+      ],
+      "score_objective": 95.0,
+      "score_diner": 86.7,
+      "score_taste": 95.0,
+      "score_endorsement": 100.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 93.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"环境像走进法国乡村院落，鸽胸熟度完美粉嫩，配甜菜根酱汁层次丰富\", \"source\": \"米其林指南\", \"url\": \"https://guide.michelin.com/cn/zh_cn/restaurant/le-comptoir-de-pierre-gagnaire\", \"date\": \"2026\"}, {\"quote\": \"石库门下午茶套餐精致优雅，布雷斯鸡外皮金黄酥脆肉质嫩滑，法国奶酪盘种类丰富\", \"source\": \"Nomfluence\", \"url\": \"https://www.nomfluence.com/shanghai/le-comptoir\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.457806 31.209091)"
+    },
+    "cids_add": [
+      26,
+      65,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1168,
+    "name": "Land of Butterful & Creamorous",
+    "fields": {
+      "name": "Land of Butterful & Creamorous",
+      "name_en": "Butterful & Creamorous",
+      "tier": "平价",
+      "price_avg": 80,
+      "price_range": "¥60-100",
+      "address": "黄浦区兴业路123弄6号楼1楼L1-18单元",
+      "district": "黄浦区",
+      "business_area": "新天地",
+      "phone": "02153861677",
+      "booking_method": "无需预订(常排队)",
+      "signature_dishes": [
+        "蝴蝶酥",
+        "黄油可颂",
+        "大蒜法棍",
+        "奶油卷"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 73.3,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 10.0,
+      "score_total": 65.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"蝴蝶酥层层酥脆黄油香气浓郁，可颂外皮酥脆内里柔软有嚼劲，排队值得\", \"source\": \"Trip.com\", \"url\": \"https://www.trip.com/restaurant/shanghai/land-of-butterful\", \"date\": \"2026\"}, {\"quote\": \"黄油可颂烤得金黄酥脆，大蒜法棍外脆内软蒜香十足，奶油卷甜而不腻\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/LandofButterful\", \"date\": \"2026\"}], \"negative\": [\"存在软广营销嫌疑\"], \"soft_ad\": [\"证据文本标注软广扣分\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.47503 31.219049)"
+    },
+    "cids_add": [
+      26,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1272,
+    "name": "Hard Rock Cafe 硬石餐厅(上海)",
+    "fields": {
+      "name": "Hard Rock Cafe 硬石餐厅(上海)",
+      "name_en": "Hard Rock Cafe",
+      "tier": "高档",
+      "price_avg": 250,
+      "price_range": "¥200-300",
+      "address": "黄浦区淮海中路近普安路(淮海路)",
+      "district": "黄浦区",
+      "business_area": "淮海路/人民广场",
+      "phone": "02163268177",
+      "booking_method": "大众点评/无需预订",
+      "signature_dishes": [
+        "经典汉堡",
+        "牛排拼盘",
+        "猪肋排",
+        "洋葱圈",
+        "奶昔"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 73.3,
+      "score_taste": 75.0,
+      "score_endorsement": 70.0,
+      "soft_ad_penalty": 4.0,
+      "score_total": 72.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"经典汉堡牛肉饼厚实多汁配烟熏培根，猪肋排烤得软烂脱骨BBQ酱汁浓郁\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/HardRockCafe上海\", \"date\": \"2026\"}, {\"quote\": \"牛排拼盘分量十足，洋葱圈酥脆可口，奶昔浓稠香甜，摇滚纪念品氛围拉满\", \"source\": \"小红书\", \"url\": \"https://www.xiaohongshu.com/search_result?keyword=HardRock上海\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.477855 31.223817)"
+    },
+    "cids_add": [
+      65,
+      72,
+      162,
+      163,
+      209
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1289,
+    "name": "Sip bistro&bar",
+    "fields": {
+      "name": "Sip bistro&bar",
+      "name_en": "Sip Bistro & Bar",
+      "tier": "中档",
+      "price_avg": 160,
+      "address": "静安区武定路993号(近康定路)",
+      "district": "静安区",
+      "business_area": "武定路/胶州路",
+      "phone": "02162549667",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "自然酒",
+        "法式小酒馆冷盘",
+        "炖菜",
+        "杯卖酒",
+        "芝士拼盘"
+      ],
+      "score_objective": 35.0,
+      "score_diner": 53.3,
+      "score_taste": 65.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 46.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"法式小酒馆冷盘拼盘食材新鲜，炖牛肉软烂入味配自然酒刚好，吧台位适合单人小酌\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Sipbistrobar武定路\", \"date\": \"2026\"}, {\"quote\": \"芝士拼盘品种丰富配蜂蜜坚果，杯卖自然酒选择多，武定路酒吧街氛围轻松\", \"source\": \"小红书\", \"url\": \"https://www.xiaohongshu.com/search_result?keyword=Sipbistro武定路\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.443247 31.230037)"
+    },
+    "cids_add": [
+      26,
+      73,
+      162,
+      163,
+      164
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"酒吧清吧\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  }
+]

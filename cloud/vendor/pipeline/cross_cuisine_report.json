@@ -1,0 +1,73 @@
+{
+  "plan": [
+    {
+      "rid": 1526,
+      "name": "大富贵酒楼(中华路总店)",
+      "primary": "徽菜",
+      "basis": "唯一细叶子",
+      "conf": "medium",
+      "roots": [
+        "徽菜",
+        "本帮菜"
+      ],
+      "dels": [
+        [
+          9,
+          "本帮菜"
+        ]
+      ]
+    },
+    {
+      "rid": 1885,
+      "name": "福廬 FULL HOUSE",
+      "primary": "苏菜",
+      "basis": "唯一细叶子",
+      "conf": "medium",
+      "roots": [
+        "川菜",
+        "苏菜"
+      ],
+      "dels": [
+        [
+          2,
+          "川菜"
+        ]
+      ]
+    }
+  ],
+  "manual": [
+    {
+      "rid": 1409,
+      "name": "BASTARD小酒馆",
+      "roots": [
+        "川菜",
+        "粤菜"
+      ],
+      "kw_hit": [],
+      "leaf_roots": [],
+      "pre_dels": []
+    },
+    {
+      "rid": 1916,
+      "name": "川粤海棠(长宁)",
+      "roots": [
+        "川菜",
+        "粤菜"
+      ],
+      "kw_hit": [],
+      "leaf_roots": [],
+      "pre_dels": []
+    },
+    {
+      "rid": 1922,
+      "name": "悦轩(上海柏悦酒店)",
+      "roots": [
+        "本帮菜",
+        "浙菜"
+      ],
+      "kw_hit": [],
+      "leaf_roots": [],
+      "pre_dels": []
+    }
+  ]
+}

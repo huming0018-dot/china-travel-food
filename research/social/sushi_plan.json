@@ -1,0 +1,200 @@
+[
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "Ginza Onodera 鮨(外滩十八号店)",
+    "fields": {
+      "name": "Ginza Onodera 鮨(外滩十八号店)",
+      "name_en": "Ginza Onodera Sushi Bund 18",
+      "price_avg": 1580,
+      "price_range": "¥1200-2000",
+      "address": "中山东一路18号外滩十八号3层A室(近南京东路)",
+      "district": "黄浦区",
+      "business_area": "外滩",
+      "phone": "02163339818",
+      "booking_method": "电话/大众点评预约",
+      "signature_dishes": [
+        "大脂金枪鱼手握",
+        "海胆寿司",
+        "炙烤星鳗",
+        "玉子烧",
+        "大竹荚寿司",
+        "比目鱼昆布渍"
+      ],
+      "investor_info": "Onodera集团",
+      "score_objective": 88.0,
+      "score_diner": 85.0,
+      "score_taste": 90.0,
+      "score_endorsement": 92.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "东京米其林二星名店Ginza Onodera上海分店，位于外滩十八号3层A室，正统江户前寿司Omakase形式，人均1580元。DiningCity评分9.2共162条评价，黑珍珠一钻认证，OAD亚洲最佳餐厅推荐。食客评价金枪鱼大腹入口即化、海胆鲜甜如冰淇淋、醋饭温度酸度恰到好处，主厨现场捏制并讲解每一贯菜品。每日空运食材，大竹荚鱼、比目鱼昆布渍、炝鱿鱼配鱼子酱、炙烤星鳗等菜品被多次提及。午市套餐性价比高，外滩景观位需提前预约，开瓶费500元。全球20余家门店，上海主将捏寿司手法稳，一握一压带着老店笃定。\n— 食客堂食原话 —\n1. [Trip.com·金枪鱼大腹/海胆寿司] 金枪鱼寿司入口即化，海胆非常新鲜带着自然甜味，每种鱼都被精心处理，寿司师傅会讲解菜品并提醒尽快吃 (https://pk.trip.com/moments/poi-ginza-onodera-26472111/)\n2. [携程笔记·大竹荚/比目鱼/鱿鱼寿司] 醋饭温度和酸度恰到好处，大竹荚开头鱼身泛粉色光泽油脂恰到好处，比目鱼用昆布腌过肉质紧实有清甜感，炝鱿鱼带玫瑰盐和鱼子酱撒柚子皮 (https://m.ctrip.com/webapp/you/community/detail?articleId=331998815)\n差评/风险：价格较高；开瓶费500元",
+      "status": "active",
+      "data_updated_at": "2026-09-26"
+    },
+    "cids_add": [
+      64,
+      71,
+      85,
+      86,
+      159,
+      160,
+      162,
+      163,
+      165,
+      167
+    ],
+    "needs_amap": true,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "source 自填类型 platform 与 URL 判定 other 不符: Ginza Onodera Sush",
+      "source 自填类型 overseas_media 与 URL 判定 other 不符: Sushi Ginza Onoder"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "鮨升(泰安路店)",
+    "fields": {
+      "name": "鮨升(泰安路店)",
+      "name_en": "Sushi Noboru Tai'an Rd",
+      "price_avg": 1180,
+      "price_range": "¥980-1280",
+      "address": "泰安路50号2楼(近兴国路)",
+      "district": "长宁区",
+      "business_area": "新华路/交通大学",
+      "booking_method": "电话/微信预约",
+      "signature_dishes": [
+        "金枪鱼舌腐",
+        "牡丹虾寿司",
+        "星鳗手卷",
+        "青花鱼棒寿司",
+        "小肌寿司",
+        "玉子烧"
+      ],
+      "investor_info": "鮨升",
+      "score_objective": 82.0,
+      "score_diner": 88.0,
+      "score_taste": 86.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "鮨升2020年泰安路首店开业，黑珍珠一钻，千元档omakase稳定选手，人均1180元。主厨李师傅曾在Ginza Onodera修行，江户前风格正宗，醋饭调味精准。食客评价金枪鱼舌腐入口如奶油融化、牡丹虾鲜甜弹牙、星鳗手卷出色、青花鱼棒寿司鲜香，李师傅健谈且专业，全程约18道吃饱喝足。2023年陆家嘴开二店。门头低调藏在梧桐树荫下，隔壁是爵士酒吧Heyday。工作日需提前一周预约，老客复购率高，开瓶费200元。\n— 食客堂食原话 —\n1. [抖音·omakase套餐] 千元档里的稳定选手，全程18道吃撑喝美，李师傅之前在小野寺修行过，从醋饭到寿司都是非常正宗的江户前风格，李师傅非常健谈 (https://www.iesdouyin.com/share/video/7526093971966872891)\n2. [抖音·金枪鱼舌腐/牡丹虾寿司] 金枪鱼舌腐入口跟奶油一样融化，根本不觉得在吃鱼肉而是一块甜美的脂肪，巨大的牡丹虾寿司虾肉鲜甜弹牙 (https://www.iesdouyin.com/share/video/7634521536451349786)\n差评/风险：需提前预约；开瓶费200元",
+      "status": "active",
+      "data_updated_at": "2026-09-26"
+    },
+    "cids_add": [
+      64,
+      71,
+      85,
+      86,
+      160,
+      162,
+      163,
+      165
+    ],
+    "needs_amap": true,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "鮨升(陆家嘴店)",
+    "fields": {
+      "name": "鮨升(陆家嘴店)",
+      "name_en": "Sushi Noboru Lujiazui",
+      "price_avg": 1180,
+      "price_range": "¥980-1280",
+      "address": "银城中路68号2楼",
+      "district": "浦东新区",
+      "business_area": "陆家嘴",
+      "phone": "15221794580",
+      "booking_method": "电话预约",
+      "signature_dishes": [
+        "金枪鱼泥手卷",
+        "江户前寿司",
+        "星鳗手卷",
+        "小肌寿司",
+        "玉子烧"
+      ],
+      "investor_info": "鮨升",
+      "score_objective": 80.0,
+      "score_diner": 85.0,
+      "score_taste": 84.0,
+      "score_endorsement": 70.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "鮨升陆家嘴二店2023年开业，李师傅主板，位于银城中路68号2楼，人均1180元。江户前风格寿司omakase，醋饭与鱼生配比精准，食材每日新鲜直送。食客评价李师傅从醋饭到寿司都非常正宗，最后会额外送金枪鱼泥手卷，彻底吃撑。与泰安路店同品牌不同分店各自独立运营，电话15221794580可预约。千元档稳定选手，食材新鲜度高，适合陆家嘴商务区商务宴请和约会，板前座位可全程观看主厨捏制。午市套餐性价比高，晚市食材更丰富。\n— 食客堂食原话 —\n1. [抖音·金枪鱼泥手卷] 李师傅主板，从醋饭到寿司都是非常正宗的江户前风格，最后生怕吃不饱又送了一个金枪鱼泥手卷，彻底吃撑 (https://www.iesdouyin.com/share/video/7526093971966872891)\n2. [抖音·omakase套餐] 时隔两年又在鮨升度过了一次开心的生日，餐费依旧1180，千元档里的稳定选手 (https://www.iesdouyin.com/share/video/7564754458883837221)\n差评/风险：浦东距离较远",
+      "status": "active",
+      "data_updated_at": "2026-09-26"
+    },
+    "cids_add": [
+      64,
+      71,
+      85,
+      86,
+      162,
+      163,
+      165
+    ],
+    "needs_amap": true,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "source 自填类型 map 与 URL 判定 other 不符: 鮨昇(陆家嘴店)电话"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "鮨莲·日本料理(新闸路店)",
+    "fields": {
+      "name": "鮨莲·日本料理(新闸路店)",
+      "name_en": "Sushi Ren",
+      "price_avg": 680,
+      "price_range": "¥580-880",
+      "address": "新闸路916号(近泰兴路)",
+      "district": "静安区",
+      "business_area": "南京西路/静安寺",
+      "booking_method": "电话/大众点评预约",
+      "signature_dishes": [
+        "厚切金枪鱼大腹",
+        "海胆金枪鱼手卷",
+        "牡丹虾刺身",
+        "扇贝寿司",
+        "炙烤寿司",
+        "玉子烧"
+      ],
+      "score_objective": 78.0,
+      "score_diner": 90.0,
+      "score_taste": 85.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 0.0,
+      "evidence_summary": "新闸路13年日料老店鮨莲，门头低调，原木风板前，人均680元omakase被称为同价位天花板。食客评价厚切金枪鱼大腹油脂绵密入口即化、海胆金枪鱼手卷如冰淇淋般顺滑、牡丹虾糯弹、扇贝甜丝丝、现磨山葵香气足，醋饭酸度刚好。13年屹立不倒，忠实老客群稳定，工作日午餐也需预约。有包厢私密性好，适合约会和姐妹小聚。前菜刺身酒肴寿司完整套餐，食材当天现杀现送，手握寿司松紧刚好，长崎金枪鱼大腹是招牌。大众点评评分4.8分约500条评价，口碑稳定。\n— 食客堂食原话 —\n1. [携程笔记·omakase套餐] 开了13年的鮨莲算得上日料爱好者心中的宝藏板前寿司店，680元的omakase套餐堪称同价位天花板，综合实力直接吊打一众同城日料板前 (https://m.ctrip.com/webapp/you/community/detail?articleId=328171901)\n2. [携程笔记·金枪鱼大腹/海胆手卷] 现磨山葵，金枪鱼大腹手握出圈，压轴是手握寿司plus——一层金枪鱼泥一层鱼籽再铺满满一层马粪海胆，这一口下去太满足了 (https://m.ctrip.com/webapp/you/community/detail?articleId=334156964)\n差评/风险：门头低调不易找；包厢需提前预约",
+      "status": "active",
+      "data_updated_at": "2026-09-26"
+    },
+    "cids_add": [
+      64,
+      71,
+      85,
+      86,
+      162,
+      163,
+      165,
+      167
+    ],
+    "needs_amap": true,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "高端店缺电话，建议补预订方式"
+    ]
+  }
+]

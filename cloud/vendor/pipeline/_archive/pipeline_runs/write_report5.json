@@ -1,0 +1,1034 @@
+[
+  {
+    "name": "Liquid Laundry",
+    "action": "update",
+    "rid": 1270,
+    "rc_added": [
+      77,
+      161,
+      209
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1270,
+      "name": "Liquid Laundry",
+      "status": "active",
+      "location": "0101000020E6100000739CDB847B5D5E400531D0B52F383F40",
+      "phone": "02154041617",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "Smokin' Hog 美式烟熏BBQ",
+    "action": "update",
+    "rid": 1271,
+    "rc_added": [
+      51,
+      209
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1271,
+      "name": "Smokin' Hog 美式烟熏BBQ",
+      "status": "active",
+      "location": "0101000020E61000007F17B6662B5D5E4042D13C80453A3F40",
+      "phone": "02162539177",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "OHA EATERY",
+    "action": "update",
+    "rid": 1273,
+    "rc_added": [
+      57,
+      72,
+      209
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1273,
+      "name": "OHA EATERY",
+      "status": "active",
+      "location": "0101000020E610000051BCCADAA65C5E40676490BB08373F40",
+      "phone": "13621647680",
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "RAC",
+    "action": "update",
+    "rid": 1274,
+    "rc_added": [
+      26,
+      77,
+      161
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1274,
+      "name": "RAC",
+      "status": "active",
+      "location": "0101000020E61000008C2D0439285C5E40F16261889C363F40",
+      "phone": "13636595172",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "法国舅舅家小酒馆CHEZ JOJO(永嘉路店)",
+    "action": "update",
+    "rid": 1275,
+    "rc_added": [
+      3,
+      26,
+      73
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1275,
+      "name": "法国舅舅家小酒馆CHEZ JOJO(永嘉路店)",
+      "status": "active",
+      "location": "0101000020E610000082583673485D5E407D91D09673353F40",
+      "phone": "02164080887",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "Kartel Wine Bar",
+    "action": "update",
+    "rid": 1276,
+    "rc_added": [
+      26
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1276,
+      "name": "Kartel Wine Bar",
+      "status": "active",
+      "location": "0101000020E6100000C0CC77F0135D5E407EE5417A8A383F40",
+      "phone": "02154042899",
+      "tier": "高档",
+      "price_avg": 220
+    },
+    "ok": true
+  },
+  {
+    "name": "HEALER Bar",
+    "action": "update",
+    "rid": 1277,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1277,
+      "name": "HEALER Bar",
+      "status": "active",
+      "location": "0101000020E61000009F5BE84A045C5E40BC5D2F4D11343F40",
+      "phone": "02162996020",
+      "tier": "中档",
+      "price_avg": 114
+    },
+    "ok": true
+  },
+  {
+    "name": "SunFlour阳光粮品(安福路店)",
+    "action": "update",
+    "rid": 1278,
+    "rc_added": [
+      51,
+      77,
+      161
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1278,
+      "name": "SunFlour阳光粮品(安福路店)",
+      "status": "active",
+      "location": "0101000020E61000001C0B0A83325C5E407E5358A9A0363F40",
+      "phone": "02164737757",
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "老麦咖啡馆TheCottageBar(武康大楼店)",
+    "action": "update",
+    "rid": 1279,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 4,
+    "location_set": true,
+    "readback": {
+      "id": 1279,
+      "name": "老麦咖啡馆TheCottageBar(武康大楼店)",
+      "status": "active",
+      "location": "0101000020E6100000E7A6CD380D5C5E405359147651343F40",
+      "phone": "19921449569",
+      "tier": "平价",
+      "price_avg": 66
+    },
+    "ok": true
+  },
+  {
+    "name": "Alimentari早午餐(安福路店)",
+    "action": "update",
+    "rid": 1280,
+    "rc_added": [
+      64,
+      77,
+      161
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1280,
+      "name": "Alimentari早午餐(安福路店)",
+      "status": "active",
+      "location": "0101000020E610000023F8DF4A765C5E40C9E53FA4DF363F40",
+      "phone": "02154036991",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "MEL BOURNE Brunch&Bistro猫尔本(静安店)",
+    "action": "update",
+    "rid": 1281,
+    "rc_added": [
+      26,
+      51,
+      64,
+      77,
+      161
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1281,
+      "name": "MEL BOURNE Brunch&Bistro猫尔本(静安店)",
+      "status": "active",
+      "location": "0101000020E6100000EF71A609DB5C5E4044A7E7DD58383F40",
+      "phone": "13917560093",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "马里昂巴Marienbad(武康路店)",
+    "action": "update",
+    "rid": 1282,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1282,
+      "name": "马里昂巴Marienbad(武康路店)",
+      "status": "active",
+      "location": "0101000020E6100000B89388F02F5C5E40C9E53FA4DF363F40",
+      "phone": "02154042909",
+      "tier": "平价",
+      "price_avg": 50
+    },
+    "ok": true
+  },
+  {
+    "name": "LENOTRE雷诺特法式西点(前滩太古里店)",
+    "action": "update",
+    "rid": 1283,
+    "rc_added": [
+      26,
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1283,
+      "name": "LENOTRE雷诺特法式西点(前滩太古里店)",
+      "status": "active",
+      "location": "0101000020E6100000C45C52B5DD5E5E4097900F7A36273F40",
+      "phone": "02158599005",
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "Le Gateau戛朵法式蛋糕(世博源店)",
+    "action": "update",
+    "rid": 1284,
+    "rc_added": [
+      26
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1284,
+      "name": "Le Gateau戛朵法式蛋糕(世博源店)",
+      "status": "active",
+      "location": "0101000020E6100000933A014D845F5E40C976BE9F1A2F3F40",
+      "phone": "02150673599",
+      "tier": "平价",
+      "price_avg": 60
+    },
+    "ok": true
+  },
+  {
+    "name": "PAUL LAFAYET法式甜品(港汇广场店)",
+    "action": "update",
+    "rid": 1285,
+    "rc_added": [
+      3,
+      26,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1285,
+      "name": "PAUL LAFAYET法式甜品(港汇广场店)",
+      "status": "active",
+      "location": "0101000020E6100000AF415F7AFB5B5E4042AF3F89CF313F40",
+      "phone": "02154015328",
+      "tier": "平价",
+      "price_avg": 65
+    },
+    "ok": true
+  },
+  {
+    "name": "Justgrapes萄醉(安福路店)",
+    "action": "update",
+    "rid": 1286,
+    "rc_added": [
+      27,
+      51,
+      73
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1286,
+      "name": "Justgrapes萄醉(安福路店)",
+      "status": "active",
+      "location": "0101000020E610000064E76D6C765C5E40FF5A5EB9DE363F40",
+      "phone": "02154046505",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "SHIMMER(巨鹿路店)",
+    "action": "update",
+    "rid": 1287,
+    "rc_added": [
+      65
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1287,
+      "name": "SHIMMER(巨鹿路店)",
+      "status": "active",
+      "location": "0101000020E61000000DC17119375D5E4093E52494BE383F40",
+      "phone": "19145480717",
+      "tier": "中档",
+      "price_avg": 150
+    },
+    "ok": true
+  },
+  {
+    "name": "JZ CLUB",
+    "action": "update",
+    "rid": 1288,
+    "rc_added": [],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1288,
+      "name": "JZ CLUB",
+      "status": "active",
+      "location": "0101000020E61000006EFB1EF5D75D5E405DC0CB0C1B393F40",
+      "phone": "02153098221",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "沪西老弄堂面馆(定西路店)",
+    "action": "update",
+    "rid": 1290,
+    "rc_added": [
+      9,
+      65,
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1290,
+      "name": "沪西老弄堂面馆(定西路店)",
+      "status": "active",
+      "location": "0101000020E61000009770E82D1E5B5E40DE5A26C3F1343F40",
+      "phone": "13641898598",
+      "tier": "经济",
+      "price_avg": 40
+    },
+    "ok": true
+  },
+  {
+    "name": "马新文拉面店(广西北路店)",
+    "action": "update",
+    "rid": 1291,
+    "rc_added": [
+      3,
+      12,
+      57
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1291,
+      "name": "马新文拉面店(广西北路店)",
+      "status": "active",
+      "location": "0101000020E610000027874F3A915E5E40541A31B3CF3B3F40",
+      "phone": "02163609153",
+      "tier": "经济",
+      "price_avg": 35
+    },
+    "ok": true
+  },
+  {
+    "name": "大拇指面馆(高平路店)",
+    "action": "update",
+    "rid": 1292,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1292,
+      "name": "大拇指面馆(高平路店)",
+      "status": "active",
+      "location": "0101000020E6100000423F53AF5B5B5E405F07CE19514A3F40",
+      "phone": "15021942238",
+      "tier": "经济",
+      "price_avg": 30
+    },
+    "ok": true
+  },
+  {
+    "name": "La Burg勒博格南非餐吧",
+    "action": "update",
+    "rid": 1293,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1293,
+      "name": "La Burg勒博格南非餐吧",
+      "status": "active",
+      "location": "0101000020E6100000AE8383BD895C5E40EE21E17B7F3F3F40",
+      "phone": "02164370057",
+      "tier": "中档",
+      "price_avg": 180
+    },
+    "ok": true
+  },
+  {
+    "name": "ATELIER NO.3",
+    "action": "update",
+    "rid": 1294,
+    "rc_added": [
+      26,
+      57,
+      164
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1294,
+      "name": "ATELIER NO.3",
+      "status": "active",
+      "location": "0101000020E61000009E0AB8E7F95C5E40AB21718FA5373F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 230
+    },
+    "ok": true
+  },
+  {
+    "name": "Yugo fusion izakaya",
+    "action": "update",
+    "rid": 1295,
+    "rc_added": [
+      28,
+      51,
+      65,
+      72,
+      85,
+      86
+    ],
+    "rc_total": 13,
+    "location_set": true,
+    "readback": {
+      "id": 1295,
+      "name": "Yugo fusion izakaya",
+      "status": "active",
+      "location": "0101000020E610000068976F7D585B5E40E2CD1ABCAF363F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 224
+    },
+    "ok": true
+  },
+  {
+    "name": "Verdant浮叶",
+    "action": "update",
+    "rid": 1296,
+    "rc_added": [
+      27,
+      51,
+      57,
+      159,
+      162
+    ],
+    "rc_total": 13,
+    "location_set": true,
+    "readback": {
+      "id": 1296,
+      "name": "Verdant浮叶",
+      "status": "active",
+      "location": "0101000020E610000022C7D633845C5E406B9C4D4700333F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 200
+    },
+    "ok": true
+  },
+  {
+    "name": "Kora by Circle",
+    "action": "update",
+    "rid": 1297,
+    "rc_added": [
+      64
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1297,
+      "name": "Kora by Circle",
+      "status": "active",
+      "location": "0101000020E6100000D26D895C705B5E400C40A374E9333F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 130
+    },
+    "ok": true
+  },
+  {
+    "name": "Trattoria del Bistecca·1565",
+    "action": "update",
+    "rid": 1298,
+    "rc_added": [
+      51,
+      57,
+      64
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1298,
+      "name": "Trattoria del Bistecca·1565",
+      "status": "active",
+      "location": "0101000020E6100000E97C789620605E40A1698995D13C3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 162
+    },
+    "ok": true
+  },
+  {
+    "name": "司芳糯米(久光店)",
+    "action": "update",
+    "rid": 1299,
+    "rc_added": [
+      3,
+      51,
+      57,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1299,
+      "name": "司芳糯米(久光店)",
+      "status": "active",
+      "location": "0101000020E6100000812040868E5C5E40AF777FBC57393F40",
+      "phone": "18217685548",
+      "tier": "经济",
+      "price_avg": 33
+    },
+    "ok": true
+  },
+  {
+    "name": "Albaluz",
+    "action": "update",
+    "rid": 1300,
+    "rc_added": [
+      3,
+      57,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1300,
+      "name": "Albaluz",
+      "status": "active",
+      "location": "0101000020E6100000C16ED8B6285C5E401364045438323F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 298
+    },
+    "ok": true
+  },
+  {
+    "name": "Kyochon1991校村炸鸡(漕宝路店)",
+    "action": "update",
+    "rid": 1301,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1301,
+      "name": "Kyochon1991校村炸鸡(漕宝路店)",
+      "status": "active",
+      "location": "0101000020E61000001AC05B2041585E40D6FD63213A283F40",
+      "phone": "02162215660",
+      "tier": "平价",
+      "price_avg": 60
+    },
+    "ok": true
+  },
+  {
+    "name": "KOSMOS斯拉夫酒馆",
+    "action": "update",
+    "rid": 1302,
+    "rc_added": [
+      12,
+      64
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1302,
+      "name": "KOSMOS斯拉夫酒馆",
+      "status": "active",
+      "location": "0101000020E6100000986BD102B45C5E4004AC55BB263C3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "是隆路船面(东湖路店)",
+    "action": "update",
+    "rid": 1303,
+    "rc_added": [
+      3,
+      51,
+      65,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1303,
+      "name": "是隆路船面(东湖路店)",
+      "status": "active",
+      "location": "0101000020E610000030A182C30B5D5E4037DF88EE59373F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45
+    },
+    "ok": true
+  },
+  {
+    "name": "WING REPUBLIC来翅够",
+    "action": "update",
+    "rid": 1304,
+    "rc_added": [
+      35,
+      51,
+      72,
+      209
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1304,
+      "name": "WING REPUBLIC来翅够",
+      "status": "active",
+      "location": "0101000020E61000004FCB0F5CE55C5E40C537143E5B3B3F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "VN Banh Mi&Cafe越法时光(1788广场店)",
+    "action": "update",
+    "rid": 1305,
+    "rc_added": [
+      35,
+      65,
+      72,
+      154
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1305,
+      "name": "VN Banh Mi&Cafe越法时光(1788广场店)",
+      "status": "active",
+      "location": "0101000020E6100000F60CE198655C5E4048DDCEBEF2383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 50
+    },
+    "ok": true
+  },
+  {
+    "name": "THE PAWON·8碗(古北SOHO店)",
+    "action": "update",
+    "rid": 1306,
+    "rc_added": [
+      57,
+      64,
+      65
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1306,
+      "name": "THE PAWON·8碗(古北SOHO店)",
+      "status": "active",
+      "location": "0101000020E610000038BD8BF7E3595E402670EB6E9E323F40",
+      "phone": "02152716188",
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "YA BENJIA by元爱本家(金虹桥店)",
+    "action": "update",
+    "rid": 1307,
+    "rc_added": [
+      57
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1307,
+      "name": "YA BENJIA by元爱本家(金虹桥店)",
+      "status": "active",
+      "location": "0101000020E6100000F64201DBC1595E408C15359886353F40",
+      "phone": "15951712472",
+      "tier": "中档",
+      "price_avg": 158
+    },
+    "ok": true
+  },
+  {
+    "name": "Nick&Nicky's Family妮琪泰式家庭料理(静安大悦城店)",
+    "action": "update",
+    "rid": 1308,
+    "rc_added": [
+      3,
+      57,
+      64,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1308,
+      "name": "Nick&Nicky's Family妮琪泰式家庭料理(静安大悦城店)",
+      "status": "active",
+      "location": "0101000020E61000006DC9AA08375E5E409D2D20B41E3E3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 110
+    },
+    "ok": true
+  },
+  {
+    "name": "印度小厨(巨鹿路店)",
+    "action": "update",
+    "rid": 1309,
+    "rc_added": [
+      3
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1309,
+      "name": "印度小厨(巨鹿路店)",
+      "status": "active",
+      "location": "0101000020E6100000AD8A7093515D5E40C1A90F24EF383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "莎德曼·秘烤美食殿(大拇指广场店)",
+    "action": "update",
+    "rid": 1310,
+    "rc_added": [
+      12,
+      35,
+      65,
+      154
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1310,
+      "name": "莎德曼·秘烤美食殿(大拇指广场店)",
+      "status": "active",
+      "location": "0101000020E6100000EDEF6C8FDE635E40EAD0E979373A3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "辻利TSUJIRI(日月光店)",
+    "action": "update",
+    "rid": 1311,
+    "rc_added": [
+      3,
+      51,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1311,
+      "name": "辻利TSUJIRI(日月光店)",
+      "status": "active",
+      "location": "0101000020E6100000116E32AA0C5E5E4015C9570229353F40",
+      "phone": "02154278868",
+      "tier": "经济",
+      "price_avg": 40
+    },
+    "ok": true
+  },
+  {
+    "name": "Kaki Mania日式刨冰",
+    "action": "update",
+    "rid": 1312,
+    "rc_added": [
+      51,
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1312,
+      "name": "Kaki Mania日式刨冰",
+      "status": "active",
+      "location": "0101000020E61000003674B33F505D5E402A3A92CB7F383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 74
+    },
+    "ok": true
+  },
+  {
+    "name": "九十葉·抹茶专门店(新天地店)",
+    "action": "update",
+    "rid": 1313,
+    "rc_added": [
+      51
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1313,
+      "name": "九十葉·抹茶专门店(新天地店)",
+      "status": "active",
+      "location": "0101000020E6100000B54E5C8E575E5E409833DB15FA383F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 32
+    },
+    "ok": true
+  },
+  {
+    "name": "鲨鱼冰屋Kooriya Shark(常熟路店)",
+    "action": "update",
+    "rid": 1314,
+    "rc_added": [
+      51,
+      64,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1314,
+      "name": "鲨鱼冰屋Kooriya Shark(常熟路店)",
+      "status": "active",
+      "location": "0101000020E610000005C1E3DBBB5C5E40AEB9A3FFE5363F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 71
+    },
+    "ok": true
+  },
+  {
+    "name": "Sobre日式刨冰",
+    "action": "update",
+    "rid": 1315,
+    "rc_added": [
+      51,
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1315,
+      "name": "Sobre日式刨冰",
+      "status": "active",
+      "location": "0101000020E610000087890629785B5E40A8363811FD363F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 57
+    },
+    "ok": true
+  },
+  {
+    "name": "空蝉怀石料理(益丰·外滩源店)",
+    "action": "update",
+    "rid": 1316,
+    "rc_added": [
+      2,
+      3,
+      51
+    ],
+    "rc_total": 12,
+    "location_set": true,
+    "readback": {
+      "id": 1316,
+      "name": "空蝉怀石料理(益丰·外滩源店)",
+      "status": "active",
+      "location": "0101000020E61000000ADAE4F0495F5E402E9276A38F3D3F40",
+      "phone": "02153210321",
+      "tier": "奢华",
+      "price_avg": 1500
+    },
+    "ok": true
+  },
+  {
+    "name": "小钵 Kobachi on Fifty Six(金茂56楼)",
+    "action": "update",
+    "rid": 1317,
+    "rc_added": [
+      51,
+      86
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1317,
+      "name": "小钵 Kobachi on Fifty Six(金茂56楼)",
+      "status": "active",
+      "location": "0101000020E6100000DD5F3DEE5B605E40A6457D923B3C3F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 800
+    },
+    "ok": true
+  },
+  {
+    "name": "麺屋庄野研究所",
+    "action": "update",
+    "rid": 1318,
+    "rc_added": [
+      3,
+      12,
+      51,
+      65
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1318,
+      "name": "麺屋庄野研究所",
+      "status": "active",
+      "location": "0101000020E610000018D1764CDD535E400FB8AE9811323F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 70
+    },
+    "ok": true
+  },
+  {
+    "name": "七豚拉面(瑞金一路店)",
+    "action": "update",
+    "rid": 1319,
+    "rc_added": [
+      3,
+      12,
+      51,
+      65,
+      159
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1319,
+      "name": "七豚拉面(瑞金一路店)",
+      "status": "active",
+      "location": "0101000020E6100000F5BA4560AC5D5E405B272EC72B383F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 60
+    },
+    "ok": true
+  }
+]

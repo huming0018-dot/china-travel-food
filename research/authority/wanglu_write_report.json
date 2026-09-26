@@ -1,0 +1,54 @@
+[
+  {
+    "name": "望庐·精细江西菜(外滩店)",
+    "action": "new",
+    "rid": 1982,
+    "rc_added": [
+      22
+    ],
+    "rc_total": 1,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1982,
+      "name": "望庐·精细江西菜(外滩店)",
+      "status": "active",
+      "location": "0101000020E6100000427A8A1C225F5E4069C878944A3C3F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 250,
+      "score_total": null,
+      "score_objective": null,
+      "score_diner": null,
+      "score_taste": null,
+      "score_endorsement": null
+    },
+    "ok": true
+  },
+  {
+    "name": "望庐·江西荟馆(前滩店)",
+    "action": "new",
+    "rid": 1983,
+    "rc_added": [
+      22
+    ],
+    "rc_total": 1,
+    "location_set": true,
+    "derive_ok": true,
+    "readback": {
+      "id": 1983,
+      "name": "望庐·江西荟馆(前滩店)",
+      "status": "active",
+      "location": "0101000020E610000090F46915FD5E5E40E2B034F0A3263F40",
+      "phone": "02158883331",
+      "tier": "高档",
+      "price_avg": 280,
+      "score_total": null,
+      "score_objective": null,
+      "score_diner": null,
+      "score_taste": null,
+      "score_endorsement": null
+    },
+    "ok": true
+  }
+]

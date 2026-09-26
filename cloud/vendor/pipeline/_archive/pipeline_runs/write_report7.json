@@ -1,0 +1,791 @@
+[
+  {
+    "name": "Radar雷达咖啡(思南路店)",
+    "action": "update",
+    "rid": 1373,
+    "rc_added": [
+      51,
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1373,
+      "name": "Radar雷达咖啡(思南路店)",
+      "status": "active",
+      "location": "0101000020E6100000B7291E17D55D5E40B22E6EA301383F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35
+    },
+    "ok": true
+  },
+  {
+    "name": "煮屿 Brew Island(溧阳路店)",
+    "action": "update",
+    "rid": 1374,
+    "rc_added": [
+      26
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1374,
+      "name": "煮屿 Brew Island(溧阳路店)",
+      "status": "active",
+      "location": "0101000020E6100000CAFE791A305F5E400188BB7A15413F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "aftertaste回味(江勇路店)",
+    "action": "update",
+    "rid": 1375,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": false,
+    "readback": {
+      "id": 1375,
+      "name": "aftertaste回味(江勇路店)",
+      "status": "active",
+      "location": null,
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 80
+    },
+    "ok": true
+  },
+  {
+    "name": "制冰铺MakingGelato·时桉(陕西南路店)",
+    "action": "update",
+    "rid": 1378,
+    "rc_added": [
+      3,
+      72,
+      85
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1378,
+      "name": "制冰铺MakingGelato·时桉(陕西南路店)",
+      "status": "active",
+      "location": "0101000020E61000005FED28CE515D5E407EE02A4F20383F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35
+    },
+    "ok": true
+  },
+  {
+    "name": "La Creperie(桃江路店)",
+    "action": "update",
+    "rid": 1379,
+    "rc_added": [
+      64
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1379,
+      "name": "La Creperie(桃江路店)",
+      "status": "active",
+      "location": "0101000020E61000004A287D21E45C5E40DD99098673353F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 120
+    },
+    "ok": true
+  },
+  {
+    "name": "泰安门 Taian Table",
+    "action": "update",
+    "rid": 1381,
+    "rc_added": [
+      71
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "readback": {
+      "id": 1381,
+      "name": "泰安门 Taian Table",
+      "status": "active",
+      "location": "0101000020E6100000CCB22781CD5B5E40AA29C93A1C393F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 2700
+    },
+    "ok": true
+  },
+  {
+    "name": "宝丽轩",
+    "action": "update",
+    "rid": 1382,
+    "rc_added": [
+      3,
+      64,
+      65,
+      71
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1382,
+      "name": "宝丽轩",
+      "status": "active",
+      "location": "0101000020E610000049BA66F2CD5E5E40850B7904373E3F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 839
+    },
+    "ok": true
+  },
+  {
+    "name": "福和慧",
+    "action": "update",
+    "rid": 1383,
+    "rc_added": [
+      71
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1383,
+      "name": "福和慧",
+      "status": "active",
+      "location": "0101000020E61000007D941117805B5E4051A1BAB9F8373F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 1191
+    },
+    "ok": true
+  },
+  {
+    "name": "三号黄浦会 Canton Table",
+    "action": "update",
+    "rid": 1384,
+    "rc_added": [
+      3,
+      71
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "readback": {
+      "id": 1384,
+      "name": "三号黄浦会 Canton Table",
+      "status": "active",
+      "location": "0101000020E6100000959C137B685F5E40F3E32F2DEA3B3F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 600
+    },
+    "ok": true
+  },
+  {
+    "name": "成隆行蟹王府(九江路店)",
+    "action": "update",
+    "rid": 1385,
+    "rc_added": [
+      9,
+      51,
+      64,
+      71
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1385,
+      "name": "成隆行蟹王府(九江路店)",
+      "status": "active",
+      "location": "0101000020E6100000E78F696D1A5F5E40A99F3715A93C3F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 400
+    },
+    "ok": true
+  },
+  {
+    "name": "Fabula",
+    "action": "update",
+    "rid": 1386,
+    "rc_added": [
+      26,
+      51,
+      71
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1386,
+      "name": "Fabula",
+      "status": "active",
+      "location": "0101000020E6100000083E062B4E5D5E4038F4160FEF393F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 1280
+    },
+    "ok": true
+  },
+  {
+    "name": "福1039",
+    "action": "update",
+    "rid": 1387,
+    "rc_added": [
+      9,
+      26,
+      64,
+      65,
+      71
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1387,
+      "name": "福1039",
+      "status": "active",
+      "location": "0101000020E610000002F566D47C5B5E40143E5B0707373F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 400
+    },
+    "ok": true
+  },
+  {
+    "name": "福1088",
+    "action": "update",
+    "rid": 1388,
+    "rc_added": [
+      9,
+      28,
+      64,
+      65,
+      71
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1388,
+      "name": "福1088",
+      "status": "active",
+      "location": "0101000020E6100000CA501553E95B5E40F355F2B1BB383F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 581
+    },
+    "ok": true
+  },
+  {
+    "name": "il Ristorante - Niko Romito",
+    "action": "update",
+    "rid": 1389,
+    "rc_added": [
+      27,
+      71
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "readback": {
+      "id": 1389,
+      "name": "il Ristorante - Niko Romito",
+      "status": "active",
+      "location": "0101000020E610000049BA66F2CD5E5E40850B7904373E3F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 1368
+    },
+    "ok": true
+  },
+  {
+    "name": "金轩(浦东丽思卡尔顿店)",
+    "action": "update",
+    "rid": 1390,
+    "rc_added": [
+      3,
+      65,
+      71
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1390,
+      "name": "金轩(浦东丽思卡尔顿店)",
+      "status": "active",
+      "location": "0101000020E6100000E97C789620605E40A1698995D13C3F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 708
+    },
+    "ok": true
+  },
+  {
+    "name": "凌珑 Ling Long",
+    "action": "update",
+    "rid": 1391,
+    "rc_added": [
+      71
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1391,
+      "name": "凌珑 Ling Long",
+      "status": "active",
+      "location": "0101000020E61000001A14CD03585F5E40BFB9BF7ADC3B3F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 2368
+    },
+    "ok": true
+  },
+  {
+    "name": "Obscura by 唐香",
+    "action": "update",
+    "rid": 1392,
+    "rc_added": [
+      71
+    ],
+    "rc_total": 5,
+    "location_set": true,
+    "readback": {
+      "id": 1392,
+      "name": "Obscura by 唐香",
+      "status": "active",
+      "location": "0101000020E6100000FDF675E09C5C5E4003D0285DFA3B3F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 2100
+    },
+    "ok": true
+  },
+  {
+    "name": "O.P.S. CAFE(太原路店)",
+    "action": "update",
+    "rid": 1393,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1393,
+      "name": "O.P.S. CAFE(太原路店)",
+      "status": "active",
+      "location": "0101000020E6100000BE4D7FF6235D5E40C5CBD3B9A2343F40",
+      "phone": "15618060636",
+      "tier": "平价",
+      "price_avg": 52
+    },
+    "ok": true
+  },
+  {
+    "name": "Café del Volcán火山咖啡(永康路店)",
+    "action": "update",
+    "rid": 1394,
+    "rc_added": [
+      145
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1394,
+      "name": "Café del Volcán火山咖啡(永康路店)",
+      "status": "active",
+      "location": "0101000020E61000004C6BD3D85E5D5E40F5D6C05609363F40",
+      "phone": "15618669291",
+      "tier": "经济",
+      "price_avg": 44
+    },
+    "ok": true
+  },
+  {
+    "name": "堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)",
+    "action": "update",
+    "rid": 1395,
+    "rc_added": [
+      85
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1395,
+      "name": "堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)",
+      "status": "active",
+      "location": "0101000020E61000000B2593533B5F5E40304AD05FE83D3F40",
+      "phone": "02163333100",
+      "tier": "中档",
+      "price_avg": 102
+    },
+    "ok": true
+  },
+  {
+    "name": "Captain George风味博物馆(太原路店)",
+    "action": "update",
+    "rid": 1396,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1396,
+      "name": "Captain George风味博物馆(太原路店)",
+      "status": "active",
+      "location": "0101000020E61000000A698D41275D5E40A088450C3B343F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 75
+    },
+    "ok": true
+  },
+  {
+    "name": "Blacksheep Espresso(茂名南路店)",
+    "action": "update",
+    "rid": 1397,
+    "rc_added": [],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1397,
+      "name": "Blacksheep Espresso(茂名南路店)",
+      "status": "active",
+      "location": "0101000020E61000008D9AAF928F5D5E40B58CD47B2A373F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 45
+    },
+    "ok": true
+  },
+  {
+    "name": "赤瑕咖啡Akadama Coffee(武定西路店)",
+    "action": "update",
+    "rid": 1398,
+    "rc_added": [
+      30,
+      72,
+      85
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1398,
+      "name": "赤瑕咖啡Akadama Coffee(武定西路店)",
+      "status": "active",
+      "location": "0101000020E61000000EF3E505D85B5E40FAF19716F5393F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 55
+    },
+    "ok": true
+  },
+  {
+    "name": "翠贝果(乌鲁木齐南路店)",
+    "action": "update",
+    "rid": 1399,
+    "rc_added": [
+      51,
+      65,
+      72
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1399,
+      "name": "翠贝果(乌鲁木齐南路店)",
+      "status": "active",
+      "location": "0101000020E6100000C58D5BCCCF5C5E4012A1116C5C333F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35
+    },
+    "ok": true
+  },
+  {
+    "name": "Big Bagel(永康路店)",
+    "action": "update",
+    "rid": 1400,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1400,
+      "name": "Big Bagel(永康路店)",
+      "status": "active",
+      "location": "0101000020E6100000D1B1834A5C5D5E40AB5AD2510E363F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 35
+    },
+    "ok": true
+  },
+  {
+    "name": "Sumerian(陕西北路店)",
+    "action": "update",
+    "rid": 1401,
+    "rc_added": [
+      12,
+      65,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1401,
+      "name": "Sumerian(陕西北路店)",
+      "status": "active",
+      "location": "0101000020E61000007FA31D37FC5C5E404084B872F63A3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 40
+    },
+    "ok": true
+  },
+  {
+    "name": "FASCINO BAKERY(新天地店)",
+    "action": "update",
+    "rid": 1402,
+    "rc_added": [
+      51,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1402,
+      "name": "FASCINO BAKERY(新天地店)",
+      "status": "active",
+      "location": "0101000020E61000002F8672A25D5E5E40904AB1A371383F40",
+      "phone": "15800483764",
+      "tier": "经济",
+      "price_avg": 45
+    },
+    "ok": true
+  },
+  {
+    "name": "Madre(番禺路店)",
+    "action": "update",
+    "rid": 1403,
+    "rc_added": [
+      51,
+      81,
+      164
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1403,
+      "name": "Madre(番禺路店)",
+      "status": "active",
+      "location": "0101000020E6100000E0D74812845B5E40446FF1F09E333F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 60
+    },
+    "ok": true
+  },
+  {
+    "name": "BAsdBAN巴适得板(愚园路店)",
+    "action": "update",
+    "rid": 1404,
+    "rc_added": [
+      51,
+      65,
+      72
+    ],
+    "rc_total": 11,
+    "location_set": true,
+    "readback": {
+      "id": 1404,
+      "name": "BAsdBAN巴适得板(愚园路店)",
+      "status": "active",
+      "location": "0101000020E610000000378B170B5C5E408D45D3D9C9383F40",
+      "phone": "13167260607",
+      "tier": "经济",
+      "price_avg": 45
+    },
+    "ok": true
+  },
+  {
+    "name": "O'Mills Sourdough Bakery(永嘉路店)",
+    "action": "update",
+    "rid": 1405,
+    "rc_added": [
+      26,
+      51,
+      77,
+      161
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1405,
+      "name": "O'Mills Sourdough Bakery(永嘉路店)",
+      "status": "active",
+      "location": "0101000020E610000036E50AEF725D5E40F9F884ECBC353F40",
+      "phone": null,
+      "tier": "平价",
+      "price_avg": 90
+    },
+    "ok": true
+  },
+  {
+    "name": "麻布屋Azabuya(兴业太古汇店)",
+    "action": "update",
+    "rid": 1406,
+    "rc_added": [
+      72
+    ],
+    "rc_total": 8,
+    "location_set": true,
+    "readback": {
+      "id": 1406,
+      "name": "麻布屋Azabuya(兴业太古汇店)",
+      "status": "active",
+      "location": "0101000020E610000015562AA8A85D5E403D2AFEEF883A3F40",
+      "phone": null,
+      "tier": "经济",
+      "price_avg": 40
+    },
+    "ok": true
+  },
+  {
+    "name": "BONUS Gelato(乌鲁木齐中路店)",
+    "action": "update",
+    "rid": 1407,
+    "rc_added": [
+      51,
+      65,
+      72
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1407,
+      "name": "BONUS Gelato(乌鲁木齐中路店)",
+      "status": "active",
+      "location": "0101000020E610000069C4CC3E8F5C5E400454388254363F40",
+      "phone": "17316580877",
+      "tier": "经济",
+      "price_avg": 35
+    },
+    "ok": true
+  },
+  {
+    "name": "BLAZ",
+    "action": "update",
+    "rid": 1408,
+    "rc_added": [
+      26,
+      65,
+      73
+    ],
+    "rc_total": 6,
+    "location_set": true,
+    "readback": {
+      "id": 1408,
+      "name": "BLAZ",
+      "status": "active",
+      "location": "0101000020E6100000682096CD1C5D5E406A6798DA52373F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 427
+    },
+    "ok": true
+  },
+  {
+    "name": "BASTARD小酒馆",
+    "action": "update",
+    "rid": 1409,
+    "rc_added": [
+      3,
+      26,
+      51,
+      64,
+      65,
+      73
+    ],
+    "rc_total": 9,
+    "location_set": true,
+    "readback": {
+      "id": 1409,
+      "name": "BASTARD小酒馆",
+      "status": "active",
+      "location": "0101000020E610000037A8FDD64E5C5E40D940BAD8B43A3F40",
+      "phone": null,
+      "tier": "高档",
+      "price_avg": 285
+    },
+    "ok": true
+  },
+  {
+    "name": "茹·pure vegan(博华广场店)",
+    "action": "update",
+    "rid": 1410,
+    "rc_added": [
+      12,
+      27,
+      57,
+      65,
+      72,
+      190
+    ],
+    "rc_total": 10,
+    "location_set": true,
+    "readback": {
+      "id": 1410,
+      "name": "茹·pure vegan(博华广场店)",
+      "status": "active",
+      "location": "0101000020E61000005CC823B8915D5E40E38DCC237F3C3F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 133
+    },
+    "ok": true
+  },
+  {
+    "name": "庆春朴门(新天地东台里店)",
+    "action": "update",
+    "rid": 1411,
+    "rc_added": [
+      57,
+      65,
+      72
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1411,
+      "name": "庆春朴门(新天地东台里店)",
+      "status": "active",
+      "location": "0101000020E610000067B62BF4C15E5E406C054D4BAC383F40",
+      "phone": null,
+      "tier": "中档",
+      "price_avg": 109
+    },
+    "ok": true
+  },
+  {
+    "name": "KIINA",
+    "action": "update",
+    "rid": 1412,
+    "rc_added": [
+      26,
+      65,
+      71
+    ],
+    "rc_total": 7,
+    "location_set": true,
+    "readback": {
+      "id": 1412,
+      "name": "KIINA",
+      "status": "active",
+      "location": "0101000020E6100000FE0FB056ED5E5E40459F8F32E2323F40",
+      "phone": null,
+      "tier": "奢华",
+      "price_avg": 1380
+    },
+    "ok": true
+  }
+]

@@ -1,0 +1,195 @@
+[
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "时相遇·1913百年茶馆",
+    "fields": {
+      "name": "时相遇·1913百年茶馆",
+      "price_avg": 398,
+      "price_range": "¥398起",
+      "address": "建国西路323号",
+      "district": "徐汇区",
+      "business_area": "建国西路",
+      "phone": "13321883830",
+      "booking_method": "电话/公众号预约",
+      "signature_dishes": [
+        "陈年普洱",
+        "武夷岩茶",
+        "伯爵红茶",
+        "招牌拿铁",
+        "菓子拼盘"
+      ],
+      "score_objective": 72.0,
+      "score_diner": 65.0,
+      "score_taste": 70.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 5.0,
+      "evidence_summary": "时相遇·1913百年茶馆藏身于徐汇区建国西路323号一栋三层花园洋房内，由与乌达克齐名的法国建筑师赉安设计，始建于1913年，已列入徐汇区文化保护遗产，据传原业主为德国人。茶馆以老洋房空间为核心卖点，欧式旋转楼梯配水晶吊灯，室内陈设深邃紫檀与精巧黄花梨明式家具，旧时光的欧式风韵与中式饮茶结合。茶单主打普洱、岩茶等传统茶品，人均约398元起，携程/360地图收录320条点评，位列上海茶馆热评榜。食客评价集中在'安静、有年代感、适合慢慢品茶'，亦有下午茶套餐含水果拼盘与伯爵红茶。作为一家预约制、独栋老洋房茶馆，其核心客群为追求环境与茶空间的文化型茶友，而非纯打卡流量店。需注意高峰窗边位需提前预约，傍晚灯光氛围最佳。\n— 食客堂食原话 —\n1. [网易] 欧式风格的旋转楼梯，配上一盏水晶吊灯，复古又充满质感……深邃的紫檀，精巧的黄花梨明式家具，旧时光的欧式风韵与中式茶馆结合 (https://www.163.com/dy/article/FBCIE77705228770.html)\n2. [抖音] 两个人还两份水果拼盘，还可以点一份很好喝的伯爵红茶，以及用他们家logo的招牌拿铁。在百年老洋房喝一顿下午茶也只要268，氛围值绝对拉满 (https://www.iesdouyin.com/share/video/7210044024864984376)\n3. [携程] 一家有老上海情怀的茶馆，很有历史感的建筑，这里可以预订私房菜，茶点都不错，环境复古典雅，老家具、艺术品字画、华丽的旋转楼梯和吊灯 (https://m.ctrip.com/webapp/you/community/detail?articleId=64507731&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165)\n4. [上海文旅推广网] 这是一处安静且充满年代感的茶馆，静悄悄地藏匿于建国西路上……始建于1913年，被列入徐汇区文化保护遗产 (https://www.meet-in-shanghai.net/cn/food/1913-centennial-teahouse-897977/)\n差评/风险：人均偏高，纯喝茶性价比一般；下午茶套餐含西餐元素，纯茶友可能觉得茶单不够深",
+      "status": "active",
+      "data_updated_at": "2026-09-26",
+      "location": "SRID=4326;POINT(121.4496 31.2095)"
+    },
+    "cids_add": [
+      77,
+      83,
+      163,
+      165,
+      167,
+      324
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "非食客UGC来源(media)不计入堂食食客数: 网易",
+      "非食客UGC来源(other)不计入堂食食客数: 上海文旅推广网",
+      "source 自填类型 official_guide 与 URL 判定 other 不符: 上海文旅推广网-时相遇1913百年茶"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "少山集(创邑SPACE店)",
+    "fields": {
+      "name": "少山集(创邑SPACE店)",
+      "price_avg": 180,
+      "price_range": "¥150-220",
+      "address": "凯旋路613号创邑SPACE园区内",
+      "district": "长宁区",
+      "business_area": "中山公园/延安西路",
+      "booking_method": "大众点评/电话预约",
+      "signature_dishes": [
+        "陈年老白茶",
+        "白牡丹",
+        "冰泉煮茶",
+        "烤物小食拼盘",
+        "红豆沙花型糕点"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 72.0,
+      "score_taste": 75.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 3.0,
+      "evidence_summary": "少山集(创邑SPACE店)位于长宁区凯旋路613号创邑SPACE园区内，地铁3/4号线延安西路站1号口步行约240米，毗邻天山公园，是一家独栋两层新中式茶艺空间。一楼为茶壶展示区与五色共生矿陈列，兼具科普与留白美学；二楼设大厅与3个包间，座位间隔大，靠窗位正对公园绿意，需提前预约。主理茶品以白茶、陈年老白茶见长，采用冰泉煮茶仪式，店长亲自冲泡；茶点搭配新鲜水果与中式点心，红豆沙花型糕点外皮酥脆、内馅清甜。食客反复提及'懂喝茶的人品味不差''预约才喝得到''窗边位抢手'，堂食评价多聚焦茶品本身与安静氛围，而非纯拍照打卡。该店另有陆家嘴民国老宅分店（东方路121-1号），本条目收录创邑SPACE本店。\n— 食客堂食原话 —\n1. [携程] 茶馆既有大厅也有包间，是真正能缓慢下来品茶、舒服放松的环境。我选择了白茶，搭配丰富的烤物和小食，和朋友一边饮茶聊天，一边看窗外的风景 (https://m.ctrip.com/webapp/you/community/detail?articleId=99308777&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165)\n2. [携程] 我们选择的是陈年老白茶，店长亲自泡茶，手法好娴熟。听店长说，老白茶就要用沸腾的热茶煮，喝上口，满满的茶香。另外他家的茶点蛮精致的，就连小时候常吃的牛轧糖也有 (https://m.ctrip.com/webapp/you/community/detail?articleId=123449306&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165)\n3. [携程] 冰泉煮茶的模式我也是第一次看到，上茶时那仙气飘飘的仪式感……茶点搭配的一点也不含糊，新鲜的水果，搭配口感细腻又高级的中式点心 (https://m.ctrip.com/webapp/you/community/detail?articleId=64969283&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165)\n差评/风险：窗边位紧张，需提前预约；部分食客认为环境大于茶本身",
+      "status": "active",
+      "data_updated_at": "2026-09-26",
+      "location": "SRID=4326;POINT(121.4198 31.2105)"
+    },
+    "cids_add": [
+      77,
+      83,
+      162,
+      165,
+      167,
+      324
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "source 自填类型 platform 与 URL 判定 ugc 不符: 携程商户页-少山集"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "隐溪茶馆(大田路店)",
+    "fields": {
+      "name": "隐溪茶馆(大田路店)",
+      "price_avg": 160,
+      "price_range": "¥143-179",
+      "address": "大田路127号",
+      "district": "静安区",
+      "business_area": "南京西路/人民广场",
+      "phone": "02163819615",
+      "booking_method": "电话/大众点评/VIP预约制",
+      "signature_dishes": [
+        "熟普",
+        "木樨岩",
+        "大红袍",
+        "金骏眉",
+        "隐溪生普",
+        "蓝莓奶油冻"
+      ],
+      "score_objective": 68.0,
+      "score_diner": 60.0,
+      "score_taste": 68.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 12.0,
+      "evidence_summary": "隐溪茶馆为上海连锁茶馆品牌，全上海30余家门店，主打VIP预约制独立包间饮茶空间。大田路店位于静安区大田路127号，房间或包厢装修风格各异但统一讲究安静、简洁、舒服，每间房备有烧水设备可自斟自饮，也可请服务员代泡。茶品涵盖白茶、普洱（熟普/生普）、大红袍、金骏眉、木樨岩等，搭配茶点、水果与简单主食如云吞面食。食客与商务客群反馈'许多身价过亿的老板来这里谈合作''小环境让人心安静片刻'，人均约150-180元。该品牌抖音团购投放较重（199元双人套餐），存在一定网红打卡属性，但包间私密性与商务接待功能使其仍具备真实饮茶与商务客群复购。本条目收录大田路总店型门店，区别于上海中心53层高空景观店。\n— 食客堂食原话 —\n1. [上海文旅推广网] 房间或包厢的装修风格都有所不同，但都讲究安静、简洁和舒服。小环境真会让人心可以安静片刻的感觉。茶品有白茶、普洱茶等，可以搭配点心，也提供简单主食如云吞、面食 (https://www.meet-in-shanghai.net/cn/food/yinxi-tea-house-datian-road-305128/)\n2. [抖音] 他们家是VIP预约制茶馆……推荐一定要试试他们的新品木樨岩和经典的熟普，在这样的环境下喝着茶，看着日落。全上海30多家门店通用，包括一份茶点和点心、两份水果，还有茶水六选二 (https://www.iesdouyin.com/share/video/7385527455295016230)\n3. [携程] 坐落在滇池路81-85号的隐溪茶馆外滩店，是周末闺蜜小聚的绝佳选择。这家堪比都市桃花源的茶馆，隐藏在外滩闹市区的老洋房里，一进门就能感受到流动的静谧 (https://m.ctrip.com/webapp/you/community/detail?articleId=194668244&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165)\n差评/风险：连锁品牌，抖音团购投放重，网红打卡属性明显；高峰期团购客多，包间私密性受影响",
+      "status": "active",
+      "data_updated_at": "2026-09-26",
+      "location": "SRID=4326;POINT(121.462 31.235)"
+    },
+    "cids_add": [
+      77,
+      83,
+      162,
+      163,
+      165,
+      166,
+      167,
+      324
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "非食客UGC来源(other)不计入堂食食客数: 上海文旅推广网",
+      "source 自填类型 official_guide 与 URL 判定 other 不符: 上海文旅推广网-隐溪茶馆大田路店"
+    ]
+  },
+  {
+    "action": "new",
+    "restaurant_id": null,
+    "name": "黄庭茶馆(新天地店)",
+    "fields": {
+      "name": "黄庭茶馆(新天地店)",
+      "price_avg": 120,
+      "price_range": "¥100-122",
+      "address": "湖滨路150号湖滨道购物中心二层E06单元",
+      "district": "黄浦区",
+      "business_area": "新天地",
+      "booking_method": "电话/大众点评",
+      "signature_dishes": [
+        "88青饼",
+        "96紫大益",
+        "普洱老茶",
+        "宋代点茶",
+        "碧螺春",
+        "龙井"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 62.0,
+      "score_taste": 72.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 10.0,
+      "evidence_summary": "黄庭茶馆(新天地店)位于黄浦区湖滨路150号湖滨道购物中心二层E06单元（星巴克楼上），设18间包厢，坐拥太平湖景观。该品牌为上海新中式连锁茶馆，全市10余家门店，新天地店定位私密高端茶空间。其特色在于除常规精品茶品外，还提供普洱茶圈内知名的典藏老茶，如88青饼、96紫大益等，吸引资深普洱玩家；同时提供宋代点茶体验，茶艺师现场碾茶、击拂成沫并可在茶汤上作画。茶单涵盖普洱、龙井、碧螺春、正山小种、漳平水仙、福鼎白茶、白毫银针等六大茶类。食客评价集中在'新中式原木风格安静适合商务''宋代点茶有仪式感'，人均约100-120元。作为连锁品牌其商场店型偏重氛围社交，但新天地店的典藏老茶单使其区别于纯拍照型茶馆。\n— 食客堂食原话 —\n1. [网易] 除了常规的精品茶品，这里还提供一些典藏级老茶，比如普洱茶爱好者圈内名声赫赫的88青饼、96紫……新天地的私密高端茶空间，18间包厢坐拥千万景观 (https://www.163.com/dy/article/K4MSG2I805228HQE.html)\n2. [携程] 他们提供多种茶叶供选择，包括普洱茶、龙井、碧螺春等。其中，宋代点茶是他们的一大亮点。专业的茶艺师将茶叶在茶碗中碾碎、混合、浸泡，最后倒入沸水，细细搅拌成一抹琥珀色。每一口都带着清香，让人回味无穷。还可以在上面作画 (https://m.ctrip.com/webapp/you/community/detail?articleId=176676284&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165)\n3. [携程] 一进门就能感受到淡淡木质香，精致到每一缕空气中。绿植盆栽装点其中，更添自然舒意 (https://m.ctrip.com/webapp/you/community/detail?articleId=176676284&hidePublishButton=true&hideTitle=true&allianceid=7144873&sid=263483165)\n差评/风险：商场店型，隔音与包间私密性弱于独栋茶馆；连锁扩张快，品控参差",
+      "status": "active",
+      "data_updated_at": "2026-09-26",
+      "location": "SRID=4326;POINT(121.4792 31.2207)"
+    },
+    "cids_add": [
+      77,
+      83,
+      162,
+      163,
+      165,
+      166,
+      167,
+      324
+    ],
+    "needs_amap": false,
+    "coord_source": "amap",
+    "missing_tags": [],
+    "conflicts": [
+      "商场同址不同铺位（库内另有 Flambe Bistro 奥地利餐厅(湖滨道店)），按新店"
+    ],
+    "warnings": [
+      "非食客UGC来源(media)不计入堂食食客数: 网易"
+    ]
+  }
+]

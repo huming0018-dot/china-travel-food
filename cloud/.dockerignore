@@ -1,0 +1,15 @@
+*.log
+.DS_Store
+data
+
+# 本机虚拟环境（损坏且庞大，不进镜像）
+.venv
+.venv312
+**/__pycache__
+*.pyc
+
+# 敏感登录态 / 密钥：运行时经环境变量或挂载注入，绝不打进镜像
+.xhs_cookies.json
+.xhs_cookies_pw.json
+env.sh
+*.bak

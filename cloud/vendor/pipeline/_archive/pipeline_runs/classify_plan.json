@@ -1,0 +1,155 @@
+[
+  {
+    "restaurant_id": 1486,
+    "name": "汕鹤潮式甜汤(人广来福士店)",
+    "op": "DELETE",
+    "cuisine_id": 313,
+    "tag": "冰淇淋Gelato",
+    "reason": "R1 gelato非主营(甜汤店)",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1486,
+    "name": "汕鹤潮式甜汤(人广来福士店)",
+    "op": "ADD",
+    "cuisine_id": 316,
+    "tag": "糖水/甜汤",
+    "reason": "R1 主营潮汕/中式甜汤",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1773,
+    "name": "L'eclair de Genie闪电巴黎(芮欧百货店)",
+    "op": "DELETE",
+    "cuisine_id": 313,
+    "tag": "冰淇淋Gelato",
+    "reason": "R1 gelato非主营(法式甜品店)",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1778,
+    "name": "贵州冰浆(陕西北路店)",
+    "op": "DELETE",
+    "cuisine_id": 313,
+    "tag": "冰淇淋Gelato",
+    "reason": "R1 gelato非主营(刨冰/冰浆店)",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1246,
+    "name": "黄启云私房牛肉面工坊",
+    "op": "DELETE",
+    "cuisine_id": 3,
+    "tag": "粤菜",
+    "reason": "R2 牛肉面误挂粤菜",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1246,
+    "name": "黄启云私房牛肉面工坊",
+    "op": "ADD",
+    "cuisine_id": 149,
+    "tag": "台湾牛肉面·小吃",
+    "reason": "R2 按做法归台湾牛肉面·小吃",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1246,
+    "name": "黄启云私房牛肉面工坊",
+    "op": "ADD",
+    "cuisine_id": 17,
+    "tag": "台湾菜",
+    "reason": "R2 归台湾菜",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 967,
+    "name": "丹凤楼雅宴·大富贵(斜土店)",
+    "op": "DELETE",
+    "cuisine_id": 8,
+    "tag": "徽菜",
+    "reason": "R3 地名陷阱大富贵",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 967,
+    "name": "丹凤楼雅宴·大富贵(斜土店)",
+    "op": "ADD",
+    "cuisine_id": 9,
+    "tag": "本帮菜",
+    "reason": "R3 大富贵实际归属",
+    "confidence": "medium"
+  },
+  {
+    "restaurant_id": 1526,
+    "name": "大富贵酒楼(中华路总店)",
+    "op": "DELETE",
+    "cuisine_id": 8,
+    "tag": "徽菜",
+    "reason": "R3 地名陷阱大富贵",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1526,
+    "name": "大富贵酒楼(中华路总店)",
+    "op": "ADD",
+    "cuisine_id": 9,
+    "tag": "本帮菜",
+    "reason": "R3 大富贵实际归属",
+    "confidence": "medium"
+  },
+  {
+    "restaurant_id": 1603,
+    "name": "南星汇新加坡海南鸡饭(静安店)",
+    "op": "DELETE",
+    "cuisine_id": 19,
+    "tag": "海南菜",
+    "reason": "R3 地名陷阱海南鸡饭",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1603,
+    "name": "南星汇新加坡海南鸡饭(静安店)",
+    "op": "ADD",
+    "cuisine_id": 183,
+    "tag": "新加坡菜",
+    "reason": "R3 海南鸡饭实际归属",
+    "confidence": "medium"
+  },
+  {
+    "restaurant_id": 1603,
+    "name": "南星汇新加坡海南鸡饭(静安店)",
+    "op": "ADD",
+    "cuisine_id": 184,
+    "tag": "马来西亚菜",
+    "reason": "R3 海南鸡饭实际归属",
+    "confidence": "medium"
+  },
+  {
+    "restaurant_id": 1652,
+    "name": "五星海南鸡饭(新乐路店)",
+    "op": "DELETE",
+    "cuisine_id": 19,
+    "tag": "海南菜",
+    "reason": "R3 地名陷阱海南鸡饭",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1652,
+    "name": "五星海南鸡饭(新乐路店)",
+    "op": "ADD",
+    "cuisine_id": 183,
+    "tag": "新加坡菜",
+    "reason": "R3 海南鸡饭实际归属",
+    "confidence": "medium"
+  },
+  {
+    "restaurant_id": 1652,
+    "name": "五星海南鸡饭(新乐路店)",
+    "op": "ADD",
+    "cuisine_id": 184,
+    "tag": "马来西亚菜",
+    "reason": "R3 海南鸡饭实际归属",
+    "confidence": "medium"
+  }
+]

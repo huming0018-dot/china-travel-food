@@ -1,0 +1,8946 @@
+[
+  {
+    "id": 1,
+    "name": "晴川sushi（午市）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 2,
+    "name": "鮨水月（午市）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 3,
+    "name": "岩田割烹鮨",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 4,
+    "name": "御千代（王雷师傅）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Sushi Oyama 鮨大山",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 6,
+    "name": "吉兆 KITCHO",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 7,
+    "name": "披头士烧鸟居酒屋",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 8,
+    "name": "酉町·烧鸟专门店",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 9,
+    "name": "宫鸠（华山路）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 10,
+    "name": "小景门（仇师傅）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 11,
+    "name": "海宫",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 12,
+    "name": "炉端一番",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 13,
+    "name": "龍響炉端烧(嘉善老市店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 14,
+    "name": "金宗咖喱",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 15,
+    "name": "伽喱博士 Dr.CURRY",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 16,
+    "name": "晚餐馆咖喱饭",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 18,
+    "name": "环七·土佐子",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 19,
+    "name": "一风堂",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 20,
+    "name": "Ramen满吉(广元西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 23,
+    "name": "鳗重",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 24,
+    "name": "哲平鳗满",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 25,
+    "name": "竿屋",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 26,
+    "name": "咕咕",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 28,
+    "name": "牛New寿喜烧（自助）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 29,
+    "name": "日和寿喜烧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 30,
+    "name": "大牛寿喜烧（自助顶配）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 31,
+    "name": "炎珀EMBER",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 32,
+    "name": "motoya寿喜烧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 34,
+    "name": "黑门乐酒天",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 35,
+    "name": "平成屋(四川北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 36,
+    "name": "天天天妇罗",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 37,
+    "name": "天嘉(天妇罗专门店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 38,
+    "name": "天吉·天遊峰",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 39,
+    "name": "尚膳天焱",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 40,
+    "name": "桃山日本料理铁板烧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 41,
+    "name": "山茶花铁板烧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 42,
+    "name": "丸龟制面",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 43,
+    "name": "荞麦道",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 44,
+    "name": "纹兵卫（午市套餐）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 45,
+    "name": "とんかつ一滨·炸猪排(世博天地首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 46,
+    "name": "静冈胜政",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 48,
+    "name": "大志/king大志",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 49,
+    "name": "虎丸烧肉",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 50,
+    "name": "三川烧肉Mikawa",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 51,
+    "name": "AJIYA味屋",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 52,
+    "name": "铁屋（古北）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 53,
+    "name": "烧肉·至心",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 453,
+    "name": "鲁丰居(灵石路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 454,
+    "name": "融智坊鲁菜(北蔡休闲广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 455,
+    "name": "新嘉中心胶东烟火小馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 456,
+    "name": "鲁菜根(上海嘉定店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 457,
+    "name": "鲁菜馆(融信绿地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 459,
+    "name": "老山东·鲁菜馆(陆家嘴店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 460,
+    "name": "老山东·御膳坊(徐汇绿地缤纷城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 461,
+    "name": "传熹·胶东菜(CP静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 462,
+    "name": "鲁东胶州菜(世纪汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 465,
+    "name": "季悦海鲜(锦江店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 466,
+    "name": "山海鲁·紫荆阁(浦东假日酒店店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 468,
+    "name": "川飨小馆(天山路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 469,
+    "name": "兴华川菜馆(交通路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 470,
+    "name": "惠中川香蛙(嘉善路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 471,
+    "name": "先启半步颠小酒馆(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 472,
+    "name": "川芙蓉市井老川菜(静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 474,
+    "name": "龙门阵茶屋川菜馆(武康路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 475,
+    "name": "渝信川菜(华盛店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 476,
+    "name": "瓦屋川菜(西岸梦中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 477,
+    "name": "辛香汇·锦里(静安大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 478,
+    "name": "南兴园",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 481,
+    "name": "邓记食园",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 482,
+    "name": "食川非川·现代川味(静安嘉里中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 483,
+    "name": "宝粤楼广式点心茶楼(成山路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 484,
+    "name": "八合里潮汕鲜牛肉火锅(世茂广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 487,
+    "name": "粤来记(徐家汇路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 488,
+    "name": "三清潭烧鹅(兴业太古汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 489,
+    "name": "惠食佳·朱雀(东方商厦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 490,
+    "name": "细记港九大牌档(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 491,
+    "name": "博多新记(复兴店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 492,
+    "name": "富临轩·臻品(前滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 493,
+    "name": "利苑酒家(国金中心店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 494,
+    "name": "菁禧荟(BFC外滩店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 495,
+    "name": "御宝轩(益丰·外滩源店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 496,
+    "name": "唐阁(新天地朗廷酒店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 497,
+    "name": "明阁(虹桥康得思酒店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 498,
+    "name": "老半斋(福州路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 499,
+    "name": "苏小柳点心(徐家汇分院)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 502,
+    "name": "四如春(真如店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 503,
+    "name": "扬州饭店(福建中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 504,
+    "name": "食庐(虹桥南丰城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 505,
+    "name": "江南晓宴(世博文化公园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 506,
+    "name": "时知味·淮扬菜(虹桥南丰城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 508,
+    "name": "逸道(益丰·外滩源店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 509,
+    "name": "龙吟山房(苏河湾万象天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 510,
+    "name": "食庐NOBLE(港汇恒隆店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 511,
+    "name": "三月醉淮扬(越洋广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 512,
+    "name": "天水雅居(滨江大道店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 513,
+    "name": "淳百味·沙县小吃研究所",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 514,
+    "name": "闽燕记·臻味府(中海环宇荟店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 515,
+    "name": "闽燕记八闽特色美食(国际传媒港店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 516,
+    "name": "荣先森·闽南菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 519,
+    "name": "阿忠食坊·厦门菜(上海首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 520,
+    "name": "临家闽南宴(正大广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 521,
+    "name": "闽和南·欢席(苏河湾万象天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 522,
+    "name": "闽润·福建会馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 525,
+    "name": "席作·福建会馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 526,
+    "name": "聚春园(上海店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 527,
+    "name": "府(Fucheng)·外滩华尔道夫",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 528,
+    "name": "新白鹿餐厅(第一百货店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 529,
+    "name": "旧村·老宁波海鲜小馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 530,
+    "name": "涌小仙·江浙小鲜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 535,
+    "name": "季家菜·温州饭摊(浦城路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 537,
+    "name": "小孃孃(思南公馆店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 539,
+    "name": "雍颐庭",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 540,
+    "name": "鹿园MOOSE(长宁店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 541,
+    "name": "南麓·浙里(外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 543,
+    "name": "小黑湘菜馆(武宁店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 544,
+    "name": "芥菜园·粮仓饭湘(四川北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 545,
+    "name": "费大厨辣椒炒肉(环球港店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 546,
+    "name": "湘粹(愚园东路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 547,
+    "name": "温暖你的猪(前滩汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 548,
+    "name": "御鲤湘(北京西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 549,
+    "name": "金湘隆·清派湘菜(金沙江路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 550,
+    "name": "古意湘味浓(久光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 551,
+    "name": "园有桃·现代湘菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 552,
+    "name": "谭姐湘菜馆(浦东大道店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 553,
+    "name": "湘翁(北外滩来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 554,
+    "name": "六月半湖南湘鲜馆(嘉里中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 555,
+    "name": "湘粤王府宴(浦东长河国际店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 556,
+    "name": "沁园春望·湘食四季(九六广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 557,
+    "name": "凤凰湘语(三湘大厦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 558,
+    "name": "徽珍源(潍坊路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 560,
+    "name": "皖荟·山野徽菜(白玉兰广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 561,
+    "name": "徽膳坊(梅花路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 562,
+    "name": "安徽省驻沪办招待所餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 563,
+    "name": "山里亲戚(九六广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 567,
+    "name": "徽膳坊·徽菜(九亭店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 574,
+    "name": "邻里川菜馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 575,
+    "name": "自贡盐帮菜馆(七莘路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 576,
+    "name": "锦盐记川菜小馆(莘朱路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 577,
+    "name": "蜀湘记(古美路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 578,
+    "name": "辣味鲜老刘特色菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 580,
+    "name": "本甄精品川菜(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 581,
+    "name": "蜀韵精品川菜·盐帮菜(九亭中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 582,
+    "name": "JSL三椒·川南小馆(虹桥南丰城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 583,
+    "name": "平川·程玉平川菜工作室",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 584,
+    "name": "鲤香(板前)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 585,
+    "name": "九老汉·川渝江湖菜(恒丰路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 586,
+    "name": "李老幺重庆大排档(松东路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 587,
+    "name": "东泰荟·江湖菜(火车站店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 589,
+    "name": "有滋有味·农家川菜(北外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 590,
+    "name": "阳哥儿·重庆芋儿肥肠鸡(元善里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 591,
+    "name": "重记袍哥·肥肠芋儿鸡(天津路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 592,
+    "name": "破店小酒馆(昌里三钢里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 593,
+    "name": "老吴川菜馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 594,
+    "name": "竹屋川菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 595,
+    "name": "椒点·川粤精品",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 596,
+    "name": "Spicy Gangster不问江湖",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 597,
+    "name": "椿庐(凯德晶萃店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 598,
+    "name": "四吉饭店",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 599,
+    "name": "兴蜀府·臻味(正大广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 600,
+    "name": "巴国布衣(世博店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 601,
+    "name": "张记川味苑(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 603,
+    "name": "有根葱不改良老火锅(徐汇全国首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 604,
+    "name": "渝利火锅(96广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 605,
+    "name": "淑芬串串公司(定西路中山公园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 606,
+    "name": "红料理",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 608,
+    "name": "程胖妹面庄(原高胖妹面庄)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 609,
+    "name": "开县徐妈串串火锅馆(人民广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 610,
+    "name": "江边城外烤全鱼(百联中环店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 612,
+    "name": "恒香渝重庆小面(长阳路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 613,
+    "name": "山城印象重庆小面(灵山路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 614,
+    "name": "我们屋头串串(老闵行)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 616,
+    "name": "弄堂川菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 619,
+    "name": "贾温柔迷踪菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 620,
+    "name": "刘栋梁大排档(大学路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 621,
+    "name": "袍哥川小馆·肥肠鸡(天钥桥路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 622,
+    "name": "沪小川肥肠烤鱼泡椒牛蛙(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 624,
+    "name": "成都鱼庄·石锅烤鱼(华发路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 625,
+    "name": "老吴家川菜(昭化路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 626,
+    "name": "火辣土菜馆(浦东大道店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 627,
+    "name": "友谊川味馆(苍梧路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 629,
+    "name": "民间川菜(尚大国际店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 630,
+    "name": "Pepper Tree花椒树",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 631,
+    "name": "井庭xNEW ARC·锅(BFC外滩金融中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 632,
+    "name": "蜀宴赋·上海(华东首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 634,
+    "name": "椿庐ChunLounge(凯德晶萃店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 635,
+    "name": "金孔雀(国金中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 638,
+    "name": "孔雀川菜(港汇恒隆广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 642,
+    "name": "蜀当家·盐帮川菜(上海首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 643,
+    "name": "柴门饭儿(陆家嘴中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 644,
+    "name": "陆小苑(打浦桥日月光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 645,
+    "name": "东蹄旺(龙茗路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 646,
+    "name": "小旺阁·老字号粤菜(江桥老街店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 647,
+    "name": "馥添浓汤广府菜(世纪汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 648,
+    "name": "肥姚仔大排档(金汇路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 649,
+    "name": "陶陶居酒家(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 650,
+    "name": "蘩楼(淮海百盛店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 653,
+    "name": "香港龙凤楼(巨鹿路洋房店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 654,
+    "name": "广舟(巨鹿店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 655,
+    "name": "申粤轩酒楼(丁香花园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 656,
+    "name": "家全七福(静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 658,
+    "name": "佬顺德(大拇指广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 659,
+    "name": "广太公顺德小馆(锦西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 660,
+    "name": "咏發顺德大排档(宝山日月光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 661,
+    "name": "禄记顺德鱼生",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 662,
+    "name": "巡味顺德菜(虹桥天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 663,
+    "name": "咏發顺德海鲜大排档(静安大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 664,
+    "name": "新顺记(南洋1931店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 665,
+    "name": "顺席(肇嘉浜路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 667,
+    "name": "好彩楼·知味顺德(丰盛里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 668,
+    "name": "猪肉婆·顺德私房菜(上海首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 669,
+    "name": "新顺记·鱼料理专家(高岛屋店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 670,
+    "name": "恒悦轩·精致香港粤菜(徐家汇店)-顺德菜部",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 672,
+    "name": "潮桔桔·潮汕小吃堂(江湾里MEET678店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 673,
+    "name": "魔都潮滋味·潮汕牛肉火锅·粿条(叶家宅路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 674,
+    "name": "陈记潮汕牛肉火锅(板泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 675,
+    "name": "阿嫲潮味(江湾里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 678,
+    "name": "草根夜档·潮汕老字号·小炒排档(大宁店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 679,
+    "name": "汕苑精致潮汕菜(静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 680,
+    "name": "潮州府·海鲜渔市·砂锅粥(武宁南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 682,
+    "name": "神仙馆(衡山路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 683,
+    "name": "虹潮荟(瑞虹天地太阳宫店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 684,
+    "name": "东平潮·潮汕菜(徐汇花园洋房店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 685,
+    "name": "恭喜里客家盐焗鸡(恒基名人购物中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 686,
+    "name": "客家小厨(临沂路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 687,
+    "name": "龙岩牛肉粉面(武夷路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 688,
+    "name": "三伯公·山野客家菜(徐汇日月光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 689,
+    "name": "南山阿姆赣南客家菜(静安CP店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 690,
+    "name": "夷和源客家菜(陆家嘴店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 691,
+    "name": "烧鹅仔•客家菜(上海首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 692,
+    "name": "客语(上海分店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 693,
+    "name": "汤伯府·猪肚鸡火锅(上海分店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 694,
+    "name": "添意客家菜(银七星盛汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 695,
+    "name": "客屿·山湖之鲜(瑞虹天地太阳宫店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 696,
+    "name": "Hakkasan(外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 697,
+    "name": "润苑·悦椿轩(徐汇万科中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 698,
+    "name": "老赣南客家菜(静安寺店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 699,
+    "name": "港九茶冰室(五环大楼店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 700,
+    "name": "新澳港式茶餐厅(延安西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 702,
+    "name": "敏华冰厅(人民广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 703,
+    "name": "龙记香港茶餐厅(延安西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 704,
+    "name": "何洪记(兴业太古汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 706,
+    "name": "港丽餐厅(龙之梦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 707,
+    "name": "合顺發茶冰室(南京东路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 708,
+    "name": "点点心港式茶餐厅(818广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 709,
+    "name": "翠华餐厅(正大广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 710,
+    "name": "港季茶餐厅(南京西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 711,
+    "name": "香港翠庭(传奇广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 712,
+    "name": "九龙冰室(徐汇日月光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 713,
+    "name": "喜粤8号(汝南街总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 714,
+    "name": "皇朝尊会(龙之梦大酒店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 715,
+    "name": "皇朝会(外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 716,
+    "name": "逸龙阁",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 717,
+    "name": "吉品轩(伯衡55店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 718,
+    "name": "壹零贰小馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 719,
+    "name": "头灶(上海商城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 721,
+    "name": "荣申府(四安里古建店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 722,
+    "name": "景煊 SOLE",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 723,
+    "name": "正斗粥面专家(前滩太古里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 725,
+    "name": "锦春茶社(保德路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 726,
+    "name": "扬春茶社(乐虹坊店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 727,
+    "name": "淮悦茶社(天钥桥路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 728,
+    "name": "永春园茶社(长宁来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 729,
+    "name": "春里·淮扬(西岸梦中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 731,
+    "name": "南伶(静安嘉里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 732,
+    "name": "九厨·淮扬(博荟广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 734,
+    "name": "宴江月(南京东路宏伊广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 735,
+    "name": "桂花楼(浦东香格里拉店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 737,
+    "name": "黄浦轩(上海大厦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 744,
+    "name": "梅府家宴(建业里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 747,
+    "name": "面庭芳·特色中餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 748,
+    "name": "新斋桥苏式面馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 751,
+    "name": "东吴石府(黑石公寓店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 753,
+    "name": "米桃-吴韵风雅·曲园(虹桥南丰城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 754,
+    "name": "裕兴记(徐家汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 755,
+    "name": "云和面馆YUNHENOODLE(华山路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 758,
+    "name": "江南雅厨(宜昌路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 760,
+    "name": "熙盛源(丰庄路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 761,
+    "name": "锡缘无锡小笼馆(北海宁路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 762,
+    "name": "井梅无锡面馆(延平路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 763,
+    "name": "无锡万家小笼(恒达公寓店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 764,
+    "name": "鼎盛源无锡小笼馄饨店",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 765,
+    "name": "米桃·江南苏锡菜(久光中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 766,
+    "name": "小无锡面馆(霍山路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 767,
+    "name": "无锡小笼(梅岭北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 768,
+    "name": "鼎福记·小笼馄饨(蒙自路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 769,
+    "name": "美玲无锡小笼(华池路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 770,
+    "name": "贡品轩无锡小笼馆(百色路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 772,
+    "name": "徐州印象(中山北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 773,
+    "name": "苏北土灶台·徐州菜(佘山店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 775,
+    "name": "洋火徐州鲜货烧烤(繁兴路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 776,
+    "name": "老板娘大排档(马陆包装城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 777,
+    "name": "徐州地锅鸡(聚丰园路弘基广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 778,
+    "name": "徐州老灶台地锅鸡(东川公路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 779,
+    "name": "沪传奇地锅(沪闵路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 780,
+    "name": "东润邻里徐州羊肉小馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 782,
+    "name": "香聚江南灶(前滩香格里拉店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 783,
+    "name": "和·燕(外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 784,
+    "name": "西塘宴Xi Tang Yan(滨江店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 785,
+    "name": "嫣花叁玥·新川扬(国金中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 786,
+    "name": "逸品淮扬(白玉兰广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 788,
+    "name": "醉舍(静安大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 790,
+    "name": "山东家常菜(繁安综合市场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 791,
+    "name": "爸爸的鱼妈妈的饼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 792,
+    "name": "味道山东经典鲁菜(宜川路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 793,
+    "name": "鲁滋味山东菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 794,
+    "name": "鲁一品",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 795,
+    "name": "糁姐鲁小菜(七宝店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 796,
+    "name": "鲁菜羊肉馆(七莘路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 797,
+    "name": "齐鲁壹号(三号湾广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 800,
+    "name": "于妈妈烟台水饺",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 802,
+    "name": "烟屿家烧小馆(川沙店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 803,
+    "name": "威海小海鲜(通河新村/宝山店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 812,
+    "name": "白茸小鲜(太阳宫店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 813,
+    "name": "申客厅 SHEEN Pavilion",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 815,
+    "name": "白茸 Bai Rong",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 816,
+    "name": "金美华轩(齐鲁万怡店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 817,
+    "name": "老山东饺子馆(宝龙城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 819,
+    "name": "山东菜馆(莲园路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 820,
+    "name": "俺家味道山东饭店(三铭广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 821,
+    "name": "海伯Bohai(全国首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 822,
+    "name": "东DōNG胶东小馆(万象城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 824,
+    "name": "紫荆阁·鲁菜本帮菜(东方路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 826,
+    "name": "新发现(绿地缤纷城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 827,
+    "name": "钱塘秋荷·新江浙菜(真华路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 828,
+    "name": "杭州新开元大酒店(徐家汇路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 829,
+    "name": "江南晓馆(五角场合生汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 833,
+    "name": "茶人村·江南雅宴(前滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 836,
+    "name": "青彩轩·新浙菜(长宁国际店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 837,
+    "name": "钱珑·江浙菜(真如大都会店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 838,
+    "name": "陈公馆·Champion Tower(黄浦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 839,
+    "name": "龚禧龚禧·甬菜(汤臣洲际店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 843,
+    "name": "卿家姆小馆·生腌熟醉·宁波小鲜(外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 844,
+    "name": "丰收日(豫园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 845,
+    "name": "小宁波海鲜馆(天津路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 846,
+    "name": "宁海食福·小漁家(复兴中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 847,
+    "name": "甬季(浙鲜小酒馆·福州路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 848,
+    "name": "宁波汤团店(豫园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 849,
+    "name": "甬悦小馆(栖山路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 851,
+    "name": "绍兴名菜(可乐路店,又称星火私房菜/绍兴名菜馆)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 852,
+    "name": "绍兴饭店·尊鲜(大宁国际店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 854,
+    "name": "老绍兴大酒店(华灵路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 855,
+    "name": "越稽·地道绍兴菜馆(PAC购物中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 856,
+    "name": "醉玖兰亭·精细绍兴菜(南京东路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 857,
+    "name": "绍荟悦(大宁店,原70后·绍东家)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 858,
+    "name": "糯米帝·温州糯米饭(徐汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 859,
+    "name": "瓯江渔市·地标温州菜(思南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 860,
+    "name": "温牛也也(凯德晶萃店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 862,
+    "name": "瓯叙·温州家烧(上海首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 863,
+    "name": "瓯江宴·海派温州菜(龙华会店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 864,
+    "name": "瓯江悦·温州菜(虹口龙之梦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 867,
+    "name": "瓯越·尊鲜(CP静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 868,
+    "name": "虹浦荟·新派温州菜(虹桥店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 869,
+    "name": "双井头饭店(上海首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 870,
+    "name": "浙时渔季·温州小馆(虹桥南丰城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 876,
+    "name": "苏浙总会",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 878,
+    "name": "南麓·荟馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 879,
+    "name": "叶马荟馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 880,
+    "name": "兰亭月·江南宴(上生新所店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 881,
+    "name": "福味福州名小吃",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 882,
+    "name": "榕汇来海鲜面",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 883,
+    "name": "甲东南(东方路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 884,
+    "name": "荣先森福建小馆(美罗城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 885,
+    "name": "福见仁FúDining·福州火灶(K11店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 886,
+    "name": "席上·福建料理Hokkien Cuisine",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 887,
+    "name": "府/Fucheng(前滩华尔道夫)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 889,
+    "name": "林氏海蛎煎(福建路64号店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 890,
+    "name": "泉仔·闽南小吃(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 891,
+    "name": "洪老大泉州风味小馆(武夷路/虹桥路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 892,
+    "name": "阿翁沙茶面",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 893,
+    "name": "黑明餐厅·厦门菜(CP静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 894,
+    "name": "呷佰贰",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 896,
+    "name": "闽叔福建菜(陆家嘴中心L+Mall店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 897,
+    "name": "闽约闽南小馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 899,
+    "name": "闽味闽海海鲜酒楼(虹口店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 900,
+    "name": "阿不先生福建小馆(鲁能中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 901,
+    "name": "莆味小馆(宝山万渡汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 904,
+    "name": "福承(前滩华尔道夫店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 907,
+    "name": "福序(徐汇滨江店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 908,
+    "name": "海湾荟·闽采(世贸大厦40楼)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 909,
+    "name": "康丰路长沙米粉店",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 910,
+    "name": "呷佬长沙手工米粉(金沙江路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 911,
+    "name": "亲亲长沙米粉(新闸路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 912,
+    "name": "粉新社长沙米粉(华敏店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 913,
+    "name": "佬湘集·湖南钵子菜(番禺路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 914,
+    "name": "湘小盏·不改良湖南菜(近铁广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 915,
+    "name": "王胜利·长沙家菜馆(长宁来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 917,
+    "name": "巡湘记(徐汇日月光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 918,
+    "name": "小团圆湘菜(东方路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 919,
+    "name": "许爷剁椒鱼头(天物空间店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 920,
+    "name": "武妹娘湖南特色牛肉米粉(南泉北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 921,
+    "name": "粉醉牛·湖南米粉(中山西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 922,
+    "name": "粉牛牛常德牛肉米粉(灵石路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 923,
+    "name": "湘椒红常德牛肉粉(潍坊路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 924,
+    "name": "食湘渔府·渔湘荟湖南土菜(大华店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 926,
+    "name": "洞庭3000里·乡野湖南菜(苏河湾万象天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 927,
+    "name": "食湘渔府(茂名南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 928,
+    "name": "借碗·湘西",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 929,
+    "name": "罐罐儿·湘西小馆(鸿寿坊店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 930,
+    "name": "罐罐儿·湘西家味(世博天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 931,
+    "name": "湘西农家菜(古美路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 932,
+    "name": "芙蓉阁(三湘大厦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 933,
+    "name": "西湘姑娘·湖南菜(沪太路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 934,
+    "name": "湘约屋坎上·土家菜(松江鹿都店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 935,
+    "name": "湘西酒楼(虬江路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 937,
+    "name": "湘上粤(老码头Wharf三号库店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 938,
+    "name": "十里湘荟(前滩太古里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 939,
+    "name": "留柱小馆(梅陇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 940,
+    "name": "徽味轩(中山北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 941,
+    "name": "庆杰徽菜馆(曹路总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 943,
+    "name": "皖荟·徽菜(白玉兰广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 944,
+    "name": "徽苑·新徽菜·烤鸭(万象城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 945,
+    "name": "徽江悦(外滩老码头店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 946,
+    "name": "嘉良驿园(闵行合川路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 950,
+    "name": "梦都海鲜酒家",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 951,
+    "name": "徽州月·民间徽菜（浦东总店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 952,
+    "name": "皖燕·南陵人家",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 953,
+    "name": "皖山汇小馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 954,
+    "name": "醉徽楼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 956,
+    "name": "朏记红皮鸭（胐记）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 957,
+    "name": "宋记淮南牛肉汤(虹梅路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 958,
+    "name": "骨里香淮南牛肉汤(绿苑路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 959,
+    "name": "阿英阿英·正宗淮南牛肉汤",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 960,
+    "name": "淮南牛肉汤(兰溪路92号老店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 961,
+    "name": "正宗安徽太和板面(莎海商务大厦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 962,
+    "name": "玉花姐皖北地锅鸡(包头路旗舰总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 963,
+    "name": "地锅公社(罗锦路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 964,
+    "name": "辉嫂老铁地锅(中华新路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 965,
+    "name": "皖北羊肉馆(华新店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 966,
+    "name": "品粹1788",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 968,
+    "name": "品粹生态餐饮(绿地海外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 970,
+    "name": "憶长安·西安宴·陕派官府菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 971,
+    "name": "懒猴子泡馍(打浦桥店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 972,
+    "name": "秦潮食集(花木时光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 973,
+    "name": "陕现·西安小馆(西岸凤巢店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 974,
+    "name": "子午路张记肉夹馍(思南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 975,
+    "name": "西安5号米皮(仙霞西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 976,
+    "name": "秦韵味道(国权北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 977,
+    "name": "麦之初·陕小馆(长宁Art Park大融城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 978,
+    "name": "张有德老字号牛肉面",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 979,
+    "name": "德元兰州纯汤牛肉面(奉贤路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 980,
+    "name": "宁夏印象·盐池滩羊(徐家汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 981,
+    "name": "宁夏马记彭浦清真饭店",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 982,
+    "name": "翠花娘家东北菜(国和路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 983,
+    "name": "吕老哈印象锅包肉(虹口海伦路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 984,
+    "name": "冰城老于家(徐汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 985,
+    "name": "李老哈·东北菜(宋园路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 986,
+    "name": "军哥饺子王",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 987,
+    "name": "傻大姐东北菜水饺(梅川路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 988,
+    "name": "姚稷大铁锅(东新路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 989,
+    "name": "玺炖·中国铁锅炖(陆家嘴店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 990,
+    "name": "老朴家铁锅炖(总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 991,
+    "name": "瑞鑫饺子馆(兰溪路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 992,
+    "name": "仲秋的饺子馆(曹杨路复悦荟店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 994,
+    "name": "喜鼎海胆水饺(长宁来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 995,
+    "name": "喜尚鲜·东北小馆(外滩外白渡桥店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 996,
+    "name": "上关雪东北菜(宝地广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 998,
+    "name": "兰心餐厅(进贤路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 999,
+    "name": "茂隆餐厅(进贤路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1000,
+    "name": "德兴馆(广东路总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1001,
+    "name": "春餐厅(进贤路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1002,
+    "name": "老吉士酒家(天平路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1003,
+    "name": "上海老饭店(豫园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1004,
+    "name": "老正兴菜馆(福州路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1005,
+    "name": "圆苑(兴国路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1006,
+    "name": "绿波廊(豫园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1007,
+    "name": "福1015(愚园路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1008,
+    "name": "雍福会(永福路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1009,
+    "name": "王宝和酒家(福州路总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1010,
+    "name": "滇味园传统云南过桥米线(宁波路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1011,
+    "name": "上汤·云南过桥米线·卤烤(奉贤路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1012,
+    "name": "云采云南菜(云南大厦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1013,
+    "name": "云之缘云南民族菜Lotus Eatery(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1014,
+    "name": "麦麦山云南菜(缤谷广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1015,
+    "name": "岚·山野云南特色菜(愚园路CP静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1016,
+    "name": "滇界云南鲜菌火锅(五角场万达店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1017,
+    "name": "黔莊",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1019,
+    "name": "八山一水黔菜餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1020,
+    "name": "上黔庄一品·酸汤鱼(吴中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1021,
+    "name": "黔香阁(虹中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1022,
+    "name": "黔山婆·地道贵州菜(静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1023,
+    "name": "山石榴·贵州菜(丰盛里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1024,
+    "name": "毛辣果Maolaguo",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1025,
+    "name": "怡妮新疆风味餐厅(东江湾路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1026,
+    "name": "艾尼巴亿餐厅(曲阳路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1027,
+    "name": "西域盛宴(古美店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1028,
+    "name": "新疆伊宁远征餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1029,
+    "name": "二道桥1881西域楼兰餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1030,
+    "name": "锡伯新疆餐厅(常熟路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1031,
+    "name": "胡集酒肆·唐潮西域菜(万象城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1032,
+    "name": "BARFU·抓饭屋(武定路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1033,
+    "name": "卡尔湾新疆餐厅(虹梅路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1034,
+    "name": "塔城饭店(新沪路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1035,
+    "name": "阿卡哥哥·喀什葛尔手抓饭(静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1036,
+    "name": "黑丰抓饭(国济路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1037,
+    "name": "捡角台湾食堂(古北店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1039,
+    "name": "吉亨面馆(古北1699店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1040,
+    "name": "台北七条通牛肉面(漕宝路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1041,
+    "name": "鹅庄·台湾美食(金汇庭院店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1042,
+    "name": "吴记鲜定味(吴中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1043,
+    "name": "和盈台湾料理(东方路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1044,
+    "name": "千秋小馆·台湾菜(古北店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1045,
+    "name": "蔡家食谱(古北一店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1046,
+    "name": "台北雅厨(中芯花园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1047,
+    "name": "光头匠·光实匠(南丰城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1048,
+    "name": "bistro bonbon凤凤亭(武夷路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1050,
+    "name": "四季民福PEKING CHAMBER(吴淞路外白渡桥店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1051,
+    "name": "全聚德(淮海中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1053,
+    "name": "洪长兴(云南南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1055,
+    "name": "南门涮肉(世博大道总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1056,
+    "name": "佟爷老北京炙子烤肉(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1058,
+    "name": "谢记武汉热干面(七浦路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1059,
+    "name": "蔡记炸酱热干面(昌里路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1060,
+    "name": "九宫殿热干面(来福士广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1061,
+    "name": "楚褚热干面(宝山万达店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1062,
+    "name": "楚韵酒馆·湖北卤味·潜江小龙虾(徐泾店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1063,
+    "name": "来菜·湖北头牌藕汤(环球港店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1064,
+    "name": "老荆味武汉美食",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1066,
+    "name": "监利早酒·湖北菜(国定路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1068,
+    "name": "冷三先生(虹莘路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1069,
+    "name": "嗲嗲的椰子鸡·太琼糟粕醋(百联又一城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1070,
+    "name": "牛信亭炭火烤肉·韩式料理(虹泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1071,
+    "name": "扎西达娲藏文化演艺餐厅(徐汇绿地缤纷城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1072,
+    "name": "多杰拉姆藏餐吧(朱家角店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1073,
+    "name": "喜来稀肉(虹泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1074,
+    "name": "陆丝芬·柳州原汤螺蛳粉(淮海中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1075,
+    "name": "青春贝壳韩国烤肉(旗舰店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1076,
+    "name": "文家粉楼(静安大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1077,
+    "name": "正三熙小木屋烤肉(虹泉路一号店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1078,
+    "name": "赣南粉局·江西锅气炒粉(久光中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1079,
+    "name": "孔德洞真味酱蟹",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1080,
+    "name": "掌柜的店·河南菜(日月光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1081,
+    "name": "草家真味酱蟹(天乐广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1082,
+    "name": "荣豫·河南菜(ONE上海张园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1083,
+    "name": "韩味岛酱蟹(天乐广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1084,
+    "name": "熹餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1085,
+    "name": "富乐满韩国正宗炸鸡(虹泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1086,
+    "name": "大翰宫·蒙古包烤全羊·融合菜(七宝店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1087,
+    "name": "bb.q Chicken比比客(虹泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1088,
+    "name": "家在塔啦·烤全羊·蒙古包餐厅(天钥桥路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1089,
+    "name": "多乐房土豆汤(虹泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1090,
+    "name": "额尔敦传统涮(延安中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1091,
+    "name": "万寿亭参鸡汤(虹泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1092,
+    "name": "济州食堂by钟路商会(虹泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1093,
+    "name": "巴屋巴屋正宗韩国料理",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1094,
+    "name": "青鹤谷烤肉(虹泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1095,
+    "name": "姜虎东白丁(上海店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1096,
+    "name": "四面泰(环贸iapm店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1097,
+    "name": "Home Thai(K11店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1098,
+    "name": "富贵椰 Thai Bistro & Eatery(丰盛里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1099,
+    "name": "POETS泰狮(徐家汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1100,
+    "name": "Mi Thai(安福路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1101,
+    "name": "Hidden Thai Bistro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1102,
+    "name": "Akanee Thai Izakaya(愚园路)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1103,
+    "name": "Zaafran(素凯泰酒店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1104,
+    "name": "泰北清迈小馆(虹桥路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1105,
+    "name": "清迈排挡(北外滩来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1106,
+    "name": "船面专门店(美罗城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1107,
+    "name": "大学路泰餐(大学路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1109,
+    "name": "清迈瓦罐火锅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1110,
+    "name": "Rasa Rasa越南料理&串烧(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1115,
+    "name": "PhoToShop福秀·越南餐厅",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1116,
+    "name": "越厨西贡Saigon Bistrot(陆家嘴中心店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1117,
+    "name": "阮千金·法式越南菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1118,
+    "name": "爱在河内越南餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1119,
+    "name": "印象芽庄越式餐厅(新华路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1120,
+    "name": "普榄越南餐厅(啦啦宝都店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1121,
+    "name": "越南美食安宫AoBaBa",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1122,
+    "name": "越洋越南菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1123,
+    "name": "PHO LA越南粉",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1124,
+    "name": "西贡Saigon越南菜(中环广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1125,
+    "name": "星洲小馆·新加坡菜(太阳宫店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1126,
+    "name": "星洲小馆·新加坡料理(田子坊店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1129,
+    "name": "钨节路新加坡餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1130,
+    "name": "Secret Flavor(马来清真)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1131,
+    "name": "兴兴东南亚饮食阁",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1132,
+    "name": "金椰壳(印力中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1133,
+    "name": "南洋南香·东南亚美食(16铺店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1134,
+    "name": "Docks河畔餐厅(静安英迪格)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1135,
+    "name": "Garuda巴东印尼餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1136,
+    "name": "娘惹情",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1137,
+    "name": "Jean Georges 上海",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1138,
+    "name": "Masala Art Indian Cuisine(大沽路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1140,
+    "name": "RANGOLI蓝果丽印度餐厅(古北SOHO店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1141,
+    "name": "Maison Lameloise 莱美露滋",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1142,
+    "name": "KLAY Modern Indian Restaurant(北京西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1143,
+    "name": "Le Comptoir de Pierre Gagnaire",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1144,
+    "name": "虹盐RED SALT新派印巴餐厅(禧瑞广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1145,
+    "name": "Phénix 斐霓丝餐厅酒吧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1146,
+    "name": "Kaveen's Kitchen印度餐厅(虹桥店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1147,
+    "name": "1929 by Guillaume Galliot",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1148,
+    "name": "Indian Kitchen(南印)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1149,
+    "name": "Dakshin南印餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1150,
+    "name": "POPOT 博朴(徐汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1151,
+    "name": "Dev Bhoomi Curry House",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1152,
+    "name": "POLUX",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1153,
+    "name": "Bombay Bistro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1154,
+    "name": "SHADOWS(安福路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1155,
+    "name": "Indian Curry Hut",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1156,
+    "name": "LE VERRE à vin by MIG",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1157,
+    "name": "Vedas Indian Restaurant",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1159,
+    "name": "Delhi Darbar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1160,
+    "name": "Mignon 9",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1161,
+    "name": "Punjabi Bistro旁遮普",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1162,
+    "name": "Luneurs(洛克·外滩源店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1163,
+    "name": "安比斯印度餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1164,
+    "name": "Pain Chaud(建国西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1166,
+    "name": "La Boulangerie by Pierre Gagnaire",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1168,
+    "name": "Land of Butterful & Creamorous",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1169,
+    "name": "MAKAN阿拉伯餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1170,
+    "name": "VERIE BAKEHOUSE(马当路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1171,
+    "name": "Eli Falafel(人民广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1173,
+    "name": "Da Vittorio Shanghai",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1175,
+    "name": "8½ Otto e Mezzo Bombana",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1177,
+    "name": "Mercato by Jean-Georges",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1178,
+    "name": "Habibi中东餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1179,
+    "name": "BOTTEGA 意库",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1180,
+    "name": "Shiraz波斯餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1181,
+    "name": "Mammamia 玛米亚",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1182,
+    "name": "Barbarossa",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1183,
+    "name": "TOPO EXPRESS",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1184,
+    "name": "Hoxa Bistro沙美大楼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1185,
+    "name": "PIZZENELLA",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1186,
+    "name": "罗宋娃娃正宗俄罗斯菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1187,
+    "name": "Mozzarella e Vino",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1188,
+    "name": "Khachapuri格鲁吉亚美食",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1189,
+    "name": "ALLORA 意大利西餐厅(外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1190,
+    "name": "撒马尔罕乌兹别克餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1191,
+    "name": "Osteria Garden 生蚝花园餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1192,
+    "name": "丝路驿站中亚餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1193,
+    "name": "Grappa's 意大利餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1194,
+    "name": "Vesta 意式餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1195,
+    "name": "何东故居披萨(襄阳店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1196,
+    "name": "Mercado 505 Gourmet Restaurant",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1197,
+    "name": "el Willy(中山东二路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1200,
+    "name": "EL Bodegon",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1201,
+    "name": "Brownstone Tapas & Lounge",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1202,
+    "name": "Tomatito",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1204,
+    "name": "德国瀚克硕啤酒花园餐厅 Hacker-Pschorr",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1208,
+    "name": "德国啤酒屋(安亭路老洋房)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1209,
+    "name": "飞象西餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1210,
+    "name": "KIRILLITSA 西里尔俄罗斯餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1211,
+    "name": "俄士厨房(环球港店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1212,
+    "name": "HELLO KIEV 乌克兰主题餐厅(世博源店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1213,
+    "name": "哈尔滨餐厅(海派俄式)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1214,
+    "name": "Wolfgang's Steakhouse 沃夫冈牛排馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1215,
+    "name": "Cantina Agave(富民路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1216,
+    "name": "El Santo Tacos&Tequila(158坊店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1217,
+    "name": "Morton's The Steakhouse 莫尔顿牛排坊",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1218,
+    "name": "LOS PACOS帕库墨西哥餐厅(上生新所店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1219,
+    "name": "Texas Roadhouse 德州公路牛排馆(世纪汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1220,
+    "name": "Maya",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1221,
+    "name": "Mayita",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1223,
+    "name": "El Luchador",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1224,
+    "name": "Laya Burger 拉亚汉堡(宜山路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1225,
+    "name": "CHIHUAHUA墨西哥餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1226,
+    "name": "Tequilaz Mexican Bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1227,
+    "name": "Bourbon Cookhouse 玻本美式餐厅酒吧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1228,
+    "name": "Tajine Moroccan 塔金摩洛哥中东餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1229,
+    "name": "Chili's 奇利斯(陆家嘴滨江店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1232,
+    "name": "Crafted 蔻阁梧桐露台西餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1233,
+    "name": "铁手咖啡制造局Metal Hands(永嘉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1234,
+    "name": "尚牛社会 Beef & Liberty",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1236,
+    "name": "gluglu面包店(思南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1237,
+    "name": "Shake Shack 奶昔小屋",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1238,
+    "name": "SMAKA咖啡烘焙",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1239,
+    "name": "Element Fresh 新元素",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1240,
+    "name": "LUNEURS月乐诗冰淇淋咖啡(北外滩来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1241,
+    "name": "Speak Low彼楼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1242,
+    "name": "The Nest(外滩)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1244,
+    "name": "Greek Taverna Milos 希腊餐厅(老外街店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1245,
+    "name": "柴爿馄饨",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1246,
+    "name": "黄启云私房牛肉面工坊",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1247,
+    "name": "The Fat Olive 欧立威",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1248,
+    "name": "Efes Turkish & Mediterranean 爱妃丝土耳其餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1249,
+    "name": "So Mezze by Pasha",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1250,
+    "name": "ELI FALAFEL 黎巴嫩餐厅(富城路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1251,
+    "name": "LEYAS 蕾娅中东美食",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1253,
+    "name": "KAPYA土耳其餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1254,
+    "name": "Shanghai Tavern(上海艾迪逊酒店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1255,
+    "name": "Guinness Social by Butler & White's",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1256,
+    "name": "The Park Tavern",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1257,
+    "name": "Camden's Fish and Chips",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1258,
+    "name": "派社 Pie Society",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1260,
+    "name": "BOR Eatery",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1261,
+    "name": "东湖宾馆北欧料理(瑞典主厨)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1263,
+    "name": "北欧森林(安福路)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1264,
+    "name": "申德勒加油站西餐厅 Schindlers Tankstelle(外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1265,
+    "name": "Papas Bierstube 德国乡村餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1266,
+    "name": "1886 German Restaurant & Bar(Bund 16)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1267,
+    "name": "TAVOLA 意大利餐厅(陆家嘴滨江)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1268,
+    "name": "Giovanni's 意大利餐厅(虹桥喜来登)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1269,
+    "name": "el Efante",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1270,
+    "name": "Liquid Laundry",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1271,
+    "name": "Smokin' Hog 美式烟熏BBQ",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1272,
+    "name": "Hard Rock Cafe 硬石餐厅(上海)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1273,
+    "name": "OHA EATERY",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1274,
+    "name": "RAC",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1275,
+    "name": "法国舅舅家小酒馆CHEZ JOJO(永嘉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1276,
+    "name": "Kartel Wine Bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1277,
+    "name": "HEALER Bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1278,
+    "name": "SunFlour阳光粮品(安福路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1279,
+    "name": "老麦咖啡馆TheCottageBar(武康大楼店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1281,
+    "name": "MEL BOURNE Brunch&Bistro猫尔本(静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1282,
+    "name": "马里昂巴Marienbad(武康路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1283,
+    "name": "LENOTRE雷诺特法式西点(前滩太古里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1284,
+    "name": "Le Gateau戛朵法式蛋糕(世博源店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1285,
+    "name": "PAUL LAFAYET法式甜品(港汇广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1286,
+    "name": "Justgrapes萄醉(安福路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1287,
+    "name": "SHIMMER(巨鹿路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1288,
+    "name": "JZ CLUB",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1289,
+    "name": "Sip bistro&bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1290,
+    "name": "沪西老弄堂面馆(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1291,
+    "name": "马新文拉面店(广西北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1292,
+    "name": "大拇指面馆(高平路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1293,
+    "name": "La Burg勒博格南非餐吧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1294,
+    "name": "ATELIER NO.3",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1295,
+    "name": "Yugo fusion izakaya",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1296,
+    "name": "Verdant浮叶",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1297,
+    "name": "Kora by Circle",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1298,
+    "name": "Trattoria del Bistecca·1565",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1299,
+    "name": "司芳糯米(久光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1300,
+    "name": "Albaluz",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1301,
+    "name": "Kyochon1991校村炸鸡(漕宝路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1302,
+    "name": "KOSMOS斯拉夫酒馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1303,
+    "name": "是隆路船面(东湖路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1304,
+    "name": "WING REPUBLIC来翅够",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1305,
+    "name": "VN Banh Mi&Cafe越法时光(1788广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1306,
+    "name": "THE PAWON·8碗(古北SOHO店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1307,
+    "name": "YA BENJIA by元爱本家(金虹桥店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1308,
+    "name": "Nick&Nicky's Family妮琪泰式家庭料理(静安大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1309,
+    "name": "印度小厨(巨鹿路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1310,
+    "name": "莎德曼·秘烤美食殿(大拇指广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1311,
+    "name": "辻利TSUJIRI(日月光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1312,
+    "name": "Kaki Mania日式刨冰",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1313,
+    "name": "九十葉·抹茶专门店(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1314,
+    "name": "鲨鱼冰屋Kooriya Shark(常熟路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1315,
+    "name": "Sobre日式刨冰",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1316,
+    "name": "空蝉怀石料理(益丰·外滩源店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1317,
+    "name": "小钵 Kobachi on Fifty Six(金茂56楼)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1318,
+    "name": "麺屋庄野研究所",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1319,
+    "name": "七豚拉面(瑞金一路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1320,
+    "name": "麺処益二郎",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1321,
+    "name": "鲤久面屋·横滨家系拉面(金桥啦啦宝都店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1322,
+    "name": "鸟山鸣·薪火烧鸟",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1323,
+    "name": "银蔵Ginzō·Yakitori烧鸟(新华路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1324,
+    "name": "玄白·炭烤活鳗(高岛屋首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1325,
+    "name": "鳗葉(世博天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1326,
+    "name": "KAI FINE开饭·汉堡排(静安寺店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1327,
+    "name": "Rumor传闻·洋食(新乐路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1328,
+    "name": "韦二姐传统螺蛳粉",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1329,
+    "name": "阳奶佬螺蛳粉(丽园路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1330,
+    "name": "家味螺蛳粉&烤鱼(安远路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1331,
+    "name": "山间堂民间瓦缸煨汤馆(淮海店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1332,
+    "name": "赣江秋瓦罐煨汤",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1334,
+    "name": "严记老北京涮锅(乌鲁木齐路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1336,
+    "name": "青藏餐厅(爱琴海购物公园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1337,
+    "name": "润园椰礼海南椰子鸡火锅(曹杨路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1338,
+    "name": "辞琼·老海南糟粕醋火锅(月亮湾店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1339,
+    "name": "柒月粉(江苏路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1340,
+    "name": "谷堆复古烩面",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1341,
+    "name": "一碗兰纯汤牛肉面1号店",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1342,
+    "name": "伊祥·敦煌楼(中山北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1344,
+    "name": "洪峣爷北京炙子烤肉",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1347,
+    "name": "nabi",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1349,
+    "name": "Yaya's Pasta Bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1350,
+    "name": "Nono's",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1351,
+    "name": "Jellooo",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1353,
+    "name": "AL'S DINER",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1354,
+    "name": "MONA",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1355,
+    "name": "Dugout Brunch & Bistro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1356,
+    "name": "WARO ROWA",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1357,
+    "name": "Madison",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1358,
+    "name": "Table a Deli",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1359,
+    "name": "Vinism Wine Bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1360,
+    "name": "SOiF",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1361,
+    "name": "Mavis966",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1362,
+    "name": "Nora's Wine Shop & Bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1363,
+    "name": "DTE down to earth",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1364,
+    "name": "Le Saleya Bar à Vin",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1365,
+    "name": "龍满·云贵川bistro小酒馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1366,
+    "name": "米仓POP",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1367,
+    "name": "Forage Eatery & Wine Bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1368,
+    "name": "La Tavernetta Bar à Vin",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1369,
+    "name": "Pecher Wine Bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1371,
+    "name": "1/10 Coffee Roaster(长乐路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1372,
+    "name": "有容乃大 Bigger Than Bigger(北京西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1373,
+    "name": "Radar雷达咖啡(思南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1374,
+    "name": "煮屿 Brew Island(溧阳路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1378,
+    "name": "制冰铺MakingGelato·时桉(陕西南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1379,
+    "name": "La Creperie(桃江路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1381,
+    "name": "泰安门 Taian Table",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1382,
+    "name": "宝丽轩",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1383,
+    "name": "福和慧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1384,
+    "name": "三号黄浦会 Canton Table",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1385,
+    "name": "成隆行蟹王府(九江路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1386,
+    "name": "Fabula",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1387,
+    "name": "福1039",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1388,
+    "name": "福1088",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1389,
+    "name": "il Ristorante - Niko Romito",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1390,
+    "name": "金轩(浦东丽思卡尔顿店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1391,
+    "name": "凌珑 Ling Long",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1392,
+    "name": "Obscura by 唐香",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1393,
+    "name": "O.P.S. CAFE(太原路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1394,
+    "name": "Café del Volcán火山咖啡(永康路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1395,
+    "name": "堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1396,
+    "name": "Captain George风味博物馆(太原路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1397,
+    "name": "Blacksheep Espresso(茂名南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1398,
+    "name": "赤瑕咖啡Akadama Coffee(武定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1399,
+    "name": "翠贝果(乌鲁木齐南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1400,
+    "name": "Big Bagel(永康路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1401,
+    "name": "Sumerian(陕西北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1403,
+    "name": "Madre(番禺路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1404,
+    "name": "BAsdBAN巴适得板(愚园路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1407,
+    "name": "BONUS Gelato(乌鲁木齐中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1408,
+    "name": "BLAZ",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1409,
+    "name": "BASTARD小酒馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1410,
+    "name": "茹·pure vegan(博华广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1411,
+    "name": "庆春朴门(新天地东台里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1412,
+    "name": "KIINA",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1430,
+    "name": "冯三孃川菜馆(嘉善路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1431,
+    "name": "归蜀第成都串串料理(梅花路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1432,
+    "name": "华华川菜馆(吴江路)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1434,
+    "name": "鸟鸟炒菜店(南昌路)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1436,
+    "name": "鸿姐老火锅·传统炒料(上海旗舰店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1437,
+    "name": "金姐老火锅(陆家嘴店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1438,
+    "name": "宴山城火锅(外滩江景店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1439,
+    "name": "红料理·串串有瘾(万航渡路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1440,
+    "name": "孔岳冒菜(五角场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1441,
+    "name": "成都你六姐·牛肉冒菜(七巧国店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1442,
+    "name": "龙玥川菜·豆花饭(丽园路总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1444,
+    "name": "溪雨观酸菜鱼(七宝宝龙城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1445,
+    "name": "百岁我家酸菜鱼(古美店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1446,
+    "name": "釜溪盐韵·私宴(上海首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1447,
+    "name": "南兴园 NAN·XING·YUAN",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1448,
+    "name": "孔雀厅 The Peacock Room",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1449,
+    "name": "洁而精川菜馆(雁荡路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1450,
+    "name": "千平平重庆面庄(延平路总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1451,
+    "name": "桂釜山城重庆小面(南京西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1452,
+    "name": "炊小川内江牛肉面",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1453,
+    "name": "川味面荘·泸州牛肉面(南翔老街店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1454,
+    "name": "寛的窄的面馆(打浦路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1455,
+    "name": "九品川味·四川绵阳米粉",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1458,
+    "name": "鲁至申(静安大融城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1459,
+    "name": "船歌鱼水饺(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1460,
+    "name": "沈春芳手工饺子(花木时光里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1461,
+    "name": "上海国际饭店·丰泽楼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1462,
+    "name": "馥添饭店·浓汤广府菜(世纪汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1463,
+    "name": "粤来记·烧味·生蚝鸡煲(打浦路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1464,
+    "name": "三伯公·客家菜(徐汇日月光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1465,
+    "name": "元朗冰室(马当路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1466,
+    "name": "细记港九宵夜大牌档(东湖路总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1467,
+    "name": "鲜斩烧味(宁波路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1468,
+    "name": "家全七福酒家(静安嘉里中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1470,
+    "name": "嘉宴·精致客家菜(虹口店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1472,
+    "name": "菁禧荟SELECTION BY DU(北外滩来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1473,
+    "name": "头家夜粥(广东路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1477,
+    "name": "姚益记潮汕菜(安亭店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1478,
+    "name": "今日牛事(瑞金店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1479,
+    "name": "下山虎潮汕鲜牛肉火锅(巨鹿路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1481,
+    "name": "潮牛嗨潮汕鲜牛肉火锅(龙茗路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1482,
+    "name": "潮汕草根鲜牛肉海鲜火锅排档(七宝店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1483,
+    "name": "任兴记(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1484,
+    "name": "留住阁潮汕砂锅粥馆(长宁店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1485,
+    "name": "潮人姐妹轩(海宁路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1486,
+    "name": "汕鹤潮式甜汤(人广来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1488,
+    "name": "游宴一品淮扬(万达瑞华店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1490,
+    "name": "狮王府淮扬菜(万象城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1492,
+    "name": "苏三姑",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1494,
+    "name": "胜春楼·淮扬菜·早茶(宝华商业广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1498,
+    "name": "东淓·苏宴(南京东路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1499,
+    "name": "上扬府·淮扬小品",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1500,
+    "name": "盛·淮扬(长风大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1501,
+    "name": "黄浦轩臻品·淮扬(上海大厦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1502,
+    "name": "荣小馆(安达仕店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1503,
+    "name": "荣家黄鱼面(南京西路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1506,
+    "name": "柒园·竹境(西岸国际会展中心店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1507,
+    "name": "柒园·竹荟(蟠龙天地店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1508,
+    "name": "越稽·绍兴小馆(万象城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1509,
+    "name": "福見仁FúDining·福州火灶(K11店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1510,
+    "name": "甲东南闽菜馆(北蔡休闲广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1511,
+    "name": "屿热闽南小馆(水城南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1512,
+    "name": "也红花泉州风味(前湾印象城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1513,
+    "name": "老吴的食光·闽南小灶(虹桥南丰城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1517,
+    "name": "乾七道文化会馆(曲阳路复城国际店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1518,
+    "name": "鲜顺欧闽北私房菜(沪太支路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1519,
+    "name": "鱼湘汇·湖南土菜(中山北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1527,
+    "name": "徽悦食府(佘山新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1533,
+    "name": "上金雀华人餐厅(乌中店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1535,
+    "name": "宝粤楼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1536,
+    "name": "香港池仔记肠粉王(襄阳南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1537,
+    "name": "银记肠粉店(华山店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1538,
+    "name": "啫苑广州啫啫煲(虹口龙之梦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1539,
+    "name": "啫火·啫啫煲(虹桥天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1540,
+    "name": "好好彩啫啫煲(黄浦来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1541,
+    "name": "瑞狮楼潮汕会馆(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1542,
+    "name": "左庭右院鲜牛肉火锅(五角场万达店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1543,
+    "name": "宽马记大排档·鲜牛肉海鲜火锅(普陀店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1544,
+    "name": "神更仔·潮汕魂大排档(汉口路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1545,
+    "name": "潮府夜档(嘉定马陆店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1546,
+    "name": "潮顺潮汕牛肉粿条(上海总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1547,
+    "name": "夜阑静·潮汕海鲜粥城(秀沿路总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1548,
+    "name": "汕心·潮汕甜汤(人广来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1549,
+    "name": "甬江里宁波小鲜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1550,
+    "name": "源清制面(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1551,
+    "name": "瓯宴·陆悦新温州菜(张江店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1552,
+    "name": "衢叔家·衢州山里菜(延安西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1553,
+    "name": "土灶头·金华菜(桃浦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1554,
+    "name": "古意湘庭(久光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1555,
+    "name": "吃饭皇帝大(上海湘西土家菜)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1556,
+    "name": "世博轩(世博园店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1558,
+    "name": "东北风(松江万达店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1559,
+    "name": "李大喜·吉林原味烧烤",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1560,
+    "name": "辣些年东北烧烤(五角场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1563,
+    "name": "便宜坊(世纪大道华贸广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1567,
+    "name": "街角和晚风台式小厨",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1569,
+    "name": "老张牛肉面(江宁路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1570,
+    "name": "台麻里台湾小馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1571,
+    "name": "度小月(美罗城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1572,
+    "name": "鼎泰丰(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1573,
+    "name": "米屿邦·台式小馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1574,
+    "name": "FIFTYLAN(CP静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1575,
+    "name": "鲜芋仙(日月光店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1576,
+    "name": "桂芭蕉GUI BISTRO(静安嘉里中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1577,
+    "name": "漓江码头桂林农家菜(金汇·华光城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1578,
+    "name": "柳州肥姨妈大骨螺蛳粉(紫藤路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1579,
+    "name": "塔哈尔·新疆盛宴(中山龙之梦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1580,
+    "name": "胖胖君的新疆抓饭(黄浦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1581,
+    "name": "大壶春(四川中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1582,
+    "name": "萝春阁·生煎大王(浙江中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1583,
+    "name": "晓燕生煎(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1584,
+    "name": "南翔馒头店(豫园店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1585,
+    "name": "万寿斋(山阴路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1586,
+    "name": "莱莱小笼(天津路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1587,
+    "name": "佳家汤包(黄河路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1588,
+    "name": "四如春食府(石泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1590,
+    "name": "小绍兴(云南南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1591,
+    "name": "振鼎鸡(福州路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1592,
+    "name": "老正兴(福州路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1594,
+    "name": "人和馆(肇嘉浜路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1595,
+    "name": "海金滋(进贤路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1596,
+    "name": "瓦屋老宅江西土菜(世博源店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1597,
+    "name": "小匠喜江西菜(黄浦世贸广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1598,
+    "name": "周真真南昌拌粉·瓦罐汤(大宁店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1599,
+    "name": "雪三娘江西炒粉拌粉(九亭中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1600,
+    "name": "胡恰·景德江西菜(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1602,
+    "name": "王凯阳河南水煎包",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1603,
+    "name": "南星汇新加坡海南鸡饭(静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1604,
+    "name": "嗲嗲的椰子鸡(五角场百联又一城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1606,
+    "name": "来菜·湖北藕汤(月星环球港店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1607,
+    "name": "靓靓蒸虾(定西路上海首店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1608,
+    "name": "一棠龙虾·王牌虾球(苏河湾万象天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1609,
+    "name": "蔡林记·湖北小馆(真如环宇城MAX店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1610,
+    "name": "糖豆(新嘉中心店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1611,
+    "name": "楚缘·经典鄂菜(宝山闿和阳光广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1612,
+    "name": "长安宴(陕西大厦·陕西驻沪办店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1613,
+    "name": "宁夏印象·盐池滩羊肉体验店(江宁路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1614,
+    "name": "大师宣羊·鲜肉烧烤·小酒馆(上海影城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1615,
+    "name": "泓0871臻选云南菜·寻鲜宴(上海北外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1616,
+    "name": "云海肴(上海闸北大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1617,
+    "name": "滇百年云南小锅米线(静安大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1618,
+    "name": "良米山·云南野生菌过桥米线(中山公园龙之梦店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1619,
+    "name": "芸山季云南野生菌火锅(上海来福士广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1620,
+    "name": "九色云野生菌火锅(长泰广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1621,
+    "name": "黔香阁·味(花木店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1623,
+    "name": "青藏餐厅·牦牛·藏羊(爱琴海店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1624,
+    "name": "扎西达娲(徐汇绿地缤纷城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1625,
+    "name": "京云华(张江汇智店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1627,
+    "name": "京城南门涮肉(杨浦大连路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1629,
+    "name": "南门天下·蒙羊世家烀羊专家(公兴路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1630,
+    "name": "多来转爆肚店(七宝老街店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1631,
+    "name": "丰碗居(长宁来福士店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1632,
+    "name": "老北京炸酱面(包头南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1633,
+    "name": "宫宴Gongyan(北京西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1634,
+    "name": "礼部·新京菜(CP静安店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1635,
+    "name": "和季新京菜(数通链谷店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1638,
+    "name": "云庄里云南铜锅米线(浦江镇欢乐颂店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1639,
+    "name": "胡麻过桥米线",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1640,
+    "name": "滇味园云南过桥米线(南京东路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1641,
+    "name": "上黔庄·一品贵州菜(吴中路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1642,
+    "name": "潘小烧·云南烧烤(外滩总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1643,
+    "name": "耶里夏丽·新疆菜(南京东路世茂店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1644,
+    "name": "那时新疆·乌孙(虹桥南丰城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1645,
+    "name": "卡德尔大叔新疆主题餐厅(东方路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1646,
+    "name": "羊伙计烤全羊(宝山店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1647,
+    "name": "爱上草原内蒙餐厅(老沪闵路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1648,
+    "name": "小小羔·内蒙涮肉&烧烤(徐家汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1649,
+    "name": "东北人家(弘基广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1650,
+    "name": "张黄锦记螺蛳粉桂林米粉(阳光天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1651,
+    "name": "方中山胡辣汤(静安康定路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1652,
+    "name": "五星海南鸡饭(新乐路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1653,
+    "name": "串姐焦烤鸡架(五角场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1655,
+    "name": "王老六铁锅炖鱼(桂林路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1656,
+    "name": "鹤北北·东北黏糊麻辣烫(人民广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1657,
+    "name": "久月东北砂锅麻辣烫",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1658,
+    "name": "家里没煮",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1659,
+    "name": "桂山禾·桂林卤菜粉",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1660,
+    "name": "O.P.S CAFE",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1662,
+    "name": "有容乃大 LuckyDraw",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1663,
+    "name": "月球咖啡 Retro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1664,
+    "name": "鲁马滋 Rumors Coffee Roastery",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1665,
+    "name": "Café del Volcán",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1666,
+    "name": "Radar Coffee",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1667,
+    "name": "Brew Island 煮屿",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1668,
+    "name": "白鲸咖啡 White Whale",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1669,
+    "name": "aftertaste 回味",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1670,
+    "name": "小半咖啡",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1671,
+    "name": "pocket pocket 口袋咖啡",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1672,
+    "name": "HUGO HUSKY HOUSE 雨果咖啡",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1673,
+    "name": "DayDreaming by Monos 白日梦",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1674,
+    "name": "IKIGAI",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1675,
+    "name": "城是 CITYBORING",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1676,
+    "name": "LANERS老虎灶喫咖啡",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1677,
+    "name": "BIG SUR COFFEE",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1678,
+    "name": "Metal Hands 铁手咖啡制造局",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1679,
+    "name": "VOYAGE COFFEE",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1680,
+    "name": "赤瑕咖啡 Akadama",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1681,
+    "name": "DEARYOU 咖啡豆研究所",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1682,
+    "name": "MONO",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1686,
+    "name": "New Lane Coffee 纽巷",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1687,
+    "name": "Rain Mountain 雨山咖啡",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1689,
+    "name": "且乐 cheer",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1690,
+    "name": "Gregorius航迹(愚园路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1691,
+    "name": "3又二分之一",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1692,
+    "name": "0566咖啡製作所",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1694,
+    "name": "TonTon(永康路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1695,
+    "name": "Bebaked(愚园路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1696,
+    "name": "O'Mills Sourdough Bakery & Bistro(永嘉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1697,
+    "name": "Gluglu(愚园路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1698,
+    "name": "Sloppy Gin(延平路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1699,
+    "name": "Luneurs月乐诗(南京西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1700,
+    "name": "柴田西点Chez Shibata(紫云西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1701,
+    "name": "辛一铜锣烧(静安大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1702,
+    "name": "香港华心糖水铺(南西总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1703,
+    "name": "双喜老铺(静安寺店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1704,
+    "name": "小团圆糖水铺(思南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1705,
+    "name": "yesOcake巴斯克专门店",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1707,
+    "name": "gula bistro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1708,
+    "name": "Yeats Bistro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1709,
+    "name": "Wine Universe",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1710,
+    "name": "Fiamo Bistro by Senso",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1711,
+    "name": "Bella Vita Bistro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1712,
+    "name": "Le Verre à vin",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1713,
+    "name": "大酉 The Merchants",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1714,
+    "name": "壳里西餐厅 Coquille Seafood Bistro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1715,
+    "name": "Alimentari Grande",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1716,
+    "name": "Juke",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1717,
+    "name": "SOSA",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1718,
+    "name": "游牧Bistro by耶里夏丽",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1721,
+    "name": "武宫酒吧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1722,
+    "name": "三山野·云南傣家菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1723,
+    "name": "煤球 Charcoal",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1724,
+    "name": "壮壮酒馆 Terroir Strong",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1725,
+    "name": "RAC BAR（安福路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1727,
+    "name": "Alimentari（安福路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1728,
+    "name": "Money Shops（愚园路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1729,
+    "name": "岚山早餐公司 Breakfast Company（武定路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1730,
+    "name": "Baker & Spice（安福路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1731,
+    "name": "Lokal",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1732,
+    "name": "FUNK&KALE（兴业太古汇店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1733,
+    "name": "新天地朗廷酒店大堂吧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1734,
+    "name": "海仑宾馆505Bar",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1735,
+    "name": "外滩华尔道夫酒店羿庭",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1736,
+    "name": "和平饭店华懋阁",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1737,
+    "name": "Matcha Love 抹艾茶",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1739,
+    "name": "裕莲茶楼（金虹桥国际中心店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1740,
+    "name": "西园抹茶专卖店（大悦城店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1741,
+    "name": "翠富楼·粤式点心·啫啫煲",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1742,
+    "name": "Bar Leone",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1743,
+    "name": "明日酿造/明日酒馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1744,
+    "name": "半醉山岚",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1745,
+    "name": "Flipper's 奇迹舒芙蕾（金桥EKA天物店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1746,
+    "name": "上海宝格丽酒店 Il Ristorante – Niko Romito",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1747,
+    "name": "When Pigs Fly当猪飞(愚园路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1748,
+    "name": "Spiceman辣男Gelato(思南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1749,
+    "name": "Gregorius SHADE(安福路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1773,
+    "name": "L'eclair de Genie闪电巴黎(芮欧百货店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1774,
+    "name": "乔尔卢布松美食坊Boulangerie(外滩18号)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1775,
+    "name": "法田鹿蛋糕",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1776,
+    "name": "Lady M(上海恒隆广场店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1777,
+    "name": "聚福shanghailander(乌鲁木齐南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1778,
+    "name": "贵州冰浆(陕西北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1781,
+    "name": "HUFFY coffee&gelato(威海路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1782,
+    "name": "MIMILATO(长乐路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1783,
+    "name": "Sit Gelato(南昌路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1784,
+    "name": "国际饭店帆声饼屋(黄河路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1786,
+    "name": "drunk baker醉师傅(陕康里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1787,
+    "name": "达可芮Gelato Dal Cuore(陕西北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1788,
+    "name": "纽约贝果博物馆(新天地店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1790,
+    "name": "EVERNAKED裸蛋糕(巨鹿路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1791,
+    "name": "yeetlemon柠檬蛋糕(同乐坊店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1792,
+    "name": "Bake No Title(番禺路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1793,
+    "name": "堂屋糖水铺(愚园路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1794,
+    "name": "BAsdBAN（愚园路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1795,
+    "name": "SMAKA（愚园路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1796,
+    "name": "一木家 Café Chez W",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1797,
+    "name": "蜂蜜草 Honey N' Clover（吴兴路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1798,
+    "name": "湖心亭茶楼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1799,
+    "name": "星神早餐（康定路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1801,
+    "name": "上海半岛酒店 The Lobby 大堂茶座",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1802,
+    "name": "上海浦东丽思卡尔顿酒店 AURA酒廊",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1803,
+    "name": "上海柏悦酒店 大堂客厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1804,
+    "name": "上海璞丽酒店 LONG BAR长吧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1805,
+    "name": "MEL BOURNE 猫尔本 Brunch&Bistro（静安店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1806,
+    "name": "SOMETHING DINING BAR（武康路店）",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1808,
+    "name": "CASALUNA Brunch&Bistro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1809,
+    "name": "Nono's Ristorante",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1810,
+    "name": "Polux by Paul Pairet",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1811,
+    "name": "Le Saleya",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1812,
+    "name": "Speak Low 低语",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1813,
+    "name": "Vinism",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1814,
+    "name": "纯阳六两",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1815,
+    "name": "段氏龙虾",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1816,
+    "name": "Sober Company",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1817,
+    "name": "Pony Up",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1818,
+    "name": "COA Shanghai",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1819,
+    "name": "ABA WHISKEY BAR 糟糕艺术家",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1820,
+    "name": "食六区·罗氏虾龙虾烧烤夜宵(虹桥店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1821,
+    "name": "顶特勒粥面馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1822,
+    "name": "肥仔文澳门猪骨煲",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1823,
+    "name": "香巴岛小龙虾(寿宁路)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1824,
+    "name": "弄口里烧烤(胶州路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1825,
+    "name": "西塔老太太泥炉烤肉(静安大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1826,
+    "name": "Tourbillon 特彼龙 Whisky Lounge",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1827,
+    "name": "Project W威士忌·鸡尾酒",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1828,
+    "name": "Goose Island Taproom 鹅岛精酿啤酒屋(巨鹿路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1829,
+    "name": "飲适精酿 Ease Taproom(南京东路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1830,
+    "name": "ONE WAY STREET精酿啤酒(大沽路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1831,
+    "name": "哥哥の深夜食堂(静安大悦城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1832,
+    "name": "PuR'aisin Wine Bar皮酉海让葡萄酒酒吧(定西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1833,
+    "name": "葡道Wine Shop & Bar(武康店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1834,
+    "name": "Lab whisky&cocktail(武定路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1835,
+    "name": "PLAN B(襄阳北路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1836,
+    "name": "FINE pancake&canteen(陕西南路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1837,
+    "name": "Le Pain Sense(建国东路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1838,
+    "name": "WULI",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1840,
+    "name": "醉东 Oriental House(静安嘉里店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1841,
+    "name": "VIVANT by Johnny Pham",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1842,
+    "name": "Cheeva Thai",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1843,
+    "name": "聪菜馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1844,
+    "name": "豪生酒家",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1845,
+    "name": "黄公子",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1846,
+    "name": "AmoyA",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1847,
+    "name": "来去Laichill",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1848,
+    "name": "作故私房菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1849,
+    "name": "叶叶菩提(太原别墅店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1850,
+    "name": "田咖啡",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1851,
+    "name": "ONIRICO CAFÉ",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1852,
+    "name": "DOU COFFEE ROASTERS(嘉善路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1853,
+    "name": "苹果花园(南泉路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1854,
+    "name": "ISAN BAKERY & CAFE",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1855,
+    "name": "银座仁志川(兴业太古汇店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1856,
+    "name": "泽田本家·铜锣烧(美罗城店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1857,
+    "name": "野人先生Gelato(徐汇旗舰店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1858,
+    "name": "和果子本铺四葉",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1859,
+    "name": "The Odd Couple",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1860,
+    "name": "ZION",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1861,
+    "name": "La Burg 勒博格金砖俱乐部南非餐吧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1862,
+    "name": "COLCA 秘鲁西班牙餐厅(衡山路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1863,
+    "name": "拉蒂娜·巴西牛排馆 Latina(陆家嘴旗舰店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1864,
+    "name": "El Bodegon 阿根廷餐厅(常熟路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1865,
+    "name": "Tacolicious(同乐坊店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1866,
+    "name": "Flambe Bistro 奥地利餐厅(湖滨道店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1867,
+    "name": "Greek Taverna Milos 米洛洛斯希腊餐厅(老外街店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1868,
+    "name": "Delight Food 比利时啤酒餐厅(老外街店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1869,
+    "name": "麺屋KING",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1870,
+    "name": "纹兵卫手打荞麦面日料(天山店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1871,
+    "name": "1515牛排馆·酒吧",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1872,
+    "name": "夏宫",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1873,
+    "name": "Stone Sal 言盐西餐厅(东湖路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1874,
+    "name": "云 LES NUAGES",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1875,
+    "name": "The MEAT·扒",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1876,
+    "name": "屋有鲜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1877,
+    "name": "晟永兴(外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1878,
+    "name": "Mr & Mrs Bund",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1879,
+    "name": "随堂里",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1880,
+    "name": "临江宴",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1881,
+    "name": "粤海棠·wineapp",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1882,
+    "name": "The Pine 松涧",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1883,
+    "name": "永·江臻",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1884,
+    "name": "徽季",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1885,
+    "name": "福廬 FULL HOUSE",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1886,
+    "name": "老兴鲜(黄浦店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1887,
+    "name": "nagi 凪",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1888,
+    "name": "鮨·天照 Omakase(南京西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1889,
+    "name": "TEN HASU 天妇罗专门",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1890,
+    "name": "隅木食物所·台湾红烧牛肉面·台式小火锅(上生新所店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1891,
+    "name": "欢桃餐酒馆 Eatery & Bistro",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1892,
+    "name": "帅帅精致家常味(长乐路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1893,
+    "name": "光头生煎(山阴路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1894,
+    "name": "来来来·泰国街边排档(长乐路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1895,
+    "name": "RONG融",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1896,
+    "name": "翡翠36",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1897,
+    "name": "Aster by Joshua Paris",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1898,
+    "name": "之舞",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1899,
+    "name": "古铜法式餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1900,
+    "name": "Shaughnessy",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1901,
+    "name": "Arva",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1902,
+    "name": "Ortensia Shanghai",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1903,
+    "name": "Endo",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1904,
+    "name": "Hide the Smoked Room",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1905,
+    "name": "EIGHT UNDER",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1906,
+    "name": "艾利爵士餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1907,
+    "name": "Tuttu",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1908,
+    "name": "夜上海",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1909,
+    "name": "上海餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1910,
+    "name": "利苑(徐汇)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1911,
+    "name": "台城镂月",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1912,
+    "name": "瑰禧",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1913,
+    "name": "海味观(静安)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1914,
+    "name": "上海总会",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1915,
+    "name": "馨源楼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1916,
+    "name": "川粤海棠(长宁)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1917,
+    "name": "外滩·林家一",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1918,
+    "name": "周舍(闵行)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1919,
+    "name": "菁禧荟(长宁)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1920,
+    "name": "东方景宴",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1921,
+    "name": "鹿园MOOSE(浦东店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1922,
+    "name": "悦轩(上海柏悦酒店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1923,
+    "name": "鮨琉璃",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1924,
+    "name": "三佰杯",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1925,
+    "name": "MIYARAKU宫楽",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1926,
+    "name": "OnCue",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1928,
+    "name": "奈良本寿司",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1929,
+    "name": "吾观·私宴",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1930,
+    "name": "思南海派私房菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1931,
+    "name": "La Jade",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1932,
+    "name": "洋房333",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1933,
+    "name": "huma 1095",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1934,
+    "name": "季福楼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1935,
+    "name": "九福里",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1936,
+    "name": "乾璟荟",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1937,
+    "name": "上式楼",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1938,
+    "name": "瑞香苑一号",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1939,
+    "name": "北外滩隐世融合私宴",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1940,
+    "name": "兰亭集私房菜",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1941,
+    "name": "赉安·海派中式板前料理",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1942,
+    "name": "繁花滨江私宴",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1943,
+    "name": "林家一·山海宴",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1944,
+    "name": "永兴餐厅",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1945,
+    "name": "春餐厅",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1946,
+    "name": "功德林(南京西路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1947,
+    "name": "云和面馆(黄浦)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1948,
+    "name": "老兴鲜(黄浦)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1949,
+    "name": "菰城宴",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1950,
+    "name": "老地方面馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1951,
+    "name": "小陶面馆",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1952,
+    "name": "临湖素食",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1953,
+    "name": "157食坊",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1954,
+    "name": "逸采(静安)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1955,
+    "name": "渔都老味面",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1956,
+    "name": "渔哥·湛江(静安)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1957,
+    "name": "宏玉方",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1958,
+    "name": "滇道(静安)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1959,
+    "name": "徐记海鲜(徐汇)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1960,
+    "name": "永丰面馆(黄浦)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1961,
+    "name": "和膳面家",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1962,
+    "name": "宁海食府",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1963,
+    "name": "阿勇面馆(东书房路)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1964,
+    "name": "坛·四川料理",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1965,
+    "name": "味香斋(雁荡路店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1966,
+    "name": "福和面馆(昆山花园路总店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1968,
+    "name": "迷上 Mi Shang",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1969,
+    "name": "食光",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1970,
+    "name": "Torikaze",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1971,
+    "name": "Cellar to Table",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1972,
+    "name": "Trine",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1973,
+    "name": "Scilla",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1974,
+    "name": "沼田双",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1975,
+    "name": "Hulu Sushi 葫芦寿司",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1976,
+    "name": "Narisawa Shanghai",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1977,
+    "name": "老乾杯(外滩店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  },
+  {
+    "id": 1978,
+    "name": "Nuits(恒隆三期Pavilion店)",
+    "patch": {
+      "chain_type": "独立店"
+    }
+  }
+]

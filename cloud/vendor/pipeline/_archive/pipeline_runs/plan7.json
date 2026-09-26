@@ -1,0 +1,1728 @@
+[
+  {
+    "action": "update",
+    "restaurant_id": 1373,
+    "name": "Radar雷达咖啡(思南路店)",
+    "fields": {
+      "name": "Radar雷达咖啡(思南路店)",
+      "name_en": "Radar Coffee",
+      "tier": "经济",
+      "price_avg": 35,
+      "address": "黄浦区思南路27号",
+      "district": "黄浦区",
+      "business_area": "淮海中路/思南路",
+      "booking_method": "到店/外带",
+      "signature_dishes": [
+        "Pink Bourbon粉波旁手冲",
+        "竞赛级拼配意式",
+        "日常日晒单品手冲"
+      ],
+      "score_objective": 40.0,
+      "score_diner": 60.0,
+      "score_taste": 80.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 56.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"TripChina(2026):'opened 2021 as an 11-square-meter shop on Sinan Road…within six months ranked first in annual coffee…started roasting own beans 2023…\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Radar雷达咖啡(思南路店)\", \"date\": \"2026\"}, {\"quote\": \"11㎡立食小店，竞赛级豆日常价，性价比标杆\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Radar雷达咖啡(思南路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.466131 31.218775)"
+    },
+    "cids_add": [
+      51,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 11㎡立食小店，竞赛级豆日常价，性价比标杆…",
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1374,
+    "name": "煮屿 Brew Island(溧阳路店)",
+    "fields": {
+      "name": "煮屿 Brew Island(溧阳路店)",
+      "name_en": "Brew Island",
+      "tier": "平价",
+      "price_avg": 90,
+      "address": "虹口区溧阳路739号",
+      "district": "虹口区",
+      "business_area": "北外滩/溧阳路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "卢旺达Gatare手冲",
+        "单品意式",
+        "手冲品鉴"
+      ],
+      "score_objective": 45.0,
+      "score_diner": 63.3,
+      "score_taste": 90.0,
+      "score_endorsement": 80.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 63.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"TripChina(2026):'run by a barista who won Shanghai regional World Barista Championship in 2014, reached China finals top5 in 2015, coached multiple re\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/煮屿 Brew Island(溧阳路店)\", \"date\": \"2026\"}, {\"quote\": \"把咖啡当fine dining做，全单品豆，吧台讲解产地与萃取逻辑\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/煮屿 Brew Island(溧阳路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.487311 31.254234)"
+    },
+    "cids_add": [
+      26,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"酒吧清吧\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1375,
+    "name": "aftertaste回味(江勇路店)",
+    "fields": {
+      "name": "aftertaste回味(江勇路店)",
+      "name_en": "aftertaste",
+      "tier": "平价",
+      "price_avg": 80,
+      "address": "浦东新区江勇路86号W3-102",
+      "district": "浦东新区",
+      "business_area": "浦东其他/张江",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "Finca Altieri瑰夏",
+        "巴拿马竞标lot",
+        "特调"
+      ],
+      "score_objective": 45.0,
+      "score_diner": 60.0,
+      "score_taste": 90.0,
+      "score_endorsement": 80.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 62.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"concept lab run by a barista who placed second in 2018 World Aeropress Championship and won Shanghai Brewers Cup 2019/2021…owner is one of China\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/aftertaste回味(江勇路店)\", \"date\": \"2026\"}, {\"quote\": \"TripChina(2026):'concept lab run by a barista who placed second in 2018 World Aeropress Championship and won Shanghai Brewers Cup 2019/2021…owner is o\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/aftertaste回味(江勇路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22"
+    },
+    "cids_add": [
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"酒吧清吧\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1378,
+    "name": "制冰铺MakingGelato·时桉(陕西南路店)",
+    "fields": {
+      "name": "制冰铺MakingGelato·时桉(陕西南路店)",
+      "name_en": "Shi'an Making Gelato",
+      "tier": "经济",
+      "price_avg": 35,
+      "address": "黄浦区陕西南路39弄58-3号(沿街商铺)",
+      "district": "黄浦区",
+      "business_area": "淮海中路/陕西南路",
+      "booking_method": "到店/外带",
+      "signature_dishes": [
+        "青梅毛尖gelato",
+        "青提铁观音",
+        "黄油玉米",
+        "红糖豆浆酒酿",
+        "凤梨酥"
+      ],
+      "score_objective": 37.5,
+      "score_diner": 53.3,
+      "score_taste": 80.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 53.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"上海市政府官网(2025):'制冰铺MakingGelato——时桉gelato，陕西南路39弄58-3号，按粤式、广式、日式三个大分类设计更新口味，整体清爽不甜腻'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/制冰铺MakingGelato·时桉(陕西南路店)\", \"date\": \"2026\"}, {\"quote\": \"澎湃新闻(2025):'时桉是陕西南路新开的Gelato店，将东方口味结合意式Gelato…青梅毛尖很清新，有茶香味和青梅果香，吃完有悠长高山云雾茶回味，还有青提铁观音、黄油玉米、红糖豆浆酒酿、凤梨酥'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/制冰铺MakingGelato·时桉(陕西南路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.458118 31.219243)"
+    },
+    "cids_add": [
+      3,
+      72,
+      85,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品点心\", \"食材\", null]",
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1379,
+    "name": "La Creperie(桃江路店)",
+    "fields": {
+      "name": "La Creperie(桃江路店)",
+      "name_en": "La Creperie",
+      "tier": "中档",
+      "price_avg": 120,
+      "address": "徐汇区桃江路1号(近汾阳路)",
+      "district": "徐汇区",
+      "business_area": "衡复风貌区/汾阳路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "La Marin可丽饼",
+        "Nutella甜可丽饼",
+        "海鲜沙拉咸galette",
+        "布列塔尼生蚝"
+      ],
+      "score_objective": 45.0,
+      "score_diner": 70.0,
+      "score_taste": 80.0,
+      "score_endorsement": 70.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 62.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"La Creperie does indeed serve crepes. From hum-drum Nutella filled dough to the tangy seafood/salad crepe, main courses run the gamut\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/La Creperie(桃江路店)\", \"date\": \"2026\"}, {\"quote\": \"charming French village ambiance, wooden benches…signature La Marin and lobster soup, authentic Breton cuisine, galettes, oysters from Riec sur Belon\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/La Creperie(桃江路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.451424 31.208794)"
+    },
+    "cids_add": [
+      26,
+      64,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1381,
+    "name": "泰安门 Taian Table",
+    "fields": {
+      "name": "泰安门 Taian Table",
+      "name_en": "Taian Table",
+      "tier": "奢华",
+      "price_avg": 2700,
+      "address": "长宁区镇宁路465弄161号愚园里1号楼101室",
+      "district": "长宁区",
+      "booking_method": "需预约(官网/邮件)",
+      "signature_dishes": [
+        "[\"品鉴套餐\"",
+        "\"无国界创意料理\"]"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 95.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林三星(2020-2026蝉联)，Stefan Stiller主理，无国界创新菜，板前座位仅约20席，10道/12道套餐¥2588/¥2888\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/泰安门 Taian Table\", \"date\": \"2026\"}, {\"quote\": \"泰安门 Taian Table 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/泰安门 Taian Table\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.434418 31.223087)"
+    },
+    "cids_add": [
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"泰国菜\", \"菜系\", \"东南亚菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1382,
+    "name": "宝丽轩",
+    "fields": {
+      "name": "宝丽轩",
+      "name_en": "Bao Li Xuan",
+      "tier": "奢华",
+      "price_avg": 839,
+      "address": "静安区山西北路108弄宝格丽酒店3层(上海总商会大楼)",
+      "district": "静安区",
+      "booking_method": "电话预约",
+      "signature_dishes": [
+        "[\"脆皮鸡\"",
+        "\"粤菜点心\"",
+        "\"鲍鱼\"]"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 85.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 68.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林二星，宝格丽酒店内，傅文彪主厨，粤菜，百年上海总商会旧址\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/宝丽轩\", \"date\": \"2026\"}, {\"quote\": \"宝丽轩 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/宝丽轩\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.48132 31.243027)"
+    },
+    "cids_add": [
+      3,
+      64,
+      65,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1383,
+    "name": "福和慧",
+    "fields": {
+      "name": "福和慧",
+      "name_en": "Fu He Hui",
+      "tier": "奢华",
+      "price_avg": 1191,
+      "address": "长宁区愚园路1037号(近江苏路)",
+      "district": "长宁区",
+      "booking_method": "需预约",
+      "signature_dishes": [
+        "[\"四季品鉴套餐\"",
+        "\"创意素食\"",
+        "\"茶禅一味\"]"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 85.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 68.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林二星(2025晋升)，纯素创意料理，黑珍珠二钻，亚洲50佳，方元主理\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/福和慧\", \"date\": \"2026\"}, {\"quote\": \"仅套餐制(380/680/1280)\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/福和慧\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.429693 31.218639)"
+    },
+    "cids_add": [
+      71,
+      159,
+      160,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"素菜\", \"菜系\", \"中餐\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 仅套餐制(380/680/1280)…",
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1384,
+    "name": "三号黄浦会 Canton Table",
+    "fields": {
+      "name": "三号黄浦会 Canton Table",
+      "name_en": "Canton Table",
+      "tier": "奢华",
+      "price_avg": 600,
+      "address": "黄浦区中山东一路3号外滩三号5楼(近广东路)",
+      "district": "黄浦区",
+      "booking_method": "电话预约",
+      "signature_dishes": [
+        "[\"传统粤菜\"",
+        "\"点心\"",
+        "\"早茶\"]"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 64.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星，外滩三号5楼，文国雄大厨掌勺，传统粤菜，浦江景\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/三号黄浦会 Canton Table\", \"date\": \"2026\"}, {\"quote\": \"三号黄浦会 Canton Table 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/三号黄浦会 Canton Table\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.490752 31.234042)"
+    },
+    "cids_add": [
+      3,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1385,
+    "name": "成隆行蟹王府(九江路店)",
+    "fields": {
+      "name": "成隆行蟹王府(九江路店)",
+      "name_en": "Cheng Long Hang",
+      "tier": "高档",
+      "price_avg": 400,
+      "address": "黄浦区九江路216号(近河南中路)",
+      "district": "黄浦区",
+      "booking_method": "电话预约",
+      "signature_dishes": [
+        "[\"大闸蟹\"",
+        "\"蟹粉豆腐\"",
+        "\"清炒蟹粉\"",
+        "\"蟹斗\"]"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 64.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星，本帮蟹宴专门店，九江路总店，大闸蟹季节限定\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/成隆行蟹王府(九江路店)\", \"date\": \"2026\"}, {\"quote\": \"成隆行蟹王府(九江路店) 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/成隆行蟹王府(九江路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.485988 31.236955)"
+    },
+    "cids_add": [
+      9,
+      51,
+      64,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1386,
+    "name": "Fabula",
+    "fields": {
+      "name": "Fabula",
+      "name_en": "Fabula",
+      "tier": "奢华",
+      "price_avg": 1280,
+      "address": "静安区威海路720号2-3楼(近石门二路)",
+      "district": "静安区",
+      "booking_method": "仅预约(提前1-2月)",
+      "signature_dishes": [
+        "[\"品鉴套餐\"",
+        "\"粤甬融合\"",
+        "\"酸种面包\"]"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 67.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星(2026新上榜)，Zee Zheng(前泰安门副厨)主理，6席chef's table，粤菜+宁波菜融合法式技法\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Fabula\", \"date\": \"2026\"}, {\"quote\": \"Fabula 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Fabula\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.457896 31.226304)"
+    },
+    "cids_add": [
+      26,
+      51,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"泰国菜\", \"菜系\", \"东南亚菜\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1387,
+    "name": "福1039",
+    "fields": {
+      "name": "福1039",
+      "name_en": "Fu 1039",
+      "tier": "高档",
+      "price_avg": 400,
+      "address": "长宁区愚园路1039号(近江苏路)",
+      "district": "长宁区",
+      "booking_method": "电话预约",
+      "signature_dishes": [
+        "[\"本帮红烧肉\"",
+        "\"老上海熏鱼\"",
+        "\"清蒸鲥鱼\"",
+        "\"烤银鳕鱼\"]"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 64.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星，愚园路法式老洋楼，本帮菜，Art Deco风格\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/福1039\", \"date\": \"2026\"}, {\"quote\": \"福1039 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/福1039\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.429494 31.214951)"
+    },
+    "cids_add": [
+      9,
+      26,
+      64,
+      65,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1388,
+    "name": "福1088",
+    "fields": {
+      "name": "福1088",
+      "name_en": "Fu 1088",
+      "tier": "奢华",
+      "price_avg": 581,
+      "address": "长宁区镇宁路375号(近愚园路)",
+      "district": "长宁区",
+      "booking_method": "电话预约",
+      "signature_dishes": [
+        "[\"本帮红烧肉\"",
+        "\"威虾\"",
+        "\"老上海熏鱼\"]"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 64.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星，镇宁路西班牙风格老洋房，纯包间本帮菜\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/福1088\", \"date\": \"2026\"}, {\"quote\": \"福1088 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/福1088\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.436116 31.221614)"
+    },
+    "cids_add": [
+      9,
+      28,
+      64,
+      65,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1389,
+    "name": "il Ristorante - Niko Romito",
+    "fields": {
+      "name": "il Ristorante - Niko Romito",
+      "name_en": "Il Ristorante - Niko Romito",
+      "tier": "奢华",
+      "price_avg": 1368,
+      "address": "静安区河南北路33号宝格丽酒店47楼",
+      "district": "静安区",
+      "booking_method": "电话预约",
+      "signature_dishes": [
+        "[\"意大利现代菜\"",
+        "\"Niko Romito signature\"]"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 95.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星，宝格丽酒店47楼，Niko Romito(意大利三星主厨)联名，意式现代菜，俯瞰城市景观\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/il Ristorante - Niko Romito\", \"date\": \"2026\"}, {\"quote\": \"il Ristorante - Niko Romito 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/il Ristorante - Niko Romito\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.48132 31.243027)"
+    },
+    "cids_add": [
+      27,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1390,
+    "name": "金轩(浦东丽思卡尔顿店)",
+    "fields": {
+      "name": "金轩(浦东丽思卡尔顿店)",
+      "name_en": "Jin Xuan",
+      "tier": "奢华",
+      "price_avg": 708,
+      "address": "浦东新区世纪大道8号国金中心丽思卡尔顿酒店53楼",
+      "district": "浦东新区",
+      "booking_method": "电话预约",
+      "signature_dishes": [
+        "[\"鹅肝片北京片皮鸭\"",
+        "\"黑松露烤鸭\"",
+        "\"粤菜\"]"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 64.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星，浦东丽思卡尔顿53楼，粤菜，鹅肝片皮鸭为招牌\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/金轩(浦东丽思卡尔顿店)\", \"date\": \"2026\"}, {\"quote\": \"米其林一星，浦东丽思卡尔顿53楼，粤菜，鹅肝片皮鸭为招牌\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/金轩(浦东丽思卡尔顿店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.501989 31.237573)"
+    },
+    "cids_add": [
+      3,
+      65,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1391,
+    "name": "凌珑 Ling Long",
+    "fields": {
+      "name": "凌珑 Ling Long",
+      "name_en": "Ling Long",
+      "tier": "奢华",
+      "price_avg": 2368,
+      "address": "黄浦区中山东一路2号外滩华尔道夫酒店1楼105室",
+      "district": "黄浦区",
+      "booking_method": "需预约(极难订)",
+      "signature_dishes": [
+        "[\"新中式品鉴套餐\"",
+        "\"中式食材×欧式技法\"]"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 67.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星，外滩华尔道夫1楼，Asia's 50 Best #35，Jason Liu主理，新中餐\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/凌珑 Ling Long\", \"date\": \"2026\"}, {\"quote\": \"凌珑 Ling Long 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/凌珑 Ling Long\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.489747 31.233833)"
+    },
+    "cids_add": [
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"其他中餐\", \"菜系\", \"中餐\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1392,
+    "name": "Obscura by 唐香",
+    "fields": {
+      "name": "Obscura by 唐香",
+      "name_en": "Obscura",
+      "tier": "奢华",
+      "price_avg": 2100,
+      "address": "静安区西康路538-2号(唐香文化空间内)",
+      "district": "静安区",
+      "booking_method": "仅晚餐预约",
+      "signature_dishes": [
+        "[\"新中菜品鉴套餐\"",
+        "\"板前体验\"]"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 67.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星，西康路独立院落，唐香文化空间内，新中菜板前，中国八大菜系理念融合中西技法\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Obscura by 唐香\", \"date\": \"2026\"}, {\"quote\": \"Obscura by 唐香 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Obscura by 唐香\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.447075 31.234289)"
+    },
+    "cids_add": [
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"其他中餐\", \"菜系\", \"中餐\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1393,
+    "name": "O.P.S. CAFE(太原路店)",
+    "fields": {
+      "name": "O.P.S. CAFE(太原路店)",
+      "name_en": "OPS Cafe",
+      "tier": "平价",
+      "price_avg": 52,
+      "address": "徐汇区太原路177弄1号临(近建国西路)",
+      "district": "徐汇区",
+      "business_area": "衡复风貌区·太原路",
+      "phone": "15618060636",
+      "booking_method": "到店排队/不接受预订",
+      "signature_dishes": [
+        "Perci(冷萃+白葡萄)",
+        "Into the Wild",
+        "Fantasy of the Deep Forest",
+        "Cinnamon Girl",
+        "季节限定特调"
+      ],
+      "score_objective": 45.0,
+      "score_diner": 66.7,
+      "score_taste": 85.0,
+      "score_endorsement": 70.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 54.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"11月的菜单有五款，三款含酒精，一款只能做热饮，均价50-55元一杯，确实不便宜…点了perci、into the wild、fantasy of the deep forest和cinnamon girl，perci冷萃+白葡萄\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/O.P.S. CAFE(太原路店)\", \"date\": \"2026\"}, {\"quote\": \"穷游锦囊食客(2024):'11月的菜单有五款，三款含酒精，一款只能做热饮，均价50-55元一杯，确实不便宜…点了perci、into the wild、fantasy of the deep forest和cinnamon girl，perci冷萃+白葡萄'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/O.P.S. CAFE(太原路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.45532 31.205608)"
+    },
+    "cids_add": [
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1394,
+    "name": "Café del Volcán火山咖啡(永康路店)",
+    "fields": {
+      "name": "Café del Volcán火山咖啡(永康路店)",
+      "name_en": "Cafe del Volcan",
+      "tier": "经济",
+      "price_avg": 44,
+      "address": "徐汇区永康路25号(近襄阳路)",
+      "district": "徐汇区",
+      "business_area": "永康路/淮海中路",
+      "phone": "15618669291",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "耶加雪菲手冲",
+        "云南手冲",
+        "Flat White",
+        "Faldas del Volcan单品豆"
+      ],
+      "score_objective": 45.0,
+      "score_diner": 66.7,
+      "score_taste": 80.0,
+      "score_endorsement": 70.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 61.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"roasting in the city, family-estate Guatemalan connection, changing Chinese and international single origins, staff-led pour-over…food is minimal, sea\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Café del Volcán火山咖啡(永康路店)\", \"date\": \"2026\"}, {\"quote\": \"charming specialty coffee…proud of fresh roasted beans, known for some of the best coffee in the city\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Café del Volcán火山咖啡(永康路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.458914 31.21108)"
+    },
+    "cids_add": [
+      72,
+      145,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1395,
+    "name": "堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)",
+    "fields": {
+      "name": "堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)",
+      "name_en": "Horiguchi Coffee",
+      "tier": "中档",
+      "price_avg": 102,
+      "address": "黄浦区圆明园路133号女青年会大楼1层",
+      "district": "黄浦区",
+      "business_area": "外滩源/北京东路",
+      "phone": "02163333100",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "招牌拼配手冲",
+        "单品手冲",
+        "深烘意式",
+        "日式甜点配饮"
+      ],
+      "score_objective": 50.0,
+      "score_diner": 73.3,
+      "score_taste": 90.0,
+      "score_endorsement": 90.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Horiguchi Coffee, a typical Japanese coffee shop, is probably the most popular coffee shop…\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)\", \"date\": \"2026\"}, {\"quote\": \"Trip.com食客:'Horiguchi Coffee, a typical Japanese coffee shop, is probably the most popular coffee shop…'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.487996 31.241827)"
+    },
+    "cids_add": [
+      72,
+      85,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1396,
+    "name": "Captain George风味博物馆(太原路店)",
+    "fields": {
+      "name": "Captain George风味博物馆(太原路店)",
+      "name_en": "Captain George Flavor Museum",
+      "tier": "平价",
+      "price_avg": 75,
+      "address": "徐汇区太原路236号",
+      "district": "徐汇区",
+      "business_area": "衡复风貌区·太原路",
+      "booking_method": "到店排队/不接受预订",
+      "signature_dishes": [
+        "埃塞金标瑰夏手冲",
+        "三温三味品鉴set",
+        "单品手冲",
+        "WBC冠军配方"
+      ],
+      "score_objective": 47.5,
+      "score_diner": 66.7,
+      "score_taste": 90.0,
+      "score_endorsement": 100.0,
+      "soft_ad_penalty": 6.0,
+      "score_total": 61.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"携程食客(2026):'乔治队长是贵阳的冠军咖啡师彭近洋的品牌，选址太原路这个咖啡重地…瞬间成为这区龙头咖啡店，环境很复古，门口咖啡豆区域好好看'\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/Captain George风味博物馆(太原路店)\", \"date\": \"2026\"}, {\"quote\": \"携程食客(2026):'什么时候去都是要排队的，排个半小时应该是常态…博物馆级手冲，尝尽三温三味'\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/Captain George风味博物馆(太原路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.455521 31.204026)"
+    },
+    "cids_add": [
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1397,
+    "name": "Blacksheep Espresso(茂名南路店)",
+    "fields": {
+      "name": "Blacksheep Espresso(茂名南路店)",
+      "name_en": "Blacksheep Espresso",
+      "tier": "经济",
+      "price_avg": 45,
+      "address": "黄浦区茂名南路124号",
+      "district": "黄浦区",
+      "business_area": "淮海中路/茂名南路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "浅烘意式",
+        "轮换单品手冲",
+        "Terraform自烘豆"
+      ],
+      "score_objective": 42.5,
+      "score_diner": 60.0,
+      "score_taste": 85.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 58.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"s Shanghai cafe arm for light-roast espresso, rotating pour-over, producer-led beans, and a bright South Maoming Road room…arrive before late-afternoo\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Blacksheep Espresso(茂名南路店)\", \"date\": \"2026\"}, {\"quote\": \"runs its own roastery in Minhang under Terraform Coffee brand, supplying both\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Blacksheep Espresso(茂名南路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.461888 31.215492)"
+    },
+    "cids_add": [
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1398,
+    "name": "赤瑕咖啡Akadama Coffee(武定西路店)",
+    "fields": {
+      "name": "赤瑕咖啡Akadama Coffee(武定西路店)",
+      "name_en": "Akadama Coffee",
+      "tier": "平价",
+      "price_avg": 55,
+      "address": "长宁区武定西路1194号(近武定路地铁站2号口)",
+      "district": "长宁区",
+      "business_area": "静安寺/武定西路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "日式手冲",
+        "冰摇手冲",
+        "单品豆"
+      ],
+      "score_objective": 37.5,
+      "score_diner": 56.7,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 53.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"澎湃新闻(2025):'赤瑕咖啡Akadama Coffee·日式手冲，武定西路1194号(近武定路地铁站2号口)，营业时间10:00-20:00'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/赤瑕咖啡Akadama Coffee(武定西路店)\", \"date\": \"2026\"}, {\"quote\": \"上观新闻(2025)同街区'冰摇手冲，精选埃塞俄比亚庄园级瑰夏豆，低温慢萃，茉莉幽香与柑橘酸甜层层释放'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/赤瑕咖啡Akadama Coffee(武定西路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.43506 31.226396)"
+    },
+    "cids_add": [
+      30,
+      72,
+      85,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1399,
+    "name": "翠贝果(乌鲁木齐南路店)",
+    "fields": {
+      "name": "翠贝果(乌鲁木齐南路店)",
+      "name_en": "Cui Bagel",
+      "tier": "经济",
+      "price_avg": 35,
+      "address": "徐汇区乌鲁木齐南路205号1F-01室",
+      "district": "徐汇区",
+      "business_area": "衡复风貌区/乌鲁木齐路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "手撕猪肉贝果",
+        "伯爵茶千层",
+        "原味贝果三明治"
+      ],
+      "score_objective": 40.0,
+      "score_diner": 63.3,
+      "score_taste": 75.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 55.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"ShanghaiLOOK/澎湃(2022):'手撕猪肉贝果…猪肉嫩而薄，芝士浓郁，酱料带一点合适的辣，不辛不呛，非常开胃，甘蓝解腻…贝果韧性十足，口感饱满，用料舍得，半个就喂饱小鸟胃'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/翠贝果(乌鲁木齐南路店)\", \"date\": \"2026\"}, {\"quote\": \"ShanghaiLOOK/澎湃(2022):'手撕猪肉贝果…猪肉嫩而薄，芝士浓郁，酱料带一点合适的辣，不辛不呛，非常开胃，甘蓝解腻…贝果韧性十足，口感饱满，用料舍得，半个就喂饱小鸟胃'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/翠贝果(乌鲁木齐南路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.450183 31.200629)"
+    },
+    "cids_add": [
+      51,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1400,
+    "name": "Big Bagel(永康路店)",
+    "fields": {
+      "name": "Big Bagel(永康路店)",
+      "name_en": "Big Bagel",
+      "tier": "经济",
+      "price_avg": 35,
+      "address": "徐汇区永康路27号",
+      "district": "徐汇区",
+      "business_area": "永康路/淮海中路",
+      "booking_method": "到店/外带",
+      "signature_dishes": [
+        "三芝士贝果明治",
+        "原味贝果",
+        "芝麻贝果",
+        "海盐贝果"
+      ],
+      "score_objective": 37.5,
+      "score_diner": 60.0,
+      "score_taste": 75.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 53.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"ShanghaiLOOK/澎湃(2022):'永康路的big bagel是这条路上难得不拥挤的小空间，附近白领的外卖小食堂…三芝士贝果明治加入3块芝士，放凉一会儿再吃，番茄切片让它尝起来清爽，贝果混合芝士一口咬下，不同层次咸香在嘴里释放'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Big Bagel(永康路店)\", \"date\": \"2026\"}, {\"quote\": \"ShanghaiLOOK/澎湃(2022):'永康路的big bagel是这条路上难得不拥挤的小空间，附近白领的外卖小食堂…三芝士贝果明治加入3块芝士，放凉一会儿再吃，番茄切片让它尝起来清爽，贝果混合芝士一口咬下，不同层次咸香在嘴里释放'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Big Bagel(永康路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.458758 31.211156)"
+    },
+    "cids_add": [
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1401,
+    "name": "Sumerian(陕西北路店)",
+    "fields": {
+      "name": "Sumerian(陕西北路店)",
+      "name_en": "Sumerian",
+      "tier": "经济",
+      "price_avg": 40,
+      "address": "静安区陕西北路415号",
+      "district": "静安区",
+      "business_area": "南京西路/陕西北路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "蔬菜贝果",
+        "芒果酸奶杯",
+        "自烘豆咖啡"
+      ],
+      "score_objective": 37.5,
+      "score_diner": 56.7,
+      "score_taste": 75.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 51.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"ShanghaiLOOK/澎湃(2022):'Sumerian是咖啡店，有自己的豆子，BOOMBOOM BAGELS姐妹店…蔬菜贝果虽全素但分量足，贝果烤得香脆又不失韧性，奶油芝士让底部润泽，咸香浓郁…蘸满奶油酱的牛油果清爽，还有burrata切片，收获巨大满足感'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Sumerian(陕西北路店)\", \"date\": \"2026\"}, {\"quote\": \"'芒果酸奶杯扎实分量，厚实果肉，酸奶绵密轻盈加蜂蜜清甜'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Sumerian(陕西北路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.452894 31.230323)"
+    },
+    "cids_add": [
+      12,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1402,
+    "name": "FASCINO BAKERY(新天地店)",
+    "fields": {
+      "name": "FASCINO BAKERY(新天地店)",
+      "name_en": "FASCINO",
+      "tier": "经济",
+      "price_avg": 45,
+      "address": "黄浦区太仓路181弄1号楼新天地北里03单元",
+      "district": "黄浦区",
+      "business_area": "新天地",
+      "phone": "15800483764",
+      "booking_method": "到店/外带",
+      "signature_dishes": [
+        "招牌乳酪贝果",
+        "京都三色贝果",
+        "全能贝果",
+        "海盐奶油卷",
+        "芝麻贝果"
+      ],
+      "score_objective": 40.0,
+      "score_diner": 60.0,
+      "score_taste": 75.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 4.0,
+      "score_total": 49.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"ShanghaiLOOK/澎湃(2022):'FASCINO调整面团发酵时间，口感更松软，近10种口味…招牌乳酪贝果用日本小麦粉和现打乳酪馅，外皮韧劲十足，内里柔软咸香\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/FASCINO BAKERY(新天地店)\", \"date\": \"2026\"}, {\"quote\": \"连锁精品烘焙(新天地/久光/苏河湾多店)，贝果为招牌\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/FASCINO BAKERY(新天地店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": [\"商场连锁档口\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.474465 31.220484)"
+    },
+    "cids_add": [
+      51,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1403,
+    "name": "Madre(番禺路店)",
+    "fields": {
+      "name": "Madre(番禺路店)",
+      "name_en": "Madre",
+      "tier": "平价",
+      "price_avg": 60,
+      "address": "长宁区番禺路504号2幢(交通大学地铁站5号口步行440米)",
+      "district": "长宁区",
+      "business_area": "新华路/番禺路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "意大利奶油面包",
+        "佛卡夏",
+        "恰巴塔",
+        "意式cornetto"
+      ],
+      "score_objective": 42.5,
+      "score_diner": 60.0,
+      "score_taste": 85.0,
+      "score_endorsement": 80.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 60.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Madre is an Italian bakery in Changning specializing in authentic Italian pastries, backed by the same people behind Scilla and Da Vittorio Shanghai\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/Madre(番禺路店)\", \"date\": \"2026\"}, {\"quote\": \"抖音探店(2026):'番禺路的Madre不仅是意式面包店，还是传统Italian Bar，主厨来自意大利烘焙世家，招牌奶油面包一定要吃'\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/Madre(番禺路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.429936 31.201644)"
+    },
+    "cids_add": [
+      27,
+      51,
+      81,
+      162,
+      163,
+      164
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"酒吧清吧\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1404,
+    "name": "BAsdBAN巴适得板(愚园路店)",
+    "fields": {
+      "name": "BAsdBAN巴适得板(愚园路店)",
+      "name_en": "BAsdBAN",
+      "tier": "经济",
+      "price_avg": 45,
+      "address": "静安区愚园路546号8幢101室",
+      "district": "静安区",
+      "business_area": "愚园路/静安寺",
+      "phone": "13167260607",
+      "booking_method": "到店/外带",
+      "signature_dishes": [
+        "原味可颂",
+        "可颂三明治",
+        "起酥面包",
+        "Dirty咖啡"
+      ],
+      "score_objective": 40.0,
+      "score_diner": 60.0,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 47.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"pastries buttery and delicious, croissants mighty popular\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/BAsdBAN巴适得板(愚园路店)\", \"date\": \"2026\"}, {\"quote\": \"携程食客(2026):'原味可颂…不知道现场吃是不是很酥脆，店里环境极简工业风，很多俊男靓女，愚园路上网红店'\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/BAsdBAN巴适得板(愚园路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.438177 31.22183)"
+    },
+    "cids_add": [
+      51,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1405,
+    "name": "O'Mills Sourdough Bakery(永嘉路店)",
+    "fields": {
+      "name": "O'Mills Sourdough Bakery(永嘉路店)",
+      "name_en": "O'Mills",
+      "tier": "平价",
+      "price_avg": 90,
+      "address": "徐汇区永嘉路110号(近嘉善路)",
+      "district": "徐汇区",
+      "business_area": "永康路/嘉善路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "酸种橄榄面包",
+        "螺旋酸种roll",
+        "全日早午餐",
+        "手冲咖啡"
+      ],
+      "score_objective": 42.5,
+      "score_diner": 66.7,
+      "score_taste": 85.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 60.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Bakery, cafe and quasi-restaurant using quality ingredients. The sour dough olive bread comes highly recommended. It gets absolutely packed during lun\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/O'Mills Sourdough Bakery(永嘉路店)\", \"date\": \"2026\"}, {\"quote\": \"their freshly baked spiral sourdough rolls are the stuff of legend…emerald-green housemade drink…menu stacked with brunch plates\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/O'Mills Sourdough Bakery(永嘉路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.46014 31.209914)"
+    },
+    "cids_add": [
+      26,
+      51,
+      77,
+      161,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1406,
+    "name": "麻布屋Azabuya(兴业太古汇店)",
+    "fields": {
+      "name": "麻布屋Azabuya(兴业太古汇店)",
+      "name_en": "Azabuya",
+      "tier": "经济",
+      "price_avg": 40,
+      "address": "静安区南京西路789号兴业太古汇LG2",
+      "district": "静安区",
+      "business_area": "南京西路/静安寺",
+      "booking_method": "到店/外带",
+      "signature_dishes": [
+        "3号抹茶gelato",
+        "300%黑芝麻gelato",
+        "日本柚子"
+      ],
+      "score_objective": 42.5,
+      "score_diner": 60.0,
+      "score_taste": 85.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 53.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"抖音必吃榜(2023):'Azabuya麻布屋，南京西路789号兴业太古汇LG2，日料店里的抹茶Gelato，推荐3号抹茶'\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/麻布屋Azabuya(兴业太古汇店)\", \"date\": \"2026\"}, {\"quote\": \"抖音gelato测评(2025):'麻布屋，上海日式gelato鼻祖，多浓度抹茶口味是亮点，3号抹茶茶味微苦且浓郁，适合大多数人\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/麻布屋Azabuya(兴业太古汇店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": [\"模板化/情绪化文案\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.463419 31.228652)"
+    },
+    "cids_add": [
+      72,
+      85,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品点心\", \"食材\", null]",
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1407,
+    "name": "BONUS Gelato(乌鲁木齐中路店)",
+    "fields": {
+      "name": "BONUS Gelato(乌鲁木齐中路店)",
+      "name_en": "Bonus",
+      "tier": "经济",
+      "price_avg": 35,
+      "address": "徐汇区乌鲁木齐中路243号-3(牛油果阿姨对面)",
+      "district": "徐汇区",
+      "business_area": "衡复风貌区/乌鲁木齐路",
+      "phone": "17316580877",
+      "booking_method": "到店/外带",
+      "signature_dishes": [
+        "莫吉托gelato",
+        "黑白芝麻海苔gelato",
+        "开心果茉莉花茶",
+        "柚子紫苏"
+      ],
+      "score_objective": 37.5,
+      "score_diner": 56.7,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 48.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"澎湃新闻(2022):'Bonus，推荐莫吉托、黑白芝麻海苔，25元单球、40元双球(换蛋筒+5)，乌鲁木齐中路243号-3(牛油果阿姨对面)'\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/BONUS Gelato(乌鲁木齐中路店)\", \"date\": \"2026\"}, {\"quote\": \"抖音必吃榜(2023):'Bonus，徐汇区乌鲁木齐中路243-3号，只卖意式Gelato的小铺，推荐开心果茉莉花茶'\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/BONUS Gelato(乌鲁木齐中路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": [\"模板化/情绪化文案\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.446243 31.212227)"
+    },
+    "cids_add": [
+      51,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品点心\", \"食材\", null]",
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1408,
+    "name": "BLAZ",
+    "fields": {
+      "name": "BLAZ",
+      "name_en": "Blaz",
+      "tier": "高档",
+      "price_avg": 427,
+      "address": "徐汇区东湖路20号1层1B(近陕西南路)",
+      "district": "徐汇区",
+      "booking_method": "可预订",
+      "signature_dishes": [
+        "[\"牛肉塔塔配脆片\"",
+        "\"奶油炖烤鸡\"",
+        "\"烤牛骨髓\"",
+        "\"烤舞茸\"",
+        "\"鸽子三吃\"]"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 59.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Chris Zhu(前Bird & Bitter)主理，Simon Briens(RAC联合创始人)掌酒单，东湖路老洋房法式小酒馆，前elefante旧址\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/BLAZ\", \"date\": \"2026\"}, {\"quote\": \"高性价比法式bistro，宠物友好\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/BLAZ\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.454883 31.216108)"
+    },
+    "cids_add": [
+      26,
+      65,
+      73,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 高性价比法式bistro，宠物友好…",
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1409,
+    "name": "BASTARD小酒馆",
+    "fields": {
+      "name": "BASTARD小酒馆",
+      "name_en": "Bastard",
+      "tier": "高档",
+      "price_avg": 285,
+      "address": "静安区胶州路319弄30号102室(近新闸路)",
+      "district": "静安区",
+      "booking_method": "可预订",
+      "signature_dishes": [
+        "[\"脆皮鸡\"",
+        "\"金枪鱼肠粉\"",
+        "\"广东烧腊\"]"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 59.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Michael Janczewski(Juke)和Jiro H主理，DongXi联合创始人，现代中餐bistro，亚洲街头小吃解构，胶州路现所旁\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/BASTARD小酒馆\", \"date\": \"2026\"}, {\"quote\": \"BASTARD小酒馆 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/BASTARD小酒馆\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.442312 31.229322)"
+    },
+    "cids_add": [
+      3,
+      26,
+      51,
+      64,
+      65,
+      73,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1410,
+    "name": "茹·pure vegan(博华广场店)",
+    "fields": {
+      "name": "茹·pure vegan(博华广场店)",
+      "name_en": "Ru Pure Vegan",
+      "tier": "中档",
+      "price_avg": 133,
+      "address": "静安区山海关路388号博华广场2幢零售区L4-03",
+      "district": "静安区",
+      "booking_method": "可预订",
+      "signature_dishes": [
+        "[\"榴莲飞饼\"",
+        "\"牛油果巧克力慕斯\"",
+        "\"纯素披萨\"",
+        "\"植物烤饭\"]"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 57.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"纯素(Vegan)创意融合餐厅，前身为茹·if vegan(陕西北路)，2024年合并迁至博华广场4楼，露台景观，无蛋奶\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/茹·pure vegan(博华广场店)\", \"date\": \"2026\"}, {\"quote\": \"HappyCow认证纯素\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/茹·pure vegan(博华广场店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.462019 31.236315)"
+    },
+    "cids_add": [
+      12,
+      27,
+      57,
+      65,
+      72,
+      162,
+      163,
+      190
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: HappyCow认证纯素…",
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1411,
+    "name": "庆春朴门(新天地东台里店)",
+    "fields": {
+      "name": "庆春朴门(新天地东台里店)",
+      "name_en": "Qingchun Pumen",
+      "tier": "中档",
+      "price_avg": 109,
+      "address": "黄浦区吉安路111号新天地东台里商业中心B栋3层L332",
+      "district": "黄浦区",
+      "booking_method": "可预订",
+      "signature_dishes": [
+        "[\"黑松露炒饭\"",
+        "\"桂花荔浦芋头\"",
+        "\"糖醋老油条\"",
+        "\"素肉骨茶\"]"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 57.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"纯素(Vegan)杭州灵隐寺素菜馆上海分店，宋式禅意环境，有机食材橄榄油烹饪，人均仅¥109\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/庆春朴门(新天地东台里店)\", \"date\": \"2026\"}, {\"quote\": \"庆春朴门(新天地东台里店) 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/庆春朴门(新天地东台里店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.480588 31.221379)"
+    },
+    "cids_add": [
+      57,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"素菜\", \"菜系\", \"中餐\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1412,
+    "name": "KIINA",
+    "fields": {
+      "name": "KIINA",
+      "name_en": "Kiina",
+      "tier": "奢华",
+      "price_avg": 1380,
+      "address": "黄浦区中山南一路568号301室(近世博会博物馆)",
+      "district": "黄浦区",
+      "booking_method": "需预约",
+      "signature_dishes": [
+        "[\"中国本土食材品鉴套餐\"",
+        "\"福建白鹭鸭\"",
+        "\"内蒙古和牛\"",
+        "\"长白山松针\"]"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 45.0,
+      "score_taste": 55.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 63.5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"先锋/分子料理fine dining，主厨Peter(分子料理经验)，完全取材中国各地本土食材，西餐烹饪手法，15道品鉴套餐¥1380-1688，每季更换菜单\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/KIINA\", \"date\": \"2026\"}, {\"quote\": \"KIINA 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/KIINA\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.483236 31.198764)"
+    },
+    "cids_add": [
+      26,
+      65,
+      71,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  }
+]

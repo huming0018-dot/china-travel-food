@@ -84,3 +84,16 @@ app/.next/
 /coverage-report-2026-09-22.md
 *.bak
 .env*
+deploy.env
+cloud/deploy.env
+
+# 云端登录态 / 打包上下文（含 cookie 等敏感信息，禁止入库）
+cloud/xhs_cookies.json
+cloud/.xhs_cookies.json
+cloud/server-context.tgz
+cloud/data/
+
+# 备份衍生文件 / 临时结果截图 / 本地缓存（不入库）
+*.bak.*
+research/authority/*.png
+research/authority/_sitemap_cache.json

@@ -1,0 +1,1811 @@
+[
+  {
+    "id": 33,
+    "name": "有喜屋居酒屋(延安西路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 458,
+    "name": "东莱海上(长宁来福士店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 463,
+    "name": "鲁采LU STYLE(环宇荟店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 464,
+    "name": "鲁采·兴(苏河湾店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 473,
+    "name": "映水芙蓉(华润时代广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 479,
+    "name": "柴门荟(前滩太古里店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 480,
+    "name": "柴门荟(BFC外滩金融中心店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 485,
+    "name": "点都德(合生汇店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 486,
+    "name": "潮界(晶耀前滩店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 500,
+    "name": "绿杨邨酒家(江宁路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 501,
+    "name": "沧浪亭(山西南路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 507,
+    "name": "福兴荟(人民广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 517,
+    "name": "莆田餐厅PUTIEN(世博源店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 518,
+    "name": "莆田餐厅PUTIEN(BFC外滩金融中心店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 523,
+    "name": "遇外滩(新天地店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 524,
+    "name": "遇外滩(BFC外滩金融中心店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 531,
+    "name": "甬府小包",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 532,
+    "name": "桂满陇·杭州小馆(人民广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 533,
+    "name": "孔乙己酒家(文庙店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 534,
+    "name": "张生记(正大广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 536,
+    "name": "甬府小鲜(陆家嘴中心店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 538,
+    "name": "甬府(黄浦店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 542,
+    "name": "甬府·北外滩",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 559,
+    "name": "小菜园新徽菜(百联世纪店)",
+    "patch": {
+      "chain_type": "资本化连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 564,
+    "name": "徽商故里(虹桥店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 565,
+    "name": "璞徽(长泰广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 566,
+    "name": "徽廷宴·徽菜(宝山店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 568,
+    "name": "皖宴(龙柏饭店店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 569,
+    "name": "皖宴(苏河湾店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 570,
+    "name": "徽廷宴·徽菜(新天地东台里店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 571,
+    "name": "徽廷宴·徽菜(创智天地店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 572,
+    "name": "徽商故里(陆家嘴店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 573,
+    "name": "蜀谭记·盐帮川菜(胶州路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 579,
+    "name": "本来川菜(陕西南路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 588,
+    "name": "对酒当歌·地道川菜(南丹东路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 602,
+    "name": "三木川菜(真如古镇店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 607,
+    "name": "十八梯邓凳面(愚园路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 618,
+    "name": "对酒当歌·地道川菜(南京东路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 623,
+    "name": "本来川菜(中骏广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 628,
+    "name": "三木川菜",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 636,
+    "name": "翠蝶川菜(BFC外滩金融中心店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 637,
+    "name": "映水芙蓉·叙川(大丸百货店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 639,
+    "name": "翠蝶川菜(北外滩来福士店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 640,
+    "name": "翠蝶川菜(One ITC店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 641,
+    "name": "映水芙蓉(白玉兰广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 651,
+    "name": "龙筵轩·广府宴(长宁虹桥店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 652,
+    "name": "唐宫·粤菜海鲜(多媒体店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 657,
+    "name": "龙筵轩·广府宴(黄浦云景店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 666,
+    "name": "顺峰顺水顺德菜(长风大悦城店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 676,
+    "name": "家府潮汕菜(莘庄仲盛店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 677,
+    "name": "潮禧·潮汕菜(长寿路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 701,
+    "name": "新旺茶餐厅(长乐店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 705,
+    "name": "东发道茶冰厅(人民广场店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 733,
+    "name": "南里山房(长宁荟聚店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 738,
+    "name": "南京大牌档(中山公园龙之梦店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 739,
+    "name": "小金陵盐水鸭(云南南路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 740,
+    "name": "小金陵盐水鸭(山西南路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 741,
+    "name": "南京大牌档(近铁广场店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 742,
+    "name": "南京大牌档(人民广场世茂店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 745,
+    "name": "南京大牌档(静安寺店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 746,
+    "name": "南京大牌档(月星环球港店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 749,
+    "name": "松鹤楼(豫园店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 750,
+    "name": "松鹤楼(嘉里城店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 752,
+    "name": "松鹤楼(港汇店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 756,
+    "name": "松鹤楼(世纪汇店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 757,
+    "name": "RIVIERA松鹤楼(外滩店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 759,
+    "name": "荣府宴(南阳路店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 771,
+    "name": "徐州味道(中山北路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 787,
+    "name": "南里山房(瑞虹天地太阳宫店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 798,
+    "name": "城南往事(滨江世茂店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 799,
+    "name": "城南往事(正大广场精选店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 801,
+    "name": "郭姐·威海渔村(中山公园/定西路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 804,
+    "name": "郭姐·威海渔村(大连路/莱克大厦店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 805,
+    "name": "崴海渔村/威海渔村(虹梅路总店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 806,
+    "name": "威海渔村(黄兴路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 807,
+    "name": "威海渔村(河间路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 808,
+    "name": "威海小馆(八佰伴店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 809,
+    "name": "威海小馆(普陀店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 810,
+    "name": "郭姐·威海渔村(柳州路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 811,
+    "name": "东莱馋房(环球金融中心店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 814,
+    "name": "东莱馋房(晶品店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 818,
+    "name": "小大董(LUONE凯德店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 823,
+    "name": "大董海参店(越洋广场店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 825,
+    "name": "外婆家(静安大悦城店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 830,
+    "name": "老头儿油爆虾(曲阳百联店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 831,
+    "name": "老头儿油爆虾(宏伊国际广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 832,
+    "name": "张生记(丁香国际店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 834,
+    "name": "锦楼·臻选新杭帮(陕西北路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 835,
+    "name": "锦楼·臻选新杭帮(正大广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 840,
+    "name": "甬府小鲜(静安嘉里中心店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 842,
+    "name": "柒熙里(辛耕路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 853,
+    "name": "孔乙己酒家(虹桥路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 861,
+    "name": "浙时码头·温州海鲜大排档(静安寺店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 866,
+    "name": "浙时码头·温州海鲜大排档(汾阳路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 871,
+    "name": "新荣记(南京西路店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 888,
+    "name": "屿园沙茶面(长春路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 902,
+    "name": "莆田卤面馆(汇融天地店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 903,
+    "name": "遇外滩SKYLINE(北外滩来福士店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 916,
+    "name": "望湘园(大宁店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 925,
+    "name": "钵湘湘·常德钵子菜(浦东创始店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 936,
+    "name": "甬府·世博轩(世博中心店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 942,
+    "name": "璞徽(正大广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 947,
+    "name": "孙大师小鲜（原小皖宴）",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 967,
+    "name": "丹凤楼雅宴·大富贵(斜土店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 993,
+    "name": "东北四季饺子王(昌平路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1018,
+    "name": "秦香岚·贵州菜·凯里酸汤鱼",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1038,
+    "name": "芳邻食堂(古北店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1049,
+    "name": "美·大董(外滩BFC店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1052,
+    "name": "小大董(新世界城店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1054,
+    "name": "老门框爆肚涮肉(四川北路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1057,
+    "name": "小吊梨汤·北京菜·烤鸭(豫园店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1065,
+    "name": "莲餐厅·湖北菜(中山公园店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1067,
+    "name": "椰子不语椰子鸡火锅(淮海店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1111,
+    "name": "FAT PHO大發越南粉(丰盛里店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1112,
+    "name": "FAT PHO大發越南粉(新天地店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1113,
+    "name": "西贡妈妈Saigon Mama(上海商城店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1114,
+    "name": "西贡妈妈Saigon Mama(港汇恒隆店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1127,
+    "name": "芽笼芽笼新加坡餐厅(浦东嘉里城店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1128,
+    "name": "芽笼芽笼新加坡餐厅(来福士广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1165,
+    "name": "Otantik黎凡特美食(吴江路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1167,
+    "name": "Otantik黎凡特美食(西藏中路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1172,
+    "name": "Brothers Kebab(奉贤路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1174,
+    "name": "Brothers Kebab(长寿路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1198,
+    "name": "CRAZYONES 克芮旺斯(前滩店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1199,
+    "name": "CRAZYONES 克芮旺斯(合生汇店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1203,
+    "name": "宝莱纳餐厅(北外滩店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1205,
+    "name": "宝莱纳餐厅(长宁来福士店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1206,
+    "name": "宝莱纳餐厅(西岸梦中心店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1207,
+    "name": "宝莱纳餐厅(新天地店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1222,
+    "name": "Blue Frog 蓝蛙",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 1230,
+    "name": "Brut Eatery悦璞食堂(肇嘉浜路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1235,
+    "name": "PAIN CHAUD百丘(建国西路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1243,
+    "name": "鲜得来排骨年糕(雁荡店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1252,
+    "name": "Otantik",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1333,
+    "name": "老门框爆肚涮肉(古美路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1346,
+    "name": "莲餐厅·湖北菜(愚园路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1370,
+    "name": "新荣记(BFC外滩金融中心店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1376,
+    "name": "新荣记(前滩太古里店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1377,
+    "name": "新荣记(虹桥店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1380,
+    "name": "新荣记(滨江店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1402,
+    "name": "FASCINO BAKERY(新天地店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1406,
+    "name": "麻布屋Azabuya(兴业太古汇店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1429,
+    "name": "蜀谭记·盐帮川菜(四川北路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1443,
+    "name": "烤匠麻辣烤鱼(上海首店·五角场合生汇店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1456,
+    "name": "鲁采LU STYLE(苏河湾慎余里店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1457,
+    "name": "东莱·海上",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1469,
+    "name": "唐宫·粤菜海鲜(华润时代店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1474,
+    "name": "家府潮汕菜(中山公园龙之梦店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1475,
+    "name": "潮禧·潮汕菜(万航渡路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1476,
+    "name": "潮界(丁香国际店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1489,
+    "name": "福兴荟(King88广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1491,
+    "name": "沧浪亭(重庆路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1493,
+    "name": "南京大牌档(世茂商都店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 1495,
+    "name": "徐州味道(镇坪路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1496,
+    "name": "松鹤楼面馆(豫园店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 1497,
+    "name": "绿杨邨酒家(天钥桥路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1504,
+    "name": "甬府尊鲜(前滩太古里店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1505,
+    "name": "桂满陇·杭州小馆(中山公园店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1514,
+    "name": "屿园沙茶面(长寿路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1515,
+    "name": "莆田餐厅PUTIEN(环贸iapm店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 1516,
+    "name": "莆味观·莆田菜(合川路店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 1520,
+    "name": "盖饭邦·长沙菜馆(新天地店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 1521,
+    "name": "望湘园湖南菜(静安大悦城店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 1522,
+    "name": "钵湘湘·常德钵子菜(梅川路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1524,
+    "name": "璞徽(瑞虹天地太阳宫店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1525,
+    "name": "小菜园新徽菜(虹桥天街店)",
+    "patch": {
+      "chain_type": "资本化连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 1526,
+    "name": "大富贵酒楼(中华路总店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1528,
+    "name": "十八梯邓凳面(上海店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1529,
+    "name": "龙筵轩(古北店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1530,
+    "name": "顺峰顺水顺德菜(龙华店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1531,
+    "name": "新旺茶餐厅(打浦店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 1532,
+    "name": "东发道茶冰厅(新业坊店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 1534,
+    "name": "点都德(南翔印象城店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 1557,
+    "name": "柒熙里(愚园路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1561,
+    "name": "大董(国金中心IFC店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1562,
+    "name": "大董(环贸iapm店)",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "无",
+      "premade_risk": "无"
+    }
+  },
+  {
+    "id": 1564,
+    "name": "东来顺(外滩南京东路店)",
+    "patch": {
+      "chain_type": "资本化连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 1565,
+    "name": "京悦南门涮肉(人民广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1566,
+    "name": "小吊梨汤·北京菜·烤鸭(龙华会店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1589,
+    "name": "鲜得来排骨年糕(云南南路总店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1605,
+    "name": "椰子不语椰子鸡火锅(凯德晶萃店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1622,
+    "name": "秦香岚·贵州菜·凯里酸汤鱼(博荟广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1626,
+    "name": "老门框爆肚涮肉(杨浦中原店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1628,
+    "name": "京悦南门涮肉(仙霞路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1636,
+    "name": "东来顺(虹桥天地店)",
+    "patch": {
+      "chain_type": "资本化连锁",
+      "central_kitchen": "疑似",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 1637,
+    "name": "京悦南门涮肉(虹桥丽宝广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1654,
+    "name": "东北四季饺子王(茅台路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1683,
+    "name": "Manner Coffee",
+    "patch": {
+      "chain_type": "资本化连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 1685,
+    "name": "星巴克臻选上海烘焙工坊",
+    "patch": {
+      "chain_type": "资本化连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "疑似"
+    }
+  },
+  {
+    "id": 1719,
+    "name": "有喜屋·鲜鸡烧鸟·居酒屋(安龙路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1720,
+    "name": "烤匠麻辣烤鱼(中山公园龙之梦店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1738,
+    "name": "点都德（瑞虹太阳宫店）",
+    "patch": {
+      "chain_type": "大型连锁",
+      "central_kitchen": "确认",
+      "premade_risk": "高"
+    }
+  },
+  {
+    "id": 1750,
+    "name": "有喜屋",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1751,
+    "name": "有喜屋·鲜鸡烧鸟·居酒屋(嘉定新城店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1752,
+    "name": "有喜屋·鲜鸡板前烧鸟",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1753,
+    "name": "有喜屋·鲜鸡烧鸟·居酒屋(真如环宇城店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1754,
+    "name": "有喜屋·日料·居酒屋(长寿路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1755,
+    "name": "有喜屋·鲜鸡板前烧鸟(宝杨宝龙店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1756,
+    "name": "有喜屋·鲜鸡烧鸟·居酒屋(海梦一方店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1757,
+    "name": "有喜屋·鲜鸡板前烧鸟(徐汇绿地缤纷店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1758,
+    "name": "有喜屋深夜食堂(宝山万达店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1759,
+    "name": "有喜屋·板前烧鸟(金地·方邻店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1760,
+    "name": "有喜屋·日料·居酒屋(嘉里不夜城企业中心店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1761,
+    "name": "有喜屋·日料·居酒屋(天物空间店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1762,
+    "name": "有喜屋·日料·居酒屋(文定路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1763,
+    "name": "有喜屋·日料·居酒屋(中集美兰湖金地广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1764,
+    "name": "有喜屋·日料·居酒屋(旭辉广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1765,
+    "name": "有喜屋·日料·居酒屋(国华广场店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1766,
+    "name": "有喜屋·日料·居酒屋(鑫耀·光环Live店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1767,
+    "name": "有喜屋·日料·居酒屋(南桥百联店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1768,
+    "name": "有喜屋·板前烧鸟(浦江欢乐颂店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1769,
+    "name": "有喜屋·板前烧鸟(盛邻Mall店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1770,
+    "name": "有喜屋·鲜鸡烧鸟·居酒屋(宝山万达店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1771,
+    "name": "有喜屋九亭金地店",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1780,
+    "name": "麻布屋AZABUYA(永康路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1785,
+    "name": "PAIN CHAUD百丘(番禺路店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1789,
+    "name": "FASCINO BAKERY(丰盛里店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1807,
+    "name": "Brut Eatery 悦璞食堂（愚园路店）",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  },
+  {
+    "id": 1839,
+    "name": "芳邻食堂(静安漫选店)",
+    "patch": {
+      "chain_type": "小型连锁",
+      "premade_risk": "低"
+    }
+  }
+]

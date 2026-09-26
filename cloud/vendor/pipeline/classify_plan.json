@@ -1,0 +1,20 @@
+[
+  {
+    "restaurant_id": 1283,
+    "name": "LENOTRE雷诺特法式西点(前滩太古里店)",
+    "op": "DELETE",
+    "cuisine_id": 26,
+    "tag": "法餐",
+    "reason": "R5 主营甜品，正餐地域菜系「法餐」让位",
+    "confidence": "high"
+  },
+  {
+    "restaurant_id": 1574,
+    "name": "FIFTYLAN(CP静安店)",
+    "op": "ADD",
+    "cuisine_id": 324,
+    "tag": "茶饮",
+    "reason": "R5 非正餐主营根",
+    "confidence": "high"
+  }
+]

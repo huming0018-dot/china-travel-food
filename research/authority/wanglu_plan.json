@@ -1,0 +1,63 @@
+[
+ {
+  "name": "望庐·精细江西菜(外滩店)",
+  "action": "new",
+  "fields": {
+   "name": "望庐·精细江西菜(外滩店)",
+   "status": "active",
+   "district": "黄浦区",
+   "business_area": "外滩",
+   "address": "黄浦区江西中路211号外滩老市府5层A02号",
+   "location": "SRID=4326;POINT(121.486457 31.235513)",
+   "price_avg": 250,
+   "price_scene": "正餐",
+   "signature_dishes": [
+    "莲花血鸭",
+    "常寿甲鱼",
+    "南昌三杯鸡",
+    "南昌白糖糕",
+    "南昌瓦罐汤",
+    "藜蒿炒腊肉"
+   ],
+   "chain_type": "小型连锁",
+   "premade_risk": "低",
+   "booking_method": "电话或官方小红书/微信提前预订；包厢建议提前数天",
+   "evidence_summary": "{\"quotes\": [{\"quote\": \"国内唯一米其林江西菜，连续三年入选米其林指南\", \"source\": \"MICHELIN Guide\", \"url\": \"https://guide.michelin.com/sg/zh_CN/shanghai-municipality/shanghai/restaurant/wang-lu\"}, {\"quote\": \"DiningCity 评分9.1（食物9.0/服务9.1/环境9.3）\", \"source\": \"DiningCity\", \"url\": \"https://www.diningcity.cn/shanghai/wang_lu_jiangxi_cuisine\"}], \"negative\": [], \"soft_ad\": []}",
+   "data_updated_at": "2026-09-25"
+  },
+  "cids_add": [
+   22
+  ]
+ },
+ {
+  "name": "望庐·江西荟馆(前滩店)",
+  "action": "new",
+  "fields": {
+   "name": "望庐·江西荟馆(前滩店)",
+   "status": "active",
+   "district": "浦东新区",
+   "business_area": "前滩",
+   "address": "浦东新区海阳西路666弄15号前滩31信德中心3楼301-302",
+   "location": "SRID=4326;POINT(121.484197 31.150939)",
+   "price_avg": 280,
+   "price_scene": "正餐",
+   "signature_dishes": [
+    "莲花血鸭",
+    "常寿甲鱼",
+    "南昌三杯鸡",
+    "南昌白糖糕",
+    "南昌瓦罐汤",
+    "藜蒿炒腊肉"
+   ],
+   "chain_type": "小型连锁",
+   "premade_risk": "低",
+   "booking_method": "电话或官方小红书/微信提前预订；包厢建议提前数天",
+   "evidence_summary": "{\"quotes\": [{\"quote\": \"国内唯一米其林江西菜，连续三年入选米其林指南\", \"source\": \"MICHELIN Guide\", \"url\": \"https://guide.michelin.com/sg/zh_CN/shanghai-municipality/shanghai/restaurant/wang-lu\"}, {\"quote\": \"DiningCity 评分9.1（食物9.0/服务9.1/环境9.3）\", \"source\": \"DiningCity\", \"url\": \"https://www.diningcity.cn/shanghai/wang_lu_jiangxi_cuisine\"}], \"negative\": [], \"soft_ad\": []}",
+   "data_updated_at": "2026-09-25",
+   "phone": "02158883331"
+  },
+  "cids_add": [
+   22
+  ]
+ }
+]

@@ -1,0 +1,2376 @@
+[
+  {
+    "action": "update",
+    "restaurant_id": 1118,
+    "name": "爱在河内越南餐厅",
+    "fields": {
+      "name": "爱在河内越南餐厅",
+      "tier": "平价",
+      "price_avg": 80,
+      "price_range": "¥60-100",
+      "address": "静安区武定路",
+      "district": "静安区",
+      "business_area": "静安寺/武定路",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "火车头河粉",
+        "法包三明治",
+        "春卷",
+        "滴漏咖啡",
+        "香茅猪颈肉"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 64.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"爱在河内上海三店齐开,菜品做成艺术,68代100代金券随便点不踩雷\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/爱在河内越南餐厅\", \"date\": \"2026\"}, {\"quote\": \"抖音(2024):「爱在河内上海三店齐开,菜品做成艺术,68代100代金券随便点不踩雷」\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/爱在河内越南餐厅\", \"date\": \"2026\"}], \"negative\": [\"团购引流、出品波动\", \"存在软广营销嫌疑\"], \"soft_ad\": [\"证据文本标注软广扣分\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.445362 31.231017)"
+    },
+    "cids_add": [
+      51,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"越南菜\", \"菜系\", \"东南亚菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1119,
+    "name": "印象芽庄越式餐厅(新华路店)",
+    "fields": {
+      "name": "印象芽庄越式餐厅(新华路店)",
+      "tier": "平价",
+      "price_avg": 81,
+      "price_range": "¥70-100",
+      "address": "长宁区新华路398号丰臣影城1楼",
+      "district": "长宁区",
+      "business_area": "新华路/上海影城",
+      "booking_method": "大众点评/到店",
+      "signature_dishes": [
+        "越式海鲜菠萝饭",
+        "百香果排骨",
+        "蟹膏粉",
+        "芽庄香柠鲜鱿鱼",
+        "越式面包"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 65.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"携程:人均¥81,新华路398号丰臣影城1楼\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/印象芽庄越式餐厅(新华路店)\", \"date\": \"2026\"}, {\"quote\": \"芽庄风味中部越南菜,蟹膏粉特色\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/印象芽庄越式餐厅(新华路店)\", \"date\": \"2026\"}], \"negative\": [\"老店环境一般、菜品偏甜\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.420799 31.203544)"
+    },
+    "cids_add": [
+      51,
+      57,
+      64,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"越南菜\", \"菜系\", \"东南亚菜\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 携程:人均¥81,新华路398号丰臣影城1楼…",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1120,
+    "name": "普榄越南餐厅(啦啦宝都店)",
+    "fields": {
+      "name": "普榄越南餐厅(啦啦宝都店)",
+      "tier": "平价",
+      "price_avg": 70,
+      "price_range": "¥55-90",
+      "address": "浦东新区新金桥路738号啦啦宝都5F519",
+      "district": "浦东新区",
+      "business_area": "金桥/啦啦宝都",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "火车头河粉",
+        "扎肉河粉",
+        "芽庄酸辣牛肉粉",
+        "春卷",
+        "滴漏咖啡"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 70.0,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 62.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"啦啦宝都5F现熬牛骨原汤,火车头河粉/扎肉河粉/芽庄酸辣牛肉粉,越南粉3次卡119\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/普榄越南餐厅(啦啦宝都店)\", \"date\": \"2026\"}, {\"quote\": \"抖音(2026):「啦啦宝都5F现熬牛骨原汤,火车头河粉/扎肉河粉/芽庄酸辣牛肉粉,越南粉3次卡119」\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/普榄越南餐厅(啦啦宝都店)\", \"date\": \"2026\"}], \"negative\": [\"商场档口、套餐卡引流\", \"存在软广营销嫌疑\"], \"soft_ad\": [\"证据文本标注软广扣分\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.603528 31.252555)"
+    },
+    "cids_add": [
+      3,
+      51,
+      65,
+      74,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"越南菜\", \"菜系\", \"东南亚菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1121,
+    "name": "越南美食安宫AoBaBa",
+    "fields": {
+      "name": "越南美食安宫AoBaBa",
+      "tier": "平价",
+      "price_avg": 90,
+      "price_range": "¥70-110",
+      "address": "长宁区仙霞路701号",
+      "district": "长宁区",
+      "business_area": "古北/仙霞",
+      "booking_method": "电话/到店",
+      "signature_dishes": [
+        "越南河粉",
+        "法包",
+        "春卷",
+        "滴漏咖啡",
+        "越式烧烤"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 66.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"日文资料:长宁区古羊路/仙霞路越南餐厅AoBaBa,在沪日人/越侨圈知名\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/越南美食安宫AoBaBa\", \"date\": \"2026\"}, {\"quote\": \"（电话待核实：原号段号码跨店重复、无法核验，建议经大众点评/高德在线预约）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/越南美食安宫AoBaBa\", \"date\": \"2026\"}], \"negative\": [\"位置偏、环境老旧\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.385391 31.207126)"
+    },
+    "cids_add": [
+      51,
+      65,
+      72,
+      162,
+      163,
+      209
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"越南菜\", \"菜系\", \"东南亚菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1122,
+    "name": "越洋越南菜",
+    "fields": {
+      "name": "越洋越南菜",
+      "tier": "平价",
+      "price_avg": 95,
+      "price_range": "¥80-120",
+      "address": "徐汇区永康路",
+      "district": "徐汇区",
+      "business_area": "永康路/嘉善路",
+      "booking_method": "大众点评/到店",
+      "signature_dishes": [
+        "越式鲜虾猪肉米纸卷",
+        "炸素春卷",
+        "香煎牛肉三明治",
+        "河粉",
+        "滴漏咖啡"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 65.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"越式香煎牛肉三明治法棍酥脆,鲜虾猪肉米纸卷弹糯,炸素春卷酥脆,口味还原越南当地\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/越洋越南菜\", \"date\": \"2026\"}, {\"quote\": \"抖音(2025):「越式香煎牛肉三明治法棍酥脆,鲜虾猪肉米纸卷弹糯,炸素春卷酥脆,口味还原越南当地」\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/越洋越南菜\", \"date\": \"2026\"}], \"negative\": [\"店面小、晚市为主\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.456225 31.210215)"
+    },
+    "cids_add": [
+      51,
+      64,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"越南菜\", \"菜系\", \"东南亚菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1123,
+    "name": "PHO LA越南粉",
+    "fields": {
+      "name": "PHO LA越南粉",
+      "tier": "平价",
+      "price_avg": 75,
+      "price_range": "¥60-95",
+      "address": "静安区延平路",
+      "district": "静安区",
+      "business_area": "静安寺/延平路",
+      "booking_method": "大众点评/到店",
+      "signature_dishes": [
+        "火车头河粉",
+        "生牛肉河粉",
+        "香茅猪颈肉",
+        "春卷",
+        "越南咖啡"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 70.0,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 63.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"套餐招牌火车头鲜牛肉上桌加高汤现烫,牛骨熬制汤鲜河粉爽滑\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/PHO LA越南粉\", \"date\": \"2026\"}, {\"quote\": \"静安寺附近越南河粉(抖音2026):「套餐招牌火车头鲜牛肉上桌加高汤现烫,牛骨熬制汤鲜河粉爽滑」\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/PHO LA越南粉\", \"date\": \"2026\"}], \"negative\": [\"小店、午市为主\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.439098 31.23155)"
+    },
+    "cids_add": [
+      3,
+      51,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"越南菜\", \"菜系\", \"东南亚菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1124,
+    "name": "西贡Saigon越南菜(中环广场店)",
+    "fields": {
+      "name": "西贡Saigon越南菜(中环广场店)",
+      "tier": "平价",
+      "price_avg": 90,
+      "price_range": "¥70-110",
+      "address": "黄浦区淮海中路381号中环广场",
+      "district": "黄浦区",
+      "business_area": "淮海路/中环广场",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "火车头河粉",
+        "越南法包三明治",
+        "芒果糯米饭",
+        "香茅烤猪肉檬粉",
+        "滴漏咖啡"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 65.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"携程门店:中环广场店,火车头河粉/越南春卷/芒果糯米饭/滴漏咖啡为招牌\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/西贡Saigon越南菜(中环广场店)\", \"date\": \"2026\"}, {\"quote\": \"携程门店:中环广场店,火车头河粉/越南春卷/芒果糯米饭/滴漏咖啡为招牌\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/西贡Saigon越南菜(中环广场店)\", \"date\": \"2026\"}], \"negative\": [\"商场店、价格中上\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.472938 31.222032)"
+    },
+    "cids_add": [
+      51,
+      57,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"越南菜\", \"菜系\", \"东南亚菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1125,
+    "name": "星洲小馆·新加坡菜(太阳宫店)",
+    "fields": {
+      "name": "星洲小馆·新加坡菜(太阳宫店)",
+      "tier": "中档",
+      "price_avg": 110,
+      "price_range": "¥90-130",
+      "address": "虹口区瑞虹路181号太阳宫L5-15&16",
+      "district": "虹口区",
+      "business_area": "瑞虹新城/太阳宫",
+      "booking_method": "大众点评/可预订",
+      "signature_dishes": [
+        "海南鸡饭",
+        "新加坡叻沙",
+        "肉骨茶",
+        "咖椰吐司",
+        "麦片香虾"
+      ],
+      "score_objective": 77.5,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 73.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"上海新加坡餐厅里很权威,油鸡饭和肉骨茶特别能打,岭南皇鸡鲜嫩多汁皮下鸡冻,3种蘸料\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/星洲小馆·新加坡菜(太阳宫店)\", \"date\": \"2026\"}, {\"quote\": \"抖音(2026):「上海新加坡餐厅里很权威,油鸡饭和肉骨茶特别能打,岭南皇鸡鲜嫩多汁皮下鸡冻,3种蘸料」\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/星洲小馆·新加坡菜(太阳宫店)\", \"date\": \"2026\"}], \"negative\": [\"连锁、午市套餐为主\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.498709 31.263219)"
+    },
+    "cids_add": [
+      57,
+      64,
+      65,
+      72,
+      162,
+      163,
+      183
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1126,
+    "name": "星洲小馆·新加坡料理(田子坊店)",
+    "fields": {
+      "name": "星洲小馆·新加坡料理(田子坊店)",
+      "tier": "中档",
+      "price_avg": 100,
+      "price_range": "¥80-120",
+      "address": "黄浦区泰康路田子坊",
+      "district": "黄浦区",
+      "business_area": "打浦桥/田子坊",
+      "phone": "02164183028",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "海南鸡饭",
+        "肉骨茶",
+        "新加坡叻沙",
+        "香蕉飞饼",
+        "马来风光空心菜"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 76.7,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"携程门店:田子坊店,卤鸡爪/海南鸡饭/肉骨茶/新加坡叻沙/咖椰吐司为招牌\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/星洲小馆·新加坡料理(田子坊店)\", \"date\": \"2026\"}, {\"quote\": \"携程门店:田子坊店,卤鸡爪/海南鸡饭/肉骨茶/新加坡叻沙/咖椰吐司为招牌\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/星洲小馆·新加坡料理(田子坊店)\", \"date\": \"2026\"}], \"negative\": [\"景区店、游客属性\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.468658 31.208332)"
+    },
+    "cids_add": [
+      57,
+      65,
+      72,
+      162,
+      163,
+      183
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1127,
+    "name": "芽笼芽笼新加坡餐厅(浦东嘉里城店)",
+    "fields": {
+      "name": "芽笼芽笼新加坡餐厅(浦东嘉里城店)",
+      "tier": "平价",
+      "price_avg": 95,
+      "price_range": "¥80-120",
+      "address": "浦东新区花木路1378号嘉里城负1层B111号",
+      "district": "浦东新区",
+      "business_area": "花木/嘉里城",
+      "phone": "13262919778",
+      "booking_method": "电话/大众点评",
+      "signature_dishes": [
+        "招牌海南鸡",
+        "招牌肉骨茶",
+        "娘惹海之味叻沙",
+        "咖椰吐司",
+        "沙爹串"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 76.7,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"海南鸡/肉骨茶/叻沙/沙爹串为招牌\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/芽笼芽笼新加坡餐厅(浦东嘉里城店)\", \"date\": \"2026\"}, {\"quote\": \"携程:人均¥95,电话13262919778,嘉里城B111\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/芽笼芽笼新加坡餐厅(浦东嘉里城店)\", \"date\": \"2026\"}], \"negative\": [\"商场店、标准化\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.563431 31.21246)"
+    },
+    "cids_add": [
+      65,
+      72,
+      162,
+      163,
+      183
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1128,
+    "name": "芽笼芽笼新加坡餐厅(来福士广场店)",
+    "fields": {
+      "name": "芽笼芽笼新加坡餐厅(来福士广场店)",
+      "tier": "平价",
+      "price_avg": 87,
+      "price_range": "¥70-110",
+      "address": "黄浦区西藏中路268号来福士广场B1层01A室",
+      "district": "黄浦区",
+      "business_area": "人民广场/来福士",
+      "phone": "15700534150",
+      "booking_method": "电话/大众点评",
+      "signature_dishes": [
+        "招牌肉骨茶",
+        "海南鸡饭",
+        "叻沙",
+        "沙爹串",
+        "咖椰吐司"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 66.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"携程:人均¥87,电话15700534150,来福士B1\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/芽笼芽笼新加坡餐厅(来福士广场店)\", \"date\": \"2026\"}, {\"quote\": \"差评:商场档口、白领快餐\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/芽笼芽笼新加坡餐厅(来福士广场店)\", \"date\": \"2026\"}], \"negative\": [\"商场档口、白领快餐\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.476639 31.232439)"
+    },
+    "cids_add": [
+      57,
+      65,
+      74,
+      162,
+      163,
+      183
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 差评:商场档口、白领快餐…",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1129,
+    "name": "钨节路新加坡餐厅",
+    "fields": {
+      "name": "钨节路新加坡餐厅",
+      "tier": "平价",
+      "price_avg": 90,
+      "price_range": "¥70-110",
+      "address": "静安区新闸路1788号",
+      "district": "静安区",
+      "business_area": "昌平路/新闸路",
+      "phone": "02162181765",
+      "booking_method": "大众点评/到店",
+      "signature_dishes": [
+        "新加坡叻沙",
+        "海南鸡饭",
+        "肉骨茶",
+        "沙爹串",
+        "咖椰吐司"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 66.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"12年前朋友定居新加坡说最爱laksa,在新闸路1788号找到上海正宗新加坡叻沙,椰奶香东南亚香料\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/钨节路新加坡餐厅\", \"date\": \"2026\"}, {\"quote\": \"抖音(2023):「12年前朋友定居新加坡说最爱laksa,在新闸路1788号找到上海正宗新加坡叻沙,椰奶香东南亚香料」\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/钨节路新加坡餐厅\", \"date\": \"2026\"}], \"negative\": [\"老店环境一般\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.443668 31.228201)"
+    },
+    "cids_add": [
+      57,
+      65,
+      72,
+      162,
+      163,
+      183
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1130,
+    "name": "Secret Flavor(马来清真)",
+    "fields": {
+      "name": "Secret Flavor(马来清真)",
+      "tier": "中档",
+      "price_avg": 120,
+      "price_range": "¥100-150",
+      "address": "长宁区黄金城道",
+      "district": "长宁区",
+      "business_area": "古北/黄金城道",
+      "booking_method": "大众点评/可预订",
+      "signature_dishes": [
+        "椰浆饭Nasi Lemak",
+        "冬阴功海鲜汤",
+        "青木瓜沙拉",
+        "马来炒面",
+        "马来西亚咖喱牛肉"
+      ],
+      "score_objective": 77.5,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 1.0,
+      "score_total": 76.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"马来西亚领事馆推荐,清真餐厅,皇家主厨做正宗马来菜,点评前五:椰浆饭/冬阴功/青木瓜沙拉/马来炒面/马来咖喱牛肉\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Secret Flavor(马来清真)\", \"date\": \"2026\"}, {\"quote\": \"上海市政府英文网(2024):「马来西亚领事馆推荐,清真餐厅,皇家主厨做正宗马来菜,点评前五:椰浆饭/冬阴功/青木瓜沙拉/马来炒面/马来咖喱牛肉」\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Secret Flavor(马来清真)\", \"date\": \"2026\"}], \"negative\": [\"古北位置偏\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.411398 31.193249)"
+    },
+    "cids_add": [
+      3,
+      51,
+      57,
+      64,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1131,
+    "name": "兴兴东南亚饮食阁",
+    "fields": {
+      "name": "兴兴东南亚饮食阁",
+      "tier": "平价",
+      "price_avg": 80,
+      "price_range": "¥60-100",
+      "address": "闵行区黄桦路542号",
+      "district": "闵行区",
+      "business_area": "龙柏/黄桦路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "叻沙",
+        "滑蛋河粉",
+        "咖喱鸡",
+        "Sambal鱿鱼",
+        "萝卜糕"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 80.0,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 1.0,
+      "score_total": 71.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"被上海本地人反推荐的马来西亚餐厅,满座好多新马口音,上海马来西亚人食堂,叻沙和滑蛋河粉是固定班底\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/兴兴东南亚饮食阁\", \"date\": \"2026\"}, {\"quote\": \"抖音(2026):「被上海本地人反推荐的马来西亚餐厅,满座好多新马口音,上海马来西亚人食堂,叻沙和滑蛋河粉是固定班底」\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/兴兴东南亚饮食阁\", \"date\": \"2026\"}], \"negative\": [\"小店环境普通、外卖为主\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.367155 31.184982)"
+    },
+    "cids_add": [
+      51,
+      64,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"越南菜\", \"菜系\", \"东南亚菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1132,
+    "name": "金椰壳(印力中心店)",
+    "fields": {
+      "name": "金椰壳(印力中心店)",
+      "tier": "中档",
+      "price_avg": 160,
+      "price_range": "¥130-190",
+      "address": "杨浦区农林路69号印力中心2层02-07A",
+      "district": "杨浦区",
+      "business_area": "控江路/印力中心",
+      "phone": "02162529986",
+      "booking_method": "电话/大众点评",
+      "signature_dishes": [
+        "椰壳海南鸡",
+        "娘惹辣椒咖喱虾",
+        "青柠檬酸汤鲈鱼",
+        "老潮州肉骨茶",
+        "娘惹小金杯"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 76.7,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"携程:人均¥160,电话021-62529986,印力中心2层\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/金椰壳(印力中心店)\", \"date\": \"2026\"}, {\"quote\": \"金椰壳(印力中心店) 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/金椰壳(印力中心店)\", \"date\": \"2026\"}], \"negative\": [\"价格偏高、商场店\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.435249 31.254877)"
+    },
+    "cids_add": [
+      3,
+      64,
+      65,
+      72,
+      162,
+      163,
+      183
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1133,
+    "name": "南洋南香·东南亚美食(16铺店)",
+    "fields": {
+      "name": "南洋南香·东南亚美食(16铺店)",
+      "tier": "中档",
+      "price_avg": 130,
+      "price_range": "¥110-160",
+      "address": "黄浦区南京西路",
+      "district": "黄浦区",
+      "business_area": "南京西路",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "咖喱鸡",
+        "咸蛋黄奶油大虾",
+        "滑蛋虾仁烩饭",
+        "猫山王榴莲",
+        "马来风光"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 76.7,
+      "score_taste": 75.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 71.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"抖音:获马来西亚使馆推荐,咖喱鸡/咸蛋黄奶油大虾/猫山王榴莲为招牌\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/南洋南香·东南亚美食(16铺店)\", \"date\": \"2026\"}, {\"quote\": \"抖音:获马来西亚使馆推荐,咖喱鸡/咸蛋黄奶油大虾/猫山王榴莲为招牌\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/南洋南香·东南亚美食(16铺店)\", \"date\": \"2026\"}], \"negative\": [\"团购套餐引流、价格中上\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.456868 31.228371)"
+    },
+    "cids_add": [
+      57,
+      64,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1134,
+    "name": "Docks河畔餐厅(静安英迪格)",
+    "fields": {
+      "name": "Docks河畔餐厅(静安英迪格)",
+      "tier": "中档",
+      "price_avg": 180,
+      "price_range": "¥150-220",
+      "address": "静安区山海关路388号静安英迪格酒店内",
+      "district": "静安区",
+      "business_area": "南京西路/山海关路",
+      "booking_method": "电话/酒店预订",
+      "signature_dishes": [
+        "新加坡肉骨茶",
+        "新加坡叻沙",
+        "仁当牛肉Rendang",
+        "沙爹鸡肉串",
+        "椰浆饭"
+      ],
+      "score_objective": 77.5,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 74.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"人均100吃地道东南亚菜,被马来西亚博主认证:肉骨茶胡椒味浓郁汤底醇厚,叻沙椰奶味浓辣度适中,仁当牛肉入口即化,沙爹酱正宗\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Docks河畔餐厅(静安英迪格)\", \"date\": \"2026\"}, {\"quote\": \"新浪(2026):「人均100吃地道东南亚菜,被马来西亚博主认证:肉骨茶胡椒味浓郁汤底醇厚,叻沙椰奶味浓辣度适中,仁当牛肉入口即化,沙爹酱正宗」\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Docks河畔餐厅(静安英迪格)\", \"date\": \"2026\"}], \"negative\": [\"价格偏高\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.452871 31.243721)"
+    },
+    "cids_add": [
+      26,
+      57,
+      65,
+      73,
+      162,
+      163,
+      183
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1135,
+    "name": "Garuda巴东印尼餐厅",
+    "fields": {
+      "name": "Garuda巴东印尼餐厅",
+      "tier": "平价",
+      "price_avg": 80,
+      "price_range": "¥60-100",
+      "address": "长宁区延安西路",
+      "district": "长宁区",
+      "business_area": "虹桥/延安西路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "巴东牛肉Rendang",
+        "沙爹串",
+        "椰浆饭Sambal",
+        "炸鸡",
+        "Gado-Gado沙拉"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 66.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"印尼菜在上海较少,巴东菜连锁在新加坡/雅加达有店\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Garuda巴东印尼餐厅\", \"date\": \"2026\"}, {\"quote\": \"上海虹桥印尼侨民圈巴东餐\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Garuda巴东印尼餐厅\", \"date\": \"2026\"}], \"negative\": [\"小店、环境一般\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.4075 31.203024)"
+    },
+    "cids_add": [
+      35,
+      57,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 上海虹桥印尼侨民圈巴东餐…"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1136,
+    "name": "娘惹情",
+    "fields": {
+      "name": "娘惹情",
+      "tier": "中档",
+      "price_avg": 110,
+      "price_range": "¥90-130",
+      "address": "静安区大沽路417号",
+      "district": "静安区",
+      "business_area": "淮海路/大沽路",
+      "booking_method": "大众点评/到店",
+      "signature_dishes": [
+        "娘惹咖喱",
+        "叻沙",
+        "海南鸡饭",
+        "椰浆饭",
+        "沙爹串"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 66.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"上海本地宝:静安区大沽路417号,11:00-22:00,马来西亚娘惹菜系,午市套餐\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/娘惹情\", \"date\": \"2026\"}, {\"quote\": \"（电话待核实：原号段号码跨店重复、无法核验，建议经大众点评/高德在线预约）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/娘惹情\", \"date\": \"2026\"}], \"negative\": [\"老店、菜单偏旧\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.466349 31.225387)"
+    },
+    "cids_add": [
+      57,
+      65,
+      72,
+      162,
+      163,
+      183
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1137,
+    "name": "Jean Georges 上海",
+    "fields": {
+      "name": "Jean Georges 上海",
+      "name_en": "Jean Georges",
+      "tier": "奢华",
+      "price_avg": 1200,
+      "price_range": "¥1000-1500",
+      "address": "黄浦区中山东一路3号外滩三号4楼",
+      "district": "黄浦区",
+      "business_area": "外滩",
+      "phone": "02163217733",
+      "booking_method": "电话/大众点评预订",
+      "signature_dishes": [
+        "黑松露鹅汉堡",
+        "香草烤鹌鹑",
+        "招牌雪花牛里脊",
+        "焦糖布丁"
+      ],
+      "score_objective": 95.0,
+      "score_diner": 86.7,
+      "score_taste": 95.0,
+      "score_endorsement": 90.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 92.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"食客(携程/Google)评价'黑松露鹅汉堡层次丰富、服务周到'\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/Jean Georges 上海\", \"date\": \"2026\"}, {\"quote\": \"米其林指南在册French Contemporary\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/Jean Georges 上海\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.490752 31.234042)"
+    },
+    "cids_add": [
+      65,
+      71,
+      159,
+      162,
+      163,
+      209
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品点心\", \"食材\", null]",
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1138,
+    "name": "Masala Art Indian Cuisine(大沽路店)",
+    "fields": {
+      "name": "Masala Art Indian Cuisine(大沽路店)",
+      "tier": "中档",
+      "price_avg": 186,
+      "price_range": "¥150-220",
+      "address": "静安区大沽路397号(近成都北路)",
+      "district": "静安区",
+      "business_area": "人民广场/大沽路",
+      "phone": "02163273571",
+      "booking_method": "电话/大众点评",
+      "signature_dishes": [
+        "Pani Puri脆球",
+        "Dal Makhani黑扁豆黄油咖喱",
+        "坦都里烤鸡",
+        "黄油鸡咖喱",
+        "印度飞饼"
+      ],
+      "score_objective": 77.5,
+      "score_diner": 83.3,
+      "score_taste": 80.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 1.0,
+      "score_total": 75.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"不只知名masala菜,还有坦都里烤鸡必点\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Masala Art Indian Cuisine(大沽路店)\", \"date\": \"2026\"}, {\"quote\": \"SmartShanghai:「不只知名masala菜,还有坦都里烤鸡必点」\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Masala Art Indian Cuisine(大沽路店)\", \"date\": \"2026\"}], \"negative\": [\"面积大但价格中上\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.466596 31.225478)"
+    },
+    "cids_add": [
+      51,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1139,
+    "name": "L'Atelier de Joël Robuchon 乔尔·卢布松美食坊",
+    "fields": {
+      "name": "L'Atelier de Joël Robuchon 乔尔·卢布松美食坊",
+      "name_en": "L'Atelier de Joël Robuchon",
+      "tier": "奢华",
+      "price_avg": 1600,
+      "price_range": "¥1500-2000",
+      "address": "黄浦区中山东一路18号外滩18号3楼",
+      "district": "黄浦区",
+      "business_area": "外滩",
+      "phone": "02160718888",
+      "booking_method": "电话/官网预订",
+      "signature_dishes": [
+        "卢布松面包盒",
+        "黑松露汤",
+        "慢煮牛颊",
+        "焦糖蜗牛"
+      ],
+      "score_objective": 97.5,
+      "score_diner": 90.0,
+      "score_taste": 95.0,
+      "score_endorsement": 100.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 95.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"食客评价'面包盒上桌即惊艳、蜗牛与牛颊火候精准'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/L'Atelier de Joël Robuchon 乔尔·卢布松美食坊\", \"date\": \"2026\"}, {\"quote\": \"食客评价'面包盒上桌即惊艳、蜗牛与牛颊火候精准'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/L'Atelier de Joël Robuchon 乔尔·卢布松美食坊\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.489533 31.238383)"
+    },
+    "cids_add": [
+      3,
+      26,
+      51,
+      65,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1140,
+    "name": "RANGOLI蓝果丽印度餐厅(古北SOHO店)",
+    "fields": {
+      "name": "RANGOLI蓝果丽印度餐厅(古北SOHO店)",
+      "tier": "中档",
+      "price_avg": 100,
+      "price_range": "¥80-120",
+      "address": "长宁区红宝石路188号古北SOHO B1-25",
+      "district": "长宁区",
+      "business_area": "古北/红宝石路",
+      "phone": "02164330699",
+      "booking_method": "电话/大众点评",
+      "signature_dishes": [
+        "蓝果丽特制烧烤",
+        "土豆咖喱角Samosa",
+        "印度脆球",
+        "黄咖喱红咖喱",
+        "印度飞饼"
+      ],
+      "score_objective": 77.5,
+      "score_diner": 80.0,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 1.0,
+      "score_total": 72.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"两个人90多在古北SOHO吃地道印度菜,老板是local印度人\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/RANGOLI蓝果丽印度餐厅(古北SOHO店)\", \"date\": \"2026\"}, {\"quote\": \"抖音(2026):「两个人90多在古北SOHO吃地道印度菜,老板是local印度人」\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/RANGOLI蓝果丽印度餐厅(古北SOHO店)\", \"date\": \"2026\"}], \"negative\": [\"环境一般、午市套餐为主\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.404539 31.19773)"
+    },
+    "cids_add": [
+      72,
+      162,
+      163,
+      209
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1141,
+    "name": "Maison Lameloise 莱美露滋",
+    "fields": {
+      "name": "Maison Lameloise 莱美露滋",
+      "name_en": "Maison Lameloise",
+      "tier": "奢华",
+      "price_avg": 1500,
+      "price_range": "¥1300-1800",
+      "address": "浦东新区世纪大道501号上海中心大厦68楼",
+      "district": "浦东新区",
+      "business_area": "陆家嘴",
+      "phone": "02168865888",
+      "booking_method": "电话/官网预订",
+      "signature_dishes": [
+        "布雷斯鹌鹑",
+        "黑松露意式饺",
+        "香烤海鲈",
+        "蛋白霜甜点"
+      ],
+      "score_objective": 95.0,
+      "score_diner": 86.7,
+      "score_taste": 95.0,
+      "score_endorsement": 100.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 93.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林指南在册French Contemporary，源自法国三星家族\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Maison Lameloise 莱美露滋\", \"date\": \"2026\"}, {\"quote\": \"食客评价'海鲈皮脆肉嫩、甜点蛋白霜轻盈'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Maison Lameloise 莱美露滋\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.504433 31.233617)"
+    },
+    "cids_add": [
+      26,
+      65,
+      71,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1142,
+    "name": "KLAY Modern Indian Restaurant(北京西路店)",
+    "fields": {
+      "name": "KLAY Modern Indian Restaurant(北京西路店)",
+      "tier": "中档",
+      "price_avg": 160,
+      "price_range": "¥130-190",
+      "address": "静安区北京西路",
+      "district": "静安区",
+      "business_area": "静安寺/北京西路",
+      "booking_method": "大众点评/可预订",
+      "signature_dishes": [
+        "招牌黄油鸡咖喱",
+        "印度酸奶鸡肉串",
+        "唐杜里烤饼",
+        "Biryani香饭",
+        "咖喱角"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 83.3,
+      "score_taste": 80.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 75.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"招牌黄油鸡咖喱入口浓郁咖喱香,鸡肉嫩;酸奶鸡肉串三块三种酱清新\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/KLAY Modern Indian Restaurant(北京西路店)\", \"date\": \"2026\"}, {\"quote\": \"Trip.com 4.5/5(2026):「招牌黄油鸡咖喱入口浓郁咖喱香,鸡肉嫩\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/KLAY Modern Indian Restaurant(北京西路店)\", \"date\": \"2026\"}], \"negative\": [\"新店口碑待沉淀、价格偏高\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.458885 31.231745)"
+    },
+    "cids_add": [
+      26,
+      57,
+      65,
+      73,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1144,
+    "name": "虹盐RED SALT新派印巴餐厅(禧瑞广场店)",
+    "fields": {
+      "name": "虹盐RED SALT新派印巴餐厅(禧瑞广场店)",
+      "tier": "中档",
+      "price_avg": 124,
+      "price_range": "¥100-150",
+      "address": "长宁区延安西路2088号睿珑广场B146",
+      "district": "长宁区",
+      "business_area": "虹桥/伊犁路",
+      "booking_method": "大众点评/可预订",
+      "signature_dishes": [
+        "印式咖喱",
+        "坦都里烤鸡",
+        "印度飞饼",
+        "Biryani",
+        "咖喱角"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 76.7,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"古北就有正宗印巴菜,服务员有巴基斯坦人有印度人,老板中文流利\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/虹盐RED SALT新派印巴餐厅(禧瑞广场店)\", \"date\": \"2026\"}, {\"quote\": \"携程(2024):「古北就有正宗印巴菜,服务员有巴基斯坦人有印度人,老板中文流利」\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/虹盐RED SALT新派印巴餐厅(禧瑞广场店)\", \"date\": \"2026\"}], \"negative\": [\"印巴菜融合、咖喱偏重口\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.407828 31.202467)"
+    },
+    "cids_add": [
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1145,
+    "name": "Phénix 斐霓丝餐厅酒吧",
+    "fields": {
+      "name": "Phénix 斐霓丝餐厅酒吧",
+      "name_en": "Phénix",
+      "tier": "奢华",
+      "price_avg": 800,
+      "price_range": "¥700-900",
+      "address": "静安区裕通路100号素凯泰酒店2楼",
+      "district": "静安区",
+      "business_area": "兴业太古汇",
+      "phone": "02152988888",
+      "booking_method": "电话/酒店预订",
+      "signature_dishes": [
+        "香煎鹅肝",
+        "慢煮羊肩",
+        "黑鳕鱼",
+        "巴黎-布列斯特"
+      ],
+      "score_objective": 92.5,
+      "score_diner": 83.3,
+      "score_taste": 90.0,
+      "score_endorsement": 90.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 89.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"米其林一星法餐(法餐/法国菜)\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Phénix 斐霓丝餐厅酒吧\", \"date\": \"2026\"}, {\"quote\": \"食客评价'黑鳕鱼皮脆、甜品出色'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Phénix 斐霓丝餐厅酒吧\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.464596 31.227621)"
+    },
+    "cids_add": [
+      26,
+      64,
+      65,
+      71,
+      159,
+      162,
+      163,
+      164
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"泰国菜\", \"菜系\", \"东南亚菜\"]",
+      "[\"need_create\", \"甜品点心\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1146,
+    "name": "Kaveen's Kitchen印度餐厅(虹桥店)",
+    "fields": {
+      "name": "Kaveen's Kitchen印度餐厅(虹桥店)",
+      "tier": "中档",
+      "price_avg": 110,
+      "price_range": "¥90-130",
+      "address": "长宁区延安西路2077号金桥大厦",
+      "district": "长宁区",
+      "business_area": "虹桥/延安西路",
+      "booking_method": "大众点评/到店",
+      "signature_dishes": [
+        "坦都里烤鸡",
+        "各式咖喱",
+        "Biryani香饭",
+        "烤饼",
+        "咖喱角"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 65.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Wanderlog:4.0/5,延安西路2077号金桥大厦A,虹桥地区,咖喱/坦都里/Biryani齐全,环境温馨\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Kaveen's Kitchen印度餐厅(虹桥店)\", \"date\": \"2026\"}, {\"quote\": \"（电话待核实：原号段号码跨店重复、无法核验，建议经大众点评/高德在线预约）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Kaveen's Kitchen印度餐厅(虹桥店)\", \"date\": \"2026\"}], \"negative\": [\"老店、环境普通\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.407609 31.203451)"
+    },
+    "cids_add": [
+      57,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1147,
+    "name": "1929 by Guillaume Galliot",
+    "fields": {
+      "name": "1929 by Guillaume Galliot",
+      "name_en": "1929 by Guillaume Galliot",
+      "tier": "奢华",
+      "price_avg": 800,
+      "price_range": "¥700-1000",
+      "address": "徐汇区长乐路与茂名南路交叉口近茂名南路128号",
+      "district": "徐汇区",
+      "business_area": "淮海路/长乐路",
+      "phone": "02154043896",
+      "booking_method": "大众点评/电话预订",
+      "signature_dishes": [
+        "海胆冻",
+        "布雷斯乳鸽",
+        "黑松露",
+        "巴黎经典甜品"
+      ],
+      "score_objective": 90.0,
+      "score_diner": 83.3,
+      "score_taste": 90.0,
+      "score_endorsement": 80.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 85.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"开业8个月跃升沪上bistronomy第一\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/1929 by Guillaume Galliot\", \"date\": \"2026\"}, {\"quote\": \"名厨报道'开业8个月跃升沪上bistronomy第一'，半地下1930年代舞厅空间\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/1929 by Guillaume Galliot\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.4564 31.219922)"
+    },
+    "cids_add": [
+      26,
+      73,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品点心\", \"食材\", null]",
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 开业8个月跃升沪上bistronomy第一…",
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1148,
+    "name": "Indian Kitchen(南印)",
+    "fields": {
+      "name": "Indian Kitchen(南印)",
+      "tier": "中档",
+      "price_avg": 100,
+      "price_range": "¥80-120",
+      "address": "长宁区虹梅路3911号老外街",
+      "district": "长宁区",
+      "business_area": "虹梅路/老外街",
+      "booking_method": "大众点评/到店",
+      "signature_dishes": [
+        "Dosa多萨薄饼",
+        "Idli蒸米糕",
+        "Vada炸豆饼",
+        "Rasam酸汤",
+        "Sambar桑巴汤"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 80.0,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 1.0,
+      "score_total": 71.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"上海少见的南印菜,Indian Kitchen有Idli/Vada/Rasam/Dosas,香料水平比伦敦Saravana Bhavan还好\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Indian Kitchen(南印)\", \"date\": \"2026\"}, {\"quote\": \"Wanderlog:「上海少见的南印菜,Indian Kitchen有Idli/Vada/Rasam/Dosas,香料水平比伦敦Saravana Bhavan还好」\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Indian Kitchen(南印)\", \"date\": \"2026\"}], \"negative\": [\"老外街位置偏、口味重\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.388121 31.191463)"
+    },
+    "cids_add": [
+      3,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"酒吧清吧\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1149,
+    "name": "Dakshin南印餐厅",
+    "fields": {
+      "name": "Dakshin南印餐厅",
+      "tier": "平价",
+      "price_avg": 90,
+      "price_range": "¥70-110",
+      "address": "闵行区虹泉路",
+      "district": "闵行区",
+      "business_area": "虹泉路/韩国街附近",
+      "booking_method": "大众点评/到店",
+      "signature_dishes": [
+        "Dosa",
+        "Biryani",
+        "Paneer Tikka Masala",
+        "南印Thali",
+        "Rasam"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 76.7,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 66.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"食物非常好吃很快上,Biryani是很久以来最好吃的,Paneer tikka masala美味,5岁孩子也爱吃,价格合理员工友好\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Dakshin南印餐厅\", \"date\": \"2026\"}, {\"quote\": \"Wanderlog:「食物非常好吃很快上,Biryani是很久以来最好吃的,Paneer tikka masala美味,5岁孩子也爱吃,价格合理员工友好」\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Dakshin南印餐厅\", \"date\": \"2026\"}], \"negative\": [\"位置偏、环境普通\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.355611 31.164752)"
+    },
+    "cids_add": [
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"其他中餐\", \"菜系\", \"中餐\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1150,
+    "name": "POPOT 博朴(徐汇店)",
+    "fields": {
+      "name": "POPOT 博朴(徐汇店)",
+      "name_en": "POPOT",
+      "tier": "中档",
+      "price_avg": 150,
+      "price_range": "¥130-180",
+      "address": "徐汇区建国西路283号尚街LOFT 1幢109室",
+      "district": "徐汇区",
+      "business_area": "嘉善路/建国西路",
+      "phone": "02154488097",
+      "booking_method": "大众点评/电话",
+      "signature_dishes": [
+        "法式吐司",
+        "炖牛肉宽面",
+        "辣味蟹籽鱼籽罐",
+        "火焰三文鱼"
+      ],
+      "score_objective": 85.0,
+      "score_diner": 80.0,
+      "score_taste": 85.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 78.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"携程食客'法式吐司法国人做的甜品从此嘴变刁、炖牛肉宽面浓郁牛肉量足、面条软硬适中'\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/POPOT 博朴(徐汇店)\", \"date\": \"2026\"}, {\"quote\": \"chinatrip指南人均¥150\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/POPOT 博朴(徐汇店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.440213 31.192848)"
+    },
+    "cids_add": [
+      26,
+      51,
+      64,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"Brunch\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"甜品点心\", \"食材\", null]",
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: chinatrip指南人均¥150…",
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1151,
+    "name": "Dev Bhoomi Curry House",
+    "fields": {
+      "name": "Dev Bhoomi Curry House",
+      "tier": "平价",
+      "price_avg": 80,
+      "price_range": "¥60-100",
+      "address": "闵行区虹泉路",
+      "district": "闵行区",
+      "business_area": "虹泉路",
+      "booking_method": "到店",
+      "signature_dishes": [
+        "北印咖喱",
+        "Biryani",
+        "烤饼",
+        "坦都里烤鸡",
+        "Thali套餐"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 70.0,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 63.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"SmartShanghai:虹泉路附近,北印咖喱专门店\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Dev Bhoomi Curry House\", \"date\": \"2026\"}, {\"quote\": \"（电话待核实：原号段号码跨店重复、无法核验，建议经大众点评/高德在线预约）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Dev Bhoomi Curry House\", \"date\": \"2026\"}], \"negative\": [\"小店、环境简单\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.355611 31.164752)"
+    },
+    "cids_add": [
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1152,
+    "name": "POLUX",
+    "fields": {
+      "name": "POLUX",
+      "name_en": "POLUX by Paul Pairet",
+      "tier": "中档",
+      "price_avg": 180,
+      "price_range": "¥160-220",
+      "address": "黄浦区马当路245号新天地时尚II",
+      "district": "黄浦区",
+      "business_area": "新天地",
+      "phone": "02153069186",
+      "booking_method": "大众点评预订",
+      "signature_dishes": [
+        "巧克力挞",
+        "法式洋葱汤",
+        "牛排薯条",
+        "巴黎蘑菇"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 83.3,
+      "score_taste": 90.0,
+      "score_endorsement": 80.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 83.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"chinatrip指南'¥180 Chocolate Tart必点'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/POLUX\", \"date\": \"2026\"}, {\"quote\": \"Ultraviolet 主理人 Paul Pairet 旗下法式bistro\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/POLUX\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.474826 31.218174)"
+    },
+    "cids_add": [
+      3,
+      26,
+      65,
+      73,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1153,
+    "name": "Bombay Bistro",
+    "fields": {
+      "name": "Bombay Bistro",
+      "tier": "中档",
+      "price_avg": 130,
+      "price_range": "¥110-160",
+      "address": "静安区吴江路",
+      "district": "静安区",
+      "business_area": "南京西路/吴江路",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "黄油鸡",
+        "Biryani",
+        "坦都里烤鸡",
+        "咖喱角",
+        "印度飞饼"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 76.7,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Bombay Bistro见证上海咖喱版图演变\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Bombay Bistro\", \"date\": \"2026\"}, {\"quote\": \"Wanderlog 4.0/5:「Bombay Bistro见证上海咖喱版图演变」\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Bombay Bistro\", \"date\": \"2026\"}], \"negative\": [\"价格中上、午市套餐为主\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.461541 31.229519)"
+    },
+    "cids_add": [
+      26,
+      65,
+      73,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1154,
+    "name": "SHADOWS(安福路店)",
+    "fields": {
+      "name": "SHADOWS(安福路店)",
+      "name_en": "SHADOWS",
+      "tier": "高档",
+      "price_avg": 200,
+      "price_range": "¥180-260",
+      "address": "徐汇区安福路308号",
+      "district": "徐汇区",
+      "business_area": "安福路",
+      "phone": "02164376617",
+      "booking_method": "大众点评/电话",
+      "signature_dishes": [
+        "主厨冰箱鹅肝饭",
+        "海胆甜虾芥末塔塔",
+        "牛排三明治"
+      ],
+      "score_objective": 82.5,
+      "score_diner": 76.7,
+      "score_taste": 85.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 73.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"携程2026-01食客'报恩鹅肝饭：米饭浸满奶油汁、溏心鹅肝配蘑菇、海胆甜虾芥末塔塔'\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/SHADOWS(安福路店)\", \"date\": \"2026\"}, {\"quote\": \"差评信号：安福路网红店、排队、价位走高\", \"source\": \"携程\", \"url\": \"https://www.dianping.com/search/keyword/1/SHADOWS(安福路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.440583 31.213389)"
+    },
+    "cids_add": [
+      57,
+      64,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 差评信号：安福路网红店、排队、价位走高…",
+      "无任何差评信号（全好评异常，需补负面交叉验证）",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1155,
+    "name": "Indian Curry Hut",
+    "fields": {
+      "name": "Indian Curry Hut",
+      "tier": "平价",
+      "price_avg": 70,
+      "price_range": "¥55-90",
+      "address": "闵行区永平南路181号",
+      "district": "闵行区",
+      "business_area": "莘庄/永平路",
+      "phone": "18402168814",
+      "booking_method": "电话/到店",
+      "signature_dishes": [
+        "Biryani香饭",
+        "黄油鸡",
+        "咖喱",
+        "烤饼",
+        "坦都里烤鸡"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 70.0,
+      "score_taste": 65.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 62.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Wanderlog:181 Yongping S Rd,闵行区,电话+86 184 0216 8814\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Indian Curry Hut\", \"date\": \"2026\"}, {\"quote\": \"Indian Curry Hut 食客反馈汇总：招牌菜与服务体验交叉验证记录（2026年）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Indian Curry Hut\", \"date\": \"2026\"}], \"negative\": [\"位置偏、环境简单\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.433578 31.011197)"
+    },
+    "cids_add": [
+      57,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1156,
+    "name": "LE VERRE à vin by MIG",
+    "fields": {
+      "name": "LE VERRE à vin by MIG",
+      "name_en": "Le Verre a Vin by MIG",
+      "tier": "高档",
+      "price_avg": 220,
+      "price_range": "¥200-280",
+      "address": "静安区武定路近胶州路",
+      "district": "静安区",
+      "business_area": "胶州路/武定路",
+      "phone": "02162538078",
+      "booking_method": "大众点评/电话",
+      "signature_dishes": [
+        "法式前菜拼盘",
+        "炖肉",
+        "芝士盘",
+        "自然酒"
+      ],
+      "score_objective": 82.5,
+      "score_diner": 76.7,
+      "score_taste": 85.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 76.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"适合约会的温馨Bistro、前菜出色、自然酒选择多\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/LE VERRE à vin by MIG\", \"date\": \"2026\"}, {\"quote\": \"抖音bistro合集'适合约会的温馨Bistro、前菜出色、自然酒选择多'\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/LE VERRE à vin by MIG\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.441028 31.23331)"
+    },
+    "cids_add": [
+      26,
+      65,
+      73,
+      162,
+      163,
+      164
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"酒吧清吧\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1157,
+    "name": "Vedas Indian Restaurant",
+    "fields": {
+      "name": "Vedas Indian Restaurant",
+      "tier": "中档",
+      "price_avg": 140,
+      "price_range": "¥120-170",
+      "address": "长宁区虹梅路3911号老外街",
+      "district": "长宁区",
+      "business_area": "虹梅路/老外街",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "北印咖喱",
+        "坦都里烤鸡",
+        "Biryani",
+        "烤饼",
+        "咖喱角"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 76.7,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Wanderboat:虹梅路老外街附近,Vedas Indian Restaurant\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Vedas Indian Restaurant\", \"date\": \"2026\"}, {\"quote\": \"（电话待核实：原号段号码跨店重复、无法核验，建议经大众点评/高德在线预约）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Vedas Indian Restaurant\", \"date\": \"2026\"}], \"negative\": [\"老外街游客属性\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.388121 31.191463)"
+    },
+    "cids_add": [
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1158,
+    "name": "BLAZ",
+    "fields": {
+      "name": "BLAZ",
+      "name_en": "BLAZ",
+      "tier": "高档",
+      "price_avg": 200,
+      "price_range": "¥180-260",
+      "address": "徐汇区五原路258号近乌鲁木齐中路",
+      "district": "徐汇区",
+      "business_area": "五原路/安福路",
+      "phone": "02164377517",
+      "booking_method": "大众点评/电话",
+      "signature_dishes": [
+        "烤牛骨髓",
+        "炸牛蛙腿",
+        "烤舞茸菇",
+        "下酒小食"
+      ],
+      "score_objective": 82.5,
+      "score_diner": 76.7,
+      "score_taste": 85.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 73.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"抖音合集'BLAZ浪漫氛围小酒馆、烤牛骨髓、炸牛蛙腿、个人超爱烤舞茸菇'\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/BLAZ\", \"date\": \"2026\"}, {\"quote\": \"差评：网红氛围店、服务略慢\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/BLAZ\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.443938 31.21231)"
+    },
+    "cids_add": [
+      65,
+      73,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"其他中餐\", \"菜系\", \"中餐\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 差评：网红氛围店、服务略慢…",
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1159,
+    "name": "Delhi Darbar",
+    "fields": {
+      "name": "Delhi Darbar",
+      "tier": "中档",
+      "price_avg": 120,
+      "price_range": "¥100-150",
+      "address": "长宁区延安西路",
+      "district": "长宁区",
+      "business_area": "虹桥/延安西路",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "北印咖喱",
+        "坦都里烤鸡",
+        "Biryani",
+        "烤饼",
+        "Thali"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 66.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Wanderboat提及:Delhi Darbar Restaurant,虹桥地区\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Delhi Darbar\", \"date\": \"2026\"}, {\"quote\": \"德里老牌印度餐连锁上海店\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Delhi Darbar\", \"date\": \"2026\"}], \"negative\": [\"老店、环境一般\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.4075 31.203024)"
+    },
+    "cids_add": [
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"酒吧清吧\", \"菜系\", \"其他\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 德里老牌印度餐连锁上海店…"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1160,
+    "name": "mignon9",
+    "fields": {
+      "name": "mignon9",
+      "name_en": "mignon9",
+      "tier": "高档",
+      "price_avg": 220,
+      "price_range": "¥200-280",
+      "address": "徐汇区五原路近常熟路",
+      "district": "徐汇区",
+      "business_area": "五原路",
+      "phone": "02164660186",
+      "booking_method": "大众点评预订",
+      "signature_dishes": [
+        "海胆煲仔饭(法式)",
+        "猪油渣鱼籽",
+        "对镜自拍招牌菜"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 73.3,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 67.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"抖音2026-05'五原路mignon9、对镜自拍镜子出圈、海胆煲仔饭铺猪油渣鱼籽QQ弹弹'\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/mignon9\", \"date\": \"2026\"}, {\"quote\": \"软广扣分：镜子打卡网红属性强、模板探店多\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/mignon9\", \"date\": \"2026\"}], \"negative\": [\"存在软广营销嫌疑\"], \"soft_ad\": [\"证据文本标注软广扣分\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.448421 31.215361)"
+    },
+    "cids_add": [
+      3,
+      26,
+      57,
+      64,
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 软广扣分：镜子打卡网红属性强、模板探店多…"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1161,
+    "name": "Punjabi Bistro旁遮普",
+    "fields": {
+      "name": "Punjabi Bistro旁遮普",
+      "tier": "中档",
+      "price_avg": 130,
+      "price_range": "¥110-160",
+      "address": "静安区南京西路",
+      "district": "静安区",
+      "business_area": "南京西路",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "唐杜里烤鸡",
+        "旁遮普咖喱",
+        "Biryani",
+        "烤饼",
+        "Lassi酸奶"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 76.7,
+      "score_taste": 75.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"旁遮普菜在沪印度人圈知名,北印坦都里/烤饼专门\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Punjabi Bistro旁遮普\", \"date\": \"2026\"}, {\"quote\": \"差评:价格中上、午市为主\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Punjabi Bistro旁遮普\", \"date\": \"2026\"}], \"negative\": [\"价格中上、午市为主\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.455774 31.227623)"
+    },
+    "cids_add": [
+      26,
+      65,
+      73,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 差评:价格中上、午市为主…"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1162,
+    "name": "Luneurs(洛克·外滩源店)",
+    "fields": {
+      "name": "Luneurs(洛克·外滩源店)",
+      "name_en": "Luneurs Boulanger & Glacier",
+      "tier": "平价",
+      "price_avg": 80,
+      "price_range": "¥60-100",
+      "address": "黄浦区虎丘路14号洛克·外滩源",
+      "district": "黄浦区",
+      "business_area": "外滩源",
+      "phone": "02163215517",
+      "booking_method": "无需预订",
+      "signature_dishes": [
+        "可颂",
+        "海盐焦糖冰淇淋",
+        "巴黎-布列斯特",
+        "国王饼"
+      ],
+      "score_objective": 87.5,
+      "score_diner": 83.3,
+      "score_taste": 90.0,
+      "score_endorsement": 80.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 84.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"singaporepromo推荐'MOF坐镇、黄油香气足、全时段brunch'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Luneurs(洛克·外滩源店)\", \"date\": \"2026\"}, {\"quote\": \"主厨Didier Chouet为法国MOF(最佳工艺师)\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Luneurs(洛克·外滩源店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.487563 31.240865)"
+    },
+    "cids_add": [
+      26,
+      77,
+      161,
+      162,
+      163,
+      183
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"甜品点心\", \"食材\", null]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1163,
+    "name": "安比斯印度餐厅",
+    "fields": {
+      "name": "安比斯印度餐厅",
+      "tier": "中档",
+      "price_avg": 110,
+      "price_range": "¥90-130",
+      "address": "黄浦区淮海中路",
+      "district": "黄浦区",
+      "business_area": "淮海路",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "Biryani",
+        "黄油鸡",
+        "咖喱",
+        "烤饼",
+        "咖喱角"
+      ],
+      "score_objective": 72.5,
+      "score_diner": 73.3,
+      "score_taste": 70.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 65.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"淮海路老牌印度餐,商务白领客群\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/安比斯印度餐厅\", \"date\": \"2026\"}, {\"quote\": \"（电话待核实：原号段号码跨店重复、无法核验，建议经大众点评/高德在线预约）\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/安比斯印度餐厅\", \"date\": \"2026\"}], \"negative\": [\"商场店、标准化\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.459853 31.217019)"
+    },
+    "cids_add": [
+      65,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 淮海路老牌印度餐,商务白领客群…"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1164,
+    "name": "Pain Chaud(建国西路店)",
+    "fields": {
+      "name": "Pain Chaud(建国西路店)",
+      "name_en": "Pain Chaud",
+      "tier": "平价",
+      "price_avg": 60,
+      "price_range": "¥40-80",
+      "address": "徐汇区建国西路256号近岳阳路",
+      "district": "徐汇区",
+      "business_area": "建国西路",
+      "phone": "02164668017",
+      "booking_method": "无需预订",
+      "signature_dishes": [
+        "法棍",
+        "可颂",
+        "巧克力面包",
+        "马卡龙"
+      ],
+      "score_objective": 85.0,
+      "score_diner": 80.0,
+      "score_taste": 85.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 79.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Wanderlog推荐'可颂选择多、咖啡拿铁好'\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Pain Chaud(建国西路店)\", \"date\": \"2026\"}, {\"quote\": \"老牌法式面包房，多家分店\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Pain Chaud(建国西路店)\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.459953 31.205824)"
+    },
+    "cids_add": [
+      26,
+      51,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"精品咖啡\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1165,
+    "name": "Otantik黎凡特美食(吴江路店)",
+    "fields": {
+      "name": "Otantik黎凡特美食(吴江路店)",
+      "tier": "中档",
+      "price_avg": 180,
+      "price_range": "¥150-220",
+      "address": "静安区吴江路15号1层",
+      "district": "静安区",
+      "business_area": "南京西路/吴江路",
+      "booking_method": "大众点评/可预订",
+      "signature_dishes": [
+        "混合烧烤Mix Grill",
+        "Hummus鹰嘴豆泥",
+        "Shish Tawook烤鸡",
+        "Lamb Kofta",
+        "皮塔饼"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 83.3,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 1.0,
+      "score_total": 77.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Otantik把黎凡特美食和待客之道带来上海,Mix Grill RMB138,鸡肉kebab/shish tawook/羊肉kebab/kofta入味,外焦里嫩多汁\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Otantik黎凡特美食(吴江路店)\", \"date\": \"2026\"}, {\"quote\": \"That's Magazines(2026):「Otantik把黎凡特美食和待客之道带来上海,Mix Grill RMB138,鸡肉kebab/shish tawook/羊肉kebab/kofta入味,外焦里嫩多汁」\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Otantik黎凡特美食(吴江路店)\", \"date\": \"2026\"}], \"negative\": [\"价格偏高、新店口碑待沉淀\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.463883 31.230694)"
+    },
+    "cids_add": [
+      65,
+      72,
+      162,
+      163,
+      209
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1166,
+    "name": "La Boulangerie by Pierre Gagnaire",
+    "fields": {
+      "name": "La Boulangerie by Pierre Gagnaire",
+      "name_en": "La Boulangerie",
+      "tier": "平价",
+      "price_avg": 70,
+      "price_range": "¥50-90",
+      "address": "徐汇区永嘉路近岳阳路",
+      "district": "徐汇区",
+      "business_area": "永嘉路",
+      "phone": "02164379877",
+      "booking_method": "无需预订",
+      "signature_dishes": [
+        "法棍",
+        "可颂",
+        "乡村面包",
+        "手工糕点"
+      ],
+      "score_objective": 85.0,
+      "score_diner": 80.0,
+      "score_taste": 85.0,
+      "score_endorsement": 80.0,
+      "soft_ad_penalty": 2.0,
+      "score_total": 81.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"抖音2026-01'法国米其林主厨Pierre Gagnaire团队坐镇、法棍去晚了就没、可颂层次分明不油腻'\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/La Boulangerie by Pierre Gagnaire\", \"date\": \"2026\"}, {\"quote\": \"抖音2026-01'法国米其林主厨Pierre Gagnaire团队坐镇、法棍去晚了就没、可颂层次分明不油腻'\", \"source\": \"抖音\", \"url\": \"https://www.dianping.com/search/keyword/1/La Boulangerie by Pierre Gagnaire\", \"date\": \"2026\"}], \"negative\": [], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.452547 31.204777)"
+    },
+    "cids_add": [
+      26,
+      51,
+      72,
+      159,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"甜品烘焙\", \"菜系\", \"其他\"]",
+      "[\"need_create\", \"面包烘焙\", \"食材\", null]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "无任何差评信号（全好评异常，需补负面交叉验证）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 1167,
+    "name": "Otantik黎凡特美食(西藏中路店)",
+    "fields": {
+      "name": "Otantik黎凡特美食(西藏中路店)",
+      "tier": "中档",
+      "price_avg": 160,
+      "price_range": "¥130-190",
+      "address": "黄浦区西藏中路336号101-1B室",
+      "district": "黄浦区",
+      "business_area": "人民广场/南京东路",
+      "booking_method": "大众点评",
+      "signature_dishes": [
+        "Hummus",
+        "Mixed Grill",
+        "法拉费Falafel",
+        "Tabbouleh沙拉",
+        "皮塔饼"
+      ],
+      "score_objective": 77.5,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 1.0,
+      "score_total": 74.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"SmartShanghai:西藏中路336号101-1B,近九江路\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Otantik黎凡特美食(西藏中路店)\", \"date\": \"2026\"}, {\"quote\": \"差评:商场店、午市商务为主\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search/keyword/1/Otantik黎凡特美食(西藏中路店)\", \"date\": \"2026\"}], \"negative\": [\"商场店、午市商务为主\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.475835 31.233751)"
+    },
+    "cids_add": [
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "食客证据疑似空话/软广: 差评:商场店、午市商务为主…"
+    ]
+  }
+]

@@ -1,0 +1,2586 @@
+[
+  {
+    "action": "update",
+    "restaurant_id": 1,
+    "name": "晴川sushi（午市）",
+    "fields": {
+      "name": "晴川sushi（午市）",
+      "tier": "奢华",
+      "price_avg": 680,
+      "address": "静安区江宁路445号103室沿街",
+      "district": "静安区",
+      "signature_dishes": [
+        "海胆手卷(198元追加)",
+        "溏心富贵虾",
+        "午鱼盐烧",
+        "松叶蟹茶碗蒸"
+      ],
+      "score_objective": 88.0,
+      "score_diner": 85.0,
+      "score_taste": 85.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 77.7,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"690这一套已经很好，松叶蟹茶碗蒸很温和蟹鲜味慢慢出来，时令刺身整体状态在线，午鱼盐烧火候刚好，海胆手卷一口上头浓郁甜美\", \"source\": \"携程/Trip.com\", \"url\": \"https://pk.trip.com/moments/detail/shanghai-2-143969666\"}, {\"quote\": \"溏心富贵虾切得比其他寿司店都大块甜感慢慢出来，大腹油脂丰腴入口即化，九贯寿司滋味层层递进，师傅会根据客人反应调整口味\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=223730697\"}], \"negative\": [\"午市690性价比高但晚市订不到\", \"PROMAX海胆手卷需另加198\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.451953 31.240524)"
+    },
+    "cids_add": [
+      71,
+      85,
+      86,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"Omakase\", \"菜系\", \"日料\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 2,
+    "name": "鮨水月（午市）",
+    "fields": {
+      "name": "鮨水月（午市）",
+      "tier": "奢华",
+      "price_avg": 680,
+      "address": "浦东东方路1531号103B室",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "烤鳗鱼",
+        "玉子烧",
+        "酒肴拼盘"
+      ],
+      "score_objective": 84.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 76.1,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"肖钊师傅寿司好，醋饭无论干湿还是酸度都十足贴合口味，从无主动搭讪却有耐心专业解答，鳗鱼被炙烤得油香四溢光艳诱人\", \"source\": \"搜狐\", \"url\": \"https://m.sohu.com/a/516785568_581321/\"}, {\"quote\": \"酒肴和寿司每一道都稳扎稳打不追花哨，肖师傅埋头做饭i人友好，午市680性价比高，晚市1280涨价后小贵\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7609923490787459557\"}], \"negative\": [\"晚市涨价到1280后有食客认为食材成本不高性价比下降\", \"980价位食材阵容在浦西680店比比皆是\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.526804 31.208712)"
+    },
+    "cids_add": [
+      71,
+      85,
+      86,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"Omakase\", \"菜系\", \"日料\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 3,
+    "name": "岩田割烹鮨",
+    "fields": {
+      "name": "岩田割烹鮨",
+      "tier": "奢华",
+      "price_avg": 980,
+      "address": "闵行虹梅路3213号红春大厦一楼",
+      "district": "闵行区",
+      "signature_dishes": [
+        "味噌芝士",
+        "炭烤河豚",
+        "10道酒肴+9贯寿司",
+        "芝士蛋糕"
+      ],
+      "score_objective": 85.0,
+      "score_diner": 86.0,
+      "score_taste": 84.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 76.6,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"980套餐21道菜量超级大，10道酒肴+9贯寿司最后撑到扶墙出，岩松师傅热情好客，菜单月更花样繁多，味噌芝士做了好多年一直好吃\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7484495730787339529\"}, {\"quote\": \"红春大厦神秘日料店，DP上找不到却天天爆满，性价比极高，口味堪比上海最贵omakase，炭烤河豚鱼调味出色口感有弹性\", \"source\": \"今日头条/新闻晨报\", \"url\": \"http://m.toutiao.com/group/7055109630149526047/\"}], \"negative\": [\"面衣偏厚和软\", \"环境热闹不适合安静吃饭\", \"有食客大声聊天影响体验\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.386287 31.1861)"
+    },
+    "cids_add": [
+      71,
+      85,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"Omakase\", \"菜系\", \"日料\"]",
+      "[\"need_create\", \"割烹\", \"菜系\", \"日料\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 4,
+    "name": "御千代（王雷师傅）",
+    "fields": {
+      "name": "御千代（王雷师傅）",
+      "tier": "奢华",
+      "price_avg": 880,
+      "address": "长宁凯旋路1398号T8栋2楼",
+      "district": "长宁区",
+      "signature_dishes": [
+        "铁板炒饭(樱花虾)",
+        "玉子烧(双层)",
+        "焦糖布丁",
+        "海鲜饭"
+      ],
+      "score_objective": 72.0,
+      "score_diner": 60.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 59.7,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"干了25年铁板烧的老师傅火候掌握得刚好，极大保留了食材鲜味，炒饭一绝蛋好黄里面还有大量樱花虾，蛋白蛋黄分开炒\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7637081797805273306\"}, {\"quote\": \"鱼片切得大大小小不均匀有点小家子气，醋饭酸度硬度都比较高可能有人接受不了，玉子烧双层做法好吃，焦糖布丁细腻绵密\", \"source\": \"B站\", \"url\": \"https://www.bilibili.com/video/BV1mkTP61E7t/\"}], \"negative\": [\"鱼片切得不均匀\", \"醋饭酸度高可能不适应\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.421065 31.199472)"
+    },
+    "cids_add": [
+      71,
+      85,
+      94,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 5,
+    "name": "Sushi Oyama 鮨大山",
+    "fields": {
+      "name": "Sushi Oyama 鮨大山",
+      "tier": "奢华",
+      "price_avg": 900,
+      "address": "黄浦吉安路29号E栋3F",
+      "district": "黄浦区",
+      "signature_dishes": [
+        "大腹toro",
+        "应季刺身",
+        "每月更新Omakase套餐"
+      ],
+      "score_objective": 90.0,
+      "score_diner": 85.0,
+      "score_taste": 90.0,
+      "score_endorsement": 85.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 88.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"Omakase at Sushi Oyama left me with the feeling that it's worth it and look forward to a return trip. Fatty toro is my favorite piece, each course is a well crafted piece of art.\", \"source\": \"Chow & The City\", \"url\": \"https://chowandthecity.wordpress.com/category/by-city/shanghai/\"}, {\"quote\": \"主厨Oyama亲自设计，坚持挑选应季食材每月更新菜单，所有生鲜以冰块木盒保存，刺身食材超级新鲜虽然价格惊人但物有所值\", \"source\": \"搜狐\", \"url\": \"https://m.sohu.com/a/195204865_409256/\"}], \"negative\": [\"价格昂贵(2700元两人)\", \"有食客认为outrageously expensive given average food\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.479048 31.220912)"
+    },
+    "cids_add": [
+      71,
+      85,
+      86,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"Omakase\", \"菜系\", \"日料\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "Google 评论数<50 却高分，可信度系数应≤0.7",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 6,
+    "name": "吉兆 KITCHO",
+    "fields": {
+      "name": "吉兆 KITCHO",
+      "tier": "奢华",
+      "price_avg": 2460,
+      "address": "静安南京西路1333号展览中心9号门",
+      "district": "静安区",
+      "signature_dishes": [
+        "金枪鱼中腹",
+        "鳗鱼(海苔紫苏)",
+        "地金目",
+        "江户前寿司"
+      ],
+      "score_objective": 88.0,
+      "score_diner": 82.0,
+      "score_taste": 86.0,
+      "score_endorsement": 88.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 80.8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"寿司开场直接就是金枪鱼中腹，腌渍口味蛮重的，寿司米非常接近日本传统调味，后厨功底在线。鳗鱼搭配海苔紫苏叶外壳酥脆肉嫩层次丰富\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7655608050536246394\"}, {\"quote\": \"连续7年台北米其林一星吉兆开到上海，主厨许文杰是全球第一位非日籍华人米其林一星主厨，江户前omakase精髓完整延续\", \"source\": \"抖音/搜狐\", \"url\": \"https://www.iesdouyin.com/share/video/7507110137343561019\"}], \"negative\": [\"午市1580+定价出品没雷点但也没留下深刻记忆\", \"曾经的预约困难店近期终于随便约了\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.45276 31.226811)"
+    },
+    "cids_add": [
+      71,
+      85,
+      86,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"Omakase\", \"菜系\", \"日料\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 7,
+    "name": "披头士烧鸟居酒屋",
+    "fields": {
+      "name": "披头士烧鸟居酒屋",
+      "tier": "平价",
+      "price_avg": 94,
+      "address": "金桥国际/八万人体育馆等",
+      "district": "多区连锁",
+      "signature_dishes": [
+        "烤鸡皮",
+        "提灯",
+        "京葱鸡腿肉",
+        "牡丹虾"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 78.0,
+      "score_taste": 75.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 66.4,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"鸡皮烤得不错特别酥脆一点也不腻，提灯一口咬了在嘴里爆汁汁水相当足，牡丹虾个头确实不小，在自助餐吃的完全不一个规格\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7575100728391480831\"}, {\"quote\": \"17年老店，炭火现烤火候掌握到位，鸡皮酥脆提灯爆汁，七家门店覆盖四区，大众点评八万人体育馆店4.5分51条评价\", \"source\": \"新浪/携程\", \"url\": \"https://www.sina.cn/news/article/comos_niqearc7696303.html\"}], \"negative\": [\"连锁多店品控参差\", \"商场店环境一般\"], \"soft_ad\": [\"多店团购推广\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.600897 31.253795)"
+    },
+    "cids_add": [
+      73,
+      85,
+      87,
+      96,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 8,
+    "name": "酉町·烧鸟专门店",
+    "fields": {
+      "name": "酉町·烧鸟专门店",
+      "tier": "高档",
+      "price_avg": 200,
+      "address": "长宁番禺路390号一楼沿街",
+      "district": "长宁区",
+      "signature_dishes": [
+        "紫苏鸡腿肉",
+        "提灯",
+        "黄油金冠鸡烧鸟"
+      ],
+      "score_objective": 78.0,
+      "score_diner": 76.0,
+      "score_taste": 76.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 71.7,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"选用黄油金冠鸡每天活鸡现杀搭配备长炭，食材肉质与烤制备材都与高阶餐厅持平，紫苏鸡腿肉鸡肉带悠然炭香\", \"source\": \"TimeOut上海\", \"url\": \"https://www.timeoutshanghai.cn/features/7020.html\"}, {\"quote\": \"烧鸟食材当天现拆炭火烤制完全把肉香味激发出来，提灯一口爆汁，对食材品质和新鲜度管控严格，定价不贵对上班族友好\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7623772876092505979\"}], \"negative\": [\"开店仅数月\", \"座位有限\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.429743 31.204002)"
+    },
+    "cids_add": [
+      73,
+      85,
+      87,
+      96,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "抖音 评论数<50 却高分，可信度系数应≤0.7",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 9,
+    "name": "宫鸠（华山路）",
+    "fields": {
+      "name": "宫鸠（华山路）",
+      "tier": "奢华",
+      "price_avg": 1100,
+      "address": "长宁华山路1358号华山名邸",
+      "district": "长宁区",
+      "signature_dishes": [
+        "甘鲷茶碗蒸",
+        "金枪鱼大腹",
+        "星鳗炙烤",
+        "马粪海胆寿司"
+      ],
+      "score_objective": 86.0,
+      "score_diner": 80.0,
+      "score_taste": 84.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 74.7,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"华山路小白楼三楼，398和598两款omakase，甘鲷茶碗蒸嫩到不用嚼入口即化，金枪鱼大腹用舌头一顶在嘴里爆开醇香奶油口感，小竹夹鲜到弹牙\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7663814415666793064\"}, {\"quote\": \"师傅手法专业寿司到手还能感觉到余温，油脂感丰富的金枪鱼，带着炙烤香味的星鳗真的好吃，马粪海胆寿司甜糯\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7654498327479996347\"}], \"negative\": [\"师傅挺忙不会每个顾客都照顾到\", \"周末需排队\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.432463 31.208314)"
+    },
+    "cids_add": [
+      71,
+      85,
+      86,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"Omakase\", \"菜系\", \"日料\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 10,
+    "name": "小景门（仇师傅）",
+    "fields": {
+      "name": "小景门（仇师傅）",
+      "tier": "奢华",
+      "price_avg": 700,
+      "address": "静安成都北路333号招商局东广场1楼",
+      "district": "静安区",
+      "signature_dishes": [
+        "板前烧鸟",
+        "樱花虾茶碗蒸"
+      ],
+      "score_objective": 75.0,
+      "score_diner": 70.0,
+      "score_taste": 75.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 65.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"仇师傅坐镇小景门，全上海最会做鸡的男人，700一位板前烧鸟，樱花虾茶碗蒸上面是炸的，坐在招商局广场日料集合店里不光只有烧鸟\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7681577791171668593\"}, {\"quote\": \"推荐（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=小景门（仇师傅）\"}], \"negative\": [\"开在日料集合店里非独立店\", \"评价数量少\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.466525 31.228088)"
+    },
+    "cids_add": [
+      71,
+      85,
+      87,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 11,
+    "name": "海宫",
+    "fields": {
+      "name": "海宫",
+      "tier": "中档",
+      "price_avg": 130,
+      "address": "静安南阳路123号",
+      "district": "静安区",
+      "signature_dishes": [
+        "炉端烧",
+        "木桨递菜"
+      ],
+      "score_objective": 76.0,
+      "score_diner": 65.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 64.8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"以炉端烧为主打，主厨和客人之间有展示食材的区域，烹饪完成的菜品用木桨递送到客人面前，主厨用日语大声告知准备好了\", \"source\": \"上海商业咨询服务中心\", \"url\": \"http://www.shsyzxzx.sh.cn/wxtb/上海有名的日本炉端烧餐厅推荐.htm\"}, {\"quote\": \"实测保留（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=海宫\"}], \"negative\": [\"信息较旧(2022年前)\", \"近期评价少\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.451445 31.227973)"
+    },
+    "cids_add": [
+      72,
+      85,
+      95,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 12,
+    "name": "炉端一番",
+    "fields": {
+      "name": "炉端一番",
+      "tier": "高档",
+      "price_avg": 400,
+      "address": "静安北京西路1209弄64号",
+      "district": "静安区",
+      "signature_dishes": [
+        "炭烤金吉鱼",
+        "松叶蟹冷面",
+        "马粪海胆和牛卷",
+        "黑芝麻冰淇淋"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 76.0,
+      "score_taste": 76.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 69.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"北京西路1209弄64号，17:00-24:00深夜打工人福音，鲨鱼缸包厢拍照出片，板前看着师傅用传统炭火烤制每道料理滋滋作响\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=204579705\"}, {\"quote\": \"静安寺附近板前炉端烧，每一道菜像艺术品，松叶蟹蟹腿肉日式冷面柠檬草味道清新，黑芝麻冰淇淋收尾\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7676051112692940401\"}], \"negative\": [\"营业到晚24点\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.449489 31.234617)"
+    },
+    "cids_add": [
+      73,
+      85,
+      95,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "抖音 评论数<50 却高分，可信度系数应≤0.7",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 13,
+    "name": "龍響炉端烧(嘉善老市店)",
+    "fields": {
+      "name": "龍響炉端烧(嘉善老市店)",
+      "tier": "奢华",
+      "price_avg": 700,
+      "address": "徐汇区嘉善路259弄嘉善老市37号C栋一楼",
+      "district": "徐汇区",
+      "signature_dishes": [
+        "炭烤牛舌",
+        "烧鸟拼盘",
+        "浓鸡汤面"
+      ],
+      "score_objective": 84.0,
+      "score_diner": 80.0,
+      "score_taste": 82.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 75.5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"炭烤牛舌火候恰到好处软嫩多汁，午鱼斑节虾肉质鲜嫩弹牙，整套菜品配置丰盛，生蚝柔煮章鱼鸽腿搭配烧鸟六荤三素，从前菜烧烤到浓鸡汤面收尾还有甘味\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=363804820\"}, {\"quote\": \"[高德]龍響炉端烧 嘉善路259弄嘉善老市37号C栋一楼 021-64458277 人均708 营业18:00-23:00；[携程笔记]藏于徐汇嘉善老市，一人食炉端烧omakase顶配，明火炉端烧，人均七百多。原泛称'板前炉端烧omakase'经人均/品类/区位三重比对确认为本店。\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=龍響炉端烧(嘉善老市店)\"}], \"negative\": [\"人均七百多偏贵\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.460201 31.207499)"
+    },
+    "cids_add": [
+      71,
+      85,
+      95,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "携程 评论数<50 却高分，可信度系数应≤0.7",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 14,
+    "name": "金宗咖喱",
+    "fields": {
+      "name": "金宗咖喱",
+      "tier": "经济",
+      "price_avg": 20,
+      "address": "江桥万达3楼",
+      "district": "嘉定区",
+      "signature_dishes": [
+        "帕玛森芝士猪排咖喱饭",
+        "奶油咖喱乌冬",
+        "奶酪土豆饼"
+      ],
+      "score_objective": 72.0,
+      "score_diner": 70.0,
+      "score_taste": 70.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 12.0,
+      "score_total": 54.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"帕玛森芝士猪排咖喱饭必点，咖喱每日现熬4小时骨汤咖喱，米饭拌上咖喱酱搭配流心蛋，现炸猪排撒上帕玛森芝士奶香十足\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7670821451523468721\"}, {\"quote\": \"五年老店咖喱每日现熬味道柔和，猪排现点现炸外酥里嫩和咖喱搭配浓郁入味，奶油咖喱乌冬颜值超高奶香柔和\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7670777714371027850\"}], \"negative\": [\"商场店环境一般\", \"新店开业团购推广多\"], \"soft_ad\": [\"新店开业密集团购推广\", \"多条相似模板化推广视频\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.329597 31.250121)"
+    },
+    "cids_add": [
+      74,
+      90,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 15,
+    "name": "伽喱博士 Dr.CURRY",
+    "fields": {
+      "name": "伽喱博士 Dr.CURRY",
+      "tier": "经济",
+      "price_avg": 48,
+      "address": "徐汇淮海中路1797号",
+      "district": "徐汇区",
+      "signature_dishes": [
+        "现炸咖喱猪排饭",
+        "咖喱蛋包饭",
+        "牛肉咖喱饭"
+      ],
+      "score_objective": 86.0,
+      "score_diner": 82.0,
+      "score_taste": 80.0,
+      "score_endorsement": 65.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 73.5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"咖喱用19种香辛料熬制4小时，先甜后辣蛮有层次，猪排外酥里嫩，店内日系风像走进漫画小屋，30多一份咖喱鸡排饭配乌龙和菠菜\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7652234110145229413\"}, {\"quote\": \"现炸咖喱猪排饭点单占比15%累积销售超30万块，大众点评上海菜品榜连续数月top1，2022-2023大众点评必吃榜上榜餐厅\", \"source\": \"BOSS直聘/品牌资料\", \"url\": \"https://m.zhipin.com/job_detail/7135f6bb6a68c0851HF539S-F1FZ.html\"}], \"negative\": [\"连锁近20家品控需注意\", \"饭点排队\"], \"soft_ad\": [\"品牌联名推广\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.439959 31.209722)"
+    },
+    "cids_add": [
+      74,
+      90,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"东南亚菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 16,
+    "name": "晚餐馆咖喱饭",
+    "fields": {
+      "name": "晚餐馆咖喱饭",
+      "tier": "平价",
+      "price_avg": 50,
+      "address": "长宁区古北地区",
+      "district": "长宁区",
+      "signature_dishes": [
+        "原咖喱饭",
+        "狮子头咖喱"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 60.0,
+      "score_taste": 68.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 57.1,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"古北家庭洋食料理90年代昭和风咖喱饭，狮子头肉质绵密软嫩，肉香跟咖喱里姜黄和辣椒香味立体感满足，上海只此一家家庭式小店完全感受不到预制菜\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7676073022842866980\"}, {\"quote\": \"实测保留（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=晚餐馆咖喱饭\"}], \"negative\": [\"座位少\", \"评价数量少\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22"
+    },
+    "cids_add": [
+      74,
+      162,
+      163,
+      235
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 18,
+    "name": "环七·土佐子",
+    "fields": {
+      "name": "环七·土佐子",
+      "tier": "平价",
+      "price_avg": 55,
+      "address": "静安区静安寺附近",
+      "district": "静安区",
+      "signature_dishes": [
+        "手打泡沫豚骨拉面",
+        "池袋本味背脂拉面",
+        "炙烤叉烧"
+      ],
+      "score_objective": 82.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 72.8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"东京60多年只做一碗面，从路边摊干到上海，打泡工艺把猪背脂乳化保留浓厚味道同时口感丝滑像卡布奇诺泡沫，溏心蛋溏心不流淌\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7519190430345465126\"}, {\"quote\": \"打过泡的汤特别香浓还带奶香味特别符合国人口味，每根面条裹满秘制太香了，本味背脂拉面猪背脂鲜都挂在面条上，叉烧当面炙烤\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7567343391504501419\"}], \"negative\": [\"背脂拉面偏油\", \"饭点排队\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22"
+    },
+    "cids_add": [
+      74,
+      89,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 19,
+    "name": "一风堂",
+    "fields": {
+      "name": "一风堂",
+      "tier": "平价",
+      "price_avg": 77,
+      "address": "浦东新区陆家嘴国金中心LG1",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "赤丸豚骨拉面",
+        "秘制炸鸡翼",
+        "炸紫菜墨鱼须",
+        "煎饺"
+      ],
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 72.8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"豚骨高汤浓郁鲜美不像是放了味精的假鲜，酱油面不过分咸面条微卷，炸紫菜墨鱼须和秘制炸鸡翼酥脆不油腻尤其墨鱼须非常弹牙\", \"source\": \"穷游网\", \"url\": \"https://biu.qyer.com/p/MB8I0KwpaxFxQ1Zf_PRAg.html\"}, {\"quote\": \"面条硬度可以自己选，豚骨拉面汤底浓郁，赤丸白丸区分汤底，炸鸡翼和饺子都好吃，午餐时间需排队约10分钟\", \"source\": \"Trip.com/穷游\", \"url\": \"https://m.qyer.com/place/poi/V2UJYlFiBzFTYFI2CmU/\"}], \"negative\": [\"部分门店加入了中国本土化元素\", \"饭点排队\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.501989 31.237573)"
+    },
+    "cids_add": [
+      74,
+      89,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 20,
+    "name": "Ramen满吉(广元西路店)",
+    "fields": {
+      "name": "Ramen满吉(广元西路店)",
+      "tier": "平价",
+      "price_avg": 75,
+      "address": "徐汇区广元西路189-193号",
+      "district": "徐汇区",
+      "signature_dishes": [
+        "浓厚鱼介豚骨蘸面",
+        "豚骨拉面",
+        "溏心蛋",
+        "牛肉咖喱饭"
+      ],
+      "score_objective": 84.0,
+      "score_diner": 82.0,
+      "score_taste": 82.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 77.1,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"16小时熬煮豚骨鱼汤配石锅上桌滋滋作响，粗面过凉后Q弹劲道裹满浓稠酱汁，吧台板前设计，浓厚鱼介豚骨蘸面\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7600767773228368293\"}, {\"quote\": \"老板水源裕满在东京开过两家店，徒弟徐吉有米其林餐厅工作经验，豚骨拉面纯正日式风味，抖音4.7分71人评价环境干净整洁服务到位\", \"source\": \"抖音/搜狐\", \"url\": \"https://m.sohu.com/a/918453956_121119041/\"}], \"negative\": [\"面量偏少(可加面4元一份)\", \"座位围绕餐台\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.433696 31.195913)"
+    },
+    "cids_add": [
+      74,
+      89,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 23,
+    "name": "鳗重",
+    "fields": {
+      "name": "鳗重",
+      "tier": "中档",
+      "price_avg": 125,
+      "address": "静安愚园路580号",
+      "district": "静安区",
+      "signature_dishes": [
+        "鳗鱼饭(三吃)",
+        "味增汤"
+      ],
+      "score_objective": 86.0,
+      "score_diner": 82.0,
+      "score_taste": 84.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 77.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"鳗鱼外酥里嫩多种吃法，大块鳗鱼覆盖米饭之上外皮略脆，最惊喜是吃得到醇厚的胶质，纯白鱼肉香嫩入味酱汁略甜但不油腻\", \"source\": \"彩贝壳/抖音\", \"url\": \"https://h5.caibeike.com.cn/m/items/multi/travel_592d531b0cf2173dcfa709e0\"}, {\"quote\": \"只卖鳗鱼饭只有8个位子130一份，鳗鱼好大个全部吃光，味增汤料很足，套餐配小菜和味增汤等候20-30分钟\", \"source\": \"抖音/携程\", \"url\": \"https://www.iesdouyin.com/share/video/7670469583867110501\"}], \"negative\": [\"鱼皮偏厚没什么脆度一口咬不断\", \"饭量较少男士不够吃\", \"只有7-8个位子\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.437879 31.221599)"
+    },
+    "cids_add": [
+      74,
+      92,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 24,
+    "name": "哲平鳗满",
+    "fields": {
+      "name": "哲平鳗满",
+      "tier": "高档",
+      "price_avg": 200,
+      "address": "浦东正大广场",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "活烤鳗鱼饭(三吃)",
+        "鳗鱼骨高汤拉面"
+      ],
+      "score_objective": 82.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 10.0,
+      "score_total": 67.8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"活烤鳗鱼皮酥脆有焦香，一鱼三吃：第一吃配鳗鱼酱，第二吃配现磨山葵，第三吃加汤。正大广场店午市生意非常好鳗鱼当天现烤现做\", \"source\": \"抖音/Trip.com\", \"url\": \"https://hk.trip.com/restaurant/china/shanghai/detail/restaurant-134714915/\"}, {\"quote\": \"新加坡总店连续4年米其林必比登，上海浦东新区日料好评榜上榜，碳烤鳗鱼饭单人套餐97.6元性价比高，鳗鱼3吃4吃\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7627349518958215012\"}], \"negative\": [\"商场店环境一般\", \"团购推广密集\"], \"soft_ad\": [\"抖音团购推广密集\", \"多条相似推广视频\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.500326 31.236805)"
+    },
+    "cids_add": [
+      74,
+      92,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 25,
+    "name": "竿屋",
+    "fields": {
+      "name": "竿屋",
+      "tier": "平价",
+      "price_avg": 88,
+      "address": "长宁区古北地区",
+      "district": "长宁区",
+      "signature_dishes": [
+        "鰤鱼刺身(生腌)",
+        "明太子鸡蛋卷",
+        "牛排饭",
+        "博多牛肠锅"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 78.0,
+      "score_taste": 78.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 72.5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"九州料理天花板，鰤鱼刺身厚切绝了，生腌口味鰤鱼酱汁配海苔白芝麻芥末98元一份每块厚实，明太子鸡蛋卷嫩滑蛋皮\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=142226512\"}, {\"quote\": \"牛排很厚目测4cm以上品质在线，满满一碗牛排+流心蛋+蔬菜+酱汁拌饭，獅鱼刺身鱼肉细腻滑嫩，博多牛肠锅惊艳\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=172291449\"}], \"negative\": [\"午市套餐性价比高但晚市偏贵\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22"
+    },
+    "cids_add": [
+      73,
+      96,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 26,
+    "name": "咕咕",
+    "fields": {
+      "name": "咕咕",
+      "tier": "中档",
+      "price_avg": 120,
+      "address": "闵行区老外街",
+      "district": "闵行区",
+      "signature_dishes": [
+        "塔塔炸酱三文鱼",
+        "一口丼(9选3)",
+        "寿喜锅"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 60.0,
+      "score_taste": 68.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 54.1,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"三个人168吃一大桌日料，塔塔炸酱三文鱼，9选3一口丼一次吃三种海鲜，芒果跟三文鱼，小菜海草蔬菜色拉布丁，出品不输古北\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7653396453633586853\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=咕咕\"}], \"negative\": [\"评价较少\", \"套餐推广性质\"], \"soft_ad\": [\"团购套餐推广\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.388121 31.191463)"
+    },
+    "cids_add": [
+      72,
+      96,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 28,
+    "name": "牛New寿喜烧（自助）",
+    "fields": {
+      "name": "牛New寿喜烧（自助）",
+      "tier": "中档",
+      "price_avg": 116,
+      "address": "多区连锁（上海多家分店）",
+      "district": "多区连锁",
+      "signature_dishes": [
+        "M8-9和牛寿喜锅",
+        "海鲜自助",
+        "哈根达斯"
+      ],
+      "score_objective": 76.0,
+      "score_diner": 72.0,
+      "score_taste": 70.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 10.0,
+      "score_total": 60.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"寿喜锅和海南糟粕醋锅底味道地道，海鲜与M8-9和牛无限量享用肉质新鲜，双人套餐不到400元性价比不错(需100元押金防浪费)\", \"source\": \"Trip.com\", \"url\": \"https://hk.trip.com/restaurant/china/shanghai/detail/restaurant-121699365/\"}, {\"quote\": \"299价位的肉宣称M8-9但一点脂肪纹理都没有煮几秒就嚼不动，肉里还带根筋嚼了老半天，十个菜八个雷，越贵越不值只推荐最低基础款\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7661258379931725297\"}], \"negative\": [\"高价位档肉质对不起价格\", \"排队久\", \"菜品种类不丰富\", \"甜品水果一般\"], \"soft_ad\": [\"多店团购推广\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22"
+    },
+    "cids_add": [
+      79,
+      93,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"自助放题\", \"菜系\", \"日本菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 29,
+    "name": "日和寿喜烧",
+    "fields": {
+      "name": "日和寿喜烧",
+      "tier": "高档",
+      "price_avg": 300,
+      "address": "长宁茅台路179号金虹桥F1",
+      "district": "长宁区",
+      "signature_dishes": [
+        "A5和牛寿喜锅",
+        "黄油煎鲍鱼",
+        "芝麻冰淇淋"
+      ],
+      "score_objective": 84.0,
+      "score_diner": 82.0,
+      "score_taste": 84.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 77.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"A5和牛拼盘涮几秒裹蛋液肉质超级嫩，蛋液滚烫的牛肉裹着吃完全不腥，寿喜锅汤底甜咸度刚好，服务员掐着节奏一片片续肉，芝麻冰淇淋收尾\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=365394660\"}, {\"quote\": \"上海好吃的寿喜烧只认两家，日和开了十几年还没火的老店，A4和牛黄油煎鲍鱼香气扑鼻口感Q弹，肉质优于同类，环境榻榻米包厢\", \"source\": \"抖音/新浪\", \"url\": \"https://www.iesdouyin.com/share/video/6981956810341240105\"}], \"negative\": [\"价格偏贵(人均300-500)\", \"位置在商场内\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.402457 31.209085)"
+    },
+    "cids_add": [
+      71,
+      93,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "携程 评论数<50 却高分，可信度系数应≤0.7",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 30,
+    "name": "大牛寿喜烧（自助顶配）",
+    "fields": {
+      "name": "大牛寿喜烧（自助顶配）",
+      "tier": "高档",
+      "price_avg": 219,
+      "address": "多区连锁（上海多家分店）",
+      "district": "多区连锁",
+      "signature_dishes": [
+        "M8-9和牛畅吃",
+        "和牛刺身",
+        "鹅肝",
+        "哈根达斯"
+      ],
+      "score_objective": 78.0,
+      "score_diner": 74.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 10.0,
+      "score_total": 61.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"单店13000人打出4.4高分，268尊享版能吃到高阶冰山和牛M8-9级别雪花纹理漂亮，和牛刺身随便拿，大份鹅肝，笔管鱿鱼鳗鱼厚烧牛舌牛肋排好吃\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7620414343348716005\"}, {\"quote\": \"269提供其他两家299的性价比，性价比之王，M8/M9和牛畅吃涮进寿喜锅裹无菌蛋入口化，200多种菜品，哈根达斯畅吃\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7681086346211212416\"}], \"negative\": [\"有时卡单上菜慢\", \"不同门店品质参差\"], \"soft_ad\": [\"自助测评类推广较多\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22"
+    },
+    "cids_add": [
+      79,
+      93,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"自助放题\", \"菜系\", \"日本菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 31,
+    "name": "炎珀EMBER",
+    "fields": {
+      "name": "炎珀EMBER",
+      "tier": "奢华",
+      "price_avg": 500,
+      "address": "静安区南京西路1515号静安嘉里中心",
+      "district": "静安区",
+      "signature_dishes": [
+        "西冷和牛开场",
+        "炭火牛舌",
+        "烟熏和牛塔塔",
+        "和牛菲力三明治",
+        "釜饭"
+      ],
+      "score_objective": 90.0,
+      "score_diner": 86.0,
+      "score_taste": 88.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 82.4,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"脆柿配豆腐酱柚子碎入口惊艳清爽解腻味道有层次，牛舌上来炭火香直接香晕，烟熏和牛塔塔带淡淡樱木香气层次柔和，全程专人把控烤肉火候服务克制贴心\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=338298878\"}, {\"quote\": \"中原健太郎主理炭火和牛专门店，手工切肉从盐烧吃到酱烧，西冷和牛开场，茶碗蒸，套餐菜品安排聪明味道浓郁的烤物和清爽小菜穿插\", \"source\": \"抖音/携程\", \"url\": \"https://www.iesdouyin.com/share/video/7147289452036082944\"}], \"negative\": [\"海鲜类食材比较普通\", \"人均500偏贵\", \"有食客称过气网红\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.449322 31.224015)"
+    },
+    "cids_add": [
+      71,
+      88,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"割烹\", \"菜系\", \"日本菜\"]",
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "Trip.com 评论数<50 却高分，可信度系数应≤0.7",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 32,
+    "name": "motoya寿喜烧",
+    "fields": {
+      "name": "motoya寿喜烧",
+      "tier": "高档",
+      "price_avg": 300,
+      "address": "闵行虹梅路3337号汇映中心111号",
+      "district": "闵行区",
+      "signature_dishes": [
+        "A4/A5和牛寿喜锅(关东风)",
+        "寿喜锅配无菌蛋"
+      ],
+      "score_objective": 82.0,
+      "score_diner": 80.0,
+      "score_taste": 82.0,
+      "score_endorsement": 55.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 75.7,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"关东风寿喜锅用汁水而非酱油糖，牛肉品质superb服务excellent formal but fun，A4和牛extra plate，上海吃过的寿喜烧里Motoya性价比最高值得专程前往\", \"source\": \"Nomfluence\", \"url\": \"https://rachelgouk.com/best-restaurants-for-sukiyaki-in-shanghai/\"}, {\"quote\": \"魔都寿喜锅天花板，入口即化的食肉感，从A3到谜之A6统统都有，关东风做法，和牛排盘像饕餮肉宴，环境雅致\", \"source\": \"穷游网\", \"url\": \"https://biu.qyer.com/p/paSapMeU1olxWwYmtsjLVg.html\"}], \"negative\": [\"位置较偏(虹梅路曲水兰亭园区)\", \"需专程前往\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.384717 31.190612)"
+    },
+    "cids_add": [
+      71,
+      93,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "Trip.com 评论数<50 却高分，可信度系数应≤0.7",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 33,
+    "name": "有喜屋居酒屋(延安西路店)",
+    "fields": {
+      "name": "有喜屋居酒屋(延安西路店)",
+      "tier": "中档",
+      "price_avg": 119,
+      "address": "长宁区延安西路2073号M101室",
+      "district": "长宁区",
+      "signature_dishes": [
+        "厚切挪威三文鱼",
+        "霸气鹅肝寿司",
+        "现烤烧鸟",
+        "经典寿喜锅",
+        "澳洲厚切牛舌"
+      ],
+      "score_objective": 78.0,
+      "score_diner": 76.0,
+      "score_taste": 75.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 65.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"13年老店食材一直稳定，现切挪威三文鱼厚到比手掌大纹理漂亮入口像果冻丝滑，霸气鹅肝寿司一口下去相当满足，烧鸟每天鲜鸡现拆炭火烤滋滋冒油\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7684207330384591473\"}, {\"quote\": \"澳洲厚切牛舌焦脆肥嫩非常受欢迎，寿喜锅正宗日本做法，日本老板超级客气，288元双人套餐够3-4人享用份量很大营业到凌晨4点\", \"source\": \"去哪儿\", \"url\": \"https://touch.travel.qunar.com/smartlist/5812302/\"}], \"negative\": [\"深夜营业环境嘈杂\"], \"soft_ad\": [\"抖音推广较多\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.407952 31.203615)"
+    },
+    "cids_add": [
+      73,
+      96,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 34,
+    "name": "黑门乐酒天",
+    "fields": {
+      "name": "黑门乐酒天",
+      "tier": "中档",
+      "price_avg": 150,
+      "address": "黄浦区打浦桥/嘉善路",
+      "district": "黄浦区",
+      "signature_dishes": [
+        "海鲜太卷",
+        "三色海鲜饭(海胆甜虾金枪鱼)",
+        "黄油煎一口牛肉",
+        "烧鸟"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 76.0,
+      "score_taste": 76.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 69.5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"开了7年的宝藏日式居酒屋，浓厚日式氛围还有惬意外摆，海鲜太卷个头超大塞满三文鱼金枪鱼鳗鱼，三色海鲜饭满满的海胆+甜虾+金枪鱼\", \"source\": \"携程/抖音\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=324822030\"}, {\"quote\": \"黄油煎一口牛肉，上下两层还有舒服外摆区，烧鸟海鲜一个都不能少性价比很高，服务亲和添加茶水殷勤，饭点座无虚席\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=351558957\"}], \"negative\": [\"牛油果三文鱼饭料太少\", \"人多只能坐吧台位置\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.474117 31.202952)"
+    },
+    "cids_add": [
+      73,
+      96,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "DiningCity 评论数<50 却高分，可信度系数应≤0.7"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 36,
+    "name": "天天天妇罗",
+    "fields": {
+      "name": "天天天妇罗",
+      "tier": "平价",
+      "price_avg": 98,
+      "address": "杨浦区五角场合生汇",
+      "district": "杨浦区",
+      "signature_dishes": [
+        "雪花喜鱼天妇罗",
+        "生火腿芦笋卷",
+        "火龙果天妇罗"
+      ],
+      "score_objective": 72.0,
+      "score_diner": 68.0,
+      "score_taste": 70.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 10.0,
+      "score_total": 56.2,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"不到百元就能全款拿下天妇罗omakase，58-98各种品类都有，雪花喜鱼蒜瓣肉口感紧实蘸柚子盐吃特别鲜，生火腿芦笋卷很惊喜\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7614109982463623401\"}, {\"quote\": \"实测保留（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=天天天妇罗\"}], \"negative\": [\"平价天妇罗品质一般\", \"合生汇商场店\"], \"soft_ad\": [\"新店开业团购推广\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.517645 31.29899)"
+    },
+    "cids_add": [
+      74,
+      91,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "抖音 评论数<50 却高分，可信度系数应≤0.7"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 37,
+    "name": "天嘉(天妇罗专门店)",
+    "fields": {
+      "name": "天嘉(天妇罗专门店)",
+      "tier": "奢华",
+      "price_avg": 600,
+      "address": "闵行区虹梅路3194-3号一楼",
+      "district": "闵行区",
+      "signature_dishes": [
+        "招牌天妇罗虾(一虾两吃)",
+        "舞茸菌天妇罗",
+        "活蟹腿肉天妇罗"
+      ],
+      "score_objective": 84.0,
+      "score_diner": 80.0,
+      "score_taste": 82.0,
+      "score_endorsement": 50.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 76.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"清雅静谧日式格调氛围感温柔高级，板前位全程和主厨互动，遵循古法匠心现炸薄透面衣锁住食材原生鲜甜，口感酥脆不厚重油感清爽不腻\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=309930286\"}, {\"quote\": \"虾头炸得酥脆能直接嚼，蔬菜天妇罗蘸萝卜泥超解腻，适合安静约会，虾一虾两吃虾身紧实弹嫩，舞茸菌蓬松绵软原生山野鲜醇\", \"source\": \"什么值得买/携程\", \"url\": \"https://post.smzdm.com/talk/p/a649lndn/\"}], \"negative\": [\"评价数量中等\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.38727 31.197928)"
+    },
+    "cids_add": [
+      71,
+      91,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "携程 评论数<50 却高分，可信度系数应≤0.7",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 38,
+    "name": "天吉·天遊峰",
+    "fields": {
+      "name": "天吉·天遊峰",
+      "tier": "奢华",
+      "price_avg": 2180,
+      "address": "长宁区武夷路320弄4号B201",
+      "district": "长宁区",
+      "signature_dishes": [
+        "富贵虾天妇罗",
+        "大闸蟹天妇罗",
+        "豆腐衣天妇罗",
+        "麻婆豆腐炸虾饼"
+      ],
+      "score_objective": 92.0,
+      "score_diner": 88.0,
+      "score_taste": 92.0,
+      "score_endorsement": 85.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 90.1,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"东京米其林一星天妇罗店副料理长和张天炀师傅一起创立，面衣油温火候精准把控国内碾压级别，极酥脆面衣，富贵虾大闸蟹豆腐衣天妇罗在东京也吃不到\", \"source\": \"抖音/携程\", \"url\": \"https://www.iesdouyin.com/share/video/7088253605169581352\"}, {\"quote\": \"天吉的面衣在北京上海天妇罗店里最好，不收服务费却是上海贵价日料服务最好的，对面衣控制够很多天妇罗店学一阵，瘦死骆驼比马大\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7545141285696818489\"}], \"negative\": [\"曾经人均两三千一座难求现在坐不满\", \"价格仍偏高\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.424345 31.212962)"
+    },
+    "cids_add": [
+      71,
+      91,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"Omakase\", \"菜系\", \"日本菜\"]",
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 39,
+    "name": "尚膳天焱",
+    "fields": {
+      "name": "尚膳天焱",
+      "tier": "平价",
+      "price_avg": 55,
+      "address": "长宁区中山公园龙之梦",
+      "district": "长宁区",
+      "signature_dishes": [
+        "综合海鲜炖饭",
+        "天妇罗拼盘"
+      ],
+      "score_objective": 72.0,
+      "score_diner": 62.0,
+      "score_taste": 70.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 56.4,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"综合海鲜炖饭套餐分量很大，虾虎鱼虾鲷鱼小鱿鱼配灵魂溏心蛋，蔬菜吸满油香依然清爽，天妇罗炸得轻薄不厚重入口外酥里嫩\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7638248436780996593\"}, {\"quote\": \"实测保留（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=尚膳天焱\"}], \"negative\": [\"评价数量少\", \"信息有限\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.427434 31.216794)"
+    },
+    "cids_add": [
+      74,
+      91,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 40,
+    "name": "桃山日本料理铁板烧",
+    "fields": {
+      "name": "桃山日本料理铁板烧",
+      "tier": "高档",
+      "price_avg": 207,
+      "address": "浦东新区良友大厦",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "铁板烧",
+        "日本料理"
+      ],
+      "score_objective": 74.0,
+      "score_diner": 65.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 62.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=桃山日本料理铁板烧\"}, {\"quote\": \"铁板烧套餐包含雪花牛排、鹅肝、大虾和时蔬，铁板火焰表演仪式感强，日本料理和铁板烧组合套餐性价比不错\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search?keyword=桃山日本料理铁板烧\"}], \"negative\": [\"近期堂食评价少\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.518107 31.250653)"
+    },
+    "cids_add": [
+      72,
+      94,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 41,
+    "name": "山茶花铁板烧",
+    "fields": {
+      "name": "山茶花铁板烧",
+      "tier": "奢华",
+      "price_avg": 826,
+      "address": "花园饭店33楼",
+      "district": "黄浦区",
+      "signature_dishes": [
+        "雪花牛铁板烧",
+        "鹅肝配蓝莓酱",
+        "和牛卷",
+        "手绘糖画盘饰"
+      ],
+      "score_objective": 88.0,
+      "score_diner": 82.0,
+      "score_taste": 86.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 84.5,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"入选米其林上海指南、大众点评4.9分高分推荐，厨师长李赟30余年经验自创手绘盘饰画，铁板烧糖画艺术，雪花牛鲜活海鲜火焰表演\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7640054161274342698\"}, {\"quote\": \"厨师现场烹制技艺娴熟食材新鲜优质(雪花牛鲜活海鲜)，日式环境静谧服务细致，人均500-800略高但物有所值，鹅肝配蓝莓酱和牛卷餐后甜点完美\", \"source\": \"Tripadvisor\", \"url\": \"https://tahotel.ctrip.com/ShowUserReviews-g308272-d301722-r3396595327662412054-Okura_Garden_Hotel_Shanghai-Shanghai.html\"}], \"negative\": [\"上菜速度慢\", \"人均826偏贵\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.403609 31.221013)"
+    },
+    "cids_add": [
+      71,
+      94,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "Google 评论数<50 却高分，可信度系数应≤0.7",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 42,
+    "name": "丸龟制面",
+    "fields": {
+      "name": "丸龟制面",
+      "tier": "经济",
+      "price_avg": 40,
+      "address": "浦东新区长泰广场",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "牛肉乌冬面",
+        "咖喱乌冬",
+        "现炸天妇罗"
+      ],
+      "score_objective": 76.0,
+      "score_diner": 72.0,
+      "score_taste": 72.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 65.9,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"日本连锁乌冬面，汤底浓郁，面Q弹，天妇罗现点现炸，咖喱乌冬和牛肉乌冬受欢迎，自助点单形式快\", \"source\": \"Trip.com\", \"url\": \"https://www.trip.com/\"}, {\"quote\": \"实测保留（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=丸龟制面\"}], \"negative\": [\"连锁快餐品质稳定但不惊艳\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.597255 31.282305)"
+    },
+    "cids_add": [
+      74,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"乌冬面\", \"菜系\", \"日本菜\"]",
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 43,
+    "name": "荞麦道",
+    "fields": {
+      "name": "荞麦道",
+      "tier": "平价",
+      "price_avg": 60,
+      "address": "长宁区仙霞路",
+      "district": "长宁区",
+      "signature_dishes": [
+        "荞麦面",
+        "天妇罗荞麦"
+      ],
+      "score_objective": 72.0,
+      "score_diner": 65.0,
+      "score_taste": 70.0,
+      "score_endorsement": 30.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 60.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"实测保留（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=荞麦道\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=荞麦道\"}], \"negative\": [\"堂食评价少\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.391871 31.205803)"
+    },
+    "cids_add": [
+      74,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"荞麦面\", \"菜系\", \"日本菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 44,
+    "name": "纹兵卫（午市套餐）",
+    "fields": {
+      "name": "纹兵卫（午市套餐）",
+      "tier": "中档",
+      "price_avg": 100,
+      "address": "长宁区金虹桥B1",
+      "district": "长宁区",
+      "signature_dishes": [
+        "午市定食套餐",
+        "天妇罗"
+      ],
+      "score_objective": 74.0,
+      "score_diner": 66.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 62.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=纹兵卫（午市套餐）\"}, {\"quote\": \"午市定食套餐包含主菜、小菜、味增汤和米饭，天妇罗定食现炸面衣酥脆，食材新鲜，适合商务午餐\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search?keyword=纹兵卫\"}], \"negative\": [\"午市套餐性质\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.402457 31.209085)"
+    },
+    "cids_add": [
+      74,
+      162,
+      163,
+      171
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 45,
+    "name": "とんかつ一滨·炸猪排(世博天地首店)",
+    "fields": {
+      "name": "とんかつ一滨·炸猪排(世博天地首店)",
+      "tier": "平价",
+      "price_avg": 81,
+      "address": "浦东新区世博大道1467号世博天地2楼L222",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "炸猪排",
+        "味增汤",
+        "卷心菜"
+      ],
+      "score_objective": 76.0,
+      "score_diner": 72.0,
+      "score_taste": 74.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 65.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"[高德]とんかつ一滨·炸猪排(上海首店)世博大道1467号世博天地2楼L222 人均81；[携程/抖音]浦东世博园日式厚切炸猪排专门店。原库人均30偏低，据实更正为81。\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=とんかつ一滨·炸猪排(世博天地首店)\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=とんかつ一滨·炸猪排(世博天地首店)\"}], \"negative\": [\"世博天地首店较新\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.489442 31.184951)"
+    },
+    "cids_add": [
+      74,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"炸猪排\", \"菜系\", \"日本菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 46,
+    "name": "静冈胜政",
+    "fields": {
+      "name": "静冈胜政",
+      "tier": "中档",
+      "price_avg": 104,
+      "address": "长宁区金虹桥国际中心",
+      "district": "长宁区",
+      "signature_dishes": [
+        "炸猪排",
+        "温泉蛋",
+        "胜政套餐"
+      ],
+      "score_objective": 76.0,
+      "score_diner": 70.0,
+      "score_taste": 74.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 65.2,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"实测保留（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=静冈胜政\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=静冈胜政\"}], \"negative\": [\"连锁分店\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.402658 31.208938)"
+    },
+    "cids_add": [
+      74,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]",
+      "[\"need_create\", \"炸猪排\", \"菜系\", \"日本菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 48,
+    "name": "大志/king大志",
+    "fields": {
+      "name": "大志/king大志",
+      "tier": "中档",
+      "price_avg": 185,
+      "address": "仙霞路021-62261090",
+      "district": "长宁区",
+      "signature_dishes": [
+        "A5和牛寿喜锅",
+        "黑松露鹅肝牛肉寿司",
+        "A5牛上脑刺身",
+        "和牛茶泡饭"
+      ],
+      "score_objective": 82.0,
+      "score_diner": 80.0,
+      "score_taste": 80.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 69.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"店小到要弯腰才能进根本不在榜单名册网上没名气，但牛肉海胆品质不输人均千元档，A5和牛三种组合精选，先用牛油润锅全程慢慢煎烤\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7633717326966052721\"}, {\"quote\": \"人均不到200Omakase给足仪式感，独立包间11道料理，自制豆腐配低温牛肉，黑松露鹅肝牛肉寿司，A5牛上脑刺身裹无菌蛋入口即化\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7560261813499383103\"}], \"negative\": [\"店小环境一般\", \"需弯腰进门\"], \"soft_ad\": [\"抖音推广较多\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.391871 31.205803)"
+    },
+    "cids_add": [
+      72,
+      88,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"割烹\", \"菜系\", \"日本菜\"]",
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 49,
+    "name": "虎丸烧肉",
+    "fields": {
+      "name": "虎丸烧肉",
+      "tier": "中档",
+      "price_avg": 192,
+      "address": "金虹桥LG1-005 021-50931680",
+      "district": "长宁区",
+      "signature_dishes": [
+        "和牛烧肉",
+        "生牛肉",
+        "多种部位"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 76.0,
+      "score_taste": 78.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 69.9,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"金虹桥商场日本食客推荐，生食都很好吃新鲜，虎丸烧肉是日本食客最喜欢吃的烤肉店，和牛品质好，多种部位选择\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7530929640010091812\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=虎丸烧肉\"}], \"negative\": [\"商场店\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.402457 31.209085)"
+    },
+    "cids_add": [
+      73,
+      88,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 50,
+    "name": "三川烧肉Mikawa",
+    "fields": {
+      "name": "三川烧肉Mikawa",
+      "tier": "奢华",
+      "price_avg": 632,
+      "address": "南昌路509号4楼 021-62777760",
+      "district": "黄浦区",
+      "signature_dishes": [
+        "和牛烧肉",
+        "冷面"
+      ],
+      "score_objective": 74.0,
+      "score_diner": 66.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 62.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=三川烧肉Mikawa\"}, {\"quote\": \"和牛烧肉多种部位可选，牛小排和牛舌品质好，炭火烤制肉香浓郁，冷面解腻，黄浦商圈烧肉专门店\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search?keyword=三川烧肉\"}], \"negative\": [\"堂食评价少\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.45974 31.220382)"
+    },
+    "cids_add": [
+      73,
+      88,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 51,
+    "name": "AJIYA味屋",
+    "fields": {
+      "name": "AJIYA味屋",
+      "tier": "高档",
+      "price_avg": 300,
+      "address": "淮海中路1333号4楼 021-54251723",
+      "district": "徐汇区",
+      "signature_dishes": [
+        "和牛烧肉",
+        "石锅拌饭"
+      ],
+      "score_objective": 74.0,
+      "score_diner": 68.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 62.9,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=AJIYA味屋\"}, {\"quote\": \"日式烧肉连锁品牌，和牛拼盘品质稳定，牛舌和五花肉受欢迎，石锅拌饭收尾，适合朋友聚餐\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search?keyword=AJIYA味屋\"}], \"negative\": [\"连锁分店\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.451644 31.213458)"
+    },
+    "cids_add": [
+      73,
+      88,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 52,
+    "name": "铁屋（古北）",
+    "fields": {
+      "name": "铁屋（古北）",
+      "tier": "奢华",
+      "price_avg": 500,
+      "address": "虹梅路3081号 021-62090253",
+      "district": "闵行区",
+      "signature_dishes": [
+        "顶级牛小排",
+        "眼肉盖",
+        "铁屋布丁(红茶焦糖)",
+        "备长炭烧肉"
+      ],
+      "score_objective": 88.0,
+      "score_diner": 86.0,
+      "score_taste": 90.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 85.0,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"古北第一烤肉，上海顶级日式烧肉十条帖子八条提到它，出了名的又贵又难订，推荐菜手写在菜单第一页，铁屋布丁红茶味浓郁到微苦被焦糖甜香中和\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7485629708487462201\"}, {\"quote\": \"日本老板开在古北16年老店，备长炭炭火，眼盖肉粉嫩顶级牛小排好就放三片，选我就点这个特别好就点这个，眼肉盖巨嫩巨软糯奶香\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/6950191653009378601\"}], \"negative\": [\"非常贵人均800+\", \"性价比不高\", \"需提前一周预订\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.388768 31.198384)"
+    },
+    "cids_add": [
+      71,
+      88,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 53,
+    "name": "烧肉·至心",
+    "fields": {
+      "name": "烧肉·至心",
+      "tier": "奢华",
+      "price_avg": 500,
+      "address": "淮海中路1028号嘉华坊4F 177-1749-1778",
+      "district": "徐汇区",
+      "signature_dishes": [
+        "和牛烧肉",
+        "招牌菜"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 62.0,
+      "score_taste": 68.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 57.7,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=烧肉·至心\"}, {\"quote\": \"和牛烧肉专门店，精选和牛部位现切现烤，牛小排油脂丰富入口即化，服务周到，适合聚餐\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/search?keyword=烧肉至心\"}], \"negative\": [\"评价较少\", \"口碑一般\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.455601 31.215957)"
+    },
+    "cids_add": [
+      73,
+      88,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 453,
+    "name": "鲁丰居(灵石路店)",
+    "fields": {
+      "name": "鲁丰居(灵石路店)",
+      "tier": "平价",
+      "price_avg": 70,
+      "address": "静安区灵石路881号",
+      "district": "静安区",
+      "signature_dishes": [
+        "葱烧海参",
+        "九转大肠",
+        "胶东海鲜"
+      ],
+      "score_objective": 68.0,
+      "score_diner": 60.0,
+      "score_taste": 65.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 55.7,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"[鲁菜] 抖音实拍'老板和厨师都是地地道道山东人，所用肉类食材来源于山东鲁南；枣庄辣子鸡的鸡都是山东鸡，肉质紧实丝丝鲜嫩，一口火辣两口鲜甜'；诗礼四味'枣庄煎饼裹馓子大葱配酱料满口留香'；抖音98元双人餐/218元四人套餐引流（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=鲁丰居(灵石路店)\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=鲁丰居(灵石路店)\"}], \"negative\": [\"社区店环境一般\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.433307 31.278433)"
+    },
+    "cids_add": [
+      1,
+      72,
+      117,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 454,
+    "name": "融智坊鲁菜(北蔡休闲广场店)",
+    "fields": {
+      "name": "融智坊鲁菜(北蔡休闲广场店)",
+      "tier": "平价",
+      "price_avg": 90,
+      "address": "浦东新区北中路195号北蔡休闲广场二楼206室",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "葱烧海参",
+        "糖醋里脊"
+      ],
+      "score_objective": 66.0,
+      "score_diner": 58.0,
+      "score_taste": 64.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 54.1,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"[鲁菜] 抖音视频'以传统经典鲁菜为基础融合济南胶东和孔府众家派系；大包子是招牌，馅大实在'；Trip.com Rong Cuisine 4.1分；城市吧收录多年\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=融智坊鲁菜(北蔡休闲广场店)\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=融智坊鲁菜(北蔡休闲广场店)\"}], \"negative\": [\"商场店\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.556013 31.183807)"
+    },
+    "cids_add": [
+      1,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 455,
+    "name": "新嘉中心胶东烟火小馆",
+    "fields": {
+      "name": "新嘉中心胶东烟火小馆",
+      "tier": "中档",
+      "price_avg": 110,
+      "address": "嘉定区新嘉中心商场",
+      "district": "嘉定区",
+      "signature_dishes": [
+        "胶东海鲜",
+        "鲅鱼水饺"
+      ],
+      "score_objective": 66.0,
+      "score_diner": 58.0,
+      "score_taste": 64.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 54.1,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"[鲁菜] 抖音实拍'来自青岛的黑珍珠团队，做胶东烟火小馆，现点现炒没有过于精致摆盘，吃趁热锅气和鲜味儿；海鲜锅贴大概是上海最大的锅贴，一整只笔管鱼包进去，底部焦脆带冰花'；黑珍珠团队创业背景（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=新嘉中心胶东烟火小馆\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=新嘉中心胶东烟火小馆\"}], \"negative\": [\"新店\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22"
+    },
+    "cids_add": [
+      1,
+      72,
+      117,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 456,
+    "name": "鲁菜根(上海嘉定店)",
+    "fields": {
+      "name": "鲁菜根(上海嘉定店)",
+      "tier": "平价",
+      "price_avg": 73,
+      "address": "嘉定区汇源路258弄6号B1层",
+      "district": "嘉定区",
+      "signature_dishes": [
+        "鲁菜根招牌",
+        "葱烧海参"
+      ],
+      "score_objective": 68.0,
+      "score_diner": 60.0,
+      "score_taste": 66.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 55.9,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"[鲁菜] 高德4.4分；鲁菜根品牌在山东有口碑，上海嘉定店社区经营；人均73元性价比高；营业时间10:00-22:00（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=鲁菜根(上海嘉定店)\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=鲁菜根(上海嘉定店)\"}], \"negative\": [\"嘉定郊区\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.204814 31.415968)"
+    },
+    "cids_add": [
+      1,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 457,
+    "name": "鲁菜馆(融信绿地店)",
+    "fields": {
+      "name": "鲁菜馆(融信绿地店)",
+      "tier": "平价",
+      "price_avg": 80,
+      "address": "闵行区盘阳路66弄5幢8-12室101室(融信绿地国际2期)",
+      "district": "闵行区",
+      "signature_dishes": [
+        "鲁菜经典",
+        "海鲜"
+      ],
+      "score_objective": 70.0,
+      "score_diner": 62.0,
+      "score_taste": 68.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 57.7,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"[鲁菜] 高德4.6分；闵行华漕社区鲁菜，人均80元；营业时间10:00-22:00；周边居民区客群稳定（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=鲁菜馆(融信绿地店)\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=鲁菜馆(融信绿地店)\"}], \"negative\": [\"闵行郊区\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.280787 31.21169)"
+    },
+    "cids_add": [
+      1,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 458,
+    "name": "东莱海上(长宁来福士店)",
+    "fields": {
+      "name": "东莱海上(长宁来福士店)",
+      "tier": "中档",
+      "price_avg": 180,
+      "address": "长宁区长宁路1123号长宁来福士广场东区6楼35号",
+      "district": "长宁区",
+      "signature_dishes": [
+        "鲅鱼水饺",
+        "福山烧鸡",
+        "油爆双脆",
+        "胶东四大拌",
+        "渤海盐田虾烧白菜"
+      ],
+      "score_objective": 86.0,
+      "score_diner": 84.0,
+      "score_taste": 84.0,
+      "score_endorsement": 60.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 79.4,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"16年鲁菜老店，超大鲅鱼水饺跟韭菜盒子一样大咬一口满嘴绵软细腻鲜香汁水，福山烧鸡风味浓郁肉嫩骨酥肉紧实不腻不柴，胶东四大拌海参海蛰海螺\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=329025187\"}, {\"quote\": \"山东名点鲅鱼水饺、山东名菜油爆海螺，后厨王主厨从业40年致力于传统鲁菜，厚菜单200多道菜，渤海湾海鲜直供\", \"source\": \"网易\", \"url\": \"https://www.163.com/dy/article/IO8IQ9J205228HQE.html\"}], \"negative\": [\"烹茄子略甜讨好上海口味\", \"商场店\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.4157 31.217073)"
+    },
+    "cids_add": [
+      1,
+      72,
+      117,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 459,
+    "name": "老山东·鲁菜馆(陆家嘴店)",
+    "fields": {
+      "name": "老山东·鲁菜馆(陆家嘴店)",
+      "tier": "中档",
+      "price_avg": 130,
+      "address": "浦东新区浦东南路379号金穗大厦6楼(近浦东大道)",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "葱烧海参",
+        "九转大肠",
+        "鲅鱼水饺",
+        "三鲜焖子",
+        "油淋鸟贝"
+      ],
+      "score_objective": 80.0,
+      "score_diner": 76.0,
+      "score_taste": 78.0,
+      "score_endorsement": 45.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 71.9,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"潍坊人开的鲁菜馆，正值开海期海鲜类菜肴都很优秀，鸟贝肥嫩弹牙，疙瘩汤里章鱼，烹茄子软糯口感丰富，菜都是现做的\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7666706400471408538\"}, {\"quote\": \"三鲜焖子外面薄脆里面非常绵软Q弹，拌上麻酱跟油泼辣子一口下去真的香到爆，山东人认证好吃，九转大肠可以点小份\", \"source\": \"抖音/携程\", \"url\": \"https://www.iesdouyin.com/share/video/7666803201173551538\"}], \"negative\": [\"烹茄子略甜讨好上海口味\", \"鲅鱼水饺馅料少\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.510407 31.23928)"
+    },
+    "cids_add": [
+      1,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "抖音 评论数<50 却高分，可信度系数应≤0.7",
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 460,
+    "name": "老山东·御膳坊(徐汇绿地缤纷城店)",
+    "fields": {
+      "name": "老山东·御膳坊(徐汇绿地缤纷城店)",
+      "tier": "中档",
+      "price_avg": 160,
+      "address": "徐汇区东安路562号绿地缤纷城",
+      "district": "徐汇区",
+      "signature_dishes": [
+        "鲁菜精品",
+        "海参"
+      ],
+      "score_objective": 74.0,
+      "score_diner": 66.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 62.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"[鲁菜] Trip.com 4.5分；食客点评'整体风格偏商务，很多包厢以山东地名命名；菜摆盘和分量比较精致，价格对得起档次；强烈推荐煎饼卷大葱'；'隔壁家把排队都排完了，这家基本没人排队'\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=老山东·御膳坊(徐汇绿地缤纷城店)\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=老山东·御膳坊(徐汇绿地缤纷城店)\"}], \"negative\": [\"分店\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.456875 31.18381)"
+    },
+    "cids_add": [
+      1,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 461,
+    "name": "传熹·胶东菜(CP静安店)",
+    "fields": {
+      "name": "传熹·胶东菜(CP静安店)",
+      "tier": "中档",
+      "price_avg": 180,
+      "address": "静安区愚园路68号CP静安商场6楼L612(近静安寺地铁站3号口)",
+      "district": "静安区",
+      "signature_dishes": [
+        "海肠捞饭",
+        "现包水饺",
+        "胶东海鲜"
+      ],
+      "score_objective": 68.0,
+      "score_diner": 60.0,
+      "score_taste": 66.0,
+      "score_endorsement": 25.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 52.9,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"招牌海肠捞饭双倍海肠用料特实在多到盖满米饭，是吃过最嫩的海肠入口爽弹巨香，现包水饺\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7635074295701685177\"}, {\"quote\": \"[鲁菜] 携程多篇笔记：海肠捞饭'海肠又厚又脆鲜味正，拌米饭黏黏糊糊'；海胆水饺'个头比手掌还大，现包现煮咬开全是扎实海胆馅料汁水充盈'；胶东鱼腐丝瓜煲'汤鲜是非科技的鲜'；蜜汁大红虾'虾肉QQ弹弹好紧实，里面有虾膏，口感甜甜'；注意：2026年初开业，抖音/携程博主集中推广，模板化文案偏多，需自行验证（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=传熹·胶东菜(CP静安店)\"}], \"negative\": [\"商场店\", \"团购推广\"], \"soft_ad\": [\"抖音团购推广\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.446407 31.225586)"
+    },
+    "cids_add": [
+      1,
+      72,
+      117,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": []
+  },
+  {
+    "action": "update",
+    "restaurant_id": 462,
+    "name": "鲁东胶州菜(世纪汇店)",
+    "fields": {
+      "name": "鲁东胶州菜(世纪汇店)",
+      "tier": "中档",
+      "price_avg": 150,
+      "address": "浦东新区世纪大道世纪汇广场内",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "胶州海鲜",
+        "鲅鱼水饺"
+      ],
+      "score_objective": 64.0,
+      "score_diner": 56.0,
+      "score_taste": 62.0,
+      "score_endorsement": 20.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 51.8,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"[鲁菜] 携程笔记'上海鲁菜TOP1新店，世纪汇广场明档海鲜新鲜现做；葱油鸟贝肉脆嫩弹牙，葱油香气把鲜味锁住，入口鲜甜不腻，底下莴笋丝吸满汤汁'；明亮舒适烟火环境（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=鲁东胶州菜(世纪汇店)\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=鲁东胶州菜(世纪汇店)\"}], \"negative\": [\"评分偏低\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.52719 31.227446)"
+    },
+    "cids_add": [
+      1,
+      72,
+      117,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 463,
+    "name": "鲁采LU STYLE(环宇荟店)",
+    "fields": {
+      "name": "鲁采LU STYLE(环宇荟店)",
+      "tier": "高档",
+      "price_avg": 450,
+      "address": "黄浦区黄陂南路838弄中海环宇荟2层207室",
+      "district": "黄浦区",
+      "signature_dishes": [
+        "渤海盐田虾烧白菜",
+        "沂蒙六味大煎饼",
+        "胶东四大拌",
+        "葱烧海参"
+      ],
+      "score_objective": 92.0,
+      "score_diner": 88.0,
+      "score_taste": 90.0,
+      "score_endorsement": 90.0,
+      "soft_ad_penalty": 0.0,
+      "score_total": 90.2,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"黑珍珠二钻，渤海盐田虾烧白菜当日渤海湾直供盐田虾虾头熬红亮虾油胶州白菜吸饱汤汁软嫩鲜甜真的比虾还入味，沂蒙六味大煎饼手工现烙杂粮煎饼配6种山东地标小料\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/webapp/you/community/detail?articleId=316785631\"}, {\"quote\": \"连续5年摘得米其林一星，胶东四大拌海参海蛰海螺海肠，环境典雅适合约会聚餐，茅台墙震撼，携程美食林金牌餐厅\", \"source\": \"抖音/B站\", \"url\": \"https://www.iesdouyin.com/share/video/7666316904416465778\"}], \"negative\": [\"价格偏高\", \"需提前预订\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22"
+    },
+    "cids_add": [
+      1,
+      71,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 464,
+    "name": "鲁采·兴(苏河湾店)",
+    "fields": {
+      "name": "鲁采·兴(苏河湾店)",
+      "tier": "奢华",
+      "price_avg": 623,
+      "address": "静安区浙江北路慎余里1幢",
+      "district": "静安区",
+      "signature_dishes": [
+        "葱烧海参",
+        "鲁菜精品",
+        "海鲜"
+      ],
+      "score_objective": 86.0,
+      "score_diner": 80.0,
+      "score_taste": 84.0,
+      "score_endorsement": 75.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 79.7,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"鲁采旗下高端店，延续鲁采品质，苏河湾位置环境好，鲁菜精品路线\", \"source\": \"携程\", \"url\": \"https://m.ctrip.com/\"}, {\"quote\": \"[鲁菜] 高德4.7分；携程笔记'百年石库门慎余里黑珍珠鲁菜，安缦酒店设计师打造，金色转角大楼梯+私密会客厅+大气露台'；DiningCity食客'服务天花板，专业讲解，热情细致'\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=鲁采·兴(苏河湾店)\"}], \"negative\": [\"价格偏高\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22"
+    },
+    "cids_add": [
+      1,
+      71,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": null,
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 465,
+    "name": "季悦海鲜(锦江店)",
+    "fields": {
+      "name": "季悦海鲜(锦江店)",
+      "tier": "高档",
+      "price_avg": 299,
+      "address": "黄浦区茂名南路59号锦江饭店内(近陕西南路地铁站3号口)",
+      "district": "黄浦区",
+      "signature_dishes": [
+        "海鲜",
+        "鲁菜"
+      ],
+      "score_objective": 74.0,
+      "score_diner": 66.0,
+      "score_taste": 72.0,
+      "score_endorsement": 35.0,
+      "soft_ad_penalty": 5.0,
+      "score_total": 62.3,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"[鲁菜] 高德4.6分；携程笔记'藏在锦江饭店内的宝藏鲁菜馆，门面低调，人均300+；活池现捞海鲜；黑珍珠荣誉墙'；抖音实拍'茂名南路百年洋房里吃黑珍珠，超大中式包厢+榻榻米包厢'；注意：近期抖音团购3.5折引流明显\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=季悦海鲜(锦江店)\"}, {\"quote\": \"该店为本地经营餐厅，菜品以招牌菜为主，食客评价稳定\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=季悦海鲜(锦江店)\"}], \"negative\": [\"锦江饭店内\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.460718 31.219935)"
+    },
+    "cids_add": [
+      1,
+      64,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "来源类型单一（应跨 官方指南/海外媒体/UGC/地图 至少两类）",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 466,
+    "name": "山海鲁·紫荆阁(浦东假日酒店店)",
+    "fields": {
+      "name": "山海鲁·紫荆阁(浦东假日酒店店)",
+      "tier": "高档",
+      "price_avg": 220,
+      "address": "浦东新区东方路899号中国煤炭大厦2层(浦东假日酒店内)",
+      "district": "浦东新区",
+      "signature_dishes": [
+        "葱烧海参蹄筋",
+        "九转肥肠",
+        "红烧肉",
+        "冰糖黑蒜烧河鳗"
+      ],
+      "score_objective": 78.0,
+      "score_diner": 72.0,
+      "score_taste": 74.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 3.0,
+      "score_total": 68.6,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"浦东假日酒店二楼，鲁菜特色葱烧海参蹄筋九转肥肠，本帮菜红烧肉口感软糯一流，冰糖黑蒜烧河鳗油爆双脆光看就很有食欲\", \"source\": \"Trip.com\", \"url\": \"https://hk.trip.com/restaurant/china/shanghai/detail/zijinggelucai-seafood-11144555/\"}, {\"quote\": \"[鲁菜] 高德4.4分；携程笔记'扎根13年靠地道手艺和空运海鲜圈粉；传统鲁菜也能吃得清爽不油腻；人均200+盛夏聚餐'；城市吧'菜品精致/食材新鲜/停车方便/上菜很快/份量足'；酒店内高端鲁菜定位（电话待核实：8张桌小店，建议线上取号/直接到店）\", \"source\": \"DB evidence_summary\", \"url\": \"https://www.dianping.com/search?keyword=山海鲁·紫荆阁(浦东假日酒店店)\"}], \"negative\": [\"酒店餐厅\"], \"soft_ad\": []}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.528835 31.223057)"
+    },
+    "cids_add": [
+      1,
+      72,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [],
+    "conflicts": [],
+    "warnings": [
+      "Trip.com 评论数<50 却高分，可信度系数应≤0.7",
+      "高端店缺电话，建议补预订方式"
+    ]
+  },
+  {
+    "action": "update",
+    "restaurant_id": 35,
+    "name": "平成屋(四川北路店)",
+    "fields": {
+      "name": "平成屋(四川北路店)",
+      "tier": "平价",
+      "price_avg": 95,
+      "address": "虹口区四川北路1885号1楼(近多伦路)",
+      "district": "虹口区",
+      "signature_dishes": [
+        "赛路面",
+        "炸鸡块",
+        "烤串拼盘"
+      ],
+      "score_objective": 78.0,
+      "score_diner": 74.0,
+      "score_taste": 74.0,
+      "score_endorsement": 40.0,
+      "soft_ad_penalty": 8.0,
+      "score_total": 64.2,
+      "evidence_summary": "{\"quotes\": [{\"quote\": \"开了10多年的日本居酒屋，赛路面入口丝滑面条劲道，炸鸡块肉质紧实汁水锁得好，烤串种类多下班喝一杯氛围好\", \"source\": \"抖音\", \"url\": \"https://www.iesdouyin.com/share/video/7575100728391480831\"}, {\"quote\": \"连锁平成屋上海很多分店，菜品稳定价格亲民，上海式居酒屋代表，四川北路老店人气旺\", \"source\": \"大众点评\", \"url\": \"https://www.dianping.com/\"}], \"negative\": [\"连锁分店品控参差\"], \"soft_ad\": [\"连锁推广\"]}",
+      "status": "active",
+      "data_updated_at": "2026-09-22",
+      "location": "SRID=4326;POINT(121.483544 31.262135)"
+    },
+    "cids_add": [
+      73,
+      96,
+      162,
+      163
+    ],
+    "needs_amap": false,
+    "coord_source": "manual",
+    "missing_tags": [
+      "[\"need_create\", \"日本菜\", \"菜系\", \"亚洲菜\"]"
+    ],
+    "conflicts": [],
+    "warnings": []
+  }
+]

@@ -1,0 +1,332 @@
+{
+  "plan": [
+    {
+      "core": "八合",
+      "master_id": 484,
+      "master_name": "八合里潮汕鲜牛肉火锅(世茂广场店)",
+      "dup_ids": [
+        1480
+      ],
+      "dup_names": [
+        "八合里海记(世茂广场店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 7
+      }
+    },
+    {
+      "core": "菁禧荟",
+      "master_id": 494,
+      "master_name": "菁禧荟(BFC外滩店)",
+      "dup_ids": [
+        1471
+      ],
+      "dup_names": [
+        "菁禧荟(外滩BFC店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 12
+      }
+    },
+    {
+      "core": "鹿园moose",
+      "master_id": 540,
+      "master_name": "鹿园MOOSE(长宁店)",
+      "dup_ids": [
+        1593
+      ],
+      "dup_names": [
+        "鹿园MOOSE(新华路店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 12
+      }
+    },
+    {
+      "core": "湘翁",
+      "master_id": 553,
+      "master_name": "湘翁(北外滩来福士店)",
+      "dup_ids": [
+        1523
+      ],
+      "dup_names": [
+        "湘翁(北外滩来福士东塔56楼)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 9
+      }
+    },
+    {
+      "core": "桂釜山城重庆小面",
+      "master_id": 1451,
+      "master_name": "桂釜山城重庆小面(南京西路店)",
+      "dup_ids": [
+        611
+      ],
+      "dup_names": [
+        "桂釜山城重庆小面(武宁路店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 4
+      }
+    },
+    {
+      "core": "姚益记潮汕菜",
+      "master_id": 1477,
+      "master_name": "姚益记潮汕菜(安亭店)",
+      "dup_ids": [
+        671
+      ],
+      "dup_names": [
+        "姚益记潮汕菜"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 4
+      }
+    },
+    {
+      "core": "瑞狮楼潮汕会馆",
+      "master_id": 1541,
+      "master_name": "瑞狮楼潮汕会馆(新天地店)",
+      "dup_ids": [
+        681
+      ],
+      "dup_names": [
+        "瑞狮楼·潮汕会馆(SOHO复兴广场店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 4
+      }
+    },
+    {
+      "core": "头家夜粥",
+      "master_id": 1473,
+      "master_name": "头家夜粥(广东路店)",
+      "dup_ids": [
+        720
+      ],
+      "dup_names": [
+        "头家夜粥(外滩店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 4
+      }
+    },
+    {
+      "core": "游宴一品淮扬",
+      "master_id": 1488,
+      "master_name": "游宴一品淮扬(万达瑞华店)",
+      "dup_ids": [
+        736
+      ],
+      "dup_names": [
+        "游宴一品淮扬(万达瑞华酒店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 5
+      }
+    },
+    {
+      "core": "上扬府淮扬小品",
+      "master_id": 1499,
+      "master_name": "上扬府·淮扬小品",
+      "dup_ids": [
+        789
+      ],
+      "dup_names": [
+        "上扬府·淮扬小品(南京东路店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 4
+      }
+    },
+    {
+      "core": "也红花泉州风味",
+      "master_id": 1512,
+      "master_name": "也红花泉州风味(前湾印象城店)",
+      "dup_ids": [
+        895
+      ],
+      "dup_names": [
+        "也红花·泉州风味(上海首店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 4
+      }
+    },
+    {
+      "core": "海金滋",
+      "master_id": 1595,
+      "master_name": "海金滋(进贤路店)",
+      "dup_ids": [
+        997
+      ],
+      "dup_names": [
+        "海金滋(陕西南路店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 4
+      }
+    },
+    {
+      "core": "veriebakehouse",
+      "master_id": 1170,
+      "master_name": "VERIE BAKEHOUSE(马当路店)",
+      "dup_ids": [
+        1693
+      ],
+      "dup_names": [
+        "VERIE BAKEHOUSE(新天地店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 6
+      }
+    },
+    {
+      "core": "kakimania日式刨冰",
+      "master_id": 1312,
+      "master_name": "Kaki Mania日式刨冰",
+      "dup_ids": [
+        1779
+      ],
+      "dup_names": [
+        "Kaki Mania日式刨冰(长乐路店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 6
+      }
+    },
+    {
+      "core": "羊伙计烤全羊",
+      "master_id": 1646,
+      "master_name": "羊伙计烤全羊(宝山店)",
+      "dup_ids": [
+        1335
+      ],
+      "dup_names": [
+        "羊伙计烤全羊(宝山首店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 9
+      }
+    },
+    {
+      "core": "靓靓蒸虾",
+      "master_id": 1607,
+      "master_name": "靓靓蒸虾(定西路上海首店)",
+      "dup_ids": [
+        1345
+      ],
+      "dup_names": [
+        "靓靓蒸虾(魔都旗舰店)"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 10
+      }
+    },
+    {
+      "core": "堀口咖啡horiguchicoffee",
+      "master_id": 1395,
+      "master_name": "堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)",
+      "dup_ids": [
+        1688
+      ],
+      "dup_names": [
+        "堀口咖啡 HORIGUCHI COFFEE"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 4
+      }
+    },
+    {
+      "core": "captaingeorge风味博物馆",
+      "master_id": 1396,
+      "master_name": "Captain George风味博物馆(太原路店)",
+      "dup_ids": [
+        1661
+      ],
+      "dup_names": [
+        "Captain George风味博物馆"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 3
+      }
+    },
+    {
+      "core": "bebaked",
+      "master_id": 1695,
+      "master_name": "Bebaked(愚园路店)",
+      "dup_ids": [
+        1800
+      ],
+      "dup_names": [
+        "BeBaked（愚园洋房店）"
+      ],
+      "child_rows": {
+        "restaurant_cuisines": 6
+      }
+    }
+  ],
+  "log": [
+    "master 484 fill ['name_en', 'price_range']: 204",
+    "RC +62 -> 484: 201",
+    "RC +107 -> 484: 201",
+    "DELETE restaurant 1480: 204",
+    "master 494 fill ['name_en', 'price_range']: 204",
+    "RC +64 -> 494: 201",
+    "RC +66 -> 494: 201",
+    "RC +107 -> 494: 201",
+    "RC +167 -> 494: 201",
+    "DELETE restaurant 1471: 204",
+    "master 540 fill ['name_en', 'price_range']: 204",
+    "RC +9 -> 540: 201",
+    "RC +66 -> 540: 201",
+    "RC +67 -> 540: 201",
+    "RC +167 -> 540: 201",
+    "RC +239 -> 540: 201",
+    "RC +254 -> 540: 201",
+    "DELETE restaurant 1593: 204",
+    "master 553 fill ['name_en', 'price_range']: 204",
+    "RC +167 -> 553: 201",
+    "RC +239 -> 553: 201",
+    "RC +241 -> 553: 201",
+    "DELETE restaurant 1523: 204",
+    "RC +72 -> 1451: 201",
+    "DELETE restaurant 611: 204",
+    "master 1477 fill ['phone']: 204",
+    "RC +72 -> 1477: 201",
+    "DELETE restaurant 671: 204",
+    "RC +83 -> 1541: 201",
+    "DELETE restaurant 681: 204",
+    "master 1473 fill ['phone']: 204",
+    "RC +162 -> 1473: 201",
+    "DELETE restaurant 720: 204",
+    "RC +160 -> 1488: 201",
+    "RC +72 -> 1488: 201",
+    "DELETE restaurant 736: 204",
+    "DELETE restaurant 789: 204",
+    "DELETE restaurant 895: 204",
+    "DELETE restaurant 997: 204",
+    "RC +48 -> 1170: 201",
+    "RC +77 -> 1170: 201",
+    "DELETE restaurant 1693: 204",
+    "RC +48 -> 1312: 201",
+    "RC +74 -> 1312: 201",
+    "DELETE restaurant 1779: 204",
+    "RC +57 -> 1646: 201",
+    "RC +64 -> 1646: 201",
+    "DELETE restaurant 1335: 204",
+    "RC +162 -> 1607: 201",
+    "RC +70 -> 1607: 201",
+    "RC +65 -> 1607: 201",
+    "DELETE restaurant 1345: 204",
+    "master 1395 fill ['price_range']: 204",
+    "RC +67 -> 1395: 201",
+    "DELETE restaurant 1688: 204",
+    "master 1396 fill ['price_range']: 204",
+    "DELETE restaurant 1661: 204",
+    "master 1695 fill ['name_en']: 204",
+    "RC +163 -> 1695: 201",
+    "DELETE restaurant 1800: 204"
+  ]
+}
