@@ -42,6 +42,11 @@ export interface Restaurant {
   price_position?: string;   // 品类内相对档（已停用，前端不再展示）
   price_scene?: string;      // 价格场景：正餐/快餐小吃/咖啡茶饮/面包/甜品/酒吧
   price_band?: number | null;// 场景内价格带 1-5（客观，按固定阈值由人均算出）
+  // —— 以下字段可能尚未上线，缺失时前端做空值处理 ——
+  opening_hours?: Record<string, string> | string | null; // 营业时间 jsonb，如 {"周一":"11:00-22:00"}
+  open_days?: string | null;        // 营业日期，如 "周一至周日" / "仅周末"
+  semantic_description?: string | null; // 一句话/一段话定性简介
+  chef_name?: string | null;        // 主厨名（反范式冗余，如有）
 }
 
 export interface PriceThreshold {
@@ -107,10 +112,20 @@ export interface FeedEvent {
   title: string;
   summary?: string;
   event_date?: string;
-  restaurant_id?: number;
-  related_restaurant_id?: number;
-  chef_id?: number;
+  expires_on?: string;          // 活动结束日期（popup / guest_kitchen / collaboration）
+  restaurant_id?: number | null;
+  related_restaurant_id?: number | null;
+  chef_id?: number | null;
   district?: string;
+  city?: string;
   confidence: string;   // high / mid / low
   status: string;       // verified / rumor
+  sources?: string | string[] | null;   // 来源链接（JSON 数组串或数组）
+  registration_url?: string | null;    // 报名入口链接（如有）
+  registration_info?: string | null;   // 报名方式说明（如有）
+  chef_name?: string | null;           // 主厨名（反范式冗余，如有）
+  // —— 前端合并/派生字段（不来自表，用于去重与展示）——
+  mergedIds?: number[];                // 被合并掉的同源事件 id
+  restaurant_name?: string;             // 前端按 restaurant_id 补的餐厅名
+  related_restaurant_name?: string;     // 前端按 related_restaurant_id 补的餐厅名
 }

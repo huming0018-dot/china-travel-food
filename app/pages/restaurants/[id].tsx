@@ -64,6 +64,7 @@ export default function RestaurantDetail() {
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [cuisines, setCuisines] = useState<Cuisine[]>([]);
   const [rc, setRc] = useState<{ restaurant_id: number; cuisine_id: number }[]>([]);
+  const [chefNames, setChefNames] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [thresholds, setThresholds] = useState<PriceThreshold[]>([]);
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -89,9 +90,23 @@ export default function RestaurantDetail() {
         fetchAll<{ restaurant_id: number; cuisine_id: number }>('restaurant_cuisines', 'restaurant_id,cuisine_id', 'restaurant_id'),
         fetchThresholds(),
       ]);
+      // 主厨关联（restaurant_chefs → chefs）；表/数据缺失时静默为空
+      let names: string[] = [];
+      try {
+        const { data: rcs } = await supabase
+          .from('restaurant_chefs')
+          .select('chef:chefs(name)')
+          .eq('restaurant_id', id);
+        if (rcs) {
+          names = (rcs as any[])
+            .map((row) => row?.chef?.name)
+            .filter((n): n is string => typeof n === 'string' && !!n.trim());
+        }
+      } catch { /* 表不存在或无权限 */ }
       setRestaurant(rest);
       setCuisines(cuis);
       setRc(links);
+      setChefNames(names);
       setThresholds(th);
       setLoading(false);
     })();
@@ -291,6 +306,13 @@ export default function RestaurantDetail() {
           </div>
         </div>
 
+        {/* 语义简介：标题区下方、招牌菜/基本信息上方 */}
+        {r.semantic_description && (
+          <p className="serif text-lg md:text-xl font-light leading-relaxed text-mocha-soft mb-10 -mt-4">
+            {r.semantic_description}
+          </p>
+        )}
+
         {/* 基本信息 */}
         <section className="border-t border-line pt-8 mb-10">
           <h2 className="kicker text-mocha-faint mb-6">INFORMATION / 基本信息</h2>
@@ -300,6 +322,11 @@ export default function RestaurantDetail() {
             <InfoRow label="预订方式" value={r.booking_method} />
             <InfoRow label="折扣/团购" value={r.discount_info} />
             {namesByDim.形式.length > 0 && <InfoRow label="业态" value={namesByDim.形式.join('、')} />}
+            {(r.chef_name || chefNames.length > 0) && (
+              <InfoRow label="主厨" value={[r.chef_name, ...chefNames].filter(Boolean).join('、')} />
+            )}
+            {r.open_days && <InfoRow label="营业日期" value={r.open_days} />}
+            <OpeningHoursRow hours={r.opening_hours} />
             {r.investor_info && <InfoRow label="投资人/公司" value={r.investor_info} />}
             {r.chain_type && <InfoRow label="连锁类型" value={r.chain_type} />}
             {r.central_kitchen && <InfoRow label="中央厨房" value={r.central_kitchen} />}
@@ -498,6 +525,41 @@ function InfoRow({ label, value }: { label: string; value?: any }) {
     <div className="flex items-start gap-4">
       <span className="kicker text-mocha-faint w-16 flex-shrink-0 pt-0.5">{label}</span>
       <span className="text-sm text-mocha-soft break-words">{text && text !== '—' ? text : '—'}</span>
+    </div>
+  );
+}
+
+// 营业时间：opening_hours 为 jsonb（如 {"周一":"11:00-22:00"}），缺失则整行不渲染
+function OpeningHoursRow({ hours }: { hours?: Record<string, string> | string | null }) {
+  if (!hours) return null;
+  let obj: Record<string, string> = {};
+  if (typeof hours === 'string') {
+    const t = hours.trim();
+    if (!t) return null;
+    if (t.startsWith('{')) {
+      try { obj = JSON.parse(t); } catch { obj = {}; }
+    } else {
+      // 纯文本直接展示
+      return (
+        <div className="flex items-start gap-4">
+          <span className="kicker text-mocha-faint w-16 flex-shrink-0 pt-0.5">营业时间</span>
+          <span className="text-sm text-mocha-soft break-words">{t}</span>
+        </div>
+      );
+    }
+  } else if (typeof hours === 'object') {
+    obj = hours;
+  }
+  const entries = Object.entries(obj).filter(([, v]) => typeof v === 'string' && v.trim());
+  if (entries.length === 0) return null;
+  return (
+    <div className="flex items-start gap-4">
+      <span className="kicker text-mocha-faint w-16 flex-shrink-0 pt-0.5">营业时间</span>
+      <div className="text-sm text-mocha-soft break-words space-y-0.5">
+        {entries.map(([day, time]) => (
+          <div key={day}><span className="text-mocha-soft">{day}</span> <span className="text-mocha-faint">{time}</span></div>
+        ))}
+      </div>
     </div>
   );
 }
