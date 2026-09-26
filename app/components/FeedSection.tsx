@@ -85,7 +85,7 @@ function dedup(events: FeedEvent[]): FeedEvent[] {
       const dd = daysBetween(e.event_date, other.event_date);
 
       let merge = false;
-      if (overlap && dd <= 60 && sim >= 0.28) merge = true;
+      if (overlap && dd <= 90) merge = true;
       else if (ca.size === 0 && cb.size === 0 && sim >= 0.6 && dd <= 45) merge = true;
 
       if (merge) {
