@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import Link from 'next/link';
 import { FeedEvent } from '@/lib/supabase';
 
 // 与 FeedSection 保持一致的分类元数据（单例导出，避免两处漂移）
@@ -138,9 +137,9 @@ export default function EventModal({ event, onClose }: { event: FeedEvent; onClo
                 <div className="kicker text-mocha-faint mb-1">RELATED / 关联餐厅</div>
                 <div className="serif text-base font-medium text-mocha">{rname || `#${rid}`}</div>
               </div>
-              <Link href={`/restaurants/${rid}`} className="btn btn-primary !py-2 !px-4 !text-xs flex-shrink-0">
+              <a href={`/restaurants/${rid}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary !py-2 !px-4 !text-xs flex-shrink-0">
                 查看餐厅 →
-              </Link>
+              </a>
             </div>
           )}
 
