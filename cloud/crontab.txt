@@ -17,3 +17,12 @@ SHELL=/bin/bash
 
 # 5) 高德全字段采集（评分/人均/电话/营业时间/坐标，一次 place/text）：每小时 :15/:35/:55（错峰）
 15,35,55 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/amap_fill.lock /usr/local/bin/python cloud_amap_fill.py --apply >> /app/data/amap_fill.log 2>&1
+
+# 6) 开放式发现（图遍历发现→离线裁决→自动收录）：每小时 :25（错峰浏览器，独立锁）
+25 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/discover.lock /usr/local/bin/python cloud_discover.py >> /app/data/discover.log 2>&1
+
+# 7) 看门狗（清理超时卡点）：每 20 分钟 :10/:30/:50
+10,30,50 * * * * cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python watchdog.py >> /app/data/watchdog.log 2>&1
+
+# 8) B站美食探店采集（API优先/bili-cli兜底）：每6小时一次（:30，错峰）
+30 */6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/bili.lock /usr/local/bin/python cloud_bili_collect.py >> /app/data/bili_collect.log 2>&1

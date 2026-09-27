@@ -63,18 +63,59 @@ def check_login(bu):
     return True, ""
 
 
-def mark_invalid(reason):
-    p = pathlib.Path(DATA_DIR)
-    p.mkdir(parents=True, exist_ok=True)
-    (p / "COOKIE_INVALID").write_text(
-        "小红书 cookie 已失效：%s\n请重新导出 cookie 并更新 XHS_COOKIE。\n" % reason,
-        encoding="utf-8")
+def _pool():
+    import xhs_cookie_pool as P
+    return P
 
 
-def clear_invalid():
-    f = pathlib.Path(DATA_DIR) / "COOKIE_INVALID"
-    if f.exists():
-        f.unlink()
+def mark_invalid(reason, account_id="default"):
+    _pool().mark_dead(account_id, reason)
+
+
+def clear_invalid(account_id="default"):
+    _pool().mark_ok(account_id)
+
+
+# ------------------------------------------------ 搜索风控探测（300011）
+# explore 首页正常 ≠ 搜索可用。账号被风控时搜索整页跳 website-login/error（300011），
+# 旧逻辑只探 explore 会误判"登录正常"，然后空跑 0 笔记。
+SEARCH_MARK = "SEARCH_RESTRICTED"
+SEARCH_RETRY_SEC = 3 * 3600  # 风控后每 3 小时才真正重开浏览器复检，期间直接跳过
+
+
+def check_search(bu):
+    """返回 (状态, 原因)。状态：ok / restricted / unknown。"""
+    bu.navigate("https://www.xiaohongshu.com/search_result?keyword="
+                + urllib.parse.quote("美食"))
+    bu.wait_for_load(timeout=15)
+    bu.wait(2.5)
+    info = bu.js(r"""
+    const t=document.body.innerText||'';
+    return {
+      href: location.href,
+      items: document.querySelectorAll('section.note-item').length,
+      err: /当前账号存在异常|安全限制|300011/.test(t)
+    };
+    """)
+    href = info.get("href", "")
+    if "website-login/error" in href or info.get("err"):
+        return "restricted", "搜索被风控（300011 当前账号存在异常）"
+    if info.get("items", 0) >= 3:
+        return "ok", ""
+    return "unknown", "搜索无卡片且未见明确风控页"
+
+
+def mark_search_restricted(reason, account_id="default"):
+    _pool().mark_restricted(account_id, reason)
+
+
+def clear_search_restricted(account_id="default"):
+    _pool().mark_ok(account_id)
+
+
+def search_recently_restricted(account_id="default"):
+    """该账号是否在搜索风控冷却窗口内（委托 cookie 池，按账号计时）。"""
+    return _pool().is_cooling(account_id)
 
 
 # ------------------------------------------------ 防刷屏状态

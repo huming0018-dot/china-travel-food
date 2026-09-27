@@ -14,14 +14,12 @@
 注意请求路径必须与实际一致（geocoder 末尾斜杠有无均可，但签名与请求要相同）。
 """
 import hashlib
-import os
 from urllib.parse import quote
 
 import requests
 
-# 云端从 deploy.env 注入 TENCENT_MAP_KEY / TENCENT_MAP_SK；本地/管线用内置默认值。
-KEY = os.environ.get("TENCENT_MAP_KEY", "").strip() or "7PQBZ-7IDKZ-YUHXF-7V2GG-M2B3O-4OBT6"
-SK = os.environ.get("TENCENT_MAP_SK", "").strip() or "4ibuevVyzenm3Xcz3X6b4rljRlhZHlZo"
+KEY = "7PQBZ-7IDKZ-YUHXF-7V2GG-M2B3O-4OBT6"
+SK = "4ibuevVyzenm3Xcz3X6b4rljRlhZHlZo"
 BASE = "https://apis.map.qq.com"
 
 

@@ -84,13 +84,6 @@ def main():
     if not PRIORITY.exists():
         sys.exit(f"找不到重点店清单: {PRIORITY}")
 
-    cookies = cloud_bu.load_cookies_from_env()
-    if not cookies:
-        print("未配置 XHS_COOKIE，无法采集（请先导出 cookie）。")
-        health.mark_invalid("缺少 XHS_COOKIE")
-        health.alert("云端未配置 XHS_COOKIE，采集未启动。", key="cookie_missing")
-        return 2
-
     names = next_batch(args.batch)
     if not names:
         print("519 家全部已采集。")
@@ -98,20 +91,26 @@ def main():
                      title="上海美食图鉴·任务完成", key="all_done", once=True)
         (pathlib.Path(DATA) / "ALL_REVIEWS_DONE").write_text(
             "519 家全部完成\n", encoding="utf-8")
+        # 即使采集中止，仍回收既有 unmatched 笔记进发现管线（幂等）
+        run_unmatched_bridge()
         return 0
 
-    bu = cloud_bu.CloudBrowser(headless=not args.headed, cookies=cookies)
+    import cloud_ready
     try:
-        ok, why = health.check_login(bu)
-        if not ok:
-            print("cookie 失效：", why)
-            health.mark_invalid(why)
-            health.alert(f"小红书 cookie 已失效（{why}），本轮跳过。请重新导出并更新 XHS_COOKIE。",
-                         key="cookie_invalid")
-            return 2
-        health.clear_invalid()
+        bu, account_id = cloud_ready.open_ready_browser(headless=not args.headed)
+    except cloud_ready.AllAccountsBlocked as e:
+        blocked = {k: v.get("status") for k, v in e.summary.items()}
+        print("全部账号当前不可用：", blocked)
+        health.alert(
+            "小红书全部账号当前都被风控/登录失效，浏览器采集暂停。\n"
+            "状态：" + json.dumps(blocked, ensure_ascii=False)
+            + "\n请再提供一个账号 cookie；系统每 3 小时自动复检已冷却账号。",
+            title="上海美食图鉴·账号全不可用", key="all_accounts_blocked")
+        return 0
 
-        added = 0
+    added = 0
+    try:
+        print(f"使用账号 {account_id} 采集。")
         import xhs_collect as X
         for i, name in enumerate(names, 1):
             try:
@@ -132,11 +131,26 @@ def main():
                     "--domain", "reviews", "--input", str(RAW_REVIEWS),
                     "--commit"], check=True)
 
+    # 回收 unmatched 笔记 → 开放式发现 → 准入 → 自动收录（失败不阻断本轮）
+    run_unmatched_bridge()
+
     total, taste = count_reviews()
     done = len(done_names())
     print(f"\n本轮新增 {added} 家；累计 {done}/519；"
           f"reviews {total} 行（含口味 {taste}）。")
     return 0
+
+
+def run_unmatched_bridge():
+    """把锚不入库的笔记（库内无此店/合集）喂回 admission→apply 管线。幂等、失败告警不抛。"""
+    bridge = HERE / "unmatched_bridge.py"
+    if not bridge.exists():
+        return
+    print("\n--- unmatched → discovery 桥接 ---")
+    try:
+        subprocess.run([sys.executable, str(bridge)], check=False)
+    except Exception as e:  # noqa: BLE001
+        print("unmatched bridge 异常:", repr(e)[:160])
 
 
 if __name__ == "__main__":

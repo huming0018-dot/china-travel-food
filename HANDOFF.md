@@ -10,6 +10,23 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-09-27 云端最新状态：账号 B 已接入并实测通过，小红书采集恢复
+
+- 账号 A 处于账号级搜索风控 `300011`（restricted，冷却中）。账号 B（小红书 uid `6972702800000000370282a7`）已登录、导出 19 个 cookie（含 `web_session`/`a1`），存为服务器与容器挂载目录 `/secrets/xhs_accounts/account_b.json`（chmod 600），零改代码、无需重建镜像。
+- **端到端实测通过**：`cloud_ready.open_ready_browser()` 自动跳过冷却中的 A → 用 B 开浏览器 → check_login + check_search 均通过 → `mark_ok`。当前 pool.summary：account_a=restricted/cooling，account_b=**ok**。后续 cron 的 run_batch/cloud_discover 将自动用 B 采集。
+- 加号（第三、四个账号）= 往服务器 `/home/ubuntu/food-cloud/xhs_accounts/` 丢一个 `<id>.json`（顶层 cookie JSON 数组），容器只读挂载即生效。
+- 排错要点：① 托管 profile 对 CDP `Storage.clearDataForOrigin`（仅 cookies）有韧性、登不出；彻底登出走应用自身菜单（`.menu-icon-btn`→`.menu-icon-dropdown-nav`→点 `div.menu-item`「退出登录」，点内层文字不触发 React）。② 整页 `/website-login?redirectPath=...` 报「回调地址错误」；应在 explore 用「点赞」触发页内弹窗 `.login-container`（小红书/微信扫码+手机号，无回调问题）。
+- 账号 A cookie 仍在服务器 `account_a.json`，未丢失，冷却到期自动复检。
+
+### 2026-09-27 B站(bilibili)美食探店采集已接入（API 优先 / bili-cli 兜底）
+
+- **新脚本** `cloud/cloud_bili_collect.py`（容器内 `/app/cloud/`），cron `crontab.txt` 第 8 条：`30 */6 * * *`（每 6 小时，:30 错峰，flock `/tmp/bili.lock`）。
+- **采集源**：首选零依赖搜索 API `x/web-interface/search/all/v2`（必须带 `Referer: https://search.bilibili.com`，否则 -412 风控）；API 非 code=0 自动切 `bili-cli`（容器内容错 pip 安装，装不上不阻断构建）。每次请求间隔≥1s，每轮≤10 词（≤200 条）。
+- **词根矩阵**：复用 `discovery_keywords.CATEGORY_SPEC`（41 品类）× 6 句式（`上海 <品类> 探店/苍蝇馆子/宝藏/正宗/主厨/新店`）= 246 词轮询；状态 `/app/data/bili_state.json` 记录已搜词/已处理 bvid/UP主累计计数，断点续跑。
+- **双通道**：① KOL 监控——UP主出现≥3 次 upsert 进新表 `food_kol_watchlist`（DDL：`db/migrations/011_bili_kol.sql`，**需在 Supabase SQL Editor 手动执行**）；② 餐厅候选——视频 title+简介落 `/app/data/discovery/raw_bili_<cat>.jsonl`（kind=discover，desc 已归一化全角竖线→冒号、并补店名锚点行）→ `admission_gate.py --raw ... --category <cat>` → `candidate_apply.py --category <cat> --commit`。
+- **反软广不变**：B站视频标题/简介只算一条整理声音，独立声音≥2（≥2 个不同 UP主）、口味均分≥3.5、招牌≥1 才 admit；单视频提及一律 hold/reject，宁空不假。坐标受上海 bbox 硬约束，电话/坐标/营业时间不确定留空。
+- **已知缺口**：抖音 / 公众号 / 视频号 源仍未接入。`food_kol_watchlist` 建表后首次运行自动预填 7 个已知美食 UP主（跟着老高吃东西、周大猫Mc、无所尉吃什么、元气八眉菌、一天世界的陆老师、头五头六白相相上海、味觉川菜）。
+
 
 
 ***
@@ -799,6 +816,32 @@ is_chain_standardized(派生): true 210 / false 1309   ← 前端"隐藏连锁/�
 
 **部署**：AMAP_KEY 已写入云端 deploy.env（env_file 传入、env.sh 固化）；Dockerfile COPY 加 cloud_amap_fill.py；crontab 第5条由 cloud_review_fill 改为 `cloud_amap_fill.py --apply`（:15/:35/:55，flock /tmp/amap_fill.lock）。容器 dry-run 与 `--apply --limit 10` 均实测通过、字段落库。全库缺营业时间(~1445)/电话(~499) 在 5000/天配额内 1 天左右补全。
 
+### ⑧.9 sourcing 开放式发现闭环工程化 + 高德队列/匹配修复（2026-09-26，本轮）
+
+**(1) 开放式发现闭环五模块（已离线端到端测试 + 上云部署）**。治"文档完整、实现不完备"的五个断点（云端只取证不发现、发现词只覆盖 6 品类、静态词表无自生成/图遍历、评论区线索无闭环、admit 无自动收录）：
+
+| 模块 | 位置 | 职责 |
+|---|---|---|
+| `discovery_keywords.py` | PIPE | 全品类发现词矩阵自动生成器：8 通用句式 + SUB/REGION/EN 模板，配每品类 CATEGORY_SPEC（约 40 品类）；含 **CUISINE_ROOT**（category→菜系根名，gate/apply 共用，避免映射散落）。验证计数 sichuan 31 / ramen 20 / bread 21。 |
+| `discovery_engine.py` | PIPE | 自驱动图遍历 DiscoveryEngine：种子入 frontier → 采集→raw_discovery→_ingest 识别品牌并扩展 frontier（合集锚点入 high、品牌长别名、评论区品牌、"明确推荐另一家"5 条 RE_REC、英文专名≥2 提及入 high、口述 SHOP_SUFFIX/重复≥2 入 low，否则 oral）；状态 engine_<cat>.json 断点续跑，frontier 清空才判饱和。离线识别鸟鸟/张记/宜宾燃面并追查到底。 |
+| `admission_gate.py`（v3 全品类参数化） | PIPE | load_db 用 CUISINE_ROOT 定位菜系子树；verdict：is_cat（section/品类标签/item≥1）+ 阈值（独立声音≥2、item≥1、均分≥3.5；<3.3 淘汰、3.3–3.5 hold；全好评 admit* 降置信；单一博主无食客交叉 hold；closed reject）。RE_PIN 贪婪 bug 已修。 |
+| `candidate_apply.py` | cloud | admit/admit* 且库外新店自动收录：amap_text 找餐饮 POI → pick_new_poi 锁唯一高分（差距<0.12 返 AMBIG 转 hold、top<0.6 返 None）→ build_fields 组装（phone 过 clean_phone、location EWKT+in_shanghai，宁空不假）→ name+addr_core 幂等回查 → POST 拿 id → tag_cuisine 挂根标签。默认 dry-run。 |
+| `cloud_discover.py` | cloud | 云端总编排：discover_state.json 维护 40 品类队列（先中餐八大+本帮京菜，再日料细分/亚洲/西餐，最后非正餐与场景）；每品类 Engine.run→未饱和下轮续，饱和→gate 裁决→apply 收录→双通道告警。cron 第6条（:25，flock discover.lock）。 |
+
+**(2) 小红书搜索账号级风控（300011，当前卡点）**：搜索整页跳 `website-login/error?error_code=300011 当前账号存在异常，请切换账号`（标题"安全限制"），任何关键词 0 卡片；explore 首页正常、登录态有效。**非 DOM/选择器 bug，是账号级搜索风控**。处置：`health.py` 新增 check_search / mark_search_restricted / clear / search_recently_restricted（标记文件 `/app/data/SEARCH_RESTRICTED`，冷却 SEARCH_RETRY_SEC=3 小时自动复检），已接入 run_batch 与 cloud_discover，冷却窗口内不开浏览器直接跳过并双通道告警。**解封依赖用户提供第二个账号 cookie 做账号轮换（推荐，多 cookie 承载机制尚未实现）或等待**。
+
+**(3) 高德"0 回填"两类底层修复（已实测回填增长、已编译进持久化镜像）**：
+- **队列饿死**：缺字段最多的难匹配店每轮排最前、主搜+3 级降级可烧 4 次调用，37 家 no_match 持续烧光每轮预算、队列无法推进。修复：state 新增 per-rid `fail` 计数（no_match 自增、匹配即 pop，每日配额重置时保留），候选排序改为 `fail_bucket`（0 次=0、1–2 次=1、≥3 次=2 沉底）+(-missing,id)。
+- **match_poi 过严误拒正确 POI**：新增 ① `name_score()`——剥 POI 尾部业态/菜品词（FOOD_TAIL，剥完≥3 字）+ 近音字归一（HOMO_CANON：膳/善、庭/亭、轩/萱、堂/唐、记/纪、城/成、园/元/缘/源、居/局、焙/培、合/和、味/未、渔/鱼、鲜/仙、茶/查、烤/考）+ 包含/序比取最大；② `primary_road()`——独立于门牌号提取去行政区后的第一条路/街/大道；③ 通用商场锚 `mall_token/mall_hit`（XX广场/商场/中心/天地/万象城…，不依赖手写 LANDMARKS）。锁定分支确认改为：强地址/分店/地标/商场 confirm≥0.9 时店名门槛 0.4/0.55；**否则同名（name_score≥0.85）+ same_road（primary_road 一致）也可确认**。修复后正确匹配：rid39 尚膳天焱→尚善天焱(龙之梦)、rid470 惠中川香蛙(嘉善路)、rid512 天水雅居(滨江)；并正确拒绝 rid455 误匹配到环宇城的错商场分店。
+- 已考虑未实现：地址为地标且主搜空时 resolve 已加"主名+地标"补搜（哲平鳗满+正大，实测高德确无该店则宁空）。
+
+**(4) 凭据持久化教训（重要，已加入 release 清单 #14）**：`build_on_server.sh` 第 24 行会用**本地 cloud/deploy.env 覆盖服务器同名文件**，此前直接在服务器追加的 AMAP_KEY/TG/飞书凭据在重建后全部丢失。**权威 deploy.env 必须维护在本地 cloud/deploy.env（gitignored、不入库）**，本轮已把高德/TG/飞书全部凭据补入本地文件，此后构建自动携带。
+
+**(5) 本轮覆盖率变化（active 1514）**：电话 68%→**73.4%（1111）**；营业时间 6%→**11.9%（180）**；坐标 **99.9%（1513，缺1）**；有评价店升至 **175**。高德 cron（:15/:35/:55，--apply）持续推进，电话/营业时间当日内继续补齐。
+
+> **凭据恢复后复验（2026-09-26，凭据曾因容器重建短暂丢失、已修复）**：重建容器一度带空凭据（AMAP_KEY 未配置），已把高德/TG/飞书全部凭据确认在**本地 cloud/deploy.env（权威、gitignored）**并 scp + compose up 重生效。手动 `cloud_amap_fill.py --apply --limit 60` 实测：60 调用回填 **37 字段 / 20 评分评价**，未匹配从修复前 37 降到 **11**，匹配修复与 fail 沉底端到端确认有效。新教训已沉淀至 lessons-learned #66/#67/#68。
+
+
 
 ***
 
@@ -970,6 +1013,14 @@ docker exec food-cloud crontab -l            # 4 条 cron 在
 
 13. **compose 无 build 段**：docker-compose.yml 只写 `image: food-cloud:local`、无 `build:`，故 `docker compose build` 空操作、`up` 沿用旧镜像；更新代码必须显式 `sudo docker build -t food-cloud:local .` 再 `compose up -d`。
 
+14. **build 会用本地 deploy.env 覆盖服务器凭据**：build_on_server.sh 上传本地 cloud/deploy.env 覆盖服务器同名文件，直接在服务器追加的键重建即丢；所有凭据（AMAP_KEY/TG/飞书）必须维护在本地 cloud/deploy.env（gitignored），勿只在服务器手改。
+
+15. **小红书搜索风控 300011 ≠ 登录失效**：搜索跳"安全限制/当前账号异常"但 explore 正常是账号级搜索风控，check_search 落标记、3 小时冷却复检，勿在窗口内硬刷；恢复靠换账号 cookie 轮换。
+
+16. **高德队列防饿死**：难匹配店用 fail 计数沉底（fail_bucket），否则每轮预算被同一批 no_match 烧光、队列不推进；店名匹配用 name_score（剥业态后缀+近音字），同名同路即可确认，不靠门牌号一刀切。
+
+17. **多账号 cookie 轮换已落地（300011 的工程解，2026-09-27）**：新增 `cloud/xhs_cookie_pool.py`（账号池 + 按账号状态/冷却，状态持久化 `/app/data/_cookie_pool_state.json`）与 `cloud/cloud_ready.py`（轮换开浏览器：登录失效/搜索风控/无卡片 → 标记该号、关浏览器、自动切下一个；全不可用才告警一次）。`health` 的标记/冷却函数委托 cookie 池（唯一真相源），`run_batch`/`cloud_discover` 改为经 `cloud_ready.open_ready_browser` 拿可用号。账号目录 compose 只读挂载 `/secrets/xhs_accounts`（本地 `cloud/xhs_accounts/`，gitignored），每文件一号（`account_a.json`/`account_b.json`，形态见 `cloud_bu.load_cookies_from_text`）；**加号 = 往目录丢一个 json，零改代码、无需重建镜像**。无账号目录时回退旧单账号（id=default）。冷却 `ACCOUNT_RETRY_SEC` 默认 3 小时。已实测：单号被风控 → 标记 restricted + 全不可用告警一次（TG/飞书均成功），不硬刷；高德 cron 不受影响。
+
 
 
 ***
@@ -996,3 +1047,27 @@ docker exec food-cloud crontab -l            # 4 条 cron 在
   * `research/`、`data/`、`backups/`、`pipeline_work/` 为工作数据区，未动。
 
 * **整理后体积**：仍为 592M（大头是 node\_modules/.next/.git，本就不该入库；过程稿仅 380K 移到 archive，净释放可忽略）。根目录文件从 20+ 个过程稿精简到 5 个根级 md/json + 配置。
+## 2026-09-27 店名抽取精度修复 + unmatched 闭环 + 城市闸门
+
+### 根因（用户审计 candidates_*.jsonl 确认）
+旧 admission_gate 把菜名/路名/泛词/元话术/外地城市名误抽成 brand，导致 190 条 unmatched 线索 0 收录：
+resolve_anchor_name/pin_name 的兜底「任意≥3字即收」是漏勺；GENERIC_ANCHOR 只有面包词无负样本；无城市闸门（B站/小红书搜「上海X」返回大量长沙/珠海/北京视频照单全收）。
+
+### 修复（确定性函数在 common.py）
+- `common.looks_like_brand(token) -> (bool, reason)`：菜名/路名/泛词/元话术/外地城市/整句/过长(>14) 一律拒；带店后缀或短 token(2-6字) 放行，下游门槛再过滤。
+- `common.note_is_out_of_shanghai(title, desc)`：正文明确外地城市且无上海信号 → 整篇丢弃。
+- admission_gate：resolve_anchor_name/pin_name 兜底过 looks_like_brand；主循环加城市闸门（统计「外地丢弃 N」）。
+- candidate_apply：入库前再过 looks_like_brand 第二道。
+- cloud_amap_fill：配额码 10044(USER_DAILY_QUERY_OVER_LIMIT) 与 10003 同视为日配额耗尽即停。
+
+### unmatched→discovery 闭环（本次新增 cloud/unmatched_bridge.py）
+旧断点：xhs_to_reviews 把锚不入库的笔记写 unmatched_shops.jsonl 后无下游。新桥接：
+- 从 raw_xhs.jsonl 按 note_url 找回完整笔记（正文+评论）；
+- 推断品类（优先 search_name 在库菜系反查 CUISINE_ROOT，兜底正文品类词）；
+- 去重(note_url 状态文件)后追加进 raw_discovery.jsonl；
+- 对每个有新证据的品类跑 admission_gate → candidate_apply --commit。
+已接入 run_batch.py（无论是否采到新店都跑，幂等）。
+
+### 验证
+- bread 品类：修复前垃圾 brand（第二次来总结/年老店/小而美的面包店/定西路/芝士猪排咖喱饭/要不要再加一句简短标签…）全消；修复后 admit 全是真店（BAsdBAN/FASCINO/Soso/O'mills/ComeCome/Punch Monday/L'Atelier Over Bakery/Table A Deli/Shiopon）。
+- 高德日配额当日已耗尽（USER_DAILY_QUERY_OVER_LIMIT），candidate_apply 暂 0 插入；配额次日重置后自动补录。回归店 Proust Moment 现 reject(非本品类)、B+Baked hold(独立声音1)，需 cloud_discover 继续图遍历补证据。

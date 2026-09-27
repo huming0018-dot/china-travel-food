@@ -12,7 +12,8 @@ services:
       - BATCH=15              # 每轮采集店数（300031零触发后从10提至15，小批量仍稳）
     volumes:
       - fooddata:/app/data                                  # 采集断点/日志持久化
-      - ./xhs_cookies.json:/secrets/xhs_cookies.json:ro     # 登录态（只读挂载，不进镜像）
+      - ./xhs_accounts:/secrets/xhs_accounts:ro             # 多账号 cookie 池（加号=丢文件）
+      - ./xhs_cookies.json:/secrets/xhs_cookies.json:ro     # 旧单账号（回退用，只读）
 
 volumes:
   fooddata:

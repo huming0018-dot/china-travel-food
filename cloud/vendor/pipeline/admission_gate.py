@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""admission_gate.py v2 — 社交声音聚合 + 收录门槛（离线、确定性、不耗浏览器）。
+"""admission_gate.py v3 — 全品类社交声音聚合 + 收录门槛（离线、确定性、不耗浏览器）。
 
-v2 相比 v1 的修正（面包线做精时暴露的问题）：
-  1) 自由文本英文 NER 太脆弱（"L'Atelier Over Bakery" 被切成 over/overl/latelierover 等5个碎片）
-     → 改为以【合集结构化锚点】为主："- 店名 ："、"📍店名"、"店名丨菜品"、编号/图X；
-  2) 品牌异写归一：BRAND_DICT 把 over / atelier over / L'Atelier Over Bakery 等别名归到一个品牌实体；
-  3) 限定主营面包：库内店须挂面包标签，非面包店（蜀宴赋）排除；
-  4) 评论区按【评论者 name】计独立声音（v1 错把笔记作者当评论者，声音被低估）；
-  5) 单一博主合集不构成收录，必须有独立交叉（多合集 / 评论区独立食客 / 专门笔记）。
+v3 在 v2（面包做精）基础上【参数化到任意品类】，使日料/面包跑通的方法论可回滚所有菜系：
+  - 主营判定 / 招牌词 / 标签子树全部按 --category 动态生成（不再硬编码面包）；
+  - 品类根标签子树来自 discovery_keywords.CUISINE_ROOT；
+  - 招牌/食物信号 = 品类专属词 ∪ 通用食物词；
+  - 门槛阈值不变（独立声音≥2、口味均分≥3.5、<3.3 淘汰、全好评 admit* 降置信）。
+
+v2 关键修正（保留）：合集结构化锚点为主、品牌异写归一、评论者计独立声音、单一博主不构成收录。
 
 用法：
-  python3 admission_gate.py --raw research/social/raw_discovery.jsonl --category bread
+  python3 admission_gate.py --raw <raw_discovery.jsonl> --category sichuan
+  python3 admission_gate.py --raw ... --category bread
 """
 import argparse
 import json
@@ -21,27 +22,76 @@ import sys
 from collections import defaultdict
 
 import common as C
+import discovery_keywords as K
 
 # ---------------------------------------------------------------- 口味
 POS = {"好吃": .35, "正宗": .3, "惊艳": .4, "鲜嫩": .25, "入味": .25, "地道": .3, "值得": .2,
        "香": .15, "酥脆": .25, "弹": .2, "浓郁": .15, "回购": .25, "新鲜": .25, "爆汁": .3,
-       "鲜美": .25, "嫩滑": .25, "层次": .15, "外脆里韧": .3, "必买": .25, "天花板": .25}
+       "鲜美": .25, "嫩滑": .25, "层次": .15, "外脆里韧": .3, "必买": .25, "天花板": .25,
+       "入口即化": .35, "必吃": .25, "封神": .3}
 NEG = {"难吃": -.6, "避雷": -.5, "踩雷": -.5, "失望": -.4, "一般": -.3, "不好吃": -.55,
        "腥": -.35, "柴": -.35, "预制": -.4, "冷冻": -.3, "不新鲜": -.45, "太咸": -.25,
        "糊弄": -.4, "无味": -.4, "寡淡": -.3, "嚼不动": -.4, "名不副实": -.4, "怕了": -.15,
        "没记忆点": -.2, "两头不着": -.2, "平平无奇": -.25}
 PROMO_WORDS = ("团购", "代金券", "套餐", "合作", "推广", "广告", "福利", "戳左下角",
                "购买链接", "招商", "加盟")
+
+# ---------------------------------------------------------------- 食物 / 招牌词
 BAKED_ITEMS = ("可颂", "贝果", "酸种", "酸面包", "欧包", "吐司", "乡村", "全麦", "肉桂卷",
                "司康", "法棍", "恰巴塔", "佛卡夏", "丹麦", "菠萝包", "盐面包", "碱水",
                "生吐司", "酥皮", "牛角", "黑麦", "核桃", "布里欧", "戚风", "明太子", "苏打面包")
+# 通用食物词（多字优先，避免单字误命中；覆盖各菜系主食/肉菜/甜品/饮品）
+GENERIC_ITEMS = (
+    "拉面", "乌冬", "荞麦面", "蘸面", "豚骨", "米粉", "河粉", "粿条", "米线", "炒饭", "盖饭",
+    "便当", "定食", "饭团", "三明治", "汉堡", "披萨", "意面", "烩饭", "包子", "饺子", "馄饨",
+    "锅贴", "生煎", "烧麦", "小笼", "汤圆", "春卷", "法包", "肉夹馍", "葱油饼", "烧饼",
+    "烧鸟", "烤串", "烧肉", "烤肉", "和牛", "牛排", "猪排", "炸鸡", "鸡肉", "牛肉", "羊肉",
+    "猪肉", "鸭肉", "海鲜", "鳗鱼", "天妇罗", "关东煮", "火锅", "辣子鸡", "回锅肉",
+    "麻婆豆腐", "水煮鱼", "酸菜鱼", "烤鱼", "佛跳墙", "烧鹅", "烧腊", "点心", "虾饺", "肠粉",
+    "牛肉丸", "卤味", "凉菜", "香肠", "咖喱", "冬阴功", "沙拉", "巴斯克", "提拉米苏", "慕斯",
+    "布丁", "冰淇淋", "冰激凌", "刨冰", "舒芙蕾", "松饼", "可丽饼", "马卡龙", "泡芙", "奶油",
+    "拿铁", "手冲", "美式", "奶茶", "鸡尾酒", "威士忌", "精酿", "抹茶", "和果子", "蛋挞",
+    "糖水", "肉冻", "鹅肝", "蜗牛", "龙虾", "螃蟹", "生蚝", "三文鱼", "金枪鱼", "鸭肝",
+    "ramen", "pho", "curry", "steak", "pizza", "pasta", "croissant", "bagel", "cake",
+    "coffee", "cocktail", "tacos", "burger", "lobster", "crab", "salmon", "tuna", "toast",
+    "brunch", "sourdough", "bakery", "noodle", "bbq",
+)
+# 品类专属额外食物词（在通用之外补充）
+CATEGORY_ITEMS = defaultdict(tuple)
+
+
+def item_words(cat):
+    words = set(GENERIC_ITEMS)
+    if cat == "bread":
+        words |= set(BAKED_ITEMS)
+    for x in CATEGORY_ITEMS.get(cat, ()):
+        words.add(x)
+    spec = K.CATEGORY_SPEC.get(cat, {})
+    for s in spec.get("subs", []):
+        if len(s) >= 2:
+            words.add(s)
+    return words
+
+
 BREAD_SECTION = re.compile(r"(可颂|酥皮|盐面包|欧包|酸面?包|贝果|吐司|日式|面包|烘焙|bagel|croissant|sourdough|bakery)")
-# 定向取证搜索词 → 实际规范品牌（anchor 按店名搜，品牌由取证确认；解决 token 顺序/异写，如 Time&Flour 实为 Flour Time）
+
+
+def section_regex(cat):
+    if cat == "bread":
+        return BREAD_SECTION
+    spec = K.CATEGORY_SPEC.get(cat, {})
+    words = list(spec.get("names", [])) + list(spec.get("ens", []))
+    words += [s for s in spec.get("subs", []) if len(s) >= 3][:8]
+    words = sorted(set(words), key=len, reverse=True)
+    pat = "|".join(re.escape(w) for w in words if w)
+    return re.compile(pat, re.I) if pat else None
+
+
+# 定向取证搜索词 → 规范品牌（仅面包需要；其余品类为空）
 ANCHOR_BRAND = {"Orenda Bay": "Orenda Bay", "Time & Flour": "Flour Time",
                 "时光 面粉 面包": "Flour Time"}
 
-# ---------------------------------------------------------------- 品牌异写词典（seed，持续扩充）
-# canonical + aliases（都会 cjk_norm；短别名只在结构化锚点精确匹配，不做自由子串，防 over/soso 误锚）
+# ---------------------------------------------------------------- 品牌异写词典
 BRAND_DICT = [
     ("L'Atelier Over Bakery", ["latelieroverbakery", "atelieroverbakery", "atelierover",
                                "latelierover", "overbakery", "over", "overl", "latelieroveromakase",
@@ -82,8 +132,7 @@ def build_alias_map():
     return alias2canon, short
 
 
-# ---------------------------------------------------------------- 未知专名开放式发现（线索）
-# 结构化锚点管"准"，这里管"全"：捞不在品牌词典/库里的新店名（如 Orenda Bay），只作线索、需锚定取证。
+# ---------------------------------------------------------------- 未知英文专名
 EN_STOP = {"best", "top", "bakery", "bakeries", "bread", "sourdough", "croissant", "bagel",
            "shanghai", "recipe", "recipes", "food", "guide", "the", "and", "a", "an", "of",
            "in", "to", "for", "with", "is", "are", "homemade", "artisan", "fresh", "new",
@@ -94,12 +143,12 @@ EN_STOP = {"best", "top", "bakery", "bakeries", "bread", "sourdough", "croissant
            "it", "this", "that", "you", "i", "we", "they", "he", "she", "at", "on", "be",
            "was", "were", "been", "am", "do", "does", "did", "have", "has", "had", "will",
            "would", "can", "could", "should", "if", "as", "by", "or", "not", "but", "from",
-           "up", "out", "into", "about", "more", "also", "just", "one", "no", "yes"}
+           "up", "out", "into", "about", "more", "also", "just", "one", "no", "yes", "go",
+           "hidden", "spot"}
 _EN = re.compile(r"[A-Za-z][A-Za-z0-9'&+.\-]{1,30}(?:\s+[A-Za-z0-9'&+.\-]{1,30}){0,5}")
 
 
 def collect_leads(text, known, leads):
-    """从文本提取未知英文专名（最长匹配）。known=已知名 norm 集合，命中则跳过。"""
     for m in _EN.finditer(text):
         raw = re.sub(r"\s+", " ", m.group()).strip(" .-'&+")
         toks = [t for t in re.split(r"[\s&+]+", raw.lower().replace(".", " ").replace("'", " "))
@@ -116,7 +165,6 @@ def collect_leads(text, known, leads):
 
 
 def merge_leads(leads):
-    """子串碎片归并到最长专名，频次相加。"""
     keys = sorted(leads, key=lambda x: -len(x))
     keep = {}
     for k in keys:
@@ -124,7 +172,7 @@ def merge_leads(leads):
         if longer:
             keep[longer[0]] += leads[k]
         else:
-            keep[k] = keep.get(k, 0) + leads[k]
+            keep[k] = keep.get(k, 0) + 1
     return keep
 
 
@@ -141,13 +189,13 @@ def has_neg_word(t):
 
 
 # ---------------------------------------------------------------- 结构化锚点
-# "- Basdban ：..." / "- bebaked ：..."
 RE_DASH = re.compile(r"^\s*[-•·▪️◦]?\s*([A-Za-z一-龥][A-Za-z一-龥'&+.・\s]{0,22}?)\s*[:：]\s*(.+)$")
-RE_PIN = re.compile(r"📍\s*([A-Za-z一-龥][A-Za-z一-龥'&+.・\s]{0,22})")          # 📍over
-RE_BAR = re.compile(r"([A-Za-z一-龥][A-Za-z一-龥'&+.・\s]{0,18}?)\s*丨\s*")      # lilis丨菜品
+RE_PIN = re.compile(r"📍\s*([A-Za-z一-龥][A-Za-z一-龥'&+.・\s]{0,22})")
+RE_BAR = re.compile(r"([A-Za-z一-龥][A-Za-z一-龥'&+.・\s]{0,18}?)\s*丨\s*")
 RE_NUM = re.compile(r"(?:^|\s)(?:[①-⑳㉑-㉟]|\d{1,2}[.、)]|\d️⃣)\s*([A-Za-z一-龥][A-Za-z一-龥'&+.・\s]{0,20}?)(?:[:：]|\s{2,}|$)")
 GENERIC_ANCHOR = {"面包", "面包店", "可颂", "贝果", "欧包", "酸种", "吐司", "甜品", "蛋糕",
-                  "盐面包", "酥皮", "烘焙", "bakery", "bread", "croissant", "bagel"}
+                  "盐面包", "酥皮", "烘焙", "bakery", "bread", "croissant", "bagel", "餐厅",
+                  "饭店", "美食", "大家", "指数", "店铺"}
 
 
 def clean_anchor(s):
@@ -158,22 +206,20 @@ def clean_anchor(s):
 
 
 # ---------------------------------------------------------------- 加载库
-def load_db():
+def load_db(category):
+    root_name = K.CUISINE_ROOT.get(category)
     rests = C.fetch_all("restaurants",
-                        "id,name,status,price_scene,price_band,score_taste,score_diner,review_count,district,address",
+                        "id,name,status,score_taste,score_diner,review_count,district,address",
                         order_col="id")
     cuis = C.fetch_all("cuisines", "id,name,parent_category", order_col="id")
     rc = C.fetch_all("restaurant_cuisines", "restaurant_id,cuisine_id", order_col="restaurant_id")
-    # 面包标签子树
     name2id = {c["name"]: c["id"] for c in cuis}
-    bread_root = name2id.get("面包")
-    children = {c["id"] for c in cuis if c["parent_category"] == bread_root}
-    bread_tags = {bread_root} | children
+    root_id = name2id.get(root_name)
+    children = {c["id"] for c in cuis if c["parent_category"] == root_id}
+    tagset = ({root_id} | children) if root_id is not None else set()
     rid_tags = defaultdict(set)
     for x in rc:
         rid_tags[x["restaurant_id"]].add(x["cuisine_id"])
-    rbyid = {r["id"]: r for r in rests}
-    # 库内 forms
     db = []
     for r in rests:
         full = re.split(r"[（(]", r["name"])[0].strip()
@@ -184,26 +230,24 @@ def load_db():
                 forms.add(s)
         db.append({"id": r["id"], "name": r["name"], "status": r["status"], "full": full,
                    "forms": {f for f in forms if f and len(f) >= 2},
-                   "has_bread_tag": bool(bread_tags & rid_tags.get(r["id"], set())),
+                   "has_cat_tag": bool(tagset & rid_tags.get(r["id"], set())),
                    "row": r})
-    return db, rbyid
+    return db
 
 
 def match_db_anchor(anchor, db):
-    """结构化锚点名 → 库内店（要求唯一且挂面包标签，或唯一强匹配）。"""
     na = C.cjk_norm(anchor)
     if not na or na in {C.cjk_norm(g) for g in GENERIC_ANCHOR}:
         return None
     exact = [d for d in db if na in d["forms"] or d["forms"] and any(f == na for f in d["forms"])]
     if exact:
-        bread = [d for d in exact if d["has_bread_tag"]] or exact
-        return bread[0] if len(bread) == 1 else None
-    # 子串
+        tagged = [d for d in exact if d["has_cat_tag"]] or exact
+        return tagged[0] if len(tagged) == 1 else None
     hits = [d for d in db if (len(na) >= 4 and na in C.cjk_norm(d["name"]))
             or (len(na) >= 4 and C.cjk_norm(d["full"]) in na)]
-    bread = [d for d in hits if d["has_bread_tag"]]
-    if len(bread) == 1:
-        return bread[0]
+    tagged = [d for d in hits if d["has_cat_tag"]]
+    if len(tagged) == 1:
+        return tagged[0]
     return None
 
 
@@ -223,97 +267,132 @@ def main():
     ap.add_argument("--category", default="bread")
     ap.add_argument("--out", default="")
     args = ap.parse_args()
+    category = K.normalize_category(args.category)
 
     rawp = pathlib.Path(args.raw)
     raw_files = [rawp]
-    _anchor_f = rawp.parent / "raw_anchor.jsonl"
-    if _anchor_f.exists() and _anchor_f != rawp:
-        raw_files.append(_anchor_f)
+    _af = rawp.parent / "raw_anchor.jsonl"
+    if _af.exists() and _af != rawp:
+        raw_files.append(_af)
     records = []
     for rf in raw_files:
         for line in rf.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 r = json.loads(line)
-                if r.get("kind") in ("discover", "anchor") and (not args.category or r.get("category") == args.category):
+                if r.get("kind") in ("discover", "anchor") and r.get("category") == category:
                     records.append(r)
 
-    db, rbyid = load_db()
+    db = load_db(category)
     alias2canon, short_alias = build_alias_map()
-    # 已知名（品牌词典别名 + 库内 forms），未知专名提取时用于去重
     known_names = set(alias2canon)
     for dd in db:
         known_names.update(dd["forms"])
     leads = defaultdict(int)
-
+    items_set = item_words(category)
+    sec_re = section_regex(category)
     profiles = {}
 
     def get_brand(canon):
         if canon not in profiles:
             profiles[canon] = {
-                "brand": canon, "rid": None, "in_db": False, "db_has_bread_tag": False,
-                "status": "unknown", "compiler_voices": {},   # url/author -> 结构化描述
-                "diner_voices": {},                          # 评论者/独立食客 key -> text
+                "brand": canon, "rid": None, "in_db": False, "db_has_cat_tag": False,
+                "status": "unknown", "compiler_voices": {}, "diner_voices": {},
                 "taste_vals": [], "items": set(), "has_negative": False,
-                "sections": set(), "evidence": [], "promo": 0, "old_taste": None,
-                "review_count": 0, "district": None, "address": None}
+                "sections": set(), "evidence": [], "promo": 0, "review_count": 0}
         return profiles[canon]
 
     def bind_db(brand, d):
         p = get_brand(brand)
         if d:
             p["rid"] = d["id"]; p["in_db"] = True
-            p["db_has_bread_tag"] = d["has_bread_tag"]; p["status"] = d["status"]
-            p["old_taste"] = d["row"].get("score_taste")
+            p["db_has_cat_tag"] = d["has_cat_tag"]; p["status"] = d["status"]
             p["review_count"] = d["row"].get("review_count")
-            p["district"] = d["row"].get("district"); p["address"] = d["row"].get("address")
 
     def resolve_anchor_name(name):
-        """锚点名 → (brand, db)。先品牌词典，再库内。"""
         na = C.cjk_norm(name)
         if not na:
             return None, None
         if na in alias2canon:
             return alias2canon[na], None
-        # 别名作为子串（长别名）
         for al, canon in alias2canon.items():
             if len(al) >= 6 and (al in na or na in al):
                 return canon, None
         d = match_db_anchor(name, db)
         if d:
             return d["full"], d
-        # 未知名（看起来像品牌：含字母或≥3字且非品类词）
-        if (re.search(r"[A-Za-z]", name) or len(na) >= 3) and na not in {C.cjk_norm(g) for g in GENERIC_ANCHOR}:
-            return name.strip(), None
+        if (re.search(r"[A-Za-z]", name) or len(na) >= 3) and \
+           na not in {C.cjk_norm(g) for g in GENERIC_ANCHOR}:
+            ok, _reason = C.looks_like_brand(name)
+            if ok:
+                return name.strip(), None
+            return None, None  # 菜名/路名/泛词/元话术 → 不建 profile
         return None, None
 
+    _SHOP_END = re.compile(r"[店坊馆苑屋堂房铺室社家行记]$")
+
+    def pin_name(raw):
+        """📍 后店名常带空格再接描述。逐级缩短前缀只认词典/库，再退回中文后缀前导词。"""
+        parts = raw.strip().split()
+        for cut in range(len(parts)):
+            cand = " ".join(parts[:len(parts) - cut]).strip()
+            na = C.cjk_norm(cand)
+            if not na:
+                continue
+            if na in alias2canon:
+                return alias2canon[na], None
+            hit = [canon for al, canon in alias2canon.items()
+                   if len(al) >= 6 and (al in na or na in al)]
+            if hit:
+                return hit[0], None
+            d = match_db_anchor(cand, db)
+            if d:
+                return d["full"], d
+        head = parts[0] if parts else raw.strip()
+        if _SHOP_END.search(head):
+            return head, None
+        if len(parts) == 1 and re.fullmatch(r"[一-龥]{3,}", head):
+            ok, _r = C.looks_like_brand(head)
+            if ok:
+                return head, None
+        return None, None
+
+    def collect_items(p, *texts):
+        for t in texts:
+            for it in items_set:
+                if it in t:
+                    p["items"].add(it)
+
+    out_of_sh = 0
     for rec in records:
         for note in rec["notes"]:
             title, desc = note.get("title", ""), note.get("desc", "")
+            # 城市闸门：正文明确外地且无上海证据 → 整篇丢弃
+            if C.note_is_out_of_shanghai(title, desc):
+                out_of_sh += 1
+                continue
             author = (note.get("author") or "")[:20]
             url = note.get("url", "")
             is_promo_note = any(w in desc for w in PROMO_WORDS)
             cur_section = ""
 
-            # ---- anchor（定向取证）：强制品牌，整篇正文作为一个整理者声音
-            force_brand = ANCHOR_BRAND.get(rec["query"]) if rec.get("kind") == "anchor" else None
+            force_brand = ANCHOR_BRAND.get(rec["query"]) if (
+                rec.get("kind") == "anchor" and category == "bread") else None
             if force_brand:
                 pf = get_brand(force_brand)
-                pf["sections"].add("面包")
+                pf["sections"].add(category)
                 pf["compiler_voices"][f"{url}#{author}"] = re.sub(r"\s+", " ", desc).strip()[:200]
                 tv = taste_raw(title + "。" + desc)
                 if tv is not None:
                     pf["taste_vals"].append(tv)
                 if has_neg_word(desc):
                     pf["has_negative"] = True
-                for it in BAKED_ITEMS:
-                    if it in desc or it in title:
-                        pf["items"].add(it)
+                collect_items(pf, desc, title)
 
-            # ---- 逐行找结构化锚点
             for line in split_lines(desc):
-                sec = BREAD_SECTION.search(line)
-                if sec and len(line) < 14:
-                    cur_section = sec.group(1)
+                if sec_re and len(line) < 14:
+                    sm = sec_re.search(line)
+                    if sm:
+                        cur_section = sm.group(0)
                 m = RE_DASH.match(line)
                 if m:
                     anchor, detail = clean_anchor(m.group(1)), m.group(2)
@@ -329,34 +408,46 @@ def main():
                             p["taste_vals"].append(tv)
                         if has_neg_word(detail):
                             p["has_negative"] = True
-                        for it in BAKED_ITEMS:
-                            if it in detail or it in anchor:
-                                p["items"].add(it)
+                        collect_items(p, detail, anchor)
                         if is_promo_note:
                             p["promo"] += 1
                         if len(p["evidence"]) < 8:
                             p["evidence"].append(f"{anchor}：{detail.strip()[:90]}")
                     continue
-                for rx in (RE_PIN, RE_BAR, RE_NUM):
+                for mm in RE_PIN.finditer(line):
+                    brand, d = pin_name(mm.group(1))
+                    if brand:
+                        p = get_brand(brand); bind_db(brand, d)
+                        if cur_section:
+                            p["sections"].add(cur_section)
+                        rest = line[mm.end():].strip()
+                        p["compiler_voices"].setdefault(f"{url}#{author}",
+                                                        (rest or brand)[:200])
+                        tv = taste_raw(line)
+                        if tv is not None:
+                            p["taste_vals"].append(tv)
+                        if has_neg_word(line):
+                            p["has_negative"] = True
+                        collect_items(p, line)
+                for rx in (RE_BAR, RE_NUM):
                     for mm in rx.finditer(line):
                         anchor = clean_anchor(mm.group(1))
-                        if not anchor or C.cjk_norm(anchor) in {C.cjk_norm(g) for g in GENERIC_ANCHOR}:
+                        if not anchor or C.cjk_norm(anchor) in {
+                                C.cjk_norm(g) for g in GENERIC_ANCHOR}:
                             continue
                         brand, d = resolve_anchor_name(anchor)
                         if brand:
                             p = get_brand(brand); bind_db(brand, d)
                             rest = line[mm.end():].strip()
-                            p["compiler_voices"].setdefault(f"{url}#{author}", (rest or anchor)[:200])
+                            p["compiler_voices"].setdefault(f"{url}#{author}",
+                                                            (rest or anchor)[:200])
                             tv = taste_raw(line)
                             if tv is not None:
                                 p["taste_vals"].append(tv)
                             if has_neg_word(line):
                                 p["has_negative"] = True
-                            for it in BAKED_ITEMS:
-                                if it in line:
-                                    p["items"].add(it)
+                            collect_items(p, line)
 
-            # ---- 正文里的品牌词典补充（长别名自由匹配）
             body_nt = C.cjk_norm(title + desc)
             for al, canon in alias2canon.items():
                 if len(al) >= 6 and al in body_nt:
@@ -368,29 +459,22 @@ def main():
                                 p["taste_vals"].append(tv)
                             if has_neg_word(s):
                                 p["has_negative"] = True
-                            for it in BAKED_ITEMS:
-                                if it in s:
-                                    p["items"].add(it)
+                            collect_items(p, s)
 
-            # ---- 评论区：按评论者 name 计独立声音
             for c in note.get("comments") or []:
                 cname = (c.get("name") or "").replace("作者", "").strip()
                 ctext = (c.get("text") or "").strip()
                 if not ctext or len(ctext) < 4:
                     continue
                 cnt = C.cjk_norm(ctext)
-                # 评论里提到的品牌（anchor 时初始为强制品牌；再先词典、库内）
                 brands_here = {force_brand} if force_brand else set()
                 for al, canon in alias2canon.items():
                     if (len(al) >= 4 and al in cnt) or (al in cnt and al not in short_alias):
                         brands_here.add(canon)
                 if not brands_here:
-                    d = None
                     for dd in db:
-                        if dd["has_bread_tag"] and any(len(f) >= 4 and f in cnt for f in dd["forms"]):
-                            brands_here.add(dd["full"]); d = dd
-                    if d:
-                        bind_db(d["full"], d)
+                        if dd["has_cat_tag"] and any(len(f) >= 4 and f in cnt for f in dd["forms"]):
+                            brands_here.add(dd["full"])
                 for brand in brands_here:
                     p = get_brand(brand)
                     if C.cjk_norm(cname) == C.cjk_norm(author) or "官方" in cname:
@@ -403,42 +487,39 @@ def main():
                             p["taste_vals"].append(tv)
                         if has_neg_word(ctext):
                             p["has_negative"] = True
-                        for it in BAKED_ITEMS:
-                            if it in ctext:
-                                p["items"].add(it)
+                        collect_items(p, ctext)
 
-            # ---- 收集未知专名开放式线索（正文+评论，最长匹配）
             _alltext = title + "\n" + desc + "\n" + " ".join(
                 c.get("text", "") for c in note.get("comments") or [])
             collect_leads(_alltext, known_names, leads)
 
-    # ---------------------------------------------------------------- 门槛裁决
+    # ---------------------------------------------------------------- 裁决
     def verdict(p):
         n_comp = len(p["compiler_voices"])
         n_diner = len(p["diner_voices"])
         tv = p["taste_vals"]
         avg = round(sum(tv) / len(tv), 2) if tv else None
         items = len(p["items"])
-        is_bread = bool(p["sections"]) or p["db_has_bread_tag"] or items >= 1
+        is_cat = bool(p["sections"]) or p["db_has_cat_tag"] or items >= 1
         comp_authors = {k.split("#", 1)[1] for k in p["compiler_voices"]}
-        independent_sources = len(comp_authors) + n_diner  # 整理者(去重) + 独立食客
-        # 关店 / 营销 / 口味差
+        independent_sources = len(comp_authors) + n_diner
         if p["status"] == "closed":
             return "reject", "已关店", independent_sources, avg, items
         if avg is not None and avg < 3.3:
             return "reject", f"口味均分 {avg} 偏低", independent_sources, avg, items
-        if not is_bread:
-            return "reject", "非主营面包（排除跨品类噪声）", independent_sources, avg, items
-        # admit：主营面包 + ≥2 独立声音（不能只有单一整理者）+ 招牌口感 + 正向
+        if not is_cat:
+            return "reject", "非本品类（排除跨品类噪声）", independent_sources, avg, items
         if independent_sources >= 2 and items >= 1 and avg is not None and avg >= 3.5:
             if n_diner == 0 and len(comp_authors) == 1:
                 return "hold", "仅单一博主整理、无独立食客交叉", independent_sources, avg, items
             tag = "admit" if p["has_negative"] else "admit*"
             tail = "" if p["has_negative"] else "（无差评交叉,全好评置信略降）"
-            return tag, f"独立声音{independent_sources}(整理{len(comp_authors)}/食客{n_diner})、均分{avg}、招牌{items}{tail}", independent_sources, avg, items
+            return tag, (f"独立声音{independent_sources}(整理{len(comp_authors)}/食客{n_diner})、"
+                         f"均分{avg}、招牌{items}{tail}"), independent_sources, avg, items
         if independent_sources == 0:
             return "hold", "无真实食客声音（旧主观分不采信）", independent_sources, avg, items
-        return "hold", f"独立声音{independent_sources}/均分{avg}/招牌{items}，证据不足", independent_sources, avg, items
+        return "hold", f"独立声音{independent_sources}/均分{avg}/招牌{items}，证据不足", \
+            independent_sources, avg, items
 
     rows, counts = [], defaultdict(int)
     for p in profiles.values():
@@ -452,44 +533,40 @@ def main():
         q = dict(p)
         for k in ("items", "sections"):
             q[k] = sorted(q[k])
-        q["compiler_voices"] = p["compiler_voices"]
-        q["diner_voices"] = p["diner_voices"]
         return q
 
-    out_path = args.out or str(pathlib.Path(args.raw).parent / f"candidates_{args.category}.jsonl")
+    out_path = args.out or str(pathlib.Path(args.raw).parent / f"candidates_{category}.jsonl")
     pathlib.Path(out_path).write_text(
         "\n".join(json.dumps(jsonable(p), ensure_ascii=False) for p in rows), encoding="utf-8")
 
-    # ---------------------------------------------------------------- 打印
-    print(f"发现笔记 {sum(len(r['notes']) for r in records)} 篇；品牌候选 {len(rows)} 个")
+    print(f"发现笔记 {sum(len(r['notes']) for r in records)} 篇（外地丢弃 {out_of_sh}）；品牌候选 {len(rows)} 个")
     print("裁决统计:", dict(counts))
     print("\n=== admit / admit*（够格收录）===")
     for p in sorted(rows, key=lambda x: -x["independent_sources"]):
         if p["verdict"].startswith("admit"):
             tag = "库内" if p["in_db"] else "新增"
-            print(f"  [{tag}] {p['brand'][:26]:<28} 独立声音{p['independent_sources']} 均分{p['avg_taste']} 招牌{p['item_count']} {p['verdict']}")
-    print("\n=== 用户点名店核对 ===")
-    watch = {"Proust Moment": "proust", "Time & Flour(Flour Time)": "flourtime", "B+Baked": "bbaked",
-             "L'Atelier Over Bakery": "over", "Orenda Bay": "orenda"}
-    for label, w in watch.items():
-        hit = [p for p in rows if w in C.cjk_norm(p["brand"]) or
-               any(w in C.cjk_norm(a) for a in p.get("evidence", []))]
-        if hit:
-            for p in hit:
-                print(f"  {label}: {p['brand']} -> {p['verdict']}（{p['why']}）")
-        else:
-            print(f"  {label}: 未在现有40篇出现（需补采集/换平台）")
-    print("\n=== hold 数 / reject 数 ===")
-    print(f"  hold={counts['hold']} reject={counts['reject']}；明细见 {out_path}")
+            print(f"  [{tag}] {p['brand'][:26]:<28} 独立声音{p['independent_sources']} "
+                  f"均分{p['avg_taste']} 招牌{p['item_count']} {p['verdict']}")
+    if category == "bread":
+        print("\n=== 用户点名店核对 ===")
+        watch = {"Proust Moment": "proust", "Time & Flour(Flour Time)": "flourtime",
+                 "B+Baked": "bbaked", "L'Atelier Over Bakery": "over", "Orenda Bay": "orenda"}
+        for label, w in watch.items():
+            hit = [p for p in rows if w in C.cjk_norm(p["brand"])
+                   or any(w in C.cjk_norm(a) for a in p.get("evidence", []))]
+            if hit:
+                for p in hit:
+                    print(f"  {label}: {p['brand']} -> {p['verdict']}（{p['why']}）")
+            else:
+                print(f"  {label}: 未在现有笔记出现（需补采集/换平台）")
+    print(f"\nhold={counts['hold']} reject={counts['reject']}；明细见 {out_path}")
 
-    # ---------------------------------------------------------------- 未知线索（需锚定取证）
     lead_merged = merge_leads(dict(leads))
-    lead_top = sorted(lead_merged.items(), key=lambda x: -x[1])
-    leads_path = str(pathlib.Path(out_path).parent / f"leads_{args.category}.json")
+    leads_path = str(pathlib.Path(out_path).parent / f"leads_{category}.json")
     pathlib.Path(leads_path).write_text(
         json.dumps(lead_merged, ensure_ascii=False, indent=1), encoding="utf-8")
-    print("\n=== 未知新店线索 TOP（不直接收录，需按店名锚定取证）===")
-    for k, c in lead_top[:20]:
+    print("未知新店线索 TOP（不直接收录，需按店名锚定取证）:")
+    for k, c in sorted(lead_merged.items(), key=lambda x: -x[1])[:12]:
         print(f"  {k:<28} 提及{c}")
     print(f"\n输出: {out_path}\n线索: {leads_path}")
 

@@ -120,17 +120,40 @@ def parse_cookie_header(header, domain=".xiaohongshu.com", path="/"):
     return out
 
 
+def load_cookies_from_text(raw):
+    """把任意形态的 cookie 内容解析成 Playwright cookie 列表。
+    支持：请求头字符串("a=b; c=d") / JSON 数组 / {"cookies":[...]} /
+    {"cookie_str":"..."} / 单个 cookie dict。"""
+    raw = (raw or "").strip()
+    if not raw:
+        return None
+    if raw[0] in "[{":
+        data = json.loads(raw)
+        if isinstance(data, list):
+            return data
+        if isinstance(data, dict):
+            if isinstance(data.get("cookies"), list):
+                return data["cookies"]
+            cs = data.get("cookie_str") or data.get("cookie") or data.get("cookieHeader")
+            if cs:
+                return parse_cookie_header(cs) if isinstance(cs, str) else cs
+            return [data]
+    return parse_cookie_header(raw)
+
+
+def load_cookies_from_file(path):
+    p = pathlib.Path(path)
+    if not p.exists():
+        return None
+    return load_cookies_from_text(p.read_text(encoding="utf-8"))
+
+
 def load_cookies_from_env():
-    """从环境变量 XHS_COOKIE 读取 cookie：可为请求头字符串，或 JSON 数组/文件路径。"""
-    import os
+    """从环境变量 XHS_COOKIE 读取 cookie：可为请求头字符串，或 JSON 数组/文件路径；
+    否则回退 XHS_COOKIE_FILE 文件。"""
     raw = os.environ.get("XHS_COOKIE", "").strip()
     if not raw:
         p = os.environ.get("XHS_COOKIE_FILE", "")
         if p and pathlib.Path(p).exists():
             raw = pathlib.Path(p).read_text(encoding="utf-8").strip()
-    if not raw:
-        return None
-    if raw.startswith("[") or raw.startswith("{"):
-        data = json.loads(raw)
-        return data if isinstance(data, list) else [data]
-    return parse_cookie_header(raw)
+    return load_cookies_from_text(raw)

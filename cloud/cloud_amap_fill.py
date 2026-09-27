@@ -189,7 +189,8 @@ def amap_text(name, offset=8):
             time.sleep(1.2 * (attempt + 1))
             continue
         code = j.get("infocode")
-        if code == "10003":          # 日配额耗尽，立即终止
+        # 10003=日配额耗尽；10044=USER_DAILY_QUERY_OVER_LIMIT（place/text 日量超限）
+        if code in ("10003", "10044"):
             return "QUOTA"
         if j.get("status") == "1":
             raw = j.get("pois", [])
@@ -225,6 +226,66 @@ def core_norm(s):
     return re.sub(r"[\s·・•\-—_–'‘’\"“”`（）()【】\[\]&]+", "", s)
 
 
+# 店名近音字（同音不同字，高德/库常混用）→ 统一到一个规范字，仅用于店名相似度
+HOMO_CANON = str.maketrans({
+    "膳": "善", "庭": "亭", "轩": "宣", "堂": "唐", "记": "纪", "城": "成",
+    "园": "元", "阁": "哥", "居": "局", "萱": "宣", "焙": "培", "合": "和",
+    "味": "未", "渔": "鱼", "鲜": "仙", "茶": "查", "烤": "考", "材": "才",
+    "财": "才", "缘": "元", "源": "元", "元": "元", "善": "善", "亭": "亭",
+})
+# POI 名尾部常带的业态/菜品词，比较品牌时逐级剥除（尚善天焱+天妇罗牛排饭 → 尚善天焱）
+FOOD_TAIL = ["天妇罗", "牛排饭", "牛排", "寿司", "拉面", "烧肉", "烤肉", "烧烤",
+             "火锅", "咖喱", "料理", "便当", "定食", "食堂", "小馆", "饭馆",
+             "餐厅", "饭店", "酒家", "酒楼", "点心", "烘焙", "面包", "蛋糕",
+             "甜品", "甜点", "茶饮", "奶茶", "咖啡", "酒馆", "酒吧", "居酒屋",
+             "饺子", "包子", "面馆", "小吃", "熟食", "燃面", "烤串", "肉串"]
+
+
+# 地域/泛称词：剥离业态后若只剩这些，不算品牌命中（治"胶东小馆"→"胶东"误匹配）
+REGION_WORDS = {
+    "胶东", "广东", "上海", "四川", "重庆", "湖南", "湖北", "潮汕", "潮州", "顺德",
+    "客家", "温州", "杭州", "宁波", "无锡", "南京", "苏州", "成都", "北京", "广州",
+    "深圳", "青岛", "厦门", "福州", "长沙", "武汉", "云南", "贵州", "江西", "广西",
+    "海南", "东北", "江南", "江北", "绵阳", "宜宾", "自贡", "泸州", "徽州", "黄山",
+    "济南", "福山", "常州", "绍兴", "嘉兴", "金华", "台州", "扬州", "徐州", "曼谷",
+    "清迈", "河内", "西贡", "新加坡", "吉隆坡", "槟城", "巴黎", "里昂", "罗马", "西西里",
+    "托斯卡纳", "巴塞罗那", "马德里", "希腊", "土耳其", "黎巴嫩", "慕尼黑", "纽约", "德州",
+    "加州", "博多", "首尔", "釜山", "浦东", "黄浦", "徐汇", "静安", "长宁", "虹口", "杨浦",
+    "普陀", "闵行", "宝山", "嘉定", "松江", "青浦", "奉贤", "金山", "崇明", "陆家嘴", "外滩",
+    "北外滩", "本地", "老街", "老街坊", "社区", "乡下", "老家",
+}
+
+
+def name_score(dbn, cn):
+    """健壮店名相似度 0-1：剥业态后缀 + 近音字归一 + 包含/序比分，取最大。"""
+    def homo(s):
+        return s.translate(HOMO_CANON)
+    variants, x = {cn}, cn
+    for _ in range(3):  # 逐级剥尾部业态词（剥完至少保留 3 字，防止短片段）
+        y = x
+        for w in FOOD_TAIL:
+            if y.endswith(w) and len(y) - len(w) >= 3:
+                y = y[:-len(w)]
+        if y == x:
+            break
+        variants.add(y)
+        x = y
+    best = 0.0
+    for cc in variants:
+        if not cc:
+            continue
+        if dbn == cc:
+            best = max(best, 1.0)
+        else:
+            short = dbn if len(dbn) < len(cc) else cc
+            if ((dbn in cc or cc in dbn) and len(short) >= 3
+                    and short not in REGION_WORDS):
+                best = max(best, 0.9)
+        best = max(best, SequenceMatcher(None, dbn, cc).ratio(),
+                   SequenceMatcher(None, homo(dbn), homo(cc)).ratio())
+    return best
+
+
 # 商场 / 地标词：库地址只写到地标（"中山公园龙之梦"）时，用地标做锚点
 LANDMARKS = ["龙之梦", "恒隆", "来福士", "大悦城", "环宇城", "太古汇", "太古里",
              "新天地", "国金", "环贸", "万象城", "印象城", "万达", "百联", "世纪汇",
@@ -234,11 +295,39 @@ LANDMARKS = ["龙之梦", "恒隆", "来福士", "大悦城", "环宇城", "太�
 
 
 def concrete_addr(addr):
-    """库地址是否可定位：路/街/道 + 号/弄，或含明确地标。"""
+    """库地址是否可定位：路/街/道 + 号/弄，或含明确地标/商场。"""
     core = C.addr_core(addr)
     if re.search(r"(路|街|道|村)", core) and re.search(r"\d", core):
         return True
-    return any(lm in (addr or "") for lm in LANDMARKS)
+    if any(lm in (addr or "") for lm in LANDMARKS):
+        return True
+    return bool(mall_token(addr))
+
+
+# 通用商场锚（不依赖手写 LANDMARKS）：XX广场/商场/中心/天地/万象城…
+MALL_RE = re.compile(
+    r"([\u4e00-\u9fa5A-Za-z0-9]{2,9}?(?:购物中心|大悦城|万象城|环宇城|印象城|"
+    r"太古汇|太古里|万达广场|广场|商场|天地|中心))")
+_MALL_TAIL = ("购物中心", "大悦城", "万象城", "环宇城", "印象城", "广场", "商场", "中心", "天地")
+
+
+def mall_token(addr):
+    m = MALL_RE.search(addr or "")
+    return m.group(1) if m else ""
+
+
+def mall_hit(db_addr, poi_addr, poi_title):
+    """库地址商场 与 POI 地址/标题一致 → 强位置锚；否则 0（治同品牌错商场分店）。"""
+    t = mall_token(db_addr)
+    if not t:
+        return 0.0
+    hay = (poi_addr or "") + (poi_title or "")
+    if t in hay:
+        return 0.92
+    for tail in _MALL_TAIL:
+        if t.endswith(tail) and len(t) - len(tail) >= 3 and t[:-len(tail)] in hay:
+            return 0.9
+    return 0.0
 
 
 def landmark_hit(db_addr, c):
@@ -275,6 +364,20 @@ def road_number(addr):
                 nums = [int(x) for x in re.findall(r"\d+", m.group(1))]
                 break
     return road, nums
+
+
+def primary_road(addr):
+    """返回去行政区后的第一条路/街/大道名（归一），不依赖门牌号。
+    治库地址只有'嘉善路(近永嘉路)'无号时 road_number 返回空、无法判同路。"""
+    s = str(addr or "")
+    for d in sorted(_DISTRICT_PREFIX, key=len, reverse=True):
+        if s.startswith(d):
+            s = s[len(d):]
+            if s.startswith("区"):
+                s = s[1:]
+            break
+    m = re.search(r"([\u4e00-\u9fa5A-Za-z0-9]{1,12}?[路街道])", s)
+    return C.cjk_norm(m.group(1)) if m else ""
 
 
 def addr_anchor(db_addr, c_addr):
@@ -318,35 +421,40 @@ def match_poi(cands, db_name, db_address):
         cn = core_norm(c_main)
         if not dbn or not cn:
             continue
-        ratio = SequenceMatcher(None, dbn, cn).ratio()
+        ns = name_score(dbn, cn)
         db_in_c, c_in_db = dbn in cn, cn in dbn
-        if db_in_c or c_in_db:
-            ratio = max(ratio, 0.9)
         _addr_ok, addr_s = addr_anchor(db_address, c.get("address", ""))
+        pr_a, pr_b = primary_road(db_address), primary_road(c.get("address", ""))
+        same_road = bool(pr_a and pr_b and pr_a == pr_b)
         branch_s = 0.0
         for cb in c_brackets:
             cbn = core_norm(cb)
             for dbb in db_branch:
                 if dbb and cbn and (dbb in cbn or cbn in dbb):
                     branch_s = 0.95
-        confirm = max(addr_s, branch_s, landmark_hit(db_address, c))
+        confirm = max(addr_s, branch_s, landmark_hit(db_address, c),
+                      mall_hit(db_address, c.get("address", ""), c.get("title", "")))
 
         if locked:
-            # 地址/分店/地标必须一致；强确认(号交集0.95)时店名语序差异可放宽 ratio
-            if confirm < 0.9:
+            # ① 强地址/分店/地标确认：店名门槛可放宽；
+            if confirm >= 0.9:
+                need = 0.4 if confirm >= 0.95 else 0.55
+                if ns < need:
+                    continue
+                score = 0.45 * ns + 0.55 * confirm
+            # ② 精确/近音同名 + 同一条路（即使库地址缺门牌号）也可确认；
+            elif same_road and ns >= 0.85:
+                score = 0.7 * ns + 0.24
+            else:
                 continue
-            rmin = 0.4 if confirm >= 0.95 else 0.55
-            if ratio < rmin:
-                continue
-            score = 0.45 * ratio + 0.55 * confirm
         else:
             # 泛地址：必须是餐饮业态，靠主名；更泛品牌（c_in_db）不采
             if not is_dining_poi(c):
                 continue
-            if db_in_c and ratio >= 0.82:
-                score = 0.8 * ratio
-            elif ratio >= 0.9:
-                score = ratio
+            if ns >= 0.9:
+                score = ns
+            elif db_in_c and ns >= 0.82:
+                score = 0.8 * ns
             else:
                 continue
         if score > bs:
@@ -453,7 +561,10 @@ def main():
     today = C.today()
     state = _read_state()
     if state.get("quota_date") != today:
-        state = {"quota_date": today, "amap_used": state.get("amap_used", 0) if False else 0}
+        # 新的一天重置用量，但保留失败退避计数（避免难匹配店每天又顶到最前）
+        state = {"quota_date": today, "amap_used": 0,
+                 "fail": state.get("fail", {})}
+    state.setdefault("fail", {})
     cache = _load_cache()
 
     # 拉全部营业店（含判定缺失所需字段）
@@ -479,7 +590,13 @@ def main():
 
     # 缺字段越多越优先；当天已缓存的不重新调用
     rows = [r for r in rows if missing_count(r) > 0]
-    rows.sort(key=lambda r: (-missing_count(r), r["id"]))
+
+    def fail_bucket(r):
+        # 反复匹配不上的店逐级沉底，避免它们每轮烧光预算、队列饿死
+        f = state["fail"].get(str(r["id"]), 0)
+        return 0 if f == 0 else (1 if f < 3 else 2)
+
+    rows.sort(key=lambda r: (fail_bucket(r), -missing_count(r), r["id"]))
 
     stats = {"candidates": len(rows), "called": 0, "from_cache": 0,
              "fields": 0, "reviews": 0, "no_match": 0, "quota_stopped": False}
@@ -501,6 +618,9 @@ def main():
         db_main, _ = split_name(name)
         zh_full = re.sub(r"[぀-ゟ゠-ヿー·・]+", "", db_main).strip()
         tries = []
+        # 主名 + 地址里的地标（主搜空时，如 "哲平鳗满 正大"）
+        for lm in [lm for lm in LANDMARKS if lm in (addr or "")][:2]:
+            tries.append(f"{db_main.strip()} {lm}")
         if db_main.strip() != name:
             tries.append(db_main.strip())
         if zh_full and zh_full != db_main.strip():
@@ -529,6 +649,7 @@ def main():
         if cached and cached.get("date") == today and cached.get("poi"):
             poi = cached["poi"]
             stats["from_cache"] += 1
+            state["fail"].pop(str(rid), None)
         else:
             if stats["called"] >= limit or state.get("amap_used", 0) >= AMAP_DAILY_QUOTA:
                 break
@@ -540,8 +661,10 @@ def main():
                 break
             if not poi:
                 stats["no_match"] += 1
+                state["fail"][str(rid)] = state["fail"].get(str(rid), 0) + 1
                 time.sleep(0.3)
                 continue
+            state["fail"].pop(str(rid), None)
             _append_cache(rid, poi)
             time.sleep(0.4)
 

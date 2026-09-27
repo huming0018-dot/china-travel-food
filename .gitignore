@@ -97,3 +97,17 @@ cloud/data/
 *.bak.*
 research/authority/*.png
 research/authority/_sitemap_cache.json
+
+# 多账号 cookie 池（敏感，禁止入库）
+cloud/xhs_accounts/
+
+# 云端管线一次性审计/修复脚本（_ 前缀 = 过程稿，不入库；终版逻辑已合入 admission_gate/common 等）
+cloud/vendor/pipeline/_*.py
+cloud/vendor/pipeline/_*.json
+
+# 云端管线工作数据（plan/report/mismatch 等中间产物，不入库）
+cloud/vendor/pipeline/chain_plan.json
+cloud/vendor/pipeline/recalc_report.json
+cloud/vendor/pipeline/mismatch_report.json
+cloud/vendor/pipeline/fill_plan.json
+cloud/vendor/pipeline/negative_plan.json

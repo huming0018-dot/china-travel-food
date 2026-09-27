@@ -14,8 +14,9 @@ SSH "echo '{\"registry-mirrors\":[\"https://mirror.ccs.tencentyun.com\"]}' | sud
 
 echo "==> [2/6] 打包构建上下文（不含大镜像/分片）"
 tar czf server-context.tgz \
-  Dockerfile requirements.txt fix_paths.py cloud_bu.py health.py run_batch.py \
-  crontab.txt entrypoint.sh map_helpers.py cloud_phone_fill.py cloud_coord_fill.py cloud_hours_fill.py cloud_review_fill.py vendor
+  Dockerfile requirements.txt fix_paths.py cloud_bu.py xhs_cookie_pool.py cloud_ready.py health.py run_batch.py \
+  crontab.txt entrypoint.sh map_helpers.py cloud_phone_fill.py cloud_coord_fill.py cloud_hours_fill.py cloud_review_fill.py \
+  cloud_amap_fill.py candidate_apply.py cloud_discover.py cloud_bili_collect.py unmatched_bridge.py watchdog.py vendor
 ls -lh server-context.tgz | awk '{print "context 大小:",$5}'
 
 echo "==> [3/6] 上传上下文与运行配置"
@@ -25,6 +26,10 @@ for f in server-context.tgz docker-compose.yml deploy.env xhs_cookies.json; do
   for a in 1 2 3 4; do SCP "$f" "$HOST:$RDIR/$f" >/dev/null 2>&1 && { echo "$f OK"; ok=1; break; }; sleep 1; done
   [ "$ok" = 1 ] || { echo "$f FAILED"; exit 1; }
 done
+
+echo "==> 上传多账号 cookie 池目录"
+SSH "mkdir -p $RDIR/xhs_accounts"
+SCP -r xhs_accounts "$HOST:$RDIR/" && echo "xhs_accounts OK" || { echo "xhs_accounts FAILED"; exit 1; }
 
 echo "==> [4/6] 清理旧 arm64 镜像/大文件并解压"
 SSH "cd $RDIR && sudo docker compose down 2>/dev/null; sudo docker image rm -f food-cloud:local 2>/dev/null; rm -rf vendor chunks food-cloud-image.tgz server-context; tar xzf server-context.tgz; find . -name '._*' -delete; echo EXTRACT_OK"
