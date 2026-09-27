@@ -1071,3 +1071,31 @@ resolve_anchor_name/pin_name 的兜底「任意≥3字即收」是漏勺；GENER
 ### 验证
 - bread 品类：修复前垃圾 brand（第二次来总结/年老店/小而美的面包店/定西路/芝士猪排咖喱饭/要不要再加一句简短标签…）全消；修复后 admit 全是真店（BAsdBAN/FASCINO/Soso/O'mills/ComeCome/Punch Monday/L'Atelier Over Bakery/Table A Deli/Shiopon）。
 - 高德日配额当日已耗尽（USER_DAILY_QUERY_OVER_LIMIT），candidate_apply 暂 0 插入；配额次日重置后自动补录。回归店 Proust Moment 现 reject(非本品类)、B+Baked hold(独立声音1)，需 cloud_discover 继续图遍历补证据。
+
+## 2026-09-27（补）精度收尾：字段标签/产品名检测 + 品牌归一去重 + 负面清单闸门
+
+用户复跑 bread 后指出三类残留，全部以确定性函数收干净：
+
+### 1. looks_like_brand 仍漏过的非店名 token（common.py）
+- 新增 `FIELD_LABELS`（精确等于匹配）：门店地址/电话/营业时间/个人cv/菜单/人均/预约/招牌 等独立字段标签 → reject。「招牌菜」不受影响（精确等于，非子串）。
+- 新增 `INGREDIENT_WORDS` + `PRODUCT_BARE_SUFFIX`：`提子面包` 类 = 食材前缀+面包/烘焙后缀 → reject（product:提子面包）。`MBD面包` 前缀非食材 → 放行。
+
+### 2. 品牌归一去重（common.normalize_brand_name + admission_gate.get_brand）
+- `normalize_brand_name`：剥尾部「面包/烘焙/蛋糕店」后缀、小写、去空格/引号/连接符。
+- profiles 的 key 改用归一值，「mbd面包」和「MBD」合并到同一 profile，声音累加；显示名取最短写法（aliases 字段记录所有原始写法）。
+
+### 3. 负面品牌硬闸门（admission_gate.NEGATIVE_BRANDS）
+- 硬编码连锁/预制清单：苹果花园/外婆家/绿茶/海底捞/瑞幸/星巴克/85度C/好利来/巴黎贝甜/面包新语/和府捞面/陈香贵 等。
+- verdict 里归一后命中即 reject（reason=negative_brand），**即使独立声音≥2、均分≥3.5 也不进精选**。苹果花园（声音5/均分4.15）实测被正确 reject。
+
+### 验证结果（bread 品类，136 篇笔记）
+- 0 个元话术/菜名 brand 漏网（门店地址/个人cv/提子面包 已消失）。
+- MBD 归一合并（aliases=[MBD, mbd面包]）。
+- 苹果花园 negative_brand reject。
+- admit/admit* 共 16 家，全为真店：BAsdBAN/FASCINO/Soso/ComeCome/Punch Monday/Shiopon/Proust Moment（回归店，声音3/4.04）/Dear You/Skroll/Bake No Title/Baker & Spice/O'mills/Pain Chaud/Table A Deli/L'Atelier Over Bakery/银座仁志川。
+- B+Baked 仍 hold（声音1），Orenda Bay 未在现有笔记出现——需 cloud_discover bread 继续图遍历补证据。
+- 其余 23 品类笔记量太少（1~44篇）凑不齐独立声音≥2，gate 正确 hold/reject 无误 admit；待 cloud_discover 采量上来后自动出结果。
+
+### SSH 运维备注
+SSH 若域名别名 `food-cloud` 不通（Clash TUN 模式会把域名解析成 fake-IP），改用直连：
+`ssh -i ~/.ssh/food_cloud_deploy ubuntu@49.234.35.92`（私钥 ~/.ssh/food_cloud_deploy，user=ubuntu）。

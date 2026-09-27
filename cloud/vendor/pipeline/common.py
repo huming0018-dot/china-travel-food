@@ -377,6 +377,30 @@ OUT_CITIES = (
     "长春", "郑州", "洛阳", "海南", "三亚", "丽江", "大理",
 )
 
+# 字段标签/元话术：独立出现即非店名（精确等于匹配，避免误伤「招牌菜」等）
+FIELD_LABELS = {
+    "门店地址", "地址", "电话", "联系方式", "营业时间", "开门时间",
+    "个人cv", "个人CV", "cv", "CV", "菜单", "价格", "人均", "价位",
+    "预约", "订座", "外卖", "配送", "停车", "wifi", "WIFI", "卫生间",
+    "推荐菜", "招牌", "特色", "门店", "分店",
+}
+
+# 仅产品名检测：<食材/口味>+面包/烘焙 且无店名后缀 → 不是店
+INGREDIENT_WORDS = {
+    "提子", "红豆", "绿豆", "抹茶", "芝士", "奶酪", "巧克力", "奶油",
+    "肉松", "蒜香", "葱油", "香葱", "火腿", "培根", "玉米", "紫薯",
+    "南瓜", "红薯", "地瓜", "芋泥", "芋头", "椰奶", "椰子", "芒果",
+    "草莓", "蓝莓", "香蕉", "苹果", "柠檬", "橙子", "葡萄", "水蜜桃",
+    "白桃", "乌龙", "红茶", "绿茶", "咖啡", "拿铁", "摩卡", "焦糖",
+    "海盐", "黑糖", "红糖", "蜂蜜", "桂花", "玫瑰", "荔枝", "龙眼",
+    "桂圆", "山楂", "陈皮", "五香", "麻辣", "香辣", "酸辣", "甜辣",
+    "原味", "咸味", "甜味", "双拼", "全家福",
+}
+PRODUCT_BARE_SUFFIX = (
+    "烘焙工坊", "烘焙", "蛋糕", "甜品", "饼干", "曲奇", "泡芙",
+    "蛋挞", "布丁", "冰淇淋", "冰激凌", "奶茶", "茶饮", "咖啡", "面包",
+)
+
 _SENT_RE = re.compile(r"[？！，。；：、,.!?;:的了是在有我你他她它这那什怎为嘛呢吧啊哦呀]")
 _ROAD_RE = re.compile(r"(路|街|道|区|弄|号|村|镇|乡|巷|桥|湾|泾|浜|口)$")
 
@@ -389,8 +413,18 @@ def looks_like_brand(token):
         return False, "empty"
     if len(s) > 14:
         return False, "too_long"
+    if s in FIELD_LABELS:
+        return False, "field_label"
     if s.endswith(SHOP_SUFFIXES):
         return True, "suffix"
+    # 仅产品名：<食材/口味>+面包/烘焙 等，前缀非店名 → reject
+    for suf in PRODUCT_BARE_SUFFIX:
+        if s.endswith(suf) and len(s) > len(suf):
+            prefix = s[:-len(suf)].strip()
+            if prefix in INGREDIENT_WORDS:
+                return False, "product:" + prefix + suf
+            if prefix in DISH_WORDS:
+                return False, "product_dish:" + prefix + suf
     if _SENT_RE.search(s):
         return False, "sentence"
     if _ROAD_RE.search(s):
@@ -404,6 +438,19 @@ def looks_like_brand(token):
     if s in OUT_CITIES:
         return False, "city:" + s
     return True, "plausible"
+
+
+def normalize_brand_name(name):
+    """品牌归一：剥尾部产品后缀、忽略大小写、去空格连接符，用于去重合并。
+    例：mbd面包 → mbd, MBD → mbd, L'Atelier Over Bakery → latelieroverbakery"""
+    s = (name or "").strip()
+    for suf in ("烘焙工坊", "烘焙", "面包", "蛋糕店", "甜品店", "咖啡店", "茶饮店"):
+        if s.endswith(suf) and len(s) > len(suf) + 1:
+            s = s[:-len(suf)].strip()
+            break
+    s = s.lower()
+    s = re.sub(r"[\s\'’\"&+·・•\-_/\\]", "", s)
+    return s
 
 
 def note_is_out_of_shanghai(title, desc):

@@ -36,6 +36,23 @@ NEG = {"难吃": -.6, "避雷": -.5, "踩雷": -.5, "失望": -.4, "一般": -.3
 PROMO_WORDS = ("团购", "代金券", "套餐", "合作", "推广", "广告", "福利", "戳左下角",
                "购买链接", "招商", "加盟")
 
+# 负面品牌硬清单：工业化连锁/预制/大众烘焙——即使独立声音≥2、均分≥3.5 也 reject。
+# 匹配时经 normalize_brand_name 归一，故「苹果花园面包」「苹果花园」均命中。
+NEGATIVE_BRANDS = {
+    "苹果花园", "盖饭邦", "望湘园", "小菜园",
+    "外婆家", "绿茶餐厅", "绿茶", "避风塘", "广州酒家", "点都德",
+    "和府捞面", "遇见小面", "陈香贵", "马记永", "张拉拉",
+    "西贝", "西贝莜面村", "眉州东坡", "俏江南", "小南国",
+    "海底捞", "呷哺呷哺", "巴奴",
+    "瑞幸", "luckin", "星巴克", "starbucks", "麦当劳", "mcdonald",
+    "肯德基", "kfc", "必胜客", "pizzahut", "汉堡王", "burgerking",
+    "85度C", "85度c", "85c", "巴黎贝甜", "parisbaguette",
+    "好利来", "holiland", "味多美", "面包新语", "breadtalk",
+    "元祖", "元祖食品", "克莉丝汀", "克里斯汀",
+}
+# 非正餐品类豁免连锁扣分（与前端隐藏连锁逻辑一致）
+NON_MAIN_CATS = {"bread", "coffee", "bar", "dessert", "tea", "bistro", "bakery"}
+
 # ---------------------------------------------------------------- 食物 / 招牌词
 BAKED_ITEMS = ("可颂", "贝果", "酸种", "酸面包", "欧包", "吐司", "乡村", "全麦", "肉桂卷",
                "司康", "法棍", "恰巴塔", "佛卡夏", "丹麦", "菠萝包", "盐面包", "碱水",
@@ -288,18 +305,26 @@ def main():
     for dd in db:
         known_names.update(dd["forms"])
     leads = defaultdict(int)
+    _NEG_NORM = {C.normalize_brand_name(b) for b in NEGATIVE_BRANDS}
     items_set = item_words(category)
     sec_re = section_regex(category)
     profiles = {}
 
     def get_brand(canon):
-        if canon not in profiles:
-            profiles[canon] = {
+        key = C.normalize_brand_name(canon)
+        if key not in profiles:
+            profiles[key] = {
                 "brand": canon, "rid": None, "in_db": False, "db_has_cat_tag": False,
                 "status": "unknown", "compiler_voices": {}, "diner_voices": {},
                 "taste_vals": [], "items": set(), "has_negative": False,
-                "sections": set(), "evidence": [], "promo": 0, "review_count": 0}
-        return profiles[canon]
+                "sections": set(), "evidence": [], "promo": 0, "review_count": 0,
+                "aliases": set()}
+        p = profiles[key]
+        p["aliases"].add(canon)
+        # 显示名取最短写法（MBD 优先于 MBD面包）
+        if len(canon) < len(p["brand"]):
+            p["brand"] = canon
+        return p
 
     def bind_db(brand, d):
         p = get_brand(brand)
@@ -505,6 +530,9 @@ def main():
         independent_sources = len(comp_authors) + n_diner
         if p["status"] == "closed":
             return "reject", "已关店", independent_sources, avg, items
+        # 负面品牌硬闸门：连锁/预制/大众烘焙，命中即 reject（非正餐品类不额外扣）
+        if C.normalize_brand_name(p["brand"]) in _NEG_NORM:
+            return "reject", "negative_brand（工业化连锁/预制，不进精选）", independent_sources, avg, items
         if avg is not None and avg < 3.3:
             return "reject", f"口味均分 {avg} 偏低", independent_sources, avg, items
         if not is_cat:
@@ -531,8 +559,9 @@ def main():
 
     def jsonable(p):
         q = dict(p)
-        for k in ("items", "sections"):
-            q[k] = sorted(q[k])
+        for k in ("items", "sections", "aliases"):
+            if k in q and isinstance(q[k], set):
+                q[k] = sorted(q[k])
         return q
 
     out_path = args.out or str(pathlib.Path(args.raw).parent / f"candidates_{category}.jsonl")
