@@ -5,11 +5,12 @@ import EventModal, { CAT_META, DEFAULT_META, ACTIVITY_CATS } from "@/components/
 const PAGE_SIZE = 10;
 
 // —— 筛选标签定义（多标签叠加 = 命中任一即显示）——
-type FilterKey = 'all' | 'new_open' | 'chef_new' | 'guest' | 'collab' | 'close_relocate' | 'award' | 'menu';
+type FilterKey = 'all' | 'new_open' | 'chef_new' | 'chef_change' | 'guest' | 'collab' | 'close_relocate' | 'award' | 'menu';
 const FILTERS: { key: FilterKey; label: string }[] = [
   { key: 'all', label: '全部' },
   { key: 'new_open', label: '新店开业' },
   { key: 'chef_new', label: '主厨新店' },
+  { key: 'chef_change', label: '主厨变动' },
   { key: 'guest', label: '飞行厨房' },
   { key: 'collab', label: '联名快闪' },
   { key: 'close_relocate', label: '关店搬迁' },
@@ -24,6 +25,7 @@ function matchFilter(e: FeedEvent, key: FilterKey): boolean {
     case 'chef_new':
       return (e.category === 'new_open' || e.category === 'coming_soon')
         && (!!e.chef_id || /by\s+[A-Z][a-zA-Z'’]*/.test(e.title));
+    case 'chef_change': return e.category === 'chef_changed';
     case 'guest': return e.category === 'guest_kitchen';
     case 'collab': return e.category === 'collaboration' || e.category === 'popup';
     case 'close_relocate': return e.category === 'relocated' || e.category === 'closed';

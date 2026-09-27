@@ -18,8 +18,24 @@ const BUDGETS = [
 // 一级根：地图认知顺序（中餐独立；其余按大陆→国家；非正餐为场景；融合菜单列）
 const ROOTS = ['中餐', '亚洲', '欧洲', '非洲', '北美洲', '南美洲', '融合菜', '非正餐'];
 const PAGE = 120;
-// 详情页返回时恢复筛选与滚动位置的快照键（sessionStorage）
+// 详情页"更多餐厅"带 ?return=1 返回：恢复筛选与滚动位置的快照。
+// 用 localStorage 跨标签共享：列表卡片改为新标签打开后，新标签页里点"返回列表"
+// 仍能读到原标签页写入的快照（sessionStorage 按标签隔离会丢）。读后即清，带时间戳防陈旧。
 const RETURN_KEY = 'restaurants:returnState';
+const RETURN_TTL = 2 * 60 * 60 * 1000; // 2 小时内有效
+
+function readReturnSnap(): any | null {
+  try {
+    const raw = localStorage.getItem(RETURN_KEY);
+    if (!raw) return null;
+    const snap = JSON.parse(raw);
+    if (!snap || typeof snap.ts !== 'number' || Date.now() - snap.ts > RETURN_TTL) return null;
+    return snap;
+  } catch { return null; }
+}
+function clearReturnSnap() {
+  try { localStorage.removeItem(RETURN_KEY); } catch { /* ignore */ }
+}
 
 // 卡片价格带颜色：按客观 price_band（1-5）由浅到深，仅反映价格高低、不暗示品质。
 const BAND_CLASSES = ['tag-budget', 'tag-value', 'tag-mid', 'tag-fine', 'tag-luxury'];
@@ -342,6 +358,12 @@ export default function RestaurantsPage() {
     if (ingredientGroup) {
       const g = Array.from(ingredientGroup) as number[];
       result = result.filter((r) => rTagIds[r.id] && g.some((id) => rTagIds[r.id].has(id)));
+      // 命中食材名（用于招牌菜加权：真把该食材写进招牌菜的店优先，而非菜单里随便用到）
+      const ingNames = g.map((id) => cuisines.find((c) => c.id === id)?.name || '').filter(Boolean);
+      const sigHits = (r: Restaurant) => {
+        const sig = Array.isArray(r.signature_dishes) ? r.signature_dishes.join(' ') : '';
+        return sig && ingNames.some((n) => sig.includes(n)) ? 1 : 0;
+      };
       // 主营：命中的食材中，有任一食材的"主营菜系正则"命中该店菜系名
       const isMain = (r: Restaurant) => {
         const names = rCuisineNames[r.id] || [];
@@ -353,6 +375,14 @@ export default function RestaurantsPage() {
       };
       secondary = result.filter((r) => !isMain(r));
       result = result.filter((r) => isMain(r));
+      // 主营区内：招牌菜真含该食材名的排更前（仅评分排序时加权；按价格排序尊重用户选择）
+      if (sortBy === 'score') {
+        result.sort((a, b) => sigHits(b) - sigHits(a) || (b.score_total || 0) - (a.score_total || 0));
+        secondary.sort((a, b) => sigHits(b) - sigHits(a) || (b.score_total || 0) - (a.score_total || 0));
+      } else {
+        doSort(result); doSort(secondary);
+      }
+      return { main: result, secondary };
     }
     doSort(result); doSort(secondary);
     return { main: result, secondary };
@@ -372,9 +402,10 @@ export default function RestaurantsPage() {
     if (restoredRef.current) return;
     if (router.query.return !== '1' || loading || !restaurants.length) return;
     restoredRef.current = true;
-    let snap: any = null;
-    try { snap = JSON.parse(sessionStorage.getItem(RETURN_KEY) || 'null'); } catch { snap = null; }
+    const snap = readReturnSnap();
     if (snap) {
+      // 读后即清：避免下次访问 ?return=1 时陈旧恢复
+      clearReturnSnap();
       setSearch(snap.search || '');
       setSortBy(snap.sortBy || 'score');
       setRoot(snap.root || '中餐');
@@ -426,11 +457,12 @@ export default function RestaurantsPage() {
   });
   const tagName = (id: number) => cuisines.find((c) => c.id === id)?.name || '';
 
-  // 进详情前保存完整筛选快照 + 滚动位置（供"更多餐厅"返回恢复）
+  // 进详情前保存完整筛选快照 + 滚动位置（供"更多餐厅"返回恢复）。
+  // 写 localStorage 跨标签共享：卡片新标签打开后，新标签页里点"返回列表"也能恢复。
   const saveReturn = useCallback(() => {
     try {
-      sessionStorage.setItem(RETURN_KEY, JSON.stringify({
-        v: 2, search, sortBy, root, flavor, subFlavor,
+      localStorage.setItem(RETURN_KEY, JSON.stringify({
+        v: 3, ts: Date.now(), search, sortBy, root, flavor, subFlavor,
         budgets: Array.from(budgets), district, location,
         tagSel: Array.from(tagSel), hideChain, scrollY: window.scrollY,
       }));
@@ -596,21 +628,23 @@ export default function RestaurantsPage() {
             )}
           </div>
 
-          {/* 三级子流派（选中三级叶子后本行仍在；"全部"与各三级均可再点撤销） */}
+          {/* 三级子流派：父级用实心小签锚定，三级药丸更小一号并带 › 前缀，层级一眼可辨；"全部"与各三级均可再点撤销 */}
           {flavorChildren.length > 0 && (
-            <div className="flex items-start gap-3 flex-wrap pt-3 border-t border-dashed border-line">
-              <span className="kicker text-mocha-faint shrink-0 pt-1.5">{flavor}</span>
-              <div className="flex flex-wrap gap-1.5 flex-1">
+            <div className="flex items-start gap-2.5 flex-wrap pt-3 border-t border-dashed border-line">
+              <span className="shrink-0 mt-0.5 text-[11px] font-semibold text-terracotta bg-terracotta-light/60 border border-terracotta/20 px-2 py-0.5 rounded-full">
+                {flavor}
+              </span>
+              <div className="flex flex-wrap gap-1.5 flex-1 items-center">
                 <button onClick={() => subFlavor && selectSub(subFlavor)}
                   data-active={!subFlavor}
-                  className="sub-seg px-2.5 py-1 text-xs rounded-full border transition">
-                  全部{flavor}
+                  className="sub-seg px-2.5 py-1 text-[11px] rounded-full border transition">
+                  全部
                 </button>
                 {flavorChildren.map((c) => (
                   <button key={c.id} onClick={() => selectSub(c.name)}
                     data-active={subFlavor === c.name}
-                    className="sub-seg px-2.5 py-1 text-xs rounded-full border transition">
-                    {c.name}{subtreeCount(c.name) > 0 && <span className="ml-1 text-2xs opacity-70">{subtreeCount(c.name)}</span>}
+                    className="sub-seg px-2.5 py-1 text-[11px] rounded-full border transition">
+                  <span className="opacity-50 mr-0.5">›</span>{c.name}{subtreeCount(c.name) > 0 && <span className="ml-1 text-2xs opacity-70">{subtreeCount(c.name)}</span>}
                   </button>
                 ))}
               </div>
@@ -777,6 +811,7 @@ function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx, isNonDiner, on
         const isBlackPearl = tags?.has(160);
         return (
           <Link key={r.id} href={`/restaurants/${r.id}`} onClick={onOpen}
+            target="_blank" rel="noopener noreferrer"
             className="group flex items-center gap-4 md:gap-6 py-4 border-b border-line hover:bg-white transition -mx-6 px-6">
             <span className="numeral text-xl text-mocha-faint w-8 flex-shrink-0 hidden sm:block">{String(idx + 1).padStart(2, '0')}</span>
             <div className="flex-1 min-w-0">
