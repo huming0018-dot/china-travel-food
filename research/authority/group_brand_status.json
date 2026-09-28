@@ -1,0 +1,18 @@
+{
+  "_doc": "集团品牌状态注册表。外部时效/关店/外地核验写入，每条须带 source_url。status: closed=已永久关店; out_of_market=品牌存在但仅外地有店(非上海缺口)。集团树对账据此把非上海缺口从发现队列剔除。",
+  "updated_at": "2026-09-28",
+  "brands": [
+    {"brand": "Ultraviolet", "status": "closed", "city": null,
+     "closed_date": "2025-03-29",
+     "source_url": "https://www.finedininglovers.fr/explorer/articles/paul-pairet-ferme-son-restaurant-ultraviolet-la-fin-dune-ere-gastronomique"},
+    {"brand": "Charbon", "status": "closed", "city": null,
+     "closed_date": "2024-12-31",
+     "source_url": "https://rachelgouk.com/the-big-list-of-restaurant-closures-in-shanghai-2025/"},
+    {"brand": "京季", "status": "out_of_market", "city": "北京",
+     "closed_date": null,
+     "source_url": "http://www.auspiciousclubvip.com/BeiJing"},
+    {"brand": "芙蓉无双", "status": "out_of_market", "city": "北京",
+     "closed_date": null,
+     "source_url": "https://www.qixin.com/company/8d9d4217-97f5-4fb6-9f21-f3fd393b7e52"}
+  ]
+}

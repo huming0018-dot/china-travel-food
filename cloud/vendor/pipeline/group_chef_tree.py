@@ -28,6 +28,7 @@ import common as C          # noqa: E402
 
 COVDIR = pathlib.Path("/app/data/coverage")
 MISS_F = COVDIR / "group_missing_brands.json"
+STATUS_F = COVDIR / "group_brand_status.json"
 
 
 def key(s):
@@ -46,6 +47,19 @@ def parse_desc_brands(desc):
             b = re.split(r"等", b)[0].strip()   # 去“等/等等”列举尾巴
             if b and not re.search(r"(米其林|星|创始人|年|生于|创立)$", b):
                 out.append(b)
+    return out
+
+
+def load_brand_status():
+    """品牌状态注册表（外部时效/关店/外地核验写入，带 source_url）。
+    返回 key(brand) -> {status: closed|out_of_market, city, closed_date, source_url}。"""
+    if not STATUS_F.exists():
+        return {}
+    d = json.loads(STATUS_F.read_text(encoding="utf-8"))
+    out = {}
+    for b in d.get("brands", []):
+        if b.get("brand"):
+            out[key(b["brand"])] = b
     return out
 
 
@@ -132,6 +146,7 @@ def main():
     all_missing = []
     new_links = []   # (gid, rid, brand_name)
     cross_skipped = []
+    brand_status = load_brand_status()
     for g in groups:
         gid = g["id"]
         have_rids = set((mem_by_g.get(gid) or {}))
@@ -154,7 +169,7 @@ def main():
             if kk and kk not in seen:
                 seen.add(kk); tokens.append((t, trusted))
 
-        linked, new, ambiguous, missing, closedb = [], [], [], [], []
+        linked, new, ambiguous, missing, closedb, oob = [], [], [], [], [], []
         for t, trusted in tokens:
             rids, conf = idx.resolve(t)
             if conf in ("exact", "strong"):
@@ -175,12 +190,18 @@ def main():
             elif conf == "closed":
                 closedb.append((t, rids))   # 品牌已关店，不补、不标缺口
             elif trusted:
-                missing.append(t)
-                all_missing.append({"group_id": gid, "group_name": g["name"], "brand": t})
+                st = brand_status.get(key(t))
+                if st and st.get("status") == "closed":
+                    closedb.append((t, []))
+                elif st and st.get("status") == "out_of_market":
+                    oob.append((t, st.get("city")))   # 外地品牌，非上海缺口
+                else:
+                    missing.append(t)   # 未知：真·待核缺口
+                    all_missing.append({"group_id": gid, "group_name": g["name"], "brand": t})
             # 创始人 owned 但解析不到 → 不硬标缺失（可能是雇主/外地品牌）
         tree[gid] = {"name": g["name"], "members": len(have_rids),
                       "linked": len(linked), "new": new, "ambiguous": ambiguous,
-                      "missing": missing, "closed": closedb}
+                      "missing": missing, "closed": closedb, "oob": oob}
 
     # ---- 报告 ----
     print(f"集团 {len(groups)}；主厨 {len(chefs)}；待补主厨 group_id {len(chef_group_patch)}")
@@ -192,6 +213,8 @@ def main():
             print(f"   ? 歧义：{tok} → {rids}")
         for tok, rids in t.get("closed", []):
             print(f"   ◼ 已关店：{tok} → {rids}")
+        for tok, city in t.get("oob", []):
+            print(f"   ◇ 外地品牌（非上海）：{tok}（{city}）")
         for tok in t["missing"]:
             print(f"   ✗ 组合缺口（无此店）：{tok}")
 
