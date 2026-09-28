@@ -137,6 +137,15 @@ def check_error_logs():
 
 
 def main():
+    # 0) 账号/采集池自动修复（守护 gap_pool、签名通道复核、换 IP、纠正状态；真失效才告警扫码）
+    try:
+        import account_repair
+        results, pool_alive = account_repair.run()
+        log("账号修复：" + "，".join(f"{a}={v}" for a, (v, _) in results.items())
+            + f"；pool_alive={pool_alive}")
+    except Exception as e:
+        log(f"账号修复步骤异常：{e}")
+
     killed, running = scan()
     errs = check_error_logs()
     if running:

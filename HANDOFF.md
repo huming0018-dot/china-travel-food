@@ -12,6 +12,8 @@
 
 - **【进度播报已上线】每 10 分钟双通道推送**：新建 `cloud/progress_broadcast.py`（只读 ledger/pool_logs/cookie_state/frontier/阻塞标记，直接调 health._telegram/_feishu_app 绕过冷却），crontab 第11条 `3,13,23,33,43,53 * * * *`（错峰）。手动执行验证 **telegram=True、feishu_app=True**；容器 /usr/sbin/cron 在跑、crontab 已安装，离线照常推。日志 /app/data/progress_broadcast.log。当前实况：account_a=dead、account_b=restricted(300011)，池待自动复检。
 
+- **【看门狗账号自动修复已上线】**：新建 `cloud/account_repair.py` 并由 watchdog 每轮调用。修复阶梯 R0 守护/自动拉起 gap_pool；R1 签名通道复核（权威），浏览器误判 dead/restricted 但签名 code=0 → 自动改判 ok；R2 默认出口软封/失败→经广州代理换独立 IP 再探；R3 仅双出口都 -100（web_session 过期）才一次性告警叫人扫码。实测两账号此前被误标 dead/restricted，复核均 code=0，**已自动改判 ok**、pool_alive=True。状态写回 xhs_cookie_pool，router 与 progress_broadcast 随之自愈。
+
 ### 2026-09-28 元层：北极星宪法 + 机制总纲 v4（治「世界观被遗忘」与六大根因，已锚定）
 
 - **元问题定位**：缺陷不是缺文档，而是 ①世界观没被锚定成「每次必读、可机械执行」的契约（散落多文档、会被忘）；②机制写在纸上但没全部落成在跑代码（容器曾是旧版 gap_runner 即例证），缺「原则→模块→状态留痕」绑定。
