@@ -24,6 +24,17 @@
 - **修复**：probe 改为 GET `/api/sns/web/v2/user/me`，code==0 且 guest==false 才判活（低风险、不碰搜索限流）；-100/游客→死，其余风控码→软封。部署后运行 account_repair，两账号自动 dead→ok，`_cookie_pool_state.json` 均 ok、pool_alive=True。
 - **核实**：容器无 pgrep（报 pgrep:not found），cron 存活以 /proc comm 扫描为准——实测 /usr/sbin/cron 在跑（crontab 39 行），「cron-stopped」是工具缺失的假阴性。
 
+### 2026-09-28 飞书看门狗暂停 + 播报信号-模块对齐精简（已部署/提交）
+
+- **暂停飞书看门狗**：看门狗在容器内（非 Doubao cron）。新增通道级总开关 `health.channel_enabled(name)`，判定顺序 NOTIFY_* 环境变量 → `/app/data/notify_channels.json` → 默认开；三个通道原语 `_telegram/_feishu_app/_feishu` 与 `health.alert` 全部先过此闸。当前 `/app/data/notify_channels.json = {"telegram":true,"feishu_app":false,"feishu":false}`——**飞书两通道全暂停、TG 保留**。一处覆盖看门狗/心跳/登录工单/地图配额/各补齐脚本的全部外发。恢复：把该文件对应项改 true（或对我说「恢复飞书」）。
+- **信号→模块目录（已固化进 notifier.py docstring，无登记不得推送）**：
+  - `heartbeat` ← progress_broadcast，每 10 分钟，INFO，cadence 600；
+  - `watchdog:killed` ← watchdog，强杀卡死进程(runtime>30m)，WARN，cooldown 3600；
+  - `login:account_x` ← warning_handler，双出口 user/me 均 -100，ACTION→RESOLVED，有界 nudge；
+  - `map:quota` ← map_key_repair，地图 key 全尽/恢复，WARN→RESOLVED；
+  - `pool_autostart` ← account_repair，gap_pool 缺失已拉起，WARN once。
+- **心跳正文精简（build_compact，固定 3~4 行）**：覆盖 / 账号(合并候选·阻塞) / 开发；DB 计数失败时该行静默（不再印「计数跳过」）；账号均 ok 时残留 SEARCH_RESTRICTED/COOKIE_INVALID 标记视为过期、不显示阻塞（修掉「账号 ok 却报搜索风控」的信号矛盾）。实测：TG send True、feishu_app/feishu 均 None。
+
 ### 2026-09-28 两个真正独立的小红书账号已登录部署（实测双账号搜索均 22 条）
 
 - **背景**：此前 account_a/account_b 的 web_session 身份段相同，取证发现是同一台设备登了同一账号（单会话策略，第二个设备登录会顶掉前一个）。用户确认有第二个号，本轮在本机真实 Chrome 分别扫码完成。
