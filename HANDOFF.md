@@ -16,6 +16,22 @@
 
 - **【P1 数据驱动分母已落地】poi_counts.py**：每叶子 1 次高德 text(offset=1 读 count)，多 key 轮换/断点续跑，291 叶子全采集（中位≈16、53 个=0；key#0 撞日限换 key#1 完成）。喂账本后 **supply_source 全转 poi**：供给档 scarce133/normal40/rich118，**达标 17/291=6%、未达标 274、总缺口 867**（比启发式更双峰）。播报新增「开发进度」区块（work_progress.py + /app/data/work_progress.json，agent 持续写入）。
 
+### 2026-09-28 地图配额根治 P1：池化仲裁 + 持久账本 + POI 缓存（已部署/提交/推送，实测通过）
+
+- **根因（均取证）**：①高德「搜索」个人开发者 **5,000/月**（infocode 10044=账号级月限，同账号多 key 不叠加，只有独立实名账号才叠加），非脚本误写的 5,000/日；②最重的 `cloud_amap_fill`（全字段、3次/时、1433 候选）走单 key 绕开池、吃光月配额，电话被饿死；③腾讯单 key 无池、且值含 `&+=#%` 时 111；④一个兜底挂就整轮判 quota，不跨 key/出口重试；⑤电话/坐标/营业时间/全字段对同一 POI 各调一次、无共享缓存；⑥无持久账本/看门狗，重启先打同一把 key。
+- **新建 `cloud/map_quota.py`（配额仲裁核心）**：
+  - 持久账本 `/app/data/map_quota_ledger.json`（原子 tmp+replace），按 `provider:idx` 存每 key 的 daily/monthly 窗口用量；本地日切换重置日桶、月初重置月桶并清对应 dead。
+  - 软上限取官方值 90%（可 env 覆盖）：腾讯 search/geocode 各 9,000/日；高德 search 4,500/**月**、geocode 4,500/日。
+  - `acquire(consumer,provider,interface)`：消费者优先级 phone=0 > coord=1 > hours=2 > full=3；search 接口在池剩余 ≤ 电话预留（腾讯 3,000 / 高德 800）时低优先任务让路 → reserved。
+  - `report()` 按真实返回码标 dead：腾讯 121→dead 到次日0点、111→sign_error 不 dead；高德 10044→dead 到下月1号、10003→dead 到次日0点。
+  - 统一签名：腾讯/高德 sig 均小写 md5；值清洗 `&+=#%`；统一 `call()`（每次新建 MapQuota 保证跨进程账本新鲜；单 call 只试一把 key，rate 由 wrapper 循环轮换）。
+  - `PoiCache`：持久 JSON、容量 4000、LRU；`make_key`（有 provider poi_id 用 `provider:id`，否则 md5(name|address)），默认 ttl 30 天。
+- **`cloud/map_helpers.py` 接线**：新增 `_map_call`（逐把 key 尝试、rate/error/sign_error 自动换下一把、no_budget/reserved→quota）；腾讯 suggestion/search/geocode/detail 与高德全部走池；`amap_geocode` 修正为 interface=geocode/consumer=coord（原误挂 search 月桶）；`resolve_poi` 接入 PoiCache **只正缓存**（found 判定=有 title/坐标/tel，quota/未找到不缓存）。
+- **`cloud/cloud_amap_fill.py` 重写**：`amap_text` 走池 consumer=full；返回 QUOTA（真耗尽）/YIELD（为电话预留让路，安静停、不告警）；main 守卫改为池里有 key；**单轮默认 100→40**；月配额告警文案改为「月初重置」。
+- **实测（容器内真实调用）**：高德 key#0 首打 10044 → 持久标 dead 到月初、monthly_used=[1,0]；第二次自动跳过 key#0、用 key#1 返回 ok（infocode 10000、3 POI），跨账号轮换通过；腾讯修复一个空 SK 回退 bug（`_split_csv("")` 返回 `[""]` truthy 致 SK 回退没生效）后 MQ.call 与 wrapper 均 status=0；resolve_poi 同店第二次调用 **零搜索（缓存命中）**。账本 search_remaining：腾讯 8,991、高德 4,499。
+- **提交**："feat(map): 地图配额池化仲裁+持久账本+POI缓存，全字段任务给电话让路"（已 push main）。
+- **后续 P3（未做）**：`map_key_repair` 看门狗（R0 重探/R1 轮换/R2 换出口/R3 全尽才带解封时刻告警）接入 20min cron；L0 官方源（官网/公众号/官方社媒/点评）免配额取电话；P2 需用户再注册 2–3 个独立实名高德/腾讯账号并做免费企业认证（搜索 5千→5万/月），key 只进 gitignored deploy.env。
+
 ### 2026-09-28 warning_handler 二维码专项：根因链全部修复（已部署/提交/推送，等用户扫码）
 
 - **现象**：看门狗虽有 warning_handler，但推送到 TG/飞书的「二维码」要么是登录遮罩文字、要么 50s 不产码；account_a 双出口签名探测 -100 一直无法恢复。
