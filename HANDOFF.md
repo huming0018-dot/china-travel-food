@@ -1717,3 +1717,65 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 2. **腾讯 key 真实日量偏低**：tencent:0 在 used=429 即返回真实 `code=121`（日量超限），
    被正确标记 daily_quota 至次日 0 点。需注册更多独立实名腾讯 key 写入
    `TENCENT_MAP_KEYS`/`TENCENT_MAP_SKS` 以扩容电话/坐标兜底通道。
+
+
+---
+
+## Phase 0-B 分类机制重做（主营 is / 含有 serves / 地名陷阱）
+
+> 执行者：分类开发执行者；日期 2026-09-28。前置 Phase 0-A 实体去重已完成。
+> 本机制把 `restaurant_cuisines.is_primary` 系统性打成「主营(is)=true / 含有(serves)=false」，
+> 按门店**主营出品**定主菜系叶；店名/地址里的地名 token 只作弱信号。
+
+### 交付物
+- 引擎：`cloud/vendor/pipeline/primary_cuisine_engine.py`（确定性、默认 dry-run、`--commit` 才写库）。
+- 报告：`cloud/vendor/pipeline/primary_engine_report.json`（逐店 before→after/证据/置信/原因/证据URL）、
+  `primary_engine_before_after.tsv`（人读摘要）。
+- 已部署容器 food-cloud `/app/pipeline/primary_cuisine_engine.py`，容器内 dry-run 复跑 **no_change=1472、0 变更**（幂等）。
+
+### 机制要点（修机制，不是手工清单）
+1. **主营 is vs 含有 serves**：每家 active 店在**既有**菜系关联中确定性选恰好 1 个主菜系叶；
+   其余菜系 link 一律 serves。不新增/删除 link，不动 restaurants/cuisines 其他字段。
+   - 中餐：地域子流派(identity)优先于产品/形式第二轴(format)。潮汕牛肉火锅店主=潮汕菜、
+     潮汕牛肉火锅=serves；松鹤楼主=苏帮菜、苏式汤面=serves。
+   - 日料/西餐/非正餐（无地域子流派）：按主营出品证据在产品叶中选主（鮨琉璃=寿司、酉町=烧鸟、
+     BOTTEGA=那不勒斯披萨、Speak Low=鸡尾酒吧）。
+2. **地名陷阱弱信号**：扬州/四川/重庆/潮汕/海南…等地名 token 在店名里权重仅 0.1，须招牌菜/食客
+   证据佐证才采纳。引擎自动记录「名字地名指向 X、但招牌/证据证明主营 Y」的纠正案例 **17 条**
+   （典型：八合里/陈记/潮牛嗨等潮汕牛肉火锅店名带"潮汕牛肉火锅"，主菜系按身份定=潮汕菜、火锅=serves；
+   武妹娘/粉醉牛湖南米粉店招牌=常德牛肉粉，主=洞庭湖区菜、湖南米粉=serves；小吊梨汤北京菜烤鸭店
+   招牌=烤鸭/爆肚/炸酱面，主=京味家常、北京烤鸭=serves）。
+3. **覆盖保护**：不推翻人工已设 leaf primary——仅当新叶招牌菜≥2 命中且旧叶 0 命中（证据明确矛盾）
+   才改；root→leaf 提升允许。1025 怡妮新疆（手抓饭/烤串菜单混合）即被保护保留人工"新疆正餐"。
+
+### 全库 dry-run→apply 数字（真实运行，非估算）
+- apply 前：rc 10600 行、is_primary=true **470**；active 1472 家中 1013 家无主菜系、458 家已标。
+- dry-run 结果：main_newly_set **1013**（新定主）、no_change **443**、main_changed **15**
+  （13 证据纠错+root→leaf 提升）、main_dedup **1**（id=517 莆田餐厅双 primary 收敛为莆仙菜、闽南菜降 serves）。
+- apply：PATCH **1044 行全部成功 / 0 失败**。
+- 回读：rc 仍 10600 行（未增删 link）；is_primary=true 470→**1482**（1472 active 各 1 主 + 10 闭店保留）；
+  active 店 **0 无主、0 多主**。
+- **restaurants 表零变化**：total 1479 / active 1472 / 电话 1254(85.2%) / 坐标 1471(99.9%) 与基线完全一致；
+  本任务只 PATCH `restaurant_cuisines.is_primary`，`trg_restaurants_derive`(tier/score_total/search_vector)
+  未被触碰、派生 trigger 未破坏。
+
+### 回归用例
+- reclassify_83 的 34 家 active 店（1927 鮨心和已闭店跳过）全部落定唯一主菜系：
+  568 皖宴龙柏=徽州菜、759 荣府宴=台州菜、1446 釜溪盐韵=自贡盐帮菜、1517 乾七道=莆仙菜、
+  1846 AmoyA=闽南菜、1923 鮨琉璃=寿司、1925 宫楽=怀石、1928 奈良本=寿司、1903 Endo=蛋糕/法式甜品、
+  1989-1992 四家茶馆=茶饮、融合私宴系=融合菜/Fusion。
+- 私房菜(形式 348)店按主营定类（1844 豪生=本帮、1846 AmoyA=闽南、1446 釜溪=自贡盐帮），
+  不因"私宴/私房"名误判；形式维度 link 未动。
+- 15 个 main_changed 均有招牌菜反证（515/884 闽南沙茶海蛎煎、569 徽州臭鳜鱼毛豆腐、648 潮汕鱼生薄壳、
+  1038 台湾家常菜、1064 武汉过早热干面豆皮、1065 藕汤粉蒸肉等）。
+
+### 周期化建议（未自行改 crontab）
+- 建议加一条只读校验 cron（每日/每周）：`cd /app/pipeline && python3 primary_cuisine_engine.py`
+  （dry-run，天然幂等；若有新店/新 link 导致 no_change<1472 则告警人工复核）。
+  是否接入 `cloud_patrol.py` 或独立 cron，由用户统一安排。
+
+### 遗留问题
+- 少量 low/medium 置信的日料/西餐店（如 Da Vittorio、8½ Otto e Mezzo 仅有"意面"叶）主菜系叶偏窄，
+  待后续补更细叶标签或证据后再优化；当前不影响"每店恰 1 主"的正确性。
+- 地名纠正 17 条均为"身份叶优先于产品叶"的正确案例；若后续发现新的"名字带地名但主营另一菜系"反例，
+  往 `LEAF_DISH_KW` 补招牌菜关键词即可，无需改机制。
