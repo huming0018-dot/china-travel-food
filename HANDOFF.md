@@ -1232,3 +1232,44 @@ resolve_anchor_name/pin_name 的兜底「任意≥3字即收」是漏勺；GENER
 ### SSH 运维备注
 SSH 若域名别名 `food-cloud` 不通（Clash TUN 模式会把域名解析成 fake-IP），改用直连：
 `ssh -i ~/.ssh/food_cloud_deploy ubuntu@49.234.35.92`（私钥 ~/.ssh/food_cloud_deploy，user=ubuntu）。
+
+---
+
+## 2026-09-28｜每账号独立出口 IP + 服务端隔离二维码登录（并行采集）
+
+### 背景
+并行 worker 池虽支持多账号，但所有账号共享上海服务器单一出口 IP，并行触发软限流；且 account_b 登录会挤掉本地浏览器里的 account_a。用户要求：独立 IP 由 AI 完成、b 由用户扫码、与 a 并行、三级菜单必须修好（菜单修复见 commit 7947cb1）。
+
+### 独立出口 IP（已验证）
+- 新增广州 Lighthouse 实例做鉴权代理（与上海主服务器不同地域/不同 IP）：
+  - 公网 IP **139.199.90.169**，实例 ID **lhins-kqyl0sh9**，zone ap-guangzhou-6（regionId=1）。
+  - 锐驰型 2核1GB/40GB SSD/200Mbps，Ubuntu 26.04 LTS，**40 元/月，2026-10-28 12:24 到期**。
+- 代理：tinyproxy 监听 **0.0.0.0:18080**，BasicAuth 用户 **xhsb** / 密码 **a7887d57a979acf608916ceb**；
+  ConnectPort 仅 443/563；云防火墙 TCP 18080 **来源仅 49.234.35.92/32**（仅上海主服务器可用，纵深防御）。
+- 验证：从上海服务器经代理 `https://myip.ipip.net` 返回「当前 IP：139.199.90.169 广东 广州 电信」；
+  `http://ip-api.com/json` query=139.199.90.169、AS45090。
+  注意 api.ipify.org（Cloudflare 104.26/172.67）在该广州网络直连也为空、不可用，非代理问题。
+- 容器内 `/app/data/account_proxies.json`：
+  `{"account_b":"http://xhsb:a7887d57a979acf608916ceb@139.199.90.169:18080"}`
+  gap_runner.proxies_for(account) 读取并透传给 XhsApi（requests proxies）。account_a 不配置 → 走上海 IP。
+
+### 服务端隔离二维码登录（cloud/xhs_qr_login.py）
+- 独立 headless Chromium + 独立 context（与本地 account_a 完全隔离），打开 xhs 首页截登录二维码。
+- 容器缺 chromium_headless_shell-1148（只有完整 chromium-1148），用 executable_path 指向
+  `/root/.cache/ms-playwright/chromium-1148/chrome-linux/chrome` 跑内置 headless。
+- **登录成功判据 = cookie 同时含 web_session 与 id_token**（XHS 给访客也发 guest web_session，
+  只判 web_session 会误判；account_a 另有 id_token/last_web_session/unread/gid）。
+- 扫码成功导出 cookie → 宿主机 `/home/ubuntu/food-cloud/xhs_accounts/account_b.json`（600，owner 1000:1001）。
+
+### 当前运行状态（已验证）
+- 重启后新 gap_pool（PID 4093）下双 worker 并行：account_a（worker 4103，leaf 170，上海 IP）、
+  account_b（worker 4104，leaf 171/172，广州 IP）；claims 原子认领、不同叶子。
+- tinyproxy 已记录 b 对 edith.xiaohongshu.com 的 CONNECT（115+），独立出口确认。
+- 提交：cloud/xhs_qr_login.py、gap_runner.py、xhs_api.py（commit 见 git log，已推 main）。
+
+### 扩容更多账号（c/d/e/f）的标准动作
+1. 每新增一个账号 → 新增一台不同地域 Lighthouse tinyproxy 实例（同法，40 元/月），
+   防火墙仅放行上海主服务器 IP；
+2. 在容器 `/app/data/account_proxies.json` 增加 `<account_x>: 代理URL`；
+3. 跑 xhs_qr_login.py（改输出文件名/账号）出二维码，用户用对应手机账号扫码；
+4. cookie 落宿主机 xhs_accounts/<account_x>.json；池自动 classify 并拉起该账号 worker。
