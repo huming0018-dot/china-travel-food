@@ -16,6 +16,21 @@
 
 - **【P1 数据驱动分母已落地】poi_counts.py**：每叶子 1 次高德 text(offset=1 读 count)，多 key 轮换/断点续跑，291 叶子全采集（中位≈16、53 个=0；key#0 撞日限换 key#1 完成）。喂账本后 **supply_source 全转 poi**：供给档 scarce133/normal40/rich118，**达标 17/291=6%、未达标 274、总缺口 867**（比启发式更双峰）。播报新增「开发进度」区块（work_progress.py + /app/data/work_progress.json，agent 持续写入）。
 
+### 2026-09-28 warning_handler 二维码专项：根因链全部修复（已部署/提交/推送，等用户扫码）
+
+- **现象**：看门狗虽有 warning_handler，但推送到 TG/飞书的「二维码」要么是登录遮罩文字、要么 50s 不产码；account_a 双出口签名探测 -100 一直无法恢复。
+- **逐层坐实的根因与修复（均在 `cloud/xhs_qr_login.py` + `cloud/warning_handler.py`）**：
+  1. **飞书缺图片权限**：自建应用缺 `im:resource`（错误码 99991672）→ 已在飞书开放平台开通 `im:resource:upload` 并发布，fs_photo=True。
+  2. **TG multipart 被 Deno 反代损坏**（sendPhoto 400 IMAGE_PROCESS_FAILED；官方被墙、广州代理超时）→ 改上传 Supabase Storage 公共桶 `qrcode`（public，对象 `qr/<stem>_<ts>.jpg`），sendPhoto 按公共 URL 以 JSON 发送，实测 ok。
+  3. **元素截图把遮罩截入**：`img.qrcode-img` 上有绝对定位遮罩（扫码登录/请在手机确认/重新 + Please/Didn't），element.screenshot 会合成遮罩 → capture_qr 改为**直接 base64 解码 `img.qrcode-img` 的 src 写原始字节，完全不截图**，PNG 签名校验。
+  4. **占位图/过期图混入**：新增 `looks_like_qr(raw)`（PIL：正方形且≥100px；采样像素彩色<1%、中间灰<20%）。实测真 QR（128×128）colored=0/mid=0/dark=52.8%/light=47.2% 通过；128×129 双语占位图因非正方形被拒。
+  5. **刷新误判死循环**：`_refresh_if_expired` 曾用宽泛词（失效/重新加载）匹配 `.code-area`，正常态也每秒点击 `.qrcode` 反复刷新、二维码无法稳定 → 收紧为 innerText 强短语（二维码已失效/点击刷新/QR code expired…）才点，且只在当前 src 非有效 QR 时按 8s 节流。
+  6. **★ 决定性根因：worker 假存活死锁**：worker 退出后 pid 文件里的 **pid 被别的进程复用**，`is_running` 仅凭 `/proc/<pid>` 存在就判 True（实测 killall 扫到 0 个 chrome/worker、但 running=True），`Q.start` 永久拒绝拉新、request_login 还误杀无关进程。→ 重写存活判定：`_worker_pid` 校验 `/proc/<pid>/cmdline` 同时含 `xhs_qr_login`+`--worker`+本账号，pid 文件失效则**全量扫描 /proc 兜底**；`start` 遇陈旧 pid 文件直接覆盖拉起；`stop` 只杀真 worker 并清 pid 文件。
+  7. **worker 自愈重载**：新增 `_goto_login`（/login→首页容错）+ `ensure_qr`（当前页抓不到就重新打开登录页再抓，最多 3 次）；主循环二维码缺失立即修、每 100s 强制换新（像素无法判断过期）。
+- **验证（2026-09-28）**：修复后 `_worker_pid` 正确识别 None → request_login 真正拉起 worker、running=True、二维码双通道推送成功（last_qr_push 有值）；最终 `/app/data/qr/account_a.png` = **128×128 RGBA 干净二维码（目视三角定位块清晰、无遮罩）**。
+- **当前等待**：用户需在二维码有效期内（小红书 App 扫一扫）扫码；宿主机 `/root/food-qr-installer.py`（root cron 每分钟）校验 `qr/account_a_new.json`（JSON 数组、含 web_session+id_token）后搬到 `/home/ubuntu/food-cloud/xhs_accounts/account_a.json`（600），warning_handler `_verify_installed` 探测 code=0 即关单并推「✅已重登」。
+- 提交："fix(watchdog): 修复二维码worker假存活死锁——cmdline校验+全量扫描兜底+自愈重载+base64解码干净二维码"（已 push main）。权威最新源即项目 `cloud/warning_handler.py`、`cloud/xhs_qr_login.py`。
+
 ### 2026-09-28 元层：北极星宪法 + 机制总纲 v4（治「世界观被遗忘」与六大根因，已锚定）
 
 - **元问题定位**：缺陷不是缺文档，而是 ①世界观没被锚定成「每次必读、可机械执行」的契约（散落多文档、会被忘）；②机制写在纸上但没全部落成在跑代码（容器曾是旧版 gap_runner 即例证），缺「原则→模块→状态留痕」绑定。
