@@ -50,22 +50,17 @@ def log(msg: str):
 
 
 def alert(title: str, msg: str):
+    """统一走 notifier（分级/去重/冷却），不再各自直推。"""
     try:
-        import health  # 容器内 health.alert(title, msg)
-        if hasattr(health, "alert"):
-            health.alert(title, msg)
-            return
+        import notifier
+        notifier.warn(f"{title}\n{msg}", key="watchdog:killed", cooldown=3600)
+        return
     except Exception:
         pass
-    # 兜底：直接 requests 发 Telegram（容器 env 已加载）
+    # 兜底：health.alert
     try:
-        import requests
-        base = os.environ.get("TELEGRAM_API_BASE", "")
-        tok = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-        chat = os.environ.get("TELEGRAM_CHAT_ID", "")
-        if base and tok and chat:
-            requests.post(f"{base}/bot{tok}/sendMessage",
-                          json={"chat_id": chat, "text": f"{title}\n{msg}"}, timeout=10)
+        import health
+        health.alert(msg, title=title, key="watchdog_killed", cooldown=3600)
     except Exception:
         pass
 

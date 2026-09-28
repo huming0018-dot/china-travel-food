@@ -1448,3 +1448,23 @@ cloud_amap_fill 走池降频 + 持久 POI 缓存一次 extensions=all 共享）�
 **当前状态**：account_a 已用真实 Chrome 干净账号覆盖并验证搜索恢复（两出口、全关键词格式均返回）；
 account_b 仍 -100，需按 runbook 在另一真实 Chrome 窗口扫码（走广州代理）。看门狗对 -100 的自动二维码
 仅作告警/沟通入口，实际重登走人工真实 Chrome 流程。
+
+## 2026-09-28 看门狗推送整顿（已部署/提交）
+
+问题：health.alert / warning_handler / progress_broadcast 各自为政，标题格式不一、10 分钟播报绕过
+冷却、且对 -100 持续推送【云端 headless 二维码】——而该路径在确认环节必 fail，属无效打扰。
+
+新增 **`cloud/notifier.py`（唯一通知出口）**，所有外发统一走它：
+- 四级：INFO(例行心跳, cadence=600) / WARN(自动处理中, 同内容冷却 3600) / ACTION(需用户操作,
+  首次即推 + 按 30/60/60/120 分钟有界提醒 4 次后不刷屏) / RESOLVED(每 key 一条收尾)。
+- 统一格式（级别标签+时间+正文+“无需操作/👉需要你做”），按 key 内容哈希去重，sanitize 截断并遮蔽凭据；
+  不推 traceback / 遮罩图 / 过期码。通道复用 health._telegram/_feishu_app/_feishu。
+- 账本 `/app/data/notifier_ledger.json`。
+
+改造：
+- `progress_broadcast.py`：新增 build_compact（每块一行），main 走 notifier.info(cadence=600)。
+- `warning_handler.py`：**停用云端 headless 二维码**（不再 Q.start/_send_qr，并清理残留 worker）；
+  -100 改推「本机真实 Chrome 重登」ACTION（回到豆包说「重登」由主 agent 开窗）；poll() 双出口
+  轻量复核，code=0 自动 notifier.resolve 关单；通用 warn() 走 notifier.warn。
+- `watchdog.alert` 走 notifier.warn。
+实测紧凑播报双通道推送 True。

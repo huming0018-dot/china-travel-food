@@ -149,31 +149,33 @@ def build_message():
     return "\n".join(lines)
 
 
+def build_compact():
+    """紧凑心跳：每块压成一行，控制在易读范围（推送整顿）。"""
+    work = ""
+    try:
+        import work_progress
+        work = work_progress.render_text()
+    except Exception:
+        work = "开发进度：状态缺失"
+    lines = [
+        coverage_section(),
+        db_counts_section(),
+        frontier_section(),
+        account_section(),
+        blockers_section(),
+        "",
+        work,
+    ]
+    return "\n".join(x for x in lines if x is not None)
+
+
 def main():
-    msg = build_message()
-    title = "🍜 进度播报"
-    results = {}
-    try:
-        r = health._telegram(msg, title)
-        if r is not None:
-            results["telegram"] = r
-    except Exception as e:
-        print("TG err", e)
-    try:
-        r = health._feishu_app(msg, title)
-        if r is not None:
-            results["feishu_app"] = r
-    except Exception as e:
-        print("FS app err", e)
-    try:
-        r = health._feishu(msg, title)
-        if r is not None:
-            results["feishu"] = r
-    except Exception as e:
-        print("FS err", e)
-    print(msg)
-    print("推送结果：", results)
-    return 0 if any(results.values()) else 1
+    import notifier
+    body = build_compact()
+    ok = notifier.info(body, key="heartbeat", cadence=600)
+    print(body)
+    print("推送结果：", ok)
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":
