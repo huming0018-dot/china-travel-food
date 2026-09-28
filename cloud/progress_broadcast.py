@@ -123,6 +123,14 @@ def db_counts_section():
         return "数据库：计数跳过"
 
 
+def work_section():
+    try:
+        import work_progress
+        return work_progress.render_text()
+    except Exception:
+        return "— 开发进度 —\n阶段：状态缺失"
+
+
 def build_message():
     sep = "—" * 18
     lines = [
@@ -135,6 +143,8 @@ def build_message():
         account_section(),
         blockers_section(),
         pool_section(),
+        sep,
+        work_section(),
     ]
     return "\n".join(lines)
 
