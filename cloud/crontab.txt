@@ -3,10 +3,11 @@
 # flock -n   -> 上一轮没跑完则跳过，避免重叠
 SHELL=/bin/bash
 
-# 1) 小红书采集：每 20 分钟（:00/:20/:40）
-*/20 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/xhs.lock /usr/local/bin/python run_batch.py >> /app/data/cron.log 2>&1
+# 1) 浏览器轮候调度器（接管所有需浏览器的任务：小红书 discover/reviews + 米其林榜单兜底）
+#    每 20 分钟一个 tick，router 按账号健康 + 轮替决定跑谁；单浏览器串行。
+*/20 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/browser.lock /usr/local/bin/python cloud_router.py >> /app/data/router.log 2>&1
 
-# 2) 电话补齐：每小时 :05/:25/:45（与 XHS 采集错峰 5 分钟）
+# 2) 电话补齐：每小时 :05/:25/:45（HTTP，不占浏览器）
 5,25,45 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/phone.lock /usr/local/bin/python cloud_phone_fill.py >> /app/data/phone_fill.log 2>&1
 
 # 3) 坐标补齐：每天凌晨 3:00（量小，全量重试）
@@ -15,14 +16,24 @@ SHELL=/bin/bash
 # 4) 营业时间补齐：每天凌晨 4:00
 0 4 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/hours.lock /usr/local/bin/python cloud_hours_fill.py >> /app/data/hours_fill.log 2>&1
 
-# 5) 高德全字段采集（评分/人均/电话/营业时间/坐标，一次 place/text）：每小时 :15/:35/:55（错峰）
+# 5) 高德全字段采集（评分/人均/电话/营业时间/坐标，多 key 池）：每小时 :15/:35/:55（HTTP，不占浏览器）
 15,35,55 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/amap_fill.lock /usr/local/bin/python cloud_amap_fill.py --apply >> /app/data/amap_fill.log 2>&1
 
-# 6) 开放式发现（图遍历发现→离线裁决→自动收录）：每小时 :25（错峰浏览器，独立锁）
-25 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/discover.lock /usr/local/bin/python cloud_discover.py >> /app/data/discover.log 2>&1
-
-# 7) 看门狗（清理超时卡点）：每 20 分钟 :10/:30/:50
+# 6) 看门狗（清理超时卡点）：每 20 分钟 :10/:30/:50
 10,30,50 * * * * cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python watchdog.py >> /app/data/watchdog.log 2>&1
 
-# 8) B站美食探店采集（API优先/bili-cli兜底）：每6小时一次（:30，错峰）
+# 7) B站美食探店采集（HTTP API，独立不占浏览器）：每6小时一次（:30，错峰）
 30 */6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/bili.lock /usr/local/bin/python cloud_bili_collect.py >> /app/data/bili_collect.log 2>&1
+
+# 8) 数据完整性巡逻 / 保鲜（REST，不占浏览器；实体/分类/价格/chef/简介）：每3小时 :42（错峰 amap）
+42 */3 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/patrol.lock /usr/local/bin/python cloud_patrol.py --apply >> /app/data/patrol.log 2>&1
+
+# 9) 软广评价分布自学（随评价积累重学正常/非正常分布，写 soft_ad_flag_reviews，
+#    最终 soft_ad_flag/penalty 由 trigger 纯派生）：每天 5:37（凌晨采集后，错峰）
+37 5 * * * cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python /app/pipeline/softad_distribution.py --apply >> /app/data/softad.log 2>&1
+
+# 10) 并行采集池常驻（容器启动即拉起；每个健康账号一个签名 HTTP worker，自动认领缺口叶子）
+@reboot sleep 25 && cd /app/cloud && . /app/cloud/env.sh && nohup /usr/local/bin/python gap_pool.py 6 >> /app/data/pool.log 2>&1
+
+# 11) 进度播报：每 10 分钟（偏移到 :03/:13/:23/:33/:43/:53，错峰 router/watchdog/amap/phone）
+3,13,23,33,43,53 * * * * cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python progress_broadcast.py >> /app/data/progress_broadcast.log 2>&1
