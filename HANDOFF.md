@@ -14,6 +14,8 @@
 
 - **【看门狗账号自动修复已上线】**：新建 `cloud/account_repair.py` 并由 watchdog 每轮调用。修复阶梯 R0 守护/自动拉起 gap_pool；R1 签名通道复核（权威），浏览器误判 dead/restricted 但签名 code=0 → 自动改判 ok；R2 默认出口软封/失败→经广州代理换独立 IP 再探；R3 仅双出口都 -100（web_session 过期）才一次性告警叫人扫码。实测两账号此前被误标 dead/restricted，复核均 code=0，**已自动改判 ok**、pool_alive=True。状态写回 xhs_cookie_pool，router 与 progress_broadcast 随之自愈。
 
+- **【P1 数据驱动分母已落地】poi_counts.py**：每叶子 1 次高德 text(offset=1 读 count)，多 key 轮换/断点续跑，291 叶子全采集（中位≈16、53 个=0；key#0 撞日限换 key#1 完成）。喂账本后 **supply_source 全转 poi**：供给档 scarce133/normal40/rich118，**达标 17/291=6%、未达标 274、总缺口 867**（比启发式更双峰）。播报新增「开发进度」区块（work_progress.py + /app/data/work_progress.json，agent 持续写入）。
+
 ### 2026-09-28 元层：北极星宪法 + 机制总纲 v4（治「世界观被遗忘」与六大根因，已锚定）
 
 - **元问题定位**：缺陷不是缺文档，而是 ①世界观没被锚定成「每次必读、可机械执行」的契约（散落多文档、会被忘）；②机制写在纸上但没全部落成在跑代码（容器曾是旧版 gap_runner 即例证），缺「原则→模块→状态留痕」绑定。
