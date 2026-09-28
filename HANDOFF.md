@@ -2013,3 +2013,42 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
    三条件齐备即自动 admit（gap_runner 饱和后自动 gate→apply）。
 2. 黑珍珠全量名录连接器待建（F2 第二权威框最大缺口，与上节相同）。
 3. 55 个地图单声音候选已随账号恢复由 pool 回灌第二声音。
+
+---
+
+## Phase 2 真实食客评价扩量（2026-09-28）
+
+> 问题：reviews 1038 行中 899 条是高德聚合分(trust=low，不计口味)，真小红书 UGC 仅 138 条；
+> active 1472 店中 **1410 家 0 真实食客证据**，154 家人均≥500 的奢华店（泰安门/Da Vittorio/Narisawa/Obscura…）**全部 0 UGC**。
+> score_taste/review_count 多为先验驱动，"口味优先"空心。本阶段为【在库、口味证据不足】店补真实食客笔记。
+
+### 通道与认证层级（A5）
+- **L3 小红书签名直连 HTTP**（cloud/xhs_api.py）：关键词搜索必须登录态（匿名 a1=-101），但签名 HTTP 绕开浏览器 300011。两账号轮替（account_a=LANCE 默认出口 / account_b=猪蛤蛤 走广州代理 account_proxies.json），与后台 gap_pool 共存。
+- **保守 pacing**：本脚本搜索间隔 60s（默认 28s 上调一倍）、min_gap=4s；采集末段触发风控自动退避到 120s，**不硬刷**。gap_pool 正同时用两账号，未开第二个激进循环。
+- B站 UP主探店 = KOL 半商业声音，**不直接当食客评价写**（A1）；大众点评 web App-only、L0 keyless 电话仍为死路，未重试。
+
+### 脚本（cloud/review_ugc_fill.py）
+- 目标选择：active、0 真实 UGC（diner+trust mid/high+非软广）、按 price_avg 降序，取 top N（默认人均≥500、25家）。
+- 证据单位：小红书单店笔记（正文含具体菜品/堂食细节），author=笔记作者，aspect_taste 由正负向词判定（含「失望/避雷/难吃」等负向，平衡不一边倒），source_url=笔记链接，visit_date=笔记时间戳（无则留空，不写 1970）。
+- **实体锚定**：core=剥括号分店归一，必须在笔记 title+desc 中；连锁多分店无分店 token 不绑（不猜错分店）。
+- **反软广（P6）**：①正文无菜名/食物词 → 丢弃；②作者身份拦截——代订/招商/场地号（预定/代订/订座/场地…）、品牌自营号（作者名=店名无个人后缀，如「鮨吉兆」=店官方号）→ `is_fake_suspect=true, trust=low` 留痕但不计口味；③模板套话密集+emoji广告结构 → 同法拦截。
+- **只写 reviews 行**（review_kind=diner, is_verified_diner=true, trust=mid/high, is_fake_suspect=false），**绝不 PATCH restaurants.score_*/review_count**——由触发器 trg_reviews_taste 自动重算。幂等按 source_url 去重。
+- 用法：`python3 review_ugc_fill.py`（dry-run）/ `--apply` 写库；`--from-plan <json>` 离线重过滤已采候选（不再请求 XHS）。
+
+### 真实运行数字（容器 food-cloud，非估算）
+- dry-run：25 店搜索 / 100 笔记 fetch / 60 锚定。
+- 作者身份拦截 **3 条非食客**留痕：魔都美食预定家(代订)、小潘潘场地推荐-弥乐(场地招商)、鮨吉兆(品牌自营)。
+- apply：**reviews +60**（57 真证据 trust mid/high + 3 软广留痕 is_fake_suspect）。
+- 回读：reviews **1038→1098**；小红书 **139→199**；软广标记 **3**。
+- 22 家高端店获 ≥1 条真评价：其中 **19 家升 verified**（≥2 独立作者）、3 家 provisional（单作者：泰安门/Narisawa/Maison Lameloise）。
+- `score_evidence_level` 全库 **verified 35→54**（+19），provisional 1441→1422。触发器自动刷新 taste/review_count（如 VIVANT taste=92/verified、福廬=100/verified、头灶=77.7、Obscura=75.9、邓记食园=82.6）。
+- 修 4 行误写 `visit_date=1970-01-01` 为 NULL。
+- 容器复跑幂等：`--from-plan --apply` 二次运行识别 60 条全已存在，**写 0**。
+
+### 部署
+- 脚本经 `docker cp` 进运行容器 `/app/cloud/review_ugc_fill.py`（与 gap_pool 同账号设施，未重启容器、未动 crontab）；下次 `build_on_server.sh` 的 `COPY *.py` 会固化进镜像。
+
+### 遗留
+1. 仍有约 **130 家人均≥500 奢华店 0 真实 UGC**（本轮只取 top25）；中价位(200–500)0-UGC 店约 385 家。直接重跑脚本 `--apply`（batch 递增）即天然接续下一批高价店（已落库的 22 家自动移出目标集）。
+2. fine dining 在 XHS 的普通食客笔记稀少，多为美食博主/系列号；本脚本保留"真实到店+含菜名"的博主笔记作证据，仅拦代订/品牌/场地号。后续可接 B站/评论区真实食客短评补独立作者。
+3. 已验证死路未重试：大众点评 web（App-only）、L0 keyless 电话。
