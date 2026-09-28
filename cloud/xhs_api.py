@@ -84,6 +84,10 @@ class XhsApi:
         self._last = 0.0
         self._search_last = 0.0  # 搜索端点专用节流（比全局 _gap 更慢）
         self.search_gap = SEARCH_MIN_GAP  # 当前搜索间隔；遇速率验证永久翻倍（封顶）
+        # 【质量监管】搜索限流状态：连续空结果计数 + 是否被限流标记
+        # 用于 discovery_engine / gap_runner 检测空转，防止假饱和
+        self.search_throttled = False
+        self.consecutive_empty = 0
         self.accounts = []
         d = pathlib.Path(accounts_dir)
         if d.exists():
@@ -189,12 +193,21 @@ class XhsApi:
             items = (j.get("data") or {}).get("items") or []
             if items:
                 self.empty_streak = 0
+                # 【质量监管】有结果 → 清除限流标记
+                self.search_throttled = False
+                self.consecutive_empty = 0
                 return items
             if code == 0:  # 速率软限流：60–180s 长冷却，停顿后自恢复，不硬刷
                 self.empty_streak = getattr(self, "empty_streak", 0) + 1
                 time.sleep(min(60 * self.empty_streak, 180))
                 continue
+            # code != 0 且无结果：非限流类错误（如 -100 已在 _send 处理），直接返回
+            self.search_throttled = False
+            self.consecutive_empty = 0
             return []
+        # 【质量监管】3 次重试后仍 code=0 空结果 → 标记为限流空，调用方可据此检测空转
+        self.search_throttled = True
+        self.consecutive_empty += 1
         return items
 
     def feed(self, nid, tok):

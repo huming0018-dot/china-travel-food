@@ -10,6 +10,35 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-09-29 lean 清理：在跑热补丁归位入库 + 一次性过程稿清除（已提交）
+
+**目的**：把"热部署进容器但未入库"的真实修复收回 git，保证 `docker build` 可忠实复现镜像；删除构建目录里 gitignored 的一次性过程稿；不碰凭据/数据卷/research 原始数据，不改写已提交历史。
+
+**对账方法**：以容器 `/app`（运行事实）↔ 云端构建目录 `~/food-cloud` ↔ git HEAD(bba7008) 三方 md5 对账，判定每个漂移文件"谁新谁旧"，而非照单全收。
+
+**① 归位入库（容器在跑、git 缺失的真实修复，本次 commit）**：
+- `cloud/patrol_classify.py`（新增，13033B）：菜系"概念语义校验"（招牌菜/店名/别名→主身份，ADD/REMOVE/REVIEW），由 `cloud_patrol.py` 周期 `--apply` 调用；之前只在容器/构建目录、git 缺失 → 归位。
+- `cloud/cloud_bili_collect.py`：KOL upsert 补写 `mid` + 显式 `on_conflict=name,platform`（修重复 upsert 409）。
+- `cloud/cloud_discover.py`：`stalled` 空转检测触发即停、不入库，并经 notifier/health 告警（key=`discover_stalled:<cat>`，30min 冷却）。
+- `cloud/xhs_api.py`：新增 `search_throttled` / `consecutive_empty` 限流状态计数，供 discovery/gap_runner 检测空转、防假饱和。
+- `cloud/vendor/pipeline/merge_duplicates.py`：`brand_keys()` 拉丁品牌多键聚类（治 'PAIN CHAUD百丘'='Pain Chaud' 同店异写），坐标距离把关分店。
+- `cloud/Dockerfile`：硬编码文件清单 → `COPY *.py /app/cloud/` 通配，避免新增脚本漏烤进镜像。
+
+**② 还原 HEAD（构建目录是旧版/回退实验，容器实际跑的就是 HEAD，勿回退仓库）**：
+- `cloud/notifier.py`、`cloud/map_key_repair.py`、`cloud/cloud_router.py`：构建目录 md5 ≠ 容器 = git HEAD。其中 `cloud_router.py` 的构建目录版删掉了"账号全 dead 时不让位、浏览器留给榜单兜底"的护栏（回归），已 `git checkout --` 还原 HEAD。
+
+**③ 云端构建目录删除（gitignored 一次性过程稿，共 9 个文件 60K，运行中容器不受影响）**：
+- `vendor/pipeline/_apply_second_axis.py` `_audit_8cuisine.py` `_audit_axis_regress.py` `_build_second_axis.py` `_check_regress.py` `_scan_second_axis.py` `_tag_second_axis.py` `_thin_shops.py` `_second_axis_plan.json`（9-26 二级轴分析过程稿，无外部 import、终版逻辑已合入 admission_gate/common）。
+- **保留未动**：`deploy.env*`、`*.bak`、`server-context.tgz`、`.dianping_cookies.json`、`xhs_cookies.json`、`xhs_accounts/`、`_seed/`、`/app/data` 持久卷（19M）、`research/` 原始数据；`accepted*.jsonl`/`_archive/` 系 git 已跟踪历史 ETL 产物，保留。
+
+**④ 验证（只读，未写库/未重启服务/未动 crontab）**：
+- 容器内 import 12 个关键模块（common/admission_gate/coverage_ledger/chain_audit/cross_cuisine/cuisine_classify/entity_align/authority_compare/stage5/stage6/stage7/softad_distribution）全部 OK。
+- `release_audit.py` 只读跑通：D/G、E、C、B 类 PASS；A 覆盖 CHECK、D 实体对齐 / A 权威比对 ERROR——均为**先于本次清理存在的数据质量项**（实体未对齐/权威名单缺口），非清理引入，留待后续机制修复。报告 `/app/data/research/release_audit_2026-09-29.md`。
+
+**待决项**：
+- 用户 MacBook 主副本（`/Users/hubowen/...`，含已跟踪修改 cloud/Dockerfile/build_on_server.sh、未跟踪 QUALITY_*.md、顶层 __t_root/data_subagent_work/pipeline_work 等）不在本沙箱可达范围，其本地脏状态需在该机器上按同一口径复核清理。
+- 本地聊天快照 `xhs_solution_bundle.zip`（14M，xhs 方案研究包）非 git 仓库内容，保留待用户定夺。
+
 - **【进度播报已上线】每 10 分钟双通道推送**：新建 `cloud/progress_broadcast.py`（只读 ledger/pool_logs/cookie_state/frontier/阻塞标记，直接调 health._telegram/_feishu_app 绕过冷却），crontab 第11条 `3,13,23,33,43,53 * * * *`（错峰）。手动执行验证 **telegram=True、feishu_app=True**；容器 /usr/sbin/cron 在跑、crontab 已安装，离线照常推。日志 /app/data/progress_broadcast.log。当前实况：account_a=dead、account_b=restricted(300011)，池待自动复检。
 
 - **【看门狗账号自动修复已上线】**：新建 `cloud/account_repair.py` 并由 watchdog 每轮调用。修复阶梯 R0 守护/自动拉起 gap_pool；R1 签名通道复核（权威），浏览器误判 dead/restricted 但签名 code=0 → 自动改判 ok；R2 默认出口软封/失败→经广州代理换独立 IP 再探；R3 仅双出口都 -100（web_session 过期）才一次性告警叫人扫码。实测两账号此前被误标 dead/restricted，复核均 code=0，**已自动改判 ok**、pool_alive=True。状态写回 xhs_cookie_pool，router 与 progress_broadcast 随之自愈。

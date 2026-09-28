@@ -36,8 +36,8 @@ COPY vendor/pipeline /app/pipeline
 COPY fix_paths.py /app/cloud/fix_paths.py
 RUN python /app/cloud/fix_paths.py /app/pipeline
 
-# 4) 云端运行代码
-COPY cloud_bu.py xhs_cookie_pool.py cloud_ready.py health.py run_batch.py map_helpers.py cloud_phone_fill.py cloud_coord_fill.py cloud_hours_fill.py cloud_review_fill.py cloud_amap_fill.py candidate_apply.py cloud_discover.py cloud_bili_collect.py unmatched_bridge.py watchdog.py /app/cloud/
+# 4) 云端运行代码（通配符复制所有 .py，避免硬编码遗漏新文件）
+COPY *.py /app/cloud/
 
 # 5) 定时与启动脚本
 COPY crontab.txt entrypoint.sh /app/cloud/

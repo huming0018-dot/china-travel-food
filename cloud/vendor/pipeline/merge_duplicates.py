@@ -41,6 +41,28 @@ def brand_core(s):
     return C.norm_name(s)
 
 
+_LATIN_STOP = {"cafe", "shop", "store", "bakery", "restaurant", "bistro", "barre",
+               "the", "and", "bar", "coffee", "kitchen", "co"}
+
+
+def brand_keys(s):
+    """同一品牌常有多种写法，返回用于聚类的全部键：
+    - 完整品牌核心（中文/混合）；
+    - 外文品牌常附中文别名（'PAIN CHAUD百丘'、'Starbucks星巴克'），追加“拉丁拼写核心”，
+      使 'Pain Chaud' 与 'PAIN CHAUD百丘' 归到同一品牌候选；**是否同一物理店仍由坐标距离把关**。"""
+    keys = set()
+    core = brand_core(s)
+    if core:
+        keys.add(core)
+    pre = re.split(r"[（(]", str(s))[0]
+    lat = [t for t in re.findall(r"[a-z0-9]+", pre.lower())
+           if len(t) >= 3 and t not in _LATIN_STOP]
+    latin_core = "".join(lat)
+    if len(latin_core) >= 4:
+        keys.add("lat:" + latin_core)
+    return keys
+
+
 def ll(r):
     return C.parse_location(r.get("location"))
 
@@ -55,13 +77,14 @@ def dist_m(a, b):
 
 
 def find_clusters(rests, thresh):
-    g = defaultdict(list)
+    """按 brand_keys 建倒排（同一店可命中多个键），每个键内用坐标距离单链聚类；
+    同品牌、坐标明显分开 → 连锁异址分店，保留。最后按 id 集合对多键发现的同一簇去重。"""
+    key_map = defaultdict(list)
     for r in rests:
-        c = brand_core(r["name"])
-        if c:
-            g[c].append(r)
-    out = []
-    for c, items in g.items():
+        for k in brand_keys(r["name"]):
+            key_map[k].append(r)
+    found = []
+    for c, items in key_map.items():
         if len(items) < 2:
             continue
         clusters = []
@@ -80,8 +103,14 @@ def find_clusters(rests, thresh):
                 clusters.append([r])
         for cl in clusters:
             if len(cl) > 1:
-                out.append((c, cl))
-    return out
+                found.append((c, cl))
+    uniq, sigs = [], set()
+    for c, cl in found:
+        sig = tuple(sorted(x["id"] for x in cl))
+        if sig not in sigs:
+            sigs.add(sig)
+            uniq.append((c, cl))
+    return uniq
 
 
 def completeness(r):

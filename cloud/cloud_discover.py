@@ -137,8 +137,22 @@ def main():
     finally:
         bu.close()
 
-    if rep is None or rep["status"] != "saturated":
-        print(f"品类 {category} 发现进行中：{rep}")
+    if rep is None or rep["status"] not in ("saturated",):
+        # 【质量监管】stalled = 连续空结果触发空转检测，不继续、不入库，告警
+        if rep and rep.get("status") == "stalled":
+            reason = rep.get("stall_reason", "未知原因")
+            print(f"!! 品类 {category} 空转检测触发：{reason}")
+            try:
+                import notifier
+                notifier.warn(
+                    f"开放式发现空转：category={category}\n原因：{reason}\n已暂停，等待账号恢复或限流解除。",
+                    key=f"discover_stalled:{category}", cooldown=1800)
+            except Exception:
+                health.alert(
+                    f"开放式发现空转：{category}，{reason}。已暂停自动入库。",
+                    title="上海美食图鉴·发现空转", key=f"discover_stalled_{category}", cooldown=1800)
+        else:
+            print(f"品类 {category} 发现进行中：{rep}")
         return 0
 
     # 饱和 → 离线裁决 + 自动收录

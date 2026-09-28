@@ -259,11 +259,14 @@ def search(keyword):
 def upsert_kol(name, mid, count):
     """PostgREST upsert food_kol_watchlist（按 (name,platform) 唯一）。返回是否成功。"""
     row = {"name": name, "platform": "bilibili", "video_count": count,
+           "mid": (mid or None),
            "last_seen": date.today().isoformat(), "status": "active"}
     h = dict(C.headers())
     h["Prefer"] = "resolution=merge-duplicates,return=representation"
     try:
-        r = requests.post(C.BASE + "/food_kol_watchlist", headers=h, json=row, timeout=30)
+        # 显式 on_conflict：不传时 PostgREST 无法稳定推断 (name,platform) 冲突，重复 upsert 会 409
+        r = requests.post(C.BASE + "/food_kol_watchlist?on_conflict=name,platform",
+                          headers=h, json=row, timeout=30)
         if r.status_code not in (200, 201):
             print(f"  [KOL upsert] {name} -> HTTP {r.status_code}: {r.text[:120]}")
             return False
