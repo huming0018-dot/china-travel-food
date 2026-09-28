@@ -107,15 +107,24 @@ class DiscoveryEngine:
         self.state = self._load_or_init()
 
     # ------------------------------------------------------------ 状态
+    # 【质量监管】连续空结果阈值：达到此数则标记 stalled，防止搜索限流时空跑至假饱和
+    EMPTY_STALL_LIMIT = 3
+
     def _load_or_init(self):
         if self.state_path.exists():
-            return json.loads(self.state_path.read_text(encoding="utf-8"))
+            st = json.loads(self.state_path.read_text(encoding="utf-8"))
+            # 兼容旧 state：补 empty_streak 字段
+            st.setdefault("empty_streak", 0)
+            return st
         seeds = K.build_queries(self.category, dense=self.dense)
         return {
             "category": self.category, "city": self.city, "dense": self.dense,
             "visited": [], "frontier_high": list(seeds), "frontier_low": [],
             "brands": {}, "oral": {}, "stall": 0, "processed": 0,
             "outside_brands": 0, "status": "running",
+            # 【质量监管】连续空结果计数：搜索被限流时 notes 持续为空，
+            # 达到 EMPTY_STALL_LIMIT 则标记 stalled，防止 frontier 耗尽误判 saturated
+            "empty_streak": 0,
         }
 
     def save(self):
@@ -318,13 +327,61 @@ class DiscoveryEngine:
         return outside_new
 
     # ------------------------------------------------------------ 主循环
+    # 假饱和重开用的加深词根（评论区/长尾/主厨/英文/排名，见 BREAD method §二）
+    DEEP_WORD_SUFFIX = [
+        "评论区 推荐", "评论区 真正好吃", "合集 盘点", "红黑榜",
+        "本地人 私藏", "老饕 无广", "主厨 招牌 工作室",
+        "预约 排队 老顾客", "正宗 排名", "宝藏小店", "踩雷 排雷",
+    ]
+
+    def reseed_deep(self, round_n=1):
+        """假饱和重开：用「更密 + 评论区/长尾词根」重建 frontier（排除已访问）。
+
+        何时由 gap_runner 调用：一轮 run 标 saturated/stalled，但覆盖账本显示该叶
+        在营候选店 n_active < target_n（发现没做够）。verified 缺口归评价管线、不靠
+        本方法。round_n 记入 state，达上限仍不足则由 gap_runner 标 gap_remaining。
+        返回新 frontier 长度。
+        """
+        visited = set(self.state.get("visited", []))
+        spec = K.CATEGORY_SPEC.get(self.category, {})
+        cand = list(K.build_queries(self.category, dense=True))  # gather 自动加城市
+        for nm in (spec.get("names") or [])[:2]:
+            for suf in self.DEEP_WORD_SUFFIX:
+                cand.append(f"{nm} {suf}")
+        for sub in (spec.get("subs") or [])[:8]:
+            cand.append(f"{sub} 评论区 推荐")
+            cand.append(f"{sub} 正宗 好吃 排名")
+        for en in (spec.get("ens") or [])[:3]:
+            cand.append(f"best {en} shanghai review")
+        out, seen = [], set()
+        for q in cand:
+            qq = re.sub(r"\s+", " ", q).strip()
+            if not qq or qq in visited or qq in seen:
+                continue
+            seen.add(qq)
+            out.append(qq)
+        self.state["frontier_high"] = out
+        self.state["frontier_low"] = []
+        self.state["stall"] = 0
+        self.state["empty_streak"] = 0
+        self.state["deep_round"] = round_n
+        self.state["status"] = "running"
+        self.state.pop("stall_reason", None)
+        self.save()
+        return len(out)
+
     def run(self, max_queries=None):
         max_queries = max_queries or self.max_per_run
         did = 0
         while did < max_queries:
             q = self._pop()
             if q is None:
-                self.state["status"] = "saturated"
+                # 【质量监管】frontier 耗尽前若有连续空结果，应是 stalled 而非 saturated
+                if self.state.get("empty_streak", 0) >= self.EMPTY_STALL_LIMIT:
+                    self.state["status"] = "stalled"
+                    self.state["stall_reason"] = "frontier耗尽但连续空结果，疑似搜索限流"
+                else:
+                    self.state["status"] = "saturated"
                 break
             notes = D._gather_one_query(self.bu, q, self.npq, self.city)
             self._append_raw({"kind": "discover", "category": self.category,
@@ -337,14 +394,27 @@ class DiscoveryEngine:
                 self.state["stall"] = 0
             else:
                 self.state["stall"] += 1
+            # 【质量监管】空结果检测：连续 EMPTY_STALL_LIMIT 次返回 0 篇笔记 → stalled
+            if len(notes) == 0:
+                self.state["empty_streak"] = self.state.get("empty_streak", 0) + 1
+            else:
+                self.state["empty_streak"] = 0
             remaining = (len(self.state["frontier_high"])
                          + len(self.state["frontier_low"]))
             self.save()
             print(f"  [{q}] 笔记{len(notes)} 新库外店={'是' if outside_new else '否'} "
-                  f"frontier剩余{remaining} stall{self.state['stall']}")
+                  f"frontier剩余{remaining} stall{self.state['stall']} "
+                  f"空转{self.state['empty_streak']}")
+            # 【质量监管】连续空结果达到阈值 → 立即停止，不继续跑到假饱和
+            if self.state["empty_streak"] >= self.EMPTY_STALL_LIMIT:
+                self.state["status"] = "stalled"
+                self.state["stall_reason"] = (
+                    f"连续{self.EMPTY_STALL_LIMIT}次搜索返回0篇笔记，疑似登录失效或搜索限流")
+                print(f"  !! 空转检测触发：{self.state['stall_reason']}，停止本叶子采集")
+                break
             # 饱和判据 = frontier 清空（每个发现的店名都已追查到底）。
             # stall 仅作报告、不提前终止，确保任何已发现线索都不漏查。
-        if self.state["status"] != "saturated":
+        if self.state["status"] not in ("saturated", "stalled"):
             self.state["status"] = "running"
         self.save()
         return self.report()
@@ -357,4 +427,7 @@ class DiscoveryEngine:
             "brands": len(s["brands"]), "outside_brands": s["outside_brands"],
             "frontier_remaining": len(s["frontier_high"]) + len(s["frontier_low"]),
             "oral_pending": len(s["oral"]),
+            # 【质量监管】空转计数 + 原因（如有）
+            "empty_streak": s.get("empty_streak", 0),
+            "stall_reason": s.get("stall_reason", ""),
         }

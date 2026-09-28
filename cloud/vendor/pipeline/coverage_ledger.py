@@ -48,9 +48,13 @@ def supply_from_poi(n_poi):
 
 def supply_heuristic(name, root_names):
     """无 POI 计数时的兜底：命中大众品类词=rich；命中境外/小众=scarce；
-    境外大陆下的国家叶子默认 scarce，中餐叶子默认 normal。"""
+    境外大陆下的国家叶子默认 scarce，中餐叶子默认 normal。
+    复合子叶（「拉面·蘸面」）只看「·」后的子类型部分，不被父类大众词「拉面」误判 rich。"""
     t = str(name)
-    if any(k in t for k in RICH_HEUR):
+    sub = t.split("·")[-1].strip() if "·" in t else t
+    if any(k in sub for k in RICH_HEUR):
+        return "rich"
+    if "·" not in t and any(k in t for k in RICH_HEUR):
         return "rich"
     if any(k in t for k in SCARCE_HEUR):
         return "scarce"
@@ -88,9 +92,12 @@ def main():
     args = ap.parse_args()
 
     poi_counts = {}
-    if args.poi_counts and pathlib.Path(args.poi_counts).exists():
+    # 默认自动加载地图 POI 计数（即使未显式 --poi-counts）；否则叶子会全落到名字启发式，
+    # 使「拉面·蘸面」这类稀缺子叶也被根名「拉面」误判成 rich=5。
+    poi_path = args.poi_counts or "/app/data/coverage/poi_counts.json"
+    if poi_path and pathlib.Path(poi_path).exists():
         poi_counts = {int(k): v for k, v in
-                      json.loads(pathlib.Path(args.poi_counts).read_text("utf-8")).items()}
+                      json.loads(pathlib.Path(poi_path).read_text("utf-8")).items()}
     overrides = {}
     if args.override and pathlib.Path(args.override).exists():
         overrides = {int(k): v for k, v in

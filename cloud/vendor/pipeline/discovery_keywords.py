@@ -289,6 +289,133 @@ ALIASES = {
 }
 
 
+# ============================================================================
+# 数据驱动桶注册表（2026-09-28 覆盖攻坚）
+# ----------------------------------------------------------------------------
+# 为什么存在：旧 map_category 用 ~29 个子串硬编码，129 个 plan bundle 有 81 个
+# 映射不到 category（智利/烧卖/烧饼/汤包/包子/葱油饼/各国菜…），从未进入采集。
+# 下面四张表是「声明式参考数据」，模块加载时自动合并进 CATEGORY_SPEC / CUISINE_ROOT，
+# 路由则由 category_resolver 沿 cuisines 父链走到「桶根名」反查 slug 完成。
+# 新增国家/形态只需在此登记，无需改路由代码。
+# ----------------------------------------------------------------------------
+
+# ① 地理国别桶（大陆→国家，每国一个 discovery 桶）
+#    slug: (菜系根名, 英文名, [子品类/招牌提示])
+GEO_COUNTRY = {
+    # 欧洲
+    "russian":  ("俄餐", "russian food", ["红菜汤", "俄式西餐", "大列巴"]),
+    "british":  ("英国菜", "british food", ["英式早餐", "fish and chips"]),
+    "nordic":   ("北欧菜", "nordic cuisine", ["北欧海鲜"]),
+    "eastern_european": ("东欧菜", "eastern european food", []),
+    "contemporary_european": ("欧陆菜/欧洲当代", "contemporary european", []),
+    "austrian": ("奥地利", "austrian food", ["维也纳炸猪排", "皇帝松饼", "维也纳烤肋排"]),
+    "belgian":  ("比利时", "belgian food", ["比利时啤酒", "华夫饼", "青口贝", "薯条"]),
+    # 非洲
+    "african":  ("非洲菜", "african food", []),
+    "moroccan": ("摩洛哥", "moroccan food", ["塔吉锅", "couscous"]),
+    "south_african": ("南非", "south african food", ["bobotie", "南非烤肉"]),
+    # 北美洲
+    "mexican":  ("墨西哥菜", "mexican food", ["taco", "tex-mex", "burrito"]),
+    # 南美洲
+    "peruvian": ("秘鲁", "peruvian food", ["ceviche", "秘鲁-西班牙融合"]),
+    "chilean":  ("智利", "chilean food", []),
+    "brazilian": ("巴西", "brazilian food", ["churrasco", "巴西烤肉", "烤牛舌"]),
+    "argentine": ("阿根廷", "argentine food", ["asado", "empanada", "chimichurri"]),
+    # 亚洲
+    "vietnamese": ("越餐", "vietnamese food", ["越南菜", "越南粉", "越南法包", "顺化菜", "越南春卷"]),
+    "indonesian": ("印尼菜", "indonesian food", []),
+    "central_asian": ("中亚菜", "central asian food", ["乌兹别克", "馕坑肉", "烤包子", "手抓饭"]),
+    "middle_eastern": ("中东/阿拉伯菜", "middle eastern food", ["黎巴嫩菜", "波斯菜", "falafel", "kebab"]),
+    "sri_lankan": ("斯里兰卡菜", "sri lankan food", []),
+    # 中餐地域（此前未单列桶）
+    "northeastern": ("东北菜", "northeastern chinese food", ["东北铁锅炖", "东北饺子", "东北家常菜"]),
+    "hubei":   ("湖北菜", "hubei food", ["藕汤", "湖北家常菜", "湖北宴请"]),
+    "jiangxi": ("江西菜", "jiangxi food", ["瓦罐汤"]),
+    "henan":   ("河南菜", "henan food", ["烩面", "开封洛阳水席"]),
+    "mongolian": ("内蒙古菜", "mongolian food", ["手把肉", "涮羊肉"]),
+    "taiwanese": ("台湾菜", "taiwanese food", ["高端台菜", "台菜 bistro"]),
+    "hainanese": ("海南菜", "hainanese food", ["糟粕醋", "海南鸡饭"]),
+    "fusion":  ("创新菜", "innovative fusion cuisine", []),
+}
+
+# ② 中式/通用「食材形态」桶：食材根名 -> (slug, 英文, [子叶提示])
+FORM_BUCKETS = {
+    "包馅面食": ("stuffed", "stuffed wheaten food", ["烧卖", "汤包", "包子", "锅贴", "汤圆"]),
+    "饼": ("bing", "flatbread and pancake", ["烧饼", "葱油饼", "手抓饼", "薄饼", "可丽饼", "galette"]),
+    "包子/馒头": ("baozi", "steamed buns", []),
+    "饺子/馄饨": ("dumpling", "dumplings and wontons", []),
+    "茶饮": ("tea_drink", "tea drinks", ["新中式茶饮", "港式奶茶", "奶茶专门店"]),
+}
+
+# ③ 日料形态桶（日料 id=85 下的子形态，各自单列；咖喱桶已存在则不覆盖）
+JAPAN_FORMS = {
+    "咖喱": ("japanese_curry", "日式咖喱", "japanese curry", ["咖喱乌冬", "汤咖喱"]),
+    "铁板烧": ("teppanyaki", "铁板烧", "teppanyaki", []),
+    "炉端烧": ("robata", "炉端烧", "robata", []),
+    "荞麦": ("soba", "荞麦", "soba", ["十割", "二八", "冷荞麦", "山药泥", "天妇罗盛荞麦"]),
+    "乌冬": ("udon", "乌冬", "udon", ["赞岐", "咖喱乌冬", "手打"]),
+}
+
+# ④ 服务形式桶（cuisines.dimension=形式）：形式节点名 -> slug
+SERVICE_FORMS = {
+    "私宴/会所": "club",
+    "会所": "club",
+    "自助/放题": "buffet",
+    "外卖/外带": "takeout",
+    "美食广场/Food Court": "food_court",
+}
+
+# ---- 自动合并：声明表 -> CATEGORY_SPEC / CUISINE_ROOT（setdefault，不覆盖手写规格）----
+for _slug, (_root, _en, _subs) in GEO_COUNTRY.items():
+    CATEGORY_SPEC.setdefault(_slug, {
+        "names": [_root], "ens": [_en] if _en else [],
+        "subs": list(_subs), "regions": []})
+    CUISINE_ROOT.setdefault(_slug, _root)
+
+for _root, (_slug, _en, _subs) in FORM_BUCKETS.items():
+    CATEGORY_SPEC.setdefault(_slug, {
+        "names": [_root], "ens": [_en] if _en else [],
+        "subs": list(_subs), "regions": []})
+    CUISINE_ROOT.setdefault(_slug, _root)
+
+for _name, (_slug, _cn, _en, _subs) in JAPAN_FORMS.items():
+    CATEGORY_SPEC.setdefault(_slug, {
+        "names": [_cn or _name], "ens": [_en] if _en else [],
+        "subs": list(_subs), "regions": []})
+    CUISINE_ROOT.setdefault(_slug, _name)
+
+for _name, _slug in SERVICE_FORMS.items():
+    CUISINE_ROOT.setdefault(_slug, _name)  # 形式根名=节点名，供 admission 定位子树
+    CATEGORY_SPEC.setdefault(_slug, {"names": [_name], "ens": [], "subs": [], "regions": []})
+
+# 桶根名 -> slug 反查表（category_resolver 沿父链走到桶根后用它反查）
+ROOT_NAME_TO_SLUG = {}
+for _slug, _root in CUISINE_ROOT.items():
+    ROOT_NAME_TO_SLUG.setdefault(_root, _slug)
+# 服务形式可能多个节点名共用一个 slug（私宴/会所、会所 -> club），逐一登记
+for _name, _slug in SERVICE_FORMS.items():
+    ROOT_NAME_TO_SLUG.setdefault(_name, _slug)
+# 日料形态节点名逐一登记（咖喱/铁板烧/炉端烧/荞麦/乌冬），即使 slug 已被手写规格占用
+for _name, (_slug, *_rest) in JAPAN_FORMS.items():
+    ROOT_NAME_TO_SLUG.setdefault(_name, _slug)
+
+# 额外根名别名（表里父节点名与 CUISINE_ROOT 主名不一致时显式对齐）
+EXTRA_ROOT_NAMES = {
+    "甜品/点心": "dessert",
+    "地中海/希腊菜": "mediterranean",
+    "越餐": "vietnamese",
+    "越南菜": "vietnamese",
+    "越南粉": "vietnamese",
+}
+for _name, _slug in EXTRA_ROOT_NAMES.items():
+    ROOT_NAME_TO_SLUG.setdefault(_name, _slug)
+
+# 非采集节点：纯标签/特殊标签不驱动 discovery（resolver 对这些返回 None）
+NON_SOURCING_DIMS = {"标签"}
+SPECIAL_NON_SOURCING_ROOTS = {"素食/纯素", "分子/先锋料理", "上海老字号",
+                              "工业化餐饮", "宠物友好"}
+
+
 def normalize_category(cat):
     c = str(cat or "").strip().lower()
     if c in CATEGORY_SPEC:

@@ -16,6 +16,25 @@
 
 - **【P1 数据驱动分母已落地】poi_counts.py**：每叶子 1 次高德 text(offset=1 读 count)，多 key 轮换/断点续跑，291 叶子全采集（中位≈16、53 个=0；key#0 撞日限换 key#1 完成）。喂账本后 **supply_source 全转 poi**：供给档 scarce133/normal40/rich118，**达标 17/291=6%、未达标 274、总缺口 867**（比启发式更双峰）。播报新增「开发进度」区块（work_progress.py + /app/data/work_progress.json，agent 持续写入）。
 
+### 2026-09-28 覆盖采集粒度对齐：细叶 → category 原生（已落盘/部署/验证）
+
+**根因（粒度错配）**：`candidate_apply.py` 对每条 admit 新店只 `tag_cuisine(rid, 菜系根id)`（root 名取 `K.CUISINE_ROOT[cat]`），**不分发到 discovery_plan 的细叶**。故细叶（拉面·博多/蘸面…）`n_active` 恒为 0，若按细叶判据，每个细叶都跑 2 轮加深后 gap_remaining、空转。采集单元本就应是 category（引擎/门/写库都以 category 路由）。
+
+**已落地（category 原生 gap_runner，重写）**：
+- `category_worklist()`：129 bundle 经 resolver 映射后**按 category 聚合**为 **58 个工作单元、覆盖 126 叶**（3 个标签节点 257/258/259 正确不采集）；每单元 `{leaves,names,seeds=并集xhs词}`。
+- `category_supply(cat)`：root 由本单元细叶父链的**最近公共祖先 LCA** 推出（不依赖 CUISINE_ROOT 显示名，修掉「越南菜 vs 越餐」「地中海菜 vs 地中海/希腊菜」漂移）；`n_active`=root 聚合在营店数（账本父节点根直挂+子树去重）；`target`=本单元计划叶 target_n 之和。
+- `claim_next_category`：认领即**整类占用全部细叶**，整类 met / gap 冷却中 / 已被认领则跳过；`release_category`。`run_category` 仅全新引擎注入「frontier名+并集种子」，饱和→gate+apply→按 category_supply 判整类达标；未达标走 reseed_deep 假饱和重开（MAX_DEEP_ROUNDS=2）→ gap_remaining（6h 冷却）。
+- 修了一个会让 account_b 启动即崩的 bug：`_claimed_categories` 误对 dict 迭代键（str）→ 改为 `claims.values()`。
+
+**target 校准（coverage_ledger 两处修复）**：
+- 旧 gap_runner 调 `coverage_ledger --save` 不带 `--poi-counts`，叶子全落到**名字启发式**：每个拉面子叶名含「拉面」→ 误判 rich=5（ramen target 虚高到 40）。
+- 修复：ledger **默认自动加载 `/app/data/coverage/poi_counts.json`**（291 叶分母来源全转 poi）；复合子叶（「拉面·蘸面」）启发式只看「·」后子类型词。结果：供给档 scarce133/normal40/rich118；**ramen target 40→17、sichuan 56→17（n=111 met）、sushi target=5（n=21 met）**；category 发现达标 27/58。
+- 口径分离：**发现完成 = n_active ≥ target**（本判据）；`n_verified≥target`（17/291=6%）是下游真实评价管线，不阻塞发现。
+
+**验收（实测）**：单一真实 gap_pool（重启前先清旧 pool/worker、claims 重置 {}）；2 worker 存活、**分采不同 category**（account_a→ramen / account_b→soba），raw 真实增长；软限流时退避 120s 自恢复、stalled 不入库。全量 category_supply 自检 **err=0**。
+
+**仍未做（下一步）**：细叶 subtype 分发（把根下餐厅按招牌菜归到子叶）是独立下游 pass，未建；深覆盖名店回归（佐佐/福寿司/肉屋kita、ministry of crab、8by8、望庐等）依赖 social listening 进一步升级。
+
 ### 2026-09-28 角色确立 + 看门狗「假死号」根因修复（已部署/提交）
 
 - **角色确立**：本对话框被正式赋权为「采集运维与效率负责人」，宪章见 skill `references/collection-ops-charter.md`（已在 SKILL.md 开工读取与 References 中挂载）。五要点：①负责采集（小红书/B站等）运转与提效，边界自动从上下文获取；②聚合看门狗+语义判断+方案自治；③自主开发/现成skill/资料查询→回到自主开发；④解决问题最高、非高难任务节约 token；⑤逐日复盘、每日 02:00 自进化。
