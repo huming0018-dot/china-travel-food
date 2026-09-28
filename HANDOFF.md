@@ -1634,3 +1634,57 @@ heuristic 类（无 authority_urls）只列清单**不自动改写**，待 L1–
 **周期化**：只读扫描已接入 `cloud/cloud_patrol.py`（不碰 crontab.txt）；
 patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条」。真正合并仍需人工确认后
 `python3 entity_dedup.py --apply`。如需 cron 行建议由运维统一安排。
+
+
+---
+
+## Phase 0-B · 云端地图运维修复 + 每日只读自进化（云端运维执行者，2026-09-28，commit b191716）
+
+> 本节为云端运维部分独立章节，不改动上方 Phase 0-A（实体去重）内容。
+
+### 背景与真因
+- 现象：`cloud_amap_fill.py` 每个 cron tick 都「新调用:1 … 配额超限，本轮提前终止」空转，
+  待补 1433、回填字段长期为 0；经 map_quota 池调 amap `/v3/place/text` 返回
+  `status=0, infocode=10007 INVALID_USER_SIGNATURE`。
+- 真因（非配额、非代码逻辑错误）：`AMAP_KEYS` 有 2 个 key，但 `AMAP_SKS` 只配了 1 个 SK，
+  第二把 amap:1 被 `load_provider_keys` 配成 `(key, "")` 空签名 → 每次 10007。
+- 旧代码把 10007 当通用 error：每候选重试、烧 amap:1 月桶计数、不熔断；并把"高德不可用"
+  误判成"地图配额尽"导致整轮中断（腾讯主通道其实健康）。
+
+### 机制修复（最小改动，已部署容器 food-cloud）
+1. `cloud/map_quota.py` `report()`：amap `infocode=10007` → `dead_reason="auth"`、
+   `dead_until=now+1800`（30min 熔断）、`bucket.used -= 1`（**不耗配额桶**）、result=auth。
+   **鉴权错误与配额错误彻底分开**。
+2. `cloud/map_key_repair.py` `_key_usable()`：reason=="auth" 冷却期内全接口判不可用。
+3. `cloud/cloud_amap_fill.py`：新增 `_tencent_poi(name, addr)`（腾讯 suggestion→search 兜底），
+   `resolve()` 三处返回点接入——amap search 无预算时先走腾讯兜底，腾讯无预算才整轮停，
+   腾讯正常但本店无匹配则继续下一家；`pick_best` name_thresh=0.85、综合分≥0.6 才回填（宁空不假）。
+4. `cloud/cloud_phone_fill.py`：③步 amap_search 返回 QUOTA_EXCEEDED 不再 set quota_hit
+   （高德不可用只算本店无匹配，不中断腾讯主通道）。
+
+### 验证（真实输出）
+- map_key_repair 修复后实跑 exit=0：`tencent/search=全尽(解封次日00:00)；amap/search=全尽；
+  amap/geocode=ok(1/2)` —— **amap search 月桶/auth dead 不影响 geocode，日/月桶隔离正确**。
+- amap_fill 手动 `--limit 40/150`：连续处理 40/150 家、不再 1 调用即中断；最新 cron tick
+  「新调用:40 用缓存:157 未匹配:6」（旧日志「新调用:1」模式已消失）。
+- phone_fill 实跑**回填 6 个电话**：id 1895 RONG融→17520618326、1898 之舞→18721495794、
+  1907 Tuttu→18321133722、1912 瑰禧→02162881977、1923 鮨琉璃→18930255116、
+  1924 三佰杯→13564171130；电话覆盖持续上升（自检计数：已补电话 1281/1479）。
+- 回填字段=0 的原因已查清：全库仅 1 家缺坐标，队列几乎都已有坐标、只缺电话/营业时间/评分，
+  腾讯 suggestion 不返回 tel/cost/hours；机制在可匹配店（南兴园/老吉士/鲜得来）上已验证产出"坐标"patch。
+
+### 每日 01:00 只读自进化（新上线）
+- 脚本 `cloud/self_evolve.py`：**只读、确定性、可复跑**，无任何 PATCH/DDL/删改。
+  复盘当日 `/app/cloud/*.py` mtime 改动 + Supabase 只读计数 + 跑 `release_audit.py` A–G 只读扫描。
+- 产出落盘 `/app/data/self_evolve/YYYY-MM-DD.md`；经 `cloud/notifier.py` 推精简结论
+  （常态 INFO，出现 ERROR/需人工处理才 ACTION）到 Telegram(@ShanghaiFoodAtlasBot)+飞书。
+- crontab 已装入容器并 `crontab -l` 验证：
+  `0 1 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/self_evolve.lock /usr/local/bin/python self_evolve.py >> /app/data/self_evolve.log 2>&1`
+
+### ⚠ 需用户在控制台处理的行动项（运维无法自解）
+1. **补 amap:1 的数字签名 SK**：到高德开放平台控制台取第二把 key 的「数字签名(SK)」，
+   追加到 gitignored `cloud/deploy.env` 的 `AMAP_SKS`（逗号分隔，与 AMAP_KEYS 一一对应）。
+   未补前 amap:1 search 持续 10007/auth，amap 全字段主要靠腾讯兜底。
+2. **腾讯 key 真实日量偏低**：tencent:0 在 used=429 即返回真实 `code=121`（日量超限），
+   被正确标记 daily_quota 至次日 0 点。需注册更多独立实名腾讯 key 写入
+   `TENCENT_MAP_KEYS`/`TENCENT_MAP_SKS` 以扩容电话/坐标兜底通道。
