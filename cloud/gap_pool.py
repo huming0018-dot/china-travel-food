@@ -27,22 +27,19 @@ RESCAN_EVERY = 300  # 账号健康重扫周期（秒）
 
 
 def classify():
-    """返回 {account_name: code}。逐账号【绑定】探测，-100 不会被轮换掩盖。"""
+    """返回 {account_name: code}（0=可派 worker）。逐账号绑定探测，复用 account_repair.probe
+    的 GET user/me 权威判据（guest=false），不再用搜索 POST/get_search_id——
+    搜索软限流会自恢复，不应据此阻止 worker 派发（与 account_repair 同一口径）。"""
     sys.path.insert(0, str(HERE))
-    import xhs_api
+    import account_repair
     base = pathlib.Path("/secrets/xhs_accounts")
     out = {}
     for f in sorted(base.glob("*.json")):
-        api = xhs_api.XhsApi(min_gap=3.0, pin=f.stem)
-        if not api.accounts:
-            continue
-        j = api._send(
-            "POST", "/api/sns/web/v1/search/notes",
-            payload={"keyword": "拉面", "page": 1, "page_size": 5,
-                     "search_id": api.sign.get_search_id(),
-                     "sort": "general", "note_type": 0})
-        out[f.stem] = j.get("code", -1)
-        time.sleep(3.0)
+        try:
+            out[f.stem] = account_repair.probe(f.stem, use_proxy=False)
+        except Exception:
+            out[f.stem] = -1
+        time.sleep(2.0)
     return out
 
 
@@ -62,11 +59,32 @@ def main():
          "queries": QUERIES}, ensure_ascii=False), encoding="utf-8")
     print(f"[pool] 启动，queries={QUERIES}；presence={PRESENCE}", flush=True)
 
+    # 启动先清理上一轮残留的陈旧认领（无活 worker 持有的 claim），避免叶子被永久卡死
+    try:
+        import reap_claims
+        n = reap_claims.reap()
+        if n:
+            print(f"[pool] 启动清理陈旧认领 {n} 个。", flush=True)
+    except Exception as e:
+        print("[pool] reap_claims 异常：", e, flush=True)
+
     workers = {}   # account -> Popen
     last_class = 0.0
+    last_reap = 0.0
     health = {}
     try:
         while True:
+            # 周期性清理 worker 崩溃后残留、无人持有的陈旧认领（每 5 分钟）
+            if time.time() - last_reap > 300:
+                try:
+                    import reap_claims
+                    n = reap_claims.reap()
+                    if n:
+                        print(f"[pool] 周期清理陈旧认领 {n} 个。", flush=True)
+                except Exception as e:
+                    print("[pool] reap_claims 异常：", e, flush=True)
+                last_reap = time.time()
+
             if not workers or time.time() - last_class > RESCAN_EVERY:
                 try:
                     health = classify()

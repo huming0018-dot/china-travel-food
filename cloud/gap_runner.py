@@ -151,15 +151,19 @@ def auto_gate_apply(leaf, cat):
 
 
 def _probe_account(api, account):
-    """一次最小签名搜索，返回 code；-100 表示该账号登录过期（worker 应退出）。"""
+    """GET user/me 权威判据：登录有效(guest=false)返回 0；登录过期返回 -100（worker 应退出）；
+    其余风控码原样返回（搜索软限流会自恢复，不当死）。不再用搜索 POST / get_search_id。"""
     acc = next((a for a in api.accounts if a["name"] == account), None)
     if acc is None:
         return -100
-    uri = "/api/sns/web/v1/search/notes"
-    p = {"keyword": "拉面", "page": 1, "page_size": 5,
-         "search_id": api.sign.get_search_id(), "sort": "general", "note_type": 0}
-    j = api._send("POST", uri, payload=p)
-    return j.get("code", -1)
+    j = api._send("GET", "/api/sns/web/v2/user/me")
+    code = j.get("code", -1)
+    me = j.get("data", {}) or {}
+    if code == 0 and not me.get("guest", True):
+        return 0
+    if code in (-100, -101) or me.get("guest", True):
+        return -100
+    return code
 
 
 def run_leaf(leaf, category, queries, account=None):
