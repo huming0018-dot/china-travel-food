@@ -29,6 +29,7 @@ export interface Restaurant {
   score_endorsement?: number;
   soft_ad_penalty?: number;
   evidence_summary?: string;
+  score_evidence_level?: string;  // 证据等级：provisional / verified / insufficient（前端"新上好店"按 verified 精选）
   status?: string;
   data_updated_at?: string;
   created_at?: string;

@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-09-28",
-  "current_phase": "Phase 3 主厨/集团 profile",
+  "updated_at": "2026-09-29",
+  "current_phase": "首页新店快闪",
   "phases": {
     "phase0": {"status": "done"},
     "phase3_chef_group_profile": {
@@ -32,6 +32,24 @@
         "next_build": "exit 0",
         "routes_200": ["/chefs", "/chefs/[id]", "/groups", "/groups/[id]"],
         "screenshot_checked": true
+      }
+    },
+    "home_new_store_flash": {
+      "status": "done",
+      "date": "2026-09-29",
+      "rule": "score_evidence_level='verified'（已通过堂食证据核验）的 active 精选；排除 is_chain_standardized=true；按 score_total 降序。created_at 为整库批量重建时间（全员 2-13 天），不作新店信号。",
+      "excluded_hidden_chain": true,
+      "pool_size": 53,
+      "cards_shown": 8,
+      "frontend": {
+        "files": ["app/pages/index.tsx", "app/lib/supabase.ts"],
+        "section": "首页 FeedSection 之后新增横滑卡片「新上好店 / FRESHLY VERIFIED」，卡片含店名/行政区/主菜系/评分/招牌菜，点击进 /restaurants/[id]"
+      },
+      "verification": {
+        "tsc_noEmit": "pass",
+        "next_build": "exit 0 (/tmp/ctf-build 干净环境)",
+        "screenshot_desktop_1280": "pass",
+        "screenshot_mobile_390": "pass"
       }
     }
   },

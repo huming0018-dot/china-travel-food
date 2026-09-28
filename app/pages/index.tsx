@@ -109,6 +109,20 @@ export default function Home() {
     [restaurants]
   );
 
+  // 新上好店：最近通过证据核验（score_evidence_level === 'verified'）的 active 精选。
+  // 注：整库 created_at 为批量重建时间（全员近期），不能作为"新店"信号；
+  //     故以证据核验为唯一确定性新近信号，并按现有 hideChain 口径排除标准化连锁/预制。
+  const verifiedStores = useMemo(
+    () => restaurants.filter(
+      (r) => r.score_evidence_level === 'verified' && r.is_chain_standardized !== true
+    ),
+    [restaurants]
+  );
+  const newStores = useMemo(
+    () => [...verifiedStores].sort((a, b) => (b.score_total || 0) - (a.score_total || 0)).slice(0, 8),
+    [verifiedStores]
+  );
+
   return (
     <div className="min-h-screen bg-cream-100">
       <Head>
@@ -186,6 +200,45 @@ export default function Home() {
       </section>
 
       <FeedSection />
+
+      {/* 新上好店 · 最近通过堂食证据核验的 active 精选（已排除标准化连锁/预制） */}
+      {!loading && newStores.length > 0 && (
+        <section className="max-w-7xl mx-auto px-6 pb-4">
+          <div className="flex items-end justify-between mb-5">
+            <div>
+              <div className="kicker text-moss mb-2">FRESHLY VERIFIED / 新上好店</div>
+              <h2 className="serif text-3xl font-light">新上<span className="italic text-moss">好店</span></h2>
+            </div>
+            <p className="kicker text-mocha-faint hidden sm:block">已通过堂食证据核验 · 共 {verifiedStores.length} 家</p>
+          </div>
+          <div className="flex gap-4 overflow-x-auto pb-3 -mx-1 px-1 snap-x">
+            {newStores.map((r) => {
+              const names = rCuisineNames(r.id);
+              return (
+                <Link key={r.id} href={`/restaurants/${r.id}`}
+                  className="card p-5 flex flex-col w-[260px] flex-shrink-0 snap-start group">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-moss-light text-moss-deep">已核验</span>
+                    {r.score_total
+                      ? <span className="serif text-xl font-medium text-moss tabular-nums">{r.score_total.toFixed(1)}</span>
+                      : <span className="text-mocha-faint text-xs">暂无评分</span>}
+                  </div>
+                  <h3 className="serif text-lg font-medium mb-1.5 group-hover:text-terracotta transition leading-snug line-clamp-1">{r.name}</h3>
+                  <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+                    <span className="kicker text-mocha-faint">{r.district || '—'}</span>
+                    {names[0] && <span className="tag tag-value !py-0 !px-2">{names[0]}</span>}
+                  </div>
+                  {Array.isArray(r.signature_dishes) && r.signature_dishes.length > 0 && (
+                    <p className="text-xs text-mocha-soft line-clamp-2 mt-auto pt-3 border-t border-line">
+                      {r.signature_dishes.slice(0, 2).join(' · ')}
+                    </p>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* 根胶囊导航 */}
       <section className="max-w-7xl mx-auto px-6 pb-8">

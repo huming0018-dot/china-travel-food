@@ -2127,3 +2127,34 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 1. groups.headquarters/website/social_* 与 members.source_url/chefs.source_url 仍空——待官方/工商/权威名单（L1–L3）补齐后再写，本轮不猜。
 2. 若干 ghost 主厨（id=6/18/29/41/42/47 等）无门店 link，列表中在营门店数为 0；待 entity 锚定后补 link。
 3. F3「集团/主厨树」枚举已通过新页面（集团反向列门店、主厨反向列门店）在前端落地；后端 coverage 侧 group/chef 框仍待 coverage_matrix 接入。
+
+---
+
+## 首页「新上好店 / 新店快闪」模块 — 2026-09-29
+
+> 本波唯一编辑 app/ 的执行者；评分引擎在后端并行重算，未碰 cloud/、chefs/groups 数据脚本、reviews、crontab。数据访问走 lib/supabase.ts，严格沿用现有 Tailwind/lib/pages 风格，未加非必要依赖、未重排无关文件。
+
+### 新店判定规则（确定性、可解释，数字来自真实 REST 查询，非估算）
+- **不用 created_at 作新店信号**：实测全库 1472 家 active 的 `created_at` 全部落在近 2–13 天内（整库批量重建时间），人人都是"新建"，无区分度。
+- **采用 `score_evidence_level = 'verified'`（已通过堂食证据核验）作为新近/精选信号**——这是当前唯一确定性、可解释的新近口径。
+- 排除口径与列表页 `hideChain` 完全一致：`is_chain_standardized === true` 的标准化连锁/预制派生隐藏店一律不进；`status='active'`（首页本就只拉 active）。
+- 排序：`score_total` 降序。
+- 实测分布：active 1472 中 evidence_level = verified 54 / provisional 1415 / insufficient 3；排除隐藏连锁后 **verified = 53 家**（其中预制高风险 0、全部有招牌菜）。横滑卡片区取前 **8** 家。
+
+### 前端改动（仅 2 个 app/ 文件）
+- `app/lib/supabase.ts`：`Restaurant` 接口补 `score_evidence_level?: string`（列已核实存在）。
+- `app/pages/index.tsx`：
+  - 派生 `verifiedStores`（verified 且非隐藏连锁）与 `newStores`（按 score_total 降序取 8），复用页面已加载的 restaurants/cuisines/rc，无新增请求。
+  - 在 `<FeedSection />`（最近动向时间线）之后、根胶囊导航之前，新增横滑卡片区「新上好店 / FRESHLY VERIFIED」：卡片含「已核验」moss 徽章、评分、店名、行政区·主菜系 tag、招牌菜（底部 line-clamp），点击进 `/restaurants/[id]`；右侧标注"已通过堂食证据核验 · 共 53 家"。
+  - 与 FeedSection 是不同内容（事件时间线 vs 已核验餐厅卡），不并列重复时间线；未改动 hero/分类/高分推荐/方法论等无关区块。
+
+### 构建与核验
+- `tsc --noEmit` exit 0。
+- `next build` 在 /tmp/ctf-build（复制源码 + 符号链接 node_modules 的干净文件系统）完成，exit 0；路由表 `/` 8.22kB / First Load 156kB，12 页全部生成。
+- 生产 server（next start :3100）实测首页 HTTP 200；无头 Chrome 真实渲染截图核验：
+  - 桌面 1280px：新区块紧跟"最近动向"，8 张卡横滑、徽章/评分/菜系/招牌菜齐全，"共 53 家"标注正确。
+  - 移动 390px：卡片横滑、无溢出/错位，版式与现有设计系统一致。
+
+### 遗留
+1. 若后续管线新增"最近转为 verified 的时间戳"列（如 evidence_verified_at），可把"新近"从静态 verified 集合升级为"近 N 天转 verified"，当前无该列、不造字段。
+2. 横滑区固定展示前 8 家（共 53 家）；暂未做"查看全部已核验"入口（可链 /restaurants 后续按 evidence 筛选，本轮不加筛选维度以免动列表页）。
