@@ -41,3 +41,6 @@ SHELL=/bin/bash
 # 12) 自我进化日报（只读复盘当日代码/数据改动 + 跑 release_audit A–G 只读扫描；
 #     只报告不自动改数据，落盘 /app/data/self_evolve/YYYY-MM-DD.md 并经 notifier 双通道推送）：每天 01:00
 0 1 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/self_evolve.lock /usr/local/bin/python self_evolve.py >> /app/data/self_evolve.log 2>&1
+
+# 13) 跨源证据池（汇总 reviews+B站KOL+权威标签，信任加权、跨源互证，落 /app/data/evidence/pool.jsonl）：每小时 :17
+17 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/evidence.lock /usr/local/bin/python /app/pipeline/evidence_pool.py >> /app/data/evidence.log 2>&1

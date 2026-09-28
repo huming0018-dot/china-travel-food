@@ -1895,3 +1895,52 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
    需重新扫码登录或提供新 cookie。恢复后 gap_pool 自动认领 129 缺口叶、并给 55 个地图候选补第二声音。
 2. **黑珍珠连接器待建**：F2 第二权威框尚无全量索引，是目前最大权威缺口。
 3. **23 条「海市X区」脏名**（历史 district 缺"上"），可在后续字段清洗阶段批量归一，本阶段不动。
+
+---
+
+### 2026-09-28（晚）地毯式采集落地：router 修复 + 米其林/黑珍珠权威对账 + 跨源证据池
+
+**背景**：用户重启并拍板——非小红书源默认走**地毯式（carpet-sweep）**、云端 24/7 先跑不需小红书登录的源；小红书只定向补充、不在数据中心登录。本对话框角色＝采集运维与效率负责人。
+
+**1. cloud_router「永久让位」bug（已热部署，未 commit）**
+- 根因：旧 `decide()` 第一条即「若 presence `/app/data/POOL_RUNNING` 存在就无条件 return 空（让位）」；gap_pool 账号全 -100 空转时仍长期保留该文件，router.log 连续近 3 小时每 20min 打印让位、米其林永不被调度。
+- 修复：账号健康探测（`xhs_usable_accounts`，status ok 且非 cooling 才 ready）提前；`decide()` 改为「ready>0 且 POOL_RUNNING 存在」才让位，ready<=0 时返回 `cloud_michelin_collect.py`。dry-run 实测 ready=0 → 正确调度米其林。
+
+**2. 米其林权威召回闭环：154/154 全命中（确定性对账）**
+- 本机 `research/authority/_sitemap_cache.json` 提取 ae-az 段上海 154 slug；`michelin_shanghai_153.json` 提供 153 中文名，唯一缺名 slug=`wang-lu` 补「望庐」。
+- 自包含脚本（内 `fetch_all` 拉实时库 + 复刻四态匹配器）经 stdin 进容器执行。结果落 `/app/data/authority_reconcile.json` = `{"total":154,"missing":[],"uncertain":[]}`。官方口径 156，差 2 为发布后动态关店/口径差异，不硬追。
+
+**3. 黑珍珠对账：61 家 → 真品牌缺失 5**
+- 结构 `{three_diamond:3, two_diamond:6, one_diamond:52}` = 61。容器对账：51 在库、3 弱匹配（头灶/宝丽轩/周舍，经核候选名都在库）、7 缺失。
+- 别名核验后：**徽季在库 id1884（假缺失，四态强包含未覆盖长权威名）**；**成隆行在库 id1385（九江路店），虹桥店/怡丰园为同名异址分店、待地址核验是否新增**；真品牌缺失＝**堀田 Horita、楼上菜馆(静安嘉里)、西郊5号 Maggie 5、VALE RESTAURANT、Sushi Aoki**。这 5 家缺真实口味证据，按宪章不仅凭榜单录入（四项评分全空），进证据采集。结果落 `/app/data/blackpearl_reconcile.json`。
+
+**4. 跨源证据池 `evidence_pool.py`（新建，已部署 + crontab 第13条）**
+- 根因：`admission_gate v3` 按「单品类 × 单来源目录」聚合、**不跨源**；B站搜索只给标题（desc 常空），单源凑不齐门槛 → B站 0 admit、稀疏源永不贡献。
+- 机制：把所有来源归一化到同一餐厅账本并**跨源互证 + 信任加权**——
+  - 真实食客（小红书 verified，trust high/mid）权重 1.0、独立声音全计；
+  - 地图平台评论（高德 899 条，trust low）权重 0.4、仅弱互证、**不单独构成独立食客**；
+  - B站 KOL 视频（标题**严格**品牌匹配）权重 0.6、计 curator；
+  - 权威标签（米其林/黑珍珠）＝1 个来源声音、保证不漏、触发取证，不带口味。
+  - 口味取评论 `aspect_taste`（1-5），B站标题 POS/NEG 现算；时间半衰期 180 天。
+- 品牌匹配高精度：`brand_forms()` 用主名（≥2 汉字）+ ·分段（仅 ≥3 汉字）+ aliases，统一过 STOP 通用词表（居酒屋/外滩/海上/烧烤/炸猪排/日本料理…），消除此前把通用词当品牌的误命中。
+- **首跑实测（1479 店 / 719 B站视频）**：
+  - 权威标签店 **212，其中 209 家无真实食客口味**（最大待取证队列）；
+  - 真实食客 ≥2 仅 **35**、=1 27（合计 62，与触发引擎口径一致）；
+  - B站 KOL 正确覆盖 **18** 家真实品牌（酉町/平成屋/虎丸烧肉/点都德/敏华/喜粤8号/茂隆/圆苑…），多为 1 声音、不足单源门槛；
+  - 无真实食客但有 KOL/权威（跨源待补）**223** 家。
+- 输出 `/app/data/evidence/pool.jsonl`；crontab `17 * * * *`（flock evidence.lock）。`--commit` 已预留（对跨源够格**新品牌**走 candidate_apply），当前 B站标题只命中在库店、无新品牌可 apply。
+
+**5. reviews / 口味引擎现状（关键，已摸清）**
+- reviews 真实列：`id,restaurant_id,user_id,author_name,rating_total,rating_taste,content,visit_date,is_hidden,report_count,created_at,source_platform,source_url,review_kind,is_verified_diner,trust_level,is_fake_suspect,aspect_taste,aspect_service,aspect_env,aspect_value,aspect_json`。
+- 1038 行 = **899 高德（low、未验证）+ 139 小红书（verified，mid56/high83）**；rating_taste 全空；aspect_taste/aspect_json 已派生 1037。
+- 触发引擎 `trg_reviews_taste` **只采信 verified 真实食客**：score_taste/score_diner/review_count>0 仅覆盖 62 店（899 高德被正确忽略）。瓶颈＝高信任真实食客来源太窄（小红书被封），非引擎错误。
+
+**6. B站通道审计**：搜索 `x/web-interface/search/all/v2`（必须 Referer 否则 -412）只给 title/author/play/bvid、desc 常空；旧 gate 把菜名/短语当品牌（sushi 仅 1/33、bread 0/37 命中库）。详情接口 `x/web-interface/view?bvid=`（code 0）可用但样例 desc 仍空。结论：**B站需视频详情/字幕 enrichment 后才有独立价值**，当前仅经证据池严格标题匹配贡献 KOL 互证。
+
+**地图配额现状（硬约束）**：腾讯 key 今日用 429、0 点重置；高德 key#0 月度尽（dead 至 10/1）、key#1 auth 冷却。非小红书覆盖受日/月配额限制，电话/坐标/amap 补齐已由既有 cron 在重置后自动推进。
+
+**遗留 / 下一步**：
+1. 小红书稳健采集方案（已委派 OrganizerAgent `o_000cb5ClpVN`，进行中）→ 查结果后部署；两账号 -100 需真实 Chrome 重登（account_a LANCE / account_b 猪蛤蛤）。
+2. 黑珍珠真缺失 5 家 + 209 权威店 → 证据池驱动定向取证，不仅凭榜单录入。
+3. B站视频详情/字幕 enrichment（提 KOL 通道独立价值）；地图 POI 作地毯抽样框（配额内、多独立开发者 key）。
+4. cloud_router 修复 + evidence_pool 待 git commit/push（push 状态需先核验）。

@@ -97,17 +97,18 @@ def next_tick():
 
 def decide():
     """返回 (脚本, 理由)。优先级从高到低。"""
-    # 并行采集池运行中：HTTP 并行已覆盖 gap 深覆盖，router 整体让位，避免重复采集。
-    if (DATA / "POOL_RUNNING").exists():
-        return ("", "并行采集池(POOL)运行中，router 让位，不重复调度")
-
     ready, s = xhs_usable_accounts()
     brief = {k: {"status": v.get("status"), "cooling": v.get("cooling")} for k, v in s.items() if isinstance(v, dict)}
     log(f"账号状态: ready={ready} ({json.dumps(brief, ensure_ascii=False)})")
 
+    # 并行采集池只有在"有健康账号"时才真正在做 XHS 深覆盖；账号全 dead（如 -100）时
+    # gap_pool 只是进程在、实际空转。此时绝不能让位，否则非小红书兜底任务永远不被调度。
+    if ready > 0 and (DATA / "POOL_RUNNING").exists():
+        return ("", "并行采集池(POOL)有健康账号且运行中，router 让位，不重复调度")
+
     if ready <= 0:
-        # 所有 XHS 账号都在冷却/不可用：不要硬刷小红书，浏览器让给榜单兜底
-        return ("cloud_michelin_collect.py", "所有XHS账号冷却，浏览器让给米其林榜单")
+        # 所有 XHS 账号都在冷却/不可用（含 POOL 空转）：不硬刷小红书，浏览器让给榜单兜底
+        return ("cloud_michelin_collect.py", "所有XHS账号冷却/POOL空转，浏览器让给米其林榜单")
 
     # 有可用 XHS 账号：discover（找宝藏店主力）与 run_batch（reviews 取证）轮替，
     # 共用同一浏览器锁，避免旧 cron 手动错峰。reviews 全部采完后只跑 discover。
