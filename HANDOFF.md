@@ -1944,3 +1944,32 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 2. 黑珍珠真缺失 5 家 + 209 权威店 → 证据池驱动定向取证，不仅凭榜单录入。
 3. B站视频详情/字幕 enrichment（提 KOL 通道独立价值）；地图 POI 作地毯抽样框（配额内、多独立开发者 key）。
 4. cloud_router 修复 + evidence_pool 待 git commit/push（push 状态需先核验）。
+
+---
+
+## Phase 0-E：KOL 名单监控接线（food_kol_posts / food_kol_mentions 连接器化）
+
+> 前置 A 实体去重 / B 分类 / C 负面清单 / D 深覆盖 sourcing（source_registry + coverage_matrix + admission_gate）全部完成。本块把 `food_kol_watchlist`（38 个 KOL）从「名单」接成「长期增量监控连接器」。
+
+**1. 连接器 `cloud/kol_monitor.py`（新，dry-run 默认 / `--apply` 才写库）**
+- 遍历 `food_kol_watchlist` active KOL，按平台选通道；游标 `last_pub_ts + seen_bvids` 落 `/app/data/kol_monitor_state.json`，只处理新内容，重跑不重复写。
+- 通道实测（2026-09-28）：B站 keyless 搜索 `x/web-interface/search/all/v2`（Referer=search.bilibili.com）code=0 可用，按 KOL 名 + `order=pubdate` 拉近期视频，再用 `author==name(归一) 且 mid 一致`**严格归属**防错绑 UP 主；space/wbi `arc/search` 在本数据中心 IP 返回 -403/-352 风控，**不硬刷**。cross（沈宏非/殳俏/陈晓卿等 9 个跨媒介美食作家）无 keyless 单渠道，登记但不自动轮询。**XHS 两账号 -100，watchlist 暂无 xhs KOL，标「待账号恢复」**。
+- 上海相关性：KOL 全国探店，只保留有**明确上海信号**（路名/区/地标）的视频；无上海信号的月饼/外地/泛话题不产 mentions、不污染线索池（A2 宁空不假）。
+
+**2. mention 锚定（高置信才绑、错分店宁留空）**
+- 复用权威 `authority_sitemap.core()`（剥括号归一 + 中文数字归一）建 `core→[分店]` 多行索引（不折叠连锁）。
+- 核心名在库内唯一 → 高置信绑 `restaurant_id`（matched）；连锁多分店但正文无区/路/门牌消歧 → `restaurant_id=NULL`、标 ambiguous（**绝不猜绑、绝不绑错分店**）；不像库内店但像真实店名的线索 → unmatched、`restaurant_id=NULL`，路由进 discovery 池交 admission_gate（≥2 独立声音+堂食证据），**本连接器绝不直接插 restaurants**。
+- 情感按归属窗口（本提及→下一提及之间）POS/NEG 词判定，默认 neu；提及只作特征线索，**不计 taste**。
+
+**3. 真实运行数字（容器 food-cloud，非估算）**
+- KOL 总数 **38**：bilibili **29** + cross **9**；可轮询 29、无通道 9、本轮阻塞 0。
+- 本轮拉取沪相关新视频 **54**；锚定 matched **7** / ambiguous **1** / 候选线索 **33**。
+- `--apply` 写入：**food_kol_posts +54、food_kol_mentions +41**（matched 7 条高置信绑定：味香斋(雁荡路)/大壶春(四川中路)/屋有鲜/南兴园/Mercado505/Texas Roadhouse(世纪汇)/圆苑(兴国路)；ambiguous 1=Madre 多分店留空）。回读校验：matched 空绑 0、ambiguous/unmatched 带 restaurant_id 均 0。
+- **restaurants 基线零变化：1479（active 1472 / closed 7）**，与权威基线一致。候选线索 33 条落 `/app/data/discovery/raw_kol.jsonl`，待 admission_gate 聚合 ≥2 独立声音（当前单 KOL 单声音=hold，不入库）。
+- 幂等：dry-run 两次数字完全一致（54/7/1/33）；apply 后 dry-run **0 新增**（游标推进，复跑不重复写）。
+
+**4. 注册与调度**
+- 已注册进 `cloud/source_registry.py`（id=`kol_watchlist_monitor`，L0 bili 搜索 / L3 xhs 停摆，frames F4/F6，reliability 0.72，cadence daily 增量，淘汰=搜索连续 5 轮失败或 14 天零新内容）。
+- **未编辑 crontab.txt**（交用户统一安排）；建议 cron 行：`15 */6 * * * cd /app/cloud && python3 kol_monitor.py --apply`（flock kol_monitor.lock，与既有采集错峰）。XHS 恢复后再扩 xhs KOL 轮询。
+
+**遗留**：① mid 为空的 B站 KOL（如跟着老高吃东西/头五头六/小猴吃上海等）本轮按名搜索仍可归属，待账号/搜索补 mid；② 候选线索需跨 KOL 聚合够 ≥2 独立声音才进 gate admit；③ 连接器经 `docker cp` 进运行容器本轮跑通，下次 `build_on_server.sh` 会随 `COPY *.py` 固化进镜像。

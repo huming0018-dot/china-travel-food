@@ -119,6 +119,20 @@ CATALOG = [
         "note": "必须带 Referler；KOL≥3 次入监控表",
     },
     {
+        "id": "kol_watchlist_monitor", "name": "KOL/美食家名单监控（帖子归档+提及锚定）",
+        "platform": "bilibili/xiaohongshu/cross", "kind": "ugc",
+        "auth_level": "L0(bili搜索)/L3(xhs)", "frames": ["F4", "F6"],
+        "connector_module": "kol_monitor.py",
+        "output": "/app/data/kol_monitor_report.json; food_kol_posts/food_kol_mentions",
+        "reliability": 0.72, "refresh_cadence": "daily(增量游标)",
+        "account_dependency": "bili=none(keyless搜索); xhs=required(L3,当前-100停摆)",
+        "covers": "遍历 food_kol_watchlist(38)：按平台拉近期内容→归档→提及店锚定(高置信才绑restaurant_id,"
+                  "连锁分店正文消歧否则留空)→新候选路由 discovery 池交 admission_gate(≥2独立声音)。提及只作线索不计口味",
+        "retire_if": "bili搜索 code!=0 连续5轮且无兜底；或 watchlist 连续14天零新内容",
+        "note": "Phase0-E 接线。bili space/wbi 在数据中心IP -403/-352 不可用，走 keyless 搜索按author+mid严格归属；"
+                "xhs 两账号 -100 待恢复；cross(美食作家)无单渠道登记不轮询。只写 food_kol_posts/mentions，restaurants 零变化",
+    },
+    {
         "id": "dianping_identity", "name": "点评身份/电话锚定",
         "platform": "dianping", "kind": "map/identity",
         "auth_level": "L3", "frames": ["C"],
