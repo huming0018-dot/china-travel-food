@@ -16,6 +16,17 @@
 
 - **【P1 数据驱动分母已落地】poi_counts.py**：每叶子 1 次高德 text(offset=1 读 count)，多 key 轮换/断点续跑，291 叶子全采集（中位≈16、53 个=0；key#0 撞日限换 key#1 完成）。喂账本后 **supply_source 全转 poi**：供给档 scarce133/normal40/rich118，**达标 17/291=6%、未达标 274、总缺口 867**（比启发式更双峰）。播报新增「开发进度」区块（work_progress.py + /app/data/work_progress.json，agent 持续写入）。
 
+### 2026-09-28 两个真正独立的小红书账号已登录部署（实测双账号搜索均 22 条）
+
+- **背景**：此前 account_a/account_b 的 web_session 身份段相同，取证发现是同一台设备登了同一账号（单会话策略，第二个设备登录会顶掉前一个）。用户确认有第二个号，本轮在本机真实 Chrome 分别扫码完成。
+- **关键坑：同端口 IPv4/IPv6 被两个 Chrome 同时占用**。旧的卡住 Chrome（profile `/tmp/food_real_a2`）占着 `127.0.0.1:9222`（IPv4），新窗口（profile `/tmp/food_real_a3`）退而绑定 `[::1]:9222`（IPv6）。Playwright 连 `http://127.0.0.1:9222` 一直读到旧窗口、且报 `Browser context management is not supported`；改用 `http://[::1]:9222` 才连到新窗口。排查：`lsof -Pan -p <主进程PID> -iTCP -sTCP:LISTEN`。
+- **最终两账号（容器签名 user/me 权威核实，均 guest=false）**：
+  - account_a：实际昵称 **LANCE**（用户口头称 ahuhu），小红书号 **668317783**，uid **`5e1175c9000000000100804c`**；profile `/tmp/food_real_a3`，CDP `[::1]:9222`；搜索实测 22 条。
+  - account_b：昵称 **猪蛤蛤**，小红书号 **6353478662**，uid **`6972702800000000370282a7`**；profile `/tmp/food_real_b2`，CDP `127.0.0.1:9223`；搜索 22 条，采集走广州独立出口。
+  - 两账号 uid 不同 = 真正独立。cookie 已部署宿主机 `/home/ubuntu/food-cloud/xhs_accounts/account_{a,b}.json`（600，旧文件已 .bak 备份），只读挂容器 `/secrets/xhs_accounts`。
+- **身份判据（务必遵守）**：昵称可随意改，user_id / 小红书号永久不变；判断账号是否独立只看 user_id，不看昵称。权威登录判据 = `user/me guest=false`。身份账本 `cloud/account_identities.json` 已回填并部署 /app/data 与 /app/cloud。
+- SOP 已在 `references/xhs-login-runbook.md`（真实 Chrome + CDP 只读，安全速率 ≤2 次搜索/分钟、间隔 28s；云端 headless 扫码确认必 fail 是死路）。
+
 ### 2026-09-28 地图配额根治 P1：池化仲裁 + 持久账本 + POI 缓存（已部署/提交/推送，实测通过）
 
 - **根因（均取证）**：①高德「搜索」个人开发者 **5,000/月**（infocode 10044=账号级月限，同账号多 key 不叠加，只有独立实名账号才叠加），非脚本误写的 5,000/日；②最重的 `cloud_amap_fill`（全字段、3次/时、1433 候选）走单 key 绕开池、吃光月配额，电话被饿死；③腾讯单 key 无池、且值含 `&+=#%` 时 111；④一个兜底挂就整轮判 quota，不跨 key/出口重试；⑤电话/坐标/营业时间/全字段对同一 POI 各调一次、无共享缓存；⑥无持久账本/看门狗，重启先打同一把 key。
@@ -30,7 +41,10 @@
 - **`cloud/cloud_amap_fill.py` 重写**：`amap_text` 走池 consumer=full；返回 QUOTA（真耗尽）/YIELD（为电话预留让路，安静停、不告警）；main 守卫改为池里有 key；**单轮默认 100→40**；月配额告警文案改为「月初重置」。
 - **实测（容器内真实调用）**：高德 key#0 首打 10044 → 持久标 dead 到月初、monthly_used=[1,0]；第二次自动跳过 key#0、用 key#1 返回 ok（infocode 10000、3 POI），跨账号轮换通过；腾讯修复一个空 SK 回退 bug（`_split_csv("")` 返回 `[""]` truthy 致 SK 回退没生效）后 MQ.call 与 wrapper 均 status=0；resolve_poi 同店第二次调用 **零搜索（缓存命中）**。账本 search_remaining：腾讯 8,991、高德 4,499。
 - **提交**："feat(map): 地图配额池化仲裁+持久账本+POI缓存，全字段任务给电话让路"（已 push main）。
-- **后续 P3（未做）**：`map_key_repair` 看门狗（R0 重探/R1 轮换/R2 换出口/R3 全尽才带解封时刻告警）接入 20min cron；L0 官方源（官网/公众号/官方社媒/点评）免配额取电话；P2 需用户再注册 2–3 个独立实名高德/腾讯账号并做免费企业认证（搜索 5千→5万/月），key 只进 gitignored deploy.env。
+- **P3 地图看门狗（已完成/部署/提交）**：新建 `cloud/map_key_repair.py` 并由 `watchdog.py` 每 20min 调用。按 provider×接口（腾讯/高德 × search/geocode）盘点可用 key：amap search 月桶、其余日桶，月配额 dead 不影响 geocode；全尽才经 notifier 告警一次并带【最早解封时刻】，恢复自动收尾。实测：`tencent/search=ok(1/1)、tencent/geocode=ok(1/1)、amap/search=ok(1/2)、amap/geocode=ok(2/2)`。提交 "feat(watchdog): 地图key看门狗接入20min巡检"。
+- **L0 免配额电话源：取证确认【keyless 批量不可行】（2026-09-28）**。实测：①Bing 摘要几乎不含电话（严格 021/手机正则在全库已知电话店召回≈0，偶现手机号与真值不符）；②Bing 云出口搜索质量失效（KIINA→新疆新闻、凌珑→字典页，发现不了正确官网）；③SmartShanghai 首页超时/search 404，TimeOut search 仅 446B 空壳。结论：真实电话只在地图配额或登录墙平台（点评/美团/微信小程序），不存在可精确批量的免 key 源；强做会写错号、违反宁空不假，故不做。
+- **缺电话 197 家处置**：大量为预约制私房菜/私宴（本就无公开号，正确留空）；少数高端酒店餐厅（La Jade/凌珑/金轩）号码在墙内，需【登录态点评会话】（类比小红书账号）做账号辅助定向采集，属独立连接器、非 keyless 批量，待用户决定是否提供点评登录。
+- **P2 扩容（可选，需用户操作）**：再注册 2–3 个独立实名高德/腾讯账号并做免费企业认证（搜索 5千→5万/月），key 只进 gitignored deploy.env。
 
 ### 2026-09-28 warning_handler 二维码专项：根因链全部修复（已部署/提交/推送，等用户扫码）
 
