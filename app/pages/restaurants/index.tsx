@@ -127,8 +127,12 @@ export default function RestaurantsPage() {
   }, []);
 
   // ---- 树索引 ----
-  const childrenOf = useCallback(
-    (parent: string) => cuisines.filter((c) => c.dimension === '菜系' && c.parent_category === parent),
+  // parent_category 实际存父级【数字 id】；仅虚拟根 ROOTS（中餐/亚洲…）存名字。
+  // 统一用 String 比较：key 传虚拟根名字或真实节点 id，同一函数取根下一级 / 真实子级。
+  const childrenOfKey = useCallback(
+    (key: string | number) =>
+      cuisines.filter((c) => c.dimension === '菜系' &&
+        String(c.parent_category ?? '') === String(key)),
     [cuisines]
   );
 
@@ -177,22 +181,21 @@ export default function RestaurantsPage() {
 
   const byDim = useCallback((dim: string) => cuisines.filter((c) => c.dimension === dim), [cuisines]);
 
-  // 递归收集菜系子孙 id
+  // 递归收集菜系子孙 id（虚拟根按名字取一级，真实节点按 id 向下遍历）
   const collectFlavorIds = useCallback((name: string): Set<number> => {
     const ids = new Set<number>();
-    const visit = (nm: string) => {
-      cuisines
-        .filter((c) => c.dimension === '菜系' && (c.name === nm || c.parent_category === nm))
-        .forEach((obj) => {
-          if (!ids.has(obj.id)) {
-            ids.add(obj.id);
-            visit(obj.name);
-          }
-        });
-    };
-    visit(name);
+    const seed: Cuisine[] = [];
+    if (ROOTS.includes(name)) seed.push(...childrenOfKey(name));
+    seed.push(...cuisines.filter((c) => c.dimension === '菜系' && c.name === name));
+    const stack = [...seed];
+    while (stack.length) {
+      const n = stack.pop()!;
+      if (ids.has(n.id)) continue;
+      ids.add(n.id);
+      stack.push(...childrenOfKey(n.id));
+    }
     return ids;
-  }, [cuisines]);
+  }, [cuisines, childrenOfKey]);
 
   // 非正餐（咖啡/面包/甜品/Bar/茶饮 全部子孙）id：连锁是这些业态的常态，隐藏连锁时豁免。
   const nonDinerIds = useMemo(() => collectFlavorIds('非正餐'), [collectFlavorIds]);
@@ -248,17 +251,19 @@ export default function RestaurantsPage() {
     return rs.size;
   }, [collectFlavorIds, rc, closedIds]);
 
-  // 当前根的二级菜系（按店数排序）
+  // 当前根的二级菜系（根为虚拟根，按名字取；按店数排序）
   const rootChildren = useMemo(
-    () => childrenOf(root).sort((a, b) => subtreeCount(b.name) - subtreeCount(a.name)),
-    [childrenOf, root, subtreeCount]
+    () => childrenOfKey(root).sort((a, b) => subtreeCount(b.name) - subtreeCount(a.name)),
+    [childrenOfKey, root, subtreeCount]
   );
 
-  // 二级菜系的三级子流派（flavor 为虚拟根时不展开；选中三级叶子后 flavor 不变、本行不消失）
+  // 二级菜系的三级子流派（flavor 为虚拟根时不展开；真实节点按 id 取孩子）
   const flavorChildren = useMemo(() => {
     if (!flavor || ROOTS.includes(flavor)) return [];
-    return childrenOf(flavor).sort((a, b) => subtreeCount(b.name) - subtreeCount(a.name));
-  }, [flavor, childrenOf, subtreeCount]);
+    const node = cuisines.find((c) => c.dimension === '菜系' && c.name === flavor);
+    const key = node ? node.id : flavor;
+    return childrenOfKey(key).sort((a, b) => subtreeCount(b.name) - subtreeCount(a.name));
+  }, [flavor, childrenOfKey, subtreeCount, cuisines]);
 
   // 行政区 / 商圈
   const districts = useMemo(() => {
@@ -857,13 +862,22 @@ function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx, isNonDiner, on
   );
 }
 
-// 沿 parent 链找到一级根
+// parent 字符串 -> 父节点（数字 id 字符串如 "85" 按 id 找；否则按名字找）
+function parentNode(raw: string, all: Cuisine[]): Cuisine | undefined {
+  const asNum: number = Number(raw);
+  return Number.isNaN(asNum)
+    ? all.find((x) => x.dimension === '菜系' && x.name === raw)
+    : all.find((x) => x.id === asNum);
+}
+
+// 沿 parent 链找到一级虚拟根（虚拟根存名字如 "中餐"；真实父级存数字 id 字符串）
 function topLevel(c: Cuisine, all: Cuisine[]): string {
   let cur: Cuisine | undefined = c;
-  let guard = 0;
-  while (cur && cur.parent_category && !ROOTS.includes(cur.parent_category) && guard < 8) {
-    cur = all.find((x) => x.name === cur!.parent_category && x.dimension === '菜系');
-    guard++;
+  for (let guard = 0; cur && guard < 8; guard++) {
+    const raw: string | undefined = cur.parent_category;
+    if (!raw) break;
+    if (ROOTS.includes(raw)) return raw;
+    cur = parentNode(raw, all);
   }
-  return cur?.parent_category && ROOTS.includes(cur.parent_category) ? cur.parent_category : '中餐';
+  return '中餐';
 }
