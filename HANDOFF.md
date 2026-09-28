@@ -1367,3 +1367,21 @@ SSH 若域名别名 `food-cloud` 不通（Clash TUN 模式会把域名解析成 
 
 **结论（先原因后数据）**：覆盖停滞 = 误杀（已修）+ 取证太浅（待修）+ 无 apply（待修）。
 下一步顺序：先做每品牌深取证把独立声音做到≥2，再建 candidate_apply 接通账本。
+
+---
+
+## 地图配额根治（2026-09-28，对标小红书方案）
+
+告警“地图日配额耗尽、电话暂停”的根因（证据）：
+1. 真瓶颈=高德**搜索服务个人 5,000/月**（非硬编码 5,000/日），**10044 账号级**；同账号多 key 共享、不扩容。
+2. 最重 cloud_amap_fill 走**单 key、绕开 key 池**，吃光月配额；无配额仲裁，电话被饿死。
+3. 腾讯单 key 无池，且大量 **status=111 签名失败**（关键词含 `&`/`+`）。
+4. 一个兜底挂就整轮中止；电话/坐标/营业时间/全字段对同 POI 重复调用、无共享缓存；无 L0 免配额源；无看门狗自愈。
+
+**已做 P0**：修复腾讯 111——tencent_sig 签名前清洗值内 `&+=#%`（实测 Mr & Mrs Bund/a+b c 由 111→status=0）。
+已部署 /app/pipeline/tencent_sig.py，vendor 同步。
+
+**待做**：P1 `map_quota.py`（持久 key×接口 日/月账本 + 腾讯多 key 池 + acquire 仲裁 + 电话预留预算 +
+cloud_amap_fill 走池降频 + 持久 POI 缓存一次 extensions=all 共享）；P2 注册多个**独立实名开发者账号**
++免费企业认证（搜索 5千→5万/月，需用户实名）；P3 L0 官方源取电话 + map_key_repair 接看门狗。
+完整方案：skill `references/map-quota-fix.md`（副本 research/design/map-quota-fix.md）。

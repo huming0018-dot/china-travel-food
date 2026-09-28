@@ -14,6 +14,7 @@
 注意请求路径必须与实际一致（geocoder 末尾斜杠有无均可，但签名与请求要相同）。
 """
 import hashlib
+import re
 from urllib.parse import quote
 
 import requests
@@ -22,12 +23,18 @@ KEY = "7PQBZ-7IDKZ-YUHXF-7V2GG-M2B3O-4OBT6"
 SK = "4ibuevVyzenm3Xcz3X6b4rljRlhZHlZo"
 BASE = "https://apis.map.qq.com"
 
+# 值里若含查询串结构性字符（& + = # %），服务端解析签名时会把它当成分隔/空格/转义，
+# 导致重算签名不一致 → status=111（实测 "Mr & Mrs Bund"、"a+b c" 必现）。
+# 签名与发送前统一替换为空格并折叠，保证“签名用原值”与“发送值”解析后完全一致。
+def _clean_value(v):
+    return re.sub(r"\s+", " ", re.sub(r"[&+=#%]", " ", str(v))).strip()
+
 
 def build_signed_url(path, params):
-    p = dict(params)
+    p = {k: _clean_value(v) for k, v in dict(params).items()}
     p["key"] = KEY
     items = sorted(p.items())
-    raw = "&".join(f"{k}={v}" for k, v in items)  # 签名用原始未编码值
+    raw = "&".join(f"{k}={v}" for k, v in items)  # 签名用原始未编码值（已无结构性字符）
     sig = hashlib.md5((path + "?" + raw + SK).encode("utf-8")).hexdigest()
     sent = "&".join(f"{k}={quote(str(v), safe='')}" for k, v in items)  # 发送只编码 value
     return BASE + path + "?" + sent + "&sig=" + sig
