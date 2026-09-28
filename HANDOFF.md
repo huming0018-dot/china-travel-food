@@ -16,6 +16,20 @@
 
 - **【P1 数据驱动分母已落地】poi_counts.py**：每叶子 1 次高德 text(offset=1 读 count)，多 key 轮换/断点续跑，291 叶子全采集（中位≈16、53 个=0；key#0 撞日限换 key#1 完成）。喂账本后 **supply_source 全转 poi**：供给档 scarce133/normal40/rich118，**达标 17/291=6%、未达标 274、总缺口 867**（比启发式更双峰）。播报新增「开发进度」区块（work_progress.py + /app/data/work_progress.json，agent 持续写入）。
 
+### 2026-09-28 细叶分发（招牌菜联动归类）：39 高置信入库（已写库/提交 a7196bb）
+
+**分工**：用户明确「细叶分发由本对话框（纯 DB、不依赖小红书登录），social listening 交开发」。背景：candidate_apply 收录只挂菜系根，细叶 n_active 恒 0。
+
+**产物 `cloud/subtype_distributor.py`（数据驱动，非逐店枚举）**：
+- 复用 gap_runner.category_worklist/category_supply（LCA 根+细叶）；指示词 = `LEAF_KW`（leaf_id→风格/概念同义词，含英/罗马字/假名，覆盖 ramen8+soba3+udon3+stuffed5+dessert4+french2+tea3=28 叶）＋叶名自动派生 `_auto_terms` 兜底。新增细叶/风格只改词典。
+- **两道关键防线（dry-run 抓出 bug，先修后写）**：
+  1. **distinct-dish 计数 + 头名词**：一道菜只计一次、取最高分，杜绝「小笼/小笼包」「汤包/灌汤包」在同一道菜重复计数把正餐大店（园有桃/夏宫/随堂里/上海餐厅/Hoxa/罗宋娃娃）误抬过主营门槛；强形式词（蘸面/二郎/家系/松饼…）只有在菜名头位（去括号注释后以该词结尾）才记 3 分，作修饰（后接拉面/面）降 1 分 → 满吉正确归蘸面、七豚（鸡白汤 vs 二郎并列）正确 hold。
+  2. **NAME_WEIGHT=4**：店名命中（横滨家系/无锡小笼/bistro 品牌词）压过泛汤头词次 → 鲤久正确归横滨家系（曾被泛豚骨误判博多）、丸龟归赞岐；`LEAF_EXCLUDE`（锅贴排除「地锅/贴饼」）→ 徐州老灶台（贴饼子）正确 hold。
+- 判定（precision-first）：必须 support 严格领先；形式叶（stuffed/bing/tea_drink）要求店名命中或 ≥2 道不同菜；风格叶还允许强头名单菜。并列/弱/负向语境一律 hold。只 POST restaurant_cuisines（幂等加法，不删根、不动其它字段）。
+- **结果：39 入库** = ramen5 + udon1 + stuffed16（汤包15、汤圆宁波汤团店1）+ dessert5（可丽饼 La Creperie、松饼 AL'S/米仓/Flipper's/FINE）+ french7（Bistro：LE VERRE/Sip/Polux/Le Saleya/Cuivre/Nuits三期/Coquille）+ tea5（新中式茶饮）。其余多叶 category（hubei/korean/thai/vietnamese/indian/spanish/russian/american/sichuan/beijing/mongolian/henan/mexican/bread）**0 入库、371 hold**。
+- **hold 两类根因（交开发/social 侧，勿手补）**：①候选是正餐大店、仅单道菜沾边（正确不挂）；②**分类法缺口**——缺细叶：烤肉/韩式烤肉、美式/西式牛排、gelato、蛋糕/西点、糖水、饺子、馄饨、生煎、抹茶、越南 pho 等，同类店无叶可挂；需补 discovery_plan 叶后重跑本分发器（幂等）。
+- 复跑：容器内 `python3 /app/cloud/subtype_distributor.py [--category X] [--commit]`（common 在 /app/pipeline；当前经 stdin 落 /tmp 跑，下次 build 由 `COPY *.py` 收进镜像）。
+
 ### 2026-09-28 看门狗通知合并（digest）+ 重复标题修复（已部署/验证）
 
 **用户反馈（附刷屏截图）**：看门狗一次盘点发出 3 条独立消息（tencent/search、tencent/geocode、amap/search 各一条），且每条标题「自动处理中…」重复出现两行。要求同一轮所有信息合并成一条一次性发完。
