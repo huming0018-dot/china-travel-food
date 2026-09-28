@@ -16,6 +16,14 @@
 
 - **【P1 数据驱动分母已落地】poi_counts.py**：每叶子 1 次高德 text(offset=1 读 count)，多 key 轮换/断点续跑，291 叶子全采集（中位≈16、53 个=0；key#0 撞日限换 key#1 完成）。喂账本后 **supply_source 全转 poi**：供给档 scarce133/normal40/rich118，**达标 17/291=6%、未达标 274、总缺口 867**（比启发式更双峰）。播报新增「开发进度」区块（work_progress.py + /app/data/work_progress.json，agent 持续写入）。
 
+### 2026-09-28 角色确立 + 看门狗「假死号」根因修复（已部署/提交）
+
+- **角色确立**：本对话框被正式赋权为「采集运维与效率负责人」，宪章见 skill `references/collection-ops-charter.md`（已在 SKILL.md 开工读取与 References 中挂载）。五要点：①负责采集（小红书/B站等）运转与提效，边界自动从上下文获取；②聚合看门狗+语义判断+方案自治；③自主开发/现成skill/资料查询→回到自主开发；④解决问题最高、非高难任务节约 token；⑤逐日复盘、每日 02:00 自进化。
+- **02:00 自进化 cron 已建**：「美食图鉴·02:00自进化复盘」，表达式 `0 2 * * *`，首次 2026-09-29 02:00；复盘采集/告警/配额/登录态→归纳通识→固化机制→核查 cron/采集进程→更新 HANDOFF→notifier 双通道推复盘摘要。
+- **★ 假死号根因（两账号刚登录即被标 dead -100）**：`account_repair.probe()` 旧实现用搜索 POST（`/api/sns/web/v1/search/notes`）且调用 `sign.get_search_id()`；实测 xhshow 0.1.9 已移除 get_search_id（AttributeError），且搜索受速率软限流、返回值在 `0(有数据)/0(空)/-100` 间漂移，快速探测（min_gap=3s）时把活账号误判 -100 → mark_dead。
+- **修复**：probe 改为 GET `/api/sns/web/v2/user/me`，code==0 且 guest==false 才判活（低风险、不碰搜索限流）；-100/游客→死，其余风控码→软封。部署后运行 account_repair，两账号自动 dead→ok，`_cookie_pool_state.json` 均 ok、pool_alive=True。
+- **核实**：容器无 pgrep（报 pgrep:not found），cron 存活以 /proc comm 扫描为准——实测 /usr/sbin/cron 在跑（crontab 39 行），「cron-stopped」是工具缺失的假阴性。
+
 ### 2026-09-28 两个真正独立的小红书账号已登录部署（实测双账号搜索均 22 条）
 
 - **背景**：此前 account_a/account_b 的 web_session 身份段相同，取证发现是同一台设备登了同一账号（单会话策略，第二个设备登录会顶掉前一个）。用户确认有第二个号，本轮在本机真实 Chrome 分别扫码完成。

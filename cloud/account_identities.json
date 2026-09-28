@@ -1,18 +1,24 @@
 {
   "account_a": {
-    "friendly_name": "ahuhu",
+    "friendly_name": "ahuhu(用户称呼)",
     "expected_nickname": "ahuhu",
-    "nickname": null,
-    "red_id": null,
-    "uid": null,
-    "verified": false
+    "nickname": "LANCE",
+    "red_id": "668317783",
+    "uid": "5e1175c9000000000100804c",
+    "verified": true,
+    "verified_at": "2026-09-28",
+    "search_ok": true,
+    "note": "实际昵称是 LANCE（用户口头称 ahuhu）。本机真实 Chrome(IPv6 [::1]:9222, profile /tmp/food_real_a3) 扫码，user/me guest=false，搜索返回 22 条。uid 与 account_b 不同，确认为独立账号。"
   },
   "account_b": {
     "friendly_name": "猪蛤蛤",
     "expected_nickname": "猪蛤蛤",
-    "nickname": null,
-    "red_id": null,
-    "uid": null,
-    "verified": false
+    "nickname": "猪蛤蛤",
+    "red_id": "6353478662",
+    "uid": "6972702800000000370282a7",
+    "verified": true,
+    "verified_at": "2026-09-28",
+    "search_ok": true,
+    "note": "本机真实 Chrome 扫码，user/me guest=false，搜索返回 22 条；采集走广州独立出口。"
   }
 }

@@ -77,19 +77,34 @@ def _proxies_for(account):
 
 
 def probe(account, use_proxy=False):
-    """签名通道 pin 探测，返回 code（网络失败返回 None）。"""
+    """签名通道 pin 探测（权威、低风险、不碰搜索限流），返回归一化 code。
+
+    判定：GET /api/sns/web/v2/user/me，code==0 且 guest==false 才算活。
+      返回 0=可用 / -100=登录过期(或游客态) / 其它=对应风控码；网络失败返回 None。
+    旧实现用「搜索 POST + sign.get_search_id()」，而 xhshow 0.1.9 已移除 get_search_id，
+    且搜索受速率软限流、返回值在 0/空/-100 间漂移，会把刚登录的活账号误判成死号。
+    """
+    import requests
     import xhs_api
     proxies = _proxies_for(account) if use_proxy else None
     api = xhs_api.XhsApi(min_gap=3.0, pin=account, proxies=proxies)
     if not api.accounts:
         return None
+    a = api.accounts[0]["ck"]
+    uri = "/api/sns/web/v2/user/me"
     try:
-        j = api._send(
-            "POST", "/api/sns/web/v1/search/notes",
-            payload={"keyword": "拉面", "page": 1, "page_size": 5,
-                     "search_id": api.sign.get_search_id(),
-                     "sort": "general", "note_type": 0})
-        return j.get("code")
+        h = api.sign.sign_headers("GET", uri, a)
+        h.update(xhs_api.BASE_HEADERS)
+        h["Cookie"] = api._cookie_header(a)
+        r = requests.get(xhs_api.EDITH + uri, headers=h, timeout=20, proxies=proxies)
+        j = r.json()
+        code = j.get("code")
+        d = j.get("data") or {}
+        if code == 0 and d.get("guest") is False:
+            return 0
+        if code == -100 or d.get("guest") is True:
+            return -100
+        return code
     except Exception:
         return None
 
