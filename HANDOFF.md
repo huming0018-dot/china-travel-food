@@ -24,6 +24,22 @@
 - **修复**：probe 改为 GET `/api/sns/web/v2/user/me`，code==0 且 guest==false 才判活（低风险、不碰搜索限流）；-100/游客→死，其余风控码→软封。部署后运行 account_repair，两账号自动 dead→ok，`_cookie_pool_state.json` 均 ok、pool_alive=True。
 - **核实**：容器无 pgrep（报 pgrep:not found），cron 存活以 /proc comm 扫描为准——实测 /usr/sbin/cron 在跑（crontab 39 行），「cron-stopped」是工具缺失的假阴性。
 
+### 2026-09-28 采集空转诊断与恢复（已修复/部署/提交）
+
+**起因：用户问「采集任务是不是在跑」。结论：守护进程与账号都在，但实际没在采（空转）。** 三个确定性卡点：
+1. **陈旧认领**：worker 崩溃 / gap_pool 重启后 `coverage/claims.json` 残留（无活 gap_runner 持有），claim_next_leaf 见 lid 被占永不重领 → 8 个叶子被卡死（4 个 engine 卡 running、4 个未建引擎）。
+2. **xhshow 0.1.9 移除 `get_search_id`**：`gap_pool.classify()` 与 `gap_runner._probe_account()` 仍调 `api.sign.get_search_id()` → AttributeError。在跑的旧进程内存里是旧签名才没暴露，**一旦容器重启将再也拉不起 worker / worker 一启动即崩**。
+3. **假饱和**：其余 40 个可映射叶子全被标 saturated（搜索 frontier 跑干）但覆盖未达标（达标仅 17/291、缺口 867）——弱关键词/限流搜不到≠没有好店，缺「未达标即重开+更深信源」。
+
+**已落地修复**：
+- 新增 `cloud/reap_claims.py`：扫 /proc，仅当存在含 `gap_runner --account <name>` 的活进程才保留该 claim，否则在锁内删除；**gap_pool 启动时调用 + 运行中每 5 分钟周期 reap**，自愈。
+- `gap_pool.classify()` 与 `gap_runner._probe_account()` 全部改用 **GET `/api/sns/web/v2/user/me`（code=0 且 guest=false 才健康）**，与 account_repair 同一口径；搜索软限流自恢复、不再卡住 worker 派发。
+- 已重启 gap_pool 加载新代码。**验收：2 个 worker 存活、各认领叶子并真实采集**（leaf 272 荞麦 raw 7 条、leaf 275 乌冬 raw 11 条并持续增长）；b 偶发速率软限流（间隔退避 120s）后自恢复。
+
+**遗留、下一步机制缺口（未修，属覆盖深水区）**：
+- 「假饱和」重开：saturated 但 ledger 未达标叶子应自动重开、换更深 social listening 信源，而非以 frontier-dry 收尾。
+- `map_category` 路由过窄：discovery_plan 129 bundle 中 **81 个映射不到 category**（智利/烧卖/烧饼/汤包/包子/葱油饼/手抓饼/薄饼等），从未进入采集；需扩 routing 或改由 cuisines 表直接解析 category。
+
 ### 2026-09-28 飞书看门狗暂停 + 播报信号-模块对齐精简（已部署/提交）
 
 - **暂停飞书看门狗**：看门狗在容器内（非 Doubao cron）。新增通道级总开关 `health.channel_enabled(name)`，判定顺序 NOTIFY_* 环境变量 → `/app/data/notify_channels.json` → 默认开；三个通道原语 `_telegram/_feishu_app/_feishu` 与 `health.alert` 全部先过此闸。当前 `/app/data/notify_channels.json = {"telegram":true,"feishu_app":false,"feishu":false}`——**飞书两通道全暂停、TG 保留**。一处覆盖看门狗/心跳/登录工单/地图配额/各补齐脚本的全部外发。恢复：把该文件对应项改 true（或对我说「恢复飞书」）。
