@@ -1830,3 +1830,68 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 - softad 自学已在 cron 5:37。连锁/预制本脚本为只读扫描+幂等 tag-on，建议每周一条：
   `cd /app/pipeline && python3 phase0c_negative_tagon.py`（dry-run；若 pr=高新店漏标则报告新增，人工确认后 --apply）。
   是否接入 `cloud_patrol.py` 或独立 cron，由用户统一安排。
+
+---
+
+## Phase 0-D：深覆盖 sourcing（信源资产化 × 多抽样框覆盖矩阵）（2026-09-28）
+
+> 执行者：sourcing 专职开发；前置 0-A 实体去重 / 0-B 分类 / 0-C 负面清单已完成。
+> 本阶段修「信源」机制（A4 信源沉淀 / A5 账号最后手段 / P5 信源资产化），并把 P1 覆盖从
+> 「单框关键词」升级为「目标全集 × 多个相互独立抽样框」，缺口可计算、可复现。
+> 原则：默认 dry-run、只读不造店、候选必经实体锚定去重 + 堂食证据门槛；不靠关键词碰运气。
+
+### 新增机制（两个确定性模块，已部署容器 /app/cloud）
+1. **`cloud/source_registry.py`** — 信源注册表（Source Registry，P5）。
+   把每个可用源注册为长期连接器：`id/name/platform/kind/auth_level(L0–L3)/covers框/connector_module/
+   reliability(0–1)/refresh_cadence/account_dependency/淘汰条件`；并**动态探测健康**（连接器是否在、
+   状态文件 last_polled、账号池状态）。默认只读，`--save` 落 `/app/data/source_registry.json`。
+2. **`cloud/coverage_matrix.py`** — 多独立抽样框覆盖矩阵（P1）。
+   逐框量化 已覆盖/缺口，只读，`--save` 落 `/app/data/coverage/coverage_matrix.json`。
+   F2 权威框复用 `authority_sitemap.make_matcher` 权威四态匹配（cjk 繁简异体+中文数字+slug 品牌前缀+
+   单汉字规则），**不**用粗糙子串（后者会把唐阁/甬府/福10xx/言盐误报缺失）。
+
+### 真实运行数字（容器 dry-run，复跑一致；非估算）
+- **权威基线只升不降**：total 1479 / active 1472 / closed 7；电话 1254(85.2%) / 坐标 1471(99.9%)，
+  与本阶段开始前完全一致（本阶段**零写库**）。
+- **F2a 米其林权威框**：分母 153（主列表），在库 exact+strong = **153**（136 exact + 17 strong），
+  weak/short=0，**true_missing(none)=0，召回 100%**。官方口径 156，差额为发布后动态关店/口径差（已知）。
+- **F2b 黑珍珠权威框**：无全量名录连接器 = **已知缺口**（待建；须对齐 authority-recall 三件套：
+  全量索引 + 官方总数对账 + 缺店强制闭环）。
+- **F5 地图 POI 框**：frontier 池 65（new 59 / ambiguous 3 / matched 3）；其中 **55 个非连锁单平台
+  (amap) 新候选**，hits 多=1、仅 1 个声音 → 按机制**正确地未收录**，等待社交/评论区第二声音。
+- **F4 社交发现框**：账本 291 叶，状态 shallow 99 / rich 61 / thin 54 / ok 47 / empty 30；
+  **缺口叶 empty+shallow=129**（已展开为 discovery_plan 129 bundle × 6 平台路由）。
+  ⚠ 两个小红书账号 account_a/account_b 当前均 **-100 web_session 过期**，F4 停摆（见遗留）。
+- **F1 行政区格网**：1472 active；黄浦309/静安261/徐汇220/浦东173/长宁162 密集；
+  **稀疏区（<20）奉贤1/青浦4/松江10/嘉定16/宝山16** = 地理框漏采候选；
+  另发现 23 条脏名「海市X区」（缺"上"），登记不修（非本阶段范围）。
+
+### 注册连接器清单与健康（source_registry.json）
+| 源 | 层级 | 框 | rel | 健康 | 账号 |
+|---|---|---|---|---|---|
+| michelin_list 主列表 | L2 | F2/F6 | .95 | ok | - |
+| michelin_sitemap 全量对账 | L2 | F2 | .98 | ok | - |
+| blackpearl | L2 | F2 | .85 | **待建** | - |
+| amap_poi | L0 | F1/F5 | .80 | ok(配额) | - |
+| tencent_map | L0 | F1/F5 | .75 | ok(配额) | - |
+| xhs_signed | L1/L3 | F4/F6 | .70 | **down(账号-100)** | 是 |
+| bili_search | L0 | F4/G | .75 | ok | - |
+| dianping_identity | L3 | C | .60 | ok | 是 |
+| media_overseas | L2 | F2/D | .80 | **待建** | - |
+- 合计 9 源：ok 6 / down 1 / 待建 2；**L3 登录账号依赖仅 1/9（dianping）**，符合 A5「账号最后手段」。
+
+### 本轮候选与落库
+- admission_gate 全量裁决现状：**hold 208 / reject 250 / admit 0**（独立声音≥2+均分≥3.5 门槛正常工作）。
+- **本轮真实新增落库店 = 0**：不是失败，是机制正确——地图单平台 55 候选未达「≥2 独立声音」门槛；
+  且小红书账号全过期、无新堂食证据可喂。候选不进库、不造重复、不收网红店。
+
+### 周期化（未改 crontab.txt）
+- 建议由用户统一安排：在 cloud_router/gap_pool 既有调度里加只读定时（每日/每周）：
+  `cd /app/cloud && python3 source_registry.py --save && python3 coverage_matrix.py --save`
+  （产出健康快照 + 覆盖矩阵，供监控 F2 召回是否掉 100%、F4 账号是否恢复）。
+
+### 遗留 / 需用户处理
+1. **小红书账号过期**：account_a/account_b 均 -100（web_session 失效），F4 社交框与 gap_pool 停摆；
+   需重新扫码登录或提供新 cookie。恢复后 gap_pool 自动认领 129 缺口叶、并给 55 个地图候选补第二声音。
+2. **黑珍珠连接器待建**：F2 第二权威框尚无全量索引，是目前最大权威缺口。
+3. **23 条「海市X区」脏名**（历史 district 缺"上"），可在后续字段清洗阶段批量归一，本阶段不动。
