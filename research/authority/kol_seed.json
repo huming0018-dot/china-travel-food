@@ -1,0 +1,33 @@
+{
+  "_doc": "全局美食声音种子（美食作家/美食家/美食导演）。type/region 经公开资料核实；profile_url 与社交 handle 未逐一核验者留空，由连接器后续补；宁空不假。KOL 到访仅作线索/特征标签，不计入 taste。",
+  "updated_at": "2026-09-28",
+  "entries": [
+    {"name": "沈宏非", "platform": "cross", "kol_type": "美食作家", "region": "上海", "trust": "high",
+     "specialty_tags": ["饮食文化", "本帮菜", "粤菜", "美食评论"], "profile_url": null,
+     "notes": "《舌尖上的中国》前两季总顾问，著有《写食主义》，《繁花》批注本"},
+    {"name": "殳俏", "platform": "cross", "kol_type": "美食作家", "region": "上海", "trust": "high",
+     "specialty_tags": ["饮食文化", "跨菜系", "美食纪录片", "杂志"], "profile_url": null,
+     "notes": "悦食中国创始人，《悦食Epicure》主编，《悦食中国》制片人，著《贪食纪》"},
+    {"name": "陈晓卿", "platform": "cross", "kol_type": "美食导演", "region": "北京", "trust": "high",
+     "specialty_tags": ["美食纪录片", "地域美食", "食材"], "profile_url": null,
+     "notes": "《舌尖上的中国》第一二季、《风味人间》总导演，稻来传媒创始人"},
+    {"name": "蔡澜", "platform": "cross", "kol_type": "美食家", "region": "香港", "trust": "high",
+     "specialty_tags": ["粤菜", "饮食文化", "美食评论"], "profile_url": null,
+     "notes": "香港美食家、作家、电影监制"},
+    {"name": "董克平", "platform": "cross", "kol_type": "美食家", "region": "北京", "trust": "high",
+     "specialty_tags": ["美食评论", "跨菜系"], "profile_url": null,
+     "notes": "美食评论家，《舌尖上的中国》顾问"},
+    {"name": "小宽", "platform": "cross", "kol_type": "美食作家", "region": "北京", "trust": "mid",
+     "specialty_tags": ["美食评论", "餐厅榜单"], "profile_url": null,
+     "notes": "美食作家、评论家，一大口美食榜创始人"},
+    {"name": "欧阳应霁", "platform": "cross", "kol_type": "美食作家", "region": "香港", "trust": "mid",
+     "specialty_tags": ["跨菜系", "生活方式"], "profile_url": null,
+     "notes": "香港跨媒体创作人、美食与生活作家"},
+    {"name": "叶怡兰", "platform": "cross", "kol_type": "美食作家", "region": "台湾", "trust": "mid",
+     "specialty_tags": ["饮食文化", "食材", "茶"], "profile_url": null,
+     "notes": "台湾饮食/生活作家，PEKOE 食品杂货铺创始人"},
+    {"name": "焦桐", "platform": "cross", "kol_type": "美食作家", "region": "台湾", "trust": "mid",
+     "specialty_tags": ["饮食文学", "台湾菜"], "profile_url": null,
+     "notes": "台湾诗人、饮食文学作家与学者"}
+  ]
+}
