@@ -2091,3 +2091,39 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 ### 遗留
 1. 仍约 130 家人均≥500 奢华店 0 真实 UGC（taste=NULL、走 provisional cap70）；靠后续 review_ugc_fill 接续补证据后重跑本脚本即自动收敛先验。
 2. score_objective/score_endorsement 维持现状（012 未动）；本脚本只收敛 taste/diner 组件，不重算客观/背书分。
+
+---
+
+## Phase 3 · 主厨 / 集团 profile（数据补全 + 前端 profile 页）— 2026-09-28
+
+> 本波唯一编辑 app/ 的执行者；并行执行者写 reviews，未碰前端。铁律：宁空不假、每条事实带来源、只写 chefs/groups/members/restaurant_chefs、restaurants 零改动、写库只走 common.req(service)、PostgREST 分页≤1000。
+
+### 数据（pipeline_work/p3_chef_group_profile.py，幂等，dry-run 默认，--apply 才写）
+- 盘点基线：chefs 56 / restaurant_chefs 75 / restaurant_groups 10 / restaurant_group_members 47。
+- **groups.founded_year 补全 4 条**（仅从 description 已明确写出的创立年份确定性提取，不臆测）：
+  id=1 新荣记=1995、id=2 甬府系=2011、id=5 菁禧荟=2014、id=6 遇外滩=2018。
+- **chefs.group_id 反查回填 1 条**：chef_id=21（杨艳彬）→ group 10；其余（Rotella=9、陈志评=6、Jacky Zhang=10 等）库中已设，脚本正确跳过。
+- **members.brand_name 规范化 32 条**：去掉尾部分店括号（如「新荣记(虹桥店)」→「新荣记」），覆盖 g1/g2/g3/g4/g5/g6/g8/g9/g10。
+- 刻意**不补** headquarters/website/social_*/members.source_url——无 L1–L3 可靠来源，宁空不假。
+- 校验：dry-run 出 37 处改动报告后 --apply，全部 PATCH 204 且回读 OK；restaurants 表 0 改动；复跑 dry-run 0 变更（幂等）。
+- 实体锚定复核：rid=1884「徽季」挂新荣记，经 investor_info="新荣记集团" 与证据文本证实，不改（集团详情页正确按 brand「徽菜品牌」分组显示）。
+
+### 前端（Next.js 14 pages router，严格沿用现有 Tailwind/lib 约定）
+- 新增 4 页：`pages/chefs/index.tsx`、`pages/chefs/[id].tsx`、`pages/groups/index.tsx`、`pages/groups/[id].tsx`。
+  - 主厨列表：按在营门店数排序，展示姓名/外文名/头衔/所属集团；主厨详情：履历/招牌风格/荣誉/在营门店（连餐厅详情）/过往门店。
+  - 集团列表：卡片含 group_type 标签/简介/创始人/创立年/主厨数；集团详情：按 brand_name 分组列门店（价格/评分）+ 旗下主厨。
+- `lib/supabase.ts` 追加 Chef/RestaurantGroup/GroupMember/ChefRestaurant 接口（FeedEvent 已恢复，无破坏）。
+- 入口导航：首页 header 与餐厅列表 header 加「主厨」「集团」链接。
+- 未加新依赖、未重排无关文件。
+
+### 构建与核验
+- `tsc --noEmit` exit 0；`next build` exit 0，路由表产出 /chefs 1.94kB、/chefs/[id] 2.51kB、/groups 1.67kB、/groups/[id] 2.45kB（First Load 共享 152kB）。
+  - 注：项目在 ~/Desktop（iCloud 同步卷），next build 清理 .next 时反复 EAGAIN/「Resource deadlock avoided」；
+    验证用 build 复制到 /tmp/p3_build（源码 + node_modules 符号链接）在干净文件系统完成，exit 0。
+- 生产 server 实测 4 路由全 200；无头浏览器真实渲染截图核验：
+  /chefs（56 位主厨列表）、/chefs/12 卢怿明（6 在营门店+履历/风格/荣誉）、/groups（10 集团卡片）、/groups/1 新荣记（按荣府宴/徽季/新荣记分组 7 店 + 旗下主厨）版式与现有设计系统一致，无错位/脏数据。
+
+### 遗留
+1. groups.headquarters/website/social_* 与 members.source_url/chefs.source_url 仍空——待官方/工商/权威名单（L1–L3）补齐后再写，本轮不猜。
+2. 若干 ghost 主厨（id=6/18/29/41/42/47 等）无门店 link，列表中在营门店数为 0；待 entity 锚定后补 link。
+3. F3「集团/主厨树」枚举已通过新页面（集团反向列门店、主厨反向列门店）在前端落地；后端 coverage 侧 group/chef 框仍待 coverage_matrix 接入。

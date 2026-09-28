@@ -126,6 +126,8 @@ export default function Home() {
           </Link>
           <nav className="flex items-center gap-7">
             <Link href="/restaurants" className="text-sm text-mocha-soft hover:text-terracotta transition">全部餐厅</Link>
+            <Link href="/chefs" className="text-sm text-mocha-soft hover:text-terracotta transition">主厨</Link>
+            <Link href="/groups" className="text-sm text-mocha-soft hover:text-terracotta transition">集团</Link>
             <Link href="/map" className="text-sm text-mocha-soft hover:text-moss transition">地图</Link>
             <div className="w-px h-4 bg-line" />
             {user ? (

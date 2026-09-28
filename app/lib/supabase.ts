@@ -129,3 +129,56 @@ export interface FeedEvent {
   restaurant_name?: string;             // 前端按 restaurant_id 补的餐厅名
   related_restaurant_name?: string;     // 前端按 related_restaurant_id 补的餐厅名
 }
+
+// —— 主厨（chefs 表）——
+export interface Chef {
+  id: number;
+  name: string;
+  name_en?: string;
+  title?: string;
+  bio?: string;
+  origin?: string;
+  reputation?: string;
+  culinary_background?: string;        // 厨艺履历
+  signature_style?: string;            // 招牌风格
+  group_id?: number | null;            // 所属集团/品牌矩阵
+  restaurants_owned?: string[];       // 主理/拥有餐厅名（展示用）
+  media_mentions?: number;
+  social_xhs?: string | null;
+  social_douyin?: string | null;
+  social_weibo?: string | null;
+}
+
+// —— 餐饮集团/品牌矩阵（restaurant_groups 表）——
+export interface RestaurantGroup {
+  id: number;
+  name: string;
+  name_en?: string;
+  group_type?: string;               // 餐饮集团 / 主厨品牌 / 酒店管理集团 / 独立品牌矩阵
+  founder?: string;
+  founder_role?: string;
+  headquarters?: string;
+  founded_year?: number | null;
+  description?: string;
+  website?: string;
+  social_xhs?: string | null;
+  social_wechat?: string | null;
+  social_instagram?: string | null;
+}
+
+// 集团-餐厅关联（restaurant_group_members）
+export interface GroupMember {
+  group_id: number;
+  restaurant_id: number;
+  brand_name?: string;
+  role?: string;
+  is_current?: boolean;
+}
+
+// 主厨-餐厅关联（restaurant_chefs）
+export interface ChefRestaurant {
+  restaurant_id: number;
+  chef_id: number;
+  role?: string;
+  is_current?: boolean;
+}

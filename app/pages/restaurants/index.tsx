@@ -533,6 +533,8 @@ export default function RestaurantsPage() {
           </Link>
           <div className="flex items-center gap-4">
             <span className="kicker text-mocha-faint">{filtered.length + secondaryList.length} 家餐厅</span>
+            <Link href="/chefs" className="kicker text-mocha-soft hover:text-terracotta transition">主厨</Link>
+            <Link href="/groups" className="kicker text-mocha-soft hover:text-terracotta transition">集团</Link>
             <Link href="/map" className="kicker text-mocha-soft hover:text-mocha transition">地图</Link>
           </div>
         </div>
