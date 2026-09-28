@@ -322,12 +322,17 @@ def run(data):
                     break
 
         patches = []
-        for l in food:
+        non_cuisine_cleared = []
+        for l in links:  # 所有维度：目标菜系叶=True，其余（食材/形式/认证/时段/标签）一律 False
             cid = l["cuisine_id"]
             want = (cid == target_id)
             cur = bool(l.get("is_primary"))
             if want != cur:
                 patches.append((rid, cid, want))
+                if not want and cur and byid[cid]["dimension"] != "菜系":
+                    non_cuisine_cleared.append((cid, byid[cid]["name"], byid[cid]["dimension"]))
+        if non_cuisine_cleared:
+            stats["non_cuisine_primary_cleared"] += len(non_cuisine_cleared)
 
         if not patches:
             stats["no_change"] += 1; outcome = "no_change"
