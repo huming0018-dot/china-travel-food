@@ -2230,3 +2230,30 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 ### 遗留
 1. 若后续管线新增"最近转为 verified 的时间戳"列（如 evidence_verified_at），可把"新近"从静态 verified 集合升级为"近 N 天转 verified"，当前无该列、不造字段。
 2. 横滑区固定展示前 8 家（共 53 家）；暂未做"查看全部已核验"入口（可链 /restaurants 后续按 evidence 筛选，本轮不加筛选维度以免动列表页）。
+
+---
+
+## Phase 2 续 · UGC 扩量第二批（2026-09-29）
+
+> 第一批后后台又把 reviews 推到 1239、电话到 1266。本批在固定工作副本继续。
+
+### 基线（开工时）
+- reviews 1239；真 UGC(trust mid/high 非fake) 336 条；active 已覆盖真实食客 141 家；
+- **人均≥500 奢华店 154 家中仍 0 真实 UGC 104 家**；verified 90。
+
+### 本批运行（容器 food-cloud，真实数字）
+- review_ugc_fill.py 按价格降序（人均≥1150）dry-run：**15 店 / 60 笔记 / 34 锚定**。
+- 两账号轮替 + account_b 广州代理，60s 礼貌限速，风控自动退避不硬刷。
+- **作者拦截词表扩展**：除既有代订/品牌自营外，新增婚庆场地（BOX CREATIVITY婚宴小百科/朵蕴文化）、平台营销招募（携程黑钻WoW礼遇·招募体验官）、酒店官方（上海外滩半岛酒店）。本批拦截 **4 条**非食客留痕（is_fake_suspect=true，不计口味）。
+- apply 写 reviews **+34**（30 真证据 trust mid/high + 4 软广留痕）；只 POST reviews，不手 PATCH restaurants.score_*/review_count。
+- **scoring_engine.py --apply**：85/85 组件分 PATCH（品类先验收敛），触发器 blend score_total/evidence_level/penalty。
+
+### 回读结果
+- reviews **1239→1284**；真 UGC **336→377**；active 已覆盖真实食客 **141→158**。
+- **≥500 奢华店 0 真实 UGC：104→90**。
+- **verified 店 90→101**；score_total n=1476，avg 61.82（min 11 / max 93.2），分布 ≥80:46 / 70-80:477 / 60-70:456 / 50-60:280 / <50:217。
+- 幂等复跑 --from-plan --apply：识别已存在写 0。
+
+### 遗留
+- 奢华(≥500) 0-UGC 剩 **90 家**；中价(200–500) 约 1300 家 0-UGC。重跑脚本即接续下一批高价店。
+- fine dining 在 XHS 普通食客笔记稀少，多为博主/系列号；仅拦代订/品牌/场地/营销/酒店官方，保留真实到店含菜名笔记。

@@ -71,11 +71,19 @@ NEG_WORDS = ["难吃", "失望", "踩雷", "翻车", "太咸", "腥", "发柴", 
              "不推荐", "一般般", "避雷", "不推荐", "敷衍", "冤种", "不会再去", "走掉",
              "sorry", "踩", "寡淡", "失望"]
 
-# 作者身份拦截（P6）：代订/招商/场地/品牌自营号 ≠ 真实食客
+# 作者身份拦截（P6）：代订/招商/场地/婚庆/营销/品牌自营号 ≠ 真实食客
 AUTHOR_INTERCEPT_RE = re.compile(
-    r"(预定|代订|订座|预约|订位|场地|云看场|招商|策划|推广|管家|预订|排号|留位)")
+    r"(预定|代订|订座|预约|订位|场地|云看场|招商|策划|推广|管家|预订|排号|留位|"
+    r"婚庆|婚宴|婚礼|朵蕴|招募|体验官|礼遇|携程|黑钻|礼遇官)")
 # 作者名里的个人化后缀（命中则不像品牌官方号）
 PERSONAL_MARKER = re.compile(r"(的|呀|呢|哈|啦|日记|笔记|吃货|吃|喝|喵|酱|子|er|爱)")
+
+
+def _is_hotel_official(author):
+    """作者名像酒店/餐厅官方号（含'酒店/饭店/公馆/会所'且无个人后缀）。"""
+    if re.search(r"(酒店|大饭店|公馆|会所|餐饮管理|餐饮文化)", author) and not PERSONAL_MARKER.search(author):
+        return True
+    return False
 
 
 def proxies_for(account):
@@ -157,6 +165,8 @@ def author_intercept(author, core):
         return None
     if AUTHOR_INTERCEPT_RE.search(author):
         return f"agent_account({author})"
+    if _is_hotel_official(author):
+        return f"hotel_official({author})"
     n_author = C.cjk_norm(author)
     n_core = C.cjk_norm(core)
     n_core_cjk = "".join(re.findall(r"[一-鿿]", n_core))  # 只取中文核心，剥离拉丁/空格
