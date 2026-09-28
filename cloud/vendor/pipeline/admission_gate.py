@@ -36,23 +36,6 @@ NEG = {"难吃": -.6, "避雷": -.5, "踩雷": -.5, "失望": -.4, "一般": -.3
 PROMO_WORDS = ("团购", "代金券", "套餐", "合作", "推广", "广告", "福利", "戳左下角",
                "购买链接", "招商", "加盟")
 
-# 负面品牌硬清单：工业化连锁/预制/大众烘焙——即使独立声音≥2、均分≥3.5 也 reject。
-# 匹配时经 normalize_brand_name 归一，故「苹果花园面包」「苹果花园」均命中。
-NEGATIVE_BRANDS = {
-    "苹果花园", "盖饭邦", "望湘园", "小菜园",
-    "外婆家", "绿茶餐厅", "绿茶", "避风塘", "广州酒家", "点都德",
-    "和府捞面", "遇见小面", "陈香贵", "马记永", "张拉拉",
-    "西贝", "西贝莜面村", "眉州东坡", "俏江南", "小南国",
-    "海底捞", "呷哺呷哺", "巴奴",
-    "瑞幸", "luckin", "星巴克", "starbucks", "麦当劳", "mcdonald",
-    "肯德基", "kfc", "必胜客", "pizzahut", "汉堡王", "burgerking",
-    "85度C", "85度c", "85c", "巴黎贝甜", "parisbaguette",
-    "好利来", "holiland", "味多美", "面包新语", "breadtalk",
-    "元祖", "元祖食品", "克莉丝汀", "克里斯汀",
-}
-# 非正餐品类豁免连锁扣分（与前端隐藏连锁逻辑一致）
-NON_MAIN_CATS = {"bread", "coffee", "bar", "dessert", "tea", "bistro", "bakery"}
-
 # ---------------------------------------------------------------- 食物 / 招牌词
 BAKED_ITEMS = ("可颂", "贝果", "酸种", "酸面包", "欧包", "吐司", "乡村", "全麦", "肉桂卷",
                "司康", "法棍", "恰巴塔", "佛卡夏", "丹麦", "菠萝包", "盐面包", "碱水",
@@ -75,6 +58,32 @@ GENERIC_ITEMS = (
 )
 # 品类专属额外食物词（在通用之外补充）
 CATEGORY_ITEMS = defaultdict(tuple)
+# 川菜高频出品/食材（GENERIC_ITEMS 未覆盖的部分；治“四吉饭店皮蛋”无招牌信号）
+CATEGORY_ITEMS["sichuan"] = (
+    "皮蛋", "豆花", "担担面", "燃面", "钵钵鸡", "串串", "冒菜", "肥肠", "毛血旺",
+    "口水鸡", "盐帮", "冷吃", "兔头", "豌杂面", "抄手", "蒜泥白肉", "水煮牛肉",
+    "辣子", "泡椒", "藤椒", "川味", "豆瓣", "泡菜")
+CATEGORY_ITEMS["ramen"] = (
+    "担担面", "沾面", "二郎系", "叉烧", "溏心蛋", "鸡白汤", "虾汤", "替玉",
+    "博多", "味噌拉面", "盐味拉面", "酱油拉面", "拌面")
+
+# 店铺形态：中文店名后缀（纯菜名/短语没有这些后缀，天然区分“夫妻肺片”与“四吉饭店”）
+SHOP_SUFFIX = re.compile(
+    r"(店|坊|馆|苑|屋|堂|房|铺|室|社|行|记|轩|斋|家|食堂|製麺|制面|烘焙)$")
+# 强品类形态：即便暂无口味信号，命中也判属该品类（随后仍受独立声音门槛约束，多为 hold）
+STRONG_MORPH = defaultdict(tuple)
+STRONG_MORPH["ramen"] = ("製麺", "制面", "麺屋", "面屋", "荞麦", "拉麺", "拉面", "麺")
+STRONG_MORPH["bread"] = ("烘焙", "面包", "bakery", "boulangerie", "製菓")
+STRONG_MORPH["sichuan"] = ("川菜", "川味", "川宴", "盐帮", "江湖菜", "川味苑")
+
+
+def shop_morph(brand, cat, avg):
+    """带店铺后缀 +（有口味信号 或 命中强品类形态）→ 属本品类。"""
+    if not brand or not SHOP_SUFFIX.search(brand):
+        return False
+    if avg is not None:
+        return True
+    return any(m in brand for m in STRONG_MORPH.get(cat, ()))
 
 
 def item_words(cat):
@@ -305,26 +314,18 @@ def main():
     for dd in db:
         known_names.update(dd["forms"])
     leads = defaultdict(int)
-    _NEG_NORM = {C.normalize_brand_name(b) for b in NEGATIVE_BRANDS}
     items_set = item_words(category)
     sec_re = section_regex(category)
     profiles = {}
 
     def get_brand(canon):
-        key = C.normalize_brand_name(canon)
-        if key not in profiles:
-            profiles[key] = {
+        if canon not in profiles:
+            profiles[canon] = {
                 "brand": canon, "rid": None, "in_db": False, "db_has_cat_tag": False,
                 "status": "unknown", "compiler_voices": {}, "diner_voices": {},
                 "taste_vals": [], "items": set(), "has_negative": False,
-                "sections": set(), "evidence": [], "promo": 0, "review_count": 0,
-                "aliases": set()}
-        p = profiles[key]
-        p["aliases"].add(canon)
-        # 显示名取最短写法（MBD 优先于 MBD面包）
-        if len(canon) < len(p["brand"]):
-            p["brand"] = canon
-        return p
+                "sections": set(), "evidence": [], "promo": 0, "review_count": 0}
+        return profiles[canon]
 
     def bind_db(brand, d):
         p = get_brand(brand)
@@ -347,10 +348,7 @@ def main():
             return d["full"], d
         if (re.search(r"[A-Za-z]", name) or len(na) >= 3) and \
            na not in {C.cjk_norm(g) for g in GENERIC_ANCHOR}:
-            ok, _reason = C.looks_like_brand(name)
-            if ok:
-                return name.strip(), None
-            return None, None  # 菜名/路名/泛词/元话术 → 不建 profile
+            return name.strip(), None
         return None, None
 
     _SHOP_END = re.compile(r"[店坊馆苑屋堂房铺室社家行记]$")
@@ -376,9 +374,7 @@ def main():
         if _SHOP_END.search(head):
             return head, None
         if len(parts) == 1 and re.fullmatch(r"[一-龥]{3,}", head):
-            ok, _r = C.looks_like_brand(head)
-            if ok:
-                return head, None
+            return head, None
         return None, None
 
     def collect_items(p, *texts):
@@ -387,14 +383,9 @@ def main():
                 if it in t:
                     p["items"].add(it)
 
-    out_of_sh = 0
     for rec in records:
         for note in rec["notes"]:
             title, desc = note.get("title", ""), note.get("desc", "")
-            # 城市闸门：正文明确外地且无上海证据 → 整篇丢弃
-            if C.note_is_out_of_shanghai(title, desc):
-                out_of_sh += 1
-                continue
             author = (note.get("author") or "")[:20]
             url = note.get("url", "")
             is_promo_note = any(w in desc for w in PROMO_WORDS)
@@ -525,14 +516,12 @@ def main():
         tv = p["taste_vals"]
         avg = round(sum(tv) / len(tv), 2) if tv else None
         items = len(p["items"])
-        is_cat = bool(p["sections"]) or p["db_has_cat_tag"] or items >= 1
+        is_cat = (bool(p["sections"]) or p["db_has_cat_tag"] or items >= 1
+                  or shop_morph(p["brand"], category, avg))
         comp_authors = {k.split("#", 1)[1] for k in p["compiler_voices"]}
         independent_sources = len(comp_authors) + n_diner
         if p["status"] == "closed":
             return "reject", "已关店", independent_sources, avg, items
-        # 负面品牌硬闸门：连锁/预制/大众烘焙，命中即 reject（非正餐品类不额外扣）
-        if C.normalize_brand_name(p["brand"]) in _NEG_NORM:
-            return "reject", "negative_brand（工业化连锁/预制，不进精选）", independent_sources, avg, items
         if avg is not None and avg < 3.3:
             return "reject", f"口味均分 {avg} 偏低", independent_sources, avg, items
         if not is_cat:
@@ -559,16 +548,15 @@ def main():
 
     def jsonable(p):
         q = dict(p)
-        for k in ("items", "sections", "aliases"):
-            if k in q and isinstance(q[k], set):
-                q[k] = sorted(q[k])
+        for k in ("items", "sections"):
+            q[k] = sorted(q[k])
         return q
 
     out_path = args.out or str(pathlib.Path(args.raw).parent / f"candidates_{category}.jsonl")
     pathlib.Path(out_path).write_text(
         "\n".join(json.dumps(jsonable(p), ensure_ascii=False) for p in rows), encoding="utf-8")
 
-    print(f"发现笔记 {sum(len(r['notes']) for r in records)} 篇（外地丢弃 {out_of_sh}）；品牌候选 {len(rows)} 个")
+    print(f"发现笔记 {sum(len(r['notes']) for r in records)} 篇；品牌候选 {len(rows)} 个")
     print("裁决统计:", dict(counts))
     print("\n=== admit / admit*（够格收录）===")
     for p in sorted(rows, key=lambda x: -x["independent_sources"]):
