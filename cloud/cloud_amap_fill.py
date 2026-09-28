@@ -40,6 +40,7 @@ sys.path.insert(0, PIPE)
 
 import common as C          # noqa: E402
 import map_helpers as M     # noqa: E402  仅复用 pick_best/cjk_sim/addr_core_sim
+import map_quota as MQ      # noqa: E402  全字段走配额池（consumer=full，给电话让路）
 import health               # noqa: E402
 
 STATE_F = pathlib.Path(DATA) / "_amap_fill_state.json"
@@ -170,36 +171,24 @@ def is_dining_poi(poi):
 
 
 def amap_text(name, offset=8):
-    """place/text extensions=all，返回 [餐饮poi...] / [] / 'QUOTA'。不带 sig。
-    限流感知：status!=1（QPS/并发超限）指数退避重试；status=1 空 pois 重试 1 次防限流空响应。"""
-    if not AMAP_KEY:
-        return []
-    params = {
-        "keywords": name, "city": "上海", "citylimit": "true",
-        "offset": offset, "extensions": "all", "key": AMAP_KEY,
-    }
-    qs = "&".join(f"{k}={quote(str(v), safe='')}" for k, v in params.items())
-    url = f"{AMAP_BASE}/v3/place/text?{qs}"
+    """place/text extensions=all，经 map_quota 池（consumer=full，多 key/签名/月配额）。
+    返回 [餐饮poi...] / [] / 'QUOTA'（真耗尽）/ 'YIELD'（给电话预留让路，安静停）。
+    限流空 pois 重试 1 次；其它错误指数退避。"""
+    params = {"keywords": name, "city": "上海", "citylimit": "true",
+              "offset": offset, "extensions": "all"}
     for attempt in range(4):
-        try:
-            r = requests.get(url, timeout=15)
-            j = r.json()
-        except Exception as e:
-            print(f"  [高德异常] {e}", file=sys.stderr)
-            time.sleep(1.2 * (attempt + 1))
-            continue
-        code = j.get("infocode")
-        # 10003=日配额耗尽；10044=USER_DAILY_QUERY_OVER_LIMIT（place/text 日量超限）
-        if code in ("10003", "10044"):
+        j, st = MQ.call("amap", "/v3/place/text", params, "search", "full", timeout=15)
+        if st in ("rate", "no_budget"):
             return "QUOTA"
-        if j.get("status") == "1":
-            raw = j.get("pois", [])
+        if st == "reserved":
+            return "YIELD"
+        if st == "ok":
+            raw = (j or {}).get("pois", [])
             if not raw and attempt < 1:    # 空结果可能是限流，重试 1 次
                 time.sleep(1.2)
                 continue
             return [_parse_poi(p) for p in raw]
-        # status!=1：QPS/并发/瞬时错误，退避重试
-        time.sleep(1.2 * (attempt + 1))
+        time.sleep(1.2 * (attempt + 1))    # error/sign_error：退避后换下一把 key
     return []
 
 
@@ -549,13 +538,14 @@ def _apply_patch(rid, patch):
 # ------------------------------------------------------------ 主流程
 def main():
     apply = "--apply" in sys.argv
-    limit = 100
+    limit = 40
     if "--limit" in sys.argv:
         i = sys.argv.index("--limit")
         limit = int(sys.argv[i + 1])
 
-    if not AMAP_KEY:
-        print("AMAP_KEY 未配置，高德采集跳过（在 deploy.env 配置 AMAP_KEY 后自动生效）。")
+    # key 现由 map_quota 池提供（AMAP_KEYS 多账号，回退 AMAP_KEY）
+    if not MQ.load_provider_keys("amap"):
+        print("高德 key 未配置（deploy.env 配 AMAP_KEYS/AMAP_KEY），本轮跳过。")
         return 0
 
     today = C.today()
@@ -599,7 +589,8 @@ def main():
     rows.sort(key=lambda r: (fail_bucket(r), -missing_count(r), r["id"]))
 
     stats = {"candidates": len(rows), "called": 0, "from_cache": 0,
-             "fields": 0, "reviews": 0, "no_match": 0, "quota_stopped": False}
+             "fields": 0, "reviews": 0, "no_match": 0,
+             "quota_stopped": False, "yield_stopped": False}
 
     def call_amap(kw):
         c = amap_text(kw)
@@ -612,6 +603,8 @@ def main():
         c = call_amap(name)
         if c == "QUOTA":
             return None, True
+        if c == "YIELD":
+            return None, "yield"
         poi, _s = match_poi(c, name, addr)
         if poi:
             return poi, False
@@ -634,6 +627,8 @@ def main():
             c2 = call_amap(t)
             if c2 == "QUOTA":
                 return None, True
+            if c2 == "YIELD":
+                return None, "yield"
             p2, _s = match_poi(c2, name, addr)
             if p2:
                 return p2, False
@@ -654,9 +649,12 @@ def main():
             if stats["called"] >= limit or state.get("amap_used", 0) >= AMAP_DAILY_QUOTA:
                 break
             poi, quota = resolve(name, addr)
+            if quota == "yield":
+                stats["yield_stopped"] = True
+                break  # 给电话预留让路：安静停、不告警
             if quota:
                 stats["quota_stopped"] = True
-                health.alert("高德日配额耗尽，全字段采集暂停至明天。",
+                health.alert("高德搜索月配额耗尽，全字段采集暂停（月初重置）。",
                              title="上海美食图鉴·配额告警", key="amap_quota")
                 break
             if not poi:
@@ -708,6 +706,8 @@ def main():
           f"高德已用: {state.get('amap_used', 0)}/{AMAP_DAILY_QUOTA}")
     if stats["quota_stopped"]:
         print("  ⚠ 配额超限，本轮提前终止")
+    if stats["yield_stopped"]:
+        print("  · 已为电话预留让路，本轮安静停止（非耗尽）")
     return 0
 
 

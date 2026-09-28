@@ -23,6 +23,7 @@ sys.path.insert(0, PIPE)
 sys.path.insert(0, HERE)
 
 import common as C
+import map_quota as MQ
 from tencent_sig import signed_get as tencent_signed_get
 
 # ── 高德（独立签名，腾讯sig模块不覆盖） ──
@@ -118,31 +119,39 @@ def pick_best(results, db_name, db_address="", name_thresh=0.85):
     return scored[0][1], scored[0][0]
 
 
+# ────────────────────── 统一配额调用（经 map_quota 池化/仲裁）──────────────────────
+def _map_call(provider, path, params, interface, consumer, timeout=15):
+    """逐把 key 尝试：某 key rate/error 自动换下一把；全 dead/无预算 → quota。
+    返回 (json_or_None, "ok"/"quota"/"error")。"""
+    pool = MQ.MapQuota()
+    n = max(1, len(pool.keys[provider]))
+    last = (None, "error")
+    for _ in range(n):
+        j, st = MQ.call(provider, path, params, interface, consumer, timeout=timeout)
+        last = (j, st)
+        if st == "ok":
+            return j, "ok"
+        if st in ("no_budget", "reserved"):
+            return None, "quota"
+        # rate / error / sign_error：换下一把 key 重试
+    return (last[0], "quota" if last[1] == "rate" else "error")
+
+
 # ────────────────────── 腾讯 API ──────────────────────
 def tencent_suggestion(keyword, page_size=10):
     """腾讯 place/v1/suggestion —— 店名精确搜索，region_fix=1 限定上海。
     返回 list of {title, address, tel, lng, lat} 或 'QUOTA_EXCEEDED' 或 []。
     """
-    try:
-        r = tencent_signed_get("/ws/place/v1/suggestion", {
-            "keyword": keyword,
-            "region": "上海",
-            "region_fix": 1,
-            "page_size": page_size,
-        }, timeout=15)
-        j = r.json()
-    except Exception as e:
-        print(f"  [腾讯suggestion异常] {e}", file=sys.stderr)
-        return []
-    status = j.get("status")
-    if status == 121:
-        print("  [腾讯配额超限 status=121]", file=sys.stderr)
+    j, st = _map_call("tencent", "/ws/place/v1/suggestion", {
+        "keyword": keyword, "region": "上海", "region_fix": 1, "page_size": page_size,
+    }, "search", "phone", timeout=15)
+    if st == "quota":
+        print("  [腾讯池配额超限]", file=sys.stderr)
         return "QUOTA_EXCEEDED"
-    if status == 348:
-        print(f"  [腾讯suggestion status=348 参数错误] keyword={keyword[:30]}", file=sys.stderr)
-        return []
-    if status != 0:
-        print(f"  [腾讯suggestion status={status}] {j.get('message','')}", file=sys.stderr)
+    status = (j or {}).get("status")
+    if st != "ok" or status != 0:
+        print(f"  [腾讯suggestion st={st} status={status}] { (j or {}).get('message','') }",
+              file=sys.stderr)
         return []
     out = []
     for item in j.get("data", []):
@@ -159,21 +168,13 @@ def tencent_suggestion(keyword, page_size=10):
 
 def tencent_search(keyword, page_size=10):
     """腾讯 place/v1/search —— 广义搜索，boundary=region(上海)。"""
-    try:
-        r = tencent_signed_get("/ws/place/v1/search", {
-            "keyword": keyword,
-            "boundary": "region(上海)",
-            "page_size": page_size,
-        }, timeout=15)
-        j = r.json()
-    except Exception as e:
-        print(f"  [腾讯search异常] {e}", file=sys.stderr)
-        return []
-    status = j.get("status")
-    if status == 121:
+    j, st = _map_call("tencent", "/ws/place/v1/search", {
+        "keyword": keyword, "boundary": "region(上海)", "page_size": page_size,
+    }, "search", "phone", timeout=15)
+    if st == "quota":
         return "QUOTA_EXCEEDED"
-    if status != 0:
-        print(f"  [腾讯search status={status}] {j.get('message','')}", file=sys.stderr)
+    if st != "ok" or (j or {}).get("status") != 0:
+        print(f"  [腾讯search st={st} status={(j or {}).get('status')}]", file=sys.stderr)
         return []
     out = []
     for item in j.get("data", []):
@@ -194,14 +195,11 @@ def tencent_geocode(address):
     """
     if not address:
         return None
-    try:
-        r = tencent_signed_get("/ws/geocoder/v1/", {"address": address}, timeout=15)
-        j = r.json()
-    except Exception as e:
-        print(f"  [腾讯geocoder异常] {e}", file=sys.stderr)
-        return None
-    if j.get("status") != 0:
-        print(f"  [腾讯geocoder status={j.get('status')}] {j.get('message','')} addr={address[:40]}", file=sys.stderr)
+    j, st = _map_call("tencent", "/ws/geocoder/v1/", {"address": address},
+                      "geocode", "coord", timeout=15)
+    if st != "ok" or (j or {}).get("status") != 0:
+        print(f"  [腾讯geocoder st={st} status={(j or {}).get('status')}] addr={address[:40]}",
+              file=sys.stderr)
         return None
     loc = j.get("result", {}).get("location", {})
     lng, lat = loc.get("lng"), loc.get("lat")
@@ -214,46 +212,58 @@ def tencent_place_detail(page_id):
     """腾讯 place/v1/detail —— 查POI详情（含营业时间business字段）。"""
     if not page_id:
         return {}
-    try:
-        r = tencent_signed_get("/ws/place/v1/detail", {"page_id": page_id}, timeout=15)
-        j = r.json()
-        if j.get("status") == 0:
-            return j.get("result", j.get("data", {}))
-    except Exception:
-        pass
+    j, st = _map_call("tencent", "/ws/place/v1/detail", {"page_id": page_id},
+                      "search", "hours", timeout=15)
+    if st == "ok" and (j or {}).get("status") == 0:
+        return j.get("result", j.get("data", {}))
     return {}
 
 
-# ────────────────────── 高德 API ──────────────────────
-def _amap_signed_url(path, params):
-    if not AMAP_KEY:
-        return None
-    p = dict(params)
-    p["key"] = AMAP_KEY
-    items = sorted(p.items())
-    raw = "&".join(f"{k}={v}" for k, v in items)
-    sig = hashlib.md5((raw + AMAP_SK).encode("utf-8")).hexdigest().upper()
-    sent = "&".join(f"{k}={quote(str(v), safe='')}" for k, v in items)
-    return f"{AMAP_BASE}{path}?{sent}&sig={sig}"
+# ────────────────────── 高德 API（多 key 池，配额耗尽自动轮换）──────────────────────
+# 第二个开发者账号 = 第二份日配额。配置：
+#   AMAP_KEYS=key1,key2   （多 key 逗号分隔；未配则回退单个 AMAP_KEY）
+#   AMAP_SKS=sk1,sk2      （与 keys 一一对应；未配则所有 key 共用 AMAP_SK）
+# 一个 key 撞 10003/10044（日配额）就在本进程内标记停用并切下一个；
+# 全部 key 配额耗尽才返回 QUOTA_EXCEEDED。
+def _load_keys():
+    # 注意：保留每个位置（含空 SK），不能过滤空串，否则 key↔sk 会错位。
+    keys = [k.strip() for k in os.environ.get("AMAP_KEYS", "").split(",")]
+    keys = [k for k in keys if k]
+    if not keys:
+        keys = [k.strip() for k in [AMAP_KEY] if k.strip()]
+    raw_sks = os.environ.get("AMAP_SKS", "")
+    if raw_sks:
+        sks = [s.strip() for s in raw_sks.split(",")]
+    else:
+        sks = [AMAP_SK] * len(keys)
+    # 补齐 / 截断到与 keys 等长（缺位回退共用 AMAP_SK，通常为空=IP白名单）
+    if len(sks) < len(keys):
+        sks += [AMAP_SK] * (len(keys) - len(sks))
+    sks = sks[:len(keys)]
+    return list(zip(keys, sks))
+
+_KEY_POOL = _load_keys()
+AMAP_AVAILABLE = bool(_KEY_POOL)
+_dead_keys = set()
+_QUOTA_INFOCODES = {"10003", "10044"}
+
+
+def _amap_get(path, params, interface="search", consumer="phone"):
+    """经 map_quota 池请求高德（持久账本/轮换/仲裁）。返回 (json_or_None, ok/quota/error)。"""
+    if not _KEY_POOL:
+        return None, "error"
+    return _map_call("amap", path, params, interface, consumer, timeout=15)
 
 
 def amap_search(keywords, offset=10):
     """高德 place/text —— citylimit=true 限定上海。"""
-    url = _amap_signed_url("/v3/place/text", {
+    j, st = _amap_get("/v3/place/text", {
         "keywords": keywords, "city": "上海", "citylimit": "true",
         "offset": offset, "extensions": "all",
     })
-    if not url:
-        return []
-    try:
-        r = requests.get(url, timeout=15)
-        j = r.json()
-    except Exception as e:
-        print(f"  [高德search异常] {e}", file=sys.stderr)
-        return []
-    if j.get("status") != "1":
-        if j.get("infocode") == "10003":
-            return "QUOTA_EXCEEDED"
+    if st == "quota":
+        return "QUOTA_EXCEEDED"
+    if st != "ok":
         return []
     out = []
     for p in j.get("pois", []):
@@ -270,16 +280,10 @@ def amap_search(keywords, offset=10):
 
 
 def amap_geocode(address):
-    """高德 geocode/geo —— address 应带城市前缀。"""
-    url = _amap_signed_url("/v3/geocode/geo", {"address": address, "city": "上海"})
-    if not url:
-        return None
-    try:
-        r = requests.get(url, timeout=15)
-        j = r.json()
-    except Exception:
-        return None
-    if j.get("status") != "1" or not j.get("geocodes"):
+    """高德 geocode/geo —— address 应带城市前缀。返回 (lng,lat) 或 None。"""
+    j, st = _amap_get("/v3/geocode/geo", {"address": address, "city": "上海"},
+                      interface="geocode", consumer="coord")
+    if st != "ok" or not j.get("geocodes"):
         return None
     loc = j["geocodes"][0].get("location", "")
     parts = loc.split(",")
@@ -293,50 +297,63 @@ def amap_geocode(address):
 
 # ────────────────────── 统一查询入口 ──────────────────────
 def resolve_poi(db_name, db_address="", db_district="", want_phone=False, want_coord=False):
-    """统一POI解析：suggestion → search → geocoder 逐级降级。
-    返回 dict {found:bool, title, address, tel, lng, lat, source, score} 或 None。
-    """
-    # ① suggestion（店名+地址地标，最精确）
-    kw = db_name
-    if db_address and not is_fake_address(db_address):
-        kw = f"{db_name} {C.addr_core(db_address)}"
-    res = tencent_suggestion(kw)
-    if res == "QUOTA_EXCEEDED":
-        return {"quota_exceeded": True}
-    best, score = pick_best(res, db_name, db_address)
-    if best:
-        return {**best, "source": "tencent_suggestion", "score": score}
+    """统一POI解析：suggestion → search → 高德search → geocoder 逐级降级。
+    命中持久 PoiCache 直接返回（电话/坐标/营业时间跨任务复用，省搜索调用）。
+    返回 dict {found:bool,...} / {"quota_exceeded":True} / None。"""
+    pc = MQ.PoiCache()
+    cache_key = pc.make_key(db_name, db_address or db_district)
+    cached = pc.get(cache_key, ttl_days=14)
+    if cached:
+        return cached
 
-    # ② search（广义）
-    res = tencent_search(db_name)
-    if res == "QUOTA_EXCEEDED":
-        return {"quota_exceeded": True}
-    best, score = pick_best(res, db_name, db_address)
-    if best:
-        return {**best, "source": "tencent_search", "score": score}
-
-    # ③ 高德 search
-    if AMAP_KEY:
-        res = amap_search(db_name)
+    def _chain():
+        # ① suggestion（店名+地址地标，最精确）
+        kw = db_name
+        if db_address and not is_fake_address(db_address):
+            kw = f"{db_name} {C.addr_core(db_address)}"
+        res = tencent_suggestion(kw)
         if res == "QUOTA_EXCEEDED":
             return {"quota_exceeded": True}
         best, score = pick_best(res, db_name, db_address)
         if best:
-            return {**best, "source": "amap_search", "score": score}
+            return {**best, "source": "tencent_suggestion", "score": score}
 
-    # ④ geocoder（仅当有真实地址时）
-    if want_coord and db_address and not is_fake_address(db_address):
-        full_addr = ensure_shanghai_prefix(db_address, db_district)
-        coord = tencent_geocode(full_addr)
-        if coord and in_shanghai(*coord):
-            return {"title": db_name, "address": full_addr, "tel": "",
-                    "lng": coord[0], "lat": coord[1],
-                    "source": "tencent_geocoder", "score": 0.5}
-        if AMAP_KEY:
-            coord = amap_geocode(full_addr)
+        # ② search（广义）
+        res = tencent_search(db_name)
+        if res == "QUOTA_EXCEEDED":
+            return {"quota_exceeded": True}
+        best, score = pick_best(res, db_name, db_address)
+        if best:
+            return {**best, "source": "tencent_search", "score": score}
+
+        # ③ 高德 search
+        if AMAP_AVAILABLE:
+            res = amap_search(db_name)
+            if res == "QUOTA_EXCEEDED":
+                return {"quota_exceeded": True}
+            best, score = pick_best(res, db_name, db_address)
+            if best:
+                return {**best, "source": "amap_search", "score": score}
+
+        # ④ geocoder（仅当有真实地址时）
+        if want_coord and db_address and not is_fake_address(db_address):
+            full_addr = ensure_shanghai_prefix(db_address, db_district)
+            coord = tencent_geocode(full_addr)
             if coord and in_shanghai(*coord):
                 return {"title": db_name, "address": full_addr, "tel": "",
                         "lng": coord[0], "lat": coord[1],
-                        "source": "amap_geocoder", "score": 0.5}
+                        "source": "tencent_geocoder", "score": 0.5}
+            if AMAP_AVAILABLE:
+                coord = amap_geocode(full_addr)
+                if coord and in_shanghai(*coord):
+                    return {"title": db_name, "address": full_addr, "tel": "",
+                            "lng": coord[0], "lat": coord[1],
+                            "source": "amap_geocoder", "score": 0.5}
+        return None
 
-    return None
+    out = _chain()
+    if out and not out.get("quota_exceeded") and (
+            out.get("title") or out.get("lat") is not None or out.get("tel")):
+        out["found"] = True
+        pc.put(cache_key, out)   # 只正缓存，quota/未找到不缓存
+    return out
