@@ -1468,3 +1468,26 @@ account_b 仍 -100，需按 runbook 在另一真实 Chrome 窗口扫码（走广
   轻量复核，code=0 自动 notifier.resolve 关单；通用 warn() 走 notifier.warn。
 - `watchdog.alert` 走 notifier.warn。
 实测紧凑播报双通道推送 True。
+
+## 2026-09-28 xhshow 签名升级 + 反检测移植（已部署/提交）
+
+审查 jackwener/xiaohongshu-cli 后确认：它也是 xhshow 薄封装，但固定 **xhshow 0.1.9**（我方原 0.1.0），
+并有 gaussian 抖动 / 验证码后永久降速 / sec-ch-ua 对齐 / browser_cookie3 自动取 cookie。
+
+已移植进 `cloud/xhs_api.py`（兼容 0.1.0 与 0.1.9）：
+- 自备 `generate_search_id()`（0.1.9 已移除 Xhshow.get_search_id）；
+- `_human_jitter()`：高斯抖动(均值0.3)+5%概率2–5s长停顿，用于 _gap/_search_pace；
+- sec-ch-ua / sec-ch-ua-platform / sec-fetch-* 与 UA(Chrome126) 严格对齐；
+- `slow_down()`：遇速率验证码(300011/300012/120/406)搜索间隔永久翻倍（28→…→封顶120s）。
+requirements 固定 xhshow==0.1.9。
+**待办**：当前会话已 -100（同账号重复登录被顶，见下），0.1.9 真实搜索的端到端验证需在一次干净
+重登后进行；签名版本本身不影响 web_session 有效性（-100 是服务端会话校验，非签名问题）。
+
+## 账号独立性：account_a / account_b 当前是【同一账号】（2026-09-28 取证）
+
+两文件 web_session 身份段完全相同：均以 `040069b80633608cd2f1` 开头（仅设备后缀不同）；
+a1（设备指纹）不同 = 两个不同设备，但登录身份是同一个小红书账号（uid …370282a7）。
+原因：第二个二维码是用【同一台手机/同一个已登录账号】的小红书 App 扫的。同账号在第二个新设备
+登录会把第一个会话顶掉（单会话安全策略），故随后两出口统一 -100。
+**要独立**：第二个码必须用【另一个小红书账号】扫——在 App「我 → 切换账号」切到别的账号再扫，
+或用第二部手机/第二个账号；且登完不要在别处重复登录。

@@ -4,3 +4,8 @@ playwright==1.49.0
 requests>=2.31
 # common.py 的繁简转换用 OpenCC；纯 Python 实现最易在容器内安装
 opencc-python-reimplemented>=0.1.7
+# 小红书「签名直连 HTTP」后端（xhs_api.py）：xhshow 纯 Python 签名，xhs 为参考实现
+# 0.1.9：对齐参考项目 jackwener/xiaohongshu-cli 的签名版本（跟进 API 变更）；
+# xhs_api 已自备 search_id，兼容 0.1.0/0.1.9 的 sign_headers 接口。
+xhshow==0.1.9
+xhs==0.2.13

@@ -20,19 +20,51 @@ import requests
 from xhshow import Xhshow
 
 EDITH = "https://edith.xiaohongshu.com"
+CHROME_VER = "126"
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
+      f"(KHTML, like Gecko) Chrome/{CHROME_VER}.0.0.0 Safari/537.36")
 BASE_HEADERS = {
     "User-Agent": UA,
     "Content-Type": "application/json;charset=UTF-8",
     "Origin": "https://www.xiaohongshu.com",
     "Referer": "https://www.xiaohongshu.com/",
+    # sec-ch-ua 与 UA 的 Chrome 版本 / 平台严格对齐（借鉴 xiaohongshu-cli，防指纹不一致）
+    "sec-ch-ua": (f'"Not/A)Brand";v="99", "Google Chrome";v="{CHROME_VER}", '
+                  f'"Chromium";v="{CHROME_VER}"'),
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": '"macOS"',
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
 }
 # 需要换号/冷却的返回码
 ROTATE_CODES = {-100, -101, 300011, 300012, 1203, 406}
+# 速率/验证类码（非登录过期）：触发后永久把搜索节奏翻倍（借鉴 xiaohongshu-cli）
+RATE_CODES = {300011, 300012, 1203, 406, 300013}
 # 搜索端点安全节奏（2026-09-28 实测）：≤2 次/分钟（间隔≥28s）可持续返回；
 # 更快的连续爆发会触发「code=0 但 data 空」的数分钟软限流冷却，停顿后自恢复。
 SEARCH_MIN_GAP = 28.0
+SEARCH_GAP_CAP = 120.0
+
+
+def generate_search_id():
+    """生成 search_id（base36：毫秒时间戳<<64 + 随机）。xhshow 0.1.9 已不内置，自备。"""
+    num = (int(time.time() * 1000) << 64) + random.randint(0, 2147483646)
+    alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    out = ""
+    while num > 0:
+        out = alphabet[num % 36] + out
+        num //= 36
+    return out or "0"
+
+
+def _human_jitter():
+    """高斯抖动（均值0.3s）+ 约5%概率额外2–5s长停顿，模拟真人浏览节奏。"""
+    j = max(0.0, random.gauss(0.3, 0.15))
+    if random.random() < 0.05:
+        j += random.uniform(2.0, 5.0)
+    return j
 
 
 class AllAccountsBlocked(RuntimeError):
@@ -51,6 +83,7 @@ class XhsApi:
         self.empty_streak = 0
         self._last = 0.0
         self._search_last = 0.0  # 搜索端点专用节流（比全局 _gap 更慢）
+        self.search_gap = SEARCH_MIN_GAP  # 当前搜索间隔；遇速率验证永久翻倍（封顶）
         self.accounts = []
         d = pathlib.Path(accounts_dir)
         if d.exists():
@@ -72,8 +105,13 @@ class XhsApi:
     def _gap(self):
         dt = time.time() - self._last
         if dt < self.min_gap:
-            time.sleep(self.min_gap - dt + random.uniform(0, 0.6))
+            time.sleep(self.min_gap - dt + _human_jitter())
         self._last = time.time()
+
+    def slow_down(self):
+        """速率/验证事件后：搜索节奏永久翻倍（直到 SEARCH_GAP_CAP）。"""
+        self.search_gap = min(SEARCH_GAP_CAP, self.search_gap * 2)
+        print(f"[xhs] 触发风控，搜索间隔降为 {self.search_gap:.0f}s")
 
     def _cookie_header(self, ck):
         return "; ".join(f"{k}={v}" for k, v in ck.items())
@@ -113,6 +151,8 @@ class XhsApi:
                               _retried=True)
 
         code = j.get("code")
+        if code in RATE_CODES:
+            self.slow_down()
         if code in ROTATE_CODES:
             acc["bad"] += 1
             if self.pin:
@@ -130,10 +170,10 @@ class XhsApi:
 
     # ------------------------------------------------------------ 三个端点
     def _search_pace(self):
-        """搜索端点强制 ≥SEARCH_MIN_GAP 间隔（实测安全节奏 2 次/分钟）。"""
+        """搜索端点强制 ≥self.search_gap 间隔（实测安全节奏 2 次/分钟；风控后自动翻倍）。"""
         dt = time.time() - self._search_last
-        if dt < SEARCH_MIN_GAP:
-            time.sleep(SEARCH_MIN_GAP - dt + random.uniform(0, 0.8))
+        if dt < self.search_gap:
+            time.sleep(self.search_gap - dt + _human_jitter())
 
     def search(self, keyword, page=1, page_size=20):
         kw = keyword if (not self.city or self.city in keyword) else f"{keyword} {self.city}"
@@ -141,7 +181,7 @@ class XhsApi:
         for attempt in range(3):  # 软限流空页(code0/0条)：长冷却后最多重试 2 次，宁慢不硬刷
             self._search_pace()
             payload = {"keyword": kw, "page": page, "page_size": page_size,
-                       "search_id": self.sign.get_search_id(),
+                       "search_id": generate_search_id(),
                        "sort": "general", "note_type": 0}
             j = self._send("POST", "/api/sns/web/v1/search/notes", payload=payload)
             self._search_last = time.time()
