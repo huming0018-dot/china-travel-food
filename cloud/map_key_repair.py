@@ -104,25 +104,36 @@ def _minimal_probe(provider, interface):
 
 
 def run():
+    """盘点全部 provider×interface，合并成【一条】消息（不再每个接口各发一条）。
+
+    - 有接口全尽：单条 WARN（key=map:quota），逐行列接口+最早解封；
+    - 全部恢复：单条 RESOLVED 收尾；
+    - 内容哈希不变且在冷却内 → notifier 自动折叠，不重复刷屏。
+    """
     import notifier
-    summary = []
+    key = "map:quota"
+    oks, downs, summary = [], [], []
     for provider in PROVIDERS:
         for interface in INTERFACES:
             r = assess(provider, interface)
-            key = f"mapquota:{provider}:{interface}"
             label = f"{provider}/{interface}"
             if r["n_avail"] >= 1:
+                oks.append(label)
                 summary.append(f"{label}=ok({r['n_avail']}/{r['n_keys']})")
-                notifier.resolve(
-                    f"{label} 已有 {r['n_avail']} 把可用 key，地图通道恢复。", key)
             else:
                 unblock = _fmt_ts(r["earliest_unblock"])
+                downs.append((label, r["n_keys"], unblock))
                 summary.append(f"{label}=全尽(解封{unblock})")
-                notifier.warn(
-                    f"{label} 所有 key 均不可用（{r['n_keys']} 把）。\n"
-                    f"最早解封：{unblock}（日配额 0 点 / 高德搜索月初重置）。\n"
-                    "系统将到点自动恢复，无需操作。",
-                    key=key, cooldown=3600)
+
+    if downs:
+        lines = [f"{label}：{n} 把 key 均不可用，最早解封 {ub}"
+                 for label, n, ub in downs]
+        lines.append("系统将在重置点自动恢复（日配额 0 点 / 高德搜索月初），无需操作。")
+        notifier.warn("\n".join(lines), key=key, cooldown=3600)
+    else:
+        notifier.resolve(
+            "地图通道全部恢复：" + "、".join(oks) + " 均有可用 key。", key)
+
     line = "地图key盘点：" + "；".join(summary)
     print(line)
     return line

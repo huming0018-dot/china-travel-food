@@ -16,6 +16,16 @@
 
 - **【P1 数据驱动分母已落地】poi_counts.py**：每叶子 1 次高德 text(offset=1 读 count)，多 key 轮换/断点续跑，291 叶子全采集（中位≈16、53 个=0；key#0 撞日限换 key#1 完成）。喂账本后 **supply_source 全转 poi**：供给档 scarce133/normal40/rich118，**达标 17/291=6%、未达标 274、总缺口 867**（比启发式更双峰）。播报新增「开发进度」区块（work_progress.py + /app/data/work_progress.json，agent 持续写入）。
 
+### 2026-09-28 看门狗通知合并（digest）+ 重复标题修复（已部署/验证）
+
+**用户反馈（附刷屏截图）**：看门狗一次盘点发出 3 条独立消息（tencent/search、tencent/geocode、amap/search 各一条），且每条标题「自动处理中…」重复出现两行。要求同一轮所有信息合并成一条一次性发完。
+
+**两个根因 + 修复**：
+1. **重复标题**：`notifier.format` 把 head 拼进正文，health 发送原语（`_telegram/_feishu/_feishu_app`）又在最前面拼一次 head → 标题两行。修复：`format` 正文不再含 head（只返回「分隔线+正文+结尾」），由原语统一在最前拼一次；实测最终文本 head 计数=1。
+2. **多条刷屏**：`map_key_repair.run` 旧实现对 4 个 provider×interface 各调一次 `notifier.warn`（key 各不同）→ 多条。修复：合并盘点，**有接口全尽则单条 WARN（统一 key=`map:quota`，逐行列接口+key数+最早解封）；全部恢复则单条 RESOLVED**。内容哈希不变且在 cooldown(3600) 内由 notifier 自动折叠。实测：首跑发 1 条合并消息，立即再跑同内容被折叠（不发第二条）。
+
+**容器重建（并行会话操作，已确认恢复）**：期间 food-cloud 容器/镜像被一次 `docker build -t food-cloud:local`（新增 Playwright/Chromium，国内源）重建，随机名容器是构建中间步骤；构建完成后经 `docker-compose.yml` 以 `container_name=food-cloud、restart=always` 起回，fooddata 卷与挂载不变。已重新热部署 notifier.py / map_key_repair.py；验收 gap_pool 在跑、cron 在跑（13 条有效 crontab）、采集恢复。
+
 ### 2026-09-28 覆盖采集粒度对齐：细叶 → category 原生（已落盘/部署/验证）
 
 **根因（粒度错配）**：`candidate_apply.py` 对每条 admit 新店只 `tag_cuisine(rid, 菜系根id)`（root 名取 `K.CUISINE_ROOT[cat]`），**不分发到 discovery_plan 的细叶**。故细叶（拉面·博多/蘸面…）`n_active` 恒为 0，若按细叶判据，每个细叶都跑 2 轮加深后 gap_remaining、空转。采集单元本就应是 category（引擎/门/写库都以 category 路由）。

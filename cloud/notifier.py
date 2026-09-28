@@ -102,7 +102,8 @@ def sanitize(text):
 def format(level, body, action=None, footer=None):
     head = f"{LEVEL_TAG.get(level, level)} · 上海美食图鉴 · {_now_str()}"
     body = sanitize(body)
-    parts = [head, "─" * 16, body]
+    # 正文【不含 head】：发送原语会统一在最前面拼一次 head，避免标题重复出现两行。
+    parts = ["─" * 16, body]
     if action:
         parts += ["", f"👉 需要你做：{action}"]
     elif level in (INFO, WARN, RESOLVED):
