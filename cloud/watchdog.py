@@ -149,6 +149,13 @@ def main():
     except Exception as e:
         log(f"告警专项异常：{e}")
 
+    # 0.7) 地图 key 看门狗：盘点腾讯/高德各接口可用 key，全尽带解封时刻告警、恢复自动收尾
+    try:
+        import map_key_repair
+        log(map_key_repair.run())
+    except Exception as e:
+        log(f"地图key盘点异常：{e}")
+
     killed, running = scan()
     errs = check_error_logs()
     if running:
