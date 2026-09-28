@@ -118,9 +118,11 @@ def db_counts_section():
             return "?"
         nr = count("restaurants", "status=eq.active")
         nv = count("reviews")
+        if nr in ("?", None):
+            return ""
         return f"数据库：{nr} 家在营，{nv} 条评价"
     except Exception:
-        return "数据库：计数跳过"
+        return ""
 
 
 def work_section():
@@ -149,24 +151,54 @@ def build_message():
     return "\n".join(lines)
 
 
-def build_compact():
-    """紧凑心跳：每块压成一行，控制在易读范围（推送整顿）。"""
-    work = ""
+def account_line():
+    """账号 + 阻塞 + 候选池合并为一行（心跳精简）。"""
+    st = load_json(DATA / "_cookie_pool_state.json", {})
+    accs = st.get("accounts", st) if isinstance(st, dict) else {}
+    bits = []
+    if isinstance(accs, dict):
+        for aid, info in accs.items():
+            short = aid.replace("account_", "").upper() if "account_" in aid else aid
+            code = (info.get("status") or info.get("state") or "?") if isinstance(info, dict) else info
+            bits.append(f"{short}={code}")
+    marks = []
+    if (DATA / "SEARCH_RESTRICTED").exists():
+        marks.append("搜索风控")
+    if (DATA / "COOKIE_INVALID").exists():
+        marks.append("登录失效")
+    fr = load_json(DATA / "coverage/frontier.json", {})
+    nfr = len(fr) if isinstance(fr, dict) else 0
+    tail = f"候选{nfr}"
+    # 阻塞标记须与账号实时状态对齐：所有账号 ok 时，残留 marker 视为过期、不展示
+    all_ok = bool(bits) and all(b.endswith("=ok") for b in bits)
+    if marks and not all_ok:
+        tail += "·阻塞:" + "、".join(marks)
+    return "账号：" + ("，".join(bits) if bits else "状态缺失") + f"（{tail}）"
+
+
+def work_oneline():
+    """开发进度压成一行；无实质内容则返回空串（不进心跳）。"""
     try:
         import work_progress
-        work = work_progress.render_text()
+        st = work_progress.load()
+        bits = [st.get("phase"), st.get("in_progress")]
+        bits = [b for b in bits if b]
+        return "开发：" + "｜".join(str(b)[:40] for b in bits) if bits else ""
     except Exception:
-        work = "开发进度：状态缺失"
+        return ""
+
+
+def build_compact():
+    """紧凑心跳：3~4 行，只保留有信号的板块（覆盖/库/账号[+候选/阻塞]/开发）。"""
     lines = [
         coverage_section(),
         db_counts_section(),
-        frontier_section(),
-        account_section(),
-        blockers_section(),
-        "",
-        work,
+        account_line(),
     ]
-    return "\n".join(x for x in lines if x is not None)
+    w = work_oneline()
+    if w:
+        lines.append(w)
+    return "\n".join(x for x in lines if x)
 
 
 def main():

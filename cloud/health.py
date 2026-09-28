@@ -153,8 +153,32 @@ def note_sent(key):
     _write_state(st)
 
 
+# ------------------------------------------------ 通道开关（可独立暂停）
+CHANNELS_FILE = pathlib.Path(DATA_DIR) / "notify_channels.json"
+_CHANNEL_ENV = {"telegram": "NOTIFY_TELEGRAM", "feishu_app": "NOTIFY_FEISHU_APP",
+                "feishu": "NOTIFY_FEISHU"}
+
+
+def channel_enabled(name):
+    """通道总开关，默认全开。判定顺序：NOTIFY_* 环境变量 → notify_channels.json → 开。
+    name: telegram / feishu_app / feishu。所有通道原语与 health.alert 都先过此闸，
+    暂停某通道（如飞书）即可一处覆盖看门狗/播报/各补齐脚本的全部外发。"""
+    env = _CHANNEL_ENV.get(name)
+    if env:
+        v = os.environ.get(env)
+        if v is not None:
+            return v.strip().lower() not in ("0", "false", "no", "off")
+    try:
+        m = json.loads(CHANNELS_FILE.read_text(encoding="utf-8"))
+        return bool(m.get(name, True))
+    except Exception:
+        return True
+
+
 # ------------------------------------------------ 各通道
 def _telegram(message, title):
+    if not channel_enabled("telegram"):
+        return None
     token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
     chat = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
     if not token or not chat:
@@ -174,6 +198,8 @@ def _telegram(message, title):
 
 
 def _feishu(message, title):
+    if not channel_enabled("feishu"):
+        return None
     url = os.environ.get("FEISHU_WEBHOOK", "").strip()
     if not url:
         return None
@@ -208,6 +234,8 @@ def _feishu_app(message, title):
     app_id = os.environ.get("FEISHU_APP_ID", "").strip()
     app_secret = os.environ.get("FEISHU_APP_SECRET", "").strip()
     chat_id = os.environ.get("FEISHU_CHAT_ID", "").strip()
+    if not channel_enabled("feishu_app"):
+        return None
     if not app_id or not app_secret or not chat_id:
         return None
     base = (os.environ.get("FEISHU_API_BASE")

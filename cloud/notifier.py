@@ -19,6 +19,16 @@
   - 同一 key 内容哈希不变且在冷却内 → 不重复推。
 
 通道复用 health 原语（TG / 飞书自建应用 / 飞书 webhook），不重复实现鉴权。
+
+信号 → 模块目录（每条外发都必须能在此登记；无登记/无触发条件不得推送）：
+  key                生产模块               触发条件（确定性）                 级别              节流
+  heartbeat          progress_broadcast     每 10 分钟例行心跳                 INFO              cadence 600
+  watchdog:killed    watchdog               强杀了卡死采集进程（runtime>30m）   WARN              cooldown 3600
+  login:account_x    warning_handler        双出口 user/me 均 -100             ACTION→RESOLVED   有界 nudge
+  map:quota          map_key_repair         全部地图 key 耗尽 / 恢复           WARN→RESOLVED     cooldown
+  pool_autostart     account_repair         gap_pool 缺失并已自动拉起          WARN(health)      once
+通道开关：health.channel_enabled（NOTIFY_* 或 /app/data/notify_channels.json），可独立暂停某通道。
+心跳正文由 progress_broadcast.build_compact 生成，固定 3~4 行：覆盖 / 库 / 账号(含候选·阻塞) / 开发。
 """
 import datetime
 import hashlib
