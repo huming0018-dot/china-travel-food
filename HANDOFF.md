@@ -1295,3 +1295,28 @@ SSH 若域名别名 `food-cloud` 不通（Clash TUN 模式会把域名解析成 
 2. 在容器 `/app/data/account_proxies.json` 增加 `<account_x>: 代理URL`；
 3. 跑 xhs_qr_login.py（改输出文件名/账号）出二维码，用户用对应手机账号扫码；
 4. cookie 落宿主机 xhs_accounts/<account_x>.json；池自动 classify 并拉起该账号 worker。
+
+---
+
+## F3「集团 / 品牌 / 主厨树」抽样框 —— 已闭环（2026-09-28）
+
+模块：`cloud/vendor/pipeline/group_chef_tree.py`（已部署 /app/pipeline，已提交推 main）。
+默认 dry-run，`--apply` 才写库；幂等可复跑。
+
+### 机制（确定性，不靠模型即兴）
+- 把集团“期望品牌”解析到在营 restaurant，逐一对账：linked 已挂 / new 在库未挂（补挂）/
+  ambiguous 多分店（不自动连）/ closed 仅匹配到关店 / out_of_market 外地品牌 / missing 真缺口。
+- **跨集团守卫**：品牌解析到的店全部已属其他集团、本集团没有 → 判为雇主品牌跳过
+  （解决卢怿明受雇福系列导致福1015 串到自创品牌集团；福和慧反串福系列）。
+- **品牌状态注册表** `/app/data/coverage/group_brand_status.json`（版本化副本
+  `research/authority/group_brand_status.json`）：外部时效/关店/外地核验写入，每条带 source_url；
+  status=closed / out_of_market。集团树据此把非上海缺口剔除发现队列。
+
+### 本轮结果（已 apply、已回验）
+- 补挂成员 5：荣府宴 rid759→新荣记；雍颐庭 rid539→卢怿明品牌；
+  La Boulangerie rid1166→海外名店；逸龙阁 rid716、香聚江南灶 rid782→国际酒店集团。
+  restaurant_group_members 42 → **47**。
+- 核实并分流“疑似缺口”：Ultraviolet（2025-03-29 永久关店）、Charbon（2024-12-31 关店）、
+  L'Atelier de Joël Robuchon rid1139（已关店）；京季、芙蓉无双（仅北京，非上海）。
+- 最终：**真缺口 0、待补挂 0**；发现队列 group_missing_brands.json = []。
+- 权威 sitemap 全量召回（154，含望庐）经核实与米其林官方口径一致，权威召回机制正常。
