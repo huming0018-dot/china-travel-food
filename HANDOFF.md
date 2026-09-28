@@ -1424,3 +1424,27 @@ cloud_amap_fill 走池降频 + 持久 POI 缓存一次 extensions=all 共享）�
    /home/ubuntu/food-cloud/xhs_accounts/<account>.json（600 ubuntu:ubuntu），并改名 _installed.json。
 
 当前：account_a 工单 waiting_user，二维码已推 TG/飞书/用户，扫码后自动验证恢复；后续账号失效全自动走此闭环。
+
+## 2026-09-28（定稿）登录路径收敛 + 搜索速率软限流 —— account_a 已恢复
+
+接上文，多轮实测推翻「云端 headless 扫码可重登」的假设，定位唯一可用路径与搜索限流真相。
+**完整 SOP 见 skill `references/xhs-login-runbook.md`。**
+
+1. **云端 headless 扫码是死路**：二维码能识别，但手机「确认」后必 **fail to login**、id_token 永不出现
+   （服务端在确认环节拒绝数据中心 IP/自动化会话，多次重扫相同）。宿主机安装器/warning_handler 的
+   自动二维码无法完成确认登录——**重登必须人工在本机真实有头浏览器扫码**。
+2. Playwright 有头（navigator.webdriver=**true**）能登录成功（guest=false），但该账号搜索被持续抑制；
+   豆包内置浏览器导出的 cookie 是**游客态**（guest=true）。
+3. **唯一可用路径 = 本机真实 Google Chrome**：`open -na "Google Chrome" --args --remote-debugging-port=9222
+   --user-data-dir=<全新目录> ...`（经 launchd 启动；shell fork/nohup 会 abort134 或被回收，默认 profile
+   有锁权限），再用 Playwright connect_over_cdp **只读**导出 cookie。实测 navigator.webdriver=**false**，
+   user/me **guest=false**（uid 6972702800000000370282a7）。
+4. **搜索是速率型软限流，不是账号死**：结果按时间窗在「满/空」翻转；连续快速请求触发数分钟 code=0、
+   data 空冷却，停顿自恢复。实测安全速率 **≤2 次搜索/分钟（间隔 ≥28s）**，连续 3 分钟 7 次全返回 22 条；
+   登录后还有数分钟**搜索预热窗口**（可能空）。空 code-0 = 放慢/冷却中，禁止硬刷。
+5. 已固化并部署 `/app/cloud/xhs_api.py`：`SEARCH_MIN_GAP=28`、`_search_pace()` 强制节流、空页走
+   60–180s 长冷却最多重试 2 次（COMPILE_OK）。项目 cloud/ 源已同步，待提交。
+
+**当前状态**：account_a 已用真实 Chrome 干净账号覆盖并验证搜索恢复（两出口、全关键词格式均返回）；
+account_b 仍 -100，需按 runbook 在另一真实 Chrome 窗口扫码（走广州代理）。看门狗对 -100 的自动二维码
+仅作告警/沟通入口，实际重登走人工真实 Chrome 流程。

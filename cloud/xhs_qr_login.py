@@ -207,7 +207,7 @@ def worker(account, proxy_url=None, window_sec=900):
             print("QR_NOT_READY", flush=True)
         deadline = time.time() + window_sec
         last_good = time.time()
-        QR_FRESH_SEC = 100   # 二维码有效期：到点重新打开登录页换新（像素无法判断过期）
+        QR_FRESH_SEC = 240   # 二维码有效期：到点重新打开登录页换新（像素无法判断过期；100s太短会作废旧码）
         while time.time() < deadline:
             if has_session(context):
                 cookies = context.cookies()

@@ -30,6 +30,9 @@ BASE_HEADERS = {
 }
 # 需要换号/冷却的返回码
 ROTATE_CODES = {-100, -101, 300011, 300012, 1203, 406}
+# 搜索端点安全节奏（2026-09-28 实测）：≤2 次/分钟（间隔≥28s）可持续返回；
+# 更快的连续爆发会触发「code=0 但 data 空」的数分钟软限流冷却，停顿后自恢复。
+SEARCH_MIN_GAP = 28.0
 
 
 class AllAccountsBlocked(RuntimeError):
@@ -47,6 +50,7 @@ class XhsApi:
         self.proxies = proxies  # {"http": url, "https": url}；每账号独立出口
         self.empty_streak = 0
         self._last = 0.0
+        self._search_last = 0.0  # 搜索端点专用节流（比全局 _gap 更慢）
         self.accounts = []
         d = pathlib.Path(accounts_dir)
         if d.exists():
@@ -125,22 +129,30 @@ class XhsApi:
         return j
 
     # ------------------------------------------------------------ 三个端点
+    def _search_pace(self):
+        """搜索端点强制 ≥SEARCH_MIN_GAP 间隔（实测安全节奏 2 次/分钟）。"""
+        dt = time.time() - self._search_last
+        if dt < SEARCH_MIN_GAP:
+            time.sleep(SEARCH_MIN_GAP - dt + random.uniform(0, 0.8))
+
     def search(self, keyword, page=1, page_size=20):
         kw = keyword if (not self.city or self.city in keyword) else f"{keyword} {self.city}"
         items, code = [], None
-        for attempt in range(2):  # 软限流空页(code0/0条)时冷却后最多重试 1 次
+        for attempt in range(3):  # 软限流空页(code0/0条)：长冷却后最多重试 2 次，宁慢不硬刷
+            self._search_pace()
             payload = {"keyword": kw, "page": page, "page_size": page_size,
                        "search_id": self.sign.get_search_id(),
                        "sort": "general", "note_type": 0}
             j = self._send("POST", "/api/sns/web/v1/search/notes", payload=payload)
+            self._search_last = time.time()
             code = j.get("code")
             items = (j.get("data") or {}).get("items") or []
             if items:
                 self.empty_streak = 0
                 return items
-            if code == 0:  # 共享 IP 软限流：指数退避，不硬刷
+            if code == 0:  # 速率软限流：60–180s 长冷却，停顿后自恢复，不硬刷
                 self.empty_streak = getattr(self, "empty_streak", 0) + 1
-                time.sleep(min(20 * self.empty_streak, 90))
+                time.sleep(min(60 * self.empty_streak, 180))
                 continue
             return []
         return items
