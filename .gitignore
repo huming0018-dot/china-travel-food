@@ -90,6 +90,7 @@ cloud/deploy.env
 # 云端登录态 / 打包上下文（含 cookie 等敏感信息，禁止入库）
 cloud/xhs_cookies.json
 cloud/.xhs_cookies.json
+cloud/.dianping_cookies.json
 cloud/server-context.tgz
 cloud/data/
 

@@ -1562,3 +1562,31 @@ a1（设备指纹）不同 = 两个不同设备，但登录身份是同一个小
 - account_b = **猪蛤蛤**
 登录成功（user/me guest=false）时自动回填 nickname/red_id/uid 并校验昵称与 expected_nickname 一致；
 看门狗/通知按 friendly_name 播报。当前 cookie 仍是同一旧身份，需按此分别重登才生效。
+
+## 大众点评电话连接器 cloud/cloud_dianping_phone.py（2026-09-28）
+
+**目的**：为 phone 为空的 active 店在点评按店名检索，锚定唯一门店（记录 uuid/URL/地址），尝试取公开电话。
+**登录态**：本机真实 Chrome + CDP 扫码取得，账号 **LANCE（member 1329295730）**。
+cookie 存 `cloud/.dianping_cookies.json`（gitignored，600，含 httpOnly `dper`/`dplet`），
+容器内 `/app/data/.dianping_cookies.json`（600），cookie 可移植、本机 IP 取得。
+
+**机制结论（重要）**：点评 web（www/m 门店页 + 桌面搜索页）**不公开电话**——
+门店页为 H5 shell（260 处 wx-view），`desc-phone` 是空 CSS 图标/App 深链；HTML 内嵌 JSON
+（shopConfig/__NEXT_DATA__）无 tel 字段；wxmapi shopservice 仅返回服务能力标志；
+mapi shopinfo/shopdetail 404；poi-bundle JS 无电话 API 路径。电话为 **App-only**。
+已用连锁（外婆家）+ 多家高端店双向验证，非解析错误。
+
+**连接器行为**：
+- `common.fetch_all("restaurants", extra="phone=is.null&status=eq.active")` 取全量缺号店；
+  点名回归店（id 列表）优先；
+- 搜索 `data-click-name="shop_title_click" data-shopid=... title=店名` 解析结果；
+- `cjk_norm` 名称相似度 + `addr_core` 地址重合双闸门；仅名称≥0.75 且地址≥0.5 才锚定；
+- 电话候选过 `clean_phone`，并排除 poiId 碎片/点评客服 4003101100；
+- 默认 dry-run，`--apply` 才 PATCH（只 PATCH phone 一个字段）；
+- 礼貌限速 4s/店、幂等、可复跑；取证报告 `/app/data/dianping_phone_report.json`。
+
+**dry-run 结果（2026-09-28，197 家唯一缺号店）**：
+- 锚定点评门店 163 家、点评搜不到 101 家；
+- 拟采纳电话 **0**；唯一候选 `0379254716`（洛阳区号、地址不匹配）被 clean_phone/闸门正确拦截；
+- 全部留空（点评 web App-only，无公开号）。覆盖率维持 84.8%（1248/1472，null=224）。
+- 未做 --apply（0 采纳，no-op）。后续若点评开放 web 电话或改走 App 抓包，再补。
