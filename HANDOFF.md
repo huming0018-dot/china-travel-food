@@ -1590,3 +1590,47 @@ mapi shopinfo/shopdetail 404；poi-bundle JS 无电话 API 路径。电话为 **
 - 拟采纳电话 **0**；唯一候选 `0379254716`（洛阳区号、地址不匹配）被 clean_phone/闸门正确拦截；
 - 全部留空（点评 web App-only，无公开号）。覆盖率维持 84.8%（1248/1472，null=224）。
 - 未做 --apply（0 采纳，no-op）。后续若点评开放 web 电话或改走 App 抓包，再补。
+
+## Phase 0-A 实体解析去重 + 名称交叉验证（2026-09-28）
+
+**目的**：修机制（不是手工补这几家）——全库重复实体检测/合并 + 名称权威源校验，双向防错并保护子表数据。
+新引擎 `cloud/vendor/pipeline/entity_dedup.py`（默认 dry-run），已部署容器 `/app/pipeline/`。
+
+**双向裁决（核心）**：
+- 同店异写→合并：品牌相关 AND（同座机 OR 同门牌 addr_core OR 坐标<25m）。正名为准、异写并入 `aliases`、证据取并集。
+- 近名异店→保留：连锁异址分店（坐标>200m/不同路）即使同品牌也不并；`entity_keep_pairs.json` 强制豁免。
+- 中间带（25–200m、共享手机/商场共用中心坐标）→ REVIEW，不自动并。
+
+**合并数据安全（全子表，以 db/migrations 实际 schema 为准）**：
+- 迁移覆盖 10 类 FK：restaurant_cuisines(PK cid)、reviews(user+visit_date+content)、
+  restaurant_chefs(PK chef+role)、restaurant_awards(uniq award_type+year)、food_events
+  （restaurant_id CASCADE 与 related_restaurant_id SET NULL **两字段都迁**）、
+  restaurant_group_members(PK group_id)、negotiations/price_benchmarks/favorites/food_kol_mentions。
+- 复合 PK 表（无独立 id）走 POST 新行+删旧行；有 id 表按业务键去重后 PATCH 改指。
+- 字段合并只补 keeper 空值（coalesce），**电话/坐标永不覆盖已存在有效值**；旧店名并入 aliases。
+- 绝不直接 DELETE restaurant 行触发 CASCADE：先全量迁子表 FK，最后才删被合并行。
+
+**并发健壮**：每簇 apply 前重新快照成员行；若与计划时不一致就该簇重算字段合并，
+不覆盖 amap/电话定时任务刚 PATCH 的字段。写后回读 keeper + 自检（keeper 在、drop 行已消失）。
+
+**名称交叉验证（L1–L6）**：正名需 ≥2 个 L1–L5 源一致；UGC 异写入 aliases。
+`name_audit()` 产出 `name_fixes.jsonl`（id/wrong/correct/level/authority_urls）；
+已核实表（白茸/佰荣/白荣/百荣→「白茸 Bai Rong」BFC 鲁菜米其林）+ 店名混入营业时段等噪声后缀检出。
+heuristic 类（无 authority_urls）只列清单**不自动改写**，待 L1–L5 核证后 --apply。
+
+**回归用例（--selftest 全 PASS）**：
+- pain chaud：1164(建国西路) vs 1785(番禺路) = 连锁分店→keep；历史同店异写 1235 已并入 1164。
+- 纹兵卫：44(金虹桥) vs 1870(天山) = 不同分店→keep；44 店名「（午市套餐）」噪声被审计检出。
+- 南兴园：已收敛为单条实体(478)，不误拆/不重建重复。
+- 白茸：815(BFC「白茸 Bai Rong」) vs 812(太阳宫白茸小鲜) = 子品牌异店→keep；815 正名正确，
+  不与南京东路温州馆「白荣」误并（库内当前无该白荣行）。
+- 合成对：同店异写→merge；近名异店(同品牌~3km)→keep。
+
+**dry-run 结果（容器 food-cloud，2026-09-28）**：全库 1479（active 1472/closed 7），
+自动合并簇 0、待复核 0（强信号候选此前已由 entity_resolve/keep_pairs 裁决收敛），
+名称修正 1 条（纹兵卫 id=44 噪声后缀，heuristic 待核）。基线：电话覆盖 1256/1479≈84%、
+坐标 1473/1479≈99%，合并前后只许变好。未 --apply（0 真合并 + 名称修正无权威源，no-op）。
+
+**周期化**：只读扫描已接入 `cloud/cloud_patrol.py`（不碰 crontab.txt）；
+patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条」。真正合并仍需人工确认后
+`python3 entity_dedup.py --apply`。如需 cron 行建议由运维统一安排。
