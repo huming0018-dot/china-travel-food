@@ -1793,3 +1793,40 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
   待后续补更细叶标签或证据后再优化；当前不影响"每店恰 1 主"的正确性。
 - 地名纠正 17 条均为"身份叶优先于产品叶"的正确案例；若后续发现新的"名字带地名但主营另一菜系"反例，
   往 `LEAF_DISH_KW` 补招牌菜关键词即可，无需改机制。
+
+---
+
+## Phase 0-C：连锁 / 工业化预制 / 软广 负面清单 tag-on + 隐藏连锁联动（2026-09-28）
+
+> 脚本：`cloud/vendor/pipeline/phase0c_negative_tagon.py`（默认 dry-run，自检全绿才 `--apply`；幂等可复跑）。
+> 原则：机制优先、可溯可逆；只加负面标签/派生标志，不删店、不改菜系/电话/坐标/价格。
+
+### 现状盘点（真实运行数字，active=1472）
+- chain_type 已 100% 覆盖无 NULL：独立店 **1208** / 小型连锁 **203** / 大型连锁 **55** / 资本化连锁 **6**。
+- central_kitchen：无 1266 / 疑似 181 / 确认 25；premade_risk：无 1266 / 低 168 / 疑似 15 / **高 23**。
+- 软广：`soft_ad_flag` none 1253 / suspected 197 / confirmed 22；**`soft_ad_flag_reviews` 全 1472=none**（分布模型 cron 5:37 跑过，17 家有≥3条真实UGC的店全判 none，无误杀）。
+- 隐藏联动：`is_chain_standardized`(generated) True **205** 家 = 前端"隐藏连锁/预制"过滤依据；penalty 218 家。
+
+### 本轮唯一写库动作（tag-on 补缺）
+- 缺口：migration 003 审计视图规定「pr=高 ⇒ 必挂工业化餐饮标签(cuisine_id=258)」，但 23 家 pr=高 全部未挂。
+- apply：INSERT `restaurant_cuisines(restaurant_id, 258)` **23/23 成功，0 失败**；回读挂标总数 2→**25**，pr=高 23 家 **0 缺失**。
+- 涉及品牌（均有 curated 证据，非"出餐快/平价"臆测）：小菜园×2、望湘园×2、盖饭邦、外婆家、点都德×3、
+  南京大牌档×6、新旺×2、东发道×2、丸龟制面、新白鹿、费大厨、鲜芋仙。
+- **restaurants 表零变化**：apply 前后全字段 SHA256 完全一致（`925e19eb…`）；total 1479/active 1472/closed 7、
+  电话 1254、坐标 1471 与基线一致。只动了 tag junction；`soft_ad_flag/penalty/is_chain_standardized` 全部由 trigger/generated 派生，未直写。
+
+### 反误伤（最高验收，自检 PASS）
+- 独立店被标 suspected/confirmed 必须有 ck/pr 具体输入——无信号误杀 = **0**。
+- 高端锚点新荣记/荣府宴/大董/甬府/鲁采/福和慧/唐阁/Ling Long/菁禧荟/鮨系 全部 `is_chain_standardized=False`（不隐藏）。
+- 预制正例召回：小菜园/望湘园/盖饭邦/外婆家/点都德 全部 pr=高+ck=确认+std=True+flag=confirmed。
+- 软广分布模型 17 家可打分店全 none——高口碑/低评论店未因平价或低评论数被误判。
+
+### 人工复核项（脚本只报告不自动改/删，可逆）
+- 遇外滩×3（高端闽菜真·三店连锁，ck疑似/pr低→按008公式保守隐藏，可申诉撤销）。
+- POP露台餐厅(1984)：独立店但 ck=疑似/pr=低→trigger 派生 suspected；非低价小馆误伤，ck 依据可复核。
+- 历史已挂 tag258 但 pr=无 的 2 家（1715 Alimentari Grande、1853 苹果花园）与派生口径不一致，人工复核（本脚本不自动删）。
+
+### 周期化建议（未自行改 crontab.txt）
+- softad 自学已在 cron 5:37。连锁/预制本脚本为只读扫描+幂等 tag-on，建议每周一条：
+  `cd /app/pipeline && python3 phase0c_negative_tagon.py`（dry-run；若 pr=高新店漏标则报告新增，人工确认后 --apply）。
+  是否接入 `cloud_patrol.py` 或独立 cron，由用户统一安排。
