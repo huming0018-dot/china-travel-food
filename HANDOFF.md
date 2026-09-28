@@ -2052,3 +2052,42 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 1. 仍有约 **130 家人均≥500 奢华店 0 真实 UGC**（本轮只取 top25）；中价位(200–500)0-UGC 店约 385 家。直接重跑脚本 `--apply`（batch 递增）即天然接续下一批高价店（已落库的 22 家自动移出目标集）。
 2. fine dining 在 XHS 的普通食客笔记稀少，多为美食博主/系列号；本脚本保留"真实到店+含菜名"的博主笔记作证据，仅拦代订/品牌/场地号。后续可接 B站/评论区真实食客短评补独立作者。
 3. 已验证死路未重试：大众点评 web（App-only）、L0 keyless 电话。
+
+---
+
+## 评分引擎：真实食客口味分全量收敛（2026-09-28）
+
+> 上一阶段 review_ugc_fill 只写 reviews、靠触发器 `trg_reviews_taste` 逐条增量刷新 taste。
+> 但触发器在每条 review 插入时调用 `recalc_taste_for`，**品类先验 c_prior 是按当时全局 review 集合算的**——
+> 后插入的同菜系 review 不会回头刷新已写店的先验，导致 72 家 taste 停留在未收敛值。本阶段做一次全量重算收敛。
+
+### 机制（cloud/vendor/pipeline/scoring_engine.py，严格对齐 db/migrations/012_scoring_realign.sql，不另起公式）
+- 证据准入红线：仅 `review_kind='diner' AND is_fake_suspect!=true AND is_hidden=false
+  AND trust_level IN ('mid','high') AND COALESCE(aspect_taste,rating_taste,rating_total) IS NOT NULL`。
+  高德聚合(trust=low, 902 条)、平台星、3 条软广留痕一律不作口味证据；服务/环境/个人情绪不进口味。
+- 时间衰减 `w=0.5^((今天-COALESCE(visit_date,created_at))/180)`；`q=(口味分-1)/4*100`。
+- `score_diner = Σw·q/Σw`（时间加权原始均值，不收缩）；
+  `score_taste = round( v/(v+8)·v_R + 8/(v+8)·c_prior , 2)`（贝叶斯收缩，m=8）；
+  `review_count=有效条数`、`review_confidence=round(v/(v+8),3)`；无证据 taste/diner=NULL（宁空不假）。
+- `c_prior` 复现 012 `cuisine_prior`：主菜系叶→父类→虚拟根逐级，取首个 Σw≥20 否则最浅层，缺省 70。
+- **只 PATCH 组件分** score_taste/score_diner/review_count/review_confidence；
+  score_total / score_evidence_level / soft_ad_penalty 一律由 DB 触发器 `trg_restaurants_derive` blend，脚本不手填。
+- 用法：`python3 scoring_engine.py`（dry-run）/ `--apply`（仅 PATCH 有差异行，幂等）。
+
+### 真实运行数字（容器 food-cloud，非估算）
+- 参与重算餐厅 **1479**；有效口味证据行 **195**（全为小红书 trust mid/high UGC；高德 902 条 low 全排除）。
+- score_taste 非空：**84 -> 84**（无空/非空翻转）；其中 ≥2 独立作者 **54** 家。
+- score_evidence_level：verified **54**、provisional **1422**、insufficient **3**（前后不变）。
+- score_total：before n=1476 min=11.0 max=89.1 avg=61.33 -> after n=1476 min=11.0 max=88.1 avg=61.32（仅 67 家 taste 先验收敛微调，均值几乎不动，无异常大面积掉分）。
+- 先经 RPC `/rpc/recalc_taste_for` 抽样仲裁 5 家，证明 Python 复算与 DB 函数逐位一致（taste/diner/count/conf 全等）；
+  apply PATCH **67/67** 行；回读触发器 blend 与预测 **0 偏差**、evidence **0 偏差**、taste **0 偏差**。
+- 非评分字段零变化：phone 1256 / location 1473 / address/district/status/price_avg 校验和前后一致。
+- 幂等：复跑 dry-run **0 变更**；容器内复跑同样 **0 变更**、同分布。
+
+### 部署
+- 脚本已 `docker cp` 进运行容器 `/app/pipeline/scoring_engine.py`（未重启、未动 crontab、未碰 app/ 与 chefs/groups）；
+  下次 `build_on_server.sh` 的 `COPY vendor/pipeline /app/pipeline` 会固化进镜像。
+
+### 遗留
+1. 仍约 130 家人均≥500 奢华店 0 真实 UGC（taste=NULL、走 provisional cap70）；靠后续 review_ugc_fill 接续补证据后重跑本脚本即自动收敛先验。
+2. score_objective/score_endorsement 维持现状（012 未动）；本脚本只收敛 taste/diner 组件，不重算客观/背书分。
