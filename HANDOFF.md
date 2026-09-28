@@ -1491,3 +1491,9 @@ a1（设备指纹）不同 = 两个不同设备，但登录身份是同一个小
 登录会把第一个会话顶掉（单会话安全策略），故随后两出口统一 -100。
 **要独立**：第二个码必须用【另一个小红书账号】扫——在 App「我 → 切换账号」切到别的账号再扫，
 或用第二部手机/第二个账号；且登完不要在别处重复登录。
+
+**已定义用户名（2026-09-28，账本 cloud/account_identities.json → 持久卷 /app/data）**：
+- account_a = **ahuhu**
+- account_b = **猪蛤蛤**
+登录成功（user/me guest=false）时自动回填 nickname/red_id/uid 并校验昵称与 expected_nickname 一致；
+看门狗/通知按 friendly_name 播报。当前 cookie 仍是同一旧身份，需按此分别重登才生效。

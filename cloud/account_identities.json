@@ -1,0 +1,18 @@
+{
+  "account_a": {
+    "friendly_name": "ahuhu",
+    "expected_nickname": "ahuhu",
+    "nickname": null,
+    "red_id": null,
+    "uid": null,
+    "verified": false
+  },
+  "account_b": {
+    "friendly_name": "猪蛤蛤",
+    "expected_nickname": "猪蛤蛤",
+    "nickname": null,
+    "red_id": null,
+    "uid": null,
+    "verified": false
+  }
+}
