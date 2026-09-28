@@ -10,6 +10,49 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-09-29 黑珍珠餐厅指南连接器（F2b 权威框缺口，已提交）
+
+**目的**：补 Phase 0-D 的 F2b 缺口，对齐米其林那套确定性机制（authority-recall 三件套：全量索引兜底 + 官方总数对账 + 缺店强制补录闭环）。此前黑珍珠无连接器，`coverage_matrix.frame_blackpearl()` 是占位 `gap=no_connector`。
+
+**① 官方源逆向（核心，L2 公开 web API，非前台翻页）**
+- `blackpearl.meituan.com` 是 `__rome__` 微前端 SPA（blackpearl-overseas 海外版）。下载 `home.js` 提取出真正 API host = `https://apimeishi.meituan.com`（`mars.meituan.com/blackpearl/...` 404 openresty，已排除；`www.dianping.com/blackpearl/*` 也 404/重定向，已排除）。
+- 契约（POST，JSON body 嵌套，成功码 `code=200/succeed`，**不是 0**）：
+  - `POST /blackpearl/pc/rank/getSelectorList` body `{"pcSelectorRequest":{"cityId":0,...},"commonRequest":{"language":"zh"}}` → 每城 `cityId`+`shopCount`。上海 `cityId=1`，官方 `shopCount=61`。
+  - `POST /blackpearl/pc/rank/filterList` body `{"pcRankListRequest":{"cityId":1,"pageNum":1,"pageSize":100,...},"commonRequest":{"language":"zh"}}` → `{totalCount, shopList:[{shopId,shopName,diamondLevel,cateName,avgPriceDisplay}]}`。
+- 接口为海外版公开 L2 web API（点评 LANCE cookie 仅礼貌携带，坏了不阻断，不硬刷；A5）。
+
+**② 采集器 `cloud/cloud_blackpearl_collect.py`（默认 dry-run、可复跑）**
+- 流程：`official_city()`（getSelectorList 找上海 cityId/shopCount）→ `fetch_shanghai()`（分页 filterList 穷举）→ 双口径对账（shopCount=totalCount=collected=61，不一致报警不静默）→ 写 `/app/data/blackpearl_shanghai.json`（统一 schema）→ `reconcile()` 与库四态比对 → 写 `/app/data/blackpearl_reconcile.json`。
+- 复用 `authority_sitemap.make_matcher` 四态（exact/strong/weak/none，cjk 繁简异体+中文数字+slug 品牌前缀），不用粗糙子串。
+- 官方名常带"场馆前缀·品牌 / 品牌·菜描述"（"上海柏悦酒店·悦轩"、"皇朝会.经典传统粤菜(外滩店)"），采集器加 `_brand_aliases()` 按 `·.•-—|` 切品牌段作别名（与 make_matcher 对 slug 品牌前缀同哲学）。
+- **两张可审计对照表（宁空不假、不绑错分店）**：
+  - `MANUAL_CONFIRM`：官方名无分隔符、地址已逐字核实为同店才接管（仅 徽季荣派徽菜→id1884，陆家嘴金控广场V2号别墅地址一致）。
+  - `BRANCH_MISMATCH`：core() 剥括号后多分店品牌会撞名 exact，经地址核对下列为【同名异址分店/错店】，强制转真缺失、绝不挂标：1929(误配莆田PUTIEN id517)、成隆行(虹桥 vs 九江路 id1385)、大董(iapm vs 国金IFC id1561)、广舟(千禧 vs 巨鹿 id654)、海味观(老西门 vs 静安 id1913)、家全七福(丰盛 vs 嘉里中心 id1468)、食廬NOBLE(凯德晶萃 vs 港汇恒隆 id510)、鲁采(新天地 vs 环宇荟 id463)、皖宴(苏河湾 vs 龙柏饭店 id568)。
+
+**③ 真实对账数字（当日容器实测，非估算）**
+- 官方上海总数 **61**（3钻=3 / 2钻=6 / 1钻=52）；selector.shopCount = filterList.totalCount = 实际采集 = 61，三口径一致。
+- 与库比对：**exact=39 / strong=5 / weak=0 / short=0 / none=17**；在库(exact+strong)=**44**，recall=**72.1%**。
+- 真缺失 17 家（含 9 家分店错配排除 + 8 家库内完全无行）：1929、堀田、成隆行(虹桥)、大董(iapm)、广舟(千禧)、海味观(老西门)、家全七福(丰盛)、楼上荟馆(静安嘉里)、鲁采(新天地)、上海滩(BFC)、食廬(凯德晶萃)、皖宴(苏河湾)、无蟹居、西郊5号Maggie5、洋房火锅(新天地)、逸谷会(虹桥新天地)、橼舍鮨青木。
+
+**④ 认证挂标（dimension=认证，cuisine_id=160 黑珍珠餐厅，已存在无需 migration）**
+- 口径对齐米其林 159：认证 tag 是"曾上榜"宽口径（实测 159 挂 187 > 当年官方 156），故**只 ADD 不 detag**、不建店、不改其它字段。
+- `--apply-tag` 幂等：先 GET 现有 160 挂标集合，仅给在库在榜(exact/strong)且未挂的店 POST `restaurant_cuisines(restaurant_id,cuisine_id=160)`。
+- 本轮实测：挂标前 82 家 → **新增 19 家 → 挂标后 101 家**。新增清单全为已核实在库在榜店，9 家分店错配无一误挂。
+
+**⑤ 接线**
+- `cloud/source_registry.py`：blackpearl 条目从 `connector_module=""/health=not_built` 填实为 `connector_module=cloud_blackpearl_collect.py`、output=`/app/data/blackpearl_shanghai.json`、frames=F2b、L2、reliability 0.95。
+- `cloud/coverage_matrix.py`：`frame_blackpearl()` 从占位改成读 `blackpearl_reconcile.json` 出真实对账（denominator=61 / in_db=44 / recall=72.1% / tagged_after=101）。冒烟实测无引用错误，F2a 米其林 153/153 无回归。
+
+**⑥ 部署与安全**
+- 脚本已 docker cp 进运行中容器 `/app/cloud/`（/app/cloud 是镜像内非卷；repo 提交后下次 build_on_server.sh 会 `COPY *.py` 烤入）；未重启在跑服务、未动 crontab。
+- 容器内 dry-run 复跑多次数字一致（44/17）。
+- 安全：只采信官方榜单 + 真实食客证据；媒体通稿不冒充 UGC；标签与店铺身份交叉验证、不绑错分店；除认证标签外不动其它数据。
+
+**遗留**
+1. 17 家真缺失**本轮 0 家经 gate 入库**——无现成"≥2 独立堂食声音+口味均分≥3.5"证据（旧 gap raw 11 家已全部入库在榜）；按 A2 宁空不假不硬造证据。下一步走 admission_gate 补录闭环（详情取证→够门槛才建店）。
+2. `/app/cloud` 为镜像内非卷，容器重建后 docker cp 的脚本会丢——但已 commit 进 repo，下次 build 自动 COPY；本轮不重建镜像。
+3. 斐霓丝 PHENIX：官方名带"(璞麗酒店)"，库内 id1145 地址标"素凯泰酒店"（品牌唯一、已挂标，酒店归属口径差异待核）。
+
 ### 2026-09-29 lean 清理：在跑热补丁归位入库 + 一次性过程稿清除（已提交）
 
 **目的**：把"热部署进容器但未入库"的真实修复收回 git，保证 `docker build` 可忠实复现镜像；删除构建目录里 gitignored 的一次性过程稿；不碰凭据/数据卷/research 原始数据，不改写已提交历史。

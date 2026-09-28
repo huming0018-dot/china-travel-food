@@ -59,16 +59,18 @@ CATALOG = [
         "note": "必须浏览器（纯 requests 202）；慢 XML 页用 cdp+Wait 法",
     },
     {
-        "id": "blackpearl", "name": "黑珍珠餐厅指南",
-        "platform": "黑珍珠(大众点评)", "kind": "official_guide",
-        "auth_level": "L2", "frames": ["F2"],
-        "connector_module": "",  # 待建
-        "output": "",
-        "reliability": 0.85, "refresh_cadence": "yearly",
+        "id": "blackpearl", "name": "黑珍珠餐厅指南·上海",
+        "platform": "blackpearl.meituan.com (apimeishi.meituan.com)", "kind": "official_guide",
+        "auth_level": "L2", "frames": ["F2b"],
+        "connector_module": "cloud_blackpearl_collect.py",
+        "output": "/app/data/blackpearl_shanghai.json",
+        "reliability": 0.95, "refresh_cadence": "yearly",
         "account_dependency": "none",
-        "covers": "权威框第二根支柱（与米其林独立）；当前无连接器=已知缺口",
-        "retire_if": "源停办",
-        "note": "【待建】需先找全量名录页/API + 官方总数对账（对齐 authority-recall 三件套）",
+        "covers": "黑珍珠上海官方全量（2026=61，3/2/1钻=3/6/52）；getSelectorList+filterList 双口径对账；"
+                  "与库 make_matcher 四态比对 + 分店错配排除；在库在榜店幂等挂 160 认证标签",
+        "retire_if": "源停办，或 apimeishi rank 接口连续 2 次 totalCount=0",
+        "note": "官方 rank API 逆向自 blackpearl-overseas SPA home.js；上海 cityId=1；"
+                "默认 dry-run，--apply-tag 才挂标；missing(17) 交 admission_gate 补录",
     },
     {
         "id": "amap_poi", "name": "高德地图 POI",

@@ -67,9 +67,32 @@ def frame_authority_michelin():
 
 
 def frame_blackpearl():
-    return {"frame": "F2b 黑珍珠", "denominator": None,
-            "in_db": None, "gap": "no_connector",
-            "note": "无全量名录连接器=已知缺口；待建（对齐 authority-recall 三件套：全量索引+总数对账+缺店闭环）"}
+    """F2b 黑珍珠权威框：读 cloud_blackpearl_collect.py 产物（官方全量 + 四态对账）。"""
+    p = pathlib.Path(DATA) / "blackpearl_reconcile.json"
+    if not p.exists():
+        return {"frame": "F2b 黑珍珠", "denominator": 0,
+                "note": "blackpearl_reconcile.json 不存在；先跑 cloud_blackpearl_collect.py"}
+    r = json.loads(p.read_text(encoding="utf-8"))
+    cd = r.get("conf_dist", {})
+    denom = r.get("official_totalCount") or r.get("collected") or 0
+    in_db = r.get("in_db_exact_strong",
+                  cd.get("exact", 0) + cd.get("strong", 0))
+    missing = r.get("missing", [])
+    return {
+        "frame": "F2b 黑珍珠(上海)",
+        "denominator": denom,
+        "official_shopCount": r.get("official_shopCount"),
+        "collected": r.get("collected"),
+        "in_db_exact_strong": in_db,
+        "conf_dist": cd,
+        "true_missing_none": len(missing),
+        "recall_pct": round(in_db * 100 / max(1, denom), 1),
+        "tagged_total_after": r.get("tagged_total_after"),
+        "tag_added_this_run": r.get("tag_added_this_run"),
+        "true_missing_names": [m["name"] for m in missing],
+        "note": "官方双口径对账(shopCount=totalCount=61)；exact/strong=在库已挂160；"
+                "none=真缺(含同名异址分店错配排除)，交 admission_gate 补录；不 detag 历史宽口径",
+    }
 
 
 def frame_map_frontier():
