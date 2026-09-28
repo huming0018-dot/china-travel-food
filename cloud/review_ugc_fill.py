@@ -173,6 +173,10 @@ def author_intercept(author, core):
     # 品牌自营：作者名包含核心店名，且无个人化后缀（如「鮨吉兆」=店官方号）
     if n_core_cjk and len(n_core_cjk) >= 2 and n_core_cjk in n_author and not PERSONAL_MARKER.search(author):
         return f"brand_selfpost({author})"
+    # 拉丁/混合店名官方号：归一化后作者名整体含店名核心串且无个人后缀（Mr & Mrs Bund / TORIKAZE鳥かぜ）
+    n_core_lat = re.sub(r"[^a-z0-9]", "", n_core)
+    if len(n_core_lat) >= 6 and n_core_lat in n_author and not PERSONAL_MARKER.search(author):
+        return f"brand_selfpost_latin({author})"
     return None
 
 
