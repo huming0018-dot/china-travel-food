@@ -1320,3 +1320,27 @@ SSH 若域名别名 `food-cloud` 不通（Clash TUN 模式会把域名解析成 
   L'Atelier de Joël Robuchon rid1139（已关店）；京季、芙蓉无双（仅北京，非上海）。
 - 最终：**真缺口 0、待补挂 0**；发现队列 group_missing_brands.json = []。
 - 权威 sitemap 全量召回（154，含望庐）经核实与米其林官方口径一致，权威召回机制正常。
+
+---
+
+## KOL / 美食声音体系 —— 已落地（2026-09-28，commit 2c710d5）
+
+迁移：`db/migrations/013_kol.sql`（经 Supabase SQL Editor 执行、回验）。
+- food_kol_watchlist 扩列：kol_type（博主/美食家/美食导演/美食作家/主厨自媒体/媒体）、
+  specialty_tags jsonb、region、profile_url、trust（high/mid/low）。
+- 新表 food_kol_posts（帖子归档，post_url 唯一）、food_kol_mentions（提及，
+  matched/ambiguous/unmatched + polarity pos/neu/neg/mixed）；RLS 默认仅 service role。
+
+名单：25 B站博主 + 9 权威声音 = **34**。9 权威声音（种子 `research/authority/kol_seed.json`）：
+沈宏非、殳俏（上海/作家）、陈晓卿（美食导演/北京）、蔡澜、欧阳应霁（香港）、
+董克平、小宽（北京）、叶怡兰、焦桐（台湾）。社交 handle/profile_url 未核验者留空，连接器补。
+
+模块：`kol_post_ingest.py`（skill scripts/food_pipeline + 项目 cloud/vendor/pipeline）。
+- 平台无关：连接器把帖子拉成统一 jsonl，本模块做最长匹配店名 + 归档 + 提及；
+- 情感用**归属窗口**：提及拥有“自己起点→下一个提及起点”的描述，名字后的赞美/批评归该名字、
+  不越过下一个名字；服务/情绪词不计口味；默认 neu。
+- 已端到端测试：正/负/中性三种语境全部判对（pos/neg/neu），合成测试数据已清。
+- 边界：KOL 到访只作线索/特征标签，**不计 taste**；unmatched 店名由连接器侧入发现队列。
+
+待办：①把 bilibili 采集的 KOL 视频接入 kol_post_ingest 归档；②douyin/wechat 连接器（P5）；
+③未匹配提及→发现队列的自动闭环。
