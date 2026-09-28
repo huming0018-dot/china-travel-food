@@ -2273,3 +2273,37 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 
 ### 遗留
 - 奢华(≥500) 0-UGC 剩 **80 家**；中价(200–500) 约 1300 家 0-UGC。
+
+
+---
+
+## Phase 0-C · 两条容器常驻低频长跑（云端运维，2026-09-29）
+
+> 设备无关：全部由腾讯云容器 food-cloud 内 cron 触发，不依赖任何用户设备/豆包会话；未用豆包 cron scheduler。
+
+### 任务一 · 真实 UGC 扩量长跑（cron `39 * * * *`，每小时 :39）
+- 新 wrapper `cloud/ugc_longrun.py`：每轮 `review_ugc_fill.py --apply --batch 5 --min-price 500`，
+  环境 pacing `UGC_SEARCH_GAP=70s`（≥28s、≤2次/分），双 XHS 账号 account_a/b + account_b 广州代理轮替（CoexistXhs 内置）。
+- 退避不硬刷：xhs_api 已内置 RATE_CODES 翻倍 search_gap（封顶）、空页 60–180s 长冷却、ROTATE 换号；
+  wrapper 再加墙钟 `UGC_RUN_TIMEOUT=1500s` 到点安静停。
+- 每批后自动 `/app/pipeline/scoring_engine.py --apply` 收敛口味分（幂等，DB 触发器重算 score_total）。
+- 续跑天然：0-UGC 选择即续跑（获真证据的店自动出待办集），source_url 幂等；状态落 `/app/data/ugc_longrun.json`。
+- 通知：仅账号 -100/AllAccountsBlocked 经 notifier.action 推 TG+飞书，恢复 resolve；常规进度不刷屏（心跳归 progress_broadcast）。
+- 节奏目标：先清 ≥500 奢华 0-UGC 约 80 家；清完后把环境 `UGC_MIN_PRICE` 降到 200–500 延伸中价约 1300 家。
+- 实测（2026-09-29 07:15 CST 手动一轮）：搜索 5 家/取 20 笔记/账号健康；scoring PATCH 121 行收敛；
+  本轮 accepted=0 属真实现象（fine dining 普通食客笔记稀少 + 锚定从严 core_not_in_note/branch_ambiguous，
+  如 Jean Georges 连字符、鮨升/鮨昇异体）——按 A2 宁空不假，不硬绑；正名走 entity_align/L1-L5。
+
+### 任务二 · 黑珍珠 17 缺失取证 + F4/F5 第二声音（cron `20 6 * * *`，每日 06:20）
+- `cloud_blackpearl_collect.py --apply-tag`（轻 HTTP、非 XHS）：官方全量召回 + 双口径对账 + 在库在榜店幂等挂 cuisine_id=160。
+- 当前对账：官方 61 / 在库 exact+strong 44 / **真缺失 17** / 待确认 0；在库挂标总数 101。
+- 17 家真缺失（1929 by Guillaume / Horita堀田 / 成隆行·颐丰花园虹桥 / 大董环贸iapm / 广舟千禧 /
+  海味观老西门 / 家全七福丰盛 / 楼上荟馆静安嘉里 / 鲁采新天地 / 上海滩BFC / 食廬凯德晶萃 / 皖宴苏河湾 /
+  无蟹居 / 西郊5号Maggie5 / 洋房火锅新天地南北里 / 逸谷会虹桥新天地 / 椽舍鮨青木）：**留队列、0 硬造**。
+- 取证路径（复用不重造）：F4 社交/F5 地图第二声音由 `gap_pool.py`（@reboot 常驻、双账号健康 worker）+
+  `gap_runner.py` 持续发现；缺失店进 frontier 后由 admission_gate 按「≥2 独立声音 + 堂食口味均分≥3.5」裁决，
+  达标才入库/挂标，不达标继续留队列。
+
+### 调度错峰与防重入
+- 两条均 `flock -n` 防重叠；:39 错峰 :35/:42/:43，06:20 错峰 5:37 softad/03:00 coord。
+- 看门狗 :10/:30/:50 巡检照常；容器时区 Asia/Shanghai。

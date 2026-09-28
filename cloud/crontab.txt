@@ -44,3 +44,10 @@ SHELL=/bin/bash
 
 # 13) 跨源证据池（汇总 reviews+B站KOL+权威标签，信任加权、跨源互证，落 /app/data/evidence/pool.jsonl）：每小时 :17
 17 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/evidence.lock /usr/local/bin/python /app/pipeline/evidence_pool.py >> /app/data/evidence.log 2>&1
+
+# 14) 真实UGC扩量长跑（容器常驻、低频礼貌；每轮5家、搜索间隔70s、两XHS账号+广州代理轮替；
+#     墙钟25min到点安静停；每批后自动 scoring_engine --apply 收敛；账号-100才ACTION、不硬刷）：每小时 :39
+39 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/ugc_longrun.lock /usr/local/bin/python ugc_longrun.py >> /app/data/ugc_longrun.log 2>&1
+
+# 15) 黑珍珠上海官方全量对账+在库在榜店幂等挂标160（轻HTTP，非XHS；17家真缺失留队列等F4/gap_pool取证，0硬造）：每天 06:20
+20 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/bp.lock /usr/local/bin/python cloud_blackpearl_collect.py --apply-tag >> /app/data/blackpearl.log 2>&1
