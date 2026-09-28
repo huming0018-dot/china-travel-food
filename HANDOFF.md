@@ -24,6 +24,7 @@
   - **spec→code binding 强约束**：每条原则须同时绑定 ①确定性模块 ②状态/账本留痕 ③被闸门调用，才算已实现；只写文档=未实现。绑定表逐项标 已建/部分/待建。
 - **SKILL.md 已更新**：标题下加「开工第一步读宪法+机制绑定表」强制项；修复文档漂移（原引用不存在的 `references/architecture-v3-master.md`，实际 v3 在项目 `research/design/`，已改正路径）；登记两份新文档。
 - **实施顺序（L0→L3）**：①本轮锚定 → ②P1 扩 ledger(expected/target)+建 group/chef tree(F3) → ③P5 source registry+连接器(douyin/wechat→weibo/zhihu) → ④P2 field claims/保鲜/history → ⑤P3 出品定类联动+审计+复评 → ⑥P6 软广 v2 → ⑦P4 迁移源到 L0/L1 → 每步 release_audit A–H 全绿、回读、更新 HANDOFF。
+- **【P1 第一步已落地】coverage_ledger 扩展分母**：新增 expected_supply(scarce95/normal151/rich45)、target_n(2/3/5)、gap_n、met、supply_source；分母优先级 override>地图POI>根路径启发式。实跑 291 叶子：**达标仅 15/291=5%、未达标 276、总缺口 757 家 verified 好店**；当前分母全为 heuristic。已存 /app/data/coverage/ledger.json 并提交。**下一步**：deep_discovery 全叶子跑地图 POI 计数喂 --poi-counts（数据驱动分母）+ 建 group/chef tree(F3)。
 
 ### 2026-09-28 P2 地基：覆盖账本 + 地毯搜索计划器（已建模块、容器内跑通）
 
