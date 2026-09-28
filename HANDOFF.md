@@ -1385,3 +1385,27 @@ SSH 若域名别名 `food-cloud` 不通（Clash TUN 模式会把域名解析成 
 cloud_amap_fill 走池降频 + 持久 POI 缓存一次 extensions=all 共享）；P2 注册多个**独立实名开发者账号**
 +免费企业认证（搜索 5千→5万/月，需用户实名）；P3 L0 官方源取电话 + map_key_repair 接看门狗。
 完整方案：skill `references/map-quota-fix.md`（副本 research/design/map-quota-fix.md）。
+
+---
+
+## 告警专项 warning_handler（2026-09-28，看门狗内独立 warning subagent）
+
+诉求：TG 报 account_a 登出需重登，要求看门狗有**单独处理 warning、与用户沟通到解决**的专项
+（原 R3 只发一条一次性告警，无人跟进）。实测 account_a 双出口均 **-100（真登出）**、account_b code=0。
+
+新增/改造（均在容器 /app/cloud，源码同步项目 cloud/）：
+1. `xhs_qr_login.py` 重写为**任意账号、后台常驻**：产物按 `/app/data/qr/<account>.png|_status.json|
+   _new.json|_pid` 组织，worker 隔离 headless Chromium，二维码每 40s 自刷新，web_session+id_token
+   判成功；`start/is_running/status`。proxy 按 account_proxies.json 取（b 走广州代理）。
+2. `warning_handler.py`（核心）：持久工单账本 `/app/data/warning_tickets.json`，生命周期
+   open→waiting_user→resolved；`request_login` 拉二维码并把**二维码图片推 TG(sendPhoto)+飞书
+   (上传 im/v1/images 再发 image)**；`poll()`（watchdog 每轮）验证重登（等宿主机安装→probe code=0）、
+   二维码过期/worker 退出自动重拉（≤6 次）、限时提醒（20/40min 后每 60min）、TG getUpdates
+   收“重拉/已扫”指令；成功推“✅已重登”并关单。通用 `warn()` 统一处理非登录告警。
+3. `account_repair.human_alert_if_needed`（R3）改调 warning_handler.request_login（失败回退 health.alert）；
+   `watchdog.main` 在账号修复后调 warning_handler.poll()。
+4. **宿主机安装器** `/root/food-qr-installer.py`（root cron 每分钟；副本 cloud/host/）：容器内
+   /secrets 只读，无法自写；脚本校验 fooddata 卷 qr/*_new.json（含 web_session+id_token）后安装到
+   /home/ubuntu/food-cloud/xhs_accounts/<account>.json（600 ubuntu:ubuntu），并改名 _installed.json。
+
+当前：account_a 工单 waiting_user，二维码已推 TG/飞书/用户，扫码后自动验证恢复；后续账号失效全自动走此闭环。

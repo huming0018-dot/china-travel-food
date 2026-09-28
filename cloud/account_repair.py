@@ -121,12 +121,18 @@ def reconcile_account(account):
 
 
 def human_alert_if_needed(results):
-    """真·死号才一次性告警（once=True，避免刷屏）；采集池被拉起也告知一次。"""
-    import health
+    """真·死号：交给 warning_handler 告警专项——后台拉二维码、双通道推送、
+    刷新/提醒并验证到重登成功（取代只发一条一次性告警）。"""
     for account, (verdict, detail) in results.items():
         if verdict == "dead":
-            health.alert(detail, title=f"🍜 {account} 需重新登录",
-                         key=f"login_dead_{account}", once=True)
+            try:
+                import warning_handler
+                warning_handler.request_login(account, detail)
+            except Exception as e:
+                print(f"[repair] warning_handler 不可用({e})，回退普通告警")
+                import health
+                health.alert(detail, title=f"🍜 {account} 需重新登录",
+                             key=f"login_dead_{account}", once=True)
 
 
 # ------------------------------------------------ 主入口

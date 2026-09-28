@@ -146,6 +146,14 @@ def main():
     except Exception as e:
         log(f"账号修复步骤异常：{e}")
 
+    # 0.5) 告警专项（warning subagent）：推进登录工单——二维码刷新/限时提醒/
+    #      验证重登成功/接收 TG“重拉”指令，全程与用户沟通到解决
+    try:
+        import warning_handler
+        warning_handler.poll()
+    except Exception as e:
+        log(f"告警专项异常：{e}")
+
     killed, running = scan()
     errs = check_error_logs()
     if running:
