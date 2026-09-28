@@ -192,6 +192,52 @@ def amap_text(name, offset=8):
     return []
 
 
+def _tencent_poi(name, addr):
+    """高德全不可用时的腾讯兜底：补 phone / 坐标（腾讯 search 链路实测正常）。
+
+    返回 (poi|None, quota_bool)：
+      - poi dict：命中高置信同店（补 phone/location）；
+      - quota=True：腾讯通道本身无预算（该整轮才可停）；
+      - 其余 (None, False)：腾讯正常但本店无高置信匹配，调用方应继续下一家。
+    宁空不假：店名相似度 <0.85 或综合分 <0.6 不回填。
+    """
+    def _try(fn, kw):
+        try:
+            res = fn(kw)
+        except Exception:
+            return None, False
+        if res == "QUOTA_EXCEEDED":
+            return None, True
+        if not isinstance(res, list) or not res:
+            return None, False
+        best, score = M.pick_best(res, name, addr, name_thresh=0.85)
+        if not best or score < 0.6:
+            return None, False
+        if not (best.get("tel") or best.get("lng") is not None):
+            return None, False
+        return ({"poi_id": "", "title": best.get("title", ""),
+                 "address": best.get("address", ""), "tel": best.get("tel", "") or "",
+                 "lng": best.get("lng"), "lat": best.get("lat"),
+                 "rating": None, "cost": None, "hours": "",
+                 "keytag": "", "tag": "", "typecode": "", "biz_type": "",
+                 "source": "tencent"}, False)
+
+    kw = name
+    if addr:
+        kw = f"{name} {C.addr_core(addr)}"
+    tp, q = _try(M.tencent_suggestion, kw)
+    if tp:
+        return tp, False
+    if q:
+        return None, True
+    tp, q = _try(M.tencent_search, name)
+    if tp:
+        return tp, False
+    if q:
+        return None, True
+    return None, False
+
+
 # ------------------------------------------------------------ 增强匹配引擎
 CHEF_HINT = ["师傅", "主厨", "主理"]
 # cjk_unify 未覆盖的日文异体 / 同义词（本地匹配层补，不改 skill 的 common）
@@ -602,7 +648,10 @@ def main():
         """主搜 → match_poi → 三级降级模糊召回；返回 (poi|None, quota_bool)。"""
         c = call_amap(name)
         if c == "QUOTA":
-            return None, True
+            tp, tq = _tencent_poi(name, addr)
+            if tp:
+                return tp, False
+            return (None, True) if tq else (None, False)
         if c == "YIELD":
             return None, "yield"
         poi, _s = match_poi(c, name, addr)
@@ -626,14 +675,20 @@ def main():
                 return None, False
             c2 = call_amap(t)
             if c2 == "QUOTA":
-                return None, True
+                tp, tq = _tencent_poi(name, addr)
+                if tp:
+                    return tp, False
+                return (None, True) if tq else (None, False)
             if c2 == "YIELD":
                 return None, "yield"
             p2, _s = match_poi(c2, name, addr)
             if p2:
                 return p2, False
             time.sleep(0.3)
-        return None, False
+        tp, tq = _tencent_poi(name, addr)
+        if tp:
+            return tp, False
+        return (None, True) if tq else (None, False)
 
     for rest in rows:
         rid = rest["id"]

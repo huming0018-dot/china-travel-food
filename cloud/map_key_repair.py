@@ -43,6 +43,9 @@ def _key_usable(rec, provider, interface, pool):
     monthly_bucket = (provider == "amap" and interface == "search")
 
     if until and until > now_i:
+        if reason == "auth":
+            # 鉴权/签名错误：该 key 冷却期内全接口不可用（非配额，到点自动重探）
+            return False, until
         if reason == "monthly_quota":
             if monthly_bucket:
                 return False, until

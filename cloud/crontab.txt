@@ -37,3 +37,7 @@ SHELL=/bin/bash
 
 # 11) 进度播报：每 10 分钟（偏移到 :03/:13/:23/:33/:43/:53，错峰 router/watchdog/amap/phone）
 3,13,23,33,43,53 * * * * cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python progress_broadcast.py >> /app/data/progress_broadcast.log 2>&1
+
+# 12) 自我进化日报（只读复盘当日代码/数据改动 + 跑 release_audit A–G 只读扫描；
+#     只报告不自动改数据，落盘 /app/data/self_evolve/YYYY-MM-DD.md 并经 notifier 双通道推送）：每天 01:00
+0 1 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/self_evolve.lock /usr/local/bin/python self_evolve.py >> /app/data/self_evolve.log 2>&1

@@ -74,13 +74,12 @@ def lookup_phone(name, address, state):
             if best and best.get("tel"):
                 return best["tel"], quota_hit
 
-    # ③ 高德 search
-    if not quota_hit and state["amap_used"] < AMAP_DAILY_QUOTA:
+    # ③ 高德 search（补充通道：高德池死/鉴权失败时仅算本店无匹配，
+    #    不得把“高德不可用”误判成“腾讯配额尽”而中断整轮——腾讯主通道仍健康）
+    if state["amap_used"] < AMAP_DAILY_QUOTA:
         res = amap_search(name)
         state["amap_used"] += 1
-        if res == "QUOTA_EXCEEDED":
-            quota_hit = True
-        else:
+        if res != "QUOTA_EXCEEDED":
             best, score = pick_best(res, name, address, name_thresh=0.85)
             if best and best.get("tel"):
                 return best["tel"], quota_hit

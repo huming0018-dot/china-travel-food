@@ -211,6 +211,13 @@ class MapQuota:
                 elif ic == "10003":  # 日配额
                     rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
                     result = "rate"
+                elif ic == "10007":
+                    # 签名/鉴权错误（INVALID_USER_SIGNATURE）：不是配额耗尽。
+                    # 短时熔断该 key（30min 后看门狗自动重探），且不消耗配额桶计数，
+                    # 避免把鉴权错误误记成“月配额耗尽”并触发空转告警。
+                    bucket["used"] -= 1
+                    rec.update(dead_until=time.time() + 1800, dead_reason="auth")
+                    result = "auth"
                 else:
                     result = "error"
         self._save()
