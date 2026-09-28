@@ -10,6 +10,21 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-09-28 元层：北极星宪法 + 机制总纲 v4（治「世界观被遗忘」与六大根因，已锚定）
+
+- **元问题定位**：缺陷不是缺文档，而是 ①世界观没被锚定成「每次必读、可机械执行」的契约（散落多文档、会被忘）；②机制写在纸上但没全部落成在跑代码（容器曾是旧版 gap_runner 即例证），缺「原则→模块→状态留痕」绑定。
+- **`references/north-star-constitution.md`（每次开工第一读，最高优先级）**：唯一使命=为真实食客做「真正好吃」的图鉴，入选唯一充分理由=真实可验证的好吃；去软广是护城河不是目的。六条公理 A1 口味唯一最高 / A2 真实可溯宁空不假 / A3 机制优先不补单店 / A4 信源要沉淀 / A5 账号是最后手段 / A6 闭环自检；含会话启动强制动作。
+- **`references/mechanism-master-v4.md`（六大根因完整方案 + 绑定表）**：
+  - P1 缺失→**宇宙定义（叶子×expected_supply×target_n）+ 6 个独立抽样框（地理/权威/集团主厨树/社交/地图POI/滚雪球）+ 缺口可量化**；密度升级（每叶子语义词≥10、每词≥4篇、必采评论区）。
+  - P2 错漏重复过时→**规范实体 + 事实主张 claims(provenance/confidence) + 字段 last_verified 保鲜 + 变更留 history**。
+  - P3 良莠不齐→**出品定类 is(主营) vs serves(含有) + admission gate 证据准入 + 持续复评**。
+  - P4 账号依赖→**L0 公开/L1 匿名签名/L2 只读/L3 登录兜底 降级阶梯**；需登录请求占比逐版本下降。
+  - P5 一次性源→**source registry（kind/auth_level/covers/reliability/cadence/health/connector）+ 连接器定时化 + 源质量评分淘汰**。
+  - P6 去软广太窄→**区分软广 astroturf / 硬广 paid / 工业化 industrial；评论级 p_softad 多信号（语言模板分布+行为网络+商业标记+平台操纵）+ 店铺级扣罚；自学正常/非正常分布**。
+  - **spec→code binding 强约束**：每条原则须同时绑定 ①确定性模块 ②状态/账本留痕 ③被闸门调用，才算已实现；只写文档=未实现。绑定表逐项标 已建/部分/待建。
+- **SKILL.md 已更新**：标题下加「开工第一步读宪法+机制绑定表」强制项；修复文档漂移（原引用不存在的 `references/architecture-v3-master.md`，实际 v3 在项目 `research/design/`，已改正路径）；登记两份新文档。
+- **实施顺序（L0→L3）**：①本轮锚定 → ②P1 扩 ledger(expected/target)+建 group/chef tree(F3) → ③P5 source registry+连接器(douyin/wechat→weibo/zhihu) → ④P2 field claims/保鲜/history → ⑤P3 出品定类联动+审计+复评 → ⑥P6 软广 v2 → ⑦P4 迁移源到 L0/L1 → 每步 release_audit A–H 全绿、回读、更新 HANDOFF。
+
 ### 2026-09-28 P2 地基：覆盖账本 + 地毯搜索计划器（已建模块、容器内跑通）
 
 - **`pipeline/coverage_ledger.py`（四维覆盖账本）**：对 291 个叶子节点量化 n_active / n_real（有真实食客）/ n_verified。结果：**empty 30、shallow 99、thin 54、ok 47、rich 61；缺口(empty+shallow)=129**；全库真实食客仅覆盖 **62/1472**。落盘 `/app/data/coverage/ledger.json`。`--gaps` 列缺口喂引擎。
