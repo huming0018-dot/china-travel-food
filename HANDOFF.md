@@ -1973,3 +1973,43 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 - **未编辑 crontab.txt**（交用户统一安排）；建议 cron 行：`15 */6 * * * cd /app/cloud && python3 kol_monitor.py --apply`（flock kol_monitor.lock，与既有采集错峰）。XHS 恢复后再扩 xhs KOL 轮询。
 
 **遗留**：① mid 为空的 B站 KOL（如跟着老高吃东西/头五头六/小猴吃上海等）本轮按名搜索仍可归属，待账号/搜索补 mid；② 候选线索需跨 KOL 聚合够 ≥2 独立声音才进 gate admit；③ 连接器经 `docker cp` 进运行容器本轮跑通，下次 `build_on_server.sh` 会随 `COPY *.py` 固化进镜像。
+
+---
+
+## Phase 0-D 社交框深覆盖（两账号恢复后全速采集）（2026-09-28 续）
+
+> 前置：信源注册表 + 覆盖矩阵已交付（上节）。本节是账号恢复后 F4 社交框真实采集结果。
+> 账号：account_a=LANCE(ahuhu, red_id 668317783)、account_b=猪蛤蛤(red_id 63534786762)，
+> 均 guest=false、uid 不同、相互独立；account_b 走广州代理。两账号 `probe` 实测 code=0 健康。
+
+### 采集执行
+- gap_pool 自动认领两 worker 轮替：account_a→ramen 品类、account_b→soba 品类；礼貌限速
+  （account_a 3.2s/查询；account_b 触发搜索风控后**自动退避到 120s 间隔，不硬刷**）。
+- 22 条 KOL 线索（`raw_kol.jsonl`，原 category=kol 无法路由）按标题推断品类并入 `raw_discovery.jsonl`
+  （幂等，记 `kol_ingested.json`，分布 11 品类：sichuan8/dessert2/steakhouse2/shanghainese2/italian2/bar1/yakiniku1/yakitori1/beijing1/cantonese1/ramen1）。
+
+### 跨源聚合 dry-run 表（449 候选，实体锚定去重后）
+- **独立声音分布**：0→9、1→427、**2→11、3→1、5→1**（≥2 独立声音共 13）。
+- **裁决**：hold 208 / reject 241 / **admit 0**。
+- 13 个 ≥2 独立声音候选的去向：
+  - 跨品类噪声（锚定误抓，如 BAsdBAN/FASCINO/苦麻叶/苍蝇馆/COLCA 秘鲁菜）→ reject；
+  - `avg_taste=None`（评论区无数值口味分）→ hold；
+  - **最接近门槛的两家**：`蜀南面馆` indep=2 taste=3.5 hold（招牌0）、
+    `寛的窄的面馆` indep=2 taste=4.1 hold（招牌0）——独立声音与均分都够，**缺第3项「≥1 含菜名堂食证据」**，机制正确 hold。
+
+### 缺口叶推进（F4）
+- 账本叶状态：empty 30→**20**（10 叶补到至少有笔记）；rich 61→62、ok 47→48。
+- **gap empty+shallow：129 → 124**（净改善 5 叶；账号恢复前 F4 完全停摆）。
+
+### 落库与回读（宁空不假）
+- **本轮真实新增落库新店 = 0**。不是失败：准入三条件（≥2 独立声音 + 口味均分≥3.5 + ≥1 含菜名堂食证据）
+  同时满足才 admit；当前无候选三条件齐备，故全部 hold，不硬凑、不收网红店、不造重复。
+- **coverage_matrix 前后**：F2a 米其林仍 153/153 exact+strong、真缺 0、召回 100%（无回退）；
+  基线 total 1479 / active 1472 / 电话 1254(85.2%) / 坐标 1471(99.9%) **零变化**（restaurants 其余字段未动）。
+- 容器复跑一致（coverage_matrix 连跑两次 F2a=100%）。
+
+### 遗留
+1. pool 仍在后台跑：待 XHS 软限流缓解后，为蜀南面馆/寛的窄的面馆补第 2 声音 + 招牌菜证据，
+   三条件齐备即自动 admit（gap_runner 饱和后自动 gate→apply）。
+2. 黑珍珠全量名录连接器待建（F2 第二权威框最大缺口，与上节相同）。
+3. 55 个地图单声音候选已随账号恢复由 pool 回灌第二声音。
