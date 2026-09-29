@@ -2829,3 +2829,14 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - 入库：`--ingest-ledger --apply` → mode=db，post35+patch1（首轮崩溃前已落1行幂等PATCH），表内 **lead_hypotheses=36**；状态 confirmed29/unverified6/contradicted1。
 - 晋升：`--promote-plan --apply` 产出 27 条过闸 advisory（关系类≥1可信文档/事实类权威或≥2声音）；该命令只打印计划不直写事实表。事实表回读 **chefs=57、restaurant_chefs=77 未变**（chef57+2任职关系已在库，幂等净新增=0）。
 - 下一步：27 条 pending/anchor 计划逐人工锚定后写事实表；24/7 自跑仍需配 ARK key。
+
+
+---
+
+## 重建后就位核验（2026-09-29 10:24 compose 重建，新镜像 f178607ac982）
+
+- 脚本：新镜像缺 `/app/cloud/kol_monitor.py`、`review_ugc_fill.py`，已从持久副本 docker cp 重部署并 py_compile 通过；其余 pipeline/cloud 脚本全部就位（含 hae_engine/price_realign/closed_relocate/track0_cleanup/semantic_wordnet/cuisine_knowledge/discovery_engine/scoring_engine/entity_dedup/primary_cuisine_engine/cross_cuisine_audit/cuisine_classify_audit）。
+- cron：15 条全在，cron 守护在跑；`@reboot` gap_pool.py 6 常驻（/proc 确认）。重建后真实触发证据：10:20 router 跑 michelin rc=0、10:30:25 watchdog tick、progress_broadcast「推送结果：True」。
+- 顺手修了一个我上轮 health.py 加固引入的回归：`alert()` 残留死调用 `_legacy_webhook` 未定义，导致 phone_fill 每次配额超限时 NameError 崩溃。已删该残留块，alert 实测 TG=True / feishu_app=True。
+- Supabase（外部库，完好）：restaurants 1478(active1472/closed6)、Rasa id1110 band2/旗舰、Nick id1308 band2/进阶、EHB id1262 closed 三要素齐、nuits id1978 单行、chefs57(邓华东 id57)、food_kol_posts104/mentions62/events25、is_verified_diner=663。
+- **待用户行动**：账号 A/B 双出口均真 -100（07:49 还 ok，10:36 已过期），UGC 候选65 阻塞。工单 waiting_user，需在本机真实 Chrome 说「重登」。地图：腾讯 search/geocode 全尽(解封09-30 00:00)、amap/search 全尽(解封09-29 10:48)、amap/geocode ok。

@@ -316,9 +316,6 @@ def alert(message, title="上海美食图鉴·采集告警", key="default", once
     fsa = _feishu_app(message, title)
     if fsa is not None:
         results["feishu_app"] = fsa
-    wh = _legacy_webhook(message, title)
-    if wh is not None:
-        results["webhook"] = wh
     if not results:
         print("【告警】（未配置任何通道）", title, message)
         return
