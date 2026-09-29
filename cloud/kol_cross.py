@@ -83,6 +83,46 @@ def sogou_wechat(name):
     return out, None
 
 
+# ------------------------------------------------------------------ 跨平台通道（keyless 实测 2026-09-29，本机 Mac 出口）
+# 证据（A2 宁空不假，不硬刷）：
+#  - 微博：passport.weibo.com/visitor/genvisitor 能拿到 tid（retcode 20000000），
+#    但 visitor/visitor 的 cookie 握手返回空 body，m.weibo.cn/api/container/getIndex
+#    仍被「Sina Visitor System」HTML 拦截 → raw requests 走不通，需开源后端(MediaCrawler)或扫码登录态。
+#  - 知乎：www.zhihu.com 直连 TLS 重置/Max retries；Bing site:zhihu.com 结果被 /ck/a 重定向包裹，
+#    无登录拿不到 js-initialData → 需浏览器/后端。
+#  - 抖音：iesdouyin share 页 200 但空壳；www.douyin.com/search 为 JS 渲染壳 → 需后端/扫码。
+# 这三条在 keyless 下【不产内容】，只在 MediaCrawler 后端产出落盘后接入；绝不编造。
+
+_MOBILE_UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) "
+              "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1")
+
+
+def weibo_search(keyword):
+    """微博 keyless 最佳努力：visitor 流程。当前实测被 Visitor System 拦截，返回 ([], 原因)。
+    待 MediaCrawler 后端产出落 /app/data/discovery/weibo/ 后接入。"""
+    return [], "keyless被Sina Visitor System拦截;待MediaCrawler后端/扫码登录态"
+
+
+def zhihu_search(keyword):
+    """知乎 keyless：直连 TLS 重置。待浏览器/后端。返回 ([], 原因)。"""
+    return [], "keyless TLS重置;待MediaCrawler后端/扫码登录态"
+
+
+def douyin_search(keyword):
+    """抖音 keyless：share空壳/搜索JS渲染。待后端/扫码。返回 ([], 原因)。"""
+    return [], "keyless JS壳无数据;待MediaCrawler后端/扫码登录态"
+
+
+def channels_probe():
+    """逐条打印三平台 keyless 可达性证据（不写库）。"""
+    print("跨平台 keyless 通道自检（2026-09-29 本机 Mac 出口实测）：")
+    print("  微博 m.weibo.cn getIndex  : 可拿 tid 但被 Visitor System HTML 拦截 → 不采，待后端/扫码")
+    print("  知乎 www.zhihu.com        : 直连 TLS 重置 → 不采，待后端/扫码")
+    print("  抖音 douyin/iesdouyin      : share空壳/搜索JS渲染 → 不采，待后端/扫码")
+    print("  公众号 weixin.sogou        : 可用(本连接器主通道)")
+    print("  B站                        : 已由 kol_monitor/bili_enrich 覆盖")
+
+
 def load_state():
     if STATE_F.exists():
         try:
@@ -95,7 +135,11 @@ def load_state():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--probe", action="store_true", help="只打印跨平台通道可达性证据后退出")
     args = ap.parse_args()
+    if args.probe:
+        channels_probe()
+        return
 
     _, core2rests = KM.build_rest_index()
     known_cores = set(core2rests.keys())

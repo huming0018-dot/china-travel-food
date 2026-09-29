@@ -3279,3 +3279,20 @@ chefs 59→59、restaurant_chefs 79→79（before=after，0 净新增）；revie
 1. **Apify 充值门**：到 https://console.apify.com/billing 加支付方式/买额度（首轮 $10 封顶）；充值后 armed 服务自动开跑 986 店，约100店回报真实单店成本再定续跑。
 2. 登录态恢复后闭环：麻麻/可乐（W3）、ichi 荞麦（W4a）、5 个 W1 候选品牌取证入库、鱼生 frontier 2 家。
 3. 人工复核：大富贵是否保留徽州菜(133)；1930 是否由348改挂347；354 港式奶茶/329 锅贴 等 0 供给叶子。
+
+---
+
+## Track 1C-补：微博/知乎/抖音 keyless 自研探针（逐条取证，不硬闯）
+
+> 要求：不再"keyless 不可采就跳过"，从本机 Mac 发轻量探针（不压 2GB 服务器），逐条实测后固化。
+
+**逐平台实测证据（2026-09-29，Mac 出口）：**
+| 平台 | 探针 URL / 头 | 返回码 | 能否拿正文 | 结论 |
+|---|---|---|---|---|
+| 微博 | POST passport.weibo.com/visitor/genvisitor → GET m.weibo.cn/api/container/getIndex?containerid=100103type=1&q=…；移动 UA + Referer m.weibo.cn | genvisitor 200(retcode 20000000,拿到 tid)；getIndex 200 但 ctype=text/html | **否**（返回「Sina Visitor System」HTML 10KB，无 JSON） | visitor cookie 握手返回空 body，raw requests 走不通；需开源后端(MediaCrawler)或扫码登录态 |
+| 知乎 | Bing site:zhihu.com → GET www.zhihu.com/question/<id>；Chrome UA | 直连超时/Max retries(TLS 重置)；Bing 结果被 /ck/a 重定向包裹 | **否** | 需浏览器/后端 |
+| 抖音 | GET iesdouyin.com/share/video/<id>；www.douyin.com/search/<词> | share 200(32KB 空壳，无 RENDER_DATA/meta)；search 200(72KB JS 渲染壳) | **否** | 需后端/扫码 |
+
+**固化：** kol_cross.py 新增 `weibo_search/zhihu_search/douyin_search` 三通道适配器（当前 keyless 下返回空+原因，不编造内容）+ `--probe` 自检打印上表证据。通道在 MediaCrawler 后端产出落盘后接入。公众号(搜狗)与 B站维持可用。
+
+**需用户扫码清单（合并为一次，今日只汇总一次）：微博 + 知乎 + 抖音**（均待 sibling 容器 MediaCrawler 跑通后，把二维码合并推 TG+飞书、cookie 持久化按 XHS 同方式管理）。本轮 keyless 三平台新增帖子/提及 = 0（如实），restaurants/posts/mentions 零变化。
