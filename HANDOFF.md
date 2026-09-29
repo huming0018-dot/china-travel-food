@@ -2840,3 +2840,30 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - 顺手修了一个我上轮 health.py 加固引入的回归：`alert()` 残留死调用 `_legacy_webhook` 未定义，导致 phone_fill 每次配额超限时 NameError 崩溃。已删该残留块，alert 实测 TG=True / feishu_app=True。
 - Supabase（外部库，完好）：restaurants 1478(active1472/closed6)、Rasa id1110 band2/旗舰、Nick id1308 band2/进阶、EHB id1262 closed 三要素齐、nuits id1978 单行、chefs57(邓华东 id57)、food_kol_posts104/mentions62/events25、is_verified_diner=663。
 - **待用户行动**：账号 A/B 双出口均真 -100（07:49 还 ok，10:36 已过期），UGC 候选65 阻塞。工单 waiting_user，需在本机真实 Chrome 说「重登」。地图：腾讯 search/geocode 全尽(解封09-30 00:00)、amap/search 全尽(解封09-29 10:48)、amap/geocode ok。
+
+---
+
+## 1B-1 回退根治（2026-09-29，同日）
+
+> **现象**：price_realign apply 后 Rasa=进阶/Nick=主流，但 09:49 CST（=01:49 UTC）两店被旧逻辑覆盖回 Rasa=旗舰/Nick=进阶，矛盾复现。
+
+### 根因与调用链
+- `price_position` 无 DB 触发器、无独立 cron；唯一周期写路径是 **crontab #8 `cloud_patrol.py --apply`（每 3h :42）**。
+- `cloud_patrol.py` 内 `subprocess.run([python, PIPE/"stage7_price_position.py", "--commit"])`（旧 line 253），
+  用旧的「小菜系组内 PERCENT_RANK」把 price_position 覆盖回旧分档。
+- 09:42 patrol tick 触发 → 09:49 写完，与 updated_at 时间吻合。price_band_assign.py 无调用方（死脚本）。
+
+### 切断动作
+- `cloud/cloud_patrol.py`：dry 与 apply 两处调用 `stage7_price_position.py` → 改为 `price_realign.py`（dry 默认 / `--apply`）；docstring 同步。
+- 旧脚本移出构建目录归档（保留 git 历史）：
+  `cloud/vendor/pipeline/{stage7_price_position.py, price_band_assign.py, price_band_plan.json}`
+  → `cloud/vendor/_archived/*.retired`。Dockerfile `COPY vendor/pipeline /app/pipeline`，重建后 /app/pipeline 仅剩 price_realign.py。
+- 运行容器同步：覆盖 /app/cloud/cloud_patrol.py、/app/pipeline/price_realign.py，删除容器内旧三脚本。
+
+### 验证（真实运行）
+- 回退态：Rasa ¥120=旗舰、Nick ¥110=进阶；重新 apply 841 行 → Rasa=进阶、Nick=主流。
+- **跑完一次完整 `cloud_patrol.py --apply` tick 后回读**：Rasa 仍=进阶、Nick 仍=主流（未被覆盖）；
+  position 分布 旗舰304/高端315/进阶305/主流285/入门263、band b1 335/b2 388/b3 358/b4 236/b5 155，与正确基线逐档一致。
+- 非价格字段 checksum 全程 = `f54affb237fc9752`（phone/location/address/price_avg/score_* 零误伤）。
+- 幂等：price_realign 在 patrol 内复跑 0 变更（分布不变）。
+- 注：tier 仍由 DB tier_for_price 独占，未动；本任务只改 patrol 调用 + 归档脚本 + price_band/price_position 数据。

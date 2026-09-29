@@ -6,7 +6,7 @@ cloud_patrol.py — 上海美食图鉴「数据完整性巡逻 / 保鲜」总编
 把反复回潮的缺陷收敛成确定性、可周期运行的模块，而不是逐个手补：
   1. 实体去重  —— merge_duplicates（品牌多键 + 坐标距离），治 pain chaud 异名重复。
   2. 分类校验  —— patrol_classify（概念本体/改道/主身份/互斥），治拉面误挂、老干杯双标签。
-  3. 价格归一  —— stage7_price_position（按 price_scene 组内 PERCENT_RANK），治跨场景档次矛盾。
+  3. 价格归一  —— price_realign（场景内分位 P20/40/60/80，标签绑数值区间；009+1B-1），治跨菜系同价倒挂。
   4. Chef 质检 —— 补 restaurants_owned 关联；占位“XX主厨/师傅”、近似重复 → REVIEW（不自动删）。
   5. 保鲜复检  —— data_updated_at + 场景保鲜期 → 待复检清单（供 amap/电话/营业时间任务消费）。
   6. 简介补薄  —— semantic_description 缺失/过薄 → semantic_profile_generator 重生成（apply 时，限量）。
@@ -189,9 +189,9 @@ def main():
     stale = check_freshness(rests)
     thin = thin_profiles(rests)
 
-    # 价格：dry 跑 stage7 取摘要
-    price_out = run_script([str(PIPE / "stage7_price_position.py")])
-    price_line = next((l for l in price_out.splitlines() if l.strip()), "stage7 无输出")
+    # 价格：dry 跑 price_realign 取摘要（场景内分位，009+1B-1 为准；旧 stage7 已归档）
+    price_out = run_script([str(PIPE / "price_realign.py")])
+    price_line = next((l for l in price_out.splitlines() if l.strip()), "price_realign 无输出")
 
     # 汇总指纹
     current = {}
@@ -250,7 +250,7 @@ def main():
         applied_log.append("merge: " + run_script([str(PIPE / "merge_duplicates.py"), "--commit"])[:400])
     classify_apply = PC.run(apply=True)
     applied_log.append(f"classify applied findings={len(classify_apply)}")
-    applied_log.append("price: " + run_script([str(PIPE / "stage7_price_position.py"), "--commit"])[:400])
+    applied_log.append("price: " + run_script([str(PIPE / "price_realign.py"), "--apply"])[:400])
     # chef 补链
     for l in chef_links:
         h = next(x for x in chefs if x["id"] == l["chef_id"])
