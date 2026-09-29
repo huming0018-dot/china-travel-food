@@ -135,6 +135,20 @@ CATALOG = [
                 "xhs 两账号 -100 待恢复；cross(美食作家)无单渠道登记不轮询。只写 food_kol_posts/mentions，restaurants 零变化",
     },
     {
+        "id": "bili_video_enrich", "name": "B站视频 enrichment（详情/字幕/评论→堂食口味信号，分KOL/食客声音）",
+        "platform": "bilibili", "kind": "ugc",
+        "auth_level": "L0(keyless)", "frames": ["F4", "F6"],
+        "connector_module": "bili_enrich.py",
+        "output": "/app/data/discovery/bili_signals.jsonl",
+        "reliability": 0.65, "refresh_cadence": "daily(增量游标 done_posts)",
+        "account_dependency": "none",
+        "covers": "对 food_kol_posts(bilibili) 逐条补 view详情/公开字幕/评论区：KOL正文/字幕=curator半商业(trust低,权重0.6)，"
+                  "评论区(排除UP主本人)=独立食客声音(keyless未验证trust=low)；只产信号落 discovery 交 admission_gate，绝不直接插 restaurants",
+        "retire_if": "view/reply code!=0 连续5轮；或连续14天零新信号",
+        "note": "Track1B。实测2026-09-29：view?bvid=code0补全desc(搜索常为-)；公开字幕0/104(探店视频无CC,自动字幕需登录不硬刷)；"
+                "x/v2/reply Referer=视频页 code0(98/104帖拿到284条评论)。restaurants/posts/mentions 零变化",
+    },
+    {
         "id": "dianping_identity", "name": "点评身份/电话锚定",
         "platform": "dianping", "kind": "map/identity",
         "auth_level": "L3", "frames": ["C"],

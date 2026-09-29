@@ -2639,3 +2639,35 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 ### 遗留
 1. 3 家 borderline astroturf（御宝轩/瓯越尊鲜/8½ Otto e Mezzo）系入库 burst 触发，待下一分布学习周期（更多 UGC 沉淀）自动复评；若仍 suspected 但证据 verified，可考虑 softad_distribution 用评论原始发布日而非入库日算 burst（修机制不补单店，本块未改 cron 文件）。
 2. paid 店铺级=0：当前 reviews 无 sponsor/团购挂车结构化字段，硬广只能在 review 级识别；待 discount_info/selling_points 补全后可升店铺级。
+
+---
+
+## Track 1B：KOL 监控复跑 + B站视频 enrichment（标题→详情/字幕/评论）
+
+> 接 Phase 0-E（kol_monitor 连接器）。本块：①确认 watchlist 在库并复跑监控；②把 B站 KOL 视频从「仅标题」升级到详情/字幕/评论，提取真实堂食口味信号并区分 KOL 半商业声音 vs 食客声音（A1）。
+
+**1. watchlist 确认 + 监控复跑（真实数字，容器 food-cloud）**
+- 在库 active KOL **46** = bilibili **37** + cross **9**（较 Phase0-E 的 38 新增 8 个 B站 KOL，名单未丢失且在增长）。
+- `kol_monitor.py` dry-run→apply：本轮新视频 **50**（全沪相关），matched **4**、候选线索 **17**；写库 food_kol_posts **+50**（累计 104）、food_kol_mentions **+21**（累计 62）。restaurants 表由本连接器**零写入**。
+- 复跑幂等：apply 后再 dry-run = **0 新增**（游标推进）。
+
+**2. B站 enrichment 连接器 `cloud/bili_enrich.py`（新，dry-run 默认 / --apply）**
+- 三通道全部 keyless 实测（Referer 决定成败）：
+  - `x/web-interface/view?bvid=` code=0 → 补全 desc/aid/cid（搜索结果 desc 常为 "-"，这里才拿到正文）；
+  - `x/player/v2?bvid=&cid=` code=0 → **公开字幕 0/104**：探店视频无公开 CC 字幕，自动字幕需登录，**不硬刷、不编造**（A2）；
+  - `x/v2/reply?oid=<aid>&type=1&sort=2` code=0（**Referer 必须是视频页 URL**，否则风控）→ 评论区。
+- 声音区分（A1）：UP主视频正文/字幕 = `kol_curator`（curator 半商业、trust=low、权重 0.6，绝不冒充独立食客）；评论区排除 UP主本人 = `diner_comment`（独立食客声音，keyless 未验证 trust=low）。空话（绝绝子/天花板）经 `quote_has_substance` 过滤不计口味。
+- **绝不直接插 restaurants**：信号只落 `/app/data/discovery/bili_signals.jsonl`，交 admission_gate（≥2 独立声音）聚合。
+
+**3. 真实运行数字（104 条 B站 post 全量）**
+- view 详情补全（desc≥40）= **24**；公开字幕 = **0**；拿到评论 = **98/104** 帖、共 **284** 条评论。
+- 提取信号 = **12**（kol_curator **8** + diner_comment **4**），覆盖库内店 **10** 家；11 条带 restaurant_id，Madre 多分店仍留空不猜绑。
+- 食客信号样例（真实堂食）：「南兴园这家店去了两次…传统中餐…」、「鸟啸 170/人 黄浦区瑞金二路75号 鸡生蚝、鸡白肝…」、「虎丸好吃的，铁屋太贵了」。
+- 幂等：apply 后复跑 already=104、处理=0、新信号=0。restaurants/posts/mentions 经本块零变化。
+- 基线备注：本块期间 restaurants 总数 1479→1478、closed 7→6（**active 仍 1472 不变**），系主厨执行者另一进程的删/改，非本连接器写入。
+
+**4. 注册与调度**
+- 已注册 `source_registry`：新增 `bili_video_enrich`（L0 keyless，F4/F6，reliability 0.65，daily 增量游标 done_posts）。
+- 未编辑 crontab.txt（交用户统一安排）。建议：`25 */6 * * * cd /app/cloud && python3 kol_monitor.py --apply && python3 bili_enrich.py --apply`。
+
+**遗留**：①公开字幕为 0，自动字幕需登录 B站账号（A5 最后手段，暂不硬刷）；②284 条评论仅 4 条命中库内店且有实物词，评论区店名多为口语简称，需后续做评论级店名归一；③信号需跨 KOL + 评论聚合够 ≥2 独立食客声音才进 gate admit；④连接器经 docker cp 进运行容器，下次 build_on_server.sh 固化进镜像。
