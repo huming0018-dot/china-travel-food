@@ -15,6 +15,7 @@ import os
 import pathlib
 import random
 import time
+import fcntl
 
 import requests
 
@@ -142,19 +143,30 @@ class XhsApi:
         h.update(BASE_HEADERS)
         h["Cookie"] = self._cookie_header(ck)
         url = EDITH + uri
+        # 【跨进程账号串行锁】同一账号同一时刻只允许一个进程发请求。
+        # gap_pool 常驻 worker、ugc_longrun、cloud_router 可能并发使用同一 account_a，
+        # 多进程同会话在数据中心同 IP 并发是 XHS 判异常/-100 的已知诱因。
+        # 这里对每次 HTTP 发送短时持有 per-account flock（阻塞排队），不覆盖整会话。
+        _lock_path = f"/tmp/xhs_acct_{acc['name']}.lock"
+        _lk_fd = open(_lock_path, "w")
         try:
-            if method == "POST":
-                r = requests.post(url, headers=h,
-                                  data=self.sign.build_json_body(payload),
-                                  timeout=self.timeout, proxies=self.proxies)
-            else:
-                r = requests.get(url, headers=h, params=params,
-                                 timeout=self.timeout, proxies=self.proxies)
-            j = r.json()
-        except (requests.RequestException, ValueError):
-            acc["bad"] += 1
-            time.sleep(2.0)
-            j = None
+            fcntl.flock(_lk_fd, fcntl.LOCK_EX)
+            try:
+                if method == "POST":
+                    r = requests.post(url, headers=h,
+                                      data=self.sign.build_json_body(payload),
+                                      timeout=self.timeout, proxies=self.proxies)
+                else:
+                    r = requests.get(url, headers=h, params=params,
+                                     timeout=self.timeout, proxies=self.proxies)
+                j = r.json()
+            except (requests.RequestException, ValueError):
+                acc["bad"] += 1
+                time.sleep(2.0)
+                j = None
+        finally:
+            fcntl.flock(_lk_fd, fcntl.LOCK_UN)
+            _lk_fd.close()
 
         if j is None:
             if _retried:

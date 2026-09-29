@@ -3070,3 +3070,21 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 
 **队列**：worth_fill.json 987 → **984**（移除上述3家，不为标准化连锁花钱填充）。
 **待办**：fact_claims 机制已可复跑（后续按品牌补种子即可）；深覆盖（集团/主厨树 F3、公众号事实层、私房菜/会所、茶馆/广西鱼生/菜场、拉面细分、omakase）与前端连锁过滤仍在 backlog。
+
+
+---
+
+## 2026-09-29 傍晚：account_a 反复 -100 根因（并发顶号）修复
+
+### 根因结论（证据）
+1. **多进程同账号并发（成立，主因）**：常驻 `gap_pool.py 6` 每健康账号拉起一个 `gap_runner --account account_a` worker（持续在线发请求）；cron 另有 `ugc_longrun`(:39) 与 `cloud_router`(每20min) 也实例化 XhsApi 用同一 account_a。三者各用各的 flock（/tmp/ugc_longrun.lock、/tmp/browser.lock、claims.lock），**没有跨进程的 per-account 锁** → 同一登录会话在数据中心同 IP 被多进程/多 worker 同时打，XHS 判异常 → 反复 -100。
+2. **cookie 回写覆盖（不成立）**：全仓 grep account_repair/gap_runner/health/xhs_api，无任何把账号子集写回 `/secrets/xhs_accounts/account_a.json` 的代码；xhs_api 只读加载。
+3. **cookie 字段不全（不成立）**：加载时读完整 JSON 列表（含 web_session 等 httpOnly 全字段）。
+
+### 修复（cloud/xhs_api.py）
+- 在 `_send()` 实际 HTTP 发送处，按账号名取 `/tmp/xhs_acct_<name>.lock` 的 fcntl 排他锁（短时持有、发完即放、跨进程），保证 **同一 account_a 同一时刻只有一个进程发请求**；其余进程 flock 阻塞排队，不再并发顶号。
+- 未改账号文件读写逻辑（本就只读）；锚定/退避不变。
+
+### 部署与验证
+- 已 docker cp 进容器、py_compile OK；新起进程（ugc_longrun :39、gap_runner 重拉）即加载带锁版本。
+- 注：A 正由重登执行者在本机换新 cookie（不覆盖）；新 cookie 部署后 A=ok，gap_runner 自动拉起并以串行锁使用。
