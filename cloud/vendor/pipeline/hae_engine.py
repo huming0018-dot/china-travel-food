@@ -40,12 +40,14 @@ import hashlib
 import json
 import os
 import pathlib
+import re
 import sys
 import time
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import common as C  # noqa: E402
+import model_providers as MP  # noqa: E402  多国产模型知识源舰队（llm-sourcing-fleet.md）
 
 HYP_TABLE = "lead_hypotheses"
 DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
@@ -255,6 +257,118 @@ def diverge_llm(seed: dict, ensemble_models: list) -> list:
 
 
 # ---------------------------------------------------------------------------
+# 多模型舰队（llm-sourcing-fleet.md §2）：--fleet-recall / --prove
+#   认识论红线：模型输出只进 lead_hypotheses，绝不直写事实表；
+#   多模型一致只作先验；联网结果必带 source_url，无 URL 不作证实；
+#   无 key 时降级为 agent 自身推理、跳过缺适配器，不报错中断。
+# ---------------------------------------------------------------------------
+SEED_PROMPT = (
+    "对下面这个种子实体做【自由回忆+联想】，围绕其维度（师承/沿革/现任曾任店/"
+    "招牌菜/荣誉节目/旗下品牌/合伙人/榜单节目成员）枚举结构化假设。\n"
+    "只输出 JSON 数组，每个元素：subject_type,subject_name,relation,object,when,"
+    "claim_text,confidence(0-1),known_vs_inferred(知道/推断/不知道),"
+    "confirm_queries[],falsify_queries[]。\n"
+    "规则：不知道就显式 null；禁止编造人名/年份/原话；"
+    "每条都要有 falsify_queries（关店/离职/辟谣/难吃/预制等反向查询）。\n"
+    "种子={seed}"
+)
+
+
+def _parse_model_json(text: str) -> list:
+    """从模型回复里抠 JSON 数组（容忍 ```json 包裹/前后废话）。"""
+    if not text:
+        return []
+    m = re.search(r"\[.*\]", text, re.S)
+    if not m:
+        return []
+    try:
+        v = json.loads(m.group(0))
+        return v if isinstance(v, list) else []
+    except Exception:
+        return []
+
+
+def fleet_recall(seed: dict, apply: bool) -> dict:
+    """同一探针 fan-out 到所有已配置 provider/model；结果只 upsert lead_hypotheses。
+    无 provider（无 key）→ 降级：打印提示、返回空，不报错。"""
+    providers = MP.load_providers()
+    if not providers:
+        print("[hae-fleet] 未配置任何 provider key（见 deploy.env §5）。"
+              "降级为 agent 自身推理零成本实跑；24/7 自跑请配 ARK/KIMI/QWEN/GLM/MINIMAX/HUNYUAN key。")
+        return {"mode": "degraded_no_provider", "providers": 0, "rows": []}
+    prompt = SEED_PROMPT.format(seed=json.dumps(seed, ensure_ascii=False))
+    ph = hashlib.sha1(prompt.encode("utf-8")).hexdigest()[:12]
+    out_rows, calls = [], []
+    for p in providers:
+        for model in p.models:
+            r = MP.chat(p, model, prompt, web_search=MP.web_search_enabled())
+            calls.append({"provider": p.name, "model": model, "ok": r["ok"],
+                          "web": r["web"], "sources_n": len(r.get("sources", [])),
+                          "error": r.get("error")})
+            if not r["ok"]:
+                continue
+            for item in _parse_model_json(r.get("text", "")):
+                if not isinstance(item, dict):
+                    continue
+                # 认识论：联网来源才作线索 URL；无 URL 的纯参数回忆仍进假设表，但 confidence 压低
+                urls = r.get("sources", []) or []
+                row = {
+                    "subject_type": item.get("subject_type", seed.get("subject_type", "restaurant")),
+                    "subject_name": item.get("subject_name", seed.get("subject_name")),
+                    "relation": item.get("relation", "related_to"),
+                    "object": item.get("object"),
+                    "when": item.get("when"),
+                    "claim_text": item.get("claim_text") or "(模型未给出 claim)",
+                    "confidence": float(item.get("confidence", 0.30)),
+                    "known_vs_inferred": item.get("known_vs_inferred", "推断"),
+                    "status": "hypothesized",
+                    "confirm_queries": item.get("confirm_queries", []),
+                    "falsify_queries": item.get("falsify_queries") or ["(缺证伪)"],
+                    "confirmed_source_urls": urls,   # 联网来源先挂线索
+                    "confirm_voices": 1 if urls else 0,
+                    "proposed_by": {"model": model, "provider": p.name,
+                                    "prompt_hash": ph, "date": today()},
+                    "is_seed": False,
+                }
+                out_rows.append(norm_row(row))
+    res = upsert_rows(out_rows, apply=apply)
+    return {"mode": "fleet", "calls": calls, "n_rows": len(out_rows),
+            "upsert": res, "web_search": MP.web_search_enabled()}
+
+
+def prove(rows: list, apply: bool) -> dict:
+    """收敛：对每条假设跑 confirm_queries + 【强制】falsify_queries。
+    当前无联网检索器/无 key：只做确定性裁决——
+      - 带权威/≥2独立 URL 的 confirmed 保持；
+      - 仅模型单源、无 URL → 不晋升，留 unverified；
+      - 明确被反向证伪(如关店三要素/停业新闻)→ contradicted。
+    真联网取证由 --fleet-recall 联网模型回 URL 或确定性连接器(closed_watch/authority)承担。"""
+    from collections import Counter
+    n = Counter()
+    for r in rows:
+        urls = r.get("confirmed_source_urls") or []
+        voices = r.get("confirm_voices", 0)
+        rel = r["relation"]
+        if r["status"] == "contradicted":
+            n["kept_contradicted"] += 1
+            continue
+        # 关系类：≥1 可信文档 URL；事实类：权威 URL 或 ≥2 声音
+        ok, _ = passes_gate({**r, "status": "confirmed"})
+        if ok:
+            r["status"] = "confirmed"; n["confirmed"] += 1
+        elif urls or voices:
+            r["status"] = "unverified"; n["unverified"] += 1  # 有线索但不足门槛
+        else:
+            r["status"] = "hypothesized"; n["open"] += 1
+    if apply and rows and table_exists(HYP_TABLE):
+        for r in rows:
+            C.req("PATCH", f"/{HYP_TABLE}?hid=eq.{r['hid']}",
+                  use_service=True, json={"status": r["status"],
+                                          "verdict_notes": "prove 确定性裁决(无联网器)"})
+    return {"decisions": dict(n), "apply": apply}
+
+
+# ---------------------------------------------------------------------------
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ingest-ledger", help="从 JSONL 账本导入假设（幂等 upsert）")
@@ -262,8 +376,25 @@ def main():
     ap.add_argument("--promote-plan", action="store_true")
     ap.add_argument("--apply", action="store_true", help="过闸才真写（默认 dry-run）")
     ap.add_argument("--diverge-llm", action="store_true")
+    ap.add_argument("--fleet-recall", action="store_true",
+                    help="同一探针并行 fan-out 所有已配置 provider（带参数+联网），只 upsert 假设表")
+    ap.add_argument("--prove", action="store_true",
+                    help="对假设跑 confirm+强制 falsify 裁决，标 confirmed/contradicted/unverified")
+    ap.add_argument("--fleet-status", action="store_true",
+                    help="打印舰队各 provider 配置与联网能力（不打印 key）")
     ap.add_argument("--seed-json", default="")
     args = ap.parse_args()
+
+    if args.fleet_status:
+        print(json.dumps(MP.fleet_status(), ensure_ascii=False, indent=2))
+        return
+
+    if args.fleet_recall:
+        seed = json.loads(pathlib.Path(args.seed_json).read_text(encoding="utf-8")) \
+            if args.seed_json else {}
+        res = fleet_recall(seed, apply=args.apply)
+        print(json.dumps(res, ensure_ascii=False, indent=2))
+        return
 
     if args.diverge_llm:
         seed = json.loads(pathlib.Path(args.seed_json).read_text(encoding="utf-8")) \
@@ -280,6 +411,23 @@ def main():
             line = line.strip()
             if line:
                 rows.append(norm_row(json.loads(line)))
+
+    if args.prove:
+        # 优先从库里读全量假设；库不可用则退本地 ledger
+        if table_exists(HYP_TABLE):
+            rows = [norm_row(x) for x in C.fetch_all(
+                HYP_TABLE,
+                "hid,subject_type,subject_name,relation,object,when,claim_text,confidence,"
+                "known_vs_inferred,status,evidence,confirm_queries,falsify_queries,"
+                "confirm_voices,confirmed_source_urls",
+                order_col="hid")]
+        elif not rows:
+            lp = sorted(HAE_DIR.glob("ledger_*.jsonl"))
+            if lp:
+                rows = [norm_row(x) for x in C.read_jsonl(str(lp[-1]))]
+        res = prove(rows, apply=args.apply)
+        print(json.dumps(res, ensure_ascii=False, indent=2))
+        return
 
     if args.status:
         if table_exists(HYP_TABLE):

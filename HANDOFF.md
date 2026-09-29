@@ -2944,3 +2944,20 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 ### 4. UGC「只抓不录」取数改进（锚定标准不放松）
 - 关键词本已是「精确店名+上海」；本轮新增：①搜索结果按「标题/摘要含店名」优先排序（榜单合集靠后）；②锚定除正文含店名外，接受笔记 POI/打卡定位名命中本店；连锁分店仍要求正文或 POI 命中分店 token。
 - 实跑 1 轮（--batch 5 --min-price 500）：searched=5、notes_fetched=0、anchored=0——**A 账号当前软限流（code=0 空 data），非锚定拒绝**；按宪章放慢不硬刷。reviews 维持 1587、有评价店 270、奢华≥500 零UGC 待补 49。
+
+### HAE 多模型舰队升级（2026-09-29，L0.5 第三轮）
+- 方法论：references/llm-sourcing-fleet.md（已复制 cloud/docs/llm-sourcing-fleet.md）。
+- **新注册表 `cloud/vendor/pipeline/model_providers.py`**：统一 OpenAI 兼容调用，6 家适配器——
+  ARK(豆包+DeepSeek)/Moonshot(Kimi)/DashScope(Qwen)/智谱(GLM)/MiniMax/混元；
+  各家 base_url/key/model_id 全从 deploy.env 读（变量名严格 §5：ARK/KIMI/QWEN/GLM/MINIMAX/HUNYUAN_BASE_URL+_API_KEY+HAE_MODELS_*，HAE_WEB_SEARCH=1），
+  禁止硬编码；缺 key/缺 models 自动跳过、不报错；各封装联网搜索工具语法
+  (ark web_search tools / kimi $web_search builtin / qwen enable_search / glm web_search / minimax tools / hunyuan web_search.enable)。
+- **hae_engine.py 三模式**：
+  - `--fleet-recall --seed-json X [--apply]`：同探针 fan-out 所有已配置适配器(带参数+联网)，结果只 upsert lead_hypotheses(hid 幂等，proposed_by=模型+provider+prompt_hash+日期)；联网结果必带 source_url，无 URL 不作证实。
+  - `--prove [--apply]`：跑 confirm_queries+【强制】falsify_queries，确定性裁决 confirmed/contradicted/unverified；无联网器时不硬写。
+  - `--promote-plan/--apply`：维持现有确定性晋升(check-first+复合PK幂等+回读)，本波未动。
+  - `--fleet-status`：列各 provider 配置与联网能力(不打印 key)。
+- **认识论**：模型输出绝不直写事实表；多模型一致只作先验、晋升仍需权威 URL 或≥2独立声音；无记忆显式 null、0 硬造；冲突留 unverified。
+- **无 key 降级实测（容器真跑）**：--fleet-status 6 家 configured 全 false；--fleet-recall(种子杜国金) →
+  mode=degraded_no_provider, providers=0, rows=[]，不报错中断；--prove dry-run 36 行裁决 confirmed33/unverified2/kept_contradicted1(未写)。
+- 待办：deploy.env 配任一家 key 后即 24/7 自跑；各家联网搜索参数首次用 key 需按返回报错微调 _web_search_extra。
