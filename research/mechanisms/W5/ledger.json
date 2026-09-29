@@ -1,0 +1,59 @@
+{
+  "workflow": "W5",
+  "version": "2026-09-29",
+  "generated_at": "2026-09-29T20:00:00",
+  "module": "cloud/signature_cuisine_link.py",
+  "rules_config": "cloud/signature_cuisine_rules.json",
+  "mode": "applied",
+  "gate": "cuisine_classify_audit / stage2_prepare (招牌菜→菜系联动质量门)",
+  "denominator": {
+    "restaurants_scanned": 1478,
+    "active": 1472,
+    "cuisines_total": 347,
+    "w5_owned_leaves": [8, 17, 19, 98, 133, 149, 150, 151, 302, 315, 316, 317, 351, 94, 26, 187, 74, 73, 301, 308, 309, 189, 183, 184, 38]
+  },
+  "frames": [
+    "F_dish: restaurants.signature_dishes 出品向量 → dish_rules 确定性词典映射菜系叶",
+    "F_trap: 店名/招牌陷阱词典 trap_rules（具名实体裁决，优先于泛化词典）",
+    "F_web: 低置信/边界 case 走免费 web 封闭选项核验（general_search/web.fetch 权威源）"
+  ],
+  "items": [
+    {"id": 1, "name": "黄启云私房牛肉面工坊", "frame": "F_trap/F_dish", "decision": "ensure 台湾菜(17)+台湾牛肉面·小吃(149); 历史误挂粤菜应清除", "before": ["台湾菜(17)","台湾牛肉面·小吃(149)★"], "after": ["台湾菜(17)","台湾牛肉面·小吃(149)★"], "write": "noop(幂等,已正确)", "trigger_dishes": ["私房牛肉面","牛三宝面","半筋半肉面"], "rule": "t1_huangqiyun_taiwan_beef_noodle", "source_urls": ["店内招牌:私房牛肉面/牛三宝面/半筋半肉面"]},
+    {"id": 2, "name": "Lady M(恒隆广场)", "frame": "F_trap", "decision": "西式千层=蛋糕/法式甜品(317) under 甜品(302); 去链日式甜品(98)", "before": ["蛋糕/法式甜品(317)★","甜品(302)"], "after": ["蛋糕/法式甜品(317)★","甜品(302)"], "write": "noop(幂等,已正确,98本无链接)", "trigger_dishes": ["原味千层","抹茶千层","玫瑰千层"], "rule": "t2_ladym_ju_fu_western_patisserie", "source_urls": ["https://www.ladym.com/"]},
+    {"id": 3, "name": "聚福shanghailander", "frame": "F_trap", "decision": "血糯米/咸蛋黄千层=蛋糕/法式甜品(317); 去链日式甜品(98)", "before": ["蛋糕/法式甜品(317)★","甜品(302)"], "after": ["蛋糕/法式甜品(317)★","甜品(302)"], "write": "noop(幂等,已正确)", "trigger_dishes": ["血糯米千层","咸蛋黄流心千层","笨柿子蛋糕"], "rule": "t2_ladym_ju_fu_western_patisserie", "source_urls": ["店内招牌:血糯米千层"]},
+    {"id": 4, "name": "御千代(王雷师傅)", "frame": "F_trap+F_web", "decision": "板前omakase寿司=寿司(86)+Omakase板前(325); 招牌铁板炒饭仅为套餐一道主食(serves),去链铁板烧(94)", "before": ["寿司(86)★","Omakase板前(325)","怀石(97)","日料(85)"], "after": ["寿司(86)★","Omakase板前(325)","怀石(97)","日料(85)"], "write": "noop(幂等,94本无链接)", "trigger_dishes": ["铁板炒饭(樱花虾)","玉子烧","焦糖布丁","海鲜饭"], "rule": "t3_ochiyo_not_teppanyaki", "source_urls": ["http://anniehoa.com/restaurants/Ichiro/index.html","https://washoku-guide.com/cities/shanghai"]},
+    {"id": 5, "name": "Pain Chaud(建国西路/番禺路)", "frame": "F_trap", "decision": "法式烘焙面包=面包(301)+可颂起酥(308); 非法餐FineDining(187)/法餐正餐(26)", "before": ["面包(301)","可颂/起酥专门(308)★","快餐/简餐(74)"], "after": ["面包(301)","可颂/起酥专门(308)★","快餐/简餐(74)"], "write": "noop(幂等,187/26本无链接)", "trigger_dishes": ["法棍","可颂","巧克力面包","马卡龙"], "rule": "t4_painchaud_verie_bakery_not_finedining", "source_urls": ["https://shanghai.bychefs.com/restaurant/pain-chaud/"]},
+    {"id": 6, "name": "VERIE BAKEHOUSE(马当路)", "frame": "F_trap", "decision": "法式烘焙=面包(301)+可颂起酥(308); 非法餐FineDining(187)", "before": ["面包(301)","可颂/起酥专门(308)★","快餐/简餐(74)"], "after": ["面包(301)","可颂/起酥专门(308)★","快餐/简餐(74)"], "write": "noop(幂等)", "trigger_dishes": ["蝴蝶结面包","可颂","水果挞","手工曲奇"], "rule": "t4_painchaud_verie_bakery_not_finedining", "source_urls": ["https://www.timeoutshanghai.cn/features/7442.html"]},
+    {"id": 7, "name": "鲜芋仙(日月光)", "frame": "F_trap/F_dish", "decision": "芋圆/烧仙草=甜品(302)+糖水/甜汤(316); 去链台湾菜(17)", "before": ["甜品(302)","糖水/甜汤(316)★"], "after": ["甜品(302)","糖水/甜汤(316)★"], "write": "noop(幂等,17本无链接)", "trigger_dishes": ["芋圆仙草冻","招牌烧仙草","芋圆鲜奶"], "rule": "t5_xianyu_xian_dessert_not_taiwan", "source_urls": ["店内招牌:芋圆仙草冻"]},
+    {"id": 8, "name": "大富贵酒楼(中华路总店)#1526", "frame": "F_trap", "decision": "上海老字号大众本帮为主挂; 去链徽州菜(133)", "before": ["本帮菜(9)★","徽州菜(133)","面(51)","肉禽(65)"], "after": ["本帮菜(9)★","面(51)","肉禽(65)","河鲜(239)"], "write": "remove 133", "trigger_dishes": ["臭鳜鱼","葡萄鱼","杨梅圆子","炒鳝丝"], "rule": "t6_dafugui_benbang_not_huizhou", "source_urls": ["http://sh.people.com.cn/n2/2024/1215/c134768-41075994.html"]},
+    {"id": 9, "name": "丹凤楼雅宴·大富贵(斜土店)#967", "frame": "F_trap", "decision": "本帮为主挂; 去链徽菜(8)+徽州菜(133)", "before": ["本帮菜(9)★","徽州菜(133)","徽菜(8)","烧腊/卤味(245)"], "after": ["本帮菜(9)★","烧腊/卤味(245)"], "write": "remove 8 + remove 133", "trigger_dishes": ["富贵酱鸭","徽州熏鱼","酱汁方肉","麻酱珍珠鲍鱼"], "rule": "t6_dafugui_benbang_not_huizhou", "source_urls": ["http://sh.people.com.cn/n2/2024/1215/c134768-41075994.html"]},
+    {"id": 10, "name": "南星汇新加坡海南鸡饭#1603 / 五星海南鸡饭#1652", "frame": "F_trap/F_dish", "decision": "海南鸡饭=南洋国菜归新加坡菜(183)/新马印(38); 去链海南菜(19)", "before": ["新加坡菜(183)★","马来西亚菜(184)"], "after": ["新加坡菜(183)★","马来西亚菜(184)"], "write": "noop(幂等,19本无链接; 海南菜19现仅椰子鸡/糟粕醋火锅5店)", "trigger_dishes": ["海南鸡饭","鸡油饭","马拉拉茶"], "rule": "t7_hainan_chicken_rice_singapore", "source_urls": ["店内招牌:海南鸡饭/马拉拉茶"]},
+    {"id": 11, "name": "白茸 Bai Rong #815 / 白茸小鲜#812", "frame": "F_web+F_trap", "decision": "名称正名=白茸(非'佰荣'); 写 aliases=[Bai Rong,白荣],不改正店主名; 菜系=鲁菜(孔府菜118/胶东菜117)正确不动", "before": {"815": {"aliases": null}, "812": {"aliases": null}}, "after": {"815": {"aliases": ["Bai Rong","白荣"]}, "812": {"aliases": ["Bai Rong","白荣"]}}, "write": "alias_patch 815 + 812", "trigger_dishes": ["葱烧海参","油爆双脆","胶东冷鲜拼盘"], "rule": "t8_bairong_name_provenance", "source_urls": ["https://guide.michelin.com/tw/zh_TW/shanghai-municipality/shanghai/restaurant/bai-rong","https://joinpearl.co/restaurants/shanghai/bai-rong"]}
+  ],
+  "stats": {
+    "named_trap_matched_shops": 14,
+    "link_added": 0,
+    "link_removed": 3,
+    "entity_alias_written": 2,
+    "generic_backfill_candidates_lowconf": 3,
+    "readback_assert": "PASS",
+    "idempotent_rerun": "remove=0 (二次 dry-run 幂等)"
+  },
+  "gaps": [
+    "大富贵招牌含臭鳜鱼/葡萄鱼/杨梅圆子( textbook 徽州菜),权威源(人民网/新民/文旅局)称'徽帮为体';与本规则去链徽菜(8/133)存在张力。按 W5 Organizer 裁决(上海老字号大众本帮定位)去链,留人工复核是否应保留133。",
+    "泛化补链候选3条(千秋小馆#1044/隅木#1890 缺台湾牛肉面149; 妃灵蛋糕#1999 缺蛋糕法式甜品317)为低置信,未自动写,待人工确认。",
+    "Apify 付费额度耗尽(剩$0.00066),本轮仅走免费通道 general_search/web.fetch/Supabase REST;未做付费点评抓取。"
+  ],
+  "regression": {
+    "黄启云牛肉面": {"found": true, "discovery_path": "F_trap name~黄启云 → t1; 招牌菜向量命中牛肉面", "restaurant_id": 1246, "expected": "台湾菜17/149", "actual": "台湾菜17/149★", "pass": true},
+    "Lady M": {"found": true, "discovery_path": "F_trap name~Lady M → t2", "restaurant_id": 1776, "expected": "甜品302/317 非98", "actual": "317★/302,无98", "pass": true},
+    "聚福": {"found": true, "discovery_path": "F_trap name~聚福 → t2", "restaurant_id": 1777, "expected": "甜品302/317 非98", "actual": "317★/302,无98", "pass": true},
+    "御千代": {"found": true, "discovery_path": "F_trap name~御千代 → t3; F_web anniehoa/washoku 核验 Ochiyo omakase", "restaurant_id": 4, "expected": "非铁板烧94,日料正确叶", "actual": "寿司86★+Omakase325,无94", "pass": true},
+    "pain chaud": {"found": true, "discovery_path": "F_trap name~Pain Chaud/百丘 → t4", "restaurant_id": "1164,1785", "expected": "面包/简餐 非法餐FD187", "actual": "面包301/可颂308★/简餐74,无187", "pass": true},
+    "verie": {"found": true, "discovery_path": "F_trap name~VERIE → t4", "restaurant_id": 1170, "expected": "面包/简餐 非法餐FD187", "actual": "面包301/可颂308★,无187", "pass": true},
+    "鲜芋仙": {"found": true, "discovery_path": "F_trap name~鲜芋仙 → t5", "restaurant_id": 1575, "expected": "甜品302 非台湾菜17", "actual": "302/糖水316★,无17", "pass": true},
+    "大富贵酒楼": {"found": true, "discovery_path": "F_trap name~大富贵/丹凤楼 → t6", "restaurant_id": "1526,967", "expected": "非徽菜8/133", "actual": "已remove 8/133,本帮菜9★保留", "pass": true},
+    "海南鸡饭": {"found": true, "discovery_path": "F_trap name~海南鸡饭 → t7", "restaurant_id": "1603,1652", "expected": "非海南菜19,归新加坡183", "actual": "新加坡菜183★,无19", "pass": true},
+    "白茸": {"found": true, "discovery_path": "F_web Michelin/Pearl → t8 entity", "restaurant_id": "815,812", "expected": "正名白茸非佰荣,写aliases不改正店", "actual": "aliases=[Bai Rong,白荣],name未改", "pass": true}
+  }
+}

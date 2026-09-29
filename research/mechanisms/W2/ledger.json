@@ -1,0 +1,63 @@
+{
+  "workflow": "W2",
+  "version": "2026-09-29",
+  "generated_at": "2026-09-29T18:50:00+08:00",
+  "goal": "P5 信源注册表机制 + 把事实核验扩到微信公众号文章（免费通道，事实与评价分离，宁空不假）",
+  "denominator": {
+    "registered_sources": 3,
+    "by_kind": {"official_guide": 1, "media": 1, "other(mirror)": 1},
+    "by_platform": {"wechat": 1, "web_media": 2},
+    "health": {"active": 2, "stale": 0, "dead": 1}
+  },
+  "frames": ["F4 社交框-公众号/媒体源", "P5 信源注册表(一次发现->长期注册->cadence poll->评分->淘汰)"],
+  "items": [
+    {"id": "wechat::跃动金海", "name": "跃动金海（奉贤金海街道官方宣传号）", "frame": "P5",
+     "evidence": "mp.weixin.qq.com 3 篇真实可抓取文章",
+     "decision": "注册为 official_guide/L0/cadence14d，health=active，reliability=0.66",
+     "source_urls": ["https://mp.weixin.qq.com/s/5bc5osQCYyTUhRF-5zLNkQ",
+                     "https://mp.weixin.qq.com/s/IArVnIwhmLaa05EOOVKNhA",
+                     "https://mp.weixin.qq.com/s/sUPzUpnmbyNa5oLIqhpfNA"],
+     "discovery_path": "general_search: mp.weixin.qq.com 上海 餐厅 -> 奉贤政务公开索引 -> web.fetch 正文确认存活"},
+    {"id": "web_media::澎湃新闻·美食", "name": "澎湃新闻·美食", "frame": "P5",
+     "evidence": "thepaper 探店报道：刘掌柜牛肉煎包（原肇周路店）",
+     "decision": "注册为 media/L0/cadence7d，health=active，reliability=0.84",
+     "source_urls": ["https://m.thepaper.cn/newsDetail_forward_33103403"],
+     "discovery_path": "general_search: mp.weixin.qq.com 上海 餐厅 2026 -> 澎湃新闻"},
+    {"id": "web_media::奉贤政务公开·小商铺大流量转载", "name": "奉贤政务公开·小商铺大流量转载（聚合镜像）",
+     "frame": "P5",
+     "evidence": "xxgk.fengxian.gov.cn 仅转载公众号文章，不新增独立声音",
+     "decision": "kind=other，首轮 poll 无独立新文 -> reliability 0.40->0.25 跌破淘汰线 -> health=dead，淘汰留痕",
+     "source_urls": ["https://xxgk.fengxian.gov.cn/"],
+     "discovery_path": "随上述公众号文章索引页发现"}
+  ],
+  "stats": {
+    "registered_new": 3,
+    "polled_this_run": 3,
+    "posts_archived": 4,
+    "mentions_to_in_db_restaurants": 0,
+    "fact_claim_candidates": 2,
+    "fact_claims_written_to_restaurants": 0,
+    "leads_unmatched": 2,
+    "degraded": 1,
+    "eliminated": 1,
+    "idempotent_rerun_polled": 0,
+    "p5_gate_errors": 0
+  },
+  "fact_claim_leads": [
+    {"type": "group_relation", "value": "蒋记集团旗下品牌（金海家宴）", "source_url": "https://mp.weixin.qq.com/s/IArVnIwhmLaa05EOOVKNhA",
+     "note": "未命中在库餐厅（奉贤社区店未入图鉴），作线索留痕，不臆造匹配"},
+    {"type": "relocation", "value": "刘掌柜牛肉煎包 原肇周路店（现大林路63号）", "source_url": "https://m.thepaper.cn/newsDetail_forward_33103403",
+     "note": "未命中在库餐厅，搬迁线索留痕，需二次核址"}
+  ],
+  "gaps": [
+    "免费 general_search 今日对【个人探店 mp.weixin 公众号】召回弱（偏抖音/携程），本轮只跑通 1 个官方号+1 个媒体号；个人 UGC 公众号源待 Apify 充值/搜狗微信恢复后补全（见待人工项）。",
+    "本轮 4 篇文章提及的店（南郊匠叁/金海家宴/香禾面馆/刘掌柜）均不在 1478 家图鉴库内，故 mentions=0、fact_claims 0 写库——这是『宁空不假』的正确结果，非机制断点。",
+    "restaurants.fact_claims 写库路径已实现并带回读断言，但本轮无在库命中，待后续 poll 命中在库店即自动落库。"
+  ],
+  "gate": {
+    "name": "wechat_source_registry.py --audit (P5 信源注册表门)",
+    "result": "P5_GATE_ERRORS=0",
+    "scheduled_in": "cloud/crontab.txt 新增 #13"
+  },
+  "regression": {}
+}

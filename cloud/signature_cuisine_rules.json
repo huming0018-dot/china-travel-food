@@ -1,0 +1,117 @@
+{
+  "version": "2026-09-29",
+  "owner": "W5",
+  "note": "招牌菜→菜系联动引擎配置。加规则不改代码：trap_rules=具名实体裁决(优先于 dish_rules)；dish_rules=招牌菜→菜系叶确定性词典。is=主营才改/补 restaurant_cuisines；serves=含有仅打标签不挂叶。",
+  "owned_cuisine_ids": [8, 17, 19, 98, 133, 149, 150, 151, 302, 315, 316, 317, 351, 94, 26, 187, 74, 73, 301, 308, 309, 189, 183, 184, 38],
+  "owned_cuisine_names": ["徽菜", "台湾菜", "海南菜", "日式甜品", "徽州菜", "台湾牛肉面·小吃", "台湾家常菜", "高端台菜·台菜Bistro", "甜品", "松饼/薄饼", "糖水/甜汤", "蛋糕/法式甜品", "法式Bistro", "铁板烧", "法餐", "法餐Fine Dining", "快餐/简餐", "Bistro/小酒馆", "面包", "可颂/起酥专门", "日式面包", "可颂甜品", "新加坡菜", "马来西亚菜", "新马印"],
+
+  "trap_rules": [
+    {
+      "id": "t1_huangqiyun_taiwan_beef_noodle",
+      "match_name_contains": ["黄启云"],
+      "ensure_cuisine_ids": [17, 149],
+      "forbid_cuisine_ids": [],
+      "forbid_rationale": "黄启云私房牛肉面工坊=台湾牛肉面师傅品牌，主营红烧/半筋半肉牛肉面；非粤菜。历史误挂粤菜应清除(现库已无粤菜链接，幂等确认)。",
+      "source_urls": ["https://guide.michelin.com/", "店内招牌菜:私房牛肉面/牛三宝面/半筋半肉面"]
+    },
+    {
+      "id": "t2_ladym_ju_fu_western_patisserie",
+      "match_name_contains": ["Lady M", "聚福"],
+      "ensure_cuisine_ids": [302, 317],
+      "forbid_cuisine_ids": [98],
+      "forbid_rationale": "Lady M千层蛋糕/聚福血糯米千层=西式蛋糕/法式甜品(蛋糕/法式甜品317 under 甜品302)，非日式甜品(98)。98仅限和果子/抹茶/铜锣烧/日式刨冰。",
+      "source_urls": ["https://www.ladym.com/", "店内招牌:原味千层/抹茶千层/血糯米千层"]
+    },
+    {
+      "id": "t3_ochiyo_not_teppanyaki",
+      "match_name_contains": ["御千代"],
+      "ensure_cuisine_ids": [86, 325],
+      "forbid_cuisine_ids": [94],
+      "forbid_rationale": "御千代(Ochiyo 1710, 王雷师傅)=板前omakase寿司/会席，非铁板烧；招牌'铁板炒饭(樱花虾)'仅为omakase套餐一道主食(serves)，不构成铁板烧主营。据权威源归寿司(86)+Omakase板前(325)。",
+      "source_urls": ["http://anniehoa.com/restaurants/Ichiro/index.html", "https://washoku-guide.com/cities/shanghai"]
+    },
+    {
+      "id": "t4_painchaud_verie_bakery_not_finedining",
+      "match_name_contains": ["Pain Chaud", "PAIN CHAUD", "百丘", "VERIE", "Verie"],
+      "ensure_cuisine_ids": [301, 308],
+      "forbid_cuisine_ids": [187, 26],
+      "forbid_rationale": "Pain Chaud(百丘)/VERIE Bakehouse=法式烘焙面包专门店(法棍/可颂/蝴蝶结面包/水果挞)，面包(301)+可颂起酥(308)，非法餐FineDining(187)/法餐正餐(26)。形式上属快餐/简餐(74)非正餐bistro主营业态。",
+      "source_urls": ["https://shanghai.bychefs.com/restaurant/pain-chaud/", "https://www.timeoutshanghai.cn/features/7442.html"]
+    },
+    {
+      "id": "t5_xianyu_xian_dessert_not_taiwan",
+      "match_name_contains": ["鲜芋仙"],
+      "ensure_cuisine_ids": [302, 316],
+      "forbid_cuisine_ids": [17],
+      "forbid_rationale": "鲜芋仙=芋圆/烧仙草/芋圆鲜奶连锁甜品，主营非正餐甜品，归甜品(302)+糖水/甜汤(316)；非正餐地域根优先于台湾菜(17)。",
+      "source_urls": ["https://www.mebxx.com/", "店内招牌:芋圆仙草冻/招牌烧仙草/芋圆鲜奶"]
+    },
+    {
+      "id": "t6_dafugui_benbang_not_huizhou",
+      "match_name_contains": ["大富贵", "丹凤楼"],
+      "ensure_cuisine_ids": [],
+      "forbid_cuisine_ids": [8, 133],
+      "forbid_rationale": "大富贵/丹凤楼=上海中华老字号酒楼，现定位大众本帮(本帮菜9为主挂；招牌富贵酱鸭/熏鱼/方肉等本帮熟食点心)，不为徽菜/徽州菜专门店；历史徽帮渊源(臭鳜鱼)不构成主营徽菜叶。去链徽菜(8)/徽州菜(133)，保留本帮菜(9)。注:招牌含臭鳜鱼，与权威'徽帮为体'存张力，按W5 Organizer裁决去链，留人工复核。",
+      "source_urls": ["http://sh.people.com.cn/n2/2024/1215/c134768-41075994.html", "https://www.meet-in-shanghai.net/cn/food/dafugui-zhonghua-road-main-store-753884/"]
+    },
+    {
+      "id": "t7_hainan_chicken_rice_singapore",
+      "match_name_contains": ["海南鸡饭"],
+      "ensure_cuisine_ids": [183],
+      "forbid_cuisine_ids": [19],
+      "forbid_rationale": "'海南鸡饭'是南洋(新加坡/马来西亚)成型国菜，归新加坡菜(183)/新马印(38)；非海南菜(19)。海南菜(19)仅留给椰子鸡/文昌鸡/糟粕醋火锅。",
+      "source_urls": ["https://guide.michelin.com/", "店内招牌:海南鸡饭/马拉拉茶/冬阴功"]
+    },
+    {
+      "id": "t8_bairong_name_provenance",
+      "match_name_contains": ["白茸", "白荣", "佰荣"],
+      "ensure_cuisine_ids": [],
+      "forbid_cuisine_ids": [],
+      "entity_name": {
+        "canonical_name": "白茸",
+        "rejected_aliases": ["佰荣"],
+        "accept_aliases": ["Bai Rong", "白荣"],
+        "do_not_rename_main": true,
+        "rationale": "权威源(Michelin Guide / Pearl)记作 Bai Rong，鲁菜(孔府菜118 under 鲁菜1)，外滩金融中心。中文正名'白茸'，非'佰荣'。只写 aliases/正名，不改正店主名。",
+        "source_urls": ["https://guide.michelin.com/tw/zh_TW/shanghai-municipality/shanghai/restaurant/bai-rong", "https://joinpearl.co/restaurants/shanghai/bai-rong"]
+      }
+    }
+  ],
+
+  "dish_rules": [
+    {
+      "pattern": "牛肉面|半筋半肉|红烧.{0,3}牛|牛三宝",
+      "leaf_cuisine_id": 149,
+      "root_cuisine_id": 17,
+      "kind": "is",
+      "strength": 2,
+      "note": "台湾牛肉面(红烧/清炖/半筋半肉/带筋肉块)。注意与兰州牛肉面(清汤萝卜)区分：店名/招牌含台湾/私房黄启云/古北台胞才命中本叶。",
+      "applies_when_name_contains": ["黄启云", "老张", "度小月", "台湾", "台南", "隅木"]
+    },
+    {
+      "pattern": "千层蛋糕|千层|mille|Mille|玫瑰千层|抹茶千层",
+      "leaf_cuisine_id": 317,
+      "root_cuisine_id": 302,
+      "kind": "is",
+      "strength": 2,
+      "require_scene_contains": ["甜品"],
+      "note": "西式千层/法式蛋糕→蛋糕/法式甜品(317)。仅当店型 scene=甜品 才补链；正餐店里一道千层=serves 仅标签不挂叶。与日式甜品98互斥。"
+    },
+    {
+      "pattern": "芋圆|烧仙草|仙草冻|芋圆鲜奶",
+      "leaf_cuisine_id": 316,
+      "root_cuisine_id": 302,
+      "kind": "is",
+      "strength": 2,
+      "note": "台式芋圆仙草→糖水/甜汤(316) under 甜品(302)，非台湾菜(17)。"
+    },
+    {
+      "pattern": "海南鸡饭|鸡油饭|文昌鸡饭",
+      "leaf_cuisine_id": 183,
+      "root_cuisine_id": 38,
+      "kind": "is",
+      "strength": 2,
+      "note": "海南鸡饭→新加坡菜(183)，非海南菜(19)。"
+    }
+  ]
+}

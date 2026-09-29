@@ -1,0 +1,102 @@
+{
+  "workflow": "W2",
+  "generated_at": "2026-09-29T18:46:09.565307",
+  "sources": {
+    "wechat::跃动金海": {
+      "business_key": "wechat::跃动金海",
+      "name": "跃动金海",
+      "platform": "wechat",
+      "kind": "official_guide",
+      "auth_level": "L0",
+      "covers": [
+        "奉贤",
+        "社区餐饮",
+        "烧鸟"
+      ],
+      "reliability": 0.66,
+      "refresh_cadence_days": 14,
+      "last_polled": "2026-09-29",
+      "health": "active",
+      "stale_streak": 0,
+      "connector_module": "cloud/wechat_source_registry.py",
+      "profile_url": "https://mp.weixin.qq.com/s/5bc5osQCYyTUhRF-5zLNkQ",
+      "history": [
+        {
+          "at": "2026-09-29",
+          "event": "fact_claim",
+          "type": "group_relation",
+          "value": "蒋记集团旗下品牌（机构号自述）",
+          "matched": [],
+          "applied": false
+        },
+        {
+          "at": "2026-09-29",
+          "event": "skipped_not_due"
+        }
+      ]
+    },
+    "web_media::澎湃新闻·美食": {
+      "business_key": "web_media::澎湃新闻·美食",
+      "name": "澎湃新闻·美食",
+      "platform": "web_media",
+      "kind": "media",
+      "auth_level": "L0",
+      "covers": [
+        "黄浦",
+        "本帮小吃",
+        "面馆"
+      ],
+      "reliability": 0.84,
+      "refresh_cadence_days": 7,
+      "last_polled": "2026-09-29",
+      "health": "active",
+      "stale_streak": 0,
+      "connector_module": "cloud/wechat_source_registry.py",
+      "profile_url": "https://m.thepaper.cn/newsDetail_forward_33103403",
+      "history": [
+        {
+          "at": "2026-09-29",
+          "event": "fact_claim",
+          "type": "relocation",
+          "value": "原址 肇周路店（现址见正文，需二次核址）",
+          "matched": [],
+          "applied": false
+        },
+        {
+          "at": "2026-09-29",
+          "event": "skipped_not_due"
+        }
+      ]
+    },
+    "web_media::奉贤政务公开·小商铺大流量转载": {
+      "business_key": "web_media::奉贤政务公开·小商铺大流量转载",
+      "name": "奉贤政务公开·小商铺大流量转载",
+      "platform": "web_media",
+      "kind": "other",
+      "auth_level": "L0",
+      "covers": [
+        "奉贤",
+        "聚合转载"
+      ],
+      "reliability": 0.25,
+      "refresh_cadence_days": 30,
+      "last_polled": "2026-09-29",
+      "health": "dead",
+      "stale_streak": 1,
+      "connector_module": "cloud/wechat_source_registry.py",
+      "profile_url": "https://xxgk.fengxian.gov.cn/",
+      "history": [
+        {
+          "at": "2026-09-29",
+          "event": "eliminated",
+          "reason": "reliability=0.25<0.3 或 stale_streak=1>=3，停止独立采集，仅留痕"
+        },
+        {
+          "at": "2026-09-29",
+          "event": "skipped_not_due"
+        }
+      ]
+    }
+  },
+  "audit_log": []
+}

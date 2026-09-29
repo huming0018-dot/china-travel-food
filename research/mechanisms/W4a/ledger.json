@@ -1,0 +1,83 @@
+{
+  "workflow": "W4a",
+  "version": "2026-09-29",
+  "generated_at": "2026-09-29T20:05:41",
+  "mode": "apply",
+  "denominator": {
+    "ramen_parent89_active": 8,
+    "ramen_leaves": {
+      "拉面·虾白汤": 1,
+      "拉面·柚子盐鸡白汤": 2,
+      "拉面·博多豚骨": 2,
+      "拉面·蘸面": 1,
+      "拉面·二郎系": 2,
+      "拉面·横滨家系": 1,
+      "拉面·纪州酱油豚骨": 0,
+      "拉面·熊本黑蒜味噌": 0
+    },
+    "wrapped_leaves": {
+      "饺子(327)": 9,
+      "馄饨(328)": 13,
+      "锅贴(329)": 0,
+      "生煎(330)": 4,
+      "烧饼(335)": 0,
+      "葱油饼(336)": 0,
+      "手抓饼(337)": 0,
+      "可丽饼(338)": 1,
+      "薄饼(339)": 0,
+      "中式烙烤饼(342)": 0
+    },
+    "omakase_325_active": 16
+  },
+  "stats": {
+    "link_actions": 4,
+    "wrapped_kept_main": 27,
+    "wrapped_dropped_incidental": 0,
+    "new_shops_upserted": 0,
+    "omakase_325_added": 0,
+    "wrapped_dropped_incidental_applied": 38,
+    "link_added_applied": 7,
+    "new_shops_created": 1
+  },
+  "items": [
+    {
+      "id": 2006,
+      "name": "AJIYA炭火烤肉(仙霞路店)",
+      "frame": "F4社交框(抖音古北拉面5家横评) + F5地图POI(360地图/Trip.com)",
+      "evidence": "开了十几年的烧肉店，因未改良二郎拉面出圈（粗面/酱油汤/豆芽山）；仙霞路333号",
+      "decision": "分店补链(已存在行)",
+      "source_urls": [
+        "https://www.iesdouyin.com/share/video/7522281552277966130",
+        "https://www.trip.com/restaurant/china/shanghai/detail/ajiya-15140677/",
+        "http://www.aquars.com/miseinfo/2019miseinfo_haru.php"
+      ],
+      "discovery_path": "F4社交框(抖音古北拉面5家横评) + F5地图POI(360地图/Trip.com)"
+    }
+  ],
+  "gaps": [],
+  "regression": {
+    "面屋KING": {
+      "found": true,
+      "restaurant_id": 1869,
+      "discovery_path": "parent89 对账 + F4社交框(抖音多店横评/携程二刷)；证据=虾白汤旗舰融合，保留262+263",
+      "note": "回归括号写博多豚骨(264)，但 free-channel 证据指向虾白汤/柚子盐融合，按出品定类未硬挂264"
+    },
+    "ajiya仙霞路店": {
+      "found": true,
+      "restaurant_id": 2006,
+      "discovery_path": "F4社交框(抖音古北拉面5家横评) + F5地图POI(360地图/Trip.com/aquars)；仙霞路333号，二郎拉面出圈→266"
+    },
+    "纹兵卫": {
+      "found": true,
+      "restaurant_id": 1870,
+      "discovery_path": "parent261 对账；天山店1870挂261+270+271，金虹桥店44补270"
+    },
+    "ichi荞麦": {
+      "found": false,
+      "restaurant_id": null,
+      "discovery_path": "F4社交框已搜(抖音/携程/sophieservesup)未定位到名为 ichi 的上海荞麦店；Soba Ichi 在美国Oakland。记缺口，需 F5地图POI 按区+品类二次扫描，禁止手补"
+    }
+  },
+  "gate": "stage6_coverage (子叶分母/在库数) + release_audit.A 网格覆盖 strict",
+  "notes": "累计：补链7(拉面3+AJIYA4)、摘错链38(精品正餐/菜系馆仅含包馅饼)、新建AJIYA仙霞路(id=2006)。本ledger为末次运行，wrapped_dropped=0表示已无可摘。"
+}

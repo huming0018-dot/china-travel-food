@@ -1,0 +1,98 @@
+{
+  "workflow": "W1",
+  "frame": "F3",
+  "version": "2026-09-29",
+  "generated_at": "2026-09-29T20:19:30.760884",
+  "gate": "stage6_coverage(F3 召回) / release_audit",
+  "denominator": {
+    "expected_sh_stores_total": 3,
+    "resolved_in_db": 3,
+    "missing_in_db": 5
+  },
+  "stats": {
+    "denominator": 3,
+    "resolved_in_db": 3,
+    "missing_in_db": 5,
+    "groups_to_create": 0,
+    "members_to_add": 0,
+    "chefs_to_create": 0,
+    "rchefs_to_add": 0,
+    "candidates": 5
+  },
+  "writes": {
+    "groups_created": "0(dry)",
+    "members_added": "0(dry)",
+    "chefs_created": "0(dry)",
+    "rchefs_added": "0(dry)"
+  },
+  "frames": [
+    "F3-official-locator",
+    "F3-web-search(free)",
+    "F2-michelin",
+    "F5-map-poi",
+    "F6-snowball"
+  ],
+  "regression": {
+    "Ministry of Crab": {
+      "found": true,
+      "status": "in_db",
+      "discovery_path": "F3 group#9『海外名店入沪』成员清单 → restaurant_group_members(group_id=9,restaurant_id=2002)",
+      "restaurant_id": 2002
+    },
+    "8by8": {
+      "found": true,
+      "status": "discovered_routed",
+      "discovery_path": "F3 免费通道 web 检索 query='上海 八by8 餐厅 地址' → sohu魔都吃货小分队 https://www.sohu.com/a/798648474_391486（建国西路691号1幢102-1，voices=2）；库中无→candidates.jsonl 走stage1证据闸门",
+      "restaurant_id": null
+    },
+    "nagi": {
+      "found": true,
+      "status": "in_db",
+      "discovery_path": "F3 品牌召回 query='nagi 凪 上海 板前' → 在库 rid=1887（江师傅独立板前，非东京煮干拉面凪连锁）",
+      "restaurant_id": 1887
+    },
+    "鮨照": {
+      "found": true,
+      "status": "discovered_routed",
+      "discovery_path": "F3 query='上海 鮨照 寿司 地址 omakase'（公开web检索）→ 已捞到该店存在性，门牌待二次逼近→candidates.jsonl；勿与 rid=1888 鮨·天照混",
+      "restaurant_id": null
+    },
+    "肉屋kita": {
+      "found": true,
+      "status": "discovered_routed",
+      "discovery_path": "F3 query='上海 肉屋kita 烧肉 地址' → Tripadvisor 喜多新馆 Kita Shinkan 线索，待二次确认→candidates.jsonl",
+      "restaurant_id": null
+    },
+    "佐佐": {
+      "found": true,
+      "status": "discovered_routed",
+      "discovery_path": "F3/F6 query='上海 福寿司 佐佐 日料' → 知乎日料榜单 https://zhuanlan.zhihu.com/p/1900555902450378144 提名（福寿司母体），门牌待逼近→candidates.jsonl",
+      "restaurant_id": null
+    },
+    "福寿司": {
+      "found": true,
+      "status": "discovered_routed",
+      "discovery_path": "F3/F6 同上知乎榜单：'从佐佐独立出来的寿司专门店，人均2250'，门牌待逼近→candidates.jsonl",
+      "restaurant_id": null
+    },
+    "Stone Sal 言盐": {
+      "found": true,
+      "status": "in_db_linked",
+      "discovery_path": "F3 官网 locator https://www.stonesal.com（上海东湖路+深圳南山）→ 在库 rid=1873；上海分母=1；已建组#12+主厨林震谷(61)链接",
+      "restaurant_id": 1873
+    },
+    "Cheeva Thai": {
+      "found": true,
+      "status": "in_db",
+      "discovery_path": "F3 品牌召回 → 在库 rid=1842（泰式私宴，单店，无集团矩阵）",
+      "restaurant_id": 1842
+    },
+    "望庐": {
+      "found": true,
+      "status": "in_db_linked",
+      "discovery_path": "F3 query='上海 望庐 江西菜 地址 外滩 前滩' + F2 米其林页 guide.michelin.com/.../wang-lu → 双分店 rid=1982(外滩)+1983(前滩) 已建组#11并双挂成员；近名'望庐山'已排除",
+      "restaurant_id": null
+    }
+  },
+  "notes": "新店(8by8/佐佐/福寿司/鮨照/肉屋kita)库中无→路由 candidates.jsonl 走 stage1证据闸门，不绕过闸门强插；多声门>=2声才入链。"
+}

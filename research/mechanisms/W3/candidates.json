@@ -1,0 +1,70 @@
+[
+  {
+    "name_hint": "平川·程玉平川菜工作室",
+    "frame": "F2权威榜",
+    "lean": 348,
+    "why": "Time Out《私宴遇》：dp查无此店，隐身居民楼，主厨程玉平个人古法川菜私宴，预约微信同号",
+    "source_urls": [
+      "https://www.timeoutshanghai.cn/features/6238.html"
+    ],
+    "matched_restaurant_id": 583,
+    "matched_name": "平川·程玉平川菜工作室",
+    "resolved_target": null,
+    "resolved_reasons": [
+      "私厨名+1",
+      "连锁/商场载体+1"
+    ],
+    "already_linked": [],
+    "source_backed": true,
+    "decision": "ADD"
+  },
+  {
+    "name_hint": "雍福会",
+    "frame": "F4社区枚举",
+    "lean": 347,
+    "why": "顶级私人会所/俱乐部：原英国领事馆百年园林，会员制、入会约80万、只接会员推荐",
+    "source_urls": [
+      "https://m.maigoo.com/citiao/254740.html"
+    ],
+    "matched_restaurant_id": 1008,
+    "matched_name": "雍福会(永福路店)",
+    "resolved_target": null,
+    "resolved_reasons": [],
+    "already_linked": [],
+    "source_backed": true,
+    "decision": "ADD"
+  },
+  {
+    "name_hint": "Gardenchilde花公子",
+    "frame": "F2权威榜",
+    "lean": 348,
+    "why": "Time Out：龙门邨买手店二楼私宴，年轻主理人按季节菜单，电话预约（库内未命中→补缺店候选）",
+    "source_urls": [
+      "https://www.timeoutshanghai.cn/features/6238.html"
+    ],
+    "matched_restaurant_id": null,
+    "decision": "gap_restaurant_missing"
+  },
+  {
+    "name_hint": "FoodAnatomy",
+    "frame": "F2权威榜",
+    "lean": 347,
+    "why": "Time Out：延安西路大众金融大厦内意式私人家庭作坊/订制私宴，米其林主厨团队（商办载体）",
+    "source_urls": [
+      "https://www.timeoutshanghai.cn/features/6238.html"
+    ],
+    "matched_restaurant_id": null,
+    "decision": "gap_restaurant_missing"
+  },
+  {
+    "name_hint": "煌佳私宴",
+    "frame": "F2权威榜",
+    "lean": 347,
+    "why": "Time Out：半淞园路越界世博园淮扬私宴新贵，园区内、私密晚宴（商办园区载体）",
+    "source_urls": [
+      "https://www.timeoutshanghai.cn/features/6238.html"
+    ],
+    "matched_restaurant_id": null,
+    "decision": "gap_restaurant_missing"
+  }
+]

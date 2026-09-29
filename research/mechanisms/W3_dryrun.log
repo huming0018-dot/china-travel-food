@@ -1,0 +1,15 @@
+拉取库内数据 ...
+
+=== 裁决统计：active=1472 348候选=36 347候选=37 待核=1399 ===
+覆盖候选 5（库内命中 2，库内缺 3）
+ADD 计划 2 条：
+  + [348] id=583 平川·程玉平川菜工作室  (F2权威榜)
+  + [347] id=1008 雍福会(永福路店)  (F4社区枚举)
+误挂复核（只报不删）1 条：
+  ! id=1930 思南海派私房菜 linked348_but_resolves_club ->建议347
+回归锚点 2：
+  R 麻麻: found=False id=None -> low_confidence_freeweb_verify
+  R 可乐: found=True id=851 -> ok
+
+账本已写：research/mechanisms/W3/ledger.json
+[dry-run] 确认后加 --apply 执行高置信 ADD（只补不错杀）

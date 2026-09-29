@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://china-travel/city-atlas/raw_poi.schema.json",
+  "title": "RawPOI — 通用场所/对象原始采集证据（品类无关，一个点一行 JSONL）",
+  "description": "raw_place(餐饮) 的泛化版，适用于 Livehouse/菜市场/茶馆等任意城市品类。模型负责发现与判断并按本契约产证据；清洗/校验/对齐/入库由 stage 脚本完成。所有评分/状态/归属可溯源，指不出来源留空并在 notes 声明，禁止编造。餐饮可继续用 raw_place.schema.json（其字段为本 schema 的餐饮特化）。",
+  "type": "object",
+  "required": [
+    "name", "entity_type", "district", "category_paths", "status",
+    "evidence", "sources", "data_updated_at"
+  ],
+  "properties": {
+    "name": { "type": "string", "description": "点的正名（含分店/分场名，连锁异址保留）。" },
+    "name_en": { "type": ["string", "null"] },
+    "entity_type": { "type": "string", "enum": ["venue", "event", "service", "other"], "description": "场所/活动/服务/其他；地图上一个点代表什么。" },
+    "match_entity_id": { "type": ["integer", "null"], "description": "实体裁决锚定：同点异写/分店命名差异致自动对齐失灵时填库内同点 id；连锁异址分店不填。" },
+
+    "operator_group": { "type": ["string", "null"], "description": "运营方/品牌/主理人/集团（经交叉核实）。" },
+    "operator_confirmed": { "type": "boolean", "default": false },
+
+    "category_paths": {
+      "type": "array", "minItems": 1,
+      "description": "主品类路径（叶子+父链），按该品类 taxonomy。例：['现场音乐','Livehouse','摇滚']、['菜市场','社区菜场']、['茶馆','新中式茶空间']。",
+      "items": { "type": "array", "items": { "type": "string" }, "minItems": 2 }
+    },
+    "form": { "type": ["string", "null"], "description": "形态/形式（按品类取值，如 千人场/小场；批发/零售；茶楼/茶空间）。" },
+    "tags": { "type": "array", "items": { "type": "string" }, "description": "正交标签：场景/时段/规模/特色（独立运营/连锁/官方认证/24h/驻场/可预订/纯素等），确有其事才标。" },
+
+    "price_avg": { "type": ["integer", "null"], "description": "平均消费（元）；免费/无消费场所留 null。" },
+    "price_range": { "type": ["string", "null"] },
+    "price_sources": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["platform", "value"],
+        "properties": { "platform": { "type": "string" }, "value": { "type": "integer" }, "url": { "type": ["string", "null"] } }
+      }
+    },
+
+    "district": { "type": "string", "description": "行政区标准名；多区连锁='多区连锁'；无法定位='待确认'。" },
+    "address": { "type": ["string", "null"], "description": "门牌完整地址；渠道链 地图POI→点评→官方→政务名单。" },
+    "business_area": { "type": ["string", "null"] },
+    "lat": { "type": ["number", "null"], "description": "纬度，留空由 geocode 解析，禁止猜。" },
+    "lng": { "type": ["number", "null"], "description": "经度，同上。" },
+    "coord_source": { "type": ["string", "null"], "description": "坐标来源：tencent/amap/official/manual；国内 GCJ-02。" },
+
+    "contact_raw": { "type": ["string", "null"], "description": "原始电话/联系方式（脚本清洗）。" },
+    "booking_or_ticket": { "type": ["string", "null"], "description": "预订/购票/预约方式（平台/小程序/票务/现场）。" },
+    "signature_features": {
+      "type": "array",
+      "description": "看点/招牌（品类的'必体验'：如 招牌演出系列/特色摊位/山头茶；替代餐饮的 signature_dishes）。",
+      "items": { "type": "string" }
+    },
+
+    "status": { "type": "string", "enum": ["active", "closed", "seasonal"], "description": "在营/关店/季节性。" },
+    "closed_date": { "type": ["string", "null"] },
+    "closed_source": { "type": ["string", "null"] },
+
+    "scores": {
+      "type": "object",
+      "description": "评分。各子分 0-100 百分制（口径见该品类 03_scoring_rubric）；total 由脚本按该品类权重算，不手填。",
+      "required": ["objective", "audience", "core_experience", "endorsement", "soft_ad_penalty"],
+      "properties": {
+        "objective": { "type": "number", "minimum": 0, "maximum": 100, "description": "客观子分：平台/可量化数据×可信度" },
+        "audience": { "type": "number", "minimum": 0, "maximum": 100, "description": "受众实证子分：真实用户具体描述" },
+        "core_experience": { "type": "number", "minimum": 0, "maximum": 100, "description": "核心体验子分（口味/声场/鲜度/茶品…）" },
+        "endorsement": { "type": "number", "minimum": 0, "maximum": 100, "description": "背书子分" },
+        "soft_ad_penalty": { "type": "number", "minimum": 0, "maximum": 30 },
+        "platform_credibility": { "type": "number", "minimum": 0.7, "maximum": 1.0 }
+      }
+    },
+
+    "evidence": {
+      "type": "object", "required": ["user_quotes", "platform_scores"],
+      "properties": {
+        "user_quotes": {
+          "type": "array", "minItems": 2,
+          "description": "≥2 条可溯源真实用户原话（到场/到店/实际使用），含具体对象与细节；空话/营销稿不计。",
+          "items": {
+            "type": "object", "required": ["quote", "source", "url"],
+            "properties": {
+              "quote": { "type": "string" },
+              "subject": { "type": ["string", "null"], "description": "原话涉及的具体对象（曲目/摊位/茶品/品类）" },
+              "source": { "type": "string" },
+              "url": { "type": "string" },
+              "date": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "platform_scores": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["platform", "score"],
+            "properties": {
+              "platform": { "type": "string" }, "score": { "type": "number" },
+              "review_count": { "type": ["integer", "null"] }, "url": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "negative_signals": { "type": "array", "items": { "type": "string" } },
+        "soft_ad_flags": { "type": "array", "items": { "type": "string" } },
+        "traffic_signals": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "category_specific": {
+      "type": "object",
+      "description": "品类特有结构化字段（如 Livehouse 容量 capacity/常驻厂牌；菜市场 摊位类型数/营业时间；茶馆 茶位费/包间）。",
+      "additionalProperties": true
+    },
+
+    "sources": {
+      "type": "array", "minItems": 2,
+      "description": "≥2 个独立来源、跨类型（权威/UGC/地图/媒体/官方）。",
+      "items": {
+        "type": "object", "required": ["title", "url", "type"],
+        "properties": {
+          "title": { "type": "string" }, "url": { "type": "string" },
+          "type": { "type": "string", "description": "official_guide/ugc/map/media/brand/platform/other" }
+        }
+      }
+    },
+
+    "data_updated_at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "notes": { "type": ["string", "null"] }
+  }
+}

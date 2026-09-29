@@ -237,6 +237,31 @@ def main():
         if L:
             act(rid, "ADD", L, f"R5 主营子叶{L}")
 
+    # R-W3（W3 机制门）：形式叶子 私房菜348 / 会所347 / 私宴会所83 分流复核。
+    # 只读审计：只报"挂了348却裁决为会所（或反之）""83 中间态待分流"为待裁决冲突，
+    # 不自动 DELETE（遵守"只补不错杀"）；写库动作由 private_kitchen_club_resolver --apply 负责。
+    try:
+        import private_kitchen_club_resolver as R3
+        OWNED = {348, 347, 83}
+        for r in active:
+            rid = r["id"]
+            owned = tags[rid] & OWNED
+            if not owned:
+                continue
+            sc = R3.score_shop(r)
+            tgt = sc["target_leaf"]
+            if 83 in owned:
+                conflicts.append((rid, r["name"], "REVIEW", "私宴/会所(83)",
+                                  f"R-W3 83中间态→裁决建议{tgt or '低置信核验'}，待分流348/347"))
+            if 348 in owned and tgt == 347:
+                conflicts.append((rid, r["name"], "REVIEW", "私房菜(348)",
+                                  "R-W3 挂348但裁决为会所，复核是否误挂"))
+            if 347 in owned and tgt == 348:
+                conflicts.append((rid, r["name"], "REVIEW", "会所(347)",
+                                  "R-W3 挂347但裁决为真私房，复核是否误挂"))
+    except Exception as e:  # 门为可选增强：resolver 不可用不阻断主审计
+        print(f"[R-W3] 跳过（resolver 未就绪）: {e}")
+
     # 汇总去重（同 rid+op+cid）
     seen, uniq = set(), []
     for a in actions:

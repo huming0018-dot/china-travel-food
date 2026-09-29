@@ -1,0 +1,150 @@
+{
+  "version": "2026-09-29",
+  "frame": "F3",
+  "note": "F3 集团/品牌/主厨树反向枚举注册中心。发现由代理经免费通道(官网locator/公开web检索/权威页)取证，机械对账/匹配/写库由 cloud/group_chef_tree.py 确定性执行。近名异店 exclude_aliases 强制排除；同名异址分店保留为不同实体。",
+  "groups": [
+    {
+      "group_name": "望庐·江西菜",
+      "group_type": "餐饮品牌",
+      "founder": null,
+      "description": "国内唯一米其林江西菜（必比登推介）。2023年初浦东前滩31开业，后开外滩老市府店。招牌莲花血鸭/藜蒿炒腊肉/南昌瓦罐汤。注意：近名异店'望庐山'必须排除。",
+      "aliases": ["望庐", "望庐·江西菜", "望庐·江西荟馆", "望庐·精细江西菜", "望庐江西"],
+      "exclude_aliases": ["望庐山"],
+      "expected_sh_count": 2,
+      "discovery_queries": ["上海 望庐 江西菜 地址 外滩 前滩"],
+      "stores": [
+        {
+          "name": "望庐·精细江西菜(外滩店)",
+          "address": "黄浦区江西中路211号外滩老市府5层A02号",
+          "voices": 3,
+          "frames": ["F3", "F2-michelin"],
+          "source_urls": [
+            "https://guide.michelin.com/sg/zh_CN/shanghai-municipality/shanghai/restaurant/wang-lu",
+            "https://www.diningcity.cn/zh/shanghai/wang_lu_jiangxi_cuisine"
+          ]
+        },
+        {
+          "name": "望庐·江西荟馆(前滩店)",
+          "address": "浦东新区海阳西路666弄15号前滩31信德中心3楼301-302",
+          "voices": 3,
+          "frames": ["F3", "F2-michelin", "F5-map"],
+          "source_urls": [
+            "https://foodnwine.ifeng.com/c/8T34n1ZySjF",
+            "https://you.ctrip.com/food/2/136042222.html",
+            "https://guide.michelin.com/sg/zh_CN/shanghai-municipality/shanghai/restaurant/wang-lu"
+          ]
+        }
+      ]
+    },
+    {
+      "group_name": "Stone Sal 言盐",
+      "group_type": "餐饮品牌",
+      "founder": "林震谷(Chef Ling)",
+      "description": "上海头部干式熟成美式牛排馆，2017年由主厨林震谷(Chef Ling)创立，米其林推荐、黑珍珠一钻、BBC专访主厨团队。上海仅东湖路1店；深圳南山店为外地，不计入上海分母。",
+      "aliases": ["Stone Sal", "Stone Sal 言盐", "言盐", "言盐西餐厅", "Stonesal"],
+      "exclude_aliases": [],
+      "expected_sh_count": 1,
+      "discovery_queries": ["上海 Stone Sal 言盐 分店 门店"],
+      "stores": [
+        {
+          "name": "Stone Sal 言盐西餐厅(东湖路店)",
+          "address": "徐汇区东湖路9号地产大厦裙房1M",
+          "voices": 4,
+          "frames": ["F3-official", "F5-map", "F2-guide"],
+          "source_urls": [
+            "https://www.stonesal.com",
+            "https://you.ctrip.com/food/shanghai2/20346189.html",
+            "https://www.amap.com/place/B0FFIKANHD",
+            "https://m.dianping.com/shop/95899027"
+          ]
+        }
+      ],
+      "chef_links": [
+        {"chef_name": "林震谷", "name_en": "Chef Ling", "role": "创始人/主厨", "source_url": "https://you.ctrip.com/food/shanghai2/20346189.html"}
+      ]
+    }
+  ],
+  "new_store_candidates": [
+    {
+      "brand": "八 by 8",
+      "aliases": ["8by8", "八by8", "八 by 8", "八EIGHT", "8 by 8"],
+      "cuisine_hint": "无国界/fusion chef's table",
+      "address": "徐汇区建国西路691号1幢102-1单元",
+      "district": "徐汇区",
+      "price_avg": 988,
+      "note": "主厨Gabo(委内瑞拉混血，前8 by Anarkia)主理的无菜单chef's table，一轮8位、完全预约制。2024-08报道称'最后1间、吃完退休'，2025-09另有武夷路'八EIGHT'报道，需二次核验当前营业态与确切地址。点评已停用，仅小程序预约。",
+      "voices": 2,
+      "frames": ["F3", "F6-snowball"],
+      "source_urls": [
+        "https://www.sohu.com/a/798648474_391486",
+        "https://www.sohu.com/a/931557446_121124405",
+        "https://www.dianping.com/discovery/1559034144"
+      ],
+      "discovery_query": "上海 八by8 餐厅 地址"
+    },
+    {
+      "brand": "佐佐",
+      "aliases": ["佐佐", "佐佐寿司", "佐佐割烹"],
+      "cuisine_hint": "日料/omakase",
+      "address": null,
+      "district": null,
+      "price_avg": null,
+      "note": "上海老牌日料名店；'福寿司'即由其独立分出。地址待二次精确逼近（知乎榜单仅提名未给门牌）。",
+      "voices": 1,
+      "frames": ["F3", "F6-snowball"],
+      "source_urls": ["https://zhuanlan.zhihu.com/p/1900555902450378144"],
+      "discovery_query": "上海 福寿司 佐佐 日料 地址"
+    },
+    {
+      "brand": "福寿司",
+      "aliases": ["福寿司", "福寿司 Sushi"],
+      "cuisine_hint": "日料/寿司omakase",
+      "address": null,
+      "district": null,
+      "price_avg": 2250,
+      "note": "从魔都日料名店'佐佐'独立出来的寿司专门店，人均约2250元，另有专门茶单/酒水单。地址待二次精确逼近。",
+      "voices": 1,
+      "frames": ["F3", "F6-snowball"],
+      "source_urls": ["https://zhuanlan.zhihu.com/p/1900555902450378144"],
+      "discovery_query": "上海 福寿司 佐佐 日料 地址"
+    },
+    {
+      "brand": "鮨照",
+      "aliases": ["鮨照", "鮨照 Sushi", "Sushi Teru"],
+      "cuisine_hint": "日料/寿司omakase",
+      "address": null,
+      "district": null,
+      "price_avg": null,
+      "note": "板前寿司omakase。注意勿与库内'鮨·天照'(rid 1888)混淆——是不同店。地址待二次精确逼近。",
+      "voices": 1,
+      "frames": ["F3"],
+      "source_urls": [],
+      "discovery_query": "上海 鮨照 寿司 地址 omakase"
+    },
+    {
+      "brand": "肉屋kita",
+      "aliases": ["肉屋kita", "肉屋喜多", "Kita Shinkan", "喜多新馆"],
+      "cuisine_hint": "日料/烧肉",
+      "address": null,
+      "district": null,
+      "price_avg": null,
+      "note": "日式烧肉/肉屋。候选线索'Tripadvisor 喜多新馆 Kita Shinkan'，需二次确认是否即回归所指'肉屋kita'。",
+      "voices": 1,
+      "frames": ["F3", "F5-map"],
+      "source_urls": ["https://cn.tripadvisor.com/Restaurant_Review-g308272-d16694926-Reviews-Kita_Shinkan-Shanghai.html"],
+      "discovery_query": "上海 肉屋kita 烧肉 地址"
+    }
+  ],
+  "regression": [
+    {"name": "Ministry of Crab", "note": "斯里兰卡海外名店入沪；已挂 group 9"},
+    {"name": "8by8", "note": "八by8：先模糊召回→权威源精确逼近"},
+    {"name": "nagi", "note": "nagi 凪：江师傅独立板前，非东京煮干拉面凪连锁"},
+    {"name": "鮨照", "note": "板前寿司；勿与鮨·天照混"},
+    {"name": "肉屋kita", "note": "日式烧肉"},
+    {"name": "佐佐", "note": "上海老牌日料名店，福寿司母体"},
+    {"name": "福寿司", "note": "佐佐分出的寿司专门店"},
+    {"name": "Stone Sal 言盐", "note": "美式干式熟成牛排"},
+    {"name": "Cheeva Thai", "note": "米其林泰式私宴"},
+    {"name": "望庐", "note": "江西菜双分店；排除望庐山"}
+  ]
+}

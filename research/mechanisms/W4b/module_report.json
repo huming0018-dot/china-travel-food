@@ -1,0 +1,199 @@
+{
+  "workflow": "W4b",
+  "version": "2026-09-29",
+  "generated_at": "2026-09-29T19:19:10",
+  "mode": "apply",
+  "teahouse_actions": [
+    {
+      "rule": "yulian_ensure",
+      "rid": 1739,
+      "cid": 352,
+      "action": "noop",
+      "msg": "#1739-352 已存在 is_primary=False"
+    },
+    {
+      "rule": "yulian_ensure",
+      "rid": 1739,
+      "cid": 324,
+      "action": "noop",
+      "msg": "#1739-324 已存在 is_primary=False"
+    },
+    {
+      "rule": "yulian_forbid",
+      "rid": 1739,
+      "cid": 82,
+      "action": "noop",
+      "msg": "#1739-82 本就无链接"
+    },
+    {
+      "rule": "sitin_ensure82",
+      "rid": 1798,
+      "cid": 82,
+      "action": "noop",
+      "msg": "#1798-82 已存在 is_primary=False"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1798,
+      "cid": 324,
+      "action": "noop",
+      "msg": "#1798-324 本就无链接"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1798,
+      "cid": 352,
+      "action": "noop",
+      "msg": "#1798-352 本就无链接"
+    },
+    {
+      "rule": "sitin_ensure82",
+      "rid": 1989,
+      "cid": 82,
+      "action": "noop",
+      "msg": "#1989-82 已存在 is_primary=False"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1989,
+      "cid": 324,
+      "action": "noop",
+      "msg": "#1989-324 本就无链接"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1989,
+      "cid": 352,
+      "action": "noop",
+      "msg": "#1989-352 本就无链接"
+    },
+    {
+      "rule": "sitin_ensure82",
+      "rid": 1990,
+      "cid": 82,
+      "action": "noop",
+      "msg": "#1990-82 已存在 is_primary=False"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1990,
+      "cid": 324,
+      "action": "noop",
+      "msg": "#1990-324 本就无链接"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1990,
+      "cid": 352,
+      "action": "noop",
+      "msg": "#1990-352 本就无链接"
+    },
+    {
+      "rule": "sitin_ensure82",
+      "rid": 1991,
+      "cid": 82,
+      "action": "noop",
+      "msg": "#1991-82 已存在 is_primary=False"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1991,
+      "cid": 324,
+      "action": "noop",
+      "msg": "#1991-324 本就无链接"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1991,
+      "cid": 352,
+      "action": "noop",
+      "msg": "#1991-352 本就无链接"
+    },
+    {
+      "rule": "sitin_ensure82",
+      "rid": 1992,
+      "cid": 82,
+      "action": "noop",
+      "msg": "#1992-82 已存在 is_primary=False"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1992,
+      "cid": 324,
+      "action": "noop",
+      "msg": "#1992-324 本就无链接"
+    },
+    {
+      "rule": "sitin_remove",
+      "rid": 1992,
+      "cid": 352,
+      "action": "noop",
+      "msg": "#1992-352 本就无链接"
+    }
+  ],
+  "yusheng_actions": [
+    {
+      "rid": 1993,
+      "action": "upsert",
+      "msg": "#1993-370 is_primary=True",
+      "leaf_id": 370
+    },
+    {
+      "rid": 1994,
+      "action": "upsert",
+      "msg": "#1994-370 is_primary=True",
+      "leaf_id": 370
+    },
+    {
+      "rid": 1995,
+      "action": "upsert",
+      "msg": "#1995-370 is_primary=True",
+      "leaf_id": 370
+    },
+    {
+      "rid": 1996,
+      "action": "upsert",
+      "msg": "#1996-370 is_primary=True",
+      "leaf_id": 370
+    }
+  ],
+  "yulian_matched_shops": [
+    {
+      "restaurant_id": 1739,
+      "name": "裕莲茶楼（金虹桥国际中心店）"
+    }
+  ],
+  "yulian_dessert_proof_present": [
+    {
+      "rid": 1739,
+      "dessert_links_present": [
+        67,
+        68,
+        302,
+        317
+      ],
+      "ok": true
+    }
+  ],
+  "audit_only": {
+    "matcha_shops_keep_324_no_352": [
+      1311,
+      1313,
+      1737,
+      1740
+    ],
+    "milk_tea_correct": [
+      1574
+    ],
+    "hk_milk_tea_empty": []
+  },
+  "yusheng_leaf_id": 370,
+  "yusheng_shops_on_leaf": [
+    1993,
+    1994,
+    1995,
+    1996
+  ],
+  "market_ledger_path": "/Users/deuce/Doubao/chats/2026-09-28/new-chat-1/china-travel-food/research/category/菜市场/market_ledger.json",
+  "market_total": 93
+}

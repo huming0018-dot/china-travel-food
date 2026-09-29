@@ -1,0 +1,95 @@
+{
+  "workflow": "W4b",
+  "version": "2026-09-29",
+  "generated_at": "2026-09-29T19:55:00",
+  "agent": "deuce",
+  "scope": "茶馆/茶室82、茶饮324、新中式茶饮352、奶茶专门店353、港式奶茶茶室354、广西菜21(含新叶370)、菜市场独立POI账本",
+  "module": {
+    "cloud_run": "/Users/deuce/Doubao/chats/2026-09-28/new-chat-1/china-travel-food/cloud/scene_ingredient_coverage.py",
+    "skill_copy": "/Users/deuce/Library/Application Support/Doubao/Default/.doubao/agent_mode/workspace/.user_skills/city-food-guide/scripts/food_pipeline/scene_ingredient_coverage.py",
+    "skill_reference": "/Users/deuce/Library/Application Support/Doubao/Default/.doubao/agent_mode/workspace/.user_skills/city-food-guide/references/w4b-teahouse-yusheng-market.md",
+    "gate": "scene_ingredient_coverage --gate (挂入 stage6_coverage / release_audit 质量门，exit 0=通过)",
+    "dry_run_default": true,
+    "apply_writes_idempotent": true,
+    "readback_assertion": true
+  },
+  "denominator": {
+    "teahouse_leaf_82_active_shops": 5,
+    "tea_drink_leaf_324_active_shops_after": 7,
+    "new_chinese_tea_352_active_shops_after": 1,
+    "milk_tea_353_active_shops": 1,
+    "hk_milk_tea_354_active_shops": 0,
+    "guangxi_yusheng_leaf": 370,
+    "guangxi_yusheng_shops_on_leaf": 4,
+    "market_authority_total": 93
+  },
+  "frames": [
+    {"frame": "F2_authority_商务局", "what": "上海市商务委2025升级改造标准化菜市场名单", "count": 93},
+    {"frame": "F4_UGC_web", "what": "general_search 抖音/携程发现横县鱼生候选", "count": 2},
+    {"frame": "in_library", "what": "在库店归位（裕莲/堂饮茶馆/鱼生叶挂链）", "count": 11}
+  ],
+  "items": [
+    {"id": 1739, "name": "裕莲茶楼（金虹桥国际中心店）", "frame": "in_library",
+     "evidence": "招牌蛋挞/乌龙奶茶/中式茶香烘焙；主营=新中式茶饮+蛋挞甜品，非纯茶馆",
+     "decision": "补链352新中式茶饮+324茶饮(均非primary)；蛋挞/甜品出品由302/317/67/68体现(已断言存在)；不挂82",
+     "source_urls": [], "discovery_path": "配置规则 name contains 裕莲"},
+    {"id": 1798, "name": "湖心亭茶楼", "frame": "in_library",
+     "evidence": "豫园民俗茶楼·评弹茶席·早茶；堂饮", "decision": "留82；删324/352(堂饮≠快取茶饮)",
+     "source_urls": [], "discovery_path": "SITIN_TEAHOUSES 配置名单"},
+    {"id": 1989, "name": "时相遇·1913百年茶馆", "frame": "in_library",
+     "evidence": "普洱/岩茶堂饮，人均398", "decision": "留82；删324/352", "source_urls": [], "discovery_path": "SITIN_TEAHOUSES"},
+    {"id": 1990, "name": "少山集(创邑SPACE店)", "frame": "in_library",
+     "evidence": "老白茶·冰泉煮茶", "decision": "留82；删324/352", "source_urls": [], "discovery_path": "SITIN_TEAHOUSES"},
+    {"id": 1991, "name": "隐溪茶馆(大田路店)", "frame": "in_library",
+     "evidence": "熟普/岩茶堂饮·包间", "decision": "留82；删324/352", "source_urls": [], "discovery_path": "SITIN_TEAHOUSES"},
+    {"id": 1992, "name": "黄庭茶馆(新天地店)", "frame": "in_library",
+     "evidence": "普洱老茶·宋代点茶", "decision": "留82；删324/352", "source_urls": [], "discovery_path": "SITIN_TEAHOUSES"},
+    {"id": 1993, "name": "广记鱼生(龙茗路店)", "frame": "in_library",
+     "evidence": "横县鱼生·真鲷/吊水鱼现切(闵行)", "decision": "挂新叶370(is_primary=True)；父叶21保持False",
+     "source_urls": ["https://www.iesdouyin.com/share/video/7674532746110538211"], "discovery_path": "在库店按新叶归位"},
+    {"id": 1994, "name": "渔八公·横县鱼生(浦东店)", "frame": "in_library",
+     "evidence": "横县鱼生连锁(浦东/松江)", "decision": "挂370(is_primary=True)",
+     "source_urls": ["https://www.iesdouyin.com/share/video/7676062626950287227"], "discovery_path": "在库店归位"},
+    {"id": 1995, "name": "鱼城主·广式鱼生(宜川店)", "frame": "in_library",
+     "evidence": "名广式但视频称广西活水皖鱼(普陀)， REVIEW级仍挂370", "decision": "挂370(is_primary=True)，待人工复核流派",
+     "source_urls": ["https://www.iesdouyin.com/share/video/7650044131184950470"], "discovery_path": "在库店归位"},
+    {"id": 1996, "name": "粤桂發横县鱼生(江桥店)", "frame": "in_library",
+     "evidence": "横县鱼生(嘉定江桥)", "decision": "挂370(is_primary=True)", "source_urls": [], "discovery_path": "在库店归位"},
+    {"id": 661, "name": "禄记顺德鱼生", "frame": "hold_out",
+     "evidence": "顺德流派≠横县", "decision": "不碰，保持顺德菜106", "source_urls": [], "discovery_path": "YUSHENG_KEEP_OFF"}
+  ],
+  "frontier_candidates_not_admitted": [
+    {"name": "沪忆鲜/沪一鲜(宝山水产西路)", "district": "宝山区", "evidence": "横县鱼生·广西空运吊水皖鱼(抖音2条)",
+     "source_urls": ["https://www.iesdouyin.com/share/video/7524304213397048635", "https://www.iesdouyin.com/share/video/7536040381306228002"],
+     "decision": "frontier：抖音营销向，待≥2独立食客声音过 admission_gate 再入库（宁空不假）"},
+    {"name": "螺肥妹(宝山)", "district": "宝山区", "evidence": "广西特色·横县鱼生赤眼鱼(携程笔记)",
+     "source_urls": ["https://m.ctrip.com/webapp/you/community/detail?articleId=161638212"],
+     "decision": "frontier：单源，待第二声音"}
+  ],
+  "stats": {
+    "teahouse_link_fixes_total": 12,
+    "teahouse_yulian_added_links": 2,
+    "teahouse_sitin_removed_links": 10,
+    "yusheng_leaf_created": 370,
+    "yusheng_shops_linked": 4,
+    "shops_newly_admitted": 0,
+    "markets_authority_listed": 93,
+    "markets_with_features_verified": 2,
+    "gate_problems": 0
+  },
+  "gaps": [
+    "354 港式奶茶·茶室 在库 0 家（免费通道未发现，缺口）",
+    "鱼生候选 frontier 2 家（沪忆鲜/螺肥妹）未过 admission_gate，待≥2独立声音",
+    "菜市场网红改造市集格、一级批发市场格 未跑 UGC/地图词矩阵（下轮）",
+    "菜市场93家坐标/分区/营业时间待地图POI免费额度补（当前留空，宁空不假）",
+    "1995 鱼城主 流派名实不符（名广式、实广西），待人工复核",
+    "Apify 付费额度已尽，本轮未用"
+  ],
+  "regression": {
+    "裕莲茶楼": {"found": true, "discovery_path": "配置规则 name contains 裕莲", "restaurant_id": 1739},
+    "广记鱼生": {"found": true, "discovery_path": "在库1993归位新叶370", "restaurant_id": 1993},
+    "渔八公横县鱼生": {"found": true, "discovery_path": "在库1994归位新叶370", "restaurant_id": 1994},
+    "三角地曲阳菜场": {"found": true, "discovery_path": "F2商务委2025权威底册seq51", "restaurant_id": null},
+    "密山市场(宝山)": {"found": true, "discovery_path": "F4媒体宝山区菜篮子图鉴2026-09", "restaurant_id": null}
+  }
+}

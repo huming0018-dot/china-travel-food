@@ -1,0 +1,11 @@
+# W2 信源注册表 cron 片段（追加到 cloud/crontab.txt；2026-09-29）
+# ----------------------------------------------------------------------------
+# 为什么是独立片段：deuce 工作区的 cloud/crontab.txt 暂存了一批"旧在途删除"
+# （evidence_pool / ugc_longrun / blackpearl 行，远端仍保留、口径待对账），
+# 本轮不能整文件提交以免带入这些删除；故把 W2 新增行单独沉淀，待对账后并入 crontab.txt。
+# 运行环境：容器 food-cloud，cd /app/cloud && . /app/cloud/env.sh
+#
+# 13) W2 信源注册表 poll + P5 门（免费搜索种子驱动，HTTP 不占浏览器；
+#     按各源 refresh_cadence 到期才采）：每天 06:22 错峰
+22 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/w2_src.lock /usr/local/bin/python wechat_source_registry.py --seed /app/data/w2/discovered_seed.jsonl --apply >> /app/data/w2_source_registry.log 2>&1
+22 6 * * * cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python wechat_source_registry.py --audit >> /app/data/w2_p5_gate.log 2>&1

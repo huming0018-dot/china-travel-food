@@ -1,0 +1,51 @@
+{
+  "category": "菜市场（农贸市场/街市/市集）",
+  "note": "回归断言：行家公认标杆 / 媒体点名 / 权威底册在册。每条登记应属网格 + 应被哪条发现路径捞到。点名是检验机制的用例、不是待补清单；机制跑完未命中→修机制重跑，不手工补点。",
+  "cases": [
+    {
+      "name": "三角地曲阳菜场",
+      "aliases": ["三角地菜场", "赤峰路菜场"],
+      "expected_grid": "标准化农贸市场 × 中心城区(虹口/杨浦)",
+      "expected_discovery_path": "F2 权威底册（市商务委2025名单 seq51）",
+      "hit": true,
+      "first_hit_source": "https://sww.sh.gov.cn/zxxxgk/20251112/6c44d09d7e024d8bacde08e744a269ef.html",
+      "notes": "老牌菜场，赤峰路319号"
+    },
+    {
+      "name": "三角地大连菜场",
+      "aliases": ["大连西路菜场"],
+      "expected_grid": "标准化农贸市场 × 中心城区",
+      "expected_discovery_path": "F2 权威底册 seq52",
+      "hit": true,
+      "first_hit_source": "https://sww.sh.gov.cn/zxxxgk/20251112/6c44d09d7e024d8bacde08e744a269ef.html",
+      "notes": "大连西路250弄30号"
+    },
+    {
+      "name": "宝山集贸市场（密山市场）",
+      "aliases": ["密山市场"],
+      "expected_grid": "特色摊位-豆制品熟食 × 近郊(宝山)",
+      "expected_discovery_path": "F2/F4 媒体（宝山区菜篮子图鉴 2026-09 政府稿）",
+      "hit": true,
+      "first_hit_source": "https://www.shanghai.gov.cn/nw17239/20260907/d29c728605094f948d0b256eb0cef230.html",
+      "notes": "密山路101号，汉康豆制品现制鲜售"
+    },
+    {
+      "name": "广中菜场（虹商好客）",
+      "aliases": ["广中农贸市场"],
+      "expected_grid": "标准化农贸市场 × 中心城区(虹口)",
+      "expected_discovery_path": "F4 媒体（上观新闻 2026-09-29 复市报道）",
+      "hit": true,
+      "first_hit_source": "http://m.toutiao.com/group/7690781407160844843/",
+      "notes": "阔别数年2026-09-24重启，日均客流1.5万；属易变时效项，登记复市"
+    },
+    {
+      "name": "高邮路菜场 / 其它网红改造市集",
+      "aliases": ["网红菜场"],
+      "expected_grid": "网红改造市集 × 中心城区",
+      "expected_discovery_path": "F4 UGC（小红书/抖音逛菜场词矩阵，下轮跑）",
+      "hit": false,
+      "first_hit_source": null,
+      "notes": "本阶段未跑UGC词矩阵，标未完成发现，宁空不假"
+    }
+  ]
+}

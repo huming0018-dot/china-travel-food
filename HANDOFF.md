@@ -3186,3 +3186,96 @@ chefs 59→59、restaurant_chefs 79→79（before=after，0 净新增）；revie
 **实际晋升**：本轮 **0 家**店晋升 restaurants（KOL 内容仅线索，缺独立食客堂食声音；待 gap pool 聚合 ≥2 独立声音）。
 
 **遗留**：①016 migration 待用户在 SQL Editor 执行后，再把确认过的公众号 handle 写回 handles 列；②微博/知乎/抖音待有浏览器/账号通道再接；③24 条候选线索待 admission_gate 与 B站评论信号跨源聚合。
+
+## 2026-09-29 傍晚：事实层精细耕作落地 + Apify worth_fill 自动填充常驻服务（充值门）
+
+### 事实层（已完成、已推送 6b02359）
+- 迁移 **014_fact_claims.sql**：restaurants 增 `food_safety`(无/疑似/确认,默认无) + `fact_claims`(jsonb 默认[]，元素 {type,value,confidence,date,source_url,quote})；Supabase 执行 Success、REST 回读列存在。
+- 引擎 **cloud/fact_verify.py**：模型只产出种子 `research/fact_verify/claims_seed.json`，脚本做品牌→门店匹配(name+aliases)、值域校验、fact_claims 合并去重(type+source_url)、幂等 PATCH、写后回读断言；dry-run/--apply。已在容器 apply。
+- 大众万店连锁与严重危机店库内**本就排除**（逐一 grep 确认 NOT IN DB）：蜜雪/瑞幸/海底捞/华莱士/老乡鸡/西贝/大米先生/乡村基/米村/杨铭宇/鱼你在一起/呷哺/正新/绝味/库迪；日料自助回转(万岛/上井/寿司郎/将太无二/元气/大渔)；霸扑汉堡、Solo衡山路、明呈黄鱼面。
+- 3 家"单店伪装、实为全国标准化连锁"已纠正并回读：
+  - **id610 江边城外(百联中环)**：大型连锁(全国200直营)/ck疑似/pr低(活鱼现杀现烤)/safety无/std=true/3 claims。
+  - **id1445 百岁我家酸菜鱼(古美)**：大型连锁(全国加盟、全国配料中心供料包)/ck确认/pr低/safety无/std=true/3 claims。
+  - **id1616 云海肴(闸北大悦城)**：大型连锁(全国100+商场、丰台1万㎡加工肉类熟制冷链)/ck确认/pr疑似/safety疑似(171人中毒在集团团餐另一线、非上海堂食)/std=true/4 claims。
+- 保留不改：新荣记/大董/甬府系、全聚德、八合里、陶陶居等现做集团老字号；遇外滩"鱼钩"孤立异物已处理，safety 无。
+- 机制沉淀进 **city-food-guide skill**：新增 `references/fact-claim-verification.md` + `scripts/food_pipeline/fact_verify.py`，SKILL.md References 与 mechanism-master-v4 绑定表更新。
+
+### Apify 成本审计根因（关键）
+- 账户 username **fuchsia_civility_4ef**，FREE，$5/周期；周期 2026-09-29→2026-10-28；折后已用 **$4.99934、剩约 $0.00066**，账户无支付方式。
+- 费用拆解：**PAID_ACTORS_PER_EVENT=$4.99694（付费 actor 按次租用费，占几乎全部）**；ACTOR_COMPUTE_UNITS 仅 $0.00206。
+- 各 actor 实测单次（最近30运行）：**zhorex/rednote-xiaohongshu-scraper = $1.9703/次（最大头，2次$3.94，禁用）**；opspilot.cc keyword = **$0.10/次（固定20条、质量最好）**；toolzerhub search = **$0.0004/次（15次$0.0067，最便宜）**；其余 $0.02~0.17 不等。
+- 漏洞根因：旧脚本 PROVIDERS 把 opspilot/toolzerhub 标 price=0，额度门仅对 price>0 生效 → "免费"误判（计费延迟），实际按次费烧光整月额度。
+
+### 修复 + 常驻服务（已部署、已推送 35c0515）
+- **cloud/review_apify_fill.py**（新入库，原仅在服务器/未跟踪）：
+  - 新增 `current_used()` 读平台真实账单(totalUsageCreditsUsdAfterVolumeDiscount)；
+  - **所有 actor 每次运行前都查真实账单**：剩余 < `PER_RUN_FLOOR_USD`($0.25) 即停；本轮真实花费达 `ROUND_CAP_USD`(**$10/轮**) 即暂停等确认；不再靠内部 price 估算。
+  - `select_targets` 改为**严格限定治理队列 worth_fill.json**（FOOD_DATA_DIR），并双重排除 is_chain_standardized=true；实测目标 **968**（984 中16家已补齐）。
+- 云端 VM systemd 服务 **food-apify-fill.service**（enabled/active，Restart=always）：
+  - 控制器 `/home/ubuntu/food-apify-fill/apify_fill_controller.sh`；成本路由 **toolzerhub→zenstudio→opspilot**（便宜→质量最好），每 provider 一轮 sweep，select_targets 自然只追仍 <need 的店。
+  - 额度不足：经容器 notifier 向 **TG+飞书** 发一条 warn（key=fill_credit，自带冷却去重），sleep 1200s 复查；**充值或月度重置后自动续跑，无需重启，不依赖 deuce/MacBook 在线**。全部完成发 info(key=fill_done)。
+  - 当前状态：active，remaining=$0.0006、targets=968，处于等待态。
+- **唯一待人工（只能用户本人）**：到 https://console.apify.com/billing 添加支付方式/买额度（首轮 $10 封顶）；充值后服务自动开跑，约100店后回报真实单店成本再决定续跑。
+- 注意：deuce 工作区有一批"旧在途删除"（chefs/groups 页面、kol_monitor/source_registry 等，远端仍保留），与 HAE 机器口径待对账，本轮未提交、仅保留在工作区。
+
+---
+
+## 2026-09-29 深夜：W1–W5 并行机制建设 + worth_fill 队列重算（986）+ Apify 充值门 armed
+
+> 用户指令"同时处理，然后明确需要 worth fill 的库开启 apify 任务"。六个代理并行（W4 拆 a/b），
+> 全程仅免费通道（general_search/web.fetch、权威 sitemap/政务名单、地图 POI 免费额度、Supabase REST、确定性脚本），
+> 未触发任何付费 Apify。每个工作流均"确定性模块 + 状态账本 + 质量门"三绑定，已沉淀进 city-food-guide skill。
+
+### W1 集团/品牌/主厨树（F3）
+- 模块 cloud/group_chef_tree.py（skill scripts 已沉淀）；`--gate` F3 召回门 **exit0 闭环**。
+- 写库（回读断言）：建组 望庐·江西菜(#11，挂 1982 外滩/1983 前滩)、Stone Sal 言盐(#12，挂 1873)；
+  建主厨 林震谷(#61) 并挂 1873。"望庐山"近名异店已排除。
+- 5 品牌已自动发现入候选池 research/mechanisms/W1/candidates.jsonl，待证据闸门(≥2 堂食)后入库：
+  8by8(建国西路691，主厨Gabo)、佐佐、福寿司(自佐佐分出)、鮨照、肉屋kita。
+- 回归 Ministry of Crab(2002)/nagi凪(1887)/Stone Sal(1873)/Cheeva Thai(1842)/望庐(1982+1983) 全部命中并附发现路径。
+
+### W2 微信公众号事实核验 + P5 信源注册表
+- 模块 cloud/wechat_source_registry.py（skill 已沉淀）；`--audit` P5 门 **errors=0**；已挂 cloud/crontab.txt #13（每天06:22，HTTP 不占浏览器、flock）。
+- watchlist +3：跃动金海(241,official)、澎湃新闻·美食(242,media)、奉贤政务转载(243, 已 reliability<0.30 淘汰 dead)；posts +4。
+- 事实与评价分离：探店只进 posts/mentions；事实型信号命中在库店才写 fact_claims，本轮未命中→留线索，宁空不假。
+
+### W3 私房菜 vs 会所（两品类分开）
+- 模块 cloud/private_kitchen_club_resolver.py（skill 已沉淀）；挂 cuisine_classify_audit 的 **R-W3** 只读复核门。
+- 写库（回读断言）：583 平川·程玉平川菜工作室→348 私房菜；1008 雍福会(永福路)→347 会所（会员制私人俱乐部）。
+  会所裁决须命中强结构信号（命名/会员验资/全包间独栋），误报由 117 压到 37；1930 思南海派私房菜偏会所，进 review 未删。
+- **回归 麻麻/可乐：匿名免费通道无法把昵称唯一锚定法定店名（已排除豆花麻麻鱼/可乐路假阳性），按 A3 路由 low_confidence gaps，未手补**；闭环需登录态/充值门。
+
+### W4a 日式面细分 + omakase + 包馅饼清理
+- 模块 cloud/subcategory_noodle_coverage.py（skill 已沉淀）；挂 stage6/release_audit A。
+- 拉面 8 店归叶（博多264/二郎266/蘸面265/家系267/虾白汤262/柚子盐263）；荞麦 261（纹兵卫补270/271）；乌冬 236（丸龟→273）；omakase 325 在库16。
+- 按 is 主营摘 **38 条错链**（仅"含有"的地锅鸡/Arva/茶餐厅等）；327 饺子剩9、328 馄饨剩13 真专门店。
+- 新建 **AJIYA炭火烤肉(仙霞路) id=2006**（仙霞路333号1F/021-60318032/人均241），挂85/88/89/266。
+- 回归 KING(1869) 据证据挂 262+263（招牌为虾白汤+柚子盐融合，非盲挂括号264）；ajiya(2006)/纹兵卫(1870) 命中；
+  **ichi 荞麦=gap**（Soba Ichi 在美国 Oakland，非上海），待地图 POI 二扫。
+
+### W4b 场景茶饮 + 广西鱼生 + 菜市场
+- 模块 cloud/scene_ingredient_coverage.py（skill 已沉淀）；`--gate` **ok=true problems=[]**。
+- 裕莲茶楼(1739)=蛋挞+中式茶饮：补 352/324（蛋挞由302/317体现），不挂 82；5 家堂饮茶馆(1798/1989-1992) 移出324/352、保留82。354 港式奶茶 0=缺口。
+- 广西菜(21) 下新建叶 **广西鱼生(横县鱼生) id=370**，在库 4 店(1993-1996) is_primary 挂叶；661 顺德鱼生不碰；frontier 沪忆鲜/螺肥妹待准入。
+- 菜市场（非餐饮、不写 restaurants）：research/category/菜市场/ 00–05 冷启动模板 + market_ledger.json（市商务委2025标准化名单 **93 家**）。
+
+### W5 招牌菜→菜系联动（机制纠错）
+- 模块 cloud/signature_cuisine_link.py + signature_cuisine_rules.json（配置驱动，skill 已沉淀）；挂 cuisine_classify_audit/stage2。
+- 写库：大富贵/丹凤楼 去链 徽菜(8)/徽州菜(133)（#967/#1526，共3条），**保本帮菜(9)**；白茸(#815) aliases=[Bai Rong,白荣]，正名非"佰荣"。
+- 其余 7 类（黄启云→台湾17/149；Lady M/聚福→甜品302/317 非98；御千代 非铁板烧94；pain chaud/verie 面包简餐 非法餐FD；鲜芋仙→甜品 非台湾17；海南鸡饭→新加坡183 非海南19）库内已正确，幂等确认。
+- **张力留人工**：大富贵招牌含臭鳜鱼/葡萄鱼等徽州出品、权威源称"徽帮为体"，本轮按用户口径去链，建议人工复核是否保留133。
+
+### worth_fill 队列重算 + Apify 任务 armed（本轮核心交付）
+- 治理脚本 prefill_governance.py（已沉淀 cloud/ 与 skill）：active=1473、std=191、新候选=0、待PATCH=0。
+- **worth_fill.json：984 → 986**（924 INDEPENDENT + 62 QUALITY；#2006 在列；交叉校验 0 个 std/closed/prHigh）。
+- 控制器 select_targets(2)=986；food-apify-fill.service **active + enabled（armed）**：控制器每轮重读 worth_fill.json，
+  剩余额度 $0.0006 < 地板$0.25，处于等待态；**充值或月度重置后自动续跑，无需重启，不依赖 deuce/MacBook**。本轮 0 现金误触发。
+
+### 计数汇总
+- 新增餐厅 1（AJIYA #2006）；active 1472→1473；新增集团 2 / 成员链 3 / 主厨 1 / 主厨链 1。
+- 分类：补拉面/荞麦/乌冬/茶饮/鱼生等叶子链接，摘错链 38（W4a）+ 徽菜 3（W5）；新增 cuisine 叶 2（370 鱼生；348/347 此前已建）。
+
+### 仍待人工（只能用户本人 / 需登录态）
+1. **Apify 充值门**：到 https://console.apify.com/billing 加支付方式/买额度（首轮 $10 封顶）；充值后 armed 服务自动开跑 986 店，约100店回报真实单店成本再定续跑。
+2. 登录态恢复后闭环：麻麻/可乐（W3）、ichi 荞麦（W4a）、5 个 W1 候选品牌取证入库、鱼生 frontier 2 家。
+3. 人工复核：大富贵是否保留徽州菜(133)；1930 是否由348改挂347；354 港式奶茶/329 锅贴 等 0 供给叶子。
