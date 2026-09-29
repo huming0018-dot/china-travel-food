@@ -2532,3 +2532,36 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 - 本轮 admit 数 = **0**（hold 295 / reject 268；未在库 4 店+黑珍珠 17 店证据未达三条件，正确 hold）。
 - 基线零变化：1479/1472/电话1254/坐标1471；非目标字段零误伤。
 - 幂等：coverage_matrix 复跑 F2a=100%/F2b=72.1% 一致。
+
+## Track 1B-2 保鲜/关店/迁址（2026-09-29）
+
+**机制**：`cloud/vendor/pipeline/closed_relocate.py`（默认 dry-run、--apply 才写、写后回读、幂等）。
+复用 entity_dedup.migrate_children 全子表 FK 迁移。只动实体/地址/关店字段。
+
+**before→after（live DB 真实数字）**：
+| 项 | before | after |
+|---|---|---|
+| restaurants 总数 | 1479（active1472/closed7） | 1478（active1472/closed6） |
+| nuits 行数 | 2（1967 铜仁路closed + 1978 恒隆active，首页双显） | 1（1978 active，去重） |
+| EHB closed_source | 文本备注（无URL） | 权威URL（腾讯新闻转引官方公众号） |
+| closed 三要素齐 | 7/7（EHB 无URL） | 6/6 全部 status+date+source(URL) |
+| 电话覆盖 | 1268/1479 (85%) | 1268/1478 (85%) |
+| 坐标覆盖 | 1473/1479 (99%) | 1473/1478 (99%) |
+
+**EHB(id=1262)**：status=closed + closed_date=2025-09-28 + closed_source=
+https://view.inews.qq.com/a/20251017A07FWU00 （腾讯新闻，转引EHB官方公众号公告；ELLEMEN/DoNews 多源一致）。
+EHB 2023-05 开业、2025-09-28 停业，米其林一星；closed 后前端列表默认隐藏，不再按在营展示人均。
+
+**Nuits 迁址合并（1967→1978）**：
+- 旧 id=1967（铜仁路68号，closed 2026-09-17）→ 并入新 id=1978（恒隆广场三期Pavilion，active）。
+- 权威源：米其林指南标记关店 https://guide.michelin.com/cn/zh_CN/shanghai-region/shanghai/restaurants/nuits ；
+  恒隆三期Pavilion 2026-09-22 启幕 https://m.jfdaily.com/wx/detail.do?id=1180886 。
+- 迁移子表：restaurant_cuisines 5 行（1978 已有同 cuisine_id，去重删旧）+ food_events 1 行（restaurant_id）+ 1 行（related_restaurant_id）= 7 行。
+- 修 active 行 evidence_summary（去掉误带的"关店"警告）；aliases 加 `Nuits(铜仁路旧址)`。
+- DELETE 1967（FK 已迁空，不触发 CASCADE 丢数据）。
+- 迁址非连锁分店（同一家店搬迁），故合并而非保留两行。
+
+**幂等**：复跑 dry-run = EHB 已 URL 无需变更、nuits 1967 已不存在跳过，0 变更。
+
+**保鲜字段**：全库 1479→1478 行 data_updated_at 非空率 100%（无缺失）；
+保鲜周期走 v_data_freshness 视图（新店30/高端180/平价连锁90）。
