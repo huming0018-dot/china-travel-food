@@ -2307,3 +2307,111 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 ### 调度错峰与防重入
 - 两条均 `flock -n` 防重叠；:39 错峰 :35/:42/:43，06:20 错峰 5:37 softad/03:00 coord。
 - 看门狗 :10/:30/:50 巡检照常；容器时区 Asia/Shanghai。
+
+---
+
+## 全局缺口审计与攻坚计划（2026-09-29 07:45 CST，PM 视角）
+
+> 依据：本 HANDOFF 全文 + 云端容器实时查询（非估算）。周期战报机制已存在并在跑。
+
+### 实时快照（容器查询）
+- restaurants 1479（active 1472 / closed 7）；reviews **1458**（verified diner/trust mid-high **549**、fake 10）。
+- active evidence_level：**verified 146（9.9%）** / provisional 1323 / insufficient 3。
+- 电话：active 无电话 179 → 覆盖 **87.8%**；坐标仅缺 1。
+- 覆盖账本：44/291 叶达标（15%）；224 店有真实食客评价（≥2 条 144）。
+- cron 15 条全装、cron 守护在跑；账号 A=ok / B=ok。
+
+### 新发现 bug（立即修）
+- **progress_broadcast 最近两次「推送结果 False」**（07:23/07:33），周期战报双通道间歇失败，需排查（Deno 反代/飞书 token）。
+
+### 八类通识缺口（状态）
+- A 覆盖：verified 仅 9.9%、F4 空浅叶约 124、F5 单声音 55、黑珍珠真缺 17、稀疏区(奉贤/青浦/松江/嘉定/宝山)、私房菜/茶馆/广西鱼生/菜场/拉面下级未覆盖；点名漏店（佐佐/福寿司/肉屋kita/nagi/鮨照/言盐/ministry of crab/8by8）。
+- B 证据：1326 店 0 真食客；奢华 0-UGC 80、中价约 1300；B站仅标题需字幕 enrichment。
+- C 反软广：定义偏窄（需扩 astroturf/paid/industrial + 综艺网红）；遇外滩×3/POP/Alimentari/苹果花园待复核；前端隐藏连锁未联动。
+- D 实体：南兴园×2、纹兵卫×多、pain chaud×多 需合并；佰荣→白茸；天吉主厨名重复；23 条「海市X区」脏名；fine dining 别名(Jean Georges/鮨升昇)。
+- E 分类：鲜芋仙/黄启云/Lady M/聚福/御千代/pain chaud/大富贵/海南鸡饭/荣府宴/裕莲茶楼/淳百味/弄堂里烧烤/捡角/老干杯 等错挂；招牌菜→分类联动未建；需菜系知识学习 + 全量重审。
+- F 定价：旗舰/进阶/入门语义主观；rasa rasa vs nick nicky's 矛盾；非餐饮套正餐档；需按实际价格分布重设 band + 品类内相对档（双轨）。
+- G 时效：EHB 关店仍展示人均800；nuits 迁恒隆二期；需官方源 social listening + 关店三要素 + 周期复查。
+- H 前端（放最后）：三级撤销、价位/评分排序、返回记忆筛选页、新标签/浮窗、特殊标签筛选、隐藏连锁、详情地图/打卡、私房/会所分开、拉面下级。
+
+### 攻坚顺序
+- Track0（立即）：修播报 False；看门狗 warning 专项；实体合并+正名+脏区名。
+- Track1（数据库，云端，最高优先）：四维词网深覆盖 sourcing；招牌菜→分类联动+全量 tag 重审；定价双轨；保鲜关店；反软广拓宽；主厨/集团/美食家 tracking + 首页飞行厨房/新店/快闪全量化；UGC 长跑（奢华→中价）+ B站字幕。
+- Track2（前端，DB 稳定后）：按 H 类清单。
+- Track3：一键复现 + 精益清理 + DB 架构方案。
+- 需用户（不阻塞）：高德 key（在办）、更多独立实名地图账号、扫码（看门狗推）；**广州代理 10/28 到期需续费**。
+
+
+
+---
+
+## Track0-运维 · 通知双通道加固 + 重登闭环演练（2026-09-29）
+
+### 任务1 · progress_broadcast「推送结果 False」根因与修复
+- 真因（两条叠加）：
+  1. `/app/data/notify_channels.json` 把 `feishu_app` 写成 **false**（env 实际 app_id/secret/chat_id 全配好），
+     导致只剩 TG 单通道；飞书 webhook 未配置。
+  2. TG 唯一走 Deno 反代 `dirty-stingray-4216...deno.net`，`health._telegram` 单次 POST、
+     无重试、无降级；反代一抖即全败 → notifier.any()=False。飞书自建应用每次现取
+     tenant_access_token、无缓存、无重试。
+- 修复（`cloud/health.py`，最小机制改动）：
+  - 新增 `_post_with_retry`（3 次、退避 2s/4s）；
+  - `_telegram`：配置反代在前、直连 `api.telegram.org` 兜底在后，逐 base 重试后才判 False；
+  - `_feishu_app`：tenant_access_token 进程内缓存（提前 5min 刷新），遇失效码
+    99991661/63/64/68 强制重取重试一次；通道间独立判定、互不连坐；
+  - 容器内 `notify_channels.json` 改回 `{"telegram":true,"feishu_app":true,"feishu":false}`。
+- 验证（真实输出）：`_telegram=True`、`_feishu_app=True`（飞书 message_id
+  `om_x100b649b84413ca0c02eb2026f51353`）；强制绕过 cadence 后真实战报「推送结果：True」（07:49:39 CST）。
+  注：心跳 False 多为 cadence 600s 去重（账本 heartbeat count=49），非通道失败。
+
+### 任务2 · 看门狗 -100 重登闭环演练（不破坏在跑会话）
+- 探测-恢复端到端（健康 cookie 只读）：`warning_handler._recoverable('account_a')=True`、
+  `account_b=True`（默认+广州双出口 user/me 均 code=0）。
+- 工单闭环（drill key，已清理）：`notifier.action(...)=True` → `notifier.resolve(...)=True`，
+  双发 TG+飞书均成功。
+- 真二维码：云端 headless Chromium 打开 xiaohongshu.com/login **取不到 img.qrcode-img**
+  （datacenter IP/自动化被拦，QR_FAIL）——与 runbook 记载一致，故真码仍由用户在【本机真实 Chrome】
+  说「重登」时生成；云端只负责把 ACTION 文案与（届时的）真码 URL 双发出去。
+  TG `sendPhoto` 经反代可达（返回 TG 自有 400，非网络层失败），图像链路就位。
+
+### 边界
+- 未碰前端、未碰实体合并；仅改通知/看门狗相关（health.py、warning_handler.py、notify_channels.json）。
+- 本 Track0 不 git 提交，由 Organizer 统一提交。
+
+## Track 0 实体清理（2026-09-29）
+
+**范围**：确定性、幂等、可回滚脚本 `cloud/vendor/pipeline/track0_cleanup.py`（默认 dry-run，--apply 才写）。
+复用 Phase 0-A 的 entity_dedup 双向裁决；本轮不 git add/commit/push（Organizer 统一提交）。
+
+**实时探测结论（2026-09-29，live DB，非估算）**：
+- 南兴园：live 仅 1 行（id=478，徐汇区淮海中路1728号12幢，active）。用户所说"×2"实为
+  chef#37（邓师傅）`restaurants_owned=['南兴园','南兴园 NAN·XING·YUAN']` 的异写重复引用，
+  非第二家店。定西路737号旧址现已是 id=1607 靓靓蒸虾（另一家店，勿并）。
+- 纹兵卫：2 行（id=44 金虹桥B1 vs id=1870 天山路765号），坐标相距 226m > 200m = 真分店，保留不并。
+- pain chaud：2 行（id=1164 建国西路 vs id=1785 番禺路），相距~2.5km = 真分店，保留不并。
+- 白茸：id=815 BFC「白茸 Bai Rong」正名已正确；id=812 白茸小鲜太阳宫为子品牌异店；库内无"佰荣"行。
+- 天吉·天遊峰：id=38 仅关联 chef#35（张天炀）1 条，无重复 chef 行。
+- Jean Georges：id=1137「Jean Georges 上海」；id=1177 Mercato by Jean-Georges 为同集团另一店。
+- 鮨升：id=1986 泰安路 vs id=1987 陆家嘴，相距~8km = 两分店，保留不并。
+
+**实际写库（apply 后回读校验）**：
+1. 脏区名归一：23 条 `海市X区` → `上海市X区`（纯前缀补"上"，确定性字符串修正）。
+   全部为有喜屋连锁（1719-1771 段）+ Gregorius SHADE(1749) + 烤匠(1720)。
+2. chef#37 owned 去重：`['南兴园','南兴园 NAN·XING·YUAN']` → `['南兴园']`（canonical 为准）。
+- 非目标字段校验和：23 行 apply 前后全部一致（电话/坐标/价格/评分零误伤）。
+- 幂等：复跑 dry-run = 0 条变更、chef#37 无需变更。
+
+**品牌注册表（research/authority/brand_registry.json，仅文件不写库）**：
+- 新增 Jean Georges：en=[Jean-Georges]，aliases=[Jean-Georges, Jean-Georges 上海]，branch 1137。
+- 新增 鮨升：en=[Sushi Noboru]，aliases=[鮨昇, 鮨昇(泰安路店), 鮨昇(陆家嘴店)]，branches 1986/1987。
+- 不硬绑不硬挂；同集团另店（Mercato 1177）与两分店（1986/1987）在 note 中标注勿并。
+
+**before→after**：
+- restaurants 总数 1479（active1472/closed7）→ 1479（无增删）。
+- 电话覆盖 1256→1268（+12，并行 amap/电话 cron 补的，本轮未碰电话；覆盖率 85%）。
+- 坐标覆盖 1473/1479 → 1473/1479（99%，缺 1）。
+- 脏区名「海市X区」23 → 0。
+- chef#37 owned 数组 2 个异写 → 1 个 canonical。
+
+**遗留**：纹兵卫 id=44 店名「（午市套餐）」后缀仍是采集噪声（回归用例，未手补），
+待 L1–L5 核证后改「纹兵卫(金虹桥店)」；南兴园旧址（定西路737）现已为别店，无关店信息不臆造。

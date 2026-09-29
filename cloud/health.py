@@ -176,111 +176,129 @@ def channel_enabled(name):
 
 
 # ------------------------------------------------ 各通道
+def _post_with_retry(url, **kw):
+    """带指数退避的 POST（2s/4s）；返回最后一个 Response 或抛最后异常。"""
+    last = None
+    for i in range(3):
+        try:
+            return requests.post(url, timeout=20, **kw)
+        except requests.RequestException as e:
+            last = e
+            time.sleep(min(2 ** i, 4))
+    raise last
+
+
 def _telegram(message, title):
+    """TG：反代(TELEGRAM_API_BASE)失败自动降级直连；每个 base 带退避重试。"""
     if not channel_enabled("telegram"):
         return None
     token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
     chat = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
     if not token or not chat:
         return None
-    api_base = (os.environ.get("TELEGRAM_API_BASE") or "https://api.telegram.org").rstrip("/")
-    url = f"{api_base}/bot{token}/sendMessage"
+    body = {"chat_id": chat, "text": f"{title}\n{message}",
+            "disable_web_page_preview": True}
+    cfg = (os.environ.get("TELEGRAM_API_BASE") or "").strip().rstrip("/")
+    bases = [b for b in (cfg, "https://api.telegram.org") if b]
+    bases = list(dict.fromkeys(bases))   # 配置在前、直连兜底在后；去重
+    for base in bases:
+        try:
+            r = _post_with_retry(f"{base}/bot{token}/sendMessage", json=body)
+            if r.status_code == 200 and r.json().get("ok") is True:
+                return True
+            print("TG", base, "异常响应", r.status_code, r.text[:120])
+        except Exception as e:
+            print("TG", base, "失败", repr(e)[:120])
+    return False
+
+
+# 飞书 tenant_access_token 进程内缓存（提前 5 分钟刷新；失效码强制重取）
+_FS_TOKEN = {"tok": None, "exp": 0}
+_FS_TOKEN_INVALID = {99991663, 99991664, 99991668, 99991661}
+
+
+def _fs_tenant_token(base, force=False):
+    now = time.time()
+    if not force and _FS_TOKEN["tok"] and now < _FS_TOKEN["exp"]:
+        return _FS_TOKEN["tok"]
+    app_id = os.environ.get("FEISHU_APP_ID", "").strip()
+    app_secret = os.environ.get("FEISHU_APP_SECRET", "").strip()
+    if not app_id or not app_secret:
+        return None
     try:
-        r = requests.post(url, json={
-            "chat_id": chat,
-            "text": f"{title}\n{message}",
-            "disable_web_page_preview": True,
-        }, timeout=20)
-        return r.status_code == 200 and r.json().get("ok") is True
-    except requests.RequestException as e:
-        print("Telegram 推送失败:", e)
-        return False
+        tr = _post_with_retry(base + "/auth/v3/tenant_access_token/internal",
+                              json={"app_id": app_id, "app_secret": app_secret})
+        j = tr.json()
+        tok = j.get("tenant_access_token")
+        if tok:
+            _FS_TOKEN["tok"] = tok
+            _FS_TOKEN["exp"] = now + int(j.get("expire", 7200)) - 300
+        else:
+            print("飞书应用: 取 token 失败", j.get("code"), j.get("msg"))
+        return tok
+    except Exception as e:
+        print("飞书应用: 取 token 异常", repr(e)[:120])
+        return None
 
 
 def _feishu(message, title):
+    """飞书自定义 webhook（带签名）；退避重试。"""
     if not channel_enabled("feishu"):
         return None
     url = os.environ.get("FEISHU_WEBHOOK", "").strip()
     if not url:
         return None
-    body = {
-        "msg_type": "text",
-        "content": {"text": f"{title}\n{message}"},
-    }
+    body = {"msg_type": "text", "content": {"text": f"{title}\n{message}"}}
     secret = os.environ.get("FEISHU_SECRET", "").strip()
     if secret:
         ts = str(int(time.time()))
-        # 飞书官方签名：hmac key="{timestamp}\n{secret}"，message 为空，sha256 后 base64
-        string_to_sign = f"{ts}\n{secret}".encode("utf-8")
-        hmac_code = hmac.new(string_to_sign, digestmod=hashlib.sha256).digest()
+        sig = hmac.new(f"{ts}\n{secret}".encode("utf-8"),
+                       digestmod=hashlib.sha256).digest()
         body["timestamp"] = ts
-        body["sign"] = base64.b64encode(hmac_code).decode("utf-8")
+        body["sign"] = base64.b64encode(sig).decode("utf-8")
     try:
-        r = requests.post(url, json=body, timeout=15)
+        r = _post_with_retry(url, json=body)
         data = r.json()
-        # 自定义机器人成功为 StatusCode=0；部分网关返回 code=0
         return data.get("StatusCode", data.get("code", -1)) == 0
-    except requests.RequestException as e:
-        print("飞书推送失败:", e)
+    except Exception as e:
+        print("飞书 webhook 失败", repr(e)[:120])
         return False
 
 
 def _feishu_app(message, title):
-    """飞书开放平台企业自建应用机器人（app_id/app_secret -> tenant_access_token -> im/v1/messages）。
-
-    环境变量：FEISHU_APP_ID、FEISHU_APP_SECRET、FEISHU_CHAT_ID；
-    可选 FEISHU_API_BASE（默认 https://open.feishu.cn/open-apis）。
-    """
-    app_id = os.environ.get("FEISHU_APP_ID", "").strip()
-    app_secret = os.environ.get("FEISHU_APP_SECRET", "").strip()
-    chat_id = os.environ.get("FEISHU_CHAT_ID", "").strip()
+    """飞书自建应用：token 缓存+失效自动刷新；失败退避重试；与其它通道独立判定。"""
     if not channel_enabled("feishu_app"):
         return None
-    if not app_id or not app_secret or not chat_id:
+    app_id = os.environ.get("FEISHU_APP_ID", "").strip()
+    chat_id = os.environ.get("FEISHU_CHAT_ID", "").strip()
+    if not app_id or not os.environ.get("FEISHU_APP_SECRET", "").strip() or not chat_id:
         return None
     base = (os.environ.get("FEISHU_API_BASE")
             or "https://open.feishu.cn/open-apis").rstrip("/")
-    try:
-        tr = requests.post(base + "/auth/v3/tenant_access_token/internal",
-                           json={"app_id": app_id, "app_secret": app_secret},
-                           timeout=15)
-        token = tr.json().get("tenant_access_token")
-        if not token:
-            print("飞书应用：取 tenant_access_token 失败", tr.text[:160])
+    content = json.dumps({"text": f"{title}\n{message}"}, ensure_ascii=False)
+    for attempt in range(2):
+        tok = _fs_tenant_token(base, force=(attempt == 1))
+        if not tok:
+            time.sleep(2)
+            continue
+        try:
+            r = _post_with_retry(
+                base + "/im/v1/messages?receive_id_type=chat_id",
+                headers={"Authorization": "Bearer " + tok,
+                         "Content-Type": "application/json; charset=utf-8"},
+                json={"receive_id": chat_id, "msg_type": "text", "content": content})
+            j = r.json()
+            if j.get("code") == 0:
+                return True
+            print("飞书应用:", j.get("code"), j.get("msg"))
+            if j.get("code") in _FS_TOKEN_INVALID:   # token 失效→强制刷新重试一次
+                _FS_TOKEN["tok"] = None
+                continue
             return False
-        content = json.dumps({"text": f"{title}\n{message}"}, ensure_ascii=False)
-        r = requests.post(base + "/im/v1/messages?receive_id_type=chat_id",
-                          headers={"Authorization": "Bearer " + token,
-                                   "Content-Type": "application/json; charset=utf-8"},
-                          json={"receive_id": chat_id, "msg_type": "text",
-                                "content": content}, timeout=15)
-        data = r.json()
-        if data.get("code", -1) != 0:
-            print("飞书应用：发消息失败", data.get("code"), data.get("msg"))
-        return data.get("code", -1) == 0
-    except requests.RequestException as e:
-        print("飞书应用推送失败:", e)
-        return False
-
-
-def _legacy_webhook(message, title):
-    url = os.environ.get("ALERT_WEBHOOK", "").strip()
-    if not url:
-        return None
-    try:
-        low = url.lower()
-        if "bark" in low:  # Bark: {host}/{key}/{title}/{body}
-            u = url.rstrip("/") + "/" + urllib.parse.quote(title) + "/" + urllib.parse.quote(message)
-            requests.get(u, timeout=15)
-        elif "ftqq" in low or "sctapi" in low or "server" in low:  # Server酱
-            requests.get(url, params={"title": title, "desp": message}, timeout=15)
-        else:  # 通用 POST
-            requests.post(url, json={"title": title, "text": message,
-                                     "content": message}, timeout=15)
-        return True
-    except requests.RequestException as e:
-        print("Webhook 推送失败:", e)
-        return False
+        except Exception as e:
+            print("飞书应用发送异常", repr(e)[:120])
+            time.sleep(min(2 ** attempt, 4))
+    return False
 
 
 # ------------------------------------------------ 统一入口
