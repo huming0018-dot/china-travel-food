@@ -26,8 +26,8 @@ import notifier  # noqa: E402
 DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
 RAW_XHS = DATA / "research/atlas/xhs/raw_xhs.jsonl"
 STATE_P = DATA / "progress_state.json"
-STALL_MIN = 30          # 评价数 30min 不增长即判停滞
-CADENCE = 600           # 心跳节奏（与 cron 对齐）
+STALL_MIN = 60          # 评价数 60min 不增长才判停滞（原30min，减少误报）
+CADENCE = 3600           # 心跳节奏 60 分钟（原10分钟，柔和模式）
 
 
 def now_str():

@@ -48,10 +48,10 @@ LEDGER_F = DATA / "notifier_ledger.json"
 INFO, WARN, ACTION, RESOLVED = "INFO", "WARN", "ACTION", "RESOLVED"
 LEVEL_TAG = {INFO: "🟢 播报", WARN: "🟡 自动处理中", ACTION: "🔴 需要你操作", RESOLVED: "✅ 已解决"}
 
-# 默认节奏 / 冷却 / 提醒计划（秒）
-DEFAULT_CADENCE = 600          # 例行播报 10 分钟
-WARN_COOLDOWN = 3600           # 同类自动处理告警 1 小时
-ACTION_NUDGE = (1800, 3600, 3600, 7200)   # 首次后第 30/60/60/120 分钟各提醒一次，共 4 次
+# 默认节奏 / 冷却 / 提醒计划（秒）—— 柔和模式：少打扰
+DEFAULT_CADENCE = 3600         # 例行播报 60 分钟（原10分钟）
+WARN_COOLDOWN = 7200           # 同类自动处理告警 2 小时（原1小时）
+ACTION_NUDGE = (86400, 86400, 86400)  # 首次后每天提醒一次，共3次（原30/60/60/120分钟4次）
 MAX_BODY = 1200
 
 
