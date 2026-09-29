@@ -39,6 +39,7 @@ import common as C        # noqa: E402
 import merge_duplicates as MD  # noqa: E402
 import patrol_classify as PC   # noqa: E402
 import entity_dedup as ED      # noqa: E402  (Phase 0-A 全子表实体去重+名称审计，只读)
+import closed_watch as CW      # noqa: E402  (1B-2 关店/迁址/stale 只读扫描)
 
 PATROL_DIR = DATA / "patrol"
 STATE_F = PATROL_DIR / "state.json"
@@ -222,6 +223,10 @@ def main():
     print(f"  价格归一   : {price_line[:80]}")
     print(f"  chef 补链  : {len(chef_links)}；chef 待审: {len(chef_review)}")
     print(f"  过保鲜期   : {len(stale)}；简介过薄: {len(thin)}")
+    cw = CW.scan(rests)
+    print(f"  关店扫描   : closed三要素缺={len(cw['closed_triple_missing'])} "
+          f"active带关店信号={len(cw['active_with_closed_signal'])} "
+          f"stale={len(cw['stale_active'])}（只读候选，不自动改）")
     print(f"  相对上次   : new={len(new)} fixed={len(fixed)}")
 
     if not args.apply:

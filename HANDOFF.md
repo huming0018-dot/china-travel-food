@@ -2793,3 +2793,31 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 3. 一饭封神2 其余主厨(赵勇/Alan Yu/杜国金等)餐厅逐个锚定后，作为新种子继续扩散；
    刘永康/张雯雯等4人餐厅待锚，留 unverified。
 4. 甬府系 founder 现作「翁氏」，待官方/工商确认后再校为翁拥军（本波未改既有 group 行）。
+
+## 关店周期扫描连接器（2026-09-29）
+
+**机制**：`cloud/vendor/pipeline/closed_watch.py`（只读、确定性、幂等）。接入 cloud_patrol 巡检，随看门狗周期跑。
+不写库、不改 status、不自动合并；只产出候选清单，证据不足转人工，宁空不假。
+
+**四桶扫描**：
+- A. closed 行三要素审计（status+closed_date+closed_source URL）；
+- B. active 行 evidence/备注含「关店/停业/闭店/搬迁/歇业」信号 → 待核迁址/关店；
+- C. active 行超保鲜周期（新店30/高端180/平价连锁90）→ stale 复评；
+- D. active 行无电话且无坐标 → 待补。
+
+**首轮扫描（2026-09-29，live DB）**：
+- restaurants 1478（active1472/closed6）。
+- A. closed 三要素缺：**1**（id=905 CHIC1699 华润时代广场，closed_source 非 URL，待补权威链接）。
+- B. active 带关店/迁址信号：**18** 条候选（待人工逐家核证官方公众号/小红书/新闻）：
+  搬迁信号 14 条（平川·程玉平/弄堂川菜/蔡记炸酱/东莱海上/胖胖君/小绍兴/Sloppy Gin/
+  Le Verre à vin/COA/聪菜馆/之舞/老地方面馆/和膳面家/Hulu Sushi）；
+  闭店/歇业信号 4 条（吃饭皇帝大/FUNK&KALE/Spiceman辣男/春餐厅）。
+- C. stale 超保鲜周期：**0**。
+- D. 无电话无坐标：**1**（id=1939 北外滩隐世融合私宴，地址"预约后告知"，待核）。
+- 报告落 `/app/data/closed_watch_report.json`。
+
+**接线**：cloud_patrol.py 加 `import closed_watch as CW`，main() 打印
+「关店扫描: closed三要素缺=X active带关店信号=Y stale=Z（只读候选，不自动改）」。
+容器已部署 `/app/pipeline/closed_watch.py` + 更新 `/app/cloud/cloud_patrol.py`。
+
+**幂等**：纯读 DB，复跑 0 写、0 副作用。
