@@ -2984,3 +2984,17 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - 账本 lead_hypotheses：50→54（DeepSeek +4 post4/patch0）。状态：confirmed29/hypothesized18/unverified6/contradicted1。
 - --prove dry-run would confirmed51/unverified2/kept_contradicted1（未 apply）。
 - 晋升净新增=0：新网页行来源为百科/门户聚合页(非官方/米其林/工商)，且多为外地/未锚定上海 restaurant_id，不过闸。事实表回读 chefs=57、restaurant_chefs=77 未动；reviews/有评价店数无变化。
+
+### HAE 原始权威源取证→过闸晋升（2026-09-29）
+- 对 18 条 hypothesized 中可锚上海在库店的高价值线索做 primary-source prove（拒百度百科/百家号/网易号/门户聚合）。
+- 锚定：甬府 rid538/542(北外滩旗舰)/536/840/1504；云LES NUAGES rid1874(active)；柿合缘不在库。
+- 取证结果：
+  · 徐昆磊＝甬府行政总厨：界面新闻(上海报业集团)原文 https://m.jiemian.com/article/12879043.html 标题即"甬府-行政总厨徐昆磊"，过闸。
+  · 周晨＝法餐大厨、与翁拥军合作开设 Les nuages(云)：澎湃新闻原文 contid=20579190 "与法餐大厨周晨合作开设的Les nuages(云)法餐厅"，过闸。
+  · 段誉/柿合缘：柿合缘不在库、无上海 rid，仅留假设不晋升。
+  · 刘震/甬府香港店：香港外部、无上海 rid，仅留假设。
+- 晋升(check-first 查重后建，无重复)：
+  · 新 chef 徐昆磊 id=59（title 甬府行政总厨）；新关系 restaurant_chefs(rid542↔chef59, role=行政总厨, source_url=界面)。
+  · 新 chef 周晨 id=60（title 法餐主厨）；新关系 restaurant_chefs(rid1874↔chef60, role=主厨, source_url=澎湃)。
+- 事实表：chefs 57→59；restaurant_chefs 77→79。reviews/有评价店数无变化(未写评价)。
+- lead_hypotheses：上述 2 条 patched status=confirmed(204)；最新 confirmed31/hypothesized16/unverified6/contradicted1=54。
