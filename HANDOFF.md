@@ -2919,3 +2919,28 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - 重建后处置：notify_channels 被复位成 feishu_app=false（已重设 true，实测 tg=True/fsapp=True）；池状态 gap_pool 重启把 B 标 ok，已按指令重设 B=parked，xhs_api 过滤后 accounts=['account_a']。
 - 基线不变：restaurants 1478/active1472、reviews 1572、chefs 57。
 - 注：服务器直连 github https 不通（TLS），build_sync.sh 的 git clone 在服务器上暂不可用；当前靠 Mac rsync 同步脚本，后续可给服务器配 github deploy key 再启用脚本内自动 git pull。
+
+
+---
+
+## 2026-09-29 下午：SSH 拉取 + notify 默认 + 工单对账 + UGC 锚定
+
+### 1. 服务器经 SSH 拉通 GitHub（build_sync 自动 pull）
+- 22 端口可达；deploy key `~/.ssh/ctfs_github` 已 scp 到服务器并配 ~/.ssh/config（不回显私钥）；`ssh -T git@github.com` 返回 "Hi huming0018-dot/china-travel-food! successfully authenticated"。
+- 服务器浅克隆 `git@github.com:huming0018-dot/china-travel-food.git` → `/home/ubuntu/china-travel-food`（--depth=1）。
+- `cloud/build_sync.sh` 改为：build 前 `git fetch --depth=1 origin main && git reset --hard origin/main`，再 rsync cloud/*.py、pipeline/*.py 到构建上下文（不碰 deploy.env/xhs_accounts）。
+- 端到端实测：build_sync 自动 pull 到 **58ef996**，build 成功（60c046fc5252）、compose up，新容器脚本全部来自镜像、零 docker cp。
+
+### 2. notify_channels 复位根因与修复
+- 根因：镜像本身未烤入 notify_channels.json（health.py 只读不写）；复位来自旧镜像首次初始化命名卷时带入的陈旧 `feishu_app=false`。
+- 修复：`entrypoint.sh` 仅当 `/app/data/notify_channels.json` **缺失**时写入 `{"telegram":true,"feishu_app":true,"feishu":false}`；绝不覆盖命名卷里已存在的显式设置。
+- 验证：新容器起来后真卷文件保持 `telegram=true, feishu_app=true`（未复位），实测 tg=True / feishu_app=True；临时空卷 seed 逻辑已验证（文件缺失时自动写默认）。
+
+### 3. warning_tickets 对账（按真实探测/用户口径）
+- before：login:account_a=waiting_user、login:account_b=resolved（错误）。
+- after：**account_a=resolved**（cookie 已部署 guest=false、UGC 实跑 account_dead=false；gap_pool 签名探测 -100 判为假阴性）；**account_b=deferred/parked**（短信日配额超额，计划 2026-09-30 09:30 自动二维码重登，非 cookie 失效、勿催）。
+- 池状态同步：A=ok、B=parked，xhs_api 过滤后 accounts=['account_a']。
+
+### 4. UGC「只抓不录」取数改进（锚定标准不放松）
+- 关键词本已是「精确店名+上海」；本轮新增：①搜索结果按「标题/摘要含店名」优先排序（榜单合集靠后）；②锚定除正文含店名外，接受笔记 POI/打卡定位名命中本店；连锁分店仍要求正文或 POI 命中分店 token。
+- 实跑 1 轮（--batch 5 --min-price 500）：searched=5、notes_fetched=0、anchored=0——**A 账号当前软限流（code=0 空 data），非锚定拒绝**；按宪章放慢不硬刷。reviews 维持 1587、有评价店 270、奢华≥500 零UGC 待补 49。
