@@ -2502,3 +2502,33 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 - 967 丹凤楼雅宴·大富贵(斜土店)：primary 徽州菜(False)→**本帮菜(True)**（徽菜/徽州菜降 serves）。
 - 裕莲茶楼(1739)：库内无"蛋挞"叶，保持 primary=蛋糕/法式甜品（已满足"非茶馆"），不硬凑。
 - 复跑 cross_cuisine=0/0/0、cuisine_classify=0 动作，幂等 0 变更。
+
+---
+
+## 1B-5：词网接线 + sourcing 空白域 + UGC 延伸（2026-09-29）
+
+> 执行者：1B-5。不碰定价/关店/软广/feed；B站 enrichment 由 KOL 执行者做。
+
+### 1. 词网接线（让 1A 的取证 query 真正过闸）
+- `discovery_engine.py` 新增 `_seed_queries(category, dense)`：**优先** `semantic_wordnet.build_wordnet`，
+  异常/空结果**回退** `K.build_queries`。两处调用点（初始化 seeds、reseed_deep）均替换。
+- 确定性、幂等、回退安全；容器已部署验证：sushi seeds=35 走词网，未知品类回退 20 词不崩。
+- 在跑的 UGC/gap_pool 长进程下次启动时自动生效，未重启它们。
+
+### 2. 空白域机制进展（修词根/桶，非枚举手补）
+- 桶已注册：`private_kitchen`（真私房菜/私宴/家宴/无菜单/楼中店）、`market_food`（菜场熟食）、
+  `soba`（十割/二八/冷荞麦）、`udon`（赞岐/手打）、`guangxi_fish`（横县/顺德鱼生）；
+  词网 D2 场景已含菜场/楼中店/私宴/深夜食堂。
+- 未在库 4 店（佐佐/福寿司/鮨照/肉屋kita）与黑珍珠 17 缺店**靠证据闸门 admit，0 硬造**。
+
+### 3. UGC 延伸（条件式，不硬刷）
+- 实测：price≥500 active 154 家，其中 **0-review 还剩 24**（原约 80，未清完）。
+- **按条件不延伸**：保持 `UGC_MIN_PRICE=500`，不另开 XHS 循环、不硬刷；长今 08:48 正常跑（account 活 rc=0）。
+- 中价 200–500 active 232 家（82 家 0-review），待奢华 24 家清完后自动延伸。
+
+### 覆盖矩阵 before→after（真实 dry-run）
+- F2a 米其林 153/153=100%（无回退）；F2b 黑珍珠 44/61=72.1%（真缺 17 交 gate）；
+  F4 gap 叶 empty+shallow=124。
+- 本轮 admit 数 = **0**（hold 295 / reject 268；未在库 4 店+黑珍珠 17 店证据未达三条件，正确 hold）。
+- 基线零变化：1479/1472/电话1254/坐标1471；非目标字段零误伤。
+- 幂等：coverage_matrix 复跑 F2a=100%/F2b=72.1% 一致。

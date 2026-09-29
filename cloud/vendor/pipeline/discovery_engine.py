@@ -34,12 +34,33 @@ try:
     import social_discovery as D
     import admission_gate as G
     import discovery_keywords as K
+    try:
+        from semantic_wordnet import build_wordnet as _build_wn
+    except Exception:
+        _build_wn = None
 except Exception:
     sys.path.insert(0, str(pathlib.Path(__file__).parent))
     import common as C
     import social_discovery as D
     import admission_gate as G
     import discovery_keywords as K
+    try:
+        from semantic_wordnet import build_wordnet as _build_wn
+    except Exception:
+        _build_wn = None
+
+
+def _seed_queries(category, dense=False):
+    """1B-5 词网接线：优先 semantic_wordnet 四维词网，异常/空则回退 discovery_keywords 模板。
+    确定性、幂等；词网为空或报错不得影响既有采集。"""
+    if _build_wn:
+        try:
+            q = _build_wn(category, dense=dense)
+            if q:
+                return list(q)
+        except Exception:
+            pass
+    return K.build_queries(category, dense=dense)
 
 # 评论区 / 正文"明确推荐另一家"的口述店名模式（捕获店名片段）
 RE_REC = [
@@ -116,7 +137,7 @@ class DiscoveryEngine:
             # 兼容旧 state：补 empty_streak 字段
             st.setdefault("empty_streak", 0)
             return st
-        seeds = K.build_queries(self.category, dense=self.dense)
+        seeds = _seed_queries(self.category, dense=self.dense)
         return {
             "category": self.category, "city": self.city, "dense": self.dense,
             "visited": [], "frontier_high": list(seeds), "frontier_low": [],
@@ -344,7 +365,7 @@ class DiscoveryEngine:
         """
         visited = set(self.state.get("visited", []))
         spec = K.CATEGORY_SPEC.get(self.category, {})
-        cand = list(K.build_queries(self.category, dense=True))  # gather 自动加城市
+        cand = list(_seed_queries(self.category, dense=True))  # gather 自动加城市
         for nm in (spec.get("names") or [])[:2]:
             for suf in self.DEEP_WORD_SUFFIX:
                 cand.append(f"{nm} {suf}")
