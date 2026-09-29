@@ -46,8 +46,10 @@ def _write_state(st):
 
 
 def lookup_phone(name, address, state):
-    """逐级查电话：suggestion → search → amap。返回 (tel_or_None, quota_hit_bool)。"""
-    quota_hit = False
+    """逐级查电话：suggestion → search → amap。返回 (tel_or_None, quota_hit_bool)。
+    腾讯配额超限不终止，继续用高德；只有所有通道都超限时才quota_hit=True。"""
+    tencent_quota = False
+    amap_quota = False
 
     # ① 腾讯 suggestion（最精确）
     if state["tencent_used"] < TENCENT_DAILY_QUOTA:
@@ -57,33 +59,36 @@ def lookup_phone(name, address, state):
         res = tencent_suggestion(kw)
         state["tencent_used"] += 1
         if res == "QUOTA_EXCEEDED":
-            quota_hit = True
+            tencent_quota = True
         else:
             best, score = pick_best(res, name, address, name_thresh=0.85)
             if best and best.get("tel"):
-                return best["tel"], quota_hit
+                return best["tel"], False
 
-    # ② 腾讯 search
-    if not quota_hit and state["tencent_used"] < TENCENT_DAILY_QUOTA:
+    # ② 腾讯 search（suggestion超限时跳过，同key必超限）
+    if not tencent_quota and state["tencent_used"] < TENCENT_DAILY_QUOTA:
         res = tencent_search(name)
         state["tencent_used"] += 1
         if res == "QUOTA_EXCEEDED":
-            quota_hit = True
+            tencent_quota = True
         else:
             best, score = pick_best(res, name, address, name_thresh=0.85)
             if best and best.get("tel"):
-                return best["tel"], quota_hit
+                return best["tel"], False
 
-    # ③ 高德 search（补充通道：高德池死/鉴权失败时仅算本店无匹配，
-    #    不得把“高德不可用”误判成“腾讯配额尽”而中断整轮——腾讯主通道仍健康）
+    # ③ 高德 search（补充通道：腾讯超限时高德仍可继续，不中断整轮）
     if state["amap_used"] < AMAP_DAILY_QUOTA:
         res = amap_search(name)
         state["amap_used"] += 1
-        if res != "QUOTA_EXCEEDED":
+        if res == "QUOTA_EXCEEDED":
+            amap_quota = True
+        else:
             best, score = pick_best(res, name, address, name_thresh=0.85)
             if best and best.get("tel"):
-                return best["tel"], quota_hit
+                return best["tel"], False
 
+    # 只有所有通道都配额超限时才终止
+    quota_hit = tencent_quota and amap_quota
     return None, quota_hit
 
 
