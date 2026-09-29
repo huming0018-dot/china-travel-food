@@ -2907,3 +2907,15 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - before→after：reviews 1572→1572、verified 663→663、fake 10→10（本轮无新增入库，因锚定门拦下）。
 - 黑珍珠走官方 HTTP 对账、证据池本地聚合（pool.jsonl 正常产出），不依赖 XHS 登录，继续低频推进。
 - 下次 :39 cron 自动跑；奢华≥500 0-review 仍约 24 家，锚定难点在泛帖/分店歧义，后续可考虑放宽分店匹配或引入官网/公众号 L0 证据。
+
+
+---
+
+## 构建固化（2026-09-29 13:30）——根治重建后 docker cp 丢脚本
+
+- 根因审计：Dockerfile 早已用通配符 `COPY *.py /app/cloud/`、`COPY vendor/pipeline /app/pipeline`；真正缺口是**服务器构建上下文 ~/food-cloud 是手工快照、未随持久 repo 同步**。审计（LC_ALL=C comm）出仅 cloud 根目录 2 个脚本缺失：**review_ugc_fill.py、kol_monitor.py**；pipeline 不缺。
+- 固化：新增 `cloud/build_sync.sh`（build 前把 origin/main 的 cloud/*.py、pipeline/*.py rsync 进构建上下文，保留 deploy.env/xhs_accounts 不覆盖）。本机已把最新 cloud/*.py 同步进 ~/food-cloud（51 个），重新 `docker build -t food-cloud:local`（0e90c46aa2d9）并 `compose up -d`。
+- 零 docker cp 验收：新容器内 kol_monitor.py/review_ugc_fill.py/xhs_api.py/health.py/warning_handler.py 全部存在且 py_compile OK；crontab 15 条、cron 守护、gap_pool.py 6 worker 均起；restart=always、fooddata→/app/data、xhs_accounts:ro 不变。
+- 重建后处置：notify_channels 被复位成 feishu_app=false（已重设 true，实测 tg=True/fsapp=True）；池状态 gap_pool 重启把 B 标 ok，已按指令重设 B=parked，xhs_api 过滤后 accounts=['account_a']。
+- 基线不变：restaurants 1478/active1472、reviews 1572、chefs 57。
+- 注：服务器直连 github https 不通（TLS），build_sync.sh 的 git clone 在服务器上暂不可用；当前靠 Mac rsync 同步脚本，后续可给服务器配 github deploy key 再启用脚本内自动 git pull。
