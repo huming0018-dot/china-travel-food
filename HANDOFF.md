@@ -2998,3 +2998,15 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
   · 新 chef 周晨 id=60（title 法餐主厨）；新关系 restaurant_chefs(rid1874↔chef60, role=主厨, source_url=澎湃)。
 - 事实表：chefs 57→59；restaurant_chefs 77→79。reviews/有评价店数无变化(未写评价)。
 - lead_hypotheses：上述 2 条 patched status=confirmed(204)；最新 confirmed31/hypothesized16/unverified6/contradicted1=54。
+
+### HAE 剩余假设低频处理（2026-09-29）
+- 16 条 hypothesized 逐条核：仅 邓华东→南兴园 有上海在库锚(rid478, 已晋升 chef57)；其余 15 条全为外地/外部/无上海锚，按规则仅留注、不晋升、不耗精力。
+  · 翻 confirmed：邓华东→南兴园（web 行 b16d8c39，冗余 corroboration，事实已米其林官方在库，204）。
+  · 留 hypothesized（外地/外部，无上海 rid，不晋升）：袁伟(西安)、曹嗣全(广州)、Eric Räty/刘永康/张嘉裕/欧浩然(香港)、
+    杜国金(厦门)、赵勇/Alan Yu(杭州)、苏华(南京)、张雯雯(长沙)、陈明媚(城市未定)、李飞越(无店)、刘震(甬府香港)。
+  · 挂起不晋升：段誉→柿合缘（柿合缘未入库，等另一执行者 gap_pool 取证后回锚）。
+- Kimi 补跑(联网,搜15结果)邓华东师承/历任跨站核对：师父陈廷新/师爷孔道生/祖师蓝光鉴·荣乐园；
+  1977入行→1992雅加达→2002邓记食园→赴港→2019南兴园，与 chef57 bio 完全一致；
+  Kimi 指出"上海静安希尔顿天府楼"仅 eating_man 系单一来源(弱源)，存疑但不改已写事实。
+- 事实表无新增写：chefs 59、restaurant_chefs 79 不变；reviews/有评价店数不变。
+- lead_hypotheses：confirmed32/hypothesized15/unverified6/contradicted1=54。
