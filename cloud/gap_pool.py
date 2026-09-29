@@ -11,6 +11,7 @@
 部署：容器内常驻（docker-compose restart: always），日志 /app/data/pool.log。
 """
 import json
+import os
 import pathlib
 import subprocess
 import sys
