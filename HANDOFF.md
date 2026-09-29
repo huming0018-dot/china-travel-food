@@ -2565,3 +2565,46 @@ EHB 2023-05 开业、2025-09-28 停业，米其林一星；closed 后前端列�
 
 **保鲜字段**：全库 1479→1478 行 data_updated_at 非空率 100%（无缺失）；
 保鲜周期走 v_data_freshness 视图（新店30/高端180/平价连锁90）。
+
+---
+
+## Track 1B-4 · 主厨/集团 tracking + 首页 feed 数据模型全量化 — 2026-09-29
+
+> 本波只做数据模型与字段（前端浮窗/新标签属 Track 2）；不碰前端渲染、不动 kol/watchlist、不做词网/定价/软广。
+> 铁律：确定性/幂等、默认 dry-run、过闸才 apply、写后回读；宁空不假、不编造履历/来源。
+
+### 数据模型（db/migrations/014_feed_1b4.sql，交 SQL Editor 执行）
+- food_events 新增 `origin_market text`（海外品牌来源地：米兰/伦敦/巴黎/东京…）与 `is_overseas_brand boolean default false`。
+- 字段映射明确：`event_date` = 活动开始日(start_date)、`expires_on` = 结束日、`registration_url` = 报名/购票入口(signup_url)（均已在 004/010 存在，不重复建列）。
+- `dedup_fingerprint` 建唯一部分索引（脚本回填无重复后启用）。
+- `v_feed_recent` 视图重建，输出 `start_date`/`signup_url` 别名 + origin_market/is_overseas_brand，供 Track 2 直接筛选。
+
+### feed 受控分类（event_subtype 词表，脚本 pipeline_work/1b4_feed_normalize.py 回填）
+- category→subtype 确定性映射：award=荣誉榜单 / guest_kitchen=飞行厨房 / collaboration=跨界联名 /
+  chef_changed=主厨变化 / coming_soon=待开业 / relocated|closed=关店搬迁 / popup=联合快闪 / new_open=主厨新店。
+- 海外白名单（保守、仅标题命中已知品牌才置）：DA VITTORIO→米兰(飞行厨房本场)、Burger & Lobster→伦敦、
+  Le Bec Bund→巴黎(海外热门入沪)、Aster by Joshua Paris→巴黎(海外热门入沪)；来源不明者不猜。
+- 去重指纹 = sha1(规范化标题|event_date|restaurant_id)；写入前按指纹查重。
+- 来源/关键词/清洗归类：来源以 event.sources(URL)+权威名单为准；标题/摘要关键词归 subtype；
+  特征标签只进 `tags text[]`，不回写 score_*（真实口味为唯一评定）。
+
+### 真实运行数字（容器 food-cloud，非估算）
+- 基线：food_events 25（event_subtype 全空、dedup_fingerprint 全空）；chefs 56；groups 10；restaurant_awards 155。
+- apply：food_events PATCH **25/25**（event_subtype + dedup_fingerprint 全回填）；
+  chefs.last_tracked_at 心跳 **56**；groups.data_updated_at 心跳 **10**。
+- 回读：event_subtype 非空 **25/25**、dedup_fingerprint **25/25**、指纹重复 **0**。
+- subtype 分布：关店搬迁 6、荣誉榜单 6、联合快闪 4、飞行厨房 3、海外热门入沪 2、待开业 1、主厨变化 1、主厨新店 1、跨界联名 1。
+- start_date(event_date) 覆盖 **25/25**；expires_on 8；signup_url(registration_url) 4；tags 25/25。
+- 幂等：复跑 dry-run **0** 事件改动、**0** 心跳改动。
+- 014 新列（origin_market/is_overseas_brand）SQL Editor 执行前脚本自动探测并跳过，不报错；执行后复跑即补齐海外标记。
+
+### chefs/groups 扩量与长期 tracking
+- 本波不新增无来源的 chef/group 行（宁空不假）；chefs 56 / groups 10 维持，仅刷 tracking 心跳。
+- groups.headquarters/website/social_* 仍空——无 L1–L3 干净来源，待工商/官方页补齐，不猜。
+- 特征标签（明星/作家/博主到访、一饭封神/黑白厨房等荣誉）：荣誉已结构化在 restaurant_awards(155)；
+  到访类无可靠来源本轮不写，待证据 URL 到位后只进 tags，绝不影响 score_total。
+
+### 遗留
+1. 014 migration 需在 Supabase SQL Editor 执行（REST 不能 DDL）；执行后复跑脚本补齐 origin_market/is_overseas_brand。
+2. 海外米其林入沪 subtype 当前为 0 条（DA VITTORIO 是来沪飞行厨房而非长期入沪店）；待海外米其林品牌长期入沪开店事件入库后自然落入。
+3. signup_url 仅 4 条——后续快闪/联名事件采集时须带报名/购票 URL，脚本不臆造链接。

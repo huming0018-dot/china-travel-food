@@ -51,6 +51,20 @@
         "screenshot_desktop_1280": "pass",
         "screenshot_mobile_390": "pass"
       }
+    },
+    "track_1b4_feed_model": {
+      "status": "done",
+      "date": "2026-09-29",
+      "scope": "主厨/集团 tracking + 首页 feed 数据模型全量化（仅数据，前端属 Track 2）",
+      "migration": "db/migrations/014_feed_1b4.sql（origin_market + is_overseas_brand + dedup 唯一索引 + v_feed_recent 视图，交 SQL Editor）",
+      "script": "pipeline_work/1b4_feed_normalize.py（幂等，dry-run 默认）",
+      "before": {"food_events": 25, "event_subtype_filled": 0, "dedup_fingerprint": 0, "chefs": 56, "groups": 10, "restaurant_awards": 155},
+      "after": {"event_subtype_filled": 25, "dedup_fingerprint": 25, "fingerprint_dupes": 0, "chefs_heartbeat": 56, "groups_heartbeat": 10},
+      "subtype_distribution": {"关店搬迁": 6, "荣誉榜单": 6, "联合快闪": 4, "飞行厨房": 3, "海外热门入沪": 2, "待开业": 1, "主厨变化": 1, "主厨新店": 1, "跨界联名": 1},
+      "field_coverage": {"start_date_event_date": "25/25", "expires_on": 8, "signup_url_registration_url": 4, "tags": "25/25"},
+      "idempotent_rerun_changes": 0,
+      "feature_tags_policy": "荣誉结构化在 restaurant_awards(155)；到访/一饭封神/黑白厨房等只进 food_events.tags，不回写 score_*，真实口味为唯一评定",
+      "left_blank_no_source": ["groups.headquarters/website/social_*", "无证据的明星到访 tag", "海外米其林入沪 subtype(0条待长期入沪店事件)"]
     }
   },
   "open_items": [
