@@ -3133,3 +3133,22 @@ chefs 59→59、restaurant_chefs 79→79（before=after，0 净新增）；revie
 - **非登录线今日照常（日志实证）**：evidence_pool→pool.jsonl、cloud_patrol（咖啡带分布）、amap_fill（缓存命中42、高德126/5000）、phone_fill（腾讯395/10000）、self_evolve（01:00 报告、只读无异常）、progress_broadcast（「A=dead,B=parked」推送结果 True）。黑珍珠06:20、地图、定价/事实层照常。
 - **关键数据核对（只读）**：restaurants **1478**(active **1472**)、reviews **1708**、chefs **59**、restaurant_chefs **79**、lead_hypotheses **56**、chain_type 标准化覆盖 1478；双通道 `telegram=true, feishu_app=true`。
 - 明日错峰纯扫码自动重登 A/B；恢复后串行锁（上一轮 xhs_api flock）生效。
+
+---
+
+## HAE L0.5 — 四轴网格轮转搜索机（2026-09-29）
+
+### 设计
+- 新模块 cloud/vendor/pipeline/fleet_grid_run.py：以 cuisines 表 dimension=菜系、parent_category 非虚拟根的叶子为种子（共 253 个）。
+  游标落 /app/data/hae/fleet_grid_state.json；每轮取 SLICE=8 叶子拼探针 → 试 model_providers（无 key/限流自动跳过降级 agent/网页，不中断）→ upsert lead_hypotheses(hid=grid-<hash>-<leaf> 幂等)。
+  断点幂等：重跑从 cursor 继续、已处理叶子跳过；网格重建自动重置游标。
+- cron：cloud/crontab.txt #16 每天 09:17 低峰跑 --once --apply（flock 防重入，避开 :39 ugc/:20 黑珍珠）。
+
+### 切片规划
+- 253 叶子 / 切片 8 ≈ 32 天扫完全网格；每日 1 次。
+
+### 首轮真实结果（切片1 = [BBQ烧烤, Bar, Bobotie, Couscous, Diner, Empanada, Fish&Chips, Omakase板前]）
+- 容器无 ARK/各家 API key → 舰队自动降级，产出 8 条低置信(0.3)种子假设（status=hypothesized，带 confirm/falsify 查询）。
+- upsert post=8/patch=0；cursor 0→8/253。
+- prove：均为通用网格种子、无权威 URL → 保持 hypothesized，0 晋升（chefs59/rc79 不变）。
+- 24/7 自跑仍需在 deploy.env 配 ARK/QWEN 等 key；当前走 agent/网页降级。

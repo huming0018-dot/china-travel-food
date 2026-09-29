@@ -51,3 +51,9 @@ SHELL=/bin/bash
 
 # 15) 黑珍珠上海官方全量对账+在库在榜店幂等挂标160（轻HTTP，非XHS；17家真缺失留队列等F4/gap_pool取证，0硬造）：每天 06:20
 20 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/bp.lock /usr/local/bin/python cloud_blackpearl_collect.py --apply-tag >> /app/data/blackpearl.log 2>&1
+
+# 16) HAE 四轴网格轮转搜索机：每天 09:17 低峰跑一个切片(8个菜系叶子)
+#     fleet-recall(无key自动降级agent/网页)->写lead_hypotheses->推进游标;
+#     prove/promote 由 hae_engine 单独低频跑(过闸才晋升,幂等回读)。
+#     253叶子/8≈32天扫完全网格;限流自动退避,不依赖XHS。缺key不中断。
+17 9 * * * cd /app && . /app/cloud/env.sh && flock -n /tmp/fleet_grid.lock /usr/local/bin/python /app/pipeline/fleet_grid_run.py --once --apply >> /app/data/hae_grid.log 2>&1
