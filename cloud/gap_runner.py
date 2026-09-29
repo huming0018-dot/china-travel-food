@@ -309,18 +309,25 @@ def refresh_supply(cat):
 
 def _probe_account(api, account):
     """GET user/me 权威判据：登录有效(guest=false)返回 0；登录过期返回 -100（worker 应退出）；
-    其余风控码原样返回（搜索软限流会自恢复，不当死）。不再用搜索 POST / get_search_id。"""
+    其余风控码原样返回（搜索软限流会自恢复，不当死）。不再用搜索 POST / get_search_id。
+    【质量监管】首次 -100 时等待 30s 重试一次，避免临时性风控误判为登录过期。"""
     acc = next((a for a in api.accounts if a["name"] == account), None)
     if acc is None:
         return -100
-    j = api._send("GET", "/api/sns/web/v2/user/me")
-    code = j.get("code", -1)
-    me = j.get("data", {}) or {}
-    if code == 0 and not me.get("guest", True):
-        return 0
-    if code in (-100, -101) or me.get("guest", True):
-        return -100
-    return code
+    for attempt in range(2):
+        j = api._send("GET", "/api/sns/web/v2/user/me")
+        code = j.get("code", -1)
+        me = j.get("data", {}) or {}
+        if code == 0 and not me.get("guest", True):
+            return 0
+        if code in (-100, -101) or me.get("guest", True):
+            if attempt == 0:
+                print(f"[{account}] probe首次返回-100，等待30s后重试...")
+                time.sleep(30)
+                continue
+            return -100
+        return code
+    return -100
 
 
 # ---------------------------------------------------------------- 跑一个 category
