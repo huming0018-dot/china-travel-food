@@ -2415,3 +2415,60 @@ patrol dry-run 报告「全子表版: N 簇 / M 待复核 + 名称修正 N 条�
 
 **遗留**：纹兵卫 id=44 店名「（午市套餐）」后缀仍是采集噪声（回归用例，未手补），
 待 L1–L5 核证后改「纹兵卫(金虹桥店)」；南兴园旧址（定西路737）现已为别店，无关店信息不臆造。
+
+---
+
+## 1A-Part1：深覆盖 sourcing（四维语义词网）（2026-09-29）
+
+> 执行者：1A 深覆盖（source_registry/coverage_matrix 主理）。不碰 signature/cross_cuisine/
+> cuisine_classify/primary_cuisine_engine。云端 UGC 长跑/黑珍珠/看门狗未重启。
+
+### 新机制：`cloud/vendor/pipeline/semantic_wordnet.py`（版本 1A.1）
+- **四维配置驱动笛卡尔**（复用 discovery_keywords.CATEGORY_SPEC，不重写）：
+  D1 菜系/子流派 × D2 场景店型（私藏/苍蝇馆/楼中店/吧台/omakase/菜场/深夜食堂…20 个）
+  × D3 食材招牌（CATEGORY_SPEC.subs + INGREDIENT_ALIAS 方言俗称）
+  × D4 口碑意图（老饕私藏/锅气/自然流量/主厨传承/地域面食/反向排雷 6 组）。
+- **别名/方言/模糊→准确逼近**：INGREDIENT_ALIAS（博多豚骨/十割荞麦/横县鱼生…）；
+  REGRESSION fuzzy 表（8by8→EIGHT UNDER 永康路）。
+- **密度口径（可复现）**：每菜系默认 60~80 词 / dense ~120 词；
+  XHS 每词读前 15 篇（正文+必采评论区）、B站 8 条；饱和=frontier 清空+连续 2~3 轮零新增。
+- CLI：`--regress` 打回归路径、`--density` 打密度口径、`--cat <slug>` 打词表。
+
+### 回归集逐店自动发现路径（目标 100% 可达）
+| 店 | 桶 | 在库? | 自动发现路径 |
+|---|---|---|---|
+| 佐佐 | sushi | 否 | D1寿司×D4老饕私藏+板前场景 |
+| 福寿司 | sushi | 否 | D1寿司×D3鮨×D4老饕私藏 |
+| 肉屋kita | yakiniku | 否 | D1烧肉×D4主厨传承/私藏 |
+| nagi 凪 | ramen | **是(id1887)** | D1拉面×D3博多×D4自然流量 |
+| 鮨照 | sushi | 否 | D1寿司×D3江户前×D4老饕私藏 |
+| 言盐 Stone Sal | steakhouse | **是(id1873)** | D1牛排馆×D3干式熟成×D2老洋房 |
+| Ministry of Crab | singaporean | **是(id2002)** | D1新加坡菜×D3辣椒螃蟹×海外媒体框 |
+| 8by8/EIGHT UNDER | fusion | **是(id1905)** | D2 bistro/永康路×D4私藏 + fuzzy 8by8→EIGHT UNDER |
+| 望庐 | jiangxi | **是(id1982/1983)** | I权威框米其林sitemap全量召回 |
+
+- **桶注册率 9/9、词网可达率 9/9 = 100%**（0 机制断点）。
+- 在库 5、未在库 4（佐佐/福寿司/肉屋kita/鮨照）——**未手补**；词网已生成对应 query 分支，
+  待 gap_pool 采集经证据闸门后自动 admit。
+
+### 覆盖矩阵 before→after（真实 dry-run）
+| 框 | before | after |
+|---|---|---|
+| F2a 米其林 | 153/153=100% | 153/153=100%（无回退） |
+| F2b 黑珍珠 | 无连接器=缺口 | **61 全量对账，在库 44/61=72.1%，真缺 17（全 1 钻）交 gate 闭环** |
+| F4 gap 叶 empty+shallow | 129 | 124 |
+| F5 frontier | 65/55 单声音 | 65/55（等第二声音） |
+
+- 黑珍珠三件套已闭环：全量索引（getSelectorList+filterList 双口径）+ 官方总数对账（=61，无静默漏采）
+  + 缺店 17 交 admission_gate（不硬入）。
+- **基线零变化**：1479/1472/电话1254/坐标1471；电话坐标不回退。
+- **幂等复跑 0 变更**：coverage_matrix 连跑 F2a=100%/F2b=72.1% 完全一致。
+
+### 本轮 admit 数
+- 0（未在库 4 店+黑珍珠 17 缺店均未达「≥2 独立声音+均分≥3.5+含菜名堂食证据」，正确 hold，宁空不假）。
+
+### 遗留
+1. 黑珍珠 17 家缺店（1929 by Guillaume Galliot / 堀田 / 大董iapm / 鲁采新天地 / 洋房火锅…）
+   待 admission_gate 补堂食证据后闭环。
+2. 词网尚未接入 gap_pool 路由（当前仍走 discovery_keywords.TEMPLATES）；下轮替换。
+3. 稀疏行政区/真私房菜/菜场/拉面下级（soba/udon/博多）场景二次攻坚。
