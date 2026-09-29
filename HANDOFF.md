@@ -2821,3 +2821,11 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 容器已部署 `/app/pipeline/closed_watch.py` + 更新 `/app/cloud/cloud_patrol.py`。
 
 **幂等**：纯读 DB，复跑 0 写、0 副作用。
+
+### HAE 收尾（2026-09-29 第二轮，容器重建后）
+- **015 已在 Supabase SQL Editor 执行成功**，lead_hypotheses 建表；migration 磁盘修正 `when`→双引号 `"when" text`（PG 保留字），已单独 commit。
+- 引擎补 `import time`（首轮 ingest 在 time.sleep 处 NameError，已修并 docker cp 进运行容器；源码入 git 下次 build 自动带）。
+- 账本因容器重建丢可写层，已从持久副本 `research/hae/lead_hypotheses_2026-09-29.jsonl` 管道写入命名卷 `/app/data/hae/ledger_2026-09-29.jsonl`（**只写命名卷，未写容器层/pipeline_work**）。
+- 入库：`--ingest-ledger --apply` → mode=db，post35+patch1（首轮崩溃前已落1行幂等PATCH），表内 **lead_hypotheses=36**；状态 confirmed29/unverified6/contradicted1。
+- 晋升：`--promote-plan --apply` 产出 27 条过闸 advisory（关系类≥1可信文档/事实类权威或≥2声音）；该命令只打印计划不直写事实表。事实表回读 **chefs=57、restaurant_chefs=77 未变**（chef57+2任职关系已在库，幂等净新增=0）。
+- 下一步：27 条 pending/anchor 计划逐人工锚定后写事实表；24/7 自跑仍需配 ARK key。
