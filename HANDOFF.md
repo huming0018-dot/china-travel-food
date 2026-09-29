@@ -2892,3 +2892,18 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - notify_channels 被重建镜像复位成 feishu_app=false，已重设回 true；实测 tg=True / feishu_app=True。
 - Supabase 基线（外部库未受重启影响）：restaurants 1478(active1472)、reviews 1572、chefs 57、kol_posts104/mentions62/events25。
 - 遗留：account_a 容器 cookie 仍旧 guest（待新 LANCE cookie）、account_b parked；地图腾讯 search/geocode 全尽待解封。
+
+
+---
+
+## 单账号 A 长跑恢复实跑（2026-09-29 12:57）
+
+- A liveness 已确认：直连出口 user/me code=0、**guest=False、uid=5e1175c9（LANCE）**；池状态 A=ok、B=parked，xhs_api 过滤后 `accounts=['account_a']`（B 不轮呼）。
+- 中途处置：主容器 17min 内又重建过一次，docker cp 的 review_ugc_fill.py/kol_monitor.py 丢失（42h 旧镜像不含），已重新 docker cp 并重编译通过。
+- 手动跑一轮 ugc_longrun（batch=5、min_price=500、gap 70s、墙钟1100s、--apply）：
+  - searched=5、**notes_fetched=20**（对比 cookie 未生效时的 0，证明 A 已真活、搜索+笔记抓取通）；
+  - anchored=0、accept=0、拟写 reviews=0。拒因全是合规锚定门：`core_not_in_note`（笔记是榜单/泛菜系帖、不提本店名）、`branch_ambiguous(陆家嘴店)`（鮨升笔记无法钉到分店）。属「宁空不假」，未硬造。
+  - scoring_engine 收敛：score_evidence_level verified 185/provisional 1290/insufficient 3，PATCH 0/0（幂等无变化）。
+- before→after：reviews 1572→1572、verified 663→663、fake 10→10（本轮无新增入库，因锚定门拦下）。
+- 黑珍珠走官方 HTTP 对账、证据池本地聚合（pool.jsonl 正常产出），不依赖 XHS 登录，继续低频推进。
+- 下次 :39 cron 自动跑；奢华≥500 0-review 仍约 24 家，锚定难点在泛帖/分店歧义，后续可考虑放宽分店匹配或引入官网/公众号 L0 证据。
