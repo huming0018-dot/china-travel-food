@@ -3010,3 +3010,15 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
   Kimi 指出"上海静安希尔顿天府楼"仅 eating_man 系单一来源(弱源)，存疑但不改已写事实。
 - 事实表无新增写：chefs 59、restaurant_chefs 79 不变；reviews/有评价店数不变。
 - lead_hypotheses：confirmed32/hypothesized15/unverified6/contradicted1=54。
+
+---
+
+## 柿合缘覆盖缺口（新京菜/北方菜，段誉联合创始人）（2026-09-29）
+
+- **已做（机制，非硬塞）**：用发现引擎把取证 query 注入 beijing 桶 `engine_beijing.json` frontier 头部：
+  `柿合缘+上海`、`柿合缘+新京菜`、`柿合缘+段誉`、`柿合缘+招牌菜`、`新京菜 上海 推荐`、`新京菜 私藏 老饕`。
+  未手工建 restaurant 行。
+- **取证进度**：本轮账号抖动（account_a -100 登录过期、account_b None），未采到笔记；
+  `candidates_beijing.jsonl` 中无柿合缘候选，**gate verdict = hold（尚无证据）**。
+- **未入库**：rid 暂未分配；待账号恢复 pool 自动采，达标（≥2 独立声音+口味均分≥3.5+≥1 招牌菜堂食证据）
+  才 apply 入库；rid 拿到后回锚 chef 段誉。宁空不假。
