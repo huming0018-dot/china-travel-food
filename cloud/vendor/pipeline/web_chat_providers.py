@@ -54,6 +54,16 @@ WEB_SITES = {
         "login": "需登录（直接跳 /sign_in，手机验证码/微信扫码）",
         "web_search": "DeepSeek-R1/对话可联网时读取引用来源",
     },
+    # Qwen 网页版（无 DashScope API key，走网页复用阿里/百炼登录态）：
+    # 主入口 chat.qwen.ai 或 tongyi.aliyun.com；开「联网/全网搜索」。
+    # 百炼 playground（bailian console qwen3.8-max）仅在能稳定发消息+读到来源链接时备选，不稳定不硬用。
+    "qwen": {
+        "label": "通义千问 Qwen 网页版",
+        "url": "https://www.tongyi.com/",
+        "alt_urls": ["https://chat.qwen.ai/", "https://tongyi.aliyun.com/"],
+        "login": "复用阿里/百炼 SSO 登录态",
+        "web_search": "对话框开启「联网/全网搜索」；读取引用来源 URL",
+    },
     # WorkBuddy：仅桌面客户端、无可控浏览器网页版 → 跳过（不做桌面 GUI）。
     "workbuddy": {
         "label": "WorkBuddy",

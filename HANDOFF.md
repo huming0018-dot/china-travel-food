@@ -3022,3 +3022,11 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
   `candidates_beijing.jsonl` 中无柿合缘候选，**gate verdict = hold（尚无证据）**。
 - **未入库**：rid 暂未分配；待账号恢复 pool 自动采，达标（≥2 独立声音+口味均分≥3.5+≥1 招牌菜堂食证据）
   才 apply 入库；rid 拿到后回锚 chef 段誉。宁空不假。
+
+### HAE 新增 Qwen 网页连接器（2026-09-29）
+- web_chat_providers.py 注册表加 qwen：主入口 tongyi.com/chat.qwen.ai（复用阿里/百炼 SSO），开「联网/全网搜索」；
+  百炼 playground 仅在稳定发消息+读来源时备选，不稳定不硬用。与豆包/Kimi/DeepSeek 同 schema、只 upsert lead_hypotheses(hid幂等)。
+- 实测：qianwen.com 游客面可输入但发送按钮不触发提交（需登录）；本会话未登录 Qwen 聊天面。
+  按退避不硬刷，Qwen 本轮 0 新增假设；待用户在 qianwen.com/tongyi.com 登录后纳入舰队轮替。
+- 其他站状态不变；账本 lead_hypotheses 仍 54（confirmed32/hypothesized15/unverified6/contradicted1）。
+- 待用户登录清单（下一次一次性提示）：Qwen 千问聊天面（qianwen.com/tongyi.com）。
