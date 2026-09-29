@@ -2710,3 +2710,86 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - position after 分布: 旗舰304/高端315/进阶305/主流285/入门263（约各 20%）；band after: b1 335/b2 388/b3 358/b4 236/b5 155。
 - 非价格字段零误伤：phone/location/address/price_avg/score_taste/score_total 校验种前后一致。
 - 幂等：复跑 dry-run **0 变更**。
+
+---
+
+## HAE / L0.5 · 假设生成与联想引擎（Hypothesis & Association Engine） — 2026-09-29
+
+> 补 Phase0 过度偏确定性的缺口：模型不再只生成关键词，而是「自由回忆+联想 → 假设 →
+> 正向取证 + 强制反向证伪 → 收敛晋升」。假设与事实分层。
+> 铁律：LLM 输出绝不直写事实表，只进 `lead_hypotheses`；模型自标 知道/推断/不知道，
+> 无记忆留空（宁空不假）；每条假设必带证伪查询；默认 dry-run、过闸才 apply、写后回读。
+> 本波只新增 HAE migration 与 HAE 模块、追加本小节，未碰 Track 1B 五块（定价/关店/软广/feed/词网）。
+
+### 交付物
+- **migration `db/migrations/015_lead_hypotheses.sql`**（幂等；DDL 须在 Supabase SQL Editor 执行）。
+  新表 `lead_hypotheses`，与事实表物理/权限隔离：RLS 启用但【不建任何 policy】
+  （service_role 可读写，anon/authenticated 完全不可见，不向前端暴露未证实线索）。
+  schema 含 hid(sha1幂等主键)/subject_type(chef/owner/restaurant/blogger/list/brand/group)/
+  relation(worked_at/career_period/teacher/founded/owns/related_to/award/show_appearance/
+  signature_dish/reviewed_by/list_member)/object/when/claim_text/confidence/known_vs_inferred/
+  proposed_by(model+version+prompt_hash+date, ensemble逐模型)/status(hypothesized/confirmed/
+  contradicted/unverified)/evidence[]/confirm_queries[]/falsify_queries[]/confirm_voices/
+  confirmed_source_urls/verdict_notes/promoted_to/parent_hid/is_seed/expands_to/model_consensus。
+  无外键耦合（假设对象常是尚未入库的人/品牌/节目），`DROP TABLE ... CASCADE` 即可整体回滚。
+- **引擎 `cloud/vendor/pipeline/hae_engine.py`**：hid 确定性幂等 upsert；表不存在(015未执行)时
+  优雅降级写本地 JSONL 账本并明确告警，绝不误写事实表；`--promote-plan` 默认 dry-run；
+  `--diverge-llm` 读 deploy.env 的 ARK/OpenAI 兼容 key 做多模型 ensemble（同一探针过多个模型取并集、
+  一致提先验、不一致标 split）；容器无 key 即退回 agent 自身推理零成本实跑。
+- **首批账本 `pipeline_work/hae/lead_hypotheses_2026-09-29.jsonl`**（生成器 build_firstbatch_ledger.py 可复现）。
+
+### 首批账本真实统计（36 条，非估算）
+- status：**confirmed 29 / unverified 6 / contradicted 1 / hypothesized 0**。
+- 主体维度：chef 11、owner 7、list 15、brand 1、restaurant 1、blogger 1（六维度全跑通）。
+- 种子：chef 邓华东、owner 甬府(温)老板、list《一饭封神2》、restaurant 南兴园、blogger 郭本尼。
+
+### 邓华东链路查证（带来源）
+- 师承(confirmed)：师承陈廷新，师爷孔道生，祖师蓝光鉴(荣乐园)，「荣字派」第三代。
+  来源：新民晚报PDF、名厨主页、TastyTrip。
+- 沿革(confirmed)：1977入行；历任西南饭店→上海静安希尔顿天府楼→北京长城饭店/首都宾馆；
+  1992公派印尼雅加达四川饭店；2019创办南兴园(淮海中路1728号12幢)。
+- 招牌/荣誉(confirmed)：宫保鸡丁/麻婆豆腐/开水白菜/鸡淖豆腐；南兴园黑珍珠一钻2023–2026、
+  米其林推荐2022–2025（米其林指南官方页）。
+- 《一饭封神2》(confirmed)：2026-07-29起播出，**获第二季「荣耀厨神」总冠军**（新京报+腾讯+抖音多源）。
+- unverified：邓记食园创立年份 2002(bychefs) vs 2010(名厨/大渔) 冲突，不写年份；
+  香港开店 2008 vs 2017 口径不一，留账。
+
+### 甬府(温)老板链路查证（带来源）
+- 别名核对(confirmed)：种子「甬府温老板」= **翁拥军**（企查查法定代表人+官网创始人；「温/翁」为口述记音）。
+- 沿革(confirmed)：翁拥军1971年生于宁波，2011上海创甬府(银河宾馆/中山西路)，首年亏约400万
+  （人民网/澎湃/官网/企查查）。
+- 旗下10品牌(confirmed，官网)：甬府/甬府小鲜/甬府尊鲜/柿合缘新京菜(与段誉合作)/湘翁/
+  LES NUAGES法餐/食川非川/嫣花叁玥(与子福慧周子洋合作,国金)/甬府小包/甬府家宴。
+  食川非川首店深圳金堂奖、上海静安嘉里店在库(id=482)；嫣花叁玥在库(id=785)。
+- contradicted：明路川(甬府高端川菜,北外滩来福士,人均2300+) **2023-06已停业**（界面新闻），
+  未入库、不晋升为在营餐厅。
+
+### 《一饭封神2》扩散主厨/品牌清单（list 成员全入种子；16殿堂大厨为可锚定项）
+- 已 confirmed 餐厅：邓华东(南兴园·上海,冠军)、赵勇(安和隐世·SENSE·上海)、
+  Alan Yu(Ambre Ciel珀·上海法餐)、曹嗣全(炳胜·广州)、陈明媚(屿·闽菜公馆·广州)、
+  王刚(东莞洲际彩丰楼)、Eric Raty(Arbor·香港)、杜国金(厦门华尔道夫鲜承,2025/26米其林一星)、
+  张嘉裕Chef Menex(香港米其林一星中餐,餐厅名待逐字)、姜宛伶(TABLE by Sandy Keung·香港)、
+  苏华(龙吟山房青龙山庄店)。
+- 成员在但餐厅待锚定(unverified)：刘永康、张雯雯、欧浩然(后厨熊猫)、李飞越(年少有味)。
+- 评审(非成员)：谢霆锋、张勇、郑永麒(Vicky)、总顾问陈晓卿、李诞。
+- 另84位民间「小厨」多为昵称花名(八星过海/北美研茶生等)，不可解析，不入种子。
+
+### 晋升事实表 before→after（真实计数）
+- chefs：**56 → 57**（净新增 邓华东 id=57，title=川菜大师·南堂川菜荣字派第三代传人，含 bio）。
+- restaurant_chefs：**75 → 77**（+ 邓华东(chef57) → 南兴园(rid478) 当前主厨；
+  → 邓记食园(rid481) 创始人/主厨，已结束）。均带 source_url，写后回读确认。
+- 未动：restaurants 1478、restaurant_groups 10、awards 155、food_events 25（feed 属 Track 1B，不碰）。
+
+### 幂等复跑
+- promote check-first 流程重跑：chef 命中跳过、两条 link 命中跳过，restaurant_chefs delta=**0**；
+  composite PK 重复 POST 返回 409 不产生重复行。（注：chefs 表无 name 唯一约束，故晋升一律先 GET 锚定再写。）
+
+### 遗留 / 待办
+1. **015 migration 须在 Supabase SQL Editor 执行**（REST 不能 DDL）；执行后把
+   `pipeline_work/hae/lead_hypotheses_2026-09-29.jsonl` 用 `hae_engine.py --ingest-ledger` 入表
+   （当前表 404，账本落本地 JSONL 降级，未写库）。
+2. **24/7 定时自跑需配 ARK key**：容器 deploy.env 现无 ARK/OpenAI key，本波为 agent 自身推理零成本实跑；
+   配 ARK_BASE_URL/ARK_API_KEY/HAE_MODEL 后 `--diverge-llm` 才做多模型 ensemble。
+3. 一饭封神2 其余主厨(赵勇/Alan Yu/杜国金等)餐厅逐个锚定后，作为新种子继续扩散；
+   刘永康/张雯雯等4人餐厅待锚，留 unverified。
+4. 甬府系 founder 现作「翁氏」，待官方/工商确认后再校为翁拥军（本波未改既有 group 行）。
