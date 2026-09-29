@@ -3296,3 +3296,9 @@ chefs 59→59、restaurant_chefs 79→79（before=after，0 净新增）；revie
 **固化：** kol_cross.py 新增 `weibo_search/zhihu_search/douyin_search` 三通道适配器（当前 keyless 下返回空+原因，不编造内容）+ `--probe` 自检打印上表证据。通道在 MediaCrawler 后端产出落盘后接入。公众号(搜狗)与 B站维持可用。
 
 **需用户扫码清单（合并为一次，今日只汇总一次）：微博 + 知乎 + 抖音**（均待 sibling 容器 MediaCrawler 跑通后，把二维码合并推 TG+飞书、cookie 持久化按 XHS 同方式管理）。本轮 keyless 三平台新增帖子/提及 = 0（如实），restaurants/posts/mentions 零变化。
+
+## 2026-09-30 精益清理（提交 41f5684，已推送）
+- 删除 **314 个可再生中间产物**：research 下 raw_* 采集转储、plan*、write/report、tasks、accepted/rejected 工作文件、一次性 _fix/_merge/gen_raw/scan/apply_coords 脚本，及 app/data/work_progress.json 生成快照。
+- **保留 135 项**：全部设计/契约/审计/grid/readme 的 .md、regression_set、reviews_priority、米其林/黑珍珠 full_list、brand_registry、关键词/seed 等规范清单。
+- 安全校验：无悬空引用（cloud/app 全量扫描）、cloud/*.py 全部 py_compile 通过、crontab 引用脚本均存在；rebase 到 HAE 7bb9251 干净后推送。
+- **未做（待 deuce↔HAE 对账）**：cloud 模块级精简（blackpearl/ugc_longrun/source_registry 等是否被取代需逐一对账，本轮全部保留，不破坏运行中 cron）。
