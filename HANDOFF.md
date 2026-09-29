@@ -3152,3 +3152,37 @@ chefs 59→59、restaurant_chefs 79→79（before=after，0 净新增）；revie
 - upsert post=8/patch=0；cursor 0→8/253。
 - prove：均为通用网格种子、无权威 URL → 保持 hypothesized，0 晋升（chefs59/rc79 不变）。
 - 24/7 自跑仍需在 deploy.env 配 ARK/QWEN 等 key；当前走 agent/网页降级。
+
+---
+
+## Track 1C：KOL 跨平台身份归一 + 开放平台定点采集（不硬闯 XHS）
+
+> 接 references/source-classes-and-calibration.md §3：food_kol_watchlist 为主实体，同一博主跨平台同发；跨平台同款只算 1 个独立声音；KOL 内容只作线索、不回写 score。
+
+**1. 表结构（migration 016，待 SQL Editor 执行）**
+- 新文件 `db/migrations/016_kol_handles.sql`：`food_kol_watchlist ADD COLUMN handles JSONB NOT NULL DEFAULT '{}'` + GIN 索引。
+- handles 结构 `{bilibili:{mid,url},wechat:{name,url},weibo/douyin/zhihu/youtube:{...}}`；**只能确定性按「同名归一/已知 mid/主页链接」补，无法确定留空 {}、不硬猜**。DDL 交 Supabase SQL Editor（REST 不能 DDL）。
+
+**2. 通道实测（容器出口 IP，L0/L1/L2 优先、不硬刷）**
+- bilibili：开放搜索/详情/评论已由 kol_monitor + bili_enrich 覆盖（本连接器不重复采）。
+- 公众号（搜狗微信 `weixin.sogou.com/weixin?type=2`）：code=200、无验证码，可干净提取标题+摘要+跳转链接。
+- 微博 s.weibo.com：keyless 解析 0 cards（JS 壳）→ skipped；知乎：403 风控 → skipped；抖音：JS 渲染壳 → skipped。**均不硬闯**。
+
+**3. 身份归一结果（真实）**
+- bilibili 已知 mid = **39/41**（2 个 mid 待补）。
+- cross 美食作家（沈宏非/殳俏/陈晓卿/蔡澜/董克平/小宽/欧阳应霁/叶怡兰/焦桐，共 9 位）公众号**均有公开痕迹（9/9）**；但 keyless 拿不到可靠账号名 → **不写 handles**，等 016 列就绪 + 人工确认后再补（A2 宁空不假）。
+- 微博/知乎/抖音 resolved = 0。
+
+**4. 首轮跨平台采集（真实数字，容器 food-cloud）**
+- 新连接器 `cloud/kol_cross.py`：cross 作家按名搜搜狗微信 → 抓文章 **88** 篇 → 内容指纹 sha1(归一标题) 去重后新 **87**（1 篇与 B站已有同款去重，只算 1 独立声音）。
+- 提及：matched **3**（全聚德(淮海中路店)/夜上海/晟永兴(外滩店)）、ambiguous 0、候选线索 **24**。
+- **归属谨慎**：搜狗按名搜出的文章未必都是该博主本人公众号所发 → 不写成 food_kol_posts 硬绑 kol_id，全部 87 条线索入 gap pool `/app/data/discovery/raw_cross.jsonl`，过 admission_gate（≥2 独立声音+口味≥3.5+堂食单品）才入库。
+- 幂等：apply 后复跑 = 新 0（指纹游标推进，线索文件不翻倍）；posts=104/mentions=62/restaurants 1478(active1472) 经本连接器**零写入**。
+
+**5. 调度与注册**
+- crontab 第 18 条：`23 */6 * * * kol_cross.py --apply`（flock，每 6h 错峰，开放平台可高于舰队频率）。
+- 已注册 source_registry：`kol_cross_platform`（L0 keyless，F4/F6，reliability 0.6，内容指纹增量）。
+
+**实际晋升**：本轮 **0 家**店晋升 restaurants（KOL 内容仅线索，缺独立食客堂食声音；待 gap pool 聚合 ≥2 独立声音）。
+
+**遗留**：①016 migration 待用户在 SQL Editor 执行后，再把确认过的公众号 handle 写回 handles 列；②微博/知乎/抖音待有浏览器/账号通道再接；③24 条候选线索待 admission_gate 与 B站评论信号跨源聚合。

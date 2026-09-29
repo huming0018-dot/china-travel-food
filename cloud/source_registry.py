@@ -149,6 +149,21 @@ CATALOG = [
                 "x/v2/reply Referer=视频页 code0(98/104帖拿到284条评论)。restaurants/posts/mentions 零变化",
     },
     {
+        "id": "kol_cross_platform", "name": "KOL跨平台身份归一+开放平台定点采集(公众号搜狗/已含B站)",
+        "platform": "wechat/bilibili(微博知乎抖音skipped)", "kind": "ugc",
+        "auth_level": "L0(keyless)", "frames": ["F4", "F6"],
+        "connector_module": "kol_cross.py",
+        "output": "/app/data/discovery/raw_cross.jsonl; food_kol_watchlist.handles(016)",
+        "reliability": 0.6, "refresh_cadence": "every_6h(内容指纹增量)",
+        "account_dependency": "none(不硬闯XHS/微博/知乎/抖音)",
+        "covers": "以watchlist为主实体映射跨平台handle(同名/已知mid才记,否则留空不猜)；cross美食作家经搜狗微信按名采文章，"
+                  "内容指纹sha1(归一标题)去重(跨平台同款只算1独立声音)；提及归一restaurant_id(多分店留空)，"
+                  "归属不确定→线索入gap pool，过admission_gate(≥2独立声音+口味≥3.5+堂食单品)才入库，KOL不回写score",
+        "retire_if": "搜狗antispider连续5轮；或连续14天零新线索",
+        "note": "Track1C。2026-09-29实测：bilibili mid已知39/41；9/9 cross作家公众号有公开痕迹(keyless拿不到可靠账号名→不写handles,待016列+人工确认)；"
+                "微博s.weibo 0cards/知乎403/抖音JS壳=skipped不硬刷。首轮抓88篇去重87,matched3(全聚德淮海/夜上海/晟永兴外滩),线索24→gap pool。restaurants/posts/mentions零变化",
+    },
+    {
         "id": "dianping_identity", "name": "点评身份/电话锚定",
         "platform": "dianping", "kind": "map/identity",
         "auth_level": "L3", "frames": ["C"],

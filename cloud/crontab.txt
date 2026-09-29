@@ -57,3 +57,8 @@ SHELL=/bin/bash
 #     prove/promote 由 hae_engine 单独低频跑(过闸才晋升,幂等回读)。
 #     253叶子/8≈32天扫完全网格;限流自动退避,不依赖XHS。缺key不中断。
 17 9 * * * cd /app && . /app/cloud/env.sh && flock -n /tmp/fleet_grid.lock /usr/local/bin/python /app/pipeline/fleet_grid_run.py --once --apply >> /app/data/hae_grid.log 2>&1
+
+# 18) KOL跨平台定点采集( Track1C )：cross美食作家经搜狗微信按名采文章,内容指纹增量去重;
+#     B站已由 kol_monitor/bili_enrich 覆盖;微博/知乎/抖音 keyless 不可采不硬刷;
+#     线索入 gap pool(raw_cross.jsonl),过 admission_gate 才入库,KOL不回写score。每6h错峰 23分。
+23 */6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/kolcross.lock /usr/local/bin/python kol_cross.py --apply >> /app/data/kol_cross.log 2>&1
