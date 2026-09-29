@@ -226,19 +226,37 @@ def build_targets(min_price, batch):
     return todo[:batch], existing_urls, core_index
 
 
-def note_matches_restaurant(note_text, rest_row, core_index):
-    """实体锚定：返回 (ok, reason)。"""
+def _poi_name(nc):
+    """从 feed 详情里尽量取地点/POI 名（小红书打卡定位）。"""
+    for k in ("location", "poi", "poi_info", "place"):
+        v = nc.get(k)
+        if isinstance(v, dict):
+            for kk in ("name", "title", "poi_name"):
+                if v.get(kk):
+                    return str(v[kk])
+        elif isinstance(v, str) and v:
+            return v
+    return ""
+
+
+def note_matches_restaurant(note_text, rest_row, core_index, poi=""):
+    """实体锚定：返回 (ok, reason)。
+    锚定来源优先级：①正文/标题含店名；②笔记 POI 打卡定位名含店名（正文没写店名但定位在本店）。
+    连锁多分店仍要求正文或 POI 命中分店 token。"""
     core, branch = strip_branch(rest_row["name"])
     ncore = C.cjk_norm(core)
     nt = C.cjk_norm(note_text)
-    if ncore not in nt:
+    npoi = C.cjk_norm(poi or "")
+    in_body = ncore in nt
+    in_poi = bool(npoi) and ncore in npoi
+    if not in_body and not in_poi:
         return False, "core_not_in_note"
-    # 连锁多分店：必须命中分店 token
+    # 连锁多分店：必须命中分店 token（正文或 POI 任一命中即可）
     cands = core_index.get(ncore, [])
     if len(cands) > 1 and branch:
-        if branch not in note_text:
+        if branch not in note_text and branch not in (poi or ""):
             return False, f"branch_ambiguous({branch})"
-    return True, "ok"
+    return True, "ok" + ("+poi" if (in_poi and not in_body) else "")
 
 
 # ---------------------------------------------------------------- 主流程
@@ -330,6 +348,16 @@ def main():
             print("  无搜索结果")
             continue
 
+        # 取数优先级：标题/摘要直接点名本店的笔记排前面（榜单合集/泛菜系帖靠后），
+        # 避免把有限 feed 配额浪费在不含店名的合集上。
+        _ncore = C.cjk_norm(core)
+        def _hit_title(it):
+            sc = it.get("note_card") or {}
+            t = C.cjk_norm((sc.get("display_title") or "") + " "
+                           + str(sc.get("desc") or ""))
+            return _ncore in t
+        items = sorted(items, key=lambda it: not _hit_title(it))
+
         accepted_here = 0
         for it in items[: args.max_notes]:
             nid, tok = it.get("id"), it.get("xsec_token")
@@ -345,14 +373,15 @@ def main():
             title = nc.get("title") or sc.get("display_title") or ""
             desc = nc.get("desc") or ""
             text = f"{title}\n{desc}"
+            poi = _poi_name(nc) or _poi_name(sc)
             author = ((nc.get("user") or {}).get("nickname")
                        or (sc.get("user") or {}).get("nickname") or "")
             t_ms = nc.get("time") or 0
             url = (f"https://www.xiaohongshu.com/explore/{nid}"
                    f"?xsec_token={tok}&xsec_source=pc_search")
 
-            # 锚定正确餐厅/分店
-            ok, why = note_matches_restaurant(text, rest, core_index)
+            # 锚定正确餐厅/分店（正文或 POI 打卡定位命中店名）
+            ok, why = note_matches_restaurant(text, rest, core_index, poi=poi)
             if not ok:
                 print(f"  [跳过-锚定] {why} | {title[:24]}")
                 continue

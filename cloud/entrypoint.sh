@@ -19,6 +19,15 @@ for v in FOOD_PIPELINE_DIR FOOD_DATA_DIR \
   fi
 done
 
+# 通道开关：仅当 /app/data/notify_channels.json 缺失时写入已知良好默认值（TG+飞书自建 on）。
+# 绝不覆盖命名卷里已存在的显式设置——用户/运维显式关闭的通道保持关闭。
+# 这样全新空卷起来即双通道默认 on，而重建/重建卷不复位用户配置。
+CHANNELS_FILE=/app/data/notify_channels.json
+if [ ! -f "$CHANNELS_FILE" ]; then
+  printf '%s\n' '{"telegram": true, "feishu_app": true, "feishu": false}' > "$CHANNELS_FILE"
+  echo "=== 已写入默认通道开关 $CHANNELS_FILE（仅首次，后续不覆盖）==="
+fi
+
 crontab /app/cloud/crontab.txt
 cron
 echo "=== 云端采集服务已启动：cron 每 20 分钟一轮，数据写 /app/data ==="
