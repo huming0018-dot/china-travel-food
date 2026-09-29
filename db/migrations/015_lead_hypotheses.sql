@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS lead_hypotheses (
   subject_name  text NOT NULL,
   relation      text NOT NULL,
   object        text,                       -- 关系另一端（店/人/品牌/菜/节目），可空
-  when          text,                       -- 年份/时段，原文照录；不确定留空不猜
+  "when"        text,                       -- 年份/时段，原文照录；不确定留空不猜（when 为 PG 保留字，须双引号）
   claim_text    text NOT NULL,              -- 一句话主张（逐字，不改写事实）
   confidence    numeric(3,2) NOT NULL DEFAULT 0.30,  -- 0.00–1.00，先验置信（ensemble 一致度上调）
 
