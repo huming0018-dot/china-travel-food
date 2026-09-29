@@ -3104,3 +3104,22 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 ### 计数（prove 后）
 confirmed 32 / hypothesized 17 / unverified 6 / contradicted 1 = 56（无状态翻转：open 项或无原始权威源、或虽真但外地/香港）。
 chefs 59→59、restaurant_chefs 79→79（before=after，0 净新增）；reviews/有评价店数不变。
+
+### 2026-09-29 XHS 双账号登录状态（parked，次日自动扫码重登）
+
+**今日状态：A/B 均 parked，不硬刷。**
+- account_a (ahuhu/LANCE, uid=5e1175c9...): 今日多次扫码后 cookie 仍为游客态 (guest=True, uid=6abb291b)；后用户反馈短信日配额超限+风控，今日禁止再触发任何登录/短信/验证码请求。
+- account_b (猪蛤蛤, uid=69727028...): 短信日配额超额，今日 parked。
+- 不部署任何游客/异账号 cookie。容器内当前 account_a.json 为游客态，account_b.json 为误扫的 LANCE 数据，均待明日覆盖。
+
+**明日 (2026-09-30) 自动扫码重登计划（纯扫码、不发短信）：**
+- 09:30 account_b (猪蛤蛤): 独立 Chrome context，广州代理出口，二维码推 TG+飞书，用户用手机 App 扫码确认。
+- 09:50 account_a (LANCE): 独立 Chrome context，直连出口，二维码推 TG+飞书，与 B 错峰 20 分钟防串号。
+- 流程：本机真实 Chrome GUI 打开登录页 → CDP 取 img.qrcode-img base64 → 上传 Supabase qrcode bucket → TG sendPhoto + 飞书双通道推送 → poll 页面跳转 /login → CDP Network.getCookies 取全量 httpOnly cookie → scp 到宿主 /home/ubuntu/food-cloud/xhs_accounts/<account>.json (600) → 容器内 user/me 验证 code=0/guest=false/uid 正确 → notifier RESOLVED。
+- 二维码路径不消耗短信配额；仅当 App 自身掉登录才需短信，那也等配额重置后再说。
+
+**关键技术备忘：**
+- 必须本机真实 Chrome (open -na "Google Chrome" --args --remote-debugging-port=PORT --user-data-dir=DIR)，云端 headless 扫码确认环节必 fail。
+- CDP WebSocket 需 suppress_origin=True；cookie 格式为 JSON 数组 (Playwright/CDP cookie 对象)。
+- 容器名在 food-cloud / nice_bouman 间漂移 (重启导致)，操作前先 docker ps 确认。
+- 容器内直连 api.telegram.org 不通，必须走 TELEGRAM_API_BASE 代理；图片先传 Supabase 取公共 URL 再传 TG。
