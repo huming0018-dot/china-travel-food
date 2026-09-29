@@ -2974,3 +2974,13 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
   状态：新增 14 行全 hypothesized（豆包聚合链接非权威源，不自动翻 confirmed）。
 - --prove dry-run：would confirmed47/unverified2/kept_contradicted1（未 apply）。事实表回读 chefs=57/restaurant_chefs=77 未动，
   **晋升净新增=0**（网页行多为外地/unanchored，无上海 restaurant_id，不过闸不晋升；遵守"多站点一致仅先验、晋升需权威URL"）。
+
+### HAE 网页通道第二轮（2026-09-29 收口）
+- 三站登录态复核（受控浏览器实测）：豆包 doubao.com=已登录；Kimi kimi.com=已登录(登月者0569/Max)；DeepSeek chat.deepseek.com=已登录(智能搜索可用)；WorkBuddy 仍桌面端跳过。
+- 本轮实跑：
+  · DeepSeek(智能搜索,搜12网页) 种子=甬府/翁拥军系品牌 → 新主厨锚点：徐昆磊(甬府行政总厨)/刘震(甬府香港)/周晨(LES NUAGES云法餐)/段誉(柿合缘新京菜联创)，来源 baidu百科/163/baijiahao/yongfuhk.com。入账本 +4。
+  · Kimi 同探针邓华东师承：发送成功但触发限流("聊的人太多")，按退避不硬刷，本轮无可用结果。
+  · 豆包沿用上轮一饭封神2(14主厨)。
+- 账本 lead_hypotheses：50→54（DeepSeek +4 post4/patch0）。状态：confirmed29/hypothesized18/unverified6/contradicted1。
+- --prove dry-run would confirmed51/unverified2/kept_contradicted1（未 apply）。
+- 晋升净新增=0：新网页行来源为百科/门户聚合页(非官方/米其林/工商)，且多为外地/未锚定上海 restaurant_id，不过闸。事实表回读 chefs=57、restaurant_chefs=77 未动；reviews/有评价店数无变化。
