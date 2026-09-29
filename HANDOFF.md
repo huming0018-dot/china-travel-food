@@ -3123,3 +3123,13 @@ chefs 59→59、restaurant_chefs 79→79（before=after，0 净新增）；revie
 - CDP WebSocket 需 suppress_origin=True；cookie 格式为 JSON 数组 (Playwright/CDP cookie 对象)。
 - 容器名在 food-cloud / nice_bouman 间漂移 (重启导致)，操作前先 docker ps 确认。
 - 容器内直连 api.telegram.org 不通，必须走 TELEGRAM_API_BASE 代理；图片先传 Supabase 取公共 URL 再传 TG。
+
+
+---
+
+## 2026-09-29 晚：A/B 均 parked（短信配额+风控），系统进入无账号安静态
+
+- **安静跳过（无需改码，已生效）**：`ugc_longrun` 无账号时打印「账号：[]；无可用 XHS 账号，退出」后安静结束（日志实证）；`gap_pool` 每探测周期仅打「账号状态：{A:None,B:None}」，**不拉起 worker、不重试、不发错误告警**。无重复刷屏。
+- **非登录线今日照常（日志实证）**：evidence_pool→pool.jsonl、cloud_patrol（咖啡带分布）、amap_fill（缓存命中42、高德126/5000）、phone_fill（腾讯395/10000）、self_evolve（01:00 报告、只读无异常）、progress_broadcast（「A=dead,B=parked」推送结果 True）。黑珍珠06:20、地图、定价/事实层照常。
+- **关键数据核对（只读）**：restaurants **1478**(active **1472**)、reviews **1708**、chefs **59**、restaurant_chefs **79**、lead_hypotheses **56**、chain_type 标准化覆盖 1478；双通道 `telegram=true, feishu_app=true`。
+- 明日错峰纯扫码自动重登 A/B；恢复后串行锁（上一轮 xhs_api flock）生效。
