@@ -30,14 +30,15 @@
 - [x] 评分公式精确重验（确认0家不符，关闭误报）
 - [x] 口味分覆盖分析（1207家空，704家仅有高德low信任评论）
 - [x] 问题台账重建（QUALITY_ISSUES.md）
-- [ ] 部署后端采集P0修复到服务器（xhs_api/discovery_engine/gap_runner）
-- [ ] POOL_RUNNING假死校验修复
+- [x] 部署后端采集P0修复到服务器（xhs_api/discovery_engine/gap_runner）
+- [x] POOL_RUNNING假死校验修复（Q-002：cloud_router添加pool_alive()进程检查）
+- [x] discovery_engine frontier污染修复（Q-010：添加NON_FOOD_KEYWORDS黑名单+清理污染数据）
 
 **D3**
-- [ ] 营业时间批量补全（cloud_hours_fill.py）
-- [ ] 电话批量补全（cloud_phone_fill.py）
-- [ ] 菜系标签覆盖率验证（已确认100%，backfill_cuisine.py保留备用）
-- [ ] 数据库迁移文件与实际公式对齐（Q-003）
+- [ ] 营业时间批量补全（cloud_hours_fill.py）— 阻塞：地图API配额超限，等凌晨重置
+- [ ] 电话批量补全（cloud_phone_fill.py）— 阻塞：地图API配额超限，等凌晨重置
+- [x] 菜系标签覆盖率验证（已确认100%，backfill_cuisine.py保留备用）
+- [x] 数据库迁移文件与实际公式对齐（Q-003：创建016_scoring_v4_alignment.sql）
 
 ### 阶段二：数据充实（D4-D7，依赖采集恢复）
 

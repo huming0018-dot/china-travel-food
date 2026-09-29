@@ -45,6 +45,22 @@ def log(msg: str):
     print(line, flush=True)
 
 
+def pool_alive() -> bool:
+    """【质量监管 Q-002】检查 gap_pool 进程是否真的在运行。
+    只看 POOL_RUNNING 文件会假死（进程死了文件还在，router 永远让位）。
+    直接读 /proc 枚举进程，不依赖 ps/procps。"""
+    for p in pathlib.Path("/proc").iterdir():
+        if not p.name.isdigit():
+            continue
+        try:
+            cmd = (p / "cmdline").read_bytes().replace(b"\x00", b" ").decode("utf-8", "ignore")
+            if "gap_pool.py" in cmd:
+                return True
+        except (FileNotFoundError, ProcessLookupError, PermissionError):
+            continue
+    return False
+
+
 def xhs_usable_accounts():
     """返回 (可用账号数, summary)。summary 形如 {account_id:{status,cooling,reason}}。
     0 = 浏览器应让给不依赖 XHS 的任务。"""
@@ -103,8 +119,18 @@ def decide():
 
     # 并行采集池只有在"有健康账号"时才真正在做 XHS 深覆盖；账号全 dead（如 -100）时
     # gap_pool 只是进程在、实际空转。此时绝不能让位，否则非小红书兜底任务永远不被调度。
-    if ready > 0 and (DATA / "POOL_RUNNING").exists():
-        return ("", "并行采集池(POOL)有健康账号且运行中，router 让位，不重复调度")
+    # 【质量监管 Q-002】必须同时检查 POOL_RUNNING 文件和进程存活，防止假死。
+    presence_file = DATA / "POOL_RUNNING"
+    if ready > 0 and presence_file.exists():
+        if pool_alive():
+            return ("", "并行采集池(POOL)有健康账号且运行中，router 让位，不重复调度")
+        else:
+            # 进程已死但 presence 文件还在 → 假死，清除文件并继续调度
+            log("【Q-002告警】POOL_RUNNING文件存在但gap_pool进程已死，清除假死标记")
+            try:
+                presence_file.unlink()
+            except Exception:
+                pass
 
     if ready <= 0:
         # 所有 XHS 账号都在冷却/不可用（含 POOL 空转）：不硬刷小红书，浏览器让给榜单兜底
