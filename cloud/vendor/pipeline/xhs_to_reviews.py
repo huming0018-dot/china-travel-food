@@ -1,32 +1,62 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""raw_xhs.jsonl -> raw_reviews.jsonl  (v4)
+"""raw_xhs.jsonl -> raw_reviews.jsonl  (v5)
 
-治四类错锚（在 v3 核心专名召回 + 分店冲突基础上）：
-1. **合集/攻略笔记不锚单一店**：正文出现≥2个非参照店名、或≥2处"地址："→ 判合集，
-   不挂到其中某一家（登记 unmatched:合集），其评论也不归属。
-2. **评论独立过滤，不一刀切归主体**：评论提到他店→弃；出现"本地/当地/老家/来X吃"等
-   外地信号→弃；疑问/互动/作者本人→弃；只有围绕主体且有口味信号才归主体。
-3. **对比参照物不作主体**："还是X最好吃/不如X/没X好吃/比X"里的 X 是参照，不锚。
-4. 核心专名（·第一段/去后缀，如 桂山禾）命中且库内唯一才采信；"新店/PLUS"降 mid。
-口味情感为确定性整数 1-5，无口味信号不打分。
+v5 修复"低产：真实单店评论被大量误丢"（一批 417 行仅 +14）：
+A. 匹配归一化升级 SQ：在 cjk_norm 基础上去掉所有空白/分隔符/标点，并补 CJK-only、
+   Latin-only 品牌核心 —— 修"炎珀EMBER / 炎珀 EMBER / EMBER"因空格或拉丁边界匹配失败。
+B. 合集判定证据化：
+   - 高置信（≥2 个完整非参照店名 / ≥2 个地址块 / ≥3 个"含门店或地址的编号或圈号"）→ 合集；
+   - 标题强词（合集/盘点/排行/N家/横评…）需有任意多店佐证才判；弱词（VS/PK/N碗…）同样需佐证；
+   - 纯步骤/高亮编号（1.预约 2.点单）不含门店地址 → 不再误判合集。
+其余（评论独立过滤、对比参照、口味整数分、日期解析、宁空不假）沿用 v4。
 """
-import sys, json, re, pathlib
-SP = "/Users/hubowen/Library/Application Support/Doubao/Default/.doubao/agent_mode/workspace/.user_skills/city-food-guide/scripts/food_pipeline"
-sys.path.insert(0, SP)
+import os, sys, json, re, pathlib, fcntl
+
+PIPE = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(PIPE))
 import common as C
 
-base = "/Users/hubowen/Desktop/桌面 - 胡博文的MacBook Pro/china-travel-food"
-raw_p = base + "/research/atlas/xhs/raw_xhs.jsonl"
-out_p = base + "/research/atlas/xhs/raw_reviews.jsonl"
-unmatched_p = base + "/research/atlas/xhs/unmatched_shops.jsonl"
+# 单实例锁：relay/手动并发时后来者直接退出，避免 2 核机器上互相抢 CPU
+_lk = open("/tmp/xhs_to_reviews.lock", "w")
+try:
+    fcntl.flock(_lk, fcntl.LOCK_EX | fcntl.LOCK_NB)
+except OSError:
+    print("另一个 xhs_to_reviews 正在运行，本次跳过")
+    sys.exit(0)
 
-rests = C.fetch_all("restaurants", "id,name,status,district")
+# 数据目录自适应：容器 /app/data；本地各机回落到项目根
+_cands = [os.environ.get("FOOD_DATA_DIR"), "/app/data",
+          "/Users/hubowen/Desktop/桌面 - 胡博文的MacBook Pro/china-travel-food",
+          "/Users/deuce/Doubao/chats/2026-09-28/new-chat-1/china-travel-food"]
+DATA = next(pathlib.Path(p) for p in _cands if p and pathlib.Path(p).exists())
+XDIR = DATA / "research/atlas/xhs"
+raw_p, out_p, unmatched_p = XDIR/"raw_xhs.jsonl", XDIR/"raw_reviews.jsonl", XDIR/"unmatched_shops.jsonl"
+
+rests = C.fetch_all("restaurants", "id,name,status,district,address")
+
+
 def norm(s):
-    # 统一跨字形归一（繁简 + 日文汉字 → 简体），治 和菓子↔和果子 / 寛↔宽 / 本舖↔本铺
     return C.cjk_norm(s)
+
+
+_SQUISH = re.compile(r"[\s·・•,，。._\-—/、|｜~～:：;；]+")
+def SQ(s):
+    """匹配专用强归一：cjk_norm 后去所有空白/分隔/标点（保留 CJK、拉丁、数字）。"""
+    return _SQUISH.sub("", C.cjk_norm(s or ""))
+
+
 def strip_branch(s):
     return re.sub(r"（.*?）|\(.*?\)", "", s or "").strip()
+
+
+def _cjk_only(s):
+    return "".join(ch for ch in s if "一" <= ch <= "鿿")
+
+
+def _latin_only(s):
+    return "".join(ch for ch in s if ("a" <= ch.lower() <= "z" or ch.isdigit()))
+
 
 _GEO = ("上海|北京|武汉|四川|重庆|成都|广州|湖南|湖北|河南|江苏|浙江|云南|贵州|安徽|山东|"
         "福建|广东|陕西|新疆|西藏|青海|甘肃|江西|广西|海南|宁夏|辽宁|吉林|黑龙江|内蒙古|"
@@ -42,37 +72,46 @@ _CAT_EXTRA = ["铜锣烧","胡辣汤","卤菜","牛肉汤","牛肉面","冰浆",
               "铁板","炉端","居酒屋","怀石","洋食","盖饭","便当","定食","釜饭","粉"]
 _CAT_ALL = sorted(set(_CAT + _CAT_EXTRA), key=len, reverse=True)
 
+
 def _clean_seg(seg):
     s = re.sub(_GEO, "", seg)
     for w in _CAT_ALL:
         s = s.replace(w, "")
     return re.sub(r"[·・•\s]+", "", s).strip()
 
+
 def brand_forms(full):
+    """返回 SQ 归一后的品牌核心集合（含·分段、整段、CJK-only、Latin-only、去尾系列名）。"""
     full = strip_branch(full)
-    forms = {full}
-    m = re.search(r"([一-龥A-Za-z0-9]{1,4}记)", full)
-    if m:
-        forms.add(m.group(1))
+    forms = set()
     for seg in re.split(r"[·・•]+", full):
         s = _clean_seg(seg.strip())
         if s and len(s) >= 2:
             forms.add(s)
+        cj, lt = _cjk_only(seg), _latin_only(seg)
+        if len(cj) >= 2:
+            forms.add(cj)
+        if len(lt) >= 4:
+            forms.add(lt)
     s = _clean_seg(full)
     if s and len(s) >= 2:
         forms.add(s)
-    # 统一 cjk 归一并去重
-    out = set()
-    for f in forms:
-        cf = norm(f)
-        if cf and len(cf) >= 2 and cf not in _CAT_ALL:
-            out.add(cf)
-    # 去尾部系列名的品牌主体前缀（和果子本铺四叶→和果子本铺）；core_unique 护栏防宽泛误锚
-    fullc = norm(full)
+    cj, lt = _cjk_only(full), _latin_only(full)
+    if len(cj) >= 2:
+        forms.add(cj)
+    if len(lt) >= 4:
+        forms.add(lt)
+    fullc = SQ(full)
     for cut in (1, 2, 3):
         if len(fullc) - cut >= 4:
-            out.add(fullc[:-cut])
+            forms.add(fullc[:-cut])
+    out = set()
+    for f in forms:
+        cf = SQ(f)
+        if cf and len(cf) >= 2 and cf not in _CAT_ALL:
+            out.add(cf)
     return sorted(out)
+
 
 def head_token(name):
     full = strip_branch(name)
@@ -80,52 +119,191 @@ def head_token(name):
     s = _clean_seg(seg)
     return s or seg
 
-# 预计算每店元信息，加速
+
+def _is_cjk(ch):
+    return bool(ch) and ("一" <= ch <= "鿿")
+
+
+# 纯通用词（去 geo/品类后若只剩这些 → 该品牌"无特异性"，匹配从严，避免子串/词内误命中）
+_GW_RAW = ("味道 美食 打卡 探店 宝藏 分享 推荐 好吃 餐厅 饭店 料理 小馆 餐室 酒楼 酒家 "
+           "环境 服务 口味 口感 招牌 人气 排队 预约 新店 老店 咖啡 甜品 烘焙 工坊 厨房 "
+           "生活 碎片 日常 记录 食客 朋友")
+GENERIC_WORDS = {SQ(w) for w in _GW_RAW.split() if SQ(w)}
+
+
+def _strip_generic(s):
+    s = re.sub(_GEO, "", s)
+    for w in _CAT_ALL:
+        s = s.replace(SQ(w), "")
+    for gw in GENERIC_WORDS:
+        s = s.replace(gw, "")
+    return s
+
+
+def is_generic_name(name):
+    """去 geo/品类/通用词后无任何特异字符 → 通用品牌（如"上海餐厅""徐州味道"）。"""
+    return len(_strip_generic(SQ(strip_branch(name)))) < 1
+
+
+def head_usable(ht):
+    """head token 是否具品牌特异性（通用词如"味道"不可作弱命中）。"""
+    return len(_strip_generic(SQ(ht))) >= 1
+
+
+def _bounded(needle, hay, specific):
+    """needle 在 hay 中的边界判定。specific 品牌允许后接 CJK；通用品牌要求前后均非 CJK。"""
+    i = hay.find(needle)
+    while i != -1:
+        before = hay[i - 1] if i > 0 else ""
+        after = hay[i + len(needle)] if i + len(needle) < len(hay) else ""
+        if specific:
+            return True
+        if not _is_cjk(after) and not _is_cjk(before):
+            return True
+        i = hay.find(needle, i + 1)
+    return False
+
+
 RMD = []
 for r in rests:
     RMD.append({"id": r["id"], "name": r["name"], "status": r["status"],
                 "full": strip_branch(r["name"]), "ht": head_token(r["name"]),
-                "forms": brand_forms(r["name"])})
+                "forms": brand_forms(r["name"]), "address": r.get("address"),
+                "gen": is_generic_name(r["name"])})
 
-def match_id(name):
-    if not name:
-        return None
-    target = norm(name)
-    exact = [m for m in RMD if norm(m["name"]) == target]
-    if exact:
-        act = [x for x in exact if x["status"] == "active"] or exact
-        return act[0]["id"]
-    core = norm(strip_branch(name))[:6]
-    if len(core) < 2:
-        return None
-    hits = [m for m in RMD if core in norm(m["name"])]
-    if len(hits) == 1:
-        return hits[0]["id"]
-    return None
+# 精确/包含索引：key(SQ) -> set(rids)
+KEY2RIDS = {}
+for d in RMD:
+    for k in [SQ(d["name"]), SQ(d["full"])] + d["forms"]:
+        if k and len(k) >= 2:
+            KEY2RIDS.setdefault(k, set()).add(d["id"])
 
-def core_unique(core, rid):
-    hits = [m for m in RMD if norm(core) in norm(m["name"])]
-    return len(hits) == 1 and hits[0]["id"] == rid
+# 前缀索引（首2字 → keys），把模糊包含从全表 O(K) 降到同前缀常数级
+PREF = {}
+for k in KEY2RIDS:
+    PREF.setdefault(k[:2], []).append(k)
+_BC_CACHE = {}
+
+BYID = {d["id"]: d for d in RMD}
+
+# 提及倒排：品牌 key 首2字 → (key, rid, level, generic)；shops_mentioned 改为 O(文本长度)
+HEAD2 = {}
+def _add_mention(key, d, level):
+    if key and len(key) >= 2:
+        HEAD2.setdefault(key[:2], []).append((key, d["id"], level, d["gen"]))
+for d in RMD:
+    fsq = SQ(d["full"])
+    if fsq and len(fsq) >= 3:
+        _add_mention(fsq, d, 3)
+    hsq = SQ(d["ht"])
+    if hsq and len(hsq) >= 2 and head_usable(d["ht"]):
+        _add_mention(hsq, d, 1)
+    for f in d["forms"]:
+        _add_mention(f, d, 1)
+
+
+def _active_first(rids):
+    ids = list(rids)
+    act = [i for i in ids if next(x for x in RMD if x["id"] == i)["status"] != "closed"]
+    return (act or ids)
+
 
 MALLS = sorted(set(["国贸汇","ITC","itc","美罗城","静安大悦城","大悦城","港汇恒隆","港汇",
     "恒隆广场","恒隆","来福士","万象城","太古汇","环球港","正大广场","正大","国金中心","国金",
     "IFC","ifc","环贸","IAPM","iapm","合生汇","龙之梦","万象天地","天安千树","今潮8弄","新天地",
     "七宝万科","万达广场","万达","大宁国际","久光","仲盛","印象城","嘉亭荟","又一城","宝龙城",
-    "前滩太古里","太古里","兴业太古汇","张园","丰盛里","上海中心","金茂"]), key=len, reverse=True)
+    "前滩太古里","太古里","兴业太古汇","张园","丰盛里","上海中心","金茂","恒隆二期","恒隆三期"]),
+    key=len, reverse=True)
+
+
 def branch_malls(name):
     found = []
     for p in re.findall(r"[（(]([^）)]+)[）)]", name):
         found += [x for x in MALLS if x in p]
     return found
-def mall_conflict(text, rec_name):
-    tm = branch_malls(rec_name)
-    if not tm:
-        return False, []
-    nm = [x for x in MALLS if x in text]
-    extra = [x for x in nm if not any(x == t or x in t or t in x for t in tm)]
-    return bool(extra), extra
 
-# 对比参照："还是X最好吃 / 不如X / 没X好吃 / 比X"
+
+def malls_in(text):
+    return [x for x in MALLS if x in text]
+
+
+def brand_candidates(name):
+    """品牌匹配：(rids, 输入名自带分店mall)。
+    全名(含分店)精确命中 → 唯一，不再并入裸品牌；否则裸品牌→同前缀包含；记忆化。"""
+    q, qb = SQ(name), SQ(strip_branch(name))
+    if q in _BC_CACHE:
+        return _BC_CACHE[q]
+    bm = branch_malls(name)
+    if q in KEY2RIDS:
+        r = (set(KEY2RIDS[q]), bm)
+        _BC_CACHE[q] = r
+        return r
+    rids = set()
+    if qb in KEY2RIDS:
+        rids |= KEY2RIDS[qb]
+    if not rids and len(qb) >= 2:
+        cj = _cjk_only(qb)
+        ok_len = len(qb) >= 2 if cj else len(qb) >= 4
+        if ok_len:
+            for k in PREF.get(qb[:2], []):
+                if k.startswith(qb) or qb in k:
+                    rids |= KEY2RIDS[k]
+    r = (rids, bm)
+    _BC_CACHE[q] = r
+    return r
+
+
+def branch_addr_token(addr):
+    """门店地址 → 路+门牌 强特征（如 延安中路1238号）。"""
+    if not addr:
+        return None
+    m = re.search(r"([一-龥]{2,8}[路街弄道][^，。\n]{0,12}?号)", addr)
+    return SQ(m.group(1)) if m else None
+
+
+def disambiguate(rids, bmalls, text):
+    """多分店 → 输入分店mall → 正文mall → 正文路牌地址 → 唯一active；冲突返回 (None,原因)。"""
+    if not rids:
+        return None, "库内无此店"
+    if len(rids) == 1:
+        return next(iter(rids)), ""
+    text_malls = malls_in(text)
+    if bmalls:
+        pick = {i for i in rids if any(SQ(m) in SQ(BYID[i]["name"]) for m in bmalls)}
+        if len(pick) == 1:
+            return next(iter(pick)), "分店:" + "/".join(bmalls)
+    if text_malls:
+        pick = {i for i in rids if any(SQ(m) in SQ(BYID[i]["name"]) for m in text_malls)}
+        if len(pick) == 1:
+            return next(iter(pick)), "正文分店"
+        if not pick:
+            return None, "分店冲突:" + "/".join(text_malls)
+    sqt = SQ(text)
+    addr_hits = set()
+    for i in rids:
+        tok = branch_addr_token(BYID[i].get("address"))
+        if tok and tok in sqt:
+            addr_hits.add(i)
+    if len(addr_hits) == 1:
+        return next(iter(addr_hits)), "正文地址"
+    act = _active_first(rids)
+    if len(act) == 1:
+        return act[0], "唯一active分店"
+    return None, "多分店待核"
+
+
+def match_id(name):
+    rids, bm = brand_candidates(name)
+    rid, _ = disambiguate(rids, bm, "")
+    return rid
+
+
+def core_unique(core, rid):
+    rids = KEY2RIDS.get(SQ(core), set())
+    return len(rids) == 1 and rid in rids
+
+
+# 对比参照
 _REF_PAT = [r"还是([^，。！？\s、]{2,10}?)(?:最好吃|最好|最正|好吃|正宗|靠谱)",
             r"不如([^，。！？\s、]{2,10})",
             r"没有([^，。！？\s、]{2,10})好吃",
@@ -135,52 +313,95 @@ def ref_groups(text):
     for p in _REF_PAT:
         for mm in re.finditer(p, text):
             if mm.group(1):
-                g.add(norm(mm.group(1)))
+                g.add(SQ(mm.group(1)))
     return g
+
 
 class M:
     def __init__(s, d, score, is_ref):
         s.id, s.name, s.score, s.is_ref = d["id"], d["name"], score, is_ref
 
+
 def shops_mentioned(text):
     refs = ref_groups(text)
-    nt = norm(text)
+    sqt = SQ(text)
+    n = len(sqt)
+    best = {}  # rid -> level
+    for i in range(n - 1):
+        for key, rid, level, gen in HEAD2.get(sqt[i:i + 2], ()):
+            L = len(key)
+            if sqt[i:i + L] != key:
+                continue
+            if gen:  # 通用品牌要求边界，防"上海餐厅"命中"上海餐厅周"
+                before = sqt[i - 1] if i > 0 else ""
+                after = sqt[i + L] if i + L < n else ""
+                if _is_cjk(after) or _is_cjk(before):
+                    continue
+            if best.get(rid, 0) < level:
+                best[rid] = level
     out = []
-    for d in RMD:
-        score = 0
-        if d["full"] and len(d["full"]) >= 3 and d["full"] in text:
-            score = 3
-        elif d["full"] and len(norm(d["full"])) >= 3 and norm(d["full"]) in nt:
-            score = 2
-        elif d["ht"] and len(norm(d["ht"])) >= 2 and (d["ht"] in text or norm(d["ht"]) in nt):
-            score = 1
-        if not score:
-            continue
-        isref = bool(d["full"]) and any(
-            g and (g in norm(d["full"]) or norm(d["full"])[:4] in g) for g in refs)
-        out.append(M(d, score, isref))
+    for rid, level in best.items():
+        d = BYID[rid]
+        fsq = SQ(d["full"])
+        isref = bool(fsq) and any(
+            g and (g in fsq or fsq[:4] in g or g in fsq) for g in refs)
+        out.append(M(d, level, isref))
     return sorted(out, key=lambda z: -z.score)
 
-_TITLE_ROUNDUP = re.compile(
-    r"VS|vs|PK|pk|对决|横评|比拼|巨头|哪家强|红黑榜|排行|排名|合集|盘点|\d+家|\d+碗|\d+家店")
+
+_ADDRISH = r"地址[：:]|📍|[路街][^，。\n]{0,10}号|\d+楼|弄\d+号"
+_TITLE_STRONG = re.compile(
+    r"合集|盘点|排行|排名|红黑榜|哪家强|横评|\d+家店?|攻略大全")
+_TITLE_WEAK = re.compile(r"VS|vs|PK|pk|对决|比拼|巨头|\d+碗")
 _CIRCLED = set("①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚")
-def is_roundup(title, text, mentioned):
-    # 标题定性（PK/对决/排行/盘点/N家/N碗）→ 必然多店
-    if _TITLE_ROUNDUP.search(title or ""):
-        return True
+
+
+def _numbered_store_lines(text):
+    cnt = 0
+    for line in text.splitlines():
+        if re.match(r"\s*(?:\d{1,2}[.、）)]|[一二三四五六七八九十]{1,3}[、.）)])", line):
+            if re.search(_ADDRISH, line) or line.strip().endswith("店"):
+                cnt += 1
+    return cnt
+
+
+def _circled_store(text):
+    parts = re.split(r"[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚]", text)
+    return sum(1 for seg in parts if re.search(_ADDRISH, seg) or seg.strip().endswith("店"))
+
+
+def _any_multi_hint(text, mentioned, title):
     nonref = [x for x in mentioned if not x.is_ref]
-    # 完整提到店名(score>=2)≥2 才算多店；score1 弱命中不计
-    if len([x for x in nonref if x.score >= 2]) >= 2:
+    if len(nonref) >= 2:
         return True
-    if len(re.findall(r"地址[：:]", text)) >= 2:
+    if len(re.findall(_ADDRISH, text)) >= 2:
         return True
-    # 圈号编号列表 ≥3（①②③…）
-    if len(set(ch for ch in text if ch in _CIRCLED)) >= 3:
+    if len(set(ch for ch in text if ch in _CIRCLED)) >= 2:
         return True
-    # 多行数字/中文编号 ≥3
-    if len(re.findall(r"(?m)^\s*(?:\d{1,2}[.、）)]|[一二三四五六七八九十]{1,3}[、.）)])", text)) >= 3:
+    if len(re.findall(r"(?m)^\s*(?:\d{1,2}[.、）)]|[一二三四五六七八九十]{1,3}[、.）)])", text)) >= 2:
+        return True
+    if re.search(r"\d+家|\d+碗", title):
         return True
     return False
+
+
+def is_roundup(title, text, mentioned):
+    nonref = [x for x in mentioned if not x.is_ref]
+    if len([x for x in nonref if x.score >= 2]) >= 2:
+        return True
+    if len(re.findall(r"地址[：:]|📍", text)) >= 2:
+        return True
+    if _numbered_store_lines(text) >= 3:
+        return True
+    if _circled_store(text) >= 3:
+        return True
+    hint = _any_multi_hint(text, mentioned, title)
+    if _TITLE_STRONG.search(title or "") and hint:
+        return True
+    if _TITLE_WEAK.search(title or "") and hint:
+        return True
+    return False
+
 
 NEW_SHOP = re.compile(r"新店|PLUS|plus|首店|二店|2店|新开")
 def anchor_note(note, rec_name):
@@ -191,29 +412,26 @@ def anchor_note(note, rec_name):
         if rid:
             return rid, "显式商家"
     mentioned = shops_mentioned(text)
-    nonref = [x for x in mentioned if not x.is_ref]
-    rec_rid = match_id(rec_name)
-    if rec_rid:
-        conf, extra = mall_conflict(text, rec_name)
-        if conf:
-            return None, "分店冲突:" + "/".join(extra)
+    cands, bmalls = brand_candidates(rec_name)
     if is_roundup(note.get("title", ""), text, mentioned):
         return None, "合集"
+    rec_rid, why = disambiguate(cands, bmalls, text)
     if rec_rid:
         d0 = next(x for x in RMD if x["id"] == rec_rid)
         rec_core = strip_branch(rec_name)
-        nt = norm(text)
-        if norm(rec_core) in nt:
+        sqt = SQ(text)
+        if SQ(rec_core) in sqt or SQ(d0["full"]) in sqt:
             return rec_rid, "搜索目标在正文"
         for bf in d0["forms"]:
-            bfc = norm(bf)
-            if bfc in nt and core_unique(bfc, rec_rid):
+            if bf in sqt and core_unique(bf, rec_rid):
                 if NEW_SHOP.search(text) and re.search(r"[（(]", rec_name):
                     return rec_rid, "核心专名(新店待核)"
                 return rec_rid, "核心专名:" + bf
+    nonref = [x for x in mentioned if not x.is_ref]
     if len(nonref) == 1 and nonref[0].score >= 2:
         return nonref[0].id, "唯一主角:" + nonref[0].name
-    return None, "库内无此店"
+    return None, why or "库内无此店"
+
 
 QUESTION = re.compile(
     r"[?？]|想问|吗\b|么\b|嘛\b|请问|在哪|哪里|哪家|哪个|求问|求安利|求坐标|求地址|求个|"
@@ -221,12 +439,11 @@ QUESTION = re.compile(
 def is_question(t):
     return bool(QUESTION.search(t))
 
+
 OUT_TOWN = re.compile(r"当地|本地|老家|原产地|来[一-龥]{1,4}(?:吃|当地|本地)|去[一-龥]{1,4}吃")
-# 评论捧他店：隔壁/旁边/对面的XX好吃、XX好吃一百倍（情感对象是他店，不作为主体评价）
 PRAISE_OTHER = re.compile(
     r"(?:隔壁|旁边|对面|斜对面|楼上下|附近)[^，。！？]{0,10}(?:好吃|香|正宗|更强|更好)|"
     r"[^，。！？]{2,8}(?:好吃|香|正宗)(?:一百倍|好多倍|得多|太多)")
-# 合集编号评论：p1/p2、①②、第N家（合集正文已不锚，双保险，避免编号评论串店）
 ROUNDUP_CMT = re.compile(r"(?i)\bp?\d{1,2}[\s.、]|[①②③④⑤⑥⑦⑧⑨⑩]|第[一二三四五六七八九十\d]{1,3}家")
 
 POS = {"好吃":.35,"正宗":.3,"惊艳":.4,"鲜嫩":.25,"入味":.25,"地道":.3,"值得":.2,"香":.15,
@@ -243,34 +460,45 @@ def taste_sent(text):
     raw = max(1.0, min(5.0, round(3.8 + pos + neg, 1)))
     return max(1, min(5, int(raw + 0.5))), raw
 
+
 def clean_content(t):
     t = re.sub(r"#\S+", "", t or "")
-    t = t.replace("\t", " ").replace("\u200b", " ")
+    t = t.replace("\t", " ").replace("​", " ")
     return re.sub(r"\n{2,}", "\n", t).strip()
 
+
 def same_person(a, b):
-    return norm(a) and norm(a) == norm(b)
+    return SQ(a) and SQ(a) == SQ(b)
+
 
 def parse_note_date(d):
-    """笔记日期 → ISO date string (YYYY-MM-DD) 或 None。
-    格式：'2024-05-05' / '编辑于 01-19' / '04-13'。"""
     if not d:
         return None
+    if isinstance(d, (int, float)):
+        import datetime
+        t = float(d)
+        if t > 1e12:
+            t /= 1000.0
+        try:
+            return datetime.date.fromtimestamp(t).isoformat()
+        except Exception:
+            return None
     d = d.strip()
     m = re.match(r"(\d{4})-(\d{2})-(\d{2})", d)
     if m:
         return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
     m = re.search(r"(\d{2})-(\d{2})", d)
     if m:
+        import datetime
         mm, dd = int(m.group(1)), int(m.group(2))
         if 1 <= mm <= 12 and 1 <= dd <= 31:
-            import datetime
             now = datetime.date.today()
             yr = now.year
             if mm > now.month or (mm == now.month and dd > now.day):
                 yr -= 1
             return f"{yr}-{mm:02d}-{dd:02d}"
     return None
+
 
 reviews, unmatched = [], []
 for line in open(raw_p, encoding="utf-8"):
@@ -291,8 +519,8 @@ for line in open(raw_p, encoding="utf-8"):
                and len(body) >= 8 and C.quote_has_substance(body) and not is_question(body):
                 a, raw = taste_sent(body)
                 vd = parse_note_date(note.get("date"))
-                if a is not None:  # 无口味信号的定位/品牌/合集内容不进口味库
-                    trust = "mid" if "新店待核" in reason else "high"
+                if a is not None:
+                    trust = "mid" if ("新店待核" in reason or "待核" in reason) else "high"
                     rev = {"restaurant_id": rid, "author_name": author,
                         "source_platform": "小红书", "source_url": note.get("url"), "content": body,
                         "review_kind": "diner", "is_verified_diner": True, "trust_level": trust,
@@ -300,7 +528,6 @@ for line in open(raw_p, encoding="utf-8"):
                     if vd:
                         rev["visit_date"] = vd
                     reviews.append(rev)
-        # 评论：仅单一主体笔记处理；独立过滤他店/外地/疑问
         if rid:
             for c in note.get("comments", []):
                 ct = clean_content(c.get("text", ""))
@@ -314,7 +541,7 @@ for line in open(raw_p, encoding="utf-8"):
                 cmen = shops_mentioned(ct)
                 other = [x for x in cmen if x.id != rid and not x.is_ref]
                 if other:
-                    continue  # 评论讲他店，不挂主体
+                    continue
                 a, raw = taste_sent(ct)
                 if a is None:
                     continue
@@ -327,11 +554,12 @@ for line in open(raw_p, encoding="utf-8"):
                     rev["visit_date"] = vd
                 reviews.append(rev)
 
-pathlib.Path(out_p).write_text("\n".join(json.dumps(x, ensure_ascii=False) for x in reviews), encoding="utf-8")
-pathlib.Path(unmatched_p).write_text("\n".join(json.dumps(x, ensure_ascii=False) for x in unmatched), encoding="utf-8")
+pathlib.Path(out_p).write_text(
+    "\n".join(json.dumps(x, ensure_ascii=False) for x in reviews), encoding="utf-8")
+pathlib.Path(unmatched_p).write_text(
+    "\n".join(json.dumps(x, ensure_ascii=False) for x in unmatched), encoding="utf-8")
 print("生成 reviews:", len(reviews), "| 未锚笔记:", len(unmatched))
 from collections import Counter
-print("按店分布:", dict(Counter(x["restaurant_id"] for x in reviews)))
 print("有口味分:", sum(1 for x in reviews if x["aspect_taste"] is not None))
-for x in unmatched:
-    print("  unmatched:", x["search_name"], "=>", (x["note_title"] or "")[:24], "|", x["reason"])
+rc = Counter(x["reason"] if "reason" in x else "" for x in unmatched)
+print("未锚原因分布:", dict(rc))

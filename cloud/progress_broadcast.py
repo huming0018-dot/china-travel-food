@@ -1,31 +1,37 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""progress_broadcast.py — 每 10 分钟进度播报（Telegram + 飞书，强制推送、绕过告警冷却）。
+"""progress_broadcast.py v2 — 每 10 分钟进度播报（实时计数 + 停滞检测）。
 
-设计：只读本地状态文件 + 极少量 HEAD 计数，不占浏览器、不触发采集；离线由容器 cron 保证。
-数据来源：
-  /app/data/coverage/ledger.json   覆盖达标 / 缺口
-  /app/data/pool_logs/*.log        各账号 worker 当前叶子与进度
-  /app/data/_cookie_pool_state.json 账号健康
-  /app/data/coverage/frontier.json 候选池规模
-  /app/data/{SEARCH_RESTRICTED,COOKIE_INVALID} 阻塞标记
-推送：直接调用 health._telegram / health._feishu_app / health._feishu（不经 should_send 冷却）。
+v2 修复"播报冻结、看起来像停采"：
+  - 旧版用静态 coverage/ledger.json（不随 deuce 采集更新）+ 坏掉的 HEAD 计数（返回空）
+    + 冻结的 work_progress 文字，导致连续数小时发同一句话、真实增长（reviews 1199→1445）看不见。
+  - v2 每次直接从库实时统计（在营/评价总数/小红书/真实食客覆盖店/≥2），并显示"近 Xmin +Δ"。
+  - 停滞检测：评价数连续 STALL_MIN 不增长 → 自动判因（上游 deuce/中继未送 raw，还是
+    raw 在涨但评论被合集/匹配丢弃的低产）→ notifier.action 有界提醒；恢复流动自动 resolve。
+
+只读 + 计数，不触发采集、不占浏览器；离线由容器 cron 保证。
 """
 import datetime
 import json
 import os
 import pathlib
 import sys
+import time
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-import health  # noqa: E402
+sys.path.insert(0, "/app/pipeline")
+import notifier  # noqa: E402
 
 DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
+RAW_XHS = DATA / "research/atlas/xhs/raw_xhs.jsonl"
+STATE_P = DATA / "progress_state.json"
+STALL_MIN = 30          # 评价数 30min 不增长即判停滞
+CADENCE = 600           # 心跳节奏（与 cron 对齐）
 
 
-def now():
-    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+def now_str():
+    return datetime.datetime.now().strftime("%H:%M")
 
 
 def load_json(path, default):
@@ -35,124 +41,28 @@ def load_json(path, default):
         return default
 
 
-def tail_meaningful(path, n=1):
-    """取日志最后 n 条非空行（去掉纯空白）。"""
-    try:
-        lines = [s for s in pathlib.Path(path).read_text(
-            encoding="utf-8", errors="ignore").splitlines() if s.strip()]
-        return lines[-n:]
-    except Exception:
-        return []
-
-
-def coverage_section():
-    rows = load_json(DATA / "coverage/ledger.json", [])
-    leaves = [r for r in rows if r.get("leaf")]
-    if not leaves:
-        return "覆盖：账本未生成"
-    met = sum(1 for r in leaves if r.get("met"))
-    gap = sum(int(r.get("gap_n", 0)) for r in leaves if not r.get("met"))
-    pct = met / len(leaves) * 100
-    return f"覆盖：达标 {met}/{len(leaves)} ({pct:.0f}%)，总缺口 {gap} 家 verified 好店"
-
-
-def pool_section():
-    logdir = DATA / "pool_logs"
-    parts = []
-    if logdir.exists():
-        for f in sorted(logdir.glob("*.log")):
-            lines = tail_meaningful(f, 1)
-            acc = f.stem
-            last = lines[0].strip()[:90] if lines else "无日志"
-            parts.append(f"  {acc}: {last}")
-    if not parts:
-        # 退回到 pool.log 尾部
-        lines = tail_meaningful(DATA / "pool.log", 3)
-        return "采集池：\n" + "\n".join(f"  {s.strip()[:90]}" for s in lines) if lines else "采集池：未运行"
-    return "采集池（worker 当前进度）：\n" + "\n".join(parts)
-
-
-def account_section():
-    st = load_json(DATA / "_cookie_pool_state.json", {})
-    if not st:
-        return "账号：状态文件缺失"
-    accs = st.get("accounts", st)
-    if isinstance(accs, dict):
-        bits = []
-        for aid, info in accs.items():
-            if isinstance(info, dict):
-                code = info.get("status") or info.get("state") or info.get("code") or "?"
-                bits.append(f"{aid}={code}")
-            else:
-                bits.append(f"{aid}={info}")
-        return "账号健康：" + "，".join(bits)
-    return f"账号健康：{accs}"
-
-
-def blockers_section():
-    marks = []
-    if (DATA / "SEARCH_RESTRICTED").exists():
-        marks.append("搜索风控300011")
-    if (DATA / "COOKIE_INVALID").exists():
-        marks.append("登录态失效")
-    return "阻塞：" + ("、".join(marks) if marks else "无")
-
-
-def frontier_section():
-    fr = load_json(DATA / "coverage/frontier.json", {})
-    n = len(fr) if isinstance(fr, dict) else 0
-    return f"候选池 frontier：{n} 个候选"
-
-
-def db_counts_section():
-    """极轻量 HEAD 精确计数（失败则跳过，不影响播报）。"""
-    try:
-        import common as C
-        def count(table, extra=""):
-            r = C.req("HEAD", f"/{table}?select=id" + (("&" + extra) if extra else ""),
-                      use_service=True)
-            # Supabase 计数在 Content-Range: 0..n-1/total 或 Range
-            cr = r.headers.get("content-range", "")
-            if "/" in cr:
-                return cr.rsplit("/", 1)[-1]
-            return "?"
-        nr = count("restaurants", "status=eq.active")
-        nv = count("reviews")
-        if nr in ("?", None):
-            return ""
-        return f"数据库：{nr} 家在营，{nv} 条评价"
-    except Exception:
-        return ""
-
-
-def work_section():
-    try:
-        import work_progress
-        return work_progress.render_text()
-    except Exception:
-        return "— 开发进度 —\n阶段：状态缺失"
-
-
-def build_message():
-    sep = "—" * 18
-    lines = [
-        "上海美食图鉴 · 进度播报",
-        now(),
-        sep,
-        coverage_section(),
-        db_counts_section(),
-        frontier_section(),
-        account_section(),
-        blockers_section(),
-        pool_section(),
-        sep,
-        work_section(),
-    ]
-    return "\n".join(lines)
+def live_counts():
+    """实时从库统计（每 10min 一次，几千个小行，开销可忽略、可靠）。"""
+    import common as C
+    rests = C.fetch_all("restaurants", "id,status", order_col="id")
+    active = sum(1 for r in rests if r.get("status") != "closed")
+    revs = C.fetch_all(
+        "reviews", "id,source_platform,is_verified_diner,restaurant_id", order_col="id")
+    xhs = sum(1 for r in revs if r.get("source_platform") == "小红书")
+    rids = {}
+    for r in revs:
+        if r.get("is_verified_diner"):
+            rids[r["restaurant_id"]] = rids.get(r["restaurant_id"], 0) + 1
+    return {
+        "active": active,
+        "rev": len(revs),
+        "xhs": xhs,
+        "ver_stores": len(rids),
+        "ge2": sum(1 for v in rids.values() if v >= 2),
+    }
 
 
 def account_line():
-    """账号 + 阻塞 + 候选池合并为一行（心跳精简）。"""
     st = load_json(DATA / "_cookie_pool_state.json", {})
     accs = st.get("accounts", st) if isinstance(st, dict) else {}
     bits = []
@@ -161,53 +71,84 @@ def account_line():
             short = aid.replace("account_", "").upper() if "account_" in aid else aid
             code = (info.get("status") or info.get("state") or "?") if isinstance(info, dict) else info
             bits.append(f"{short}={code}")
-    marks = []
-    if (DATA / "SEARCH_RESTRICTED").exists():
-        marks.append("搜索风控")
-    if (DATA / "COOKIE_INVALID").exists():
-        marks.append("登录失效")
-    fr = load_json(DATA / "coverage/frontier.json", {})
-    nfr = len(fr) if isinstance(fr, dict) else 0
-    tail = f"候选{nfr}"
-    # 阻塞标记须与账号实时状态对齐：所有账号 ok 时，残留 marker 视为过期、不展示
-    all_ok = bool(bits) and all(b.endswith("=ok") for b in bits)
-    if marks and not all_ok:
-        tail += "·阻塞:" + "、".join(marks)
-    return "账号：" + ("，".join(bits) if bits else "状态缺失") + f"（{tail}）"
+    return "账号：" + ("，".join(bits) if bits else "状态缺失")
 
 
-def work_oneline():
-    """开发进度压成一行；无实质内容则返回空串（不进心跳）。"""
+def raw_idle_min():
     try:
-        import work_progress
-        st = work_progress.load()
-        bits = [st.get("phase"), st.get("in_progress")]
-        bits = [b for b in bits if b]
-        return "开发：" + "｜".join(str(b)[:40] for b in bits) if bits else ""
+        return (time.time() - RAW_XHS.stat().st_mtime) / 60.0
     except Exception:
-        return ""
+        return 9999.0
 
 
-def build_compact():
-    """紧凑心跳：3~4 行，只保留有信号的板块（覆盖/库/账号[+候选/阻塞]/开发）。"""
-    lines = [
-        coverage_section(),
-        db_counts_section(),
+def load_state():
+    return load_json(STATE_P, {"rev": None, "ts": 0, "last_growth_ts": time.time(),
+                               "stall_open": False})
+
+
+def heartbeat_body(c, delta, mins):
+    trend = f"近{mins}min +{delta}条 · 流动正常" if delta > 0 else f"近{mins}min +0条"
+    return "\n".join([
+        f"口味覆盖：{c['ver_stores']} 店有真实食客评价（≥2条 {c['ge2']}）",
+        f"评价库：{c['rev']} 条（小红书 {c['xhs']}）｜在营 {c['active']} 家",
         account_line(),
-    ]
-    w = work_oneline()
-    if w:
-        lines.append(w)
-    return "\n".join(x for x in lines if x)
+        f"进度（{now_str()}）：{trend}",
+    ])
+
+
+def stall_body(c, mins, raw_idle):
+    if raw_idle > STALL_MIN:
+        cause = ("上游未送新数据：raw_xhs 已 %.0fmin 未增长 → 检查 deuce 采集器 / 网络 / rsync / 云端relay"
+                 % raw_idle)
+        action_text = "请检查 deuce 采集器、网络或云端中继"
+    else:
+        cause = ("raw 在涨但评论 %.0fmin 0 新增 → 笔记被『合集/分店名匹配』丢弃（低产），需修锚定逻辑"
+                 % mins)
+        action_text = "需修 xhs 锚定/合集判定（机制侧）"
+    body = "\n".join([
+        f"口味覆盖：{c['ver_stores']} 店（≥2 {c['ge2']}）｜评价 {c['rev']} 条",
+        account_line(),
+        "判定：采集疑似停滞 —— " + cause,
+    ])
+    return body, action_text
 
 
 def main():
-    import notifier
-    body = build_compact()
-    ok = notifier.info(body, key="heartbeat", cadence=600)
-    print(body)
-    print("推送结果：", ok)
-    return 0 if ok else 1
+    c = live_counts()
+    st = load_state()
+    nowt = time.time()
+    prev_rev = st.get("rev")
+    prev_ts = st.get("ts") or nowt
+    mins = max(1, round((nowt - prev_ts) / 60))
+    delta = c["rev"] - prev_rev if prev_rev is not None else 0
+    moving = delta > 0
+
+    if moving:
+        st["last_growth_ts"] = nowt
+    stall_min = (nowt - float(st.get("last_growth_ts", nowt))) / 60.0
+    was_stall = bool(st.get("stall_open"))
+
+    if stall_min >= STALL_MIN:
+        # 真停滞：判因并 ACTION 有界提醒（notifier 内部去重/nudge，不刷屏）
+        body, action_text = stall_body(c, stall_min, raw_idle_min())
+        ok = notifier.action(body, key="collect_stall", action_text=action_text)
+        st["stall_open"] = True
+        print(body)
+        print("停滞升级推送：", ok)
+    else:
+        body = heartbeat_body(c, delta, mins)
+        ok = notifier.info(body, key="heartbeat", cadence=CADENCE)
+        if was_stall:
+            # 恢复流动：收尾旧停滞单
+            notifier.resolve("采集已恢复流动（评价重新增长）", key="collect_stall")
+        st["stall_open"] = False
+        print(body)
+        print("推送结果：", ok)
+
+    st["rev"] = c["rev"]
+    st["ts"] = nowt
+    STATE_P.write_text(json.dumps(st, ensure_ascii=False), encoding="utf-8")
+    return 0
 
 
 if __name__ == "__main__":
