@@ -58,21 +58,22 @@ def _split_csv(raw):
 
 
 def load_provider_keys(provider):
-    """返回 [(key, sk)]；保留位置，缺 sk 补空串。空串条目须过滤，否则回退失效。"""
+    """返回 [(key, sk)]；保留位置，缺 sk 补空串。空串条目须保留位置（IP白名单key无SK）。"""
     if provider == "tencent":
         keys = [k for k in _split_csv(os.environ.get("TENCENT_MAP_KEYS")) if k]
         if not keys:
             keys = [TENCENT_FALLBACK_KEY]
-        sks = [s for s in _split_csv(os.environ.get("TENCENT_MAP_SKS")) if s]
-        if not sks:
-            sks = [TENCENT_FALLBACK_SK]
+        sks_raw = _split_csv(os.environ.get("TENCENT_MAP_SKS"))
+        sks = sks_raw if any(s for s in sks_raw) else [TENCENT_FALLBACK_SK]
     else:  # amap
         keys = [k for k in _split_csv(os.environ.get("AMAP_KEYS")) if k]
         if not keys:
             single = os.environ.get("AMAP_KEY", "").strip()
             keys = [single] if single else []
-        sks = [s for s in _split_csv(os.environ.get("AMAP_SKS")) if s]
-        if not sks:
+        sks_raw = _split_csv(os.environ.get("AMAP_SKS"))
+        if any(s for s in sks_raw):
+            sks = sks_raw  # 保留位置，空串=IP白名单key无SK
+        else:
             single_sk = os.environ.get("AMAP_SK", "").strip()
             sks = [single_sk] if single_sk else []
     sks = (sks + [""] * len(keys))[:len(keys)]
