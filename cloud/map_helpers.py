@@ -269,10 +269,15 @@ def amap_search(keywords, offset=10):
     for p in j.get("pois", []):
         loc_str = p.get("location", "")
         parts = loc_str.split(",") if loc_str else [None, None]
+        biz_ext = p.get("biz_ext") or {}
+        # 营业时间：优先opentime2（含星期范围），其次open_time
+        business = biz_ext.get("opentime2") or biz_ext.get("open_time") or ""
         out.append({
+            "id": p.get("id", ""),
             "title": p.get("name", ""),
             "address": p.get("address", ""),
             "tel": p.get("tel", ""),
+            "business": business,
             "lng": float(parts[0]) if parts[0] else None,
             "lat": float(parts[1]) if len(parts) > 1 and parts[1] else None,
         })
