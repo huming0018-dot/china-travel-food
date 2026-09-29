@@ -2961,3 +2961,16 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - **无 key 降级实测（容器真跑）**：--fleet-status 6 家 configured 全 false；--fleet-recall(种子杜国金) →
   mode=degraded_no_provider, providers=0, rows=[]，不报错中断；--prove dry-run 36 行裁决 confirmed33/unverified2/kept_contradicted1(未写)。
 - 待办：deploy.env 配任一家 key 后即 24/7 自跑；各家联网搜索参数首次用 key 需按返回报错微调 _web_search_extra。
+
+### HAE 网页版模型通道（2026-09-29，L0.5 第四轮）
+- 新连接器 `cloud/vendor/pipeline/web_chat_providers.py`：与 model_providers(API) 输出同一 schema，
+  浏览器(bu)采回的整包 JSONL → normalize_web_row → hae_engine.upsert_rows，只写 lead_hypotheses、hid 幂等。
+- 站点登录态实查（受控浏览器）：**豆包 doubao.com 已登录(高级套餐，可联网)**；Kimi kimi.com 发送即弹登录墙；
+  DeepSeek chat.deepseek.com 直接跳 /sign_in 登录墙；**WorkBuddy 仅桌面客户端、无网页版→跳过**（不做桌面 GUI）。
+  注：本会话无 interaction.request_action 交接工具，Kimi/DeepSeek 登录留待用户自行登录后续跑。
+- 首轮豆包网页舰队回忆（种子=一饭封神2全体成员，联网搜索10词/参考53资料）：
+  真实采回 14 主厨+主理餐厅+8 来源 URL（抖音/凤凰/头条/携程），入表后账本 **lead_hypotheses 36→50（+14 post14/patch0）**。
+  新锚点：袁伟(长安荟·原味陕菜,西安)/张雯雯(蕾兰餐厅,长沙)/欧浩然(一部Ébauche,香港)/刘永康(ÉPURE,香港)/张嘉裕(唐人馆,香港)。
+  状态：新增 14 行全 hypothesized（豆包聚合链接非权威源，不自动翻 confirmed）。
+- --prove dry-run：would confirmed47/unverified2/kept_contradicted1（未 apply）。事实表回读 chefs=57/restaurant_chefs=77 未动，
+  **晋升净新增=0**（网页行多为外地/unanchored，无上海 restaurant_id，不过闸不晋升；遵守"多站点一致仅先验、晋升需权威URL"）。
