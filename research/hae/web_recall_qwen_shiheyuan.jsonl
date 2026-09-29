@@ -1,0 +1,13 @@
+{"site":"qwen","model_name":"Qwen3.7-千问(网页)","seed_name":"柿合缘发现/甬府系","prompt_hash":"qwen-shy-v1",
+"sources":["https://m.jiemian.com/article/9838994.html","https://nanjingifcmall.com.cn/dining/shiheyuan"],
+"items":[
+{"subject_type":"restaurant","subject_name":"柿合缘·新京菜","relation":"related_to","object":"甬府/翁拥军",
+ "claim_text":"Qwen联网(搜3词/13资料): 柿合缘·新京菜2021上海创立,上海门店含国金中心/环贸iapm/静安嘉里中心/西岸梦中心;界面新闻载由京遇集团创始人段誉与甬府翁拥军2021联袂打造。待gap_pool入库拿rid。",
+ "confidence":0.6,"known_vs_inferred":"知道",
+ "confirm_queries":["柿合缘 上海 国金中心","段誉 柿合缘 翁拥军"],
+ "falsify_queries":["柿合缘 上海 关店 停业"]},
+{"subject_type":"chef","subject_name":"段誉","relation":"founded","object":"柿合缘·新京菜",
+ "claim_text":"界面新闻: 京遇集团创始人段誉(新京菜名厨),2021与甬府翁拥军联袂在上海开柿合缘·新京菜。待柿合缘入库后回锚。",
+ "confidence":0.6,"known_vs_inferred":"知道",
+ "confirm_queries":["段誉 京遇集团 柿合缘 创始人"],
+ "falsify_queries":["段誉 已退出 柿合缘"]}]}

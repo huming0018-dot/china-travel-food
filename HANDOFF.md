@@ -3030,3 +3030,15 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
   按退避不硬刷，Qwen 本轮 0 新增假设；待用户在 qianwen.com/tongyi.com 登录后纳入舰队轮替。
 - 其他站状态不变；账本 lead_hypotheses 仍 54（confirmed32/hypothesized15/unverified6/contradicted1）。
 - 待用户登录清单（下一次一次性提示）：Qwen 千问聊天面（qianwen.com/tongyi.com）。
+
+### HAE Qwen 网页首轮（2026-09-29，www.qianwen.com Qwen0569）
+- 入口固化 www.qianwen.com（中文站，Qwen3.7-千问，已登录）；输入为 ProseMirror contenteditable，
+  fill_input 需逐键键入才触发 React，发送按钮 aria-label=发送消息；句首"联网回答"即走联网。
+- 首轮探针（柿合缘发现）：Qwen 搜3词/参考13资料 → 柿合缘上海4店(国金中心/iapm/静安嘉里/西岸梦中心)、
+  招牌段氏绝味鱼头/烤鸭三吃；段誉=京遇集团创始人/柿合缘联创。
+- 原始源固证：界面新闻 https://m.jiemian.com/article/9838994.html "京遇集团创始人段誉…2021与甬府翁拥军携手把柿合缘开进上海"；
+  南京ifc商场官网同证。Qwen 自带引用多为点评/quark聚合，不数。
+- 账本 lead_hypotheses 54→56（+2 Qwen: 柿合缘店线 related_to + 段誉 founded）。
+  状态：confirmed32/hypothesized17/unverified6/contradicted1=56。
+- 晋升：柿合缘仍不在库，段誉 relation 挂起（等 gap_pool 入库拿 rid 后回锚 chef段誉↔柿合缘）；本轮 chefs59/rc79 不变。
+- 跨模型一致：段誉/柿合缘=甬府系，与 DeepSeek/豆包/澎湃上轮结论一致；Qwen 补充4门店与京遇集团背景。
