@@ -45,10 +45,12 @@ def classify():
 
 def spawn(account):
     log = open(LOGDIR / f"{account}.log", "a", encoding="utf-8")
+    env = os.environ.copy()
+    env["PYTHONUNBUFFERED"] = "1"
     p = subprocess.Popen(
         [sys.executable, str(HERE / "gap_runner.py"),
          "--pool", "--account", account, "--queries", str(QUERIES)],
-        stdout=log, stderr=subprocess.STDOUT)
+        stdout=log, stderr=subprocess.STDOUT, env=env)
     return p
 
 
