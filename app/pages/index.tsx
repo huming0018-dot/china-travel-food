@@ -99,13 +99,17 @@ export default function Home() {
     const cid = cuisines.find((c) => c.name === cuisineName && c.dimension === '菜系')?.id;
     if (!cid) return [];
     return restaurants
-      .filter((r) => rTags[r.id]?.has(cid))
+      .filter((r) => rTags[r.id]?.has(cid) && r.score_total != null && r.score_total >= 50)
       .sort((a, b) => (b.score_total || 0) - (a.score_total || 0))
       .slice(0, 2);
   };
 
+  // P0修复：只推荐有评分(≥50)且至少1条评论的店，无分店不进首页推荐
   const topRestaurants = useMemo(
-    () => [...restaurants].sort((a, b) => (b.score_total || 0) - (a.score_total || 0)).slice(0, 6),
+    () => [...restaurants]
+      .filter((r) => r.score_total != null && r.score_total >= 50 && (r.review_count || 0) >= 1)
+      .sort((a, b) => (b.score_total || 0) - (a.score_total || 0))
+      .slice(0, 6),
     [restaurants]
   );
 
@@ -119,7 +123,10 @@ export default function Home() {
     [restaurants]
   );
   const newStores = useMemo(
-    () => [...verifiedStores].sort((a, b) => (b.score_total || 0) - (a.score_total || 0)).slice(0, 8),
+    () => [...verifiedStores]
+      .filter((r) => r.score_total != null && r.score_total >= 50)
+      .sort((a, b) => (b.score_total || 0) - (a.score_total || 0))
+      .slice(0, 8),
     [verifiedStores]
   );
 

@@ -48,6 +48,7 @@ export interface Restaurant {
   open_days?: string | null;        // 营业日期，如 "周一至周日" / "仅周末"
   semantic_description?: string | null; // 一句话/一段话定性简介
   chef_name?: string | null;        // 主厨名（反范式冗余，如有）
+  review_count?: number | null;     // 评论数（派生/冗余）
 }
 
 export interface PriceThreshold {
@@ -104,6 +105,12 @@ export interface Review {
   is_hidden: boolean;
   report_count: number;
   created_at: string;
+  // —— 来源与可信度字段（P0修复：区分真实食客与平台聚合）——
+  source_platform?: string;         // 来源平台：小红书/高德地图/大众点评等
+  source_url?: string;              // 原始帖/页面链接
+  is_verified_diner?: boolean;      // 是否真实食客（高德聚合评分为false）
+  trust_level?: string;             // 可信度：high/mid/low
+  review_kind?: string;             // 类型：diner/platform_aggregate
 }
 
 export interface FeedEvent {

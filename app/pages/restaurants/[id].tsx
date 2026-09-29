@@ -156,15 +156,25 @@ export default function RestaurantDetail() {
     return out;
   }, [restaurant, rc, tagsById]);
 
-  // 食客均分
+  // P0修复：分离真实食客评价与平台聚合评分（高德地图用户的聚合评论不算食客评价）
+  const dinerReviews = useMemo(
+    () => reviews.filter((rv) => rv.is_verified_diner === true || rv.source_platform !== '高德地图'),
+    [reviews]
+  );
+  const platformReviews = useMemo(
+    () => reviews.filter((rv) => rv.source_platform === '高德地图'),
+    [reviews]
+  );
+
+  // 食客均分（只计真实食客评价）
   const dinerAvg = useMemo(() => {
-    if (reviews.length === 0) return null;
-    const rated = reviews
+    if (dinerReviews.length === 0) return null;
+    const rated = dinerReviews
       .map((r) => (typeof r.rating_total === 'number' ? r.rating_total : r.aspect_taste))
       .filter((v): v is number => typeof v === 'number');
     if (rated.length === 0) return null;
     return rated.reduce((acc, v) => acc + v, 0) / rated.length;
-  }, [reviews]);
+  }, [dinerReviews]);
 
   if (loading) return (
     <div className="min-h-screen bg-cream-50 flex items-center justify-center"><div className="spinner" /></div>
@@ -422,7 +432,7 @@ export default function RestaurantDetail() {
                   {dinerAvg.toFixed(1)}<span className="text-sm text-mocha-faint"> / 5</span>
                 </span>
               )}
-              <span className="text-xs text-mocha-faint">{reviews.length} 条评价</span>
+              <span className="text-xs text-mocha-faint">{dinerReviews.length} 条食客评价</span>
             </div>
           </div>
 
@@ -470,14 +480,14 @@ export default function RestaurantDetail() {
             </div>
           )}
 
-          {/* 评价列表 */}
+          {/* 评价列表（只显示真实食客评价） */}
           {reviewsLoading ? (
             <div className="text-center py-8 text-mocha-faint text-sm">加载评价中…</div>
-          ) : reviews.length === 0 ? (
+          ) : dinerReviews.length === 0 ? (
             <div className="text-center py-8 text-mocha-faint text-sm">还没有食客评价，来抢沙发吧</div>
           ) : (
             <div className="space-y-4">
-              {reviews.map((rv) => (
+              {dinerReviews.map((rv) => (
                 <div key={rv.id} className="p-4 bg-white border border-line rounded-xl">
                   <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
                     <div className="flex items-center gap-3">
@@ -509,6 +519,39 @@ export default function RestaurantDetail() {
             </div>
           )}
         </section>
+
+        {/* P0修复：平台聚合评分（高德地图等，非真实食客评价） */}
+        {platformReviews.length > 0 && (
+          <section className="border-t border-line pt-8 mb-10">
+            <div className="flex items-baseline justify-between mb-6 flex-wrap gap-2">
+              <h2 className="kicker text-mocha-faint">PLATFORM SCORE / 平台聚合评分</h2>
+              <span className="text-xs text-mocha-faint">{platformReviews.length} 条平台数据 · 仅供参考</span>
+            </div>
+            <div className="p-4 bg-cream-100 border border-line rounded-xl">
+              <div className="space-y-2">
+                {platformReviews.slice(0, 5).map((rv) => (
+                  <div key={rv.id} className="flex items-center justify-between text-sm">
+                    <span className="text-mocha-soft">{rv.content || '平台评分'}</span>
+                    {rv.source_url && (
+                      <a href={rv.source_url} target="_blank" rel="noopener noreferrer"
+                        className="text-xs text-terracotta hover:underline ml-2 flex-shrink-0">
+                        {rv.source_platform || '来源'} →
+                      </a>
+                    )}
+                  </div>
+                ))}
+                {platformReviews.length > 5 && (
+                  <div className="text-xs text-mocha-faint pt-2 border-t border-line">
+                    另有 {platformReviews.length - 5} 条平台评分
+                  </div>
+                )}
+              </div>
+              <p className="text-2xs text-mocha-faint mt-3 italic">
+                以上为高德地图等平台的聚合评分数据，非本站食客真实评价，不参与反软广评分计算。
+              </p>
+            </div>
+          </section>
+        )}
 
         <div className="flex gap-4 pt-8 border-t border-line">
           <Link href="/restaurants?return=1" className="btn btn-outline flex-1">← 更多餐厅</Link>
