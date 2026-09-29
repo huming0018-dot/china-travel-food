@@ -2879,3 +2879,16 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - 实跑一批（review_ugc_fill --batch 3 --min-price 500）：searched=3、notes_fetched=0、accept=0——因容器内 A cookie 仍是旧 guest 会话（user/me code=0 但 guest=True），搜索全空。**待新 LANCE cookie 部署后，:39 cron 自动恢复**；未降 UGC_MIN_PRICE（奢华未清完），不硬刷。
 - 实时计数：reviews 1572（verified_diner 663、fake_suspect 10）、active band4=236。
 - 黑珍珠/证据池：blackpearl 走官方 HTTP（不依赖 XHS 登录）、evidence_pool 为本地聚合，不受 B parked 影响，继续按各自 cron 低频推进。
+
+
+---
+
+## 重启后就位核验（2026-09-29 11:37）
+
+- 异常处置：11:3x 重建后只剩一个一次性 playwright 辅助容器（laughing_panini），主 app 容器未起、本地 food-cloud:local tag 丢失（compose 误 pull 403）。定位完整应用镜像 `53c30bd9405b`（42h 前，含 watchdog/pipeline/cron），`docker tag` 为 food-cloud:local 后 `compose up -d` 拉起，容器名回到 **food-cloud**（restart=always）。
+- 挂载核对：food-cloud_fooddata 卷→/app/data（完好）、宿主 xhs_accounts→/secrets/xhs_accounts:ro（account_a/b 在）。
+- cron：15 条齐全、cron 守护在跑；@reboot gap_pool.py 6 worker 已拉起（/proc 确认）。
+- 重部署（该镜像 42h 旧）：health.py（含 _legacy_webhook 修复）、xhs_api.py（单账号降级）、warning_handler、review_ugc_fill、kol_monitor、notifier、progress_broadcast、watchdog，全部 py_compile 通过。
+- notify_channels 被重建镜像复位成 feishu_app=false，已重设回 true；实测 tg=True / feishu_app=True。
+- Supabase 基线（外部库未受重启影响）：restaurants 1478(active1472)、reviews 1572、chefs 57、kol_posts104/mentions62/events25。
+- 遗留：account_a 容器 cookie 仍旧 guest（待新 LANCE cookie）、account_b parked；地图腾讯 search/geocode 全尽待解封。
