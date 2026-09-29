@@ -3088,3 +3088,19 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 ### 部署与验证
 - 已 docker cp 进容器、py_compile OK；新起进程（ugc_longrun :39、gap_runner 重拉）即加载带锁版本。
 - 注：A 正由重登执行者在本机换新 cookie（不覆盖）；新 cookie 部署后 A=ok，gap_runner 自动拉起并以串行锁使用。
+
+---
+
+## HAE L0.5 — 全量假设权威源 prove（2026-09-29 傍晚）
+
+### 结论：本轮 0 晋升
+对 56 条（confirmed32/hyp17/unv6/contra1）跑原始权威源 prove。逐条核 open 项的上海落点：
+- 欧浩然=香港铜锣湾 Ébauche（搜狐/腾讯新闻，非上海）；刘永康(Aven Lau)=香港尖沙咀海港城 ÉPURE（官网 epure.hk + Tatler/BestChefAwards 证实，非上海）；
+- 袁伟=西安长安荟·原味陕菜创始人（凤凰网陕西原文，非上海）；张雯雯=长沙蕾兰；张嘉裕=香港唐人馆；曹嗣全=广州炳胜；杜国金=厦门华尔道夫；
+  赵勇/Alan Yu=杭州；苏华=南京龙吟山房；陈明媚/李飞越城市未定。**全部无上海门店/上海任职** → 仅留假设备注，不晋升。
+- 上海相关仅剩 段誉(founded 柿合缘) + 柿合缘 related_to 甬府：已固证（界面新闻 9838994 原文），但柿合缘仍未入库，relation 挂起等 gap_pool rid。
+- 刘震=甬府香港店（yongfuhk.com 官网可查，香港，无上海锚）→ 留假设不晋升。
+
+### 计数（prove 后）
+confirmed 32 / hypothesized 17 / unverified 6 / contradicted 1 = 56（无状态翻转：open 项或无原始权威源、或虽真但外地/香港）。
+chefs 59→59、restaurant_chefs 79→79（before=after，0 净新增）；reviews/有评价店数不变。
