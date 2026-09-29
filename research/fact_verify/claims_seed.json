@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "note": "模型负责发现+判断，产出本种子；fact_verify.py 负责匹配/分级/幂等写/回读。fields 为该品牌经多源核验后的字段结论，claims 为支撑事实（可溯源）。",
+  "brands": [
+    {
+      "brand": "云海肴",
+      "match_contains": "云海肴",
+      "fields": {"chain_type": "大型连锁", "central_kitchen": "确认", "premade_risk": "疑似", "food_safety": "疑似"},
+      "claims": [
+        {"type": "chain_type", "value": "大型连锁", "confidence": "high", "date": "2026-05",
+         "source_url": "https://www.iesdouyin.com/share/video/7558736707191147819",
+         "quote": "全国连锁了100多家，开了十多年的云海肴"},
+        {"type": "central_kitchen", "value": "确认", "confidence": "high", "date": "2025-09-22",
+         "source_url": "https://www.36kr.com/p/3475807793715591",
+         "quote": "2019年云海肴与云南农垦集团签署《中央厨房项目战略框架合作协议》；在北京丰台建设有1万平米加工物流中心，负责食材初加工、肉类熟制以及统一冷链配送"},
+        {"type": "premade_risk", "value": "疑似", "confidence": "medium", "date": "2026-05-13",
+         "source_url": "https://m.ctrip.com/webapp/you/community/detail?articleId=306910794",
+         "quote": "全国布局的连锁滇菜品牌，主打标准化云南特色菜品，拥有成熟供应链体系，菜品口味稳定统一，定位商场餐饮"},
+        {"type": "food_safety", "value": "疑似", "confidence": "high", "date": "2026-01-21",
+         "source_url": "https://m.thepaper.cn/newsDetail_forward_32433467",
+         "quote": "2024年7月云海肴为字节跳动新加坡总部供应的团餐引发171人食物中毒，爆炒鸡丁金黄色葡萄球菌超标2000倍；2025年7月宣判后永久关闭团餐业务及涉事分店（注：属集团团餐业务线，非上海堂食店，故定疑似）"}
+      ]
+    },
+    {
+      "brand": "百岁我家酸菜鱼",
+      "match_contains": "百岁我家",
+      "fields": {"chain_type": "大型连锁", "central_kitchen": "确认", "premade_risk": "低", "food_safety": "无"},
+      "claims": [
+        {"type": "central_kitchen", "value": "确认", "confidence": "high", "date": "2026",
+         "source_url": "https://baisuiwojiasuancaiyu.com/join/",
+         "quote": "酸菜鱼料包供应，面向各省市招商（加盟料包模式）"},
+        {"type": "central_kitchen", "value": "确认", "confidence": "high", "date": "2026",
+         "source_url": "https://www.baisuiwojiasuancaiyu.com/about/",
+         "quote": "全国总部、全国配料中心；集河鲜、卤菜、火锅三大门类为一体的连锁餐饮品牌，风靡全国"},
+        {"type": "premade_risk", "value": "低", "confidence": "medium", "date": "2026-07-26",
+         "source_url": "https://www.iesdouyin.com/share/video/7666822593995445361",
+         "quote": "鲜活黑鱼现点现杀，川菜现点现炒（品牌自述，用于界定预制程度为低，不否定料包集中）"}
+      ]
+    },
+    {
+      "brand": "江边城外",
+      "match_contains": "江边城外",
+      "fields": {"chain_type": "大型连锁", "central_kitchen": "疑似", "premade_risk": "低", "food_safety": "无"},
+      "claims": [
+        {"type": "chain_type", "value": "大型连锁", "confidence": "high", "date": "2026-09-21",
+         "source_url": "https://finance.sina.com.cn/wm/2026-09-21/doc-inisqriw8921638.shtml",
+         "quote": "全国200家直营门店"},
+        {"type": "central_kitchen", "value": "疑似", "confidence": "medium", "date": "2025-11-10",
+         "source_url": "https://www.docin.com/touch_new/preview_new.do?id=4918044311",
+         "quote": "半天妖、探鱼、江边城外等已实现80%以上核心食材的中央工厂统一配送（行业报告，定疑似）"},
+        {"type": "premade_risk", "value": "低", "confidence": "high", "date": "2025-05-08",
+         "source_url": "http://www.news.cn/food/20250508/51e0704bea1b4f1888ebc9540a70260d/c.html",
+         "quote": "坚持活鱼现杀现烤，最快八小时从鱼塘到餐桌（创始人/新华网，核心出品门店现做，故预制风险低）"}
+      ]
+    }
+  ]
+}
