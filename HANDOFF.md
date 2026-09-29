@@ -2608,3 +2608,34 @@ EHB 2023-05 开业、2025-09-28 停业，米其林一星；closed 后前端列�
 1. 014 migration 需在 Supabase SQL Editor 执行（REST 不能 DDL）；执行后复跑脚本补齐 origin_market/is_overseas_brand。
 2. 海外米其林入沪 subtype 当前为 0 条（DA VITTORIO 是来沪飞行厨房而非长期入沪店）；待海外米其林品牌长期入沪开店事件入库后自然落入。
 3. signup_url 仅 4 条——后续快闪/联名事件采集时须带报名/购票 URL，脚本不臆造链接。
+
+---
+
+## Track 1B-3 · 反软广拓宽 + 负面清单/淘汰（2026-09-29）
+
+脚本：`cloud/vendor/pipeline/1b3_anti_softad_expand.py`（默认 dry-run，`--apply` 才写；复用 Phase0-C 的 chain/pr 输入列与 softad 分布模型，不重写机制）。
+报告：容器 `/app/data/phase1b3/report_2026-09-29.json`。
+
+### 三类污染 + 一类信号（真实运行，非估算）
+- **industrial 预制/中央厨房/连锁标准化**：店铺级 **228** 家命中 chain/pr/ck 信号；其中 `soft_ad_flag=confirmed`（pr=高正餐，penalty25，分数下沉~45，std=True 前端隐藏）**22 家 = 已淘汰出精选**；`suspected`（下沉留库不推荐）**197 家**。鲜芋仙(1575) pr=高但 scene=甜品（非正餐），trigger 豁免 penalty、flag=none（正确）。
+- **astroturf 伪草根/刷评**：分布模型（softad_distribution cron 5:37 自学）店铺级判 suspected **3 家**（御宝轩495/瓯越尊鲜867/8½ Otto e Mezzo1175）——均为 evidence_level=verified 高端独立店、评论有真实菜名作者各异，系小红书 UGC 09-28 集中入库的 burst/近重复 borderline 信号，留观不手工覆写；其余 73 家 scorable 判 none。
+- **paid 硬广通投**：店铺级 **0**；评论级识别 **10 条**商家/场地推广号自发帖（作者=魔都美食预定家/酒店官方/餐厅官方/婚庆场地号，trust=low、无堂食评分），已 `is_hidden=true`（review 级治理，口味计算本已排除 fake_suspect，分数 0 影响）。
+- **综艺/影视人气（特征信号，不构成准入、不降权）**：新建标签 `综艺影视人气`(id=369, dimension=标签)，仅连【有明确证据】4 店——1892 帅帅精致(一饭封神出圈)/904 福承(一饭封神星厨杨艳彬)/1862 COLCA(东方卫视争霸赛总冠军)/1095 姜虎东白丁(韩国综艺人同名)。均 pr=无/flag=none/std=False，纯中性发现标签，口味仍唯一。泛词"明星打卡"未滥标（宁空不假）。
+
+### 分布学习口径（自学，非固定枚举）
+baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 语料稳健分位 ∩ 保守底线：五星占比 five≥0.9(p90=0.667)、无实质占比 nosub≥0.7(p75=0)、14天burst≥1.0(p90=1.0)、近重复 dup≥0.5(p90=0.333)、作者集中度。verdicts: none 73 / suspected 3。离群自动写 `soft_ad_flag_reviews`，再由 trigger 派生 shop-level flag/penalty，脚本不直写 penalty。
+
+### 淘汰前后（预制属性连锁移出精选）
+- **淘汰前**：盖饭邦/望湘园/小菜园/外婆家/点都德/南京大牌档/新旺/东发道/费大厨/新白鹿/丸龟制面等预制连锁与工业化店混在库中。
+- **淘汰后**：22 家 `confirmed` 全部 std=True + penalty25 → score 沉到 11–47 区间（南京大牌档多店 11），前端"隐藏连锁/预制"开关过滤、精选自然不出；留库可查挂标、不推荐。用户点名正例核验：盖饭邦(1520)confirmed+std score36.2、望湘园(1521)37.0、小菜园(1525)43.8。
+- 197 家 suspected 下沉（penalty10）留库。
+
+### 自检与幂等（过闸才 apply）
+- 写库仅两处可逆动作：① 综艺标签 junction ×4；② review 级 is_hidden ×10。**soft_ad_flag/penalty/is_chain_standardized 全程未直写**。
+- restaurants 全表非目标字段零误伤（本脚本不 PATCH restaurants；期间哈希变动来自 Track 其他块凌晨新增店，非本任务）。
+- 反误伤闸：独立店被 penalty 必须有 ck/pr 或 reviews 分布信号，无信号误杀=0；综艺标签店均 pr=无/flag=none。
+- apply 后回读：综艺标签连店 [904,1095,1862,1892]、仍可见 fake 帖 0；复跑 `--apply` 新连 0/0、隐藏 0/0（幂等）。
+
+### 遗留
+1. 3 家 borderline astroturf（御宝轩/瓯越尊鲜/8½ Otto e Mezzo）系入库 burst 触发，待下一分布学习周期（更多 UGC 沉淀）自动复评；若仍 suspected 但证据 verified，可考虑 softad_distribution 用评论原始发布日而非入库日算 burst（修机制不补单店，本块未改 cron 文件）。
+2. paid 店铺级=0：当前 reviews 无 sponsor/团购挂车结构化字段，硬广只能在 review 级识别；待 discount_info/selling_points 补全后可升店铺级。
