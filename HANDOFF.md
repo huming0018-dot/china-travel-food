@@ -2867,3 +2867,15 @@ baselines.json run=2026-09-29，corpus n_scored=76 / n_ugc_shops=198；阈值 = 
 - 非价格字段 checksum 全程 = `f54affb237fc9752`（phone/location/address/price_avg/score_* 零误伤）。
 - 幂等：price_realign 在 patrol 内复跑 0 变更（分布不变）。
 - 注：tier 仍由 DB tier_for_price 独占，未动；本任务只改 patrol 调用 + 归档脚本 + price_band/price_position 数据。
+
+
+---
+
+## 单账号 A 恢复长跑（2026-09-29 ~11:20）
+
+- 背景：account_b（猪蛤蛤）今日短信配额超额、parked（明上午自动重登）；account_a（LANCE）本机已重登，新 cookie 待部署进容器。
+- 机制最小修正（`cloud/xhs_api.py`）：加载账号时按 `/app/data/_cookie_pool_state.json` 剔除 status=dead/parked 的账号，自动降级为仅 account_a 直连出口。实测过滤后 `accounts=['account_a']`，B 不再被轮呼。
+- 池状态已写：account_a=ok（待新 cookie）、account_b=parked。
+- 实跑一批（review_ugc_fill --batch 3 --min-price 500）：searched=3、notes_fetched=0、accept=0——因容器内 A cookie 仍是旧 guest 会话（user/me code=0 但 guest=True），搜索全空。**待新 LANCE cookie 部署后，:39 cron 自动恢复**；未降 UGC_MIN_PRICE（奢华未清完），不硬刷。
+- 实时计数：reviews 1572（verified_diner 663、fake_suspect 10）、active band4=236。
+- 黑珍珠/证据池：blackpearl 走官方 HTTP（不依赖 XHS 登录）、evidence_pool 为本地聚合，不受 B parked 影响，继续按各自 cron 低频推进。

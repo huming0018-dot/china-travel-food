@@ -11,6 +11,7 @@
   gather_query(keyword, npq) -> [{title, desc, url, author, date, comments:[{name,text}]}]
 """
 import json
+import os
 import pathlib
 import random
 import time
@@ -99,6 +100,14 @@ class XhsApi:
                 if ck.get("web_session"):
                     self.accounts.append({"name": f.stem, "ck": ck, "bad": 0})
         self.idx = 0
+        # 单账号降级：按 cookie 池状态剔除 dead/parked 账号（B 短信配额超额 parked 时只留 A）。
+        try:
+            _st = json.loads((pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
+                              / "_cookie_pool_state.json").read_text(encoding="utf-8"))
+            self.accounts = [a for a in self.accounts
+                             if _st.get(a["name"], {}).get("status") not in ("dead", "parked")]
+        except Exception:
+            pass
         if pin:
             for i, a in enumerate(self.accounts):
                 if a["name"] == pin:
