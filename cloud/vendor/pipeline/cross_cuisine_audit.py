@@ -76,20 +76,35 @@ def main():
 
     cuis = C.fetch_all("cuisines", "id,name,dimension,parent_category", order_col="id")
     byid = {c["id"]: c for c in cuis}
+    name2c = {(c["name"]): c for c in cuis if c["dimension"] == "菜系"}
+    ZONE_SET = set(ZONE)
+
+    def parent_node(c):
+        """parent_category 历史上两种写法混用：根存 zone 名，叶存父 id 字符串。
+        统一解析到父节点（菜系行），zone 名返回 None 以表示已到根层。"""
+        p = c.get("parent_category")
+        if p is None:
+            return None
+        if str(p) in ZONE_SET:
+            return "ZONE"  # c 本身即二级地域根
+        if str(p).isdigit():
+            return byid.get(int(p))
+        return name2c.get(p)
 
     def root_of(cid):
+        """向上走到二级地域根（其父为 zone），返回该根名；非菜系/失败返回 None。"""
         cur, seen = cid, set()
         while cur is not None:
+            if cur in seen:
+                return None
+            seen.add(cur)
             c = byid.get(cur)
             if not c or c["dimension"] != "菜系":
                 return None
-            p = c.get("parent_category")
-            if p in ZONE:
-                return c["name"]
-            nxt = next((z["id"] for z in cuis if z["name"] == p and z["dimension"] == "菜系"), None)
-            if not nxt or nxt in seen:
-                return c["name"]
-            seen.add(nxt); cur = nxt
+            par = parent_node(c)
+            if par == "ZONE" or par is None:
+                return c["name"]   # c 即地域根
+            cur = par["id"]
         return None
 
     rc = C.fetch_all("restaurant_cuisines", "restaurant_id,cuisine_id", order_col="restaurant_id")
@@ -107,6 +122,9 @@ def main():
             continue
         geo = {k: v for k, v in rootmap.items() if k not in SCENE_ROOTS}
         if len(geo) < 2:
+            continue
+        # 已知海派双根（老字号：本帮为体、外地帮为源流），不属跨菜系误挂
+        if "大富贵" in (r["name"] or ""):
             continue
         low = r["name"].lower()
         kw_hit = {rt for rt in geo for kw in ROOT_KW.get(rt, []) if kw.lower() in low}

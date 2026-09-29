@@ -40,8 +40,8 @@ BEEF_NOODLE = [
 # 地名/食材陷阱：店名关键词 -> (应删菜系名, 应加菜系名列表)
 PREFIX_TRAPS = [
     ("海南鸡饭", ("海南菜",), ["新加坡菜", "马来西亚菜"]),
-    # 大富贵：上海徽帮老字号，招牌臭鳜鱼/葡萄鱼/杨梅圆子等徽菜；本帮菜为误挂，删而不补
-    ("大富贵", ("本帮菜",), []),
+    # 大富贵：上海老字号·点心（本帮）为体，徽帮为海派源流多挂——不得只挂徽菜
+    ("大富贵", (), ["本帮菜"]),
 ]
 
 GELATO_KW = ("gelato", "冰淇淋", "冰激凌")
@@ -92,6 +92,23 @@ def main():
                         "cuisine_id": cid, "tag": tagname, "reason": reason, "confidence": conf})
 
     active = [r for r in rests if r["status"] == "active"]
+
+    # parent_category 历史混用父名/父id；统一向上走到二级根名
+    ZONE = {"中餐", "亚洲", "欧洲", "非洲", "北美洲", "南美洲", "融合菜", "非正餐"}
+    name2c_id = {c["name"]: c["id"] for c in cuis if c["dimension"] == "菜系"}
+    def tag_root(cid):
+        cur, seen = cid, set()
+        while cur is not None and cur not in seen:
+            seen.add(cur); c = id2c.get(cur)
+            if not c or c.get("dimension") != "菜系": return None
+            p = c.get("parent_category")
+            if p in ZONE: return c["name"]
+            if str(p).isdigit(): par = id2c.get(int(p))
+            else: par = id2c.get(name2c_id.get(p, -1))
+            if not par: return c["name"]
+            cur = par["id"]
+        return None
+
 
     # R1: Gelato 主营复核
     gel_id = name2id.get(GELATO)
@@ -190,6 +207,9 @@ def main():
         for t in food_tags:
             tname = id2c[t]["name"]
             if t == R_id or t == L_id:
+                continue
+            # 同属选定非正餐家族（茶饮根下的奶茶叶等）：保留，不误删
+            if tag_root(t) == R:
                 continue
             if t in ND_ROOT_IDS:
                 # 其他非正餐根：招牌0命中→错根删（柏悦Bar）；有命中→复合保留
