@@ -9,7 +9,7 @@
      逐家 collect_restaurant，采完一家立即落盘；
   4. xhs_to_reviews 全量重算 raw_reviews（口味整数分，无口味不打分）；
   5. atlas_write --domain reviews --commit 幂等入库，触发器自动重算口味分；
-  6. 打印/回报统计；519 家全部完成则写标记并告警可停用。
+  6. 打印/回报统计；重点队列全部“有真实笔记证据”才写完成标记（访问过≠完成）。
 
 容器内路径：pipeline=/app/pipeline，data=/app/data（可用环境变量覆盖）。
 """
@@ -49,10 +49,33 @@ def done_names():
     return s
 
 
-def next_batch(n):
+def covered_names():
+    """真正采到 ≥1 条笔记的店名（区别于仅访问过）。"""
+    s = set()
+    if RAW.exists():
+        for line in RAW.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            notes = rec.get("notes")
+            has = bool(notes) if isinstance(notes, list) else bool(notes)
+            if has:
+                s.add(rec.get("name"))
+    return s
+
+
+def priority_items():
     pri = json.loads(PRIORITY.read_text(encoding="utf-8"))
-    items = pri if isinstance(pri, list) else (
+    return pri if isinstance(pri, list) else (
         pri.get("restaurants") or pri.get("items") or [])
+
+
+def next_batch(n):
+    items = priority_items()
     done = done_names()
     return [x["name"] for x in items if x.get("name") not in done][:n]
 
@@ -84,13 +107,27 @@ def main():
     if not PRIORITY.exists():
         sys.exit(f"找不到重点店清单: {PRIORITY}")
 
+    items = priority_items()
+    total = len(items)
+    pri_names = set(x.get("name") for x in items)
+    visited = done_names() & pri_names
+    covered = covered_names() & pri_names
     names = next_batch(args.batch)
     if not names:
-        print("519 家全部已采集。")
-        health.alert("小红书 519 家重点店评价已全部采集完成，可停用采集定时任务。",
-                     title="上海美食图鉴·任务完成", key="all_done", once=True)
-        (pathlib.Path(DATA) / "ALL_REVIEWS_DONE").write_text(
-            "519 家全部完成\n", encoding="utf-8")
+        # 全部“访问过”不等于完成：完成以“有真实笔记证据”为准，避免误报全完成
+        print(f"重点店已全部访问 {len(visited)}/{total}；"
+              f"有真实笔记证据 {len(covered)}/{total}。")
+        prog = pathlib.Path(DATA) / "REVIEWS_PROGRESS"
+        prog.write_text(
+            f"visited={len(visited)}/{total} covered(有笔记)={len(covered)}/{total}\n",
+            encoding="utf-8")
+        old = pathlib.Path(DATA) / "ALL_REVIEWS_DONE"
+        if old.exists():
+            old.unlink()  # 删除旧的“519全完成”误报标记
+        if len(covered) >= total:
+            health.alert(
+                f"小红书重点店 {total} 家评价已全部采集完成，可停用采集定时任务。",
+                title="上海美食图鉴·任务完成", key="all_done", once=True)
         # 即使采集中止，仍回收既有 unmatched 笔记进发现管线（幂等）
         run_unmatched_bridge()
         return 0
@@ -136,7 +173,7 @@ def main():
 
     total, taste = count_reviews()
     done = len(done_names())
-    print(f"\n本轮新增 {added} 家；累计 {done}/519；"
+    print(f"\n本轮新增 {added} 家；累计访问 {done} 家（重点队列 {len(priority_items())}）；"
           f"reviews {total} 行（含口味 {taste}）。")
     return 0
 

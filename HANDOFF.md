@@ -3486,3 +3486,21 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **依据**：纹兵卫——携程笔记(金虹桥商场楼下新店)+电话邦/本地宝(天山店)+多分店(高岛屋/新世纪/虹桥)；Pain Chaud——上海热线/澎湃(永康路/尚嘉/建国西路/番禺多店)。
 - **不改动（已核实无重复）**：南兴园(仅 id478)、天吉·天遊峰主厨(仅 chef35 张天炀一条 RC)。
 - 仅改 name/aliases/chain_type，未碰电话/坐标/营业时间/score_total/精选层。
+
+---
+
+## 2026-09-30 批次2·恢复两条卡住主线（19:10 CST）
+
+**2a fleet_grid 修复**
+- 根因（非 key、非代码 bug）：当前容器 17:32 才重建启动（StartedAt 09:32 UTC），09:17 定时切片在旧容器/网络事件期间被错过（hae_grid.log 此前不存在为证）；另发现旧逻辑「叶子总数一变即整体清零游标」的脆弱点（当时 253→254 已触发一次重置）。
+- 修复（fleet_grid_run.py）：进度改为按**已完成叶子名集合**计算（增删菜系不清零）；新增 `last_advanced` 日期 + `--catchup`（当天已推进则跳过）；crontab 新增 **@reboot 开机 90s 后 --catchup**（与 09:17 共用 flock，防漏也防重）。
+- 已手动补跑：completed **8→16/254**（第二切片 Osteria/Tapas/Tex-Mex/上海家常/东北系，post 8 新假设）；二次 --catchup 正确跳过。lead_hypotheses **64→72**。
+
+**2b “519全完成”误报口径修正（run_batch.py）**
+- 删除硬编码 “519”：分母动态＝重点队列 len=**1100**；区分 **visited（访问过）/ covered（有真实笔记）**，完成以 covered 为准。
+- 已删除误报标记 `ALL_REVIEWS_DONE`，改写 `REVIEWS_PROGRESS`＝**visited 1100/1100；covered 423/1100**；仅当 covered≥total 才告警可停。
+- 开放平台补证据（小样本实测，非估算）：B站 keyless search/all/v2 通道可用，但
+  - 对**高辨识品牌名**可靠（Manner 16、方中山胡辣汤 17 含“方中山来上海”、大壶春 12 含“上海探店”）；
+  - 对**泛描述店名**宽泛匹配（返回的20条多为成都/洛阳/淮南/柳州等同菜系异地视频，非该店）→ 不可直接采信；
+  - B站无公开字幕（keyless），不直接出口味，定位为**发现/线索通道（→gap pool）**；精确身份匹配+ASR 转口味的深度采集并入批次4（KOL跨平台）/批次8（覆盖）。
+- 账号仍 parked，未硬刷；公众号 kol_cross（每6h）、B站 collect（每6h）照常。

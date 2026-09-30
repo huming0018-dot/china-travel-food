@@ -61,6 +61,8 @@ SHELL=/bin/bash
 #     prove/promote 由 hae_engine 单独低频跑(过闸才晋升,幂等回读)。
 #     253叶子/8≈32天扫完全网格;限流自动退避,不依赖XHS。缺key不中断。
 17 9 * * * cd /app && . /app/cloud/env.sh && flock -n /tmp/fleet_grid.lock /usr/local/bin/python /app/pipeline/fleet_grid_run.py --once --apply >> /app/data/hae_grid.log 2>&1
+# 17b) 开机补漏：容器(重)建后若当天09:17切片被错过，启动90s后补一个切片；--catchup 内部按 last_advanced 防当日重复
+@reboot sleep 90; cd /app && . /app/cloud/env.sh && flock -n /tmp/fleet_grid.lock /usr/local/bin/python /app/pipeline/fleet_grid_run.py --catchup >> /app/data/hae_grid.log 2>&1
 
 # 18) KOL跨平台定点采集( Track1C )：cross美食作家经搜狗微信按名采文章,内容指纹增量去重;
 #     B站已由 kol_monitor/bili_enrich 覆盖;微博/知乎/抖音 keyless 不可采不硬刷;

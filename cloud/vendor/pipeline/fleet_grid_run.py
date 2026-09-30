@@ -44,11 +44,11 @@ def load_state(total):
     if os.path.exists(STATE_FILE):
         st = json.load(open(STATE_FILE))
     else:
-        st = {"cursor": 0, "done": []}
-    st.setdefault("cursor", 0)
+        st = {}
     st.setdefault("done", [])
-    if st.get("total") != total:  # 网格重建则游标重置
-        st = {"cursor": 0, "done": [], "total": total}
+    st.setdefault("last_advanced", None)
+    st["total"] = total
+    # 以「已完成叶子名集合」为准：增删菜系叶子不再清零整体进度（旧 numeric cursor 仅兼容）
     return st
 
 
@@ -111,21 +111,41 @@ def main():
     ap.add_argument("--once", action="store_true")
     ap.add_argument("--status", action="store_true")
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--catchup", action="store_true",
+                    help="开机补漏：仅当今天尚未推进切片时跑一个切片，否则跳过")
     ap.add_argument("--slice", type=int, default=SLICE)
     args = ap.parse_args()
 
     leaves = enum_leaves()
     st = load_state(len(leaves))
+    done_set = set(st["done"])
+    completed = sum(1 for l in leaves if l in done_set)
+
     if args.status:
-        print(json.dumps({"total_leaves": len(leaves), "cursor": st["cursor"],
-                          "done": len(st["done"]), "slice": args.slice,
-                          "remaining": len(leaves) - st["cursor"]}, ensure_ascii=False))
+        print(json.dumps({"total_leaves": len(leaves), "completed": completed,
+                          "remaining": len(leaves) - completed, "slice": args.slice,
+                          "last_advanced": st.get("last_advanced")}, ensure_ascii=False))
         return
 
-    i0 = st["cursor"]
-    i1 = min(i0 + args.slice, len(leaves))
-    batch = leaves[i0:i1]
-    print(f"[grid] leaves={len(leaves)} slice={args.slice} batch[{i0}:{i1}]={batch}")
+    # --catchup：今天已推进则跳过（防容器重建后漏跑，也防与 09:17 定时重复）
+    today = datetime.date.today().isoformat()
+    if args.catchup:
+        if st.get("last_advanced") == today:
+            print(f"[grid][catchup] 今天已推进（{today}），跳过；completed={completed}/{len(leaves)}")
+            return
+        args.once, args.apply = True, True
+
+    pending = [l for l in leaves if l not in done_set]
+    batch = pending[:args.slice]
+    print(f"[grid] leaves={len(leaves)} slice={args.slice} completed={completed} next batch={batch}")
+
+    if not batch:
+        # 全网格已扫完一轮：开启新一轮（清空 done；lead_hypotheses 幂等，不产生重复）
+        st["done"] = []
+        st["total"] = len(leaves)
+        save_state(st)
+        print("[grid] 全网格已扫完一轮，已重置 done 开启新一轮")
+        return
 
     all_rows, used_all = [], []
     for leaf in batch:
@@ -141,12 +161,13 @@ def main():
         import hae_engine as H
         res = H.upsert_rows(all_rows, apply=True)
         print("[grid] upsert:", res)
-        st["cursor"] = i1
-        st["done"] = st.get("done", []) + batch
+        st["done"] = sorted(done_set | set(batch))
+        st["total"] = len(leaves)
+        st["last_advanced"] = today
         save_state(st)
-        print("[grid] cursor ->", st["cursor"], "/", len(leaves))
+        print("[grid] completed ->", len(st["done"]), "/", len(leaves))
     else:
-        print("[grid] dry-run（加 --apply 才写 lead_hypotheses 并推进游标）")
+        print("[grid] dry-run（加 --apply 才写 lead_hypotheses 并记录进度）")
 
 
 if __name__ == "__main__":
