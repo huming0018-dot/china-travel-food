@@ -3345,3 +3345,22 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
   **0 直写 restaurants**；账本 comention_edges.jsonl / comention_graph.json / ledger 幂等。
 - cron：每日 02:52 `flock /tmp/comention.lock` 错峰（HTTP 只读不占浏览器）。
 - 已知噪声：评论区口述锚点含口语片段，由 admission_gate 过滤；后续可细化正则。
+
+### 2026-09-30 XHS 登录重试结果（QR 不渲染，继续 parked）
+
+**今日 12:59 重试 account_a 扫码登录：**
+- 新启动独立 Chrome (端口9230, profile /tmp/food_login_a_0930, 直连) 打开 xiaohongshu.com/login。
+- 登录页加载正常（logo、手机号表单均渲染），但**二维码区域持续空白**（12s 等待+刷新后仍空白）。
+- 判定：新浏览器指纹触发小红书风控，QR 接口未下发二维码图。非过期问题——码根本没生成。
+- 今日不再自动刷新/请求二维码/短信，避免延长冷却。
+
+**当前状态：**
+- account_a / account_b 均 parked。
+- 卡点：短信日配额超限 + 风控；account_a 额外为新指纹致 QR 不渲染。
+- 9230 登录窗口保留在屏幕上（不关闭），供用户可选手动操作（若出现滑块/验证码由用户本人过）；agent 不再自动刷新。
+
+**下一步（看门狗冷却后只读探测）：**
+- 不固定凌晨硬试。先做一次只读探测：打开登录页截图，判断 QR 区域是否渲染出真实二维码图。
+- 若 QR 正常渲染 → 走实时窗口待命扫码流程（推 Supabase+TG，用户扫屏幕）。
+- 若 QR 仍空白 → 自动顺延、不硬刷、不发短信、不请求验证码，回报状态。
+- account_b 走广州代理出口，需先恢复代理配置（deploy.env 中未找到，需从 account_proxies.json 或历史记录恢复）。
