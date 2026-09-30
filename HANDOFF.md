@@ -3504,3 +3504,41 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
   - 对**泛描述店名**宽泛匹配（返回的20条多为成都/洛阳/淮南/柳州等同菜系异地视频，非该店）→ 不可直接采信；
   - B站无公开字幕（keyless），不直接出口味，定位为**发现/线索通道（→gap pool）**；精确身份匹配+ASR 转口味的深度采集并入批次4（KOL跨平台）/批次8（覆盖）。
 - 账号仍 parked，未硬刷；公众号 kol_cross（每6h）、B站 collect（每6h）照常。
+
+---
+
+## 2026-09-30 批次3–8 收口（20:10 CST，并行5子代理 + 统一整合）
+
+**批次3·分类语义**
+- 新增只读检测器 `cloud/classification_intruder_audit.py` + `intruder_audit_rules.json`（配置化产品叶→主营出品正则）。
+- 已 apply 加法补链 5 条（POST 201+回读）：rid 1165/1167/1171/1172/1174（黎凡特/沙威玛店补挂 205 阿拉伯烧烤，is_primary=false）。
+- 食材≠菜系：拒绝把新疆店因“滩羊/烤羊”误补宁夏叶（1025 等）。
+- **删除/改主/降档共31项只列不删，待用户确认**：含 AJIYA2006/鮨水月2/吉兆6/敦煌楼1342 删错挂 secondary；尚膳天焱39/Mercato1177/弄口里1824/KAPYA1253 改主；美式牛排叶209 扎堆汉堡/BBQ/鸡翅约15家改挂；gelato/面包店新发现若干。
+
+**批次4·KOL 全局名单**
+- 新连接器 `cloud/kol_identity.py`；handles 0/82 → **73/82 确定性回填**（B站 mid 镜像68 + cross作家精确核验5），9 个宁空留空（蔡澜/小宽/欧阳应霁/叶怡兰/焦桐等）；公众号 handle 一个不绑（搜狗账号名非本人）。
+- kol_monitor 全量 --apply：posts 108→**206**、mentions 62→**190**（matched50/线索126）；本轮 0 真实收录（单声音不过 gate，KOL 不进 n_real）。
+
+**批次5·首页动态数据层**
+- food_events 25→**40**（批次5 +10 id26-35、批次6 +5 id36-40），每条带 source_url/起止日期/报名入口/tags；聚合门户未用。
+- 连接器 `pipeline/events_collect.py`（**浏览器+XHS 登录依赖，不挂 headless cron**）。
+- **migration 022_homepage_events.sql 待 SQL Editor 执行**（补 origin_market/is_overseas_brand + tags GIN）。
+
+**批次6·语义简介 + chef tracking**
+- 头部 **45 家精选升级人文版 semantic_description**（45/45 回读，0 软广词，修复4处招牌菜乱码）；备份 `/app/data/backups/batch6_semdesc_backup_2026-09-30.jsonl`。
+- 全部 60 chefs 写确定性 tracking_seeds（60/60）；连接器 `pipeline/chef_tracker.py`（headless 状态管理，可周 cron）。
+
+**批次7·营业时间/营业日**
+- 新连接器 `cloud/cloud_hours_fill2.py`（Pass A 从 raw 反推 open_days 零API；Pass B 高德补双空，保守拒错分店）；账本 `/app/data/hours_fill_ledger.jsonl`。
+- 已真实写入 open_days **118 条**（98→约216）；全量 Pass A 因 Supabase 写延迟（~40s/条）未一次跑完，已停，改挂夜间 cron 自跑（幂等 thinning）；Pass B 样本净增0（多为正确保守拒绝）。
+
+**批次8·覆盖扩容**
+- 过 admission 新增 3 家：rid **2007 田口家·手打乌冬(禧瑞广场)**、**2008 立食荞麦东京一味(瑞金一路161)**、**2009 都恩客DONQ(高岛屋)**；逐行回读，phone/coord/hours 留空、score 未碰。
+- 叶子：手打乌冬 0→1、荞麦十割 0→1、日式面包 2→3；Ministry of Crab(2002)/八by8(1905) 已在库（回归命中）。
+
+**统一整合（本次）**
+- crontab 新增 #21 hours2(03:17 每日)、#22 kol_monitor(:37/6h)、#23 chef_tracker(周一09:03)、#24 intruder(周三03:47)；已 `crontab` 安装（73行），逐条核对**所有被引用脚本均存在、无断 cron**。
+- 新连接器全部 docker cp 进容器（cloud/ 与 pipeline/）。
+- 实时基线：restaurants **1482**(active1476/closed6)、reviews1716、chefs60、restaurant_chefs80、groups12/members50、events40、awards155、kol posts206/mentions190、lead_hyp72、diner labels123、精选156。
+
+**仍待用户**：①SQL Editor 跑 022；②确认批次3 的31项删除/改主清单；③微博 cookie(SUB/SUBP)、知乎 cookie(z_c0)、抖音 cookie(sessionid) 合并一次提供；④柿合缘4店入库/段誉回锚待账号恢复。两 XHS 账号仍 parked。

@@ -78,3 +78,20 @@ SHELL=/bin/bash
 #     未知店只写 lead_coention.jsonl(候选池)交 admission_gate,绝不直写 restaurants;幂等断点(ledger)。
 #     轻HTTP只读,不占浏览器;每日 02:52 低峰(避开 coord 3:00/hours 4:00)。
 52 2 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/comention.lock /usr/local/bin/python comention_probe.py --enqueue >> /app/data/comention_probe.log 2>&1
+
+# 21) 批次7·营业时间/营业日重补( cloud_hours_fill2 )：
+#     Pass A 从既有 opening_hours.raw 确定性反推 open_days(零API,首晚跑透后自thinning)；
+#     Pass B 高德补 oh+od 双空店(每晚60家,错分店/地址含糊保守拒)。每日 03:17(coord 3:00之后)。
+17 3 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/hours2.lock HOURS_SAMPLE_A=0 HOURS_SAMPLE_B=60 /usr/local/bin/python cloud_hours_fill2.py --apply >> /app/data/hours_fill2.log 2>&1
+
+# 22) 批次4·KOL B站监控补接线( kol_monitor 此前无 cron )：全量可轮询KOL,posts/mentions增量,
+#     matched锚店、unmatched线索入 gap;KOL仅线索不回写score。每6h :37(kol_cross:23/bili:30之后)。
+37 */6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/kolmon.lock /usr/local/bin/python kol_monitor.py --apply >> /app/data/kol_monitor.log 2>&1
+
+# 23) 批次6·主厨/集团动向状态管理( chef_tracker,headless不爬社媒 )：刷新 last_tracked_at、
+#     输出需跟进清单;社媒发现走 social_discovery。每周一 09:03(fleet_grid 09:17之前)。
+3 9 * * 1 cd /app/pipeline && . /app/cloud/env.sh && flock -n /tmp/cheftrack.lock /usr/local/bin/python chef_tracker.py >> /app/data/chef_tracker.log 2>&1
+
+# 24) 批次3·出品定类入侵者只读审计( classification_intruder_audit )：扫错挂叶/漏挂叶出报告,
+#     只报告不自动改(删除/改主须用户确认)。每周三 03:47(hours2 03:17之后)。
+47 3 * * 3 cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/intruder.lock /usr/local/bin/python classification_intruder_audit.py --json /app/data/intruder_audit_report.json >> /app/data/intruder_audit.log 2>&1
