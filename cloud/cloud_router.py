@@ -42,7 +42,7 @@ def log(msg: str):
             f.write(line + "\n")
     except Exception:
         pass
-    print(line, flush=True)
+    # 不print：cron已重定向stdout到同一个文件，避免重复写
 
 
 def pool_alive() -> bool:
@@ -134,6 +134,12 @@ def decide():
 
     if ready <= 0:
         # 所有 XHS 账号都在冷却/不可用（含 POOL 空转）：不硬刷小红书，浏览器让给榜单兜底
+        # 但如果米其林数据24小时内已采过，不要重复跑，让浏览器空闲
+        michelin_file = DATA / "michelin_shanghai.json"
+        if michelin_file.exists():
+            age_hours = (time.time() - michelin_file.stat().st_mtime) / 3600
+            if age_hours < 24:
+                return ("", f"所有XHS账号冷却，米其林数据{age_hours:.1f}小时前已采过（<24h），浏览器空闲")
         return ("cloud_michelin_collect.py", "所有XHS账号冷却/POOL空转，浏览器让给米其林榜单")
 
     # 有可用 XHS 账号：discover（找宝藏店主力）与 run_batch（reviews 取证）轮替，

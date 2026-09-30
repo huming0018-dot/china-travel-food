@@ -95,7 +95,11 @@ def main():
                     print("[pool] classify 失败：", e, flush=True)
                     health = {a: 0 for a in workers}
                 last_class = time.time()
-                print("[pool] 账号状态：", health, flush=True)
+
+                # 只在状态变化时打印，避免空转刷屏
+                if health != globals().get('_last_health', {}):
+                    print("[pool] 账号状态：", health, flush=True)
+                    globals()['_last_health'] = dict(health)
 
                 # 为每个健康账号确保一个 worker
                 for account, code in health.items():
@@ -112,8 +116,10 @@ def main():
                     # 立即重扫，决定是否重启
                     last_class = 0.0
 
-            if not health:
-                print("[pool] 未发现任何账号，60s 后重试。", flush=True)
+            # 判断是否有健康账号在跑
+            healthy = [a for a, c in health.items() if c == 0] if health else []
+            if not healthy:
+                # 无健康账号：休眠60秒，不空转
                 time.sleep(60)
             else:
                 time.sleep(15)
