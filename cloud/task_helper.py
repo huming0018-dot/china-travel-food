@@ -105,7 +105,7 @@ def add(title, assignee, priority="P1", description="", source="qa", issue_id=""
 
 
 def stats():
-    r = C.req("GET", TABLE + "?select=assignee,status,priority")
+    r = C.req("GET", TABLE + "?select=id,title,assignee,status,priority")
     tasks = r.json() if r.status_code == 200 else []
     if not tasks:
         print("（无任务，表可能还没建）")
@@ -128,7 +128,7 @@ def stats():
     if p0:
         print(f"\n🔴 P0未完成: {len(p0)}个")
         for t in p0:
-            print(f"  #{t['id']} {t['title'][:50]}")
+            print(f"  #{t.get('id', '?')} {t['title'][:50]}")
 
 
 if __name__ == "__main__":
