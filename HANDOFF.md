@@ -3600,5 +3600,5 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - agent-reach：真包1.5.0 经镜像装在 host venv，doctor 仅3/16通道、抖音不在列、B站/XHS 无增量 → **不接入采集管线**。
 
 ### 待办（不阻塞）
-- 语义深度版第二批 **132 条已撰写、脚本 research/social/batch6/apply_semdesc2.py 就绪**（精选总177、已深度45）；主机 22:46 起 SSH Connection refused（今日第二次 Lighthouse 重启），恢复后跑 dry-run→BATCH6_APPLY=1→回读，达成177/177 深度全覆盖。
+- 语义深度版第二批 **132 条已 apply、0失败、回读132/132**（脚本 research/social/batch6/apply_semdesc2.py；备份 /app/data/backups/batch6_semdesc_batch2_backup_2026-09-30.jsonl）。**精选177 深度版 177/177 全覆盖**（含4家待裁决店只写中性事实+"证据待补"，不美化）。主机 22:46-23:21 sshd 短暂 Connection refused（非重启，uptime 连续），已恢复。
 - 仍需 cookie：微博 SUB/SUBP、知乎 z_c0、抖音 sessionid/odin_tt；两 XHS parked。
