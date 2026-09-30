@@ -3384,3 +3384,11 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - Build(CR) vs Run(OPS) 分界：抓不到/漏抓/抓错/覆盖不全=CR；进程挂/号掉/配额尽/没在跑=OPS。
 - 全量未闭环工作按角色（U/CR/OPS/ARCH/ALG/PM/QA/FE）再分配，见 `skill references/role-task-allocation.md`（A 获取得9项 / B 运维6项 / C 架构4项 / D 算法5项 / E 产品6项 / F 测试4项 / G 前端10项暂停 / H 用户4项）。
 - 推进顺序：免费项先行——CR 先做 A2 权威召回→A4 信源注册扩源→A6 细分叶子双轴→A8/A9 实体与事实校验；ARCH/ALG 并行；A1 Apify 待 H1 充值；FE 最后。
+
+## 2026-09-30 Q-013 服务器 22 不可达——外部诊断证据（collector）
+- 本机网络正常（对照，均直连不走代理）：github:22 succeeded、8.8.8.8:53 succeeded、curl example.com=200；出站 22 未被封。
+- 目标 49.234.35.92：22 稳定 **Connection refused(RST)**；80/443 也 RST（这两端口本就无服务，属正常）；3389/8080 timeout（Lighthouse 防火墙未放行→边缘丢弃）；ICMP timeout。
+- 端口行为解读：放行端口(22)到达主机却无监听→主机回 RST；未放行端口被边缘丢弃。**唯一真实异常=22 无 sshd 应答**。
+- 外部无法区分的两种状态（需控制台定论）：①实例在运行但 sshd/系统服务未起（异常启动/磁盘满/iptables REJECT）；②实例已停机（欠费到期/手动关机/宿主维护），网关对放行端口回 RST。
+- 代理(Clash 127.0.0.1:7897)SOCKS5 为**假阳性**（对明确关闭的 12345 也报成功、GitHub 无 banner、HTTP 抓 80=502），不可用作判据。
+- **决定性动作（只能控制台）**：登录 https://console.cloud.tencent.com/lighthouse 看实例 lhins-kqyl0sh9 状态：停机→开机（先查是否欠费/到期）；运行中→VNC 登录查 sshd(`systemctl status sshd`)、磁盘(`df -h`)、iptables，必要时重启；恢复后确认容器 food-cloud 与 cron。用户已跳过一次浏览器登录交接，待其选择自行处理或重新授权登录。
