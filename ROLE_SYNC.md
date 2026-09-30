@@ -1,7 +1,8 @@
 # 角色同步机制 · ROLE_SYNC
 
-> 最后更新：2026-09-29
+> 最后更新：2026-09-30
 > 目的：让ctfs开发、ctfs登陆（采集）、QA监管官三者状态透明、交接无歧义、问题不遗漏。
+> 协作工具：sync.sh（自动同步脚本）+ task_queue表（任务队列）+ STATUS.md（状态快照）+ QUALITY_ISSUES.md（问题台账）
 
 ## 三角色职责边界
 
@@ -79,5 +80,41 @@ P2：纳入迭代计划
 1. 状态不更新=工作没做
 2. 问题不登记=不存在
 3. P0不过夜
-4. 跨角色请求必须写在STATUS.md，不私聊
+4. 跨角色请求必须写在STATUS.md或task_queue表，不私聊
 5. 部署后必须验证，不能"我觉得应该好了"
+
+## 协作工具（2026-09-30新增）
+
+### sync.sh 自动同步脚本
+每个窗口**开始工作时**运行：
+```bash
+bash sync.sh dev         # 开发窗口
+bash sync.sh collector   # 采集窗口
+bash sync.sh qa          # QA窗口
+```
+自动：git pull → 显示STATUS.md → 显示P0问题 → 显示分配给自己的任务 → 显示最近commit。
+
+**结束工作时**运行：
+```bash
+bash sync.sh push "修复了登录bug"
+```
+自动：git add -A → commit → push。
+
+### task_queue 任务队列（Supabase数据库表）
+建表SQL：`db/migrations/017_task_queue.sql`（需在Supabase SQL Editor执行一次）。
+
+```bash
+# 查看任务
+python3 cloud/task_helper.py stats           # 统计概览
+python3 cloud/task_helper.py list dev         # 查看分配给开发的任务
+python3 cloud/task_helper.py list todo        # 查看所有待办
+
+# 认领/完成任务
+python3 cloud/task_helper.py claim 5         # 认领任务#5
+python3 cloud/task_helper.py done 5           # 完成任务#5
+
+# 创建任务
+python3 cloud/task_helper.py add "修复登录bug" dev P0
+```
+
+字段：id / title / description / assignee(dev|collector|qa) / status(todo|in_progress|done|blocked) / priority(P0|P1|P2) / source / issue_id
