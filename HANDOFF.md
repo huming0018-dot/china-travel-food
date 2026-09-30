@@ -3364,3 +3364,15 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 若 QR 正常渲染 → 走实时窗口待命扫码流程（推 Supabase+TG，用户扫屏幕）。
 - 若 QR 仍空白 → 自动顺延、不硬刷、不发短信、不请求验证码，回报状态。
 - account_b 走广州代理出口，需先恢复代理配置（deploy.env 中未找到，需从 account_proxies.json 或历史记录恢复）。
+
+
+---
+
+## 部署对齐 + 收尾核验（2026-09-30 13:26 CST）
+
+- **构建固化修复**：build_sync.sh 的 pipeline rsync 源由顶层 `pipeline/`（repo 不存在）改为 `cloud/vendor/pipeline/`，根因=重建后 fleet_grid_run.py 等 pipeline 脚本不入镜像。已修并 push（commit c2e10c2）。
+- **零 docker cp 验证（镜像内 py_compile OK）**：fleet_grid_run.py(/app/pipeline)、kol_cross.py、post_audit.py、comention_probe.py、label_tool.py；pipeline *.py=62。微博/知乎/抖音无独立适配器（keyless 实测不可采，不硬刷）。
+- **运行时**：restart=always；挂载 food-cloud_fooddata=>/app/data、xhs_accounts ro=>/secrets/xhs_accounts 不变；cron 守护 PID65 在跑、gap_pool.py 常驻 PID89。
+- **crontab 19 条全在**（含新增 fleet_grid 09:17、kol_cross 23 */6h、post_audit 07:47、comention 02:52）。
+- **迁移**：016 food_kol_watchlist.handles(JSONB)+GIN 已执行并 REST 验证（返回 [{"handles":{}}]）；017 task_queue 早已存在(200)；018 diner_expert_labels 由用户在 SQL Editor 手动执行（执行前 REST 探测 PGRST205 表不存在）。
+- **基线**：active restaurants 1473（content-range）。
