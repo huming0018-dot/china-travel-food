@@ -15,9 +15,24 @@
 import sys, os, pathlib, json
 
 HERE = pathlib.Path(__file__).resolve().parent
-PIPE = os.environ.get("FOOD_PIPELINE_DIR", "/app/pipeline")
+PIPE = pathlib.Path(os.environ.get("FOOD_PIPELINE_DIR", str(HERE / "vendor" / "pipeline")))
 sys.path.insert(0, str(HERE))
-sys.path.insert(0, PIPE)
+sys.path.insert(0, str(PIPE))
+
+# 本地开发时pipeline可能在上级目录
+if not (PIPE / "common.py").exists():
+    for candidate in [HERE.parent / "vendor" / "pipeline", HERE.parent / "pipeline"]:
+        if (candidate / "common.py").exists():
+            sys.path.insert(0, str(candidate))
+            break
+
+# 自动设置FOOD_APP_DIR（如果环境变量没设）
+if not os.environ.get("FOOD_APP_DIR"):
+    # 尝试找app/.env.local
+    for candidate in [HERE.parent / "app", pathlib.Path.cwd() / "app"]:
+        if (candidate / ".env.local").exists():
+            os.environ["FOOD_APP_DIR"] = str(candidate)
+            break
 
 import common as C
 
