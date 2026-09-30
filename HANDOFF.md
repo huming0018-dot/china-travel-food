@@ -3302,3 +3302,23 @@ chefs 59→59、restaurant_chefs 79→79（before=after，0 净新增）；revie
 - **保留 135 项**：全部设计/契约/审计/grid/readme 的 .md、regression_set、reviews_priority、米其林/黑珍珠 full_list、brand_registry、关键词/seed 等规范清单。
 - 安全校验：无悬空引用（cloud/app 全量扫描）、cloud/*.py 全部 py_compile 通过、crontab 引用脚本均存在；rebase 到 HAE 7bb9251 干净后推送。
 - **未做（待 deuce↔HAE 对账）**：cloud 模块级精简（blackpearl/ugc_longrun/source_registry 等是否被取代需逐一对账，本轮全部保留，不破坏运行中 cron）。
+
+---
+
+## 模块A·收录机制（2026-09-30）
+
+### 018 migration（DB 待 SQL Editor 执行）
+db/migrations/018_diner_expert_labels.sql（017 已被 task_queue 占用，故用018）。
+表 diner_expert_labels：restaurant_id FK、labeler、四维 taste/ambience/innovation/consistency(1-5 CHECK)、
+tier(must_eat/worth_eating)、evidence/evidence_url/experienced_at/notes/created_at；
+UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
+
+### 标注工具 cloud/label_tool.py
+- init -> /app/data/labels/labels_worksheet.csv（1473 家 active 店，跳过已标）。
+- submit --apply：校验四维1-5/tier枚举/店id存在/experienced_at必填，错行不写，合格 upsert+回读。
+- 用户步骤：容器跑 init → 下载 CSV 用 Excel 填列 → 跑 submit --apply。
+
+### 权重学习 cloud/vendor/pipeline/label_weight_learn.py
+- 当前 n_labels=0，先用先验：taste0.45/consistency0.20/ambience0.15/innovation0.20。
+- 样本>=8 自动逻辑回归拟合 P(must_eat)；不覆盖 DB 触发器 score_total 口径（scoring_engine 仍 0.45 taste/0.25 diner/0.18 obj/0.12 endorsement）。
+- 三类权重：专家标注>真实UGC>平台背书；近期评价时间衰减、负面情绪不扣口味。
