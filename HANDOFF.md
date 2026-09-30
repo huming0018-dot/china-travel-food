@@ -3376,3 +3376,11 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **crontab 19 条全在**（含新增 fleet_grid 09:17、kol_cross 23 */6h、post_audit 07:47、comention 02:52）。
 - **迁移**：016 food_kol_watchlist.handles(JSONB)+GIN 已执行并 REST 验证（返回 [{"handles":{}}]）；017 task_queue 早已存在(200)；018 diner_expert_labels 由用户在 SQL Editor 手动执行（执行前 REST 探测 PGRST205 表不存在）。
 - **基线**：active restaurants 1473（content-range）。
+
+---
+
+## 2026-09-30 角色任命：爬虫工程师 + 全量任务再分配
+- 用户任命本对话为**爬虫工程师（CR）**，专责数据获取能力建设；章程 `skill references/crawler-engineer-charter.md`（已写入并挂载 SKILL.md、记入长期偏好）。
+- Build(CR) vs Run(OPS) 分界：抓不到/漏抓/抓错/覆盖不全=CR；进程挂/号掉/配额尽/没在跑=OPS。
+- 全量未闭环工作按角色（U/CR/OPS/ARCH/ALG/PM/QA/FE）再分配，见 `skill references/role-task-allocation.md`（A 获取得9项 / B 运维6项 / C 架构4项 / D 算法5项 / E 产品6项 / F 测试4项 / G 前端10项暂停 / H 用户4项）。
+- 推进顺序：免费项先行——CR 先做 A2 权威召回→A4 信源注册扩源→A6 细分叶子双轴→A8/A9 实体与事实校验；ARCH/ALG 并行；A1 Apify 待 H1 充值；FE 最后。
