@@ -87,6 +87,21 @@ if [ -f ROLES.md ]; then
   awk "/^### $ROLE/,/^### |^## /" ROLES.md 2>/dev/null | head -8 || echo "  (未在ROLES.md注册)"
 fi
 
+# ────────────────────── 角色边界提示 ──────────────────────
+echo ""
+echo "📋 角色边界（$ROLE）:"
+if [ -f ROLES.md ]; then
+  awk "/^### $ROLE/,/^### |^## /" ROLES.md 2>/dev/null | head -8 || echo "  (未在ROLES.md注册)"
+fi
+
+# ────────────────────── 职责通知（必读） ──────────────────────
+if [ -f NOTICE_ROLES.md ]; then
+  echo ""
+  echo "📢 职责通知（NOTICE_ROLES.md，QA发布）:"
+  echo "────────────────────────────────────────"
+  awk "/^## 致 $ROLE 窗口/,/^---/" NOTICE_ROLES.md 2>/dev/null | head -30 || echo "  (本窗口暂无专项通知)"
+fi
+
 # ────────────────────── 公共状态快照 ──────────────────────
 echo ""
 echo "📊 公共状态:"
