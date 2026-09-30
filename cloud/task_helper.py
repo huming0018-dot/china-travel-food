@@ -55,13 +55,14 @@ def list_tasks(filter_val=None):
     tasks = r.json() if r.status_code == 200 else []
     if not tasks:
         print("（无任务）")
-        return
+        return tasks
     print(f"{'ID':>4} {'优先级':>4} {'分配给':>6} {'状态':>8}  标题")
     print("-" * 70)
     for t in tasks:
         a = ASSIGNEE_CN.get(t["assignee"], t["assignee"])
         s = STATUS_CN.get(t["status"], t["status"])
         print(f"{t['id']:>4} {t['priority']:>4} {a:>6} {s:>8}  {t['title'][:40]}")
+    return tasks
 
 
 def claim(task_id):
