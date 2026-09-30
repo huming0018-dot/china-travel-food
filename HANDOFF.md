@@ -3602,3 +3602,28 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 ### 待办（不阻塞）
 - 语义深度版第二批 **132 条已 apply、0失败、回读132/132**（脚本 research/social/batch6/apply_semdesc2.py；备份 /app/data/backups/batch6_semdesc_batch2_backup_2026-09-30.jsonl）。**精选177 深度版 177/177 全覆盖**（含4家待裁决店只写中性事实+"证据待补"，不美化）。主机 22:46-23:21 sshd 短暂 Connection refused（非重启，uptime 连续），已恢复。
 - 仍需 cookie：微博 SUB/SUBP、知乎 z_c0、抖音 sessionid/odin_tt；两 XHS parked。
+
+---
+
+## 2026-10-01 模型舰队 v2：多维结构化探针 + 真正解析舰队返回 + 提速接线（凌晨 CST）
+
+**背景**：用户要求给"模型舰队(HAE)"提速，并学习其他豆包对话成果后做进一步探针问询。排查确认舰队两处致命缺陷并修复。
+
+**SSH 可达性（已闭环）**：deuce 直连 49.234.35.92 当前被运营商多路径 NAT 路径拦截（服务器/sshd/密钥全程正常，未封 deuce IP）；已建可靠执行器 `/Users/deuce/bin/ctfs-run`（多境外节点自动重试、stdin 转发、perl alarm 超时），对云端操作统一走它。
+
+**fleet_grid_run.py 重写（v2，commit 276056c，已热部署进容器 /app/pipeline）**：
+- 缺陷修复①：探针由一句泛问 → 覆盖 主厨/师承、集团品牌、菜系定位、招牌菜、开关迁址、同名分店、米其林黑珍珠/节目成员、本地老饕口碑 vs 连锁预制 的多维探针；强制只输出结构化 JSON、显式"不知道"、附来源 URL。
+- 缺陷修复②（最关键）：v1 把舰队返回文本【整体丢弃】只写占位；v2 鲁棒解析 JSON（去代码块/容忍尾逗号）→ 按 cjk_norm 归并同店 → **每店一条假设**，携带多模型共识、招牌菜/荣誉/状态/连锁预制判定，来源 URL 落 evidence/confirmed_source_urls；原始回答按 run 落盘 `/app/data/hae/recall/fleet_recall_<ts>.json` 供审计/重解析；零实体才回退一条种子占位。
+- 置信认识论：模型一致只抬先验（0.30 + 每个额外模型0.06 最多0.12 + 有URL 0.10），纯模型封顶0.55、有权威源封顶0.65；status 恒 hypothesized，晋升仍走 hae_engine 闸门（权威源或≥2独立声音）。
+- API 调用 ThreadPoolExecutor 并行（≤6）；补全 v1 缺失的 `--catchup`（连续切片直到扫完/--max-leaves）。
+
+**提速接线**：
+- 容器 crontab 舰队行改为 `HAE_GRID_SLICE=20` + 每日09:17 `--catchup --max-leaves 80`、@reboot `--catchup --max-leaves 40`（已 crontab 安装）；有 key 后约3天扫完剩余246叶。
+- `entrypoint.sh` 固化清单补入全部 LLM 变量（ARK/KIMI/QWEN/GLM/MINIMAX/HUNYUAN 的 _BASE_URL/_API_KEY/HAE_MODELS_*、HAE_WEB_SEARCH/GRID_SLICE），重建后 cron 也能拿到。
+
+**密钥注入一键化（commit 含 cloud/llm_apply.sh）**：
+- 宿主脚本 llm_apply.sh：凭据经环境变量传入 → 幂等合并进 ~/food-cloud/deploy.env（不回显）→ 重建运行容器 env.sh 的 LLM 段（免重建立即对 cron 生效）→ 容器内真实 MP.chat 验证（只打印 ok/长度）。
+- deuce 包装 `/Users/deuce/bin/ctfs-llm-apply`：读 gitignored `~/.config/ctfs/llm.env`（chmod600，已放无密钥模板）经 ctfs-run 注入。
+- **当前唯一卡点 = LLM key**：容器与 deuce 的 LLM key 均为空（仅 APIFY_TOKEN）；火山方舟登录交接一次被超时、一次被用户跳过。推荐火山方舟（豆包可联网、DeepSeek 极便宜，近免费）。
+
+**学习成果（已读并对齐）**：09-29 工程 `cloud/docs/source-classes-and-calibration.md`（三类来源分工、admission 三条件、来源独立性 C0–C4 分级）、`research/regression_set.json`（16条断言，宫鸠/大志/吉兆/晴川/鸟鸟/张记/帅帅/聪菜馆/泓0871/nagi/鮨照/言盐仍 hit=false，是机制必须自动召回的目标）、STATUS.md。v2 置信设计与校准口径一致。
