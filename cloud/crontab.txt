@@ -67,3 +67,8 @@ SHELL=/bin/bash
 #     仅 confidence>=0.8 且带 source_url 才改，账本 /app/data/post_record/audit_<date>.jsonl。
 #     每日 07:47 错峰（避开整点/softad 5:37/黑珍珠6:20/证据池:17）。
 47 7 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/post_audit.lock /usr/local/bin/python post_audit.py --findings /app/data/post_record/findings.jsonl --apply >> /app/data/post_audit.log 2>&1
+
+# 20) 模块C·联想词探针：以高分/认证在库店为种子,扫 raw_discovery 共现建 co-mention 图,
+#     未知店只写 lead_coention.jsonl(候选池)交 admission_gate,绝不直写 restaurants;幂等断点(ledger)。
+#     轻HTTP只读,不占浏览器;每日 02:52 低峰(避开 coord 3:00/hours 4:00)。
+52 2 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/comention.lock /usr/local/bin/python comention_probe.py --enqueue >> /app/data/comention_probe.log 2>&1

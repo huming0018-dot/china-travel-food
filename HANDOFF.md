@@ -3333,3 +3333,15 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **安全闸**：仅 `confidence>=0.8` 且 `source_url` http(s) 才改；枚举非法/无 URL/低置信一律跳过；电话/坐标/营业时间不动；dry-run 出计划、`--apply` 才 PATCH、写后回读并落账本 `/app/data/post_record/audit_<date>.jsonl`（每条带 source_url+captured_at+置信+回读值）。
 - **cron**：每日 **07:47**（flock /tmp/post_audit.lock），错峰避开 3:00 坐标/4:00 营业/5:37 softad/6:20 黑珍珠/每小时:17 证据池。已装入容器 crontab（grep post_audit=2 行）。
 - **本轮实跑**：emit 6 家（id1 晴川sushi、id2 鮨水月 等），对 id2 鮨水月做 general_search（新民晚报/澎湃/水滴工商），结果均指向他人或泛餐饮集团，**无高置信归属**——按「宁空不假」0 变更；空 findings dry-run=0 计划。
+
+---
+
+## 模块C·联想词探针（2026-09-30）
+
+`cloud/comention_probe.py`：以在库高分/认证 active 店（score_total≥70）为种子，离线扫既有
+`raw_discovery.jsonl` 同篇共现，建 co-mention 图。
+- 种子 40；扫描笔记 916；共现边 242；图节点 144（已知种子 40 + 未知候选 138）；联想 query 100。
+- 未知店**只写** `/app/data/discovery/lead_coention.jsonl`（候选池），交既有 admission_gate，
+  **0 直写 restaurants**；账本 comention_edges.jsonl / comention_graph.json / ledger 幂等。
+- cron：每日 02:52 `flock /tmp/comention.lock` 错峰（HTTP 只读不占浏览器）。
+- 已知噪声：评论区口述锚点含口语片段，由 admission_gate 过滤；后续可细化正则。
