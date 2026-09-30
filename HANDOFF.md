@@ -3565,3 +3565,40 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 全程仅动 cuisines(+371)/restaurant_cuisines，未删餐厅、未碰电话/坐标/营业时间/精选/评分。无代码文件改动（数据迁移与挂标），仅更新 HANDOFF。
 
 **仍待用户（更新）**：①~④中 022 与批次3 已完成；剩 微博/知乎/抖音 cookie（另行索取）、柿合缘待账号恢复；两 XHS 账号 parked。
+
+---
+
+## 2026-09-30 五项机制缺口（审计后高优先级，22:50 CST）
+
+### item1 KOL 监控落库（迁移 023，已执行）
+- 审计实测：food_kol_posts(206)、food_kol_mentions(190) 本就存在（非只在 JSON）；raw_kol 75 url 与 posts diff=0。
+- **023**：food_kol_mentions 增 `context TEXT`；新建 **food_kol_identity**（canonical_kol_id FK、platform、handle、profile_url、confidence；UNIQUE(kol,platform)+2索引+RLS）。
+- 回填：mentions.context **143/190**（47碎片留NULL）；identity **78 行**全 bilibili/confirmed，零重复。
+- watchlist **82→87**：新增 老饭骨(主厨自媒体)/盗月社/曼食慢语/食帖/企鹅吃喝；kol_type 现 博主30/美食作家6/美食家2/美食导演1/主厨自媒体1/媒体2/未标45。微博/知乎/抖音人选待 cookie。
+- 文件：db/migrations/023_kol_identity.sql、cloud/kol_context_backfill.py。
+
+### item2 价位五档标准化（旧 CHECK 已替换，已回读）
+- 按【每场景独立】price_avg 分位定 band（1≤P20、2 P20-40、3 P40-70、4 P70-90、5>P90），纯 python。
+- **1128 行 PATCH、回读零不一致**；price_position 旧四档（入门/主流/进阶/旗舰）清零，统一为 **经济323/平价325/中端429/高端273/奢华149 + NULL4**；price_band 同分布。
+- CHECK `ch_rest_price_position` 已 DROP 并以五档重建（独立查询提交，回读确认）。
+- 场景边界(元)：正餐 n1034 ≤90/91-120/121-230/231-722/>722；快餐小吃260 ≤32/33-45/46-80/81-100/>100；酒吧74 ≤142/143-180/181-220/221-296/>296；咖啡56 ≤38/39-45/46-55/56-86/>86；甜品44 ≤30/31-42/43-68/69-100/>100；面包31 ≤35/36-43/44-59/60-90/>90。
+- 账本 /app/data/price_standardize_2026-09-30.jsonl。遗留：id1 晴川sushi 错标 price_scene=快餐小吃（待场景口径治理）。
+
+### item3 黑珍珠缺失（17 家）
+- 实为已在库（误配兄弟分店，不重建）：1929=rid1147、大董iapm=rid1562、鲁采新天地=rid463（高德同址同电话）；皖宴苏河湾=rid569 守门员 hold（缺独立堂食证据）。
+- 新准入 **13 家**（rids 2033-2045）：堀田/橼舍鮨青木/成隆行虹桥/广舟千禧/海味观老西门/家全七福丰盛/楼上荟馆/上海滩BFC/食廬凯德/无蟹居/西郊5号/洋房火锅/逸谷会。
+
+### item4 覆盖缺口
+- 新准入 **8 家**（rids 2046-2053）：肉屋Kita、福寿司、Sage Gastro、今醉火锅、柿合缘 IFC/iapm/静安嘉里/西岸梦中心。
+- Hold：鮨照、佐佐、Ichi荞麦、醉冬、jelu、rambo（证据不足，见各回报）。
+- **京遇集团=gid13 已建（founder段誉）；chef41 group_id=13；段誉 RC 挂4家柿合缘（界面源 jiemian 9838994）；group_members 4 店**。
+- 门店总数 1482→**1503**。
+
+### item5 空字段/依赖/agent-reach
+- selling_points（restaurants JSONB）0→**1476 店**（点位 signature_dish2942/award110/experience38/atmosphere20；无URL店 source 留 null）；fact_claims 3店10条→**4店11条**（其余无权威URL不硬造）。文件 cloud/selling_points_fill.py、selling_points_dedupe.py。
+- 容器装 **numpy2.5.3/scipy1.18.1/pandas3.0.6/scikit-learn1.9.1**（清华镜像），锁入 cloud/requirements.txt。
+- agent-reach：真包1.5.0 经镜像装在 host venv，doctor 仅3/16通道、抖音不在列、B站/XHS 无增量 → **不接入采集管线**。
+
+### 待办（不阻塞）
+- 语义深度版第二批 **132 条已撰写、脚本 research/social/batch6/apply_semdesc2.py 就绪**（精选总177、已深度45）；主机 22:46 起 SSH Connection refused（今日第二次 Lighthouse 重启），恢复后跑 dry-run→BATCH6_APPLY=1→回读，达成177/177 深度全覆盖。
+- 仍需 cookie：微博 SUB/SUBP、知乎 z_c0、抖音 sessionid/odin_tt；两 XHS parked。

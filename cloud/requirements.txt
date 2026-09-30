@@ -9,3 +9,8 @@ opencc-python-reimplemented>=0.1.7
 # xhs_api 已自备 search_id，兼容 0.1.0/0.1.9 的 sign_headers 接口。
 xhshow==0.1.9
 xhs==0.2.13
+# 科学计算栈（score/分位数/聚类等离线分析；2GB 内存容器内直接装预编译 wheel）
+numpy==2.5.3
+scipy==1.18.1
+pandas==3.0.6
+scikit-learn==1.9.1
