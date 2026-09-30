@@ -3542,3 +3542,26 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 实时基线：restaurants **1482**(active1476/closed6)、reviews1716、chefs60、restaurant_chefs80、groups12/members50、events40、awards155、kol posts206/mentions190、lead_hyp72、diner labels123、精选156。
 
 **仍待用户**：①SQL Editor 跑 022；②确认批次3 的31项删除/改主清单；③微博 cookie(SUB/SUBP)、知乎 cookie(z_c0)、抖音 cookie(sessionid) 合并一次提供；④柿合缘4店入库/段誉回锚待账号恢复。两 XHS 账号仍 parked。
+
+---
+
+## 2026-09-30 收尾·022 上线 + 批次3 全量 apply（20:35 CST）
+
+**022（浏览器 SQL Editor，Monaco setValue 避免草稿残留；视图 DROP 重建）回读全通过**：
+- food_events 两列 origin_market / is_overseas_brand 存在；
+- 两索引 idx_events_tags_gin / idx_events_open_window 在（idx_cnt=2）；
+- 视图 v_feed_recent 存在；Tribe 一条回填 is_overseas_brand=true / origin_market='曼谷'。
+
+**批次3 全量放行后 apply（删27 / 增4 / 改主9，0失败，逐行回读 PASS）**：
+- 删错挂 secondary：2006 AJIYA(拉面/二郎系)、2 鮨水月、6 吉兆(鳗鱼饭)、1342 敦煌楼(宁夏手抓)；
+- 改主：39 尚膳天焱→天妇罗91、1177 Mercato→Osteria194、1253 KAPYA→土耳其217；
+- 美式牛排209 移出13家（Bourbon1227/Smokin Hog1271→BBQ213、Money Shops1728→Diner215；蓝蛙/Chili's/Beef&Liberty/Shake Shack/新元素/Liquid Laundry/Hard Rock→汉堡211；Crafted/Wing Republic→炸鸡214）；真牛排馆 Wolfgang's/Morton's/Texas Roadhouse/1515/Stone Sal/MEAT/Shaughnessy 保留；
+- gelato 1780/1782/1783→313；面包 1789/1792/1837→310。
+
+**存疑两项闭环**：
+- 新建菜系叶 **id371 中式烧烤/烤串**（parent_category="中餐" 虚拟根，dimension=菜系，参照260惯例）；#1824 主挂371；
+- #1781 HUFFY 证据为咖啡冷萃、无 gelato 菜名 → 删313，挂 300咖啡 + 主挂306社区精品咖啡。
+
+全程仅动 cuisines(+371)/restaurant_cuisines，未删餐厅、未碰电话/坐标/营业时间/精选/评分。无代码文件改动（数据迁移与挂标），仅更新 HANDOFF。
+
+**仍待用户（更新）**：①~④中 022 与批次3 已完成；剩 微博/知乎/抖音 cookie（另行索取）、柿合缘待账号恢复；两 XHS 账号 parked。
