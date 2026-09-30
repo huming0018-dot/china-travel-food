@@ -10,6 +10,36 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-09-30 守门员·人工三档监督精选体系（评分v5方向，已提交 004d6c3）
+
+**北极星重申**：广泛收录（step1）之外，必须有独立的“真美食精选层”（step2），只保留真正好吃、可溯源的店；外婆家/圆苑/小菜园这类连锁预制/平庸店不得进精选。前端最后做，本轮只动数据库/管线。
+
+**① 决定性实测：现有自动分与人工档位不相关（不能在噪声上回归）**
+对 1473 active、123 条人工三档（必吃10/值得52/一般61）逐档求均值：
+- score_diner：必77.9 / 值73.8 / **般77.7（一般反高于值得，非单调）**；score_taste 78.7/77.0/77.9；
+- score_endorsement ≈60、score_objective ≈76（**近似常数，无区分度**）；review_count 1.6/.9/1.8（非单调）；
+- price_avg 775/359/689（值得最便宜，非单调）。score_diner 大量是 **75 菜系先验默认、50 单差评、100 单好评**。
+结论：可信信号只有 人工三档、真实奖项 restaurant_awards、足量独立真实食客证据。
+
+**② 新脚本（cloud/vendor/pipeline/，容器内跑，dry-run/--apply）**
+- `softad_distribution.py`：伪草根 astroturf 分布自学器（此前“引用但代码缺失”）。特征 five_star/no_substance/burst_14d/near_dup/author_conc/promo/low_trust，跨店 median+MAD 稳健阈值，切点取分数分布 P85/P（不再用工业化品牌定界——它们靠硬信号识别、未必有刷评分布）。
+  **关键反误伤（我们自己采集会造假信号）**：MIN_N=5；burst 只认真实 visit_date 且≥60%覆盖（created_at 是同批抓取时间，弃用）；near_dup 只比≥12 字长文；confirmed 必须有“采集造不出”的硬信号（长文近重复/低可信营销号/营销词+异常）；**专家必吃/值得 + 有在期奖项的店（保护集168家）绝不 confirmed**。
+- `curate_score.py`：监督式贝叶斯精选器。重算干净真实证据（半衰期180天、作者权重封顶2.0、独立作者 n_ind、负评占比、作者分歧、保守 safe 分）；证据阈值 T_ev 在标注好店 safe P25 与一般 safe P75 间偏保守（实测 **84.7**）；价位弱先验权重在标注店现估、强收缩（实测 **w_price=-0.018≈0**，价格不决定入选）。
+  决策优先级：人工一般→不入选；硬闸门（is_chain_standardized/预制高/中央厨房确认/软广confirmed）→不入选；软警戒仅强奖项或 n_ind≥3 高质量可入；人工必吃/值得→入；强奖项（米其林星/黑珍珠≥2钻）→入；中奖项（Bib/黑珍珠一钻）→入；n_ind≥2 且 safe≥T_ev→入；其余不入选（留全量库）。展示分按证据量贝叶斯收缩（K=6 向72先验），避免2条好评给100。
+
+**③ 迁移 021_goalkeeper_curate.sql（Supabase SQL Editor）**
+restaurants 增列：is_curated(默认false)、curate_badge(必吃/值得/精选)、curate_score、curate_confidence、curate_reason、astroturf_score + 索引。只新增，不改在跑评分口径。
+
+**④ 离线验证（用导出 feat_matrix/reviews_dump/awards_dump + shim，0 API）**
+- **监督还原错误=0**：62 必吃/值得全部 curated=true、61 一般全部 false。
+- 精选 **156**（必吃10/值得52/精选94）；收缩后头部：菁禧荟、周舍、鹿园、遇外滩BFC、新荣记、大董、御宝轩、泰安门、明阁、甬府。
+- 外婆家(825) 守门员拦截 score45；圆苑(1005，chain 误判独立店) 因无证据 score54.9 不入选（保守默认排除，绕开 chain 误判）；小菜园/点都德/新白鹿/丸龟制面/莆田等拦截。
+- 复跑：容器内 `softad_distribution.py --apply` → `curate_score.py --apply`；cron 拟 softad 05:37、curate 05:52。
+
+**⑤ 待办**：守门员“搜索引擎矩阵”联网部分（post_audit 是确定性消费者，general_search 需 agent）需排期成轮换小批闭环，并对圆苑等 chain 误判补取证；KOL/社媒开源舆情接入。
+
+---
+
 ### 2026-09-29 黑珍珠餐厅指南连接器（F2b 权威框缺口，已提交）
 
 **目的**：补 Phase 0-D 的 F2b 缺口，对齐米其林那套确定性机制（authority-recall 三件套：全量索引兜底 + 官方总数对账 + 缺店强制补录闭环）。此前黑珍珠无连接器，`coverage_matrix.frame_blackpearl()` 是占位 `gap=no_connector`。
