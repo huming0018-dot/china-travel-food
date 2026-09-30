@@ -30,7 +30,9 @@ SHELL=/bin/bash
 
 # 9) 软广评价分布自学（随评价积累重学正常/非正常分布，写 soft_ad_flag_reviews，
 #    最终 soft_ad_flag/penalty 由 trigger 纯派生）：每天 5:37（凌晨采集后，错峰）
-37 5 * * * cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python /app/pipeline/softad_distribution.py --apply >> /app/data/softad.log 2>&1
+# [ponytail 2026-09-30] softad_distribution.py 不存在于 repo/镜像/git历史，cron 引用即 broken；
+#    暂注释待补回（模块A/C 合并 softad 重学后再接线），不得长期引用不存在脚本。
+#37 5 * * * cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python /app/pipeline/softad_distribution.py --apply >> /app/data/softad.log 2>&1
 
 # 10) 并行采集池常驻（容器启动即拉起；每个健康账号一个签名 HTTP worker，自动认领缺口叶子）
 @reboot sleep 25 && cd /app/cloud && . /app/cloud/env.sh && nohup /usr/local/bin/python gap_pool.py 6 >> /app/data/pool.log 2>&1
