@@ -3451,3 +3451,38 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **硬约束遵守**：只 PATCH 精选层列与 soft_ad_flag_reviews，未改 score_total/电话/坐标等任何在跑字段；astroturf_score 暂留空（软信号已落 soft_ad_flag_reviews + baselines，后续可回填）。
 - **cron**：softad 每天 05:37、curate 每天 05:52（均 flock 防重入，在证据/评论更新之后）；容器 crontab 已含两行。
 - **环境**：容器与 deuce 均无 numpy/sklearn/scipy/pandas；后续若做向量化/拟合需先安装（容器则加 requirements.txt）。
+
+---
+
+## 2026-09-30 Q-013 最终结论：服务器正常，误报源于 deuce 运营商多路径 NAT 抖动（已闭环）
+
+**结论：腾讯云上海实例 49.234.35.92（控制台名 Ubuntu-pv5K，instanceId lhins-5uumzybo）全程正常，运行中、未欠费（到期 2027-09-25）。**
+
+主机内取证（OrcaTerm TAT 免密进入，不依赖 22）：
+- ssh.service active(running) since 2026-09-25，sshd 监听 0.0.0.0:22 与 [::]:22（PID 9544）；
+- 磁盘 / 用量 31% 未满；无自定义 Port/ListenAddress；iptables INPUT 默认 ACCEPT；
+- 云镜 YJ-FIREWALL-INPUT 仅 REJECT 7 个真实爆破来源 IP（109.160.32.28 / 111.229.19.43 / 1.15.15.148 / 118.121.203.170 / 121.237.180.222 / 192.144.236.225 / 82.156.82.210），均非 deuce；
+- 带密钥真实 SSH 登录成功（SSHOK_VM-0-7-ubuntu）。
+
+根因（主机 tcpdump 抓 22 端口 + deuce 同时发起连接，决定性）：
+- deuce 出口在两个运营商 NAT IP 间漂移：走 61.169.205.50 → 三次握手完成、主机发出 SSH banner（正常）；走 165.154.225.20 → 对 SYN-ACK 直接回 RST（该路径 NAT 不对称、无会话），客户端表现为 Connection refused。
+- 即"服务器挂了"是 deuce 本机运营商多路径 NAT 的瞬时抖动，非服务器故障；复测直连 10/10 成功。
+
+工作负载确认：容器 food-cloud Up，cron 在运行（/usr/sbin/cron，crontab 41 条）；宿主 food-apify-fill active/enabled；宿主 relay cron 正常。
+
+修复 / 防再误报：
+- 新增弹性 SSH 包装 `/Users/deuce/bin/ctfs-ssh`：直连失败（rc=255）自动重试 3 次，再走 Clash SOCKS5(127.0.0.1:7897) 代理兜底；`ctfs-ssh --proxy ...` 强制代理。
+- 判活纪律：不得凭单次 nc/curl refused 判服务器宕机；服务器存活以"控制台实例状态 + 主机内 sshd 监听 + 带密钥真实登录"为准；Clash SOCKS5 对 SSH 曾现假阳性，不可单独作存活判据。
+
+---
+
+## 2026-09-30 批次1·实体归一去重 --apply 完成（18:50 CST）
+
+- **PATCH 4/4（204），写后逐行回读确认**：
+  - id44：纹兵卫（午市套餐） → **纹兵卫(金虹桥店)**；aliases=[纹兵卫（午市套餐）, 纹兵卫手打荞麦面日料(虹桥本店)]；chain_type 独立店→**小型连锁**。
+  - id1870：纹兵卫手打荞麦面日料(天山店) → **纹兵卫(天山店)**；aliases 存旧名；chain_type→小型连锁。
+  - id1164：Pain Chaud(建国西路店) → **Pain Chaud百丘(建国西路店)**；aliases 存旧名；chain_type→小型连锁。
+  - id1785：PAIN CHAUD百丘(番禺路店) → **Pain Chaud百丘(番禺路店)**（大小写统一）；aliases 存旧名；chain_type 已小型连锁。
+- **依据**：纹兵卫——携程笔记(金虹桥商场楼下新店)+电话邦/本地宝(天山店)+多分店(高岛屋/新世纪/虹桥)；Pain Chaud——上海热线/澎湃(永康路/尚嘉/建国西路/番禺多店)。
+- **不改动（已核实无重复）**：南兴园(仅 id478)、天吉·天遊峰主厨(仅 chef35 张天炀一条 RC)。
+- 仅改 name/aliases/chain_type，未碰电话/坐标/营业时间/score_total/精选层。
