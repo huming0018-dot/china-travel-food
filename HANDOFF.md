@@ -3437,3 +3437,17 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **ponytail 精简已上线（d5f40bf）**：删/归档 subcategory 重复件、vendor warning_handler、cloud_review_fill、web_chat_providers、make_deploy_env、source_registry，common 去繁简兜底（保留和制字）。
 - **数据清理待办（不阻塞）**：纹兵卫——id44「纹兵卫（午市套餐）」名称被污染（实为古北本店、标签已挂此）、id1870「纹兵卫手打荞麦面日料(天山店)」为天山店；需改名 + 去重，按实体对齐机制处理（不手工硬改）。
 - **遗留**：A/B 两 XHS 账号仍 parked（短信配额+风控），看门狗风控冷却后只读探测二维码渲染再决定扫码；柿合缘4店入库 + 段誉回锚、奢华49家 UGC、黑珍珠17家取证，待账号恢复自动推进。
+
+---
+
+## 2026-09-30 守门员·精选体系上线（17:52 CST，commit 41f4bb6）
+
+- **迁移 021 已执行**（SQL Editor，Success）：restaurants 新增 is_curated/curate_badge/curate_score/curate_confidence/curate_reason/astroturf_score 6 列 + idx_rest_curated 部分索引、idx_rest_curate_score；回读 6 列 2 索引齐全。
+- **softad_distribution --apply**：可判店 53（n≥5），verdict none52/suspected1（id597 椿庐凯德晶萃 score0.549）；切点 suspected0.5/confirmed0.72、保护店168；PATCH soft_ad_flag_reviews **3 店**；baselines 重写 `/app/data/softad/baselines.json`。
+- **curate_score --apply**：active **1473**，PATCH **1473/1473**；**精选 is_curated=true 共 156 = 必吃10 / 值得52 / 精选94**，其余 1317 未入选（curate_reason 全 1473 行可追溯）。
+- **人工三档一致性（全部通过）**：10 必吃 + 52 值得 → 全部 curated=true；61 一般 → 全部 curated=false。
+- **守门员拦截（curated=false，score=45，理由 工业化/预制/刷评）**：外婆家(825)、丸龟制面(42)、点都德(485)、莆田 517/518、新白鹿(528)、小菜园(559) 等；圆苑(1005) score54.9、理由 真实证据不足。
+- **入选**：遇外滩BFC(524 必吃84.8)、菁禧荟长宁(1919 值得91.8)、新荣记(871)、大董BFC(1049)、甬府黄浦(538)、泰安门(1381)、明阁(497)、邓记食园(481) 等。
+- **硬约束遵守**：只 PATCH 精选层列与 soft_ad_flag_reviews，未改 score_total/电话/坐标等任何在跑字段；astroturf_score 暂留空（软信号已落 soft_ad_flag_reviews + baselines，后续可回填）。
+- **cron**：softad 每天 05:37、curate 每天 05:52（均 flock 防重入，在证据/评论更新之后）；容器 crontab 已含两行。
+- **环境**：容器与 deuce 均无 numpy/sklearn/scipy/pandas；后续若做向量化/拟合需先安装（容器则加 requirements.txt）。
