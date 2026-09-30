@@ -125,7 +125,7 @@ def api_tasks():
         return None, [f"model_providers import skip: {e}"]
     provs = MP.load_providers()
     if not provs:
-        return [], ["无可用 API 适配器（缺 key），降级占位"]
+        return None, ["无可用 API 适配器（缺 key），降级占位"]
     tasks = [(p, m) for p in provs for m in getattr(p, "models", [])]
     return (MP, tasks), []
 
