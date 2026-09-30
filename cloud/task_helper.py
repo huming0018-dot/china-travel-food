@@ -38,7 +38,7 @@ import common as C
 
 TABLE = "/task_queue"
 
-ASSIGNEE_CN = {"dev": "开发", "collector": "采集", "qa": "QA"}
+ASSIGNEE_CN = {"dev": "开发", "collector": "采集", "qa": "QA", "pm": "PM"}
 STATUS_CN = {"todo": "待办", "in_progress": "进行中", "done": "已完成", "blocked": "阻塞", "cancelled": "已取消"}
 
 
