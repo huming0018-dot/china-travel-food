@@ -56,13 +56,14 @@ SHELL=/bin/bash
 # 15) 黑珍珠上海官方全量对账+在库在榜店幂等挂标160（轻HTTP，非XHS；17家真缺失留队列等F4/gap_pool取证，0硬造）：每天 06:20
 20 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/bp.lock /usr/local/bin/python cloud_blackpearl_collect.py --apply-tag >> /app/data/blackpearl.log 2>&1
 
-# 16) HAE 四轴网格轮转搜索机：每天 09:17 低峰跑一个切片(8个菜系叶子)
-#     fleet-recall(无key自动降级agent/网页)->写lead_hypotheses->推进游标;
-#     prove/promote 由 hae_engine 单独低频跑(过闸才晋升,幂等回读)。
-#     253叶子/8≈32天扫完全网格;限流自动退避,不依赖XHS。缺key不中断。
-17 9 * * * cd /app && . /app/cloud/env.sh && flock -n /tmp/fleet_grid.lock /usr/local/bin/python /app/pipeline/fleet_grid_run.py --once --apply >> /app/data/hae_grid.log 2>&1
-# 17b) 开机补漏：容器(重)建后若当天09:17切片被错过，启动90s后补一个切片；--catchup 内部按 last_advanced 防当日重复
-@reboot sleep 90; cd /app && . /app/cloud/env.sh && flock -n /tmp/fleet_grid.lock /usr/local/bin/python /app/pipeline/fleet_grid_run.py --catchup >> /app/data/hae_grid.log 2>&1
+# 16) HAE 四轴网格轮转搜索机 v2：多维结构化探针 + 解析舰队返回(每店一假设、来源入库、原文落盘)。
+#     每日 09:17 低峰连续 catch-up：每片20叶、单日最多推进80叶；有 API key 后约3天扫完全网格。
+#     fleet 只写 lead_hypotheses；prove/promote 由 hae_engine 单独低频过闸(幂等回读)。
+#     限流自动退避,不依赖XHS;缺key降级占位、不中断。flock 防重叠。
+HAE_GRID_SLICE=20
+17 9 * * * cd /app && . /app/cloud/env.sh && flock -n /tmp/fleet_grid.lock /usr/local/bin/python /app/pipeline/fleet_grid_run.py --catchup --max-leaves 80 --apply >> /app/data/hae_grid.log 2>&1
+# 17b) 开机补漏：容器(重)建后若当天09:17被错过，启动90s后补一段 catch-up(最多40叶)
+@reboot sleep 90; cd /app && . /app/cloud/env.sh && flock -n /tmp/fleet_grid.lock /usr/local/bin/python /app/pipeline/fleet_grid_run.py --catchup --max-leaves 40 --apply >> /app/data/hae_grid.log 2>&1
 
 # 18) KOL跨平台定点采集( Track1C )：cross美食作家经搜狗微信按名采文章,内容指纹增量去重;
 #     B站已由 kol_monitor/bili_enrich 覆盖;微博/知乎/抖音 keyless 不可采不硬刷;
