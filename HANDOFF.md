@@ -3322,3 +3322,14 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 当前 n_labels=0，先用先验：taste0.45/consistency0.20/ambience0.15/innovation0.20。
 - 样本>=8 自动逻辑回归拟合 P(must_eat)；不覆盖 DB 触发器 score_total 口径（scoring_engine 仍 0.45 taste/0.25 diner/0.18 obj/0.12 endorsement）。
 - 三类权重：专家标注>真实UGC>平台背书；近期评价时间衰减、负面情绪不扣口味。
+
+
+---
+
+## 模块B·录后校验上线（2026-09-30）——cloud/post_audit.py
+
+- **单一职责**：复用 fact_verify/chain_audit 的 chain_type/central_kitchen/premade_risk/investor_info 枚举口径；不重复造轮子。post_audit 只消费「已带来源 URL 的 findings」做确定性挂标，联网核查由 agent 经 general_search 完成。
+- **词云矩阵**：店名 × {连锁/加盟/预制/中央厨房/料理包/人均/客单价/老板/创始人/集团/控股/投资/关店/搬迁/避雷}，`--emit N --offset M` 轮换输出待复核店与 query。
+- **安全闸**：仅 `confidence>=0.8` 且 `source_url` http(s) 才改；枚举非法/无 URL/低置信一律跳过；电话/坐标/营业时间不动；dry-run 出计划、`--apply` 才 PATCH、写后回读并落账本 `/app/data/post_record/audit_<date>.jsonl`（每条带 source_url+captured_at+置信+回读值）。
+- **cron**：每日 **07:47**（flock /tmp/post_audit.lock），错峰避开 3:00 坐标/4:00 营业/5:37 softad/6:20 黑珍珠/每小时:17 证据池。已装入容器 crontab（grep post_audit=2 行）。
+- **本轮实跑**：emit 6 家（id1 晴川sushi、id2 鮨水月 等），对 id2 鮨水月做 general_search（新民晚报/澎湃/水滴工商），结果均指向他人或泛餐饮集团，**无高置信归属**——按「宁空不假」0 变更；空 findings dry-run=0 计划。

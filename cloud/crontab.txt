@@ -62,3 +62,8 @@ SHELL=/bin/bash
 #     B站已由 kol_monitor/bili_enrich 覆盖;微博/知乎/抖音 keyless 不可采不硬刷;
 #     线索入 gap pool(raw_cross.jsonl),过 admission_gate 才入库,KOL不回写score。每6h错峰 23分。
 23 */6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/kolcross.lock /usr/local/bin/python kol_cross.py --apply >> /app/data/kol_cross.log 2>&1
+
+# 19) 模块B·录后校验：post_audit 消费高置信 findings（店名×词云矩阵核查），挂标 chain/industrial/group/price；
+#     仅 confidence>=0.8 且带 source_url 才改，账本 /app/data/post_record/audit_<date>.jsonl。
+#     每日 07:47 错峰（避开整点/softad 5:37/黑珍珠6:20/证据池:17）。
+47 7 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/post_audit.lock /usr/local/bin/python post_audit.py --findings /app/data/post_record/findings.jsonl --apply >> /app/data/post_audit.log 2>&1
