@@ -87,8 +87,7 @@ def cmd_submit(args):
     if args.apply and valid:
         n = 0
         for v in valid:
-            r = C.req("POST", "/diner_expert_labels", json=v,
-                      headers={"Prefer": "return=minimal"})
+            r = C.req("POST", "/diner_expert_labels", json=v)
             n += 1 if r.status_code in (200, 201) else 0
         print(f"[submit --apply] POST {n}/{len(valid)}，写后回读："
               f"{len(C.fetch_all('diner_expert_labels','id',order_col='id'))} 行")
