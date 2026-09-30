@@ -3392,3 +3392,18 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 外部无法区分的两种状态（需控制台定论）：①实例在运行但 sshd/系统服务未起（异常启动/磁盘满/iptables REJECT）；②实例已停机（欠费到期/手动关机/宿主维护），网关对放行端口回 RST。
 - 代理(Clash 127.0.0.1:7897)SOCKS5 为**假阳性**（对明确关闭的 12345 也报成功、GitHub 无 banner、HTTP 抓 80=502），不可用作判据。
 - **决定性动作（只能控制台）**：登录 https://console.cloud.tencent.com/lighthouse 看实例 lhins-kqyl0sh9 状态：停机→开机（先查是否欠费/到期）；运行中→VNC 登录查 sshd(`systemctl status sshd`)、磁盘(`df -h`)、iptables，必要时重启；恢复后确认容器 food-cloud 与 cron。用户已跳过一次浏览器登录交接，待其选择自行处理或重新授权登录。
+
+---
+
+## 2026-09-30 收口：极简标注 + 123 条入库 + 重建对齐（16:40 CST）
+
+- **网络事件闭环**：49.234.35.92 约 14:00–16:39（约2.5h）22 不可达；恢复后 `uptime` 显示主机未重启（4天21h），属腾讯侧网络/防火墙瞬断，非实例停机、非本机 IP 封禁。
+- **模块A 改极简并入库**：
+  - 迁移 019：`DROP TABLE diner_expert_labels`（空重表），建 `diner_seed_labels`（restaurant_id/labeler/tier 必填，taste/visit_year/evidence 选填，UNIQUE(restaurant_id,labeler)）。
+  - 迁移 020：tier CHECK 增加第三档 `average`（必吃/值得/一般）。
+  - 123 条人工标注经服务端幂等 upsert（existing 65 → patch65 + post58），写后回读：**共123 = 一般61 / 值得52 / 必吃10，无重复**。
+  - label_tool 极简：工作表列 restaurant_id/店名/商圈/菜系/评级/口味分/最近到店年份/备注，菜系自动填（1473/1473 已填），用户只需填「评级」。
+- **重建对齐**：build_sync 基于最新 main（4a84f78）重建，镜像 **1e22909a9d3f**，零 docker cp；容器 Up、restart=always、卷不变；cron 守护 + gap_pool/gap_runner 进程在；crontab 引用脚本全部存在（softad_distribution broken 行已注释，待 softad 重学补回）；py_compile 全绿；123 标注跨重建持久化。
+- **ponytail 精简已上线（d5f40bf）**：删/归档 subcategory 重复件、vendor warning_handler、cloud_review_fill、web_chat_providers、make_deploy_env、source_registry，common 去繁简兜底（保留和制字）。
+- **数据清理待办（不阻塞）**：纹兵卫——id44「纹兵卫（午市套餐）」名称被污染（实为古北本店、标签已挂此）、id1870「纹兵卫手打荞麦面日料(天山店)」为天山店；需改名 + 去重，按实体对齐机制处理（不手工硬改）。
+- **遗留**：A/B 两 XHS 账号仍 parked（短信配额+风控），看门狗风控冷却后只读探测二维码渲染再决定扫码；柿合缘4店入库 + 段誉回锚、奢华49家 UGC、黑珍珠17家取证，待账号恢复自动推进。
