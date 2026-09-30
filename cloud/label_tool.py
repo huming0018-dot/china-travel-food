@@ -22,7 +22,8 @@ import common as C
 
 OUT_DIR = os.environ.get("FOOD_DATA_DIR", "/app/data")
 OUT_CSV = os.path.join(OUT_DIR, "labels", "labels_worksheet.csv")
-HEAD = ["restaurant_id", "店名", "商圈", "评级", "口味分", "最近到店年份", "备注"]
+HEAD = ["restaurant_id", "店名", "商圈", "菜系", "评级",
+        "口味分(1-5,越高越好)", "最近到店年份", "备注"]
 
 TIER_MAP = {
     "must_eat": "must_eat", "必吃": "must_eat", "不可不吃": "must_eat",
@@ -35,20 +36,35 @@ TIER_MAP = {
 def cmd_init(args):
     rs = C.fetch_all("restaurants", "id,name,status,business_area", order_col="id")
     rows = [r for r in rs if r.get("status") == "active"]
+    # 菜系（信息列，自动填）：rid -> 菜系名（最多 2 个）
+    cu = {c["id"]: c["name"] for c in C.fetch_all("cuisines", "id,name", order_col="id")}
+    rid2cu = {}
+    for x in C.fetch_all("restaurant_cuisines", "restaurant_id,cuisine_id",
+                         order_col="restaurant_id"):
+        nm = cu.get(x["cuisine_id"])
+        if nm:
+            rid2cu.setdefault(x["restaurant_id"], [])
+            if nm not in rid2cu[x["restaurant_id"]] and len(rid2cu[x["restaurant_id"]]) < 2:
+                rid2cu[x["restaurant_id"]].append(nm)
     rows.sort(key=lambda r: ((r.get("business_area") or "~"), r["name"]))  # 按商圈聚集，便于就近标注
     os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
     with open(OUT_CSV, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f)
         w.writerow(HEAD)
         for r in rows:
-            w.writerow([r["id"], r["name"], r.get("business_area", ""), "", "", "", ""])
-    print(f"[init] 待标注 {len(rows)} 店 -> {OUT_CSV}（只需填『评级』列）")
+            w.writerow([r["id"], r["name"], r.get("business_area", ""),
+                        "/".join(rid2cu.get(r["id"], [])), "", "", "", ""])
+    print(f"[init] 待标注 {len(rows)} 店 -> {OUT_CSV}（菜系自动填，你只需填『评级』列）")
 
 
 def parse_rows():
     valid, errs = [], []
     with open(OUT_CSV, encoding="utf-8-sig") as f:
-        for i, row in enumerate(csv.DictReader(f), start=2):
+        reader = csv.DictReader(f)
+        cols = reader.fieldnames or []
+        k_taste = next((c for c in cols if "口味" in c), "口味分")
+        k_year = next((c for c in cols if "年份" in c), "最近到店年份")
+        for i, row in enumerate(reader, start=2):
             rid = (row.get("restaurant_id") or "").strip()
             tier = (row.get("评级") or "").strip()
             if not rid and not tier:
@@ -65,7 +81,7 @@ def parse_rows():
             if not t:
                 errs.append((i, rid, f"评级须填 必吃/值得，当前『{tier}』")); continue
             taste = None
-            ts = (row.get("口味分") or "").strip()
+            ts = (row.get(k_taste) or "").strip()
             if ts:
                 try:
                     taste = int(float(ts))
@@ -74,7 +90,7 @@ def parse_rows():
                 except ValueError:
                     errs.append((i, rid, f"口味分须为 1-5，当前『{ts}』")); continue
             year = None
-            ys = (row.get("最近到店年份") or "").strip()
+            ys = (row.get(k_year) or "").strip()
             if ys:
                 m = re.search(r"(20\d{2})", ys)
                 if not m:
