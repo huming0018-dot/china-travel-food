@@ -89,6 +89,69 @@ def block(task_id, reason):
         print(f"❌ 阻塞失败: {r.status_code} {r.text}")
 
 
+def auto_unblock():
+    """自动检查被阻塞的任务，条件满足的自动解锁"""
+    # 获取所有blocked任务
+    r = C.req("GET", TABLE + "?select=id,title,description,assignee,status,priority&status=eq.blocked")
+    blocked = r.json() if r.status_code == 200 else []
+    if not blocked:
+        print("✅ 无阻塞任务")
+        return []
+
+    # 检查当前环境状态
+    import pathlib, json
+    DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
+
+    unblocked = []
+    for task in blocked:
+        tid = task["id"]
+        desc = task.get("description", "")
+        title = task.get("title", "")
+        combined = (title + " " + desc).lower()
+
+        should_unblock = False
+        reason = ""
+
+        # 规则1：阻塞原因是"账号未登录/cookie失效"，现在账号状态变了
+        if "账号" in combined or "cookie" in combined or "apify" in combined:
+            # 检查Apify状态文件是否存在
+            apify_f = DATA / "apify_status.json"
+            if apify_f.exists():
+                should_unblock = True
+                reason = "Apify已配置"
+
+        # 规则2：阻塞原因是"配额不足"，现在配额恢复了
+        if "配额" in combined or "quota" in combined or "key" in combined:
+            ledger_f = DATA / "map_quota_ledger.json"
+            if ledger_f.exists():
+                ledger = json.loads(ledger_f.read_text())
+                keys = ledger.get("keys", {})
+                all_dead = all(k.get("dead_reason") for k in keys.values())
+                if not all_dead:
+                    should_unblock = True
+                    reason = "API配额已恢复"
+
+        # 执行解锁
+        if should_unblock:
+            r2 = C.req("PATCH", f"{TABLE}?id=eq.{tid}",
+                       json={"status": "todo", "description": f"自动解锁: {reason}"})
+            if r2.status_code == 200:
+                print(f"✅ 自动解锁 #{tid} {title[:30]} ({reason})")
+                unblocked.append(task)
+                # 记录事件
+                try:
+                    import status_events
+                    status_events.add_event("task_unblock", f"#{tid} {title[:30]}", source="auto")
+                except Exception:
+                    pass
+            else:
+                print(f"❌ 解锁失败 #{tid}: {r2.text[:50]}")
+
+    if not unblocked:
+        print(f"ℹ️ {len(blocked)}个阻塞任务，暂不满足解锁条件")
+    return unblocked
+
+
 def add(title, assignee, priority="P1", description="", source="qa", issue_id=""):
     if assignee not in ASSIGNEE_CN:
         print(f"❌ assignee必须是: {list(ASSIGNEE_CN.keys())}")
@@ -152,6 +215,8 @@ if __name__ == "__main__":
         add(title, assignee, priority)
     elif cmd == "stats":
         stats()
+    elif cmd == "unblock":
+        auto_unblock()
     else:
         print(f"未知命令: {cmd}")
         print(__doc__)

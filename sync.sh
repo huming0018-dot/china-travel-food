@@ -117,6 +117,16 @@ else
   echo "  (python3不可用)"
 fi
 
+# ────────────────────── 最近状态事件 ──────────────────────
+echo ""
+echo "📡 最近状态事件（其他窗口的动态）:"
+python3 cloud/status_events.py list 10 2>/dev/null | head -10 || echo "  (无新事件)"
+
+# ────────────────────── 自动解锁检查 ──────────────────────
+echo ""
+echo "🔓 自动解锁检查:"
+python3 cloud/task_helper.py unblock 2>/dev/null || echo "  (无阻塞任务)"
+
 # ────────────────────── 任务队列 ──────────────────────
 echo ""
 echo "📌 我的任务（$ROLE）:"
