@@ -3779,3 +3779,8 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - dry-run 结果：curated_off=0（硬规则A已apply）、chain_set=58 待写、price_set=21 待写、investor_set=104 待写；verify 0 违规。
 - 状态转移契约：ck=确认/premade=高->自动移出精选；疑似->hold；chain->不自动下架只打标；ML门不自动套用。
 - 待用户确认后 --apply；接线 07:47 post_audit 之后。
+
+## 2026-10-01 reconcile apply + 链式闭环上线
+- apply 结果：chain_type 58 店、price_avg 21 店、investor_info 104 店；curated_off=0（硬规则已闭环）；verify 0 违规。
+- crontab #28：47 7 * * * post_audit --apply && reconcile --apply（flock /tmp/reconcile.lock），在点评06:40之后；Apify/general_search 采集后统一在此闭环。
+- 前端最小接线暂缓（research/bridge/frontend_data_contract.md 存档）。
