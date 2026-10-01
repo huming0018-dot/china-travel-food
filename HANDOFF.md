@@ -3701,3 +3701,10 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 幂等 PATCH：is_curated=false；curate_reason 按实际写「中央厨房确认，移出精选」或「预制风险高，移出精选」。
 - 回读 23/23 is_curated=False、reason 已落。未动 chain/price/电话/坐标/营业时间。
 - ML门B（curate_v4）继续不 apply（beats_baseline=false），未挂 cron。
+
+## 2026-10-01 点评逐条评价通道可行性小样（结论：cookie 失效，暂缓）
+- 用现有点评 cookie 请求 `dianping.com/search/keyword/1/0_福和慧`：HTTP 200 但 44KB，**页面中无 /shop/<id> 链接**（反爬/未登录态跳转）；
+- 店铺评价页 `/shop/{id}/review_all` 404（点评已改版，需 App / JS 签名 / 真实登录态）；
+- **结论**：当前 cookie 不足以拉逐条食客评价正文；不伪造、不把聚合分当逐条评价。
+- 需用户重新登录点评（真实扫码）后再复跑；复跑成功则按 123标注+精选候选+7家hold 目标每店≥2独立菜品级声音。
+- 标注质量复核（只读）：diner_seed_labels 123 条 must=10/worth=52/average=61；worth 平均 taste 4.59 > must 4.47 倒挂，说明 must 中可能掺入口味以外口径（环境/服务/名气/人情），存疑清单需用户裁定后再改。
