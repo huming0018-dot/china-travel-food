@@ -10,6 +10,35 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-01 晚：food 盒子公网失联根治（公网 IP NAT 映射失效）+ 权威回读 ERROR=0
+
+**① 现象与根因（关键，勿再误判为"重启即可"）**
+- food 盒子（上海二区，实例 ID `lhins-5uumzybo`，名 `Ubuntu-pv5K`，2C/2GB）控制台显示"运行中"，但公网 **49.234.35.92 完全不可达**：ping 100% 丢包、22/80 全 filtered。
+- 经 OrcaTerm **TAT 免密通道**（腾讯内网，不依赖公网；入口见下）进系统实测：
+  - 网卡/路由正常（eth0 10.0.0.7/22，默认路由 10.0.0.1，**无 TUN/Clash 劫持**）；
+  - **出站正常**（ping 223.5.5.5、183.60.83.19 均通）；
+  - guest iptables INPUT 策略 ACCEPT、无自定义拦截；平台防火墙 22/80/ICMP 对全部 IPv4 放通。
+- **结论：出站通、入站全 filtered、guest 与平台防火墙都开 → 公网 IP→实例的 1:1 NAT 映射在腾讯侧失效/陈旧**（出站走共享 EGW SNAT 故不受影响）。**强制重启（in-place）不重建该映射，无效。**
+
+**② 有效修复：彻底关机再开机（Stop/Start）**
+- 控制台对 `lhins-5uumzybo` 执行「关机（强制关机）」→ 等"已关机" → 「开机」。Stop/Start 会重新 provision 网卡与公网 IP 绑定。
+- 开机后约 80s：ping 49.234.35.92 恢复（0% 丢包）、SSH 可达、`food-cloud` 容器 restart=always 自动 Up。**公网 IP 未变（仍 49.234.35.92），磁盘数据无损。**
+- **教训：以后"运行中但公网全不通、出站正常"，直接走 Stop/Start，不要反复 Reboot。**
+
+**③ 两台 Lighthouse 对应关系（已纠正，曾误把代理机当 food 机重启）**
+1. **food 盒子**：`lhins-5uumzybo` / 名 Ubuntu-pv5K / 上海二区 ap-shanghai（控制台 rid=4）/ 公网 **49.234.35.92** / 2C2GB / Docker `food-cloud`，到期 2027-09-25。
+2. **代理盒子**：`lhins-kqyl0sh9` / 名 Ubuntu-MR4G / 广州 ap-guangzhou（rid=1）/ 公网 **139.199.90.169** / 2C1GB / **裸机无 Docker**，crontab 仅腾讯 stargate，到期 2026-10-28。
+- TAT 通道（公网挂时最可靠）：`https://orcaterm.cloud.tencent.com/terminal?type=lighthouse&instanceId=<实例ID>&region=ap-shanghai&from=lh_console_login_btn`，协议选「免密连接 (TAT)」、用户 ubuntu。
+
+**④ 顺手清掉唯一硬伤 + 权威回读全绿**
+- stage4 报 1 条 ERROR「问题电话」：id=2033 Horita堀田 phone='021'（仅区号、不可用）。按"电话宁空不假"已 PATCH 置 NULL（204，回读 phone=None）。
+- 容器内 `python3 /app/pipeline/release_audit.py`：**7 PASS / 1 CHECK / ERROR=0**；唯一 CHECK 是 stage6 网格覆盖（薄格：创新菜、中式烧烤，属持续覆盖工作，非损坏）。
+- 本地 `bash cloud/release.sh`：**PASS=25 / WARN=2 / FAIL=0**（WARN 为未跑 next build、APIFY token 仅在容器内，均预期）。
+
+**⑤ 迁移 024（先验/证据分离）已确认完成**：4 先验列在库；纯先验 central_kitchen 162、premade 152 已搬 *_prior（provenance=heuristic、confidence 0.30），证据列保留（CK 疑似 6、premade 低 3），硬证据桶未动。硬门不消费 *_prior。
+
+**⑥ 待办（看门狗增强，建议下一步）**：现看门狗在机内、无法自测本机公网入站。需加**外部入站健康探针**（由代理盒子或外部定时端点探测 food 公网 IP 的 ping/22，连续 N 次失败即经腾讯 API 自动 Stop/Start，再回读），把本次人工操作沉淀为自愈。
+
 ### 2026-10-01 晚：火山方舟（ARK）模型舰队接入 + web_search 致命 bug 修复 + 通知链路验证
 
 **① 火山方舟 ARK 已接入（云端容器直连，无需代理）**
