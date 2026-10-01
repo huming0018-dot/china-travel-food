@@ -73,16 +73,44 @@ def build_broadcast():
     except Exception:
         pass
 
-    # ── 4. 任务队列 ──
+    # ── 4. 任务队列 + 窗口状态 ──
     try:
         import task_helper
         tasks = task_helper.list_tasks()
         p0 = [t for t in tasks if t.get("priority") == "P0" and t.get("status") not in ("done", "cancelled")]
         todo = [t for t in tasks if t.get("status") == "todo"]
-        lines.append(f"📌 任务: {len(todo)}待办 / {len(p0)}个P0")
+        doing = [t for t in tasks if t.get("status") == "in_progress"]
+        done = [t for t in tasks if t.get("status") == "done"]
+        total = len(tasks)
+        done_pct = len(done) * 100 // total if total else 0
+        lines.append(f"📌 项目进度: {done_pct}% ({len(done)}/{total}) · {len(todo)}待办/{len(doing)}进行中")
         if p0:
-            for t in p0[:3]:
-                lines.append(f"   🔴 #{t.get('id','?')} {t.get('title','')[:30]}")
+            for t in p0[:2]:
+                lines.append(f"   🔴 P0 #{t.get('id','?')} {t.get('title','')[:25]}")
+        # 各窗口当前状态（按任务统计）
+        from collections import defaultdict
+        by_role = defaultdict(lambda: {"todo": 0, "doing": 0})
+        for t in tasks:
+            a = t.get("assignee", "?")
+            s = t.get("status", "?")
+            if s == "todo":
+                by_role[a]["todo"] += 1
+            elif s == "in_progress":
+                by_role[a]["doing"] += 1
+        role_emoji = {"dev": "🔧", "collector": "🕷️", "qa": "🔍", "pm": "📋"}
+        role_names = {"dev": "开发", "collector": "采集", "qa": "QA", "pm": "PM"}
+        role_parts = []
+        for role in ["dev", "collector", "qa", "pm"]:
+            r = by_role.get(role, {"todo": 0, "doing": 0})
+            emoji = role_emoji.get(role, "·")
+            name = role_names.get(role, role)
+            if r["doing"] > 0:
+                role_parts.append(f"{emoji}{name}:做{r['doing']}")
+            elif r["todo"] > 0:
+                role_parts.append(f"{emoji}{name}:待{r['todo']}")
+            else:
+                role_parts.append(f"{emoji}{name}:空闲")
+        lines.append("👥 " + " ".join(role_parts))
     except Exception as e:
         lines.append(f"📌 任务队列获取失败: {e}")
 
