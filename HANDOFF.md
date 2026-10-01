@@ -3656,3 +3656,11 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **匹配器增强（authority_sitemap.py）**：① 项目根改为可移植解析（FOOD_PROJECT 优先，禁硬编码单机路径），容器内 FOOD_PROJECT=/app；② 新增 `_distinct` 通用业态前后缀剥离，"宝丽轩中餐厅↔宝丽轩""中国菜·头灶↔头灶"专名相等（≥2汉字）判 strong，修复漏配。
 - 三副本已同步（repo cloud/vendor/pipeline、skill scripts/food_pipeline、容器 /app/pipeline + /app/research/authority）；authority-recall.md 已补 §4/§4.1。
 - 待外部：4 家黑珍珠 hold 店口味证据采集（Apify 充值/XHS 账号恢复）；官方完整名单真人登录点评复核。
+
+## 2026-10-01 模块B producer 通道收敛（运维 owner）
+- **keyless SERP producer 已停用**：360/sogou/bing 裸抓与广州机房代理均被风控（qcaptcha/antispider/The Beatles 语义错配），so.com/link 裸 GET 返 400 无法跟跳；serp_producer.py 保留但**不再进 crontab**。
+- **点评 cookie 日更 06:40**（新增 cron #27）：`cloud/dianping_daily.py` 复用 dianping_branch_list cookie，对全量 active 刷新分店列表→chain findings；关店只写复查账本+notifier ACTION，**不自动 PATCH 关店**（关店三要素由 hosted 侧确认）；checkpoint fsync、礼貌延时、cookie 失效不硬刷。
+- **post_audit 每日 07:47 不变**：消费 /app/data/post_record/findings.jsonl（hosted general_search 与 dianping_daily 共同写入）。
+- **跨片错标修复**：回滚 63 店错挂 chain/investor/price，75 条证据按 finding_name 核心匹配改挂正确 rid（辛香汇/望湘园/甬府/菁禧荟等），33 个无匹配品牌丢弃（不新建店）；findings_extractor 已加 name 核心一致性闸门。
+- **最终标签（active 1497）**：chain 独立店 975 / 小型连锁 448 / 大型连锁 60 / 资本化连锁 10 / 未标 4；investor_info 518；price_avg 1494。
+- **行动项**：广州代理 2026-10-28 到期，**建议 2026-10-25 TG+飞书提醒续费**；如需 360 通道需换住宅代理或接浏览器。
