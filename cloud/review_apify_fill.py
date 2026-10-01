@@ -60,42 +60,51 @@ def _load_token():
 TOKEN = _load_token()
 STATE_F = DATA / "apify_fill_state.json"
 
-# 四个「账号无关、无需 cookie」的小红书搜索 actor（已逐家实测，2026-09-29）：
-#   opspilot  —— 关键词准确、每次查询免费返回 20 条（固定，忽略 maxItems）、带 noteUrl+xsecToken，
-#                实测费用 $0；首选。
-#   zenstudio —— 关键词准确、带 url+xsec_token，实测免费；作第二免费源。
-#   toolzerhub—— $0.003/条（$5.10/1000），但免费计划对该 actor 有 25 条结果硬上限；付费兜底。
-#   atomus    —— $0.02/条，免费计划每月仅 5 条免费 search；付费兜底。
+# 四个「账号无关、无需 cookie」的小红书搜索 actor。
+#
+# ⚠️ 2026-10-01 真实账单复盘（$18.94 / $5 额度超支）：
+#   Apify 不是按返回条数计费，而是按「每次运行启动事件 + 内存×时长」计费。
+#   以下 price 是 2026-10-01 从账单 API 实测的**每次运行**费用，不是每条笔记费用。
+#   之前标注 $0.003/条 / $0.0（免费）是误读 actor 页面标价，实际每次 run-sync 最低
+#   消费约 $0.10（启动事件），无论返回几条结果。这导致预算门按「条数×单价」估算严重
+#   低估，$5 额度在跑了 134 次后才从 remaining_credit() 发现（计费延迟）。
+#
+#   opspilot  —— 实测 6 次运行 $0.00（hze9g9xvmpSRztttq），可能是真免费 actor；
+#                但强制 512MB 内存参数有效。若 actor 更新或计划变更可能开始收费。
+#   zenstudio —— 未在账单中出现；保留 price=0.0 假设，下次运行后用账单复核。
+#   toolzerhub—— 实测 134 次 $13.40 = $0.10/次（JECW4SdwsOOgtuobc）。
+#   atomus    —— 实测 2 次 $0.34 = $0.17/次（hO5NqsA6aC1bz3jra）；免费计划每月仅 5 次。
 PROVIDERS = {
     "opspilot": {
         "run": ("https://api.apify.com/v2/acts/opspilot.cc~xiaohongshu-keyword-search-scraper"
                 "/run-sync-get-dataset-items"),
-        "price": 0.0},
+        "price_per_run": 0.0},
     "zenstudio": {
         "run": ("https://api.apify.com/v2/acts/zen-studio~rednote-search-scraper"
                 "/run-sync-get-dataset-items"),
-        "price": 0.0},
+        "price_per_run": 0.0},
     "toolzerhub": {
         "run": ("https://api.apify.com/v2/acts/toolzerhub~rednote-xiaohongshu-search-scraper"
                 "/run-sync-get-dataset-items"),
-        "price": 0.003},
+        "price_per_run": 0.10},
     "atomus": {
         "run": ("https://api.apify.com/v2/acts/atomus~xiaohongshu-scraper"
                 "/run-sync-get-dataset-items"),
-        "price": 0.02},
+        "price_per_run": 0.17},
 }
 DEFAULT_PROVIDER = os.environ.get("APIFY_PROVIDER", "opspilot")
-# 预算门：免费计划每月 $5 平台额度；按成本封顶（留余量），并设条数硬上限双保险。
-FREE_COST_CAP = float(os.environ.get("APIFY_FREE_COST_USD", "4.20"))
-FREE_NOTE_CAP = int(os.environ.get("APIFY_FREE_NOTE_CAP", "1500"))
+# 总预算门：免费计划每月 $5 平台额度。按实测每次运行 $0.10 保守封顶。
+# 默认只允许跑 5 次/月（$0.50），确保不会再次超支。
+FREE_COST_CAP = float(os.environ.get("APIFY_FREE_COST_USD", "0.50"))
+FREE_NOTE_CAP = int(os.environ.get("APIFY_FREE_NOTE_CAP", "100"))
 PER_NOTE_PAUSE = float(os.environ.get("APIFY_NOTE_PAUSE", "4.0"))
-# 调用前剩余额度地板：Apify 计费延迟结算，立即读 usage 会低估；每次调用前先查剩余额度，
-# 低于该地板即停止（等月度重置），不靠「立即 delta=0」误判 actor 免费（2026-09-29 教训）。
-MIN_REMAINING_USD = float(os.environ.get("APIFY_MIN_REMAINING_USD", "0.20"))
-# 真实账单口径（不靠内部 price 估算；2026-09-29 实测 opspilot=$0.10/次、zhorex=$1.97/次）：
-# 每次运行地板 + 每轮（用户拍板 $10/轮滚动）真实花费封顶，对所有 actor 生效。
-PER_RUN_FLOOR_USD = float(os.environ.get("APIFY_PER_RUN_FLOOR_USD", "0.25"))
-ROUND_CAP_USD = float(os.environ.get("APIFY_ROUND_CAP_USD", "10.0"))
+# 调用前剩余额度地板：Apify 计费延迟结算，低于此值即停。
+# 2026-10-01 教训：$0.20 地板太低，计费延迟期间已跑超；改为 $1.00 保守地板。
+MIN_REMAINING_USD = float(os.environ.get("APIFY_MIN_REMAINING_USD", "1.00"))
+# 每次运行地板：实际单次运行最低 $0.10，以此作为余额检查门槛。
+PER_RUN_FLOOR_USD = float(os.environ.get("APIFY_PER_RUN_FLOOR_USD", "0.15"))
+# 每轮真实花费封顶（从账单 API 读真实 usage，不靠内部估算）。
+ROUND_CAP_USD = float(os.environ.get("APIFY_ROUND_CAP_USD", "2.0"))
 
 
 def remaining_credit():
@@ -354,6 +363,10 @@ def note_anchors(note, rest, base_core, btoks, all_cores):
 
 
 def run(apply, limit, need, provider=DEFAULT_PROVIDER):
+    if os.environ.get("APIFY_DISABLED", ""):
+        print("[已停用] APIFY_DISABLED 环境变量已设置，Apify采集暂停。"
+              "等额度重置或充值后取消该变量。")
+        return
     if provider not in PROVIDERS:
         print(f"未知 provider {provider}；可选 {list(PROVIDERS)}")
         return
@@ -367,7 +380,7 @@ def run(apply, limit, need, provider=DEFAULT_PROVIDER):
     round_start_used = current_used()  # 本轮真实账单基线（折后）
     # 已在免费额度内完成的店仍可能因 <need 出现（证据不足），不强制跳过
     print(f"缺<{need}条真实口味证据的 active 店：{len(targets)}；本轮处理 {limit} 家；"
-          f"provider={provider}(${PROVIDERS[provider]['price']}/条)")
+          f"provider={provider}(${PROVIDERS[provider]['price_per_run']:.2f}/次)")
     print(f"已用额度 ${st.get('billable_cost_usd',0):.3f}/{FREE_COST_CAP}；"
           f"笔记 {st['billable_notes']}/{FREE_NOTE_CAP}")
 
@@ -412,12 +425,12 @@ def run(apply, limit, need, provider=DEFAULT_PROVIDER):
             continue
         if raw_notes is None:
             continue
-        # 仅付费 actor 计条数/费用；免费 actor（opspilot/zenstudio）不占预算门
-        if PROVIDERS[provider]["price"] > 0:
+        # 按每次运行计费（不是按条数）；免费 provider 不占预算门
+        if PROVIDERS[provider]["price_per_run"] > 0:
             st["billable_notes"] += len(raw_notes)
             st["billable_cost_usd"] = round(
                 st.get("billable_cost_usd", 0.0)
-                + len(raw_notes) * PROVIDERS[provider]["price"], 4)
+                + PROVIDERS[provider]["price_per_run"], 4)
         notes = [normalize_note(provider, x) for x in raw_notes]
         got = 0
         for note in notes:

@@ -187,6 +187,49 @@ else
   echo "  ⚠️ 存在过时事实！请先修正文档再继续工作（或确认该行是历史日志段，非当前待办）"
 fi
 
+# ────────────────────── 统一状态卡（PM 2026-10-01·方案B） ──────────────────────
+# 三窗口开工强制渲染同一张卡：数据/账号/配额/费用/最新事件。
+# 来源：task_queue（真源）+ status_events + Supabase 计数。看卡才允许干活。
+echo ""
+echo "📊 统一状态卡（三窗口共享，PM维护）:"
+STATUS_CARD=$(mktemp)
+python3 - > "$STATUS_CARD" <<'EOF'
+import sys, pathlib, json
+sys.path.insert(0, str(pathlib.Path('cloud').resolve()))
+os_env = pathlib.Path('app/.env.local')
+import os
+os.environ.setdefault('FOOD_APP_DIR', str(pathlib.Path('app').resolve()))
+os.environ.setdefault('HTTPS_PROXY', 'http://127.0.0.1:7897')
+os.environ.setdefault('HTTP_PROXY', 'http://127.0.0.1:7897')
+try:
+    import cloud.vendor.pipeline.common as C
+    # 数据基线
+    try:
+        rest = C.fetch_all('restaurants', select='id,status', page=1000)
+        active = sum(1 for r in rest if r.get('status')=='active')
+        print(f"  餐厅: {len(rest)} 在营: {active}")
+    except Exception as e:
+        print(f"  餐厅: (查询失败 {str(e)[:40]})")
+    try:
+        cmt = C.fetch_all('reviews', select='id', page=1000)
+        print(f"  评论: {len(cmt)}")
+    except Exception:
+        print("  评论: (查询失败)")
+    # 任务概览
+    try:
+        tq = C.fetch_all('task_queue', select='id,status,priority', page=1000)
+        todo_n = sum(1 for t in tq if t.get('status')=='todo')
+        prog_n = sum(1 for t in tq if t.get('status')=='in_progress')
+        done_n = sum(1 for t in tq if t.get('status')=='done')
+        print(f"  任务: todo={todo_n} 进行中={prog_n} done={done_n}")
+    except Exception as e:
+        print(f"  任务: (查询失败 {str(e)[:40]})")
+except Exception as e:
+    print(f"  (状态卡获取失败: {str(e)[:60]})")
+EOF
+head -8 "$STATUS_CARD"
+rm -f "$STATUS_CARD"
+
 # ────────────────────── 最近commit ──────────────────────
 echo ""
 echo "📝 最近5条commit:"

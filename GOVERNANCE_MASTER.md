@@ -9,8 +9,10 @@
 
 ## 0. 一句话总纲
 
-**一个目的、一条数据管线、三个公共组件、四窗口协作、一个真源（task_queue）、一套验收标准。**
-任何工作不符合此总纲 = 不算完成；任何绕过公共组件的代码 = QA打回。
+**一个目的、一条数据管线、三个公共组件、三窗口协作、一个真源（task_queue）、一套验收标准。**
+任何工作不符合此总纲 = 不算完成；任何绕过公共组件的代码 = PM打回。
+
+> **2026-10-01 架构变更（方案B）**：四窗口 → **三窗口**。原QA窗口停用，QA职责（release_audit/红队/播报/台账）**并入PM**。用户只在PM窗口说话，PM统一调度采集/开发。详见 ROLE_SYNC.md / WINDOWS.md。
 
 ---
 
@@ -54,7 +56,7 @@
 | R10 | 自检自巡提示+自动调度 | ✅ 19条cron |
 | R11 | 修复失败序列（空转/重复/刷屏） | ✅ 已修复 |
 | R12 | 8逻辑角色→4窗口分配 | ✅ 已分配 |
-| R13 | 各窗口确认职责+问题负责人说明解决 | ⏳ 待QA窗口确认 |
+| R13 | 各窗口确认职责+问题负责人说明解决 | ✅ 方案B收敛为三窗口，PM统一调度 |
 | R14 | 服务器SSH不可达→collector负责 | ✅ 已登记Q-013 |
 | R15 | **工作认领/模块合并/衔接不满意→彻查优化** | ✅ 本总纲即产出 |
 
@@ -66,7 +68,7 @@
 | 菜系/区域筛选 | cuisine+districts标签 | collector采 / dev实现 |
 | 主厨人物页 | chef表+关联 | collector采 / dev实现 |
 | 软广识别（哪些是营销号） | softad概率 | dev算法 |
-| 权威榜单对账（米其林/黑珍珠） | authority表 | collector采 / QA验证 |
+| 权威榜单对账（米其林/黑珍珠） | authority表 | collector采 / PM验证 |
 
 ---
 
@@ -139,7 +141,7 @@ flowchart LR
     PM --> SYNC[窗口开工 sync.sh<br/>红字强制提示待认领]
     SYNC --> CLAIM[认领 claim<br/>status=in_progress]
     CLAIM --> DO[干活<br/>遵守本总纲§5/§6]
-    DO --> QA3[QA独立验证]
+    DO --> QA3[PM独立验证]
     QA3 -->|通过| ACC[PM验收→done→关闭]
     QA3 -->|打回| DO2[返修+记issue]
     DO2 --> QA3
@@ -153,7 +155,7 @@ flowchart TD
     LOG --> A[账号问题?] -->|是| REG[account_registry标记<br/>router自动绕开]
     LOG --> Q2[配额问题?] -->|是| Q3[map_quota轮换<br/>全尽→WARN播报]
     LOG --> U[必须用户:扫码/付款/密钥?] -->|是| ACT[ACTION播报<br/>每日1次最多3次]
-    LOG --> Z[连续3轮0产出?] -->|是| QA3[QA介入查根因<br/>自动停该通道]
+    LOG --> Z[连续3轮0产出?] -->|是| QA3[PM介入查根因<br/>自动停该通道]
     QA3 --> PM2[P0不过夜→PM当天协调]
 ```
 
@@ -221,7 +223,7 @@ dev/collector 本地改 → git commit+push
 | 时间 | dev/collector动作 |
 |------|-------------------|
 | 开工 | bash sync.sh <角色> → 读STATUS → 认领todo任务 |
-| 工作中 | 完成任务→sync.sh push → QA验证 |
+| 工作中 | 完成任务→sync.sh push → PM验收 |
 | 卡住 | 写STATUS原因+找PM协调 |
 | P0 | 不过夜，当天修完+验证 |
 
@@ -271,7 +273,7 @@ dev/collector 本地改 → git commit+push
 ### 7.4 组件验收
 | 组件 | 验收方式 |
 |------|---------|
-| account_registry | 11个调用方迁移完，无重复探测；QA验证无绕过 |
+| account_registry | 11个调用方迁移完，无重复探测；PM验证无绕过 |
 | common_core | 新代码100%走core；存量迁移清单完成 |
 | data_gate | 所有采集器接入；QA抽样验证拒收率报告合理 |
 

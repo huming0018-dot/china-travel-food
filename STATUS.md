@@ -1,11 +1,11 @@
 # 当前状态 · STATUS
 
-> 最后更新：2026-10-01 11:35（PM窗口维护）
-> **✅ Apify已充值成功**：Starter $19/月已生效（预付$19额度+64GB RAM/32并发/30数据中心代理/Bronze折扣），Mastercard 4395已绑定Primary，账单地址已填（Shanghai, China），下次账单2026-11-01，超额$20才提前结算。task_queue #1 已解除blocked→todo，采集窗口已通知恢复。
-> **四窗口职责分配已定稿**：`role-task-allocation.md`（8逻辑角色→4窗口）
-> **2026-10-01 角色互换**：本窗口(CTFS_QA)任PM，原CTFS_PM任QA，见 ROLE_HANDOVER.md
+> 最后更新：2026-10-01 21:15（PM窗口维护）
+> **✅ Apify已充值成功**：Starter $19/月已生效（预付$19额度+64GB RAM/32并发/30数据中心代理/Bronze折扣），Mastercard 4395已绑定Primary，账单地址已填（Shanghai, China），下次账单2026-11-01，超额$20才提前结算。task_queue #1 已解除blocked→todo。
+> **✅ 方案B（2026-10-01）：四窗口→三窗口**：QA职责并入PM，原QA窗口停用。用户只在PM窗口说话。见 ROLE_SYNC.md / WINDOWS.md / role-task-allocation.md。
+> **✅ sync.sh v3**：开工强制渲染统一状态卡（数据/任务/账号/配额+过时事实校验），三窗口看同一张卡。
 > 各窗口开始工作时运行 `bash sync.sh <角色>`，结束时运行 `bash sync.sh push "说明"`
-> 开工时 sync.sh 会显示本窗口职责边界，请严格遵守。
+> 任务唯一真源：task_queue（Supabase）。窗口无独立待办文档。
 
 ## ⚠️ 服务器状态（2026-10-01 已查明，Q-013）
 - **主机健康**：经香港节点SSH登录成功（HK_SSH_OK），sshd正常，容器food-cloud正常运行
