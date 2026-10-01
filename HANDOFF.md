@@ -33,6 +33,14 @@
 
 **产物**：skill `scripts/food_pipeline/{release_audit,duplicate_audit}.py`、repo `cloud/vendor/pipeline/` 同步、容器 `/app/pipeline/` 已注入；教训 **#79**；SKILL.md 已更新。
 
+**④ 吸收用户《主厨库自主迭代方法论》→ 新增主厨雪球抽样框（已建/已降级冒烟，待 key 实跑）**
+- 评估：方法论补舰队缺的"实体雪球"——舰队原只有菜系叶子网格（按类目横扫），缺"从锚点主厨沿关系边 BFS"。新增驱动 **`chef_snowball_run.py`**（状态 /app/data/hae/chef_snowball_state.json），复用 model_providers/hae_engine，只写 lead_hypotheses。
+- 关系边映射：师承=teacher；同门/副牌/合作=worked_at/career_period/related_to；同榜同台=list_member/award/show_appearance；主理餐厅=founded。
+- 红线落地：只在"带 URL 证据且 chef/owner"节点上继续扩散（防多跳幻觉漂移）；同名异址分店保留；L1–L4 存 `proposed_by.anchor_tier`（网络距离、**不进口味分**）；五维 why 中传承=可晋升事实、技法/食材/调味/创新=带源 profile（**score_taste 只由真实食客定**）；连续 2 轮零增益且 frontier 空→自动判停。
+- 机制文档 `references/chef-snowball-mechanism.md`；种子模板 `research/chef_anchors.template.json`。
+- **待办**：(a) 用户那 117 人是"推演候选池、非官方"，只能以 is_seed=true 未证实假设灌入（需用户补发交付物2 的 JSON 文件，本次只收到 prose、无记录）；(b) 配 ARK key 后雪球自动实跑，再补一条低频 cron（每周 1–2 次）。
+- 降级冒烟（容器，无 key）：种子载入→辐射 0 模型→drain frontier→状态正确，RC=0。
+
 ### 2026-09-30 守门员·人工三档监督精选体系（评分v5方向，已提交 004d6c3）
 
 **北极星重申**：广泛收录（step1）之外，必须有独立的“真美食精选层”（step2），只保留真正好吃、可溯源的店；外婆家/圆苑/小菜园这类连锁预制/平庸店不得进精选。前端最后做，本轮只动数据库/管线。
