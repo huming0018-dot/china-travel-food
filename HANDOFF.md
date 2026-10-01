@@ -3694,3 +3694,10 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **结论**：当前特征不支持学习型准入，**ML 门暂缓**，待更多 verified-diner 口味证据补齐后再训。
 - **(A) 硬规则可独立 apply**：ck=确认 或 premade=高 → 23 家直接移出精选（确定性、不依赖模型）。
 - **(B) ML 门**：n_ind≥2 且非疑似预制的 eligible=226；模型拟入选 53 家，但因不跑赢基线暂不接管。
+
+## 2026-10-01 硬规则A apply（预制下架，已写库回读）
+- 23 家 rid：485/559/701/705/738/741/742/745/746/916/1445/1493/1496/1521/1525/1531/1532/1534/1575/1616/1684/1738/1853。
+- 全部满足 ck=确认 或 premade=高；apply 前 is_curated 均已 false（无一在177精选）。
+- 幂等 PATCH：is_curated=false；curate_reason 按实际写「中央厨房确认，移出精选」或「预制风险高，移出精选」。
+- 回读 23/23 is_curated=False、reason 已落。未动 chain/price/电话/坐标/营业时间。
+- ML门B（curate_v4）继续不 apply（beats_baseline=false），未挂 cron。
