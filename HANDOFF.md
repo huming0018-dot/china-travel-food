@@ -10,6 +10,21 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 中午【collector·三家 A/B 对照器已交付并 live】：sian/atomus/opspilot 同店实测每采信成本，充值后自动先跑
+
+**触发**：用户批准"$10 一轮滚动测试"，并从 $10 拨 $2–3 对 sian/atomus/opspilot 做同口径 A/B，把成本路由从"标价推断"升级为"实测结论"。
+
+**免费探查纠正的事实（不触发 run）**：①sian 我们**历史跑过 7 次**（此前月度聚合漏列）；②三家**搜索级结果都已带正文**（opspilot=`description`、atomus=`desc`、sian=`noteDesc`），故只做搜索级对照即公平且最省，不自动追全文（sian 全文 .05、atomus .04 另计）；③atomus 历史 6 run=$0 是更早免费/促销定价所致，**不能据此假设当前出结果仍免费**（当前 post-scraped=.02）；④sian 历史空数据集 run 被收 .14=FREE 档启动价，BRONZE 档启动仅 .014。
+
+**已落地（repo `cloud/` + 主机 `/home/ubuntu/food-apify-fill/`，py_compile/bash -n/主机 live 全验证）**：
+1. `cloud/ab_compare.py`（新）：3 代表店（新荣记南京西路 871=名品牌合集压力 / 望庐=米其林单菜系深度 / Tacolicious 同乐坊 1865=外文名相关性压力）× 3 actor = 9 cell。复用 v4 的 keywords_for/apify_search/normalize_note 与账单门；sian 适配器自带（searchNote action）。**成本权威口径=运行前后 current_used() 账单差值**（run-sync 阻塞后轮询至稳定）；逐 cell 记 raw/采信(anchor_note rid==目标)/口味证据(taste_sent 且非提问)/拒绝原因直方图。预算闸门 AB_BUDGET=$3、逐 run 查剩余额度、不足→NO_CREDIT 断点保留；账本 ab_result.json 按 "rid:actor" 幂等可续跑；完成自动生成 `AB_RESULT.md`（含每店成本/采信率/每条口味成本 + 自动路由建议）并经容器 notify_cli 推 TG+飞书。
+2. `cloud/apify_fill_controller.sh`（v3 改）：主循环顶部先跑 `ab_compare.py --auto`——**仅当结果缺失且剩余额度≥$5 才执行**，否则立即 `AB_SKIP` 不花钱；A/B 完成后不重跑，随后进入正常 worth_fill 填充。
+3. 服务 food-apify-fill 已重启 active，live 日志确认 `AB_SKIP remain=$0.00` → `NO_CREDIT 14400 remaining=$0.002`（充值前不烧钱、不刷屏）。
+
+**充值后自动行为**：用户在 console.apify.com/billing 充约 $10（支付须本人），控制器下一唤醒（≤4h/重启）先花约 $0.75–1 跑完 9 cell A/B、推送实测路由，再以 APIFY_DAILY_CAP=10 开跑正常填充，烧到约 $10 自停；届时据 A/B 实测把成本路由固化进 v4。
+
+---
+
 ### 2026-10-02 上午【collector·Apify 采集 v4 已交付并 live】：每店封顶 + 查询阶梯 + 持久熔断 + 日预算 + notify_cli
 
 **触发**：用户对 Apify 采集极不满意（$44.93 被烧、"笔记20 采信0"、失控重跑），主线 #44「优化 Apify 采集方案」。策略文档 `cloud/APIFY_OPTIMAL_PLAN.md`（v1）。

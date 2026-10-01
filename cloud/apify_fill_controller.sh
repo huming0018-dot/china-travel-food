@@ -29,6 +29,9 @@ drain_alerts() {
 }
 
 while true; do
+  # 充值后先跑一次三家 A/B（结果缺失且剩余额度≥$5 才跑；否则立即跳过，不花钱）
+  (cd "$DIR" && set -a && . ./fill.env && set +a && \
+        python3 ab_compare.py --auto 2>&1)
   OUT=$(cd "$DIR" && set -a && . ./fill.env && set +a && \
         python3 review_apify_fill.py --fetch --apply --guard --limit "$BATCH" 2>&1)
   echo "$OUT"
