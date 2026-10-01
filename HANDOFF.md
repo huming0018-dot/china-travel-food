@@ -40,6 +40,8 @@
 - 机制文档 `references/chef-snowball-mechanism.md`；种子模板 `research/chef_anchors.template.json`。
 - **待办**：(a) 用户那 117 人是"推演候选池、非官方"，只能以 is_seed=true 未证实假设灌入（需用户补发交付物2 的 JSON 文件，本次只收到 prose、无记录）；(b) 配 ARK key 后雪球自动实跑，再补一条低频 cron（每周 1–2 次）。
 - 降级冒烟（容器，无 key）：种子载入→辐射 0 模型→drain frontier→状态正确，RC=0。
+- **已收口**：用户发来 66 条极简候选 JSON（chef_name/restaurant/city）。新增导入器 **`ingest_chef_seed.py`**，把 66 条以 is_seed=true / status=hypothesized / confidence=0.20 / 无来源 灌入 lead_hypotheses（post28+patch38=66，幂等，RC=0），**未触碰 chefs 事实表**。
+  - 风险提示：其中大量为模板化"新荣记各分店主厨"（陈涛/林晓/郑浩/黄勇/朱凯/吴强/陆斌/陈浩/徐进…）与可能不存在的上海西餐店（Vespertine/Lumen/Aura/Alpes/Mont Blanc…），需配 key 后由雪球+prove 逐条取证，过不了闸即 unverified/contradicted，不得晋升。
 
 ### 2026-09-30 守门员·人工三档监督精选体系（评分v5方向，已提交 004d6c3）
 
