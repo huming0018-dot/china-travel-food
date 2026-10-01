@@ -102,6 +102,12 @@ if [ -f NOTICE_ROLES.md ]; then
   awk "/^## 致 $ROLE 窗口/,/^---/" NOTICE_ROLES.md 2>/dev/null | head -30 || echo "  (本窗口暂无专项通知)"
 fi
 
+# ────────────────────── 信箱（其他窗口留言） ──────────────────────
+echo ""
+echo "📬 信箱（其他窗口留言）:"
+python3 cloud/inbox.py read "$ROLE" 2>/dev/null | head -25 || echo "  (信箱不可用)"
+echo "  回复: python3 cloud/inbox.py post <收件人> \"内容\""
+
 # ────────────────────── 公共状态快照 ──────────────────────
 echo ""
 echo "📊 公共状态:"
