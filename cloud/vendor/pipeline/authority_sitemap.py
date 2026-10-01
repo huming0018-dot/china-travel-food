@@ -149,6 +149,22 @@ def _distinct(s):
     return out
 
 
+def _han_abbrev_hit(q, k):
+    """q 是 k 的「去中间字缩写」（鮨照→鮨天照）：汉字按序为子序列、首尾字相同、长度比≥0.5。"""
+    q, k = _han(q), _han(k)
+    if len(q) < 2 or len(k) <= len(q):
+        return False
+    if q[0] != k[0] or q[-1] != k[-1]:
+        return False
+    if len(q) / len(k) < 0.5:
+        return False
+    i = 0
+    for ch in k:
+        if i < len(q) and ch == q[i]:
+            i += 1
+    return i == len(q)
+
+
 def make_matcher(rests):
     index = {}
     for r in rests:
@@ -208,6 +224,15 @@ def make_matcher(rests):
                          if k.startswith(c) and not k[len(c):len(c) + 1].isalpha()]
                 if len(heads) == 1:
                     return heads[0], "strong"
+        # 汉字「去中间字缩写」（鮨照→鮨天照）：首尾同、按序子序列、长度比≥0.5；唯一→strong
+        for c in cores:
+            ch = _han(c)
+            if len(ch) >= 2:
+                ab = [r for k, r in index.items() if _han_abbrev_hit(ch, k)]
+                if len(ab) == 1:
+                    return ab[0], "strong"
+                if ab:
+                    return ab[0], "weak"
         if strong:
             return strong[0], "strong"
         if weak:
