@@ -75,7 +75,7 @@
 | **cloud_router** | 总调度中枢：按tick分派采集任务、检查pool存活（防假死） | cron */20 |
 | **gap_pool** | 采集池：管理并发采集进程生命周期 | @reboot+entrypoint |
 | **gap_runner** | 单任务执行：搜索→解析→过闸入库；stalled冷却不硬入库 | router |
-| **cloud_discover** | 发现引擎：frontier扩展（须过滤非美食词，Q-010） | router |
+| **cloud_discover** | 发现引擎：frontier扩展（**升级版机制（2026-10-01用户指示）**：黑名单只拦截纯垃圾/广告；跑题/边界笔记进候选池做"另类积累+再验证"，不直接淘汰） | router |
 | **cloud_amap_fill** | 高德补全：电话/营业时间/评分/坐标 | cron :15/:35/:55 |
 | **cloud_phone_fill** | 电话补全（腾讯/高德） | cron :05/:25/:45 |
 | **cloud_hours_fill** | 营业时间补全 | cron 凌晨4:00 |

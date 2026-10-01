@@ -207,6 +207,7 @@ dev/collector 本地改 → git commit+push
 - 评论必填：restaurant_id/source_platform/review_kind/trust_level/content
 - 枚举：review_kind(diner|platform_aggregate|kol|media)、trust_level(high|mid|low)
 - 硬标签（连锁/预制/中央厨房）必须有证据URL，否则不上
+- **跑题/边界笔记**（2026-10-01用户指示升级）：**不直接淘汰**。黑名单只拦截纯垃圾（广告刷屏/中介）；有信息量的边界内容进候选池（is_seed=true/status=hypothesized），经LLM舰队+探针多次校准后再决定晋升或contradicted——作为"另类积累"再验证，可成为新店/动向的种子来源。
 
 ---
 
