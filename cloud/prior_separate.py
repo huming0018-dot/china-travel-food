@@ -130,11 +130,14 @@ def prior_columns_exist():
 # ---------------------------------------------------------------------------
 def build_plan():
     findings_ev, ffiles, nlines = load_findings_evidence()
-    rests = C.fetch_all(
-        "restaurants",
-        "id,name,status,chain_type,central_kitchen,premade_risk,"
-        "central_kitchen_prior,premade_prior,fact_claims",
-        order_col="id")
+    # 探测 024 的 *_prior 列是否存在。列不存在（migration 024 未执行）时，
+    # dry-run 仍要能跑通拿分类计数：select 不带 prior 列，"已迁移"桶视为空。
+    # --apply 路径在 main() 末尾另有独立硬门，此处不影响。
+    prior_present = prior_columns_exist()
+    sel = ("id,name,status,chain_type,central_kitchen,premade_risk,fact_claims")
+    if prior_present:
+        sel += ",central_kitchen_prior,premade_prior"
+    rests = C.fetch_all("restaurants", sel, order_col="id")
 
     plan = []           # 待回写：{id,name,patch}
     buckets = collections.Counter()
@@ -150,8 +153,9 @@ def build_plan():
         rid = r["id"]
         ck = r.get("central_kitchen")
         pr = r.get("premade_risk")
-        ck_prior_col = r.get("central_kitchen_prior")
-        pr_prior_col = r.get("premade_prior")
+        # 列不存在时视为未迁移（None），不会进入 already_migrated 桶。
+        ck_prior_col = r.get("central_kitchen_prior") if prior_present else None
+        pr_prior_col = r.get("premade_prior") if prior_present else None
 
         patch = {}
 
@@ -191,7 +195,7 @@ def build_plan():
             patch["prior_confidence"] = PRIOR_CONFIDENCE
             plan.append({"id": rid, "name": r.get("name"), "patch": patch})
 
-    return rests, plan, buckets, samples, (ffiles, nlines), findings_ev
+    return rests, plan, buckets, samples, (ffiles, nlines), findings_ev, prior_present
 
 
 def main():
@@ -201,11 +205,14 @@ def main():
     ap.add_argument("--show", type=int, default=8, help="每桶打印样例数")
     args = ap.parse_args()
 
-    rests, plan, buckets, samples, (ffiles, nlines), findings_ev = build_plan()
+    rests, plan, buckets, samples, (ffiles, nlines), findings_ev, prior_present = build_plan()
 
     print("=" * 64)
     print(f"prior_separate  {'APPLY' if args.apply else 'DRY-RUN'}")
     print("=" * 64)
+    print(f"024 *_prior 列存在? {prior_present}"
+          + ("" if prior_present else "（列不存在：select 不带 prior 列，已迁移桶视为空；"
+                                     "--apply 仍会在下方硬门中止）"))
     print(f"门店总数（拉取）: {len(rests)}")
     print(f"findings 账本文件: {len(ffiles)} 个 / {nlines} 条带 source_url 行")
     print("-" * 64)
