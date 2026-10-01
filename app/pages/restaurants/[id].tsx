@@ -341,6 +341,8 @@ export default function RestaurantDetail() {
             {r.chain_type && <InfoRow label="连锁类型" value={r.chain_type} />}
             {r.central_kitchen && <InfoRow label="中央厨房" value={r.central_kitchen} />}
             {r.premade_risk && <InfoRow label="预制菜风险" value={r.premade_risk} />}
+            {r.is_curated && <InfoRow label="精选" value={r.curate_badge || '已入选'} />}
+            {r.curate_reason && <InfoRow label="入选理由" value={r.curate_reason} />}
           </div>
           {dataAge !== null && (
             <div className="mt-6 pt-5 border-t border-line flex items-center gap-2">

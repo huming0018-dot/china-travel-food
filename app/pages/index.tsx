@@ -104,31 +104,39 @@ export default function Home() {
       .slice(0, 2);
   };
 
-  // P0修复：只推荐有评分(≥50)且至少1条评论的店，无分店不进首页推荐
-  const topRestaurants = useMemo(
-    () => [...restaurants]
+  const cur = (r: Restaurant) => r.curate_score ?? -1;
+  // 编辑推荐：精选层（is_curated）优先，按 curate_score 排序；
+  // 精选层尚未回填时兜底回原 score_total 启发式，避免首页区块空白。
+  const topRestaurants = useMemo(() => {
+    const curated = restaurants
+      .filter((r) => r.is_curated === true)
+      .sort((a, b) => cur(b) - cur(a));
+    if (curated.length > 0) return curated.slice(0, 6);
+    return [...restaurants]
       .filter((r) => r.score_total != null && r.score_total >= 50 && (r.review_count || 0) >= 1)
       .sort((a, b) => (b.score_total || 0) - (a.score_total || 0))
-      .slice(0, 6),
-    [restaurants]
-  );
+      .slice(0, 6);
+  }, [restaurants]);
 
-  // 新上好店：最近通过证据核验（score_evidence_level === 'verified'）的 active 精选。
-  // 注：整库 created_at 为批量重建时间（全员近期），不能作为"新店"信号；
-  //     故以证据核验为唯一确定性新近信号，并按现有 hideChain 口径排除标准化连锁/预制。
+  // 新上好店：精选层（is_curated）优先；未回填时兜底回原"证据核验 verified"口径。
   const verifiedStores = useMemo(
     () => restaurants.filter(
-      (r) => r.score_evidence_level === 'verified' && r.is_chain_standardized !== true
+      (r) => r.is_curated === true ||
+             (r.score_evidence_level === 'verified' && r.is_chain_standardized !== true)
     ),
     [restaurants]
   );
-  const newStores = useMemo(
-    () => [...verifiedStores]
+  const newStores = useMemo(() => {
+    const curated = [...verifiedStores]
+      .filter((r) => r.is_curated === true)
+      .sort((a, b) => cur(b) - cur(a))
+      .slice(0, 8);
+    if (curated.length > 0) return curated;
+    return [...verifiedStores]
       .filter((r) => r.score_total != null && r.score_total >= 50)
       .sort((a, b) => (b.score_total || 0) - (a.score_total || 0))
-      .slice(0, 8),
-    [verifiedStores]
-  );
+      .slice(0, 8);
+  }, [verifiedStores]);
 
   return (
     <div className="min-h-screen bg-cream-100">

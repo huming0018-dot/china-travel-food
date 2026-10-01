@@ -41,6 +41,21 @@ function clearReturnSnap() {
 const BAND_CLASSES = ['tag-budget', 'tag-value', 'tag-mid', 'tag-fine', 'tag-luxury'];
 const bandClass = (band?: number | null) => BAND_CLASSES[(band || 1) - 1] || 'tag-mid';
 
+// 工业化连锁/预制判定：以权威列 chain_type/central_kitchen/premade_risk 为准（003/008 口径）。
+// 上游任一信号为 NULL 一律按"非连锁/无"处理，不让 NULL 让开关空转。
+//   资本化/大型连锁          -> 一律工业化（强中央厨房）。
+//   小型连锁                  -> 有中央厨房(确认/疑似) 或 预制(高/疑似/低) 才算工业化。
+//   独立店/未标注             -> 仅当 premade_risk='高' 时隐藏（按钮文案的"预制"覆盖独立店高预制）。
+function isIndustrial(r: Restaurant): boolean {
+  const ct = r.chain_type ?? null;
+  const ck = r.central_kitchen ?? null;
+  const pr = r.premade_risk ?? null;
+  if (ct === '资本化连锁' || ct === '大型连锁') return true;
+  if (ct === '小型连锁' && (ck === '确认' || ck === '疑似' || pr === '高' || pr === '疑似' || pr === '低')) return true;
+  if (pr === '高') return true;
+  return false;
+}
+
 // 食材「主营专门店」判定：食材名 -> 匹配"主营该食材的菜系叶子名"的正则。
 // 选食材后，命中且菜系主营匹配 = 主营(main)；命中食材但菜系主营是别的 = 菜单含有(secondary 折叠)。
 // 关键：分区依据是"该食材是否为店的主营品类"，不是"正餐 vs 非正餐"（否则面馆被折叠、咖啡店反进主营）。
@@ -96,7 +111,7 @@ export default function RestaurantsPage() {
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState('');
-  const [sortBy, setSortBy] = useState<'score' | 'price_asc' | 'price_desc'>('score');
+  const [sortBy, setSortBy] = useState<'curated' | 'score' | 'price_asc' | 'price_desc'>('curated');
   const [root, setRoot] = useState('中餐');              // 一级根 Tab
   const [flavor, setFlavor] = useState<string | null>(null); // 二级菜系 name
   const [subFlavor, setSubFlavor] = useState<string | null>(null); // 三级子流派 name（在二级基础上再筛）
@@ -317,8 +332,10 @@ export default function RestaurantsPage() {
   const activeFilterCount =
     budgets.size + (district ? 1 : 0) + (location ? 1 : 0) + tagSel.size + (flavor ? 1 : 0) + (search ? 1 : 0);
 
+  const cur = (r: Restaurant) => r.curate_score ?? -1;
   const doSort = (arr: Restaurant[]) => {
-    if (sortBy === 'score') arr.sort((a, b) => (b.score_total || 0) - (a.score_total || 0));
+    if (sortBy === 'curated') arr.sort((a, b) => cur(b) - cur(a) || (b.score_total || 0) - (a.score_total || 0));
+    else if (sortBy === 'score') arr.sort((a, b) => (b.score_total || 0) - (a.score_total || 0));
     else if (sortBy === 'price_asc') arr.sort((a, b) => (a.price_avg ?? 9999) - (b.price_avg ?? 9999));
     else arr.sort((a, b) => (b.price_avg ?? 0) - (a.price_avg ?? 0));
     return arr;
@@ -328,7 +345,7 @@ export default function RestaurantsPage() {
   const view = useMemo(() => {
     let result = [...restaurants];
     result = result.filter((r) => r.status !== 'closed' && r.status !== '关店');
-    if (hideChain) result = result.filter((r) => !r.is_chain_standardized || isNonDiner(r));
+    if (hideChain) result = result.filter((r) => !isIndustrial(r) || isNonDiner(r));
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       result = result.filter((r) =>
@@ -513,6 +530,7 @@ export default function RestaurantsPage() {
   };
 
   const SORTS = [
+    { key: 'curated', label: '精选优先' },
     { key: 'score', label: '评分最高' },
     { key: 'price_asc', label: '人均低→高' },
     { key: 'price_desc', label: '人均高→低' },
@@ -827,7 +845,7 @@ function RestaurantRows({ rows, rCuisineNames, rTagIds, startIdx, isNonDiner, on
                 {isMichelin && <span title="米其林星级" className="text-2xs font-sans not-italic bg-mocha text-mustard-soft px-1.5 py-0.5 rounded shrink-0">★ 米其林</span>}
                 {isBlackPearl && <span title="黑珍珠餐厅" className="text-2xs font-sans not-italic bg-[#3a2a24] text-[#D8B98E] px-1.5 py-0.5 rounded shrink-0">◆ 黑珍珠</span>}
                 {r.premade_risk === '高' && <span title="预制菜高风险，不进宝藏精选" className="text-2xs font-sans not-italic bg-[#F6D9C8] text-[#BC4B1E] px-1.5 py-0.5 rounded shrink-0">预制菜</span>}
-                {r.is_chain_standardized && !isNonDiner(r) && <span title="标准化连锁，可在上方一键隐藏" className="text-2xs font-sans not-italic bg-[#E7E0D8] text-[#7A6A5C] px-1.5 py-0.5 rounded shrink-0">连锁</span>}
+                {isIndustrial(r) && !isNonDiner(r) && <span title="工业化连锁/预制，可在上方一键隐藏" className="text-2xs font-sans not-italic bg-[#E7E0D8] text-[#7A6A5C] px-1.5 py-0.5 rounded shrink-0">连锁</span>}
               </h3>
               <div className="flex items-center gap-2 mt-1 flex-wrap">
                 {names.slice(0, 2).map((cn, k) => (

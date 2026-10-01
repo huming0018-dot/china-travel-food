@@ -36,10 +36,17 @@ export interface Restaurant {
   updated_at?: string;
   closed_date?: string;
   closed_source?: string;
-  chain_type?: string;        // 连锁类型：独立店/小型连锁/大型连锁/资本化连锁
-  central_kitchen?: boolean; // 中央厨房
-  premade_risk?: string;     // 预制菜风险
+  chain_type?: '独立店' | '小型连锁' | '大型连锁' | '资本化连锁' | null; // 连锁类型（003）
+  central_kitchen?: '无' | '疑似' | '确认' | null; // 中央厨房（DB text 枚举，003；非 boolean）
+  premade_risk?: '无' | '低' | '疑似' | '高' | null; // 预制菜风险（003）
   is_chain_standardized?: boolean | null; // 标准化连锁派生列（008），前端隐藏/角标依据
+  // —— 精选层（021_goalkeeper_curate），前端单一事实来源 ——
+  is_curated?: boolean;                 // 是否进入"真美食精选"（默认 false）
+  curate_badge?: '必吃' | '值得' | '精选' | null; // NULL=未入选
+  curate_score?: number | null;        // 精选排序分（0-100）
+  curate_confidence?: number | null;   // 精选置信度（0-1）
+  curate_reason?: string | null;        // 入选/落选可追溯理由
+  astroturf_score?: number | null;      // 伪草根刷评连续分（0-1）
   price_position?: string;   // 品类内相对档（已停用，前端不再展示）
   price_scene?: string;      // 价格场景：正餐/快餐小吃/咖啡茶饮/面包/甜品/酒吧
   price_band?: number | null;// 场景内价格带 1-5（客观，按固定阈值由人均算出）
