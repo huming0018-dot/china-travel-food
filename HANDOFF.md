@@ -3759,3 +3759,9 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 三段式：首次全量(一次性) → 每日05:30增量 → 周日03:00全量复扫；与点评06:40、post_audit 07:47 衔接。
 - 费用估算：首次全量 $400–600，月均 $30–80（日常为主）。
 - **待拍板**：Apify账号/token、月度预算上限、首选actor确认、是否充值、其他平台本轮是否接入。
+
+## 2026-10-01 Source Coverage Registry 框架冻结
+- 文档：research/coverage/coverage_framework.md（三轴+行 schema+完整性方法+漏店反推模板）。
+- 行 schema 冻结：source_id/platform/category/url/fields_available/channel/tos_pipl/risk_level/rate_limit/cost/dine_in_evidence/strong_cuisines/active/covered_grid/notes；枚举已固定。
+- 完整性：每「菜系×场景」格 ≥3 独立源、至少 1 个 dine_in_evidence=true。
+- cloud/apify_ingest.py 已写好（sian.agency actor、预算闸门、checkpoint、JSONL 输出），等 APIFY_TOKEN 后跑；不部署 cron。
