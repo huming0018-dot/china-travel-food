@@ -10,6 +10,37 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-01 晚：火山方舟（ARK）模型舰队接入 + web_search 致命 bug 修复 + 通知链路验证
+
+**① 火山方舟 ARK 已接入（云端容器直连，无需代理）**
+- API Key 名称 `food-atlas-fleet`（明文只写进 gitignored `cloud/deploy.env`，**禁止入仓/入产物**）；区域 cn-beijing；账号开「安心体验」（仅免费额度、超额自动暂停）。
+- 已开通并实测 4 个语言模型（真实 model ID，非显示名）：
+  `doubao-seed-2-1-lite-260915`、`doubao-seed-2-1-turbo-260628`、`deepseek-v4-1-flash-260910`、`glm-5-3-flash-260828`。
+- **网络口径**：deuce 直连 ark.cn-beijing.volces.com 失败（Clash 路由），须经 `http://127.0.0.1:7897`；**云端容器（上海）直连、无需代理**。
+- 开通排障：「一键开通所有模型」空选确认键禁用；整批全选 30 个会因视频(Seedance)/图片(Seedream)模型触发 200 元余额门槛报"余额不足" → 只逐个开通语言模型即可绕过。
+
+**② 两个导致舰队全挂的代码 bug（已修复，commit `4e664c0`）**
+1. **全局联网开关失效**：`model_providers.chat()` 里 `use_web = bool(web_search and provider.supports_web)` 未检查全局 `web_search_enabled()`（读 HAE_WEB_SEARCH），导致 HAE_WEB_SEARCH=0 仍注入 tools。已改为 `... and web_search_enabled()`。
+2. **ARK web_search 载荷格式错 + 误套非豆包模型**：原 `ark_tools` 返回 `{"tools":[{"type":"web_search"}],"tool_choice":"auto"}`（缺 web_search 对象），且 DeepSeek/GLM 经 ARK 不支持联网，结果 **4 模型全部 HTTP400 `missing tools.function`、整舰队零产出**。已改为：非 doubao 模型返回 `{}`；doubao 返回 `{"tools":[{"type":"web_search","web_search":{"enable":True}}]}`。
+- 当前 `HAE_WEB_SEARCH=0`（模型凭自身知识做结构化召回，已稳定）；ARK Doubao 联网 schema 的联网实跑=后续加固项。
+
+**③ deploy.env 事故与恢复（教训：上传密钥前先 diff/备份）**
+- 曾用 deuce 某不完整 `cloud/deploy.env` 经 SSH **覆盖**主机完整运行时密钥，导致 fleet_grid 报缺 SUPABASE_SERVICE_ROLE_KEY。
+- 恢复：以 deuce 最完整源 `Doubao/chats/2026-09-29/new-chat/china-travel-food/cloud/deploy.env`（14 真实变量）为底，追加 ARK 五项 → **18 变量**落主机 `/home/ubuntu/food-cloud/deploy.env`；被覆盖版主机已备份为 `deploy.env.clobbered.<epoch>`，`docker compose up -d --force-recreate`。
+- 18 变量：NEXT_PUBLIC_SUPABASE_URL、SUPABASE_SERVICE_ROLE_KEY、XHS_COOKIE_FILE、ALERT_WEBHOOK、BATCH、AMAP_KEY/AMAP_KEYS/AMAP_SKS、TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID/TELEGRAM_API_BASE、FEISHU_APP_ID/FEISHU_APP_SECRET/FEISHU_CHAT_ID、ARK_API_KEY/ARK_BASE_URL/HAE_MODELS_ARK/HAE_WEB_SEARCH。
+- **铁律：上传任何密钥文件前，先备份+diff 主机现有文件；本地某副本 ≠ 主机完整 deploy.env。**
+
+**④ 舰队真实产出已验证（去污染口径正确）**
+- 修复后实跑：DeepSeek-V4.1-flash **每叶全成功**（主力），GLM/Doubao-turbo 部分成功，Doubao-lite 多为 SKIP（返回空/解析）。
+- 抽查「重庆火锅」叶产出珮姐/楠火锅等，带 positioning/signature_dishes/chain_premade/local_repute，且模型自动标注"连锁预制、本地老饕认为分店有差距"——与北极星去污染一致。
+- grid cursor 已推进到 **232/254**；早前 HAE_WEB_SEARCH=1/旧代码期间（约 168–232 叶）upsert 的多为占位/空实体，**宜回滚这些 lead_hypotheses 后重探**。
+- 部署坑：`docker cp` 在该容器报 `/proc/self/fd`，传文件改 base64/tar；且单条 ssh 里 stdin 被前一个 `cat` 耗尽后，后续 `docker exec -i` 会写空文件——须先用主机本地文件再 `cat file | docker exec -i ... cat > path`。
+
+**⑤ 通知链路双通道验证通过**
+- `cloud/notifier.py` 的 `info(body,key=...)` 实测返回 True，Telegram（@ShanghaiFoodAtlasBot，经 TELEGRAM_API_BASE 反代）+ 飞书应用均收到测试消息；health 显示 Telegram/飞书应用已配置（飞书 webhook、ALERT_WEBHOOK 未配置，可忽略）。
+
+**待办（接续）**：ARK Doubao 联网实跑加固；回滚 168–232 占位叶重探；W1 集团/品牌/主厨树扩面（8by8、佐佐、福寿司、肉屋kita、Ministry of Crab 等）；Apify 充值（https://console.apify.com/billing，首轮 $10 封顶）或等 10-28 月度重置后续跑 worth_fill。
+
 ### 2026-10-01 晚：4 孤儿核实 + 代码/部署对齐审计 + 死脚本瘦身（只读核实，未 PATCH）
 
 **① 4 家 active 且 chain_type=NULL 的孤儿店逐店核实（证据 + 建议载荷，本轮不直接 PATCH）**
