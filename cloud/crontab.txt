@@ -73,7 +73,6 @@ HAE_GRID_SLICE=20
 # 19) 模块B·录后校验：post_audit 消费高置信 findings（店名×词云矩阵核查），挂标 chain/industrial/group/price；
 #     仅 confidence>=0.8 且带 source_url 才改，账本 /app/data/post_record/audit_<date>.jsonl。
 #     每日 07:47 错峰（避开整点/softad 5:37/黑珍珠6:20/证据池:17）。
-47 7 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/post_audit.lock /usr/local/bin/python post_audit.py --findings /app/data/post_record/findings.jsonl --apply >> /app/data/post_audit.log 2>&1
 
 # 20) 模块C·联想词探针：以高分/认证在库店为种子,扫 raw_discovery 共现建 co-mention 图,
 #     未知店只写 lead_coention.jsonl(候选池)交 admission_gate,绝不直写 restaurants;幂等断点(ledger)。
@@ -96,3 +95,12 @@ HAE_GRID_SLICE=20
 # 24) 批次3·出品定类入侵者只读审计( classification_intruder_audit )：扫错挂叶/漏挂叶出报告,
 #     只报告不自动改(删除/改主须用户确认)。每周三 03:47(hours2 03:17之后)。
 47 3 * * 3 cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/intruder.lock /usr/local/bin/python classification_intruder_audit.py --json /app/data/intruder_audit_report.json >> /app/data/intruder_audit.log 2>&1
+
+# 27) 点评cookie日更 06:40(post_audit 07:47之前)
+40 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/dianping_day.lock python dianping_daily.py >> /app/data/dianping_daily.log 2>&1
+30 3 * * 1 cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python code_audit.py >> /app/data/code_audit.log 2>&1
+
+# 28) reconcile 统一编排 07:47
+
+# 28) reconcile 统一编排 07:47
+47 7 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/reconcile.lock /usr/local/bin/python reconcile.py --apply >> /app/data/reconcile.log 2>&1
