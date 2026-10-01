@@ -129,7 +129,7 @@ def run():
         lines = [f"{label}：{n} 把 key 均不可用，最早解封 {ub}"
                  for label, n, ub in downs]
         lines.append("系统将在重置点自动恢复（日配额 0 点 / 高德搜索月初），无需操作。")
-        notifier.warn("\n".join(lines), key=key, cooldown=3600)
+        notifier.warn("\n".join(lines), key=key, cooldown=21600)
     else:
         notifier.resolve(
             "地图通道全部恢复：" + "、".join(oks) + " 均有可用 key。", key)

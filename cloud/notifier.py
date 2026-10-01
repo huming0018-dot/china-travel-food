@@ -49,9 +49,9 @@ INFO, WARN, ACTION, RESOLVED = "INFO", "WARN", "ACTION", "RESOLVED"
 LEVEL_TAG = {INFO: "🟢 播报", WARN: "🟡 自动处理中", ACTION: "🔴 需要你操作", RESOLVED: "✅ 已解决"}
 
 # 默认节奏 / 冷却 / 提醒计划（秒）—— 柔和模式：少打扰
-DEFAULT_CADENCE = 3600         # 例行播报 60 分钟（原10分钟）
-WARN_COOLDOWN = 7200           # 同类自动处理告警 2 小时（原1小时）
-ACTION_NUDGE = (86400, 86400, 86400)  # 首次后每天提醒一次，共3次（原30/60/60/120分钟4次）
+DEFAULT_CADENCE = 3600         # 例行播报 60 分钟
+WARN_COOLDOWN = 21600          # 同类自动处理告警 6 小时（原2小时，减少重复打扰）
+ACTION_NUDGE = (86400, 86400, 86400)  # 首次后每天提醒一次，共3次
 MAX_BODY = 1200
 
 

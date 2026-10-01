@@ -95,6 +95,22 @@ def build_broadcast():
     except Exception:
         pass
 
+    # ── 6. 未解决告警汇总 ──
+    try:
+        DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
+        ledger_f = DATA / "notifier_ledger.json"
+        ledger = json.loads(ledger_f.read_text(encoding="utf-8")) if ledger_f.exists() else {}
+        open_warnings = []
+        for key, rec in ledger.items():
+            if rec.get("level") == "WARN" and rec.get("state", "open") == "open":
+                open_warnings.append(key)
+        if open_warnings:
+            lines.append(f"⚠️ 待处理告警 {len(open_warnings)}个:")
+            for w in open_warnings[:5]:
+                lines.append(f"   · {w}")
+    except Exception:
+        pass
+
     return "\n".join(lines)
 
 
