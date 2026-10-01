@@ -39,7 +39,7 @@
 **⑤ 通知链路双通道验证通过**
 - `cloud/notifier.py` 的 `info(body,key=...)` 实测返回 True，Telegram（@ShanghaiFoodAtlasBot，经 TELEGRAM_API_BASE 反代）+ 飞书应用均收到测试消息；health 显示 Telegram/飞书应用已配置（飞书 webhook、ALERT_WEBHOOK 未配置，可忽略）。
 
-**待办（接续）**：ARK Doubao 联网实跑加固；回滚 168–232 占位叶重探；W1 集团/品牌/主厨树扩面（8by8、佐佐、福寿司、肉屋kita、Ministry of Crab 等）；Apify 充值（https://console.apify.com/billing，首轮 $10 封顶）或等 10-28 月度重置后续跑 worth_fill。
+**待办（接续）**：ARK Doubao 联网实跑加固；回滚 168–232 占位叶重探；W1 集团/品牌/主厨树扩面（8by8、佐佐、福寿司、肉屋kita、Ministry of Crab 等）；Apify 已充值完成（Starter $19/月已生效，预付$19额度+64GB/32并发，2026-10-01 PM确认）；worth_fill 可续跑，见 STATUS.md。
 
 ### 2026-10-01 晚：4 孤儿核实 + 代码/部署对齐审计 + 死脚本瘦身（只读核实，未 PATCH）
 
