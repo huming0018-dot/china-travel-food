@@ -10,6 +10,7 @@
 """
 import hashlib
 import os
+import re
 import sys
 import time
 from difflib import SequenceMatcher
@@ -94,11 +95,44 @@ def addr_core_sim(a, b):
     return SequenceMatcher(None, ca, cb).ratio()
 
 
+def area_tokens(addr):
+    """从库内地址提取可区分分店的区域 token：路名 + 商场/地标名。"""
+    a = (addr or "").strip()
+    toks = set()
+    for m in re.findall(r"[一-龥A-Za-z0-9]{1,8}?(?:路|街|大道|巷|弄)", a):
+        if len(m) >= 2:
+            toks.add(m)
+    for kw in ("购物中心", "合生汇", "来福士", "大悦城", "印象城", "步行街",
+               "百货", "商场", "大厦", "广场", "中心", "天地", "太古里",
+               "太古汇", "万达", "银泰", "恒隆", "环贸", "公园", "市场"):
+        i = a.find(kw)
+        if i >= 0:
+            toks.add(kw)                                   # 裸地标：足以区分不同商场
+            for back in (2, 3, 4):                          # 地标 + 前 2/3/4 字
+                t = a[max(0, i - back):i + len(kw)]
+                if len(t) >= len(kw) + 1:
+                    toks.add(t)
+    return toks
+
+
+def area_sim(db_address, cand):
+    """库内区域 token 在候选标题/地址中的命中比例 0~1。"""
+    toks = area_tokens(db_address)
+    if not toks:
+        return 0.0
+    hay = f"{cand.get('title', '')} {cand.get('address', '')}"
+    hit = sum(1 for t in toks if t in hay)
+    return hit / len(toks)
+
+
 def pick_best(results, db_name, db_address="", name_thresh=0.85):
     """从地图候选结果中选最匹配的。
     results: list of {title, address, tel, lng, lat, ...}
     返回 (best_dict, score) 或 (None, 0.0)。
     过滤：上海bbox + 店名相似度 >= name_thresh。
+    打分：店名0.55 + 路号0.25 + 商场/区域token0.20。
+    区域感知用于区分同品牌多分店（如合生汇店 vs 来福士店），保证只取正确分店，
+    绝不因正确分店无电话而误用其他分店号码（电话宁空不假）。
     """
     if not results:
         return None, 0.0
@@ -111,8 +145,9 @@ def pick_best(results, db_name, db_address="", name_thresh=0.85):
         if ns < name_thresh:
             continue
         as_ = addr_core_sim(db_address, r.get("address", ""))
-        score = ns * 0.6 + as_ * 0.4
-        scored.append((score, r))
+        ar_ = area_sim(db_address, r)
+        score = ns * 0.55 + as_ * 0.25 + ar_ * 0.20
+        scored.append((score, r, as_, ar_))
     if not scored:
         return None, 0.0
     scored.sort(key=lambda x: -x[0])
@@ -312,48 +347,62 @@ def resolve_poi(db_name, db_address="", db_district="", want_phone=False, want_c
         return cached
 
     def _chain():
-        # ① suggestion（店名+地址地标，最精确）
+        # 关键修复（跨源故障转移）：任一地图源配额耗尽都【不短路】，继续尝试下一源；
+        # 仅当腾讯与高德全部配额耗尽且零命中时，才在末尾回报 quota_exceeded。
+        quota_tencent = False
+        quota_amap = False
+
+        # ① 腾讯 suggestion（店名+地址地标，最精确）
         kw = db_name
         if db_address and not is_fake_address(db_address):
             kw = f"{db_name} {C.addr_core(db_address)}"
         res = tencent_suggestion(kw)
         if res == "QUOTA_EXCEEDED":
-            return {"quota_exceeded": True}
-        best, score = pick_best(res, db_name, db_address)
-        if best:
-            return {**best, "source": "tencent_suggestion", "score": score}
+            quota_tencent = True          # 同一把腾讯 key，search/geocode 大概率也耗尽
+        else:
+            best, score = pick_best(res, db_name, db_address)
+            if best:
+                return {**best, "source": "tencent_suggestion", "score": score}
 
-        # ② search（广义）
-        res = tencent_search(db_name)
-        if res == "QUOTA_EXCEEDED":
-            return {"quota_exceeded": True}
-        best, score = pick_best(res, db_name, db_address)
-        if best:
-            return {**best, "source": "tencent_search", "score": score}
+        # ② 腾讯 search（广义）；suggestion 已判配额耗尽则跳过，省一次调用
+        if not quota_tencent:
+            res = tencent_search(db_name)
+            if res == "QUOTA_EXCEEDED":
+                quota_tencent = True
+            else:
+                best, score = pick_best(res, db_name, db_address)
+                if best:
+                    return {**best, "source": "tencent_search", "score": score}
 
-        # ③ 高德 search
+        # ③ 高德 search（腾讯配额耗尽/无结果时照常继续，绝不硬停）
         if AMAP_AVAILABLE:
             res = amap_search(db_name)
             if res == "QUOTA_EXCEEDED":
-                return {"quota_exceeded": True}
-            best, score = pick_best(res, db_name, db_address)
-            if best:
-                return {**best, "source": "amap_search", "score": score}
+                quota_amap = True
+            else:
+                best, score = pick_best(res, db_name, db_address)
+                if best:
+                    return {**best, "source": "amap_search", "score": score}
 
-        # ④ geocoder（仅当有真实地址时）
+        # ④ geocoder（仅当有真实地址时）；search 与 geocode 是不同接口、配额分开
         if want_coord and db_address and not is_fake_address(db_address):
             full_addr = ensure_shanghai_prefix(db_address, db_district)
-            coord = tencent_geocode(full_addr)
-            if coord and in_shanghai(*coord):
-                return {"title": db_name, "address": full_addr, "tel": "",
-                        "lng": coord[0], "lat": coord[1],
-                        "source": "tencent_geocoder", "score": 0.5}
+            if not quota_tencent:
+                coord = tencent_geocode(full_addr)
+                if coord and in_shanghai(*coord):
+                    return {"title": db_name, "address": full_addr, "tel": "",
+                            "lng": coord[0], "lat": coord[1],
+                            "source": "tencent_geocoder", "score": 0.5}
             if AMAP_AVAILABLE:
                 coord = amap_geocode(full_addr)
                 if coord and in_shanghai(*coord):
                     return {"title": db_name, "address": full_addr, "tel": "",
                             "lng": coord[0], "lat": coord[1],
                             "source": "amap_geocoder", "score": 0.5}
+
+        # 仅当腾讯与（高德无 key 或高德也配额耗尽）时，才算整体配额耗尽
+        if quota_tencent and (not AMAP_AVAILABLE or quota_amap):
+            return {"quota_exceeded": True}
         return None
 
     out = _chain()

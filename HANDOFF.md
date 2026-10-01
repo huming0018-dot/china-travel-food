@@ -341,6 +341,21 @@ restaurants 增列：is_curated(默认false)、curate_badge(必吃/值得/精选
 
 - **【P1 数据驱动分母已落地】poi_counts.py**：每叶子 1 次高德 text(offset=1 读 count)，多 key 轮换/断点续跑，291 叶子全采集（中位≈16、53 个=0；key#0 撞日限换 key#1 完成）。喂账本后 **supply_source 全转 poi**：供给档 scarce133/normal40/rich118，**达标 17/291=6%、未达标 274、总缺口 867**（比启发式更双峰）。播报新增「开发进度」区块（work_progress.py + /app/data/work_progress.json，agent 持续写入）。
 
+### 2026-10-02 02:00 复盘：地图跨源故障转移 + 分店区域感知（已部署 live，见 lessons #80–82）
+
+**当日数据（Supabase 现网，约 02:10）**：restaurants total 1503 / active 1497；active 覆盖 phone 87.1%(1304)、location 99.7%(1493)、opening_hours 63.3%(947)、price_avg 99.9%(1495)。reviews total 1876（apify 138，全部 review_kind=diner；trust high715/mid230/low931；小红书955/高德921）；active 有评 1026(68.5%)；active 缺电话 193。chain_type 独立 934 / 小型连锁 471 / 大型连锁 76 / 资本化连锁 16。
+
+**核心机制修复（根因=机械短路，非语义）**：
+1. **跨源故障转移**：腾讯日配额 10-01 耗尽（dead 至 10-03 00:00），旧 `map_helpers.resolve_poi._chain()` 在腾讯返回 QUOTA 时**立即短路**，电话/amap 填充每轮只查 1 家就"提前终止"，无视健康的高德 2 key。已改为单源配额不短路、标记后继续高德；search/geocode 配额分开；仅腾讯+高德全耗尽才回报 quota。193 家扫描**零 QUOTA-STOP**。
+2. **分店区域感知**：新增 `area_tokens/area_sim`（路名 + 商场/地标裸词及前 2/3 字变体），`pick_best` 打分改为店名.55 + 路号.25 + 区域.20；同品牌多分店只选正确分店，正确分店无电话则留空、**绝不用错分店号码**。改匹配逻辑后已备份并清空 `/app/data/poi_cache.json`（旧错分店缓存，备份 poi_cache.json.bak_1002）。
+3. 实测：高德对"星巴克 外滩"正常返回 10 条含电话；"天天天妇罗（五角场合生汇）"正确选中合生汇店（该店高德无电话→留空）。本轮 193 缺电话店多为商场连锁，高德对正确分店未挂电话或按中文名 0 召回（部分登记为日文），电话宁空不假。
+
+**看门狗语义判定**：①真问题=地图无跨源故障转移（已修）；②噪声=account "unknown/基础设施"每 20 分钟重复，降级只记日志（Apify 已是评论主通道、不阻塞）；③接线缺口=review_fill 未拿到 AMAP_KEYS（env.sh 统一注入即可恢复，不另造 key）。
+
+**进程/调度**：容器 cron pid105 在跑、crontab 24 条齐全；gap_pool 常驻 pid127（账号死则空转）；主机 `food-apify-fill.service` active、0 重启，apify 评论持续增长。
+
+**待办（交 dev/PM）**：env.sh 导出 AMAP_KEYS/AMAP_SKS 供 review_fill；map_helpers 修复需 commit/push 并纳入镜像（容器重建否则回退）；account_a/b 重登需用户扫码（不阻塞）。
+
 ### 2026-09-28 细叶分发（招牌菜联动归类）：39 高置信入库（已写库/提交 a7196bb）
 
 **分工**：用户明确「细叶分发由本对话框（纯 DB、不依赖小红书登录），social listening 交开发」。背景：candidate_apply 收录只挂菜系根，细叶 n_active 恒 0。
