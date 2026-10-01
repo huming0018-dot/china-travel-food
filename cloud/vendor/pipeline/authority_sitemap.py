@@ -57,7 +57,9 @@ def _proj_root():
 
 
 PROJ = _proj_root()
-AUTH = PROJ / "research" / "authority"
+# 权威底册目录：FOOD_AUTHORITY_DIR 可指向持久卷（容器重建不丢），否则 <proj>/research/authority
+AUTH = pathlib.Path(os.environ.get("FOOD_AUTHORITY_DIR")
+                    or (PROJ / "research" / "authority"))
 SITEMAP_INDEX = "https://guide.michelin.com/sitemap.xml"
 LOCALE = "/sg/zh_CN"
 SH_MARK = "/shanghai-municipality/shanghai/restaurant/"
