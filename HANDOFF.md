@@ -10,6 +10,70 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-01 晚：4 孤儿核实 + 代码/部署对齐审计 + 死脚本瘦身（只读核实，未 PATCH）
+
+**① 4 家 active 且 chain_type=NULL 的孤儿店逐店核实（证据 + 建议载荷，本轮不直接 PATCH）**
+
+| rid | 库内现名 | 地址 | 结论 | 建议 chain_type | 建议正名 | 证据 |
+|-----|---------|------|------|----------------|---------|------|
+| 2006 | AJIYA炭火烤肉(仙霞路店) | 长宁区仙霞路333号1F | **小型连锁**：点评搜出 3 个独立分店页（仙霞路/静安店/徐汇正大乐城店），老客文"从最早的ajiya开始，每一家店都去过" | `小型连锁` | 现名已含分店后缀，无需改 | dianping shop Gad2SFYFpRwVsMHk / jwSqzR3RxjILYPlU / H7pR4x6O0fX4Ls9z；aquars.com 日籍商户名录列静安店江宁路445号 |
+| 2007 | 田口家·手打乌冬(禧瑞广场店) | 长宁区延安西路2088号禧瑞广场F1 | **独立**（单店品牌）：点评仅 1 页"田口家·手打乌冬·by喜都乃"；属喜都乃/和屋集团旗下子品牌，但品牌本身仅 1 店 | `独立` | `田口家·手打乌冬·by喜都乃(禧瑞广场店)`（补 ·by喜都乃） | dianping shop jDCOzQq7V5nrRPag；携程笔记两篇均标"by喜都乃"；电话 19921336298 与"大和屋喜都乃"同址同号 |
+| 2008 | 立食荞麦东京一味 | 黄浦区瑞金一路161号 | **独立**：B站探店视频明确"上海唯一一家立食荞麦店"，东京老板+上海老板娘自营；点评仅 1 页 | `独立` | `立食荞麦TOKYO ICHIMI东京一味`（补英文） | dianping shop l9GD8NcNouHX2RDl；B站 BV1wQQJYhEKX；rachelgouk.com 列唯一地址 |
+| 2009 | 都恩客(高岛屋店) | 长宁区虹桥路1438号高岛屋B1 | **大型连锁**：点评 5+ 分店（高岛屋/金虹桥/莲花路/晶耀前滩/Mini One啦啦宝都）；DONQ 1905 年神户创立，国际连锁 | `大型连锁` | 现名正确，无需改 | dianping shop H1hxBVh2qrDgSSve + EthR7HHVqu9o5rBo 等；donq.co.jp/shop/oversea/ 列上海高岛屋+浦东新金桥路；澎湃新闻报金虹桥第二店 |
+
+**建议 PATCH 载荷（达门槛可直接落）**：
+- 2006: `{chain_type: "小型连锁"}` — 可直接落
+- 2007: `{chain_type: "独立", name: "田口家·手打乌冬·by喜都乃(禧瑞广场店)"}` — 可直接落
+- 2008: `{chain_type: "独立", name: "立食荞麦TOKYO ICHIMI东京一味"}` — 可直接落
+- 2009: `{chain_type: "大型连锁"}` — 可直接落（DONQ 为国际百年连锁，5+上海分店）
+
+**② 代码/部署对齐审计（防 dianping_branch_list.py 容器重建丢失复发）**
+
+**部署机制证据链**：
+- `cloud/Dockerfile`：`COPY vendor/pipeline /app/pipeline` + `COPY *.py /app/cloud/` + `COPY crontab.txt entrypoint.sh` — **代码在 build 时烤进镜像**，不通过 volume 挂载。
+- `cloud/docker-compose.yml`：仅挂载 `fooddata:/app/data`（数据持久化）+ xhs cookies 只读卷。**/app/cloud 和 /app/pipeline 无 volume 挂载**。
+- `cloud/deploy.sh`：`docker build` 或 load 镜像 tar → `docker compose up -d`。
+- `cloud/entrypoint.sh`：容器启动时 `crontab /app/cloud/crontab.txt` 写 crontab，然后 `cron` 常驻。
+- **结论**：容器(重)建后，/app/cloud 和 /app/pipeline 完全从仓库 COPY 恢复。不在仓库的文件=重建即丢。
+
+**crontab 全部脚本对账（live crontab -l vs 仓库 crontab.txt）**：
+- 21 个 /app/cloud/ 脚本 + 5 个 /app/pipeline/ 脚本全部在仓库对应目录存在 ✅
+- **live crontab 与仓库 crontab.txt 差异**（另一 agent 正在接线，本轮不改）：
+  - live 已移除 #19 post_audit.py 07:47 那行（注释保留但无 schedule），改由 #28 reconcile.py 接管 07:47。
+  - live 新增 #27 dianping_daily.py 06:40 + code_audit.py 周一03:30 + #28 reconcile.py 07:47。
+  - **风险**：entrypoint.sh 每次容器启动都会 `crontab /app/cloud/crontab.txt`，若容器 restart（非 rebuild），live crontab 会被仓库版覆盖，丢失上述手动改动。建议另一 agent 接线完成后把 live 差异回写仓库 crontab.txt。
+
+**容器有而仓库无的文件（重建即丢，均非 cron 引用）**：
+| 文件 | 位置 | 处置 |
+|------|------|------|
+| cloud_review_fill.py | /app/cloud/ | 仓库已归档为 `cloud/vendor/_archived/cloud_review_fill.retired.py`；watchdog.py WATCH 列表仍字符串引用但无 cron。**不补回**（已退役） |
+| source_registry.py | /app/cloud/ | P5 信源注册表早期原型；实际跑的是 wechat_source_registry.py。**不补回** |
+| make_deploy_env.py | /app/cloud/ | 一次性 env 生成器。**不补回** |
+| subcategory_noodle_coverage.py | /app/cloud/ | 仓库已有 vendor/pipeline/ 版本；cloud/ 下为历史漂移副本。**不补回** |
+| fix_fact.py / full_audit.py / full_audit2.py / qnan.py | /app/pipeline/ | 一次性审计/修复脚本，无 import 引用。**不补回** |
+| web_chat_providers.py | /app/pipeline/ | 仓库已归档为 retired；model_providers.py 不 import 它。**不补回** |
+| warning_handler.py | /app/pipeline/ | 仓库已有 cloud/warning_handler.py。**不补回**（重复） |
+| env.sh / *.json 运行时产物 | 各处 | entrypoint.sh 运行时生成 / 数据文件，**不入库** |
+
+**关键确认**：dianping_branch_list.py 已在仓库 cloud/ 且 git tracked（`git ls-files` 确认），Dockerfile `COPY *.py` 会带走。✅ 复发风险已消除。
+
+**③ 死脚本瘦身清单**
+
+| 文件/目录 | 分类 | 处置 |
+|-----------|------|------|
+| batch6_work/ (488K) | 一次性 probe/dump + todo 分区，无引用 | **已删**（rm -rf） |
+| batch8_work/ (80K) | 一次性实验脚本，LEDGER.md 引用指向已不存在的 _b8_upsert.py（stale） | **已删** |
+| shard_s12_submit.py（仓库根） | 活跃 shard 提交工具，imports cloud/findings_extractor.py，对应 research/post_record/findings_s12.jsonl | **保留** |
+| cloud/_diag_tree.py | 一次性菜系树诊断，只读，无 cron | **保留**（ops 诊断工具，1.6K） |
+| cloud/_inspect_pool.py | /proc 进程巡检工具 | **保留**（ops 工具，0.7K） |
+| cloud/_stop_pool.py | 紧急停 gap_pool worker | **保留**（ops 工具，1K） |
+| cloud/fix_paths.py | Dockerfile build 时 `RUN python /app/cloud/fix_paths.py` | **必须保留**（构建环节） |
+| ../_xhs_*.py（父目录 7 个） | XHS 扫码登录调试脚本，在仓库外 | **不动**（不在 repo 边界内） |
+| research/post_record/ | 活跃 shard 工作区（s01-s12 findings + ledgers） | **保留** |
+| research/bridge/frontend_data_contract.md | 前端数据契约设计稿 | **保留/入库** |
+
+---
+
 ### 2026-10-01 免费机制项：全量判重闭环 + release_audit 可移植并前置三门（已写库/已部署）
 
 **背景**：Apify 额度耗尽（剩约 $0.00067→http402）、方舟 LLM key 为空，本轮只推进**不依赖充值/密钥**的免费机制项。
