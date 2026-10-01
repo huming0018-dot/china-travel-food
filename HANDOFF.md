@@ -10,7 +10,30 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
-### 2026-10-01 深夜：Apify 采集根修复（统一实体匹配 + keywords 字段 + 熔断/硬 bound）
+### 2026-10-01 深夜【最终根因·已闭环】：opspilot 查询字段是 `keyword`（单数字符串），不是 `keywords` 数组
+
+**关键纠正（推翻上一版判断）**：上一版以为 opspilot 输入是 `keywords`（复数数组）。实测 dump 原始 dataset 后发现：传 `{"keywords":[...]}` 虽不报错，却被**静默忽略**，actor 回退到默认硬编码泛搜 **"美食推荐"**（每个返回项 `"keyword":"美食推荐"`），结果全是 viral 家常菜教程 + noteType=ads 广告，且忽略 maxItems（传6返20）。
+
+- **正确输入**：`{"keyword": "<单个查询字符串>"}`（readme 明确 "a single search query"；store 示例 `keyword:"东京旅游"`、`keyword:"护肤"`）。定价 **$0.10 / actor start**（固定、可预测，非按结果计费）。
+- **验证**：`{"keyword":"Jean Georges 上海"}` → 回显 keyword 正确、20 条中 19 条可锚定（17"搜索目标在正文"+2"核心专名"）。
+- 旧控制器曾用单数 `keyword` 得到 http400，根因是 body 里混了其他非法字段（如把 maxItems 放进 body / 额外未知字段触发 additionalProperties 校验），**不是 keyword 字段本身错**；最小 body 仅含 keyword 即 201 成功。
+
+**端到端首批（已落库，真实食客内容，含正/负面）**：`review_apify_fill.py --provider opspilot --apply --limit 6`
+- 6 家（Jean Georges 1137 / 鮨升 1987 / MIYARAKU 1925 / 菁禧荟北外滩 1472 / 菁禧荟BFC 494 / 雍福会 1008），**本批落库 15 条** diner/mid 真实评论；apify 来源评论累计 **76 条**（全表 reviews 1814）。
+- 内容真实且有正有负（如"除了酸没别的""这也太难吃了""菜品平平无奇" 与 "水准在线""每道菜都好吃"），符合"真实口味、宁空不假"。
+- 成本：6 runs ≈ **$0.60**。
+
+**采集器本版改动（review_apify_fill.py，四处已对齐：repo `cloud/`、主机 `/home/ubuntu/food-apify-fill/`、容器 `/app/cloud/`）**：
+1. opspilot body 改为 `{"keyword": keyword}`（删除 body 内 maxItems，maxItems 只走 run params）。
+2. `select_targets` 排序：主流可公开发现店在前，`DEFER_NAME=私房|私厨|会所|俱乐部|会馆` 等冷门邀约制店置后（963=953主流+10置后），保证首批金丝雀可靠。
+3. preflight 由"首店 0 即熔断"升级为 **`PREFLIGHT_CONFIRM=2` 双确认**：连续 2 个正常返回的主流目标都 0 采信才判定系统性失效（最多浪费 2 runs），中途任一达标即健康。
+4. 阈值：maxTotalChargeUsd 0.30、memory 512、PER_RUN_FLOOR 0.15、ROUND_CAP 2.0、每店 need 2。
+
+**遗留/后续**：① 鮨升关键词命中差（18/20 跑题，疑似常用名不同），需查别名；② 菁禧荟两店返回多为"合集"listicle；③ 其余 provider（zenstudio `keyword`/toolzerhub `query`/atomus `keywords`）字段沿用、放量前需各自单店验证；④ 陪拍/合集/无口味信号笔记已正确过滤。
+
+---
+
+### 2026-10-01 深夜：Apify 采集根修复（统一实体匹配 + keywords 字段 + 熔断/硬 bound）〔注：本段"keywords 字段"判断已被上方最终根因推翻〕
 
 **背景**：Starter $19 被烧到剩 $0.062，大量店"笔记20 采信0"或 http400 跳过。journalctl + 离线诊断锁定三条根因。
 

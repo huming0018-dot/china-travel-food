@@ -80,6 +80,11 @@ ROUND_CAP_USD = float(os.environ.get("APIFY_ROUND_USD", "2.0"))
 MAX_CHARGE_USD = float(os.environ.get("APIFY_MAX_CHARGE_USD", "0.30"))
 # preflight：第一家正常返回但采信数 < 此值 → 熔断本轮（防系统性错配烧钱）。
 PREFLIGHT_MIN = int(os.environ.get("APIFY_PREFLIGHT_MIN", "1"))
+# 双确认：连续 N 个“正常返回”的主流目标都 0 采信才判定 actor 系统性失效，
+# 避免单个冷门/难锚定目标造成误熔断（最多浪费 N 次运行）。
+PREFLIGHT_CONFIRM = int(os.environ.get("APIFY_PREFLIGHT_CONFIRM", "2"))
+# 冷门、邀约制、几乎无公开 UGC 的业态：在目标排序中置后，不当首批金丝雀。
+DEFER_NAME = re.compile(r"私房|私厨|会所|俱乐部|会馆")
 
 
 def remaining_credit():
@@ -122,8 +127,9 @@ def apify_search(provider, keyword, max_items=6, timeout=160):
         body = {"searchType": "search", "keywords": [keyword],
                 "maxItems": max_items, "sortType": "popularity_descending"}
     elif provider == "opspilot":
-        # 正确字段是 keywords（复数数组）；单数 keyword 必 http400 invalid-input。
-        body = {"keywords": [keyword], "maxItems": max_items}
+        # 正确字段是 keyword（单数字符串）。传 keywords 复数数组虽不报错，却会被
+        # 静默忽略、回退到默认泛搜“美食推荐”，返回一堆家常菜/广告（2026-10-01 实测）。
+        body = {"keyword": keyword}
     else:  # zenstudio
         body = {"keyword": keyword, "maxItems": max_items}
     endpoint = PROVIDERS[provider]["run"]
@@ -247,7 +253,10 @@ def select_targets(idx, need):
             continue
         targets.append({"id": rid, "name": d["name"],
                         "price_avg": C.to_int(r.get("price_avg")) or 0})
-    targets.sort(key=lambda r: (-r["price_avg"], r["id"]))
+    # 主流独立/可公开发现的店在前（可靠金丝雀 + 价值主体）；
+    # 私房菜/私厨/会所/俱乐部/会馆等冷门、邀约制、几乎无公开 UGC 的店置后。
+    targets.sort(key=lambda r: (1 if DEFER_NAME.search(r["name"]) else 0,
+                                -r["price_avg"], r["id"]))
     return targets
 
 
@@ -306,7 +315,8 @@ def run(apply, limit, need, provider=DEFAULT_PROVIDER):
 
     batch = targets[:limit]
     written, blocked, empty = 0, 0, 0
-    preflight_done = False
+    preflight_obs = 0          # 已“正常返回”的 preflight 观察目标数
+    preflight_healthy = False  # 任一目标采信≥阈值 → actor 健康，永不熔断
     for i, rest in enumerate(batch):
         rid, name = rest["id"], rest["name"]
         base = EM.strip_branch(name)
@@ -383,14 +393,20 @@ def run(apply, limit, need, provider=DEFAULT_PROVIDER):
             empty += 1
         print(f"  [{rid}] {name[:22]} ← 笔记{len(notes)} 采信{got} {reason_ct if reason_ct else ''}")
 
-        # preflight 熔断：第一家“正常跑完但 0 采信”→ 系统性错配/失效，停止本轮并告警。
-        if not preflight_done:
-            preflight_done = True
-            if got < PREFLIGHT_MIN:
-                print(f"[PREFLIGHT 熔断] 首店正常返回但采信 {got} < {PREFLIGHT_MIN}，"
-                      "判定 actor/查询系统性失效，本轮停止以免继续烧钱；已告警。")
+        # preflight 双确认：仅当连续 N 个“正常返回”的主流目标都 0 采信，
+        # 才判定 actor/查询系统性失效并熔断；中途任一目标达标即视为健康。
+        if not preflight_healthy:
+            preflight_obs += 1
+            if got >= PREFLIGHT_MIN:
+                preflight_healthy = True
+            elif preflight_obs >= PREFLIGHT_CONFIRM:
+                print(f"[PREFLIGHT 熔断] 前 {preflight_obs} 个主流目标正常返回但均 0 采信 "
+                      f"(< {PREFLIGHT_MIN})，判定 actor/查询系统性失效，本轮停止以免继续烧钱；已告警。")
                 _alert_preflight(provider, name, reason_ct)
                 break
+            else:
+                print(f"[preflight {preflight_obs}/{PREFLIGHT_CONFIRM}] 首目标 0 采信，"
+                      "再用下一个主流目标确认（避免单店误判）。")
         if current_used() - round_start_used >= ROUND_CAP_USD:
             print(f"[轮次门] 本轮真实花费达 ${ROUND_CAP_USD:.2f}，暂停。")
             break
