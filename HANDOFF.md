@@ -3765,3 +3765,10 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 行 schema 冻结：source_id/platform/category/url/fields_available/channel/tos_pipl/risk_level/rate_limit/cost/dine_in_evidence/strong_cuisines/active/covered_grid/notes；枚举已固定。
 - 完整性：每「菜系×场景」格 ≥3 独立源、至少 1 个 dine_in_evidence=true。
 - cloud/apify_ingest.py 已写好（sian.agency actor、预算闸门、checkpoint、JSONL 输出），等 APIFY_TOKEN 后跑；不部署 cron。
+
+## 2026-10-01 Source Coverage Registry 总集成
+- 注册表：research/coverage/source_registry.jsonl（99 源，按 12 类分布：OPEN_API14/UGC13/DATA_MARKET12/OVERSEAS11/REGISTRY9/MEDIA_TV8/GUIDE7/MEDIA7/OFFICIAL7/LONGFORM4/SHORTVIDEO4/MAP3）。
+- 漏店反推：missed_store_proof.md（10 家漏店 8 家因 XHS 通道断，Apify 上线即补）。
+- 格缺口：grid_gap_analysis.md（最大缺口=小红书 UGC「已存在但未跑」，非源不存在）。
+- 推荐接入顺序：① Apify XHS（sian.agency）→ ② 点评分店列表（已跑）→ ③ 地图配额（已跑）→ ④ 米其林/黑珍珠 sitemap（已跑）→ ⑤ TimeOut/SmartShanghai RSS → ⑥ 海外 Instagram/TripAdvisor → ⑦ 知乎 developer API。
+- apify_ingest.py 已就绪，待 APIFY_TOKEN 跑免费小样。
