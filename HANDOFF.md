@@ -3686,3 +3686,11 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 学到系数：price=-0.38、indep=-0.35、small=+0.55、large=-0.20、premade=-0.29、ck=-0.29；avg_rating/std/neg 被正则压 0（现有口味特征与人工三档弱相关）。
 - 硬规则下架：23 店（ck=确认 或 premade=高）；模型拟入选 69 店。
 - 输出 /app/data/post_record/curate_v4_dryrun.json；**v4 dry-run 未写库**，curate_score.py 05:52 cron 不变，待用户确认 apply；是移出精选层/降权，不删店、不动电话/坐标/营业时间。
+
+## 2026-10-01 curate v4 dry-run v2（取数列修正后，ML 不达标）
+- **取数列修正**：rating_taste/rating_total 全空；真实口味分改用 aspect_taste（缺失回退 aspect_json.amap_rating）；XHS verified-diner 与高德聚合分拆为两组特征，食客分按 visit_date 180 天半衰期加权，产出近因/n_ind/负评%/分歧。
+- **平凡基线**：三档多数类=49.6%、二分类多数类=50.4%。
+- **模型结果**：二分类 5-fold OOS acc=44.7%（**未跑赢基线**），P=0.46 / R=0.50；标准化系数：price=-0.27、indep=-0.23、small=+0.29、premade=-0.15、ck=-0.15（方向符合预期但均微弱，n_ind=2.3 vs 1.5 反常识）。
+- **结论**：当前特征不支持学习型准入，**ML 门暂缓**，待更多 verified-diner 口味证据补齐后再训。
+- **(A) 硬规则可独立 apply**：ck=确认 或 premade=高 → 23 家直接移出精选（确定性、不依赖模型）。
+- **(B) ML 门**：n_ind≥2 且非疑似预制的 eligible=226；模型拟入选 53 家，但因不跑赢基线暂不接管。
