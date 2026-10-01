@@ -10,6 +10,25 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 上午【collector·Apify 采集 v4 已交付并 live】：每店封顶 + 查询阶梯 + 持久熔断 + 日预算 + notify_cli
+
+**触发**：用户对 Apify 采集极不满意（$44.93 被烧、"笔记20 采信0"、失控重跑），主线 #44「优化 Apify 采集方案」。策略文档 `cloud/APIFY_OPTIMAL_PLAN.md`（v1）。
+
+**烧钱归因（全量 539 runs 实测）**：毛额 $44.93/折后 $39.95；opspilot **344 runs/$34.40（$0.10/start）**，shops_done 仅 **37**。其中 341 次失控 run 发生在 **10-01 T10–11(131)、T16–18(210)**（约100/小时，旧循环无封顶、无持久熔断，对同批目标反复重跑），**早于 v2 控制器（10-02 00:32 启动）**。名店裸搜品牌词典型 `新荣记 ← 笔记20 采信0 {'合集':19}`。
+
+**已落地（三处对齐：repo `cloud/`、主机 `/home/ubuntu/food-apify-fill/`、容器 `/app/cloud/`）**：
+1. `review_apify_fill.py` **v4**（以 HEAD e2dadf5 v3 为基座、按最新 API 重写）：①每店 attempts 台账，每周期最多 2 次、超限转 deferred；②查询阶梯 q1=品牌 分店 上海 → 0 采信 q2=品牌 分店 招牌菜 堂食 上海（招牌菜取 signature_dishes）；③持久熔断 state.circuit（指数退避 3→6→12→24h），仅连续 2 个「纯跑题(0锚定、合集<5)」才熔断，合集主导/有锚定不熔断；④日预算=剩余额度/本月剩余天数，超 ROUND_CAP=$2/日预算则睡到次日 00:05；⑤合集写 roundup_queue.jsonl（url 去重）；⑥主机安全 `_notify`：容器内走 notifier、主机落 alert_queue.jsonl；⑦默认离线不付费，`--fetch` 才付费、`--apply` 才写库、`--guard` 输出 `@@STATUS`。
+2. `apify_fill_controller.sh` **v3**：循环跑 `--fetch --apply --guard --limit 12`，解析 @@STATUS，`drain_alerts` 把 alert_queue 多条聚合为一条（按最高级别 action>warn>info）经容器投递后清空；NO_CREDIT/DAILY_CAP/CIRCUIT_WAIT 按脚本给的秒数长睡（NO_CREDIT=4h），DONE 收尾 exit。
+3. `notify_cli.py`（**新增**）：notifier.py 无 CLI（纯模块 info/warn/action/resolve），本脚本补 CLI（level/key 走 argv、正文走 stdin）；已 `docker cp` 进容器 `/app/cloud/`，自检与充值 action 均 **delivered**（TG+飞书）。**重建镜像须纳入。**
+
+**live 验证（06:34）**：`@@STATUS NO_CREDIT 14400 remaining=$0.002` → 聚合 action 充值卡 delivered → 队列清空(0) → 睡 4h，刷屏根治、不烧钱。
+
+**当前额度/预算**：STARTER cap $40 / used $39.998 / **remain $0.002**（未获明确充值同意前不触发付费）。worth_fill **986（924独立+62优质）**，select 残余 **944**。完成预算：最坏 944×1.25≈$118，免费缩分母后约 $60–80；$40/月约 300–350 店/月。方案 A $40/月、B 一次性 $80–120、C 极限免费（见 APIFY_OPTIMAL_PLAN.md）。
+
+**仍待**：①用户拍板充值/等月度重置；②dev 把地图修复 e2dadf5 与 notify_cli 纳入镜像构建；③env.sh 导出 AMAP_KEYS/AMAP_SKS 供 review_fill；④合集 roundup_queue 的完整挖掘器尚未建（v4 只入队）。教训沉淀 #83–87。
+
+---
+
 ### 2026-10-02 清晨【dev 统一写入门 gate_apply + 错挂修复 repair_misanchor 已交付】：commit `81211b9`
 
 **起因**：用户反复指出「跑过联网搜索后前后端状态没联动、连锁 518 vs apply 58」，这是**底层机制断点**：发现写进 findings 后没有统一、过闸、可审计的应用路径，旧 `post_audit` 单源即挂硬标、`reconcile.stage_curate` 直写未过 gate，标签变化也不确定驱动精选重算。本会话交付唯一写入门并修复了一批真实错挂。

@@ -1,70 +1,53 @@
 #!/bin/bash
-# 上海美食图鉴 · worth_fill Apify 自动填充常驻控制器（v2，2026-10-02）
-#  - 质量优先：opspilot($0.10/次,固定~20条,已验证19/20相关) 为主；zenstudio 备用；
-#    toolzerhub 早前烧钱且质量差，移出默认顺序。
-#  - 单次脚本调用由 review_apify_fill.ROUND_CAP_USD=2.0 封顶（约20 runs/调用）。
-#  - 额度低于 FLOOR 自动等待，充值/月度重置后续跑；全程云端 systemd，不依赖 deuce/MacBook。
-cd /home/ubuntu/food-apify-fill || exit 1
-set -a; . ./fill.env; set +a
-export FOOD_DATA_DIR=/home/ubuntu/food-apify-fill
-export FOOD_PIPELINE_DIR=/home/ubuntu/food-apify-fill
+# 上海美食图鉴 · worth_fill Apify 自动填充常驻控制器（v3，2026-10-02）
+#  - 调度智能全部在 review_apify_fill.py（v4）：每店 attempts 封顶、q1/q2 查询阶梯、
+#    持久熔断、日预算闸门；本脚本只负责循环、解析 @@STATUS、排空告警。
+#  - 脚本默认离线不付费；这里显式 --fetch --apply --guard。
+#  - 主机无 notifier：脚本把告警落 alert_queue.jsonl，本控制器聚合为【一条】经容器转发后清空，
+#    额度耗尽只在状态变化/每日首条时提醒，随后长睡，不再每 20 分钟刷屏。
+set -u
+DIR=/home/ubuntu/food-apify-fill
+BATCH=12
 
-NOTIFY(){ # level key body
-  body="$3"
-  sudo docker exec -i food-cloud bash -lc ". /app/cloud/env.sh; cd /app/cloud; python3 -c \"import notifier,sys; getattr(notifier,sys.argv[1])(sys.argv[2], key=sys.argv[3])\" \"$1\" \"$body\" \"$2\"" >/dev/null 2>&1 || true
+# 经容器 notifier 投递：level/key 为固定枚举，正文走 stdin（可含换行/引号）
+# 容器内 notifier.py 无 CLI，统一由 notify_cli.py 分发（需已 docker cp 进 /app/cloud）。
+deliver() {
+  sudo docker exec -i food-cloud bash -c \
+    '. /app/cloud/env.sh; python3 /app/cloud/notify_cli.py "$@"' _ "$1" "$2"
 }
 
-ORDER="opspilot"
-FLOOR=0.25
-WAIT=1200
-
-state_vals(){
-  eval "$(python3 - <<'PY'
-try:
-    import review_apify_fill as F
-    import entity_match as EM
-    try:
-        rem = F.remaining_credit()
-    except Exception:
-        rem = 0.0
-    idx = EM.get_index()
-    targ = len(F.select_targets(idx, 2))
-    print('REM=%.4f' % rem)
-    print('TARG=%d' % targ)
-except Exception as e:
-    # 关键：导入/查询异常用 -1 错误哨兵，绝不能被当成“全部完成(0)”
-    print('REM=0.0')
-    print('TARG=-1')
-    print('ERR=%s' % str(e)[:120])
-PY
-)"
+# 排空 alert_queue.jsonl：多条合并成一条，按最高级别投递，然后清空
+drain_alerts() {
+  local AQ="$DIR/alert_queue.jsonl"
+  [ -s "$AQ" ] || return 0
+  local lvl=info
+  grep -q '"level": "action"' "$AQ" && lvl=action
+  [ "$lvl" = info ] && grep -q '"level": "warn"' "$AQ" && lvl=warn
+  python3 -c "import json,sys;print('\n'.join(json.loads(l)['body'] for l in open(sys.argv[1])))" "$AQ" \
+    | deliver "$lvl" guard_batch
+  : > "$AQ"
 }
 
 while true; do
-  state_vals
-  echo "[$(date '+%F %T')] remaining=\$$REM targets=$TARG ${ERR:+err=$ERR}"
-  if [ "${TARG:-0}" = "-1" ]; then
-    echo "STATE ERROR, retry in 120s"; sleep 120; continue
-  fi
-  if [ "${TARG:-0}" = "0" ]; then
-    NOTIFY info fill_done "worth_fill 队列已全部补齐真实食客口味证据，可停用本填充服务。"
-    echo "ALL DONE"; sleep 86400; continue
-  fi
-  if python3 -c "import sys;sys.exit(0 if float('${REM:-0}')>=$FLOOR else 1)"; then
-    :
-  else
-    NOTIFY warn fill_credit "Apify 本月额度仅剩 $REM 美元（运行地板 $FLOOR），worth_fill 暂停。到 console.apify.com/billing 充值；下月额度重置后本服务自动续跑，无需重启。"
-    sleep $WAIT; continue
-  fi
-  for prov in $ORDER; do
-    echo "=== pass provider=$prov $(date '+%T') ==="
-    python3 review_apify_fill.py --provider "$prov" --apply --limit 30
-    state_vals
-    [ "${TARG:-0}" = "-1" ] && { sleep 60; break; }
-    [ "${TARG:-0}" = "0" ] && break
-    python3 -c "import sys;sys.exit(0 if float('${REM:-0}')>=$FLOOR else 1)" || break
-    sleep 5
-  done
-  NOTIFY info fill_round "Apify 填充一轮结束：剩余待补 $TARG 家，本月剩余额度约 $REM 美元。"
-  sleep 30
+  OUT=$(cd "$DIR" && set -a && . ./fill.env && set +a && \
+        python3 review_apify_fill.py --fetch --apply --guard --limit "$BATCH" 2>&1)
+  echo "$OUT"
+  LINE=$(echo "$OUT" | grep '@@STATUS' | tail -1)
+  drain_alerts
+  CODE=$(echo "$LINE" | awk '{print $2}')
+  SL=$(echo "$LINE" | awk '{print $3}')
+  case "$CODE" in
+    DONE)
+      echo "worth_fill 全部达标，控制器退出。"
+      printf '%s' "worth_fill 已全部达到目标，Apify 自动填充完成。" | deliver info guard_done
+      exit 0
+      ;;
+    NO_CREDIT|TOKEN_BAD|CIRCUIT_WAIT|DAILY_CAP|ROUND_CAP)
+      echo "[$CODE] 睡 ${SL:-1800}s"
+      sleep "${SL:-1800}"
+      ;;
+    *)
+      sleep "${SL:-30}"
+      ;;
+  esac
 done

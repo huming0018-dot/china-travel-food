@@ -1,24 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""review_apify_fill.py — 账号无关的真实食客评价兜底回填（v3：统一实体匹配 + 熔断 + 硬 bound）。
+"""review_apify_fill.py — 账号无关的真实食客评价兜底回填（v4：每店封顶 + 查询阶梯 + 持久熔断 + 日预算）。
 
-v3 根修复（针对 Starter $19 被烧、"笔记20 采信0"）：
-  1. 实体锚定统一复用 entity_match（品牌多形态 + 前缀/二元索引 + 分店消歧 + 证据化合集），
-     不再用本脚本旧的"完整长店名子串"粗糙匹配（曾 78% 真实食客笔记被误判"正文无目标店"）。
-  2. opspilot 输入字段修正为 keywords（复数数组）；旧 keyword（单数）必 http400。
-  3. 每次运行带 maxTotalChargeUsd 硬上限 + memory=512，杜绝单次运行超收。
-  4. 首店即 preflight：第一家"正常返回但 0 采信"即熔断本轮并告警，不为系统性错配持续烧钱。
+v4 根修复（方案见 cloud/APIFY_OPTIMAL_PLAN.md；针对 $44.93 被烧、"笔记20 采信0"、失控重跑）：
+  1. 每店尝试台账 attempts，每周期最多 MAX_SHOP_ATTEMPTS(2) 次；超限转 deferred，治失控重跑
+     （10-01 旧循环 344 runs 仅完成 37 店）。
+  2. 查询阶梯：q1=品牌 分店 上海；0 采信则 q2=品牌 分店 招牌菜 堂食 上海，绕开名店裸搜 19/20 合集。
+  3. 持久全局熔断 circuit（指数退避 3→6→12→24h），跨脚本调用；熔断前区分「查询问题
+     (合集/有锚定)」与「actor 问题(纯跑题 0 锚定)」，治外层重启重置 preflight。
+  4. 日预算闸门 daily allowance，把月度上限摊平，根治月初一天烧光。
+  5. 合集写入 roundup_queue.jsonl 供覆盖扩容挖掘（不计口味证据）。
+  6. 主机安全 _notify：容器内走 notifier，主机落 alert_queue.jsonl，由控制器 docker-exec 排空转发。
+  7. 默认离线（不付费）；--fetch 才调用付费 actor，--apply 才写库；控制器用 --fetch --apply --guard。
 
-成本口径（2026-10-01 真实账单）：Apify 按「每次运行启动 + 内存×时长」计费，非按条。
-  余额门 / 轮次门一律用账单 API 真实值，不用内部估算。
-
-用法（容器内，cd /app/cloud && . ./env.sh）：
-  python3 review_apify_fill.py            # dry-run
-  python3 review_apify_fill.py --apply    # 写入
-  --limit N   本轮最多处理几家（默认 12）
-  --need N    每店目标独立口味证据数（默认 2）
+实体锚定统一复用 entity_match（anchor_note 返回 (rid, reason)）；账单 API 为权威门。
+用法：
+  python3 review_apify_fill.py                       # 离线计划，不付费
+  python3 review_apify_fill.py --fetch               # 真实抓取（不写库）
+  python3 review_apify_fill.py --fetch --apply       # 抓取并写库
+  python3 review_apify_fill.py --fetch --apply --guard  # 自治模式，输出 @@STATUS
 """
 import argparse
+import calendar as _calendar
+import datetime
 import json
 import os
 import pathlib
@@ -27,10 +31,11 @@ import sys
 import time
 
 HERE = pathlib.Path(__file__).resolve().parent
-PIPE = pathlib.Path(os.environ.get("FOOD_PIPELINE_DIR", "/app/pipeline"))
-DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
-sys.path.insert(0, str(HERE))
-sys.path.insert(0, str(PIPE))
+PIPE = pathlib.Path(os.environ.get("FOOD_PIPELINE_DIR") or (HERE / "vendor" / "pipeline"))
+DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR") or HERE)
+for p in (str(HERE), str(PIPE), str(HERE / "vendor" / "pipeline"), "/app/pipeline"):
+    if p and p not in sys.path:
+        sys.path.insert(0, p)
 
 import requests  # noqa: E402
 import common as C  # noqa: E402
@@ -49,20 +54,22 @@ def _load_token():
 
 TOKEN = _load_token()
 STATE_F = DATA / "apify_fill_state.json"
+ROUNDUP_QUEUE = DATA / "roundup_queue.jsonl"
+ALERT_QUEUE = HERE / "alert_queue.jsonl"
 
 PROVIDERS = {
     "opspilot": {
         "run": ("https://api.apify.com/v2/acts/opspilot.cc~xiaohongshu-keyword-search-scraper"
                 "/run-sync-get-dataset-items"),
-        "price_per_run": 0.0},
+        "price_per_run": 0.10},
     "zenstudio": {
         "run": ("https://api.apify.com/v2/acts/zen-studio~rednote-search-scraper"
                 "/run-sync-get-dataset-items"),
-        "price_per_run": 0.0},
+        "price_per_run": 0.17},
     "toolzerhub": {
         "run": ("https://api.apify.com/v2/acts/toolzerhub~rednote-xiaohongshu-search-scraper"
                 "/run-sync-get-dataset-items"),
-        "price_per_run": 0.10},
+        "price_per_run": 0.021},
     "atomus": {
         "run": ("https://api.apify.com/v2/acts/atomus~xiaohongshu-scraper"
                 "/run-sync-get-dataset-items"),
@@ -70,23 +77,19 @@ PROVIDERS = {
 }
 DEFAULT_PROVIDER = os.environ.get("APIFY_PROVIDER", "opspilot")
 
-FREE_COST_CAP = float(os.environ.get("APIFY_FREE_COST_USD", "0.50"))
-FREE_NOTE_CAP = int(os.environ.get("APIFY_FREE_NOTE_CAP", "100"))
 PER_NOTE_PAUSE = float(os.environ.get("APIFY_NOTE_PAUSE", "4.0"))
-MIN_REMAINING_USD = float(os.environ.get("APIFY_MIN_REMAINING_USD", "1.00"))
 PER_RUN_FLOOR_USD = float(os.environ.get("APIFY_PER_RUN_FLOOR_USD", "0.15"))
 ROUND_CAP_USD = float(os.environ.get("APIFY_ROUND_USD", "2.0"))
-# 单次运行计费硬上限（Apify run option maxTotalChargeUsd），超过即中止该 run、不超收。
 MAX_CHARGE_USD = float(os.environ.get("APIFY_MAX_CHARGE_USD", "0.30"))
-# preflight：第一家正常返回但采信数 < 此值 → 熔断本轮（防系统性错配烧钱）。
-PREFLIGHT_MIN = int(os.environ.get("APIFY_PREFLIGHT_MIN", "1"))
-# 双确认：连续 N 个“正常返回”的主流目标都 0 采信才判定 actor 系统性失效，
-# 避免单个冷门/难锚定目标造成误熔断（最多浪费 N 次运行）。
+MAX_SHOP_ATTEMPTS = int(os.environ.get("APIFY_MAX_SHOP_ATTEMPTS", "2"))
 PREFLIGHT_CONFIRM = int(os.environ.get("APIFY_PREFLIGHT_CONFIRM", "2"))
-# 冷门、邀约制、几乎无公开 UGC 的业态：在目标排序中置后，不当首批金丝雀。
+CIRCUIT_COOLDOWN_0 = int(os.environ.get("APIFY_CIRCUIT_COOLDOWN_0", str(3 * 3600)))
+CIRCUIT_COOLDOWN_MAX = int(os.environ.get("APIFY_CIRCUIT_COOLDOWN_MAX", str(24 * 3600)))
+CREDIT_WAIT = int(os.environ.get("APIFY_CREDIT_WAIT", str(4 * 3600)))
 DEFER_NAME = re.compile(r"私房|私厨|会所|俱乐部|会馆")
 
 
+# ---------------------------------------------------------------- 账单（权威门）
 def remaining_credit():
     if not TOKEN:
         return 0.0
@@ -113,6 +116,22 @@ def current_used():
         return 0.0
 
 
+# ---------------------------------------------------------------- 主机安全告警
+def _notify(level, key, body, **kw):
+    try:
+        import notifier  # type: ignore
+        getattr(notifier, level)(body, key=key, **kw)
+        return True
+    except Exception:
+        try:
+            with ALERT_QUEUE.open("a", encoding="utf-8") as f:
+                f.write(json.dumps({"level": level, "key": key, "body": body,
+                                    "ts": C.today()}, ensure_ascii=False) + "\n")
+        except Exception:
+            pass
+        return False
+
+
 # ---------------------------------------------------------------- Apify 调用
 class TokenBad(Exception):
     pass
@@ -127,17 +146,15 @@ def apify_search(provider, keyword, max_items=6, timeout=160):
         body = {"searchType": "search", "keywords": [keyword],
                 "maxItems": max_items, "sortType": "popularity_descending"}
     elif provider == "opspilot":
-        # 正确字段是 keyword（单数字符串）。传 keywords 复数数组虽不报错，却会被
-        # 静默忽略、回退到默认泛搜“美食推荐”，返回一堆家常菜/广告（2026-10-01 实测）。
+        # 正确字段 keyword（单数）。keywords 复数数组会被静默忽略、回退默认泛搜“美食推荐”。
         body = {"keyword": keyword}
     else:  # zenstudio
         body = {"keyword": keyword, "maxItems": max_items}
     endpoint = PROVIDERS[provider]["run"]
-    run_params = {"token": TOKEN,
-                  "maxItems": max_items,
+    run_params = {"token": TOKEN, "maxItems": max_items,
                   "maxTotalChargeUsd": MAX_CHARGE_USD}
     if provider == "opspilot":
-        run_params["memory"] = 512   # 默认 4GB 太贵；关键词搜索 512MB 足够
+        run_params["memory"] = 512
     r = requests.post(endpoint, params=run_params, json=body, timeout=timeout)
     if r.status_code == 401:
         raise TokenBad(r.text[:200])
@@ -163,8 +180,7 @@ def normalize_note(provider, n):
         return {"id": nid, "title": n.get("title") or "",
                 "desc": n.get("description") or "", "url": url,
                 "author": n.get("nickname") or "",
-                "liked_count": n.get("likedCount"),
-                "timestamp": None, "provider": provider}
+                "liked_count": n.get("likedCount"), "provider": provider}
     if provider == "zenstudio":
         nid = n.get("id")
         eng = n.get("engagement") if isinstance(n.get("engagement"), dict) else {}
@@ -172,8 +188,7 @@ def normalize_note(provider, n):
         return {"id": nid, "title": n.get("title") or "",
                 "desc": n.get("desc") or "", "url": n.get("url") or "",
                 "author": au.get("nickname") or "",
-                "liked_count": eng.get("liked_count"),
-                "timestamp": n.get("timestamp"), "provider": provider}
+                "liked_count": eng.get("liked_count"), "provider": provider}
     nid = n.get("id")
     url = n.get("url") or (f"https://www.xiaohongshu.com/explore/{nid}" if nid else "")
     u = n.get("user")
@@ -183,33 +198,44 @@ def normalize_note(provider, n):
     author = author or n.get("author") or n.get("nickname") or ""
     return {"id": nid, "title": n.get("title") or "", "desc": n.get("desc") or "",
             "url": url, "author": author, "liked_count": n.get("liked_count"),
-            "timestamp": n.get("timestamp"), "provider": provider}
+            "provider": provider}
 
 
 def note_author(note):
     if note.get("author"):
         return note["author"]
-    u = note.get("user")
-    if isinstance(u, dict):
-        return u.get("nickname") or u.get("nickName") or ""
     return note.get("nickname") or "小红书用户"
 
 
 def is_brand_author(note, base_core):
-    if not base_core:
-        return False
-    return base_core in C.cjk_norm(note_author(note))
+    return bool(base_core) and base_core in C.cjk_norm(note_author(note))
 
 
-# ---------------------------------------------------------------- 状态 / 队列
+# ---------------------------------------------------------------- 状态 / 周期
+def _cycle_tag():
+    d = datetime.date.today()
+    return f"{d.year}-{d.month:02d}"
+
+
 def load_state():
+    st = {}
     if STATE_F.exists():
         try:
-            return json.loads(STATE_F.read_text(encoding="utf-8"))
+            st = json.loads(STATE_F.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
-            pass
-    return {"billable_notes": 0, "billable_cost_usd": 0.0, "shops_done": [],
-            "skipped": {}, "last_run": "", "token_bad": False}
+            st = {}
+    st.setdefault("billable_notes", 0)
+    st.setdefault("billable_cost_usd", 0.0)
+    st.setdefault("shops_done", [])
+    st.setdefault("skipped", {})
+    st.setdefault("last_run", "")
+    st.setdefault("token_bad", False)
+    st.setdefault("attempts", {})
+    st.setdefault("deferred", [])
+    st.setdefault("circuit", {})
+    st.setdefault("last_credit_alert", "")
+    st.setdefault("cycle", _cycle_tag())
+    return st
 
 
 def save_state(st):
@@ -217,51 +243,24 @@ def save_state(st):
     STATE_F.write_text(json.dumps(st, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
+def reset_for_new_cycle(st):
+    if st.get("cycle") != _cycle_tag():
+        st["cycle"] = _cycle_tag()
+        st["attempts"] = {}
+        st["deferred"] = []
+        st["circuit"] = {}
+
+
 def worth_ids():
-    cands = [pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/home/ubuntu/food-apify-fill"))
-             / "worth_fill.json",
-             pathlib.Path(__file__).parent / "worth_fill.json"]
-    for p in cands:
+    for p in (DATA / "worth_fill.json", HERE / "worth_fill.json"):
         if p.exists():
             d = json.loads(p.read_text(encoding="utf-8"))
             return {x["id"] for x in d if isinstance(x, dict) and x.get("id") is not None}
     return None
 
 
-def select_targets(idx, need):
-    revs = C.fetch_all("reviews", "restaurant_id,trust_level,is_verified_diner")
-    have = {}
-    for r in revs:
-        if r.get("is_verified_diner") and r.get("trust_level") in ("mid", "high"):
-            have[r["restaurant_id"]] = have.get(r["restaurant_id"], 0) + 1
-    info = {r["id"]: r for r in C.fetch_all(
-        "restaurants", "id,is_chain_standardized,price_avg")}
-    allow = worth_ids()
-    targets = []
-    for d in idx.RMD:
-        if d["status"] != "active":
-            continue
-        rid = d["id"]
-        r = info.get(rid)
-        if not r:
-            continue
-        if r.get("is_chain_standardized") is True:
-            continue
-        if have.get(rid, 0) >= need:
-            continue
-        if allow is not None and rid not in allow:
-            continue
-        targets.append({"id": rid, "name": d["name"],
-                        "price_avg": C.to_int(r.get("price_avg")) or 0})
-    # 主流独立/可公开发现的店在前（可靠金丝雀 + 价值主体）；
-    # 私房菜/私厨/会所/俱乐部/会馆等冷门、邀约制、几乎无公开 UGC 的店置后。
-    targets.sort(key=lambda r: (1 if DEFER_NAME.search(r["name"]) else 0,
-                                -r["price_avg"], r["id"]))
-    return targets
-
-
+# ---------------------------------------------------------------- 查询阶梯
 def branch_hint(name):
-    """从括号分店名取 mall / XX路 短提示，让搜索更贴分店。"""
     for p in re.findall(r"[（(]([^）)]+)[）)]", name):
         for m in EM.MALLS:
             if m in p:
@@ -272,181 +271,370 @@ def branch_hint(name):
     return ""
 
 
+def first_dish(rec):
+    sd = rec.get("signature_dishes")
+    vals = []
+    if isinstance(sd, list):
+        vals = [str(x) for x in sd]
+    elif isinstance(sd, str):
+        vals = re.split(r"[、,，;/\n]", sd)
+    for v in vals:
+        v = v.strip(" ·.、,，")
+        if 1 < len(v) <= 8:
+            return v
+    return ""
+
+
+def keywords_for(rec):
+    name = rec["name"]
+    base = EM.strip_branch(name)
+    hint = branch_hint(name)
+    q1 = re.sub(r"\s+", " ", f"{base} {hint} 上海").strip()
+    dish = first_dish(rec)
+    mid = " ".join(x for x in (hint, dish or "测评", "堂食") if x)
+    q2 = re.sub(r"\s+", " ", f"{base} {mid} 上海").strip()
+    return q1, q2
+
+
+# ---------------------------------------------------------------- 目标选择
+def select_targets(idx, need, st):
+    revs = C.fetch_all("reviews", "restaurant_id,trust_level,is_verified_diner")
+    have = {}
+    for r in revs:
+        if r.get("is_verified_diner") and r.get("trust_level") in ("mid", "high"):
+            have[r["restaurant_id"]] = have.get(r["restaurant_id"], 0) + 1
+    info = {r["id"]: r for r in C.fetch_all(
+        "restaurants", "id,is_chain_standardized,price_avg,signature_dishes,status")}
+    allow = worth_ids()
+    cap_ids = {int(rid) for rid, a in st.get("attempts", {}).items()
+               if a.get("n", 0) >= MAX_SHOP_ATTEMPTS}
+    deferred_ids = {d["id"] for d in st.get("deferred", [])}
+    targets = []
+    for d in idx.RMD:
+        rid = d["id"]
+        r = info.get(rid)
+        if not r or r.get("status") != "active":
+            continue
+        if r.get("is_chain_standardized") is True:
+            continue
+        if have.get(rid, 0) >= need:
+            continue
+        if allow is not None and rid not in allow:
+            continue
+        if rid in cap_ids or rid in deferred_ids:
+            continue
+        targets.append({"id": rid, "name": d["name"],
+                        "price_avg": C.to_int(r.get("price_avg")) or 0,
+                        "signature_dishes": r.get("signature_dishes")})
+    targets.sort(key=lambda x: (1 if DEFER_NAME.search(x["name"]) else 0,
+                                -x["price_avg"], x["id"]))
+    return targets
+
+
 def accepted_note(idx, note, target_rid, rec_name):
-    """返回 (status, payload)。status: accept / official / blocked / <reason>。"""
+    """返回 (status, payload, anchored, is_roundup)。payload=(body,score,raw)。"""
     rid, reason = idx.anchor_note(note, rec_name)
     if rid != target_rid:
-        return reason or "未锚", None
+        return reason or "未锚", None, False, reason == "合集"
     body = EM.clean_content(note.get("desc", ""))
     if len(body) < 8 or not C.quote_has_substance(body):
-        return "无实物/软广模板", None
+        return "无实物/软广模板", None, True, False
     if EM.is_question(body):
-        return "疑问/互动", None
+        return "疑问/互动", None, True, False
     score, raw = EM.taste_sent(body)
     if score is None:
-        return "无口味信号", None
-    return "accept", (body, score, raw)
+        return "无口味信号", None, True, False
+    return "accept", (body, score, raw), True, False
 
 
-# ---------------------------------------------------------------- 主流程
-def run(apply, limit, need, provider=DEFAULT_PROVIDER):
-    if os.environ.get("APIFY_DISABLED", ""):
-        print("[已停用] APIFY_DISABLED 已设置，Apify 采集暂停；额度重置/充值后取消该变量。")
-        return
-    if provider not in PROVIDERS:
-        print(f"未知 provider {provider}；可选 {list(PROVIDERS)}")
-        return
-    if not TOKEN:
-        print("APIFY_TOKEN 未配置；写入 deploy.env 或持久卷 .secrets/apify_token 后再跑。")
-        return
+# ---------------------------------------------------------------- 合集捕获
+def capture_roundups(flagged):
+    """flagged: [(note, kw)]；合集写入 roundup_queue，url 去重。"""
+    seen = set()
+    if ROUNDUP_QUEUE.exists():
+        for line in ROUNDUP_QUEUE.read_text(encoding="utf-8").splitlines():
+            try:
+                seen.add(json.loads(line).get("url"))
+            except Exception:
+                pass
+    n = 0
+    with ROUNDUP_QUEUE.open("a", encoding="utf-8") as f:
+        for note, kw in flagged:
+            url = note.get("url")
+            if not url or url in seen:
+                continue
+            content = (note.get("title", "") + "\n" + note.get("desc", "")).strip()
+            f.write(json.dumps({"url": url, "content": content[:1500],
+                                "source": "apify", "kw": kw,
+                                "ts": C.today()}, ensure_ascii=False) + "\n")
+            seen.add(url); n += 1
+    return n
 
-    st = load_state()
-    idx = EM.get_index()
-    targets = select_targets(idx, need)
-    round_start_used = current_used()
-    print(f"缺<{need}条真实口味证据的 active 店：{len(targets)}；本轮处理 {limit} 家；"
-          f"provider={provider}(${PROVIDERS[provider]['price_per_run']:.2f}/次)")
-    print(f"内部累计 ${st.get('billable_cost_usd',0):.3f}/{FREE_COST_CAP}；"
-          f"笔记 {st['billable_notes']}/{FREE_NOTE_CAP}")
 
-    existing_urls = set(
-        x.get("source_url") for x in C.fetch_all("reviews", "source_url")
-        if x.get("source_url"))
+# ---------------------------------------------------------------- 熔断 / 日预算
+def circuit_open_seconds(st):
+    until = (st.get("circuit") or {}).get("cooldown_until")
+    return max(int(until - time.time()), 0) if until else 0
 
-    batch = targets[:limit]
-    written, blocked, empty = 0, 0, 0
-    preflight_obs = 0          # 已“正常返回”的 preflight 观察目标数
-    preflight_healthy = False  # 任一目标采信≥阈值 → actor 健康，永不熔断
-    for i, rest in enumerate(batch):
-        rid, name = rest["id"], rest["name"]
-        base = EM.strip_branch(name)
-        base_core = C.cjk_norm(base)
-        hint = branch_hint(name)
-        keyword = f"{base} {hint} 上海".replace("  上海", " 上海")
+
+def trip_circuit(st, reason):
+    c = st.get("circuit") or {}
+    level = c.get("level", 0) + 1
+    cooldown = min(CIRCUIT_COOLDOWN_0 * (2 ** (level - 1)), CIRCUIT_COOLDOWN_MAX)
+    st["circuit"] = {"open_at": int(time.time()), "level": level, "reason": reason,
+                     "cooldown_until": int(time.time()) + cooldown}
+    return cooldown
+
+
+def clear_circuit(st):
+    if st.get("circuit"):
+        st["circuit"] = {}
+
+
+def _days_left():
+    today = datetime.date.today()
+    last = _calendar.monthrange(today.year, today.month)[1]
+    return max((datetime.date(today.year, today.month, last) - today).days, 0) + 1
+
+
+def daily_allowance(rem):
+    return max(rem, 0.0) / _days_left()
+
+
+def _secs_to_tomorrow():
+    now = datetime.datetime.now()
+    tom = (now + datetime.timedelta(days=1)).replace(hour=0, minute=5, second=0, microsecond=0)
+    return max(int((tom - now).total_seconds()), 60)
+
+
+# ---------------------------------------------------------------- 单店处理
+def process_shop(rec, idx, st, args, gates):
+    rid, name = rec["id"], rec["name"]
+    q1, q2 = keywords_for(rec)
+    att = st["attempts"].setdefault(str(rid), {"n": 0, "kws": [], "last": ""})
+    base_core = C.cjk_norm(EM.strip_branch(name))
+    got, blocked = 0, 0
+    reason_ct = {}
+    n_roundup, n_anchor = 0, 0
+    flagged_roundups = []
+    while att["n"] < MAX_SHOP_ATTEMPTS and got < args.need:
+        kw = q1 if att["n"] == 0 else q2
         rem = remaining_credit()
         if rem < PER_RUN_FLOOR_USD:
-            print(f"[额度门] 剩余 ${rem:.3f} < 地板 ${PER_RUN_FLOOR_USD:.2f}，本轮停止；"
-                  "充值或额度重置后常驻服务自动续跑。")
-            break
-        if current_used() - round_start_used >= ROUND_CAP_USD:
-            print(f"[轮次门] 本轮真实花费达 ${ROUND_CAP_USD:.2f}，暂停。")
-            break
+            att["last"] = "额度地板"
+            return {"code": "NO_CREDIT", "got": got}
+        used_today = current_used() - gates["day_start_used"]
+        if used_today >= gates["daily"] or gates["daily"] < PER_RUN_FLOOR_USD:
+            att["last"] = "日预算"
+            return {"code": "DAILY_CAP", "got": got}
+        if current_used() - gates["round_start"] >= ROUND_CAP_USD:
+            att["last"] = "轮次上限"
+            return {"code": "ROUND_CAP", "got": got}
         try:
-            raw_notes, err = apify_search(provider, keyword, max_items=6)
+            raw_notes, err = apify_search(args.provider, kw, max_items=6)
         except TokenBad as e:
             st["token_bad"] = True
             save_state(st)
-            print(f"[TOKEN-BAD] {e}")
-            _alert_token()
-            return
+            _notify("action", "apify_token_bad",
+                    "Apify token 无效（401），账号无关回填暂停。请到 console.apify.com 确认账号/"
+                    "重新生成 token 并更新凭据。", action_text="去处理", nudge_schedule=(6,))
+            return {"code": "TOKEN_BAD", "got": got}
+        att["n"] += 1
+        att["kws"].append(kw)
+        st["billable_notes"] += len(raw_notes) if raw_notes else 0
+        st["billable_cost_usd"] = round(
+            st.get("billable_cost_usd", 0.0) + PROVIDERS[args.provider]["price_per_run"], 4)
         if err:
-            print(f"  [skip] {name}: {err}")
+            att["last"] = err
             st["skipped"][str(rid)] = err
-            continue
-        if raw_notes is None:
-            continue
-        if PROVIDERS[provider]["price_per_run"] > 0:
-            st["billable_notes"] += len(raw_notes)
-            st["billable_cost_usd"] = round(
-                st.get("billable_cost_usd", 0.0)
-                + PROVIDERS[provider]["price_per_run"], 4)
-        notes = [normalize_note(provider, x) for x in raw_notes]
-        got = 0
-        reason_ct = {}
-        for note in notes:
+            break
+        for note in [normalize_note(args.provider, x) for x in raw_notes]:
             url = note.get("url")
-            if url and url in existing_urls:
+            if url and url in gates["existing_urls"]:
                 continue
             if is_brand_author(note, base_core):
                 blocked += 1
                 continue
-            status, payload = accepted_note(idx, note, rid, name)
+            status, payload, anchored, rp = accepted_note(idx, note, rid, name)
+            if anchored:
+                n_anchor += 1
+            if rp:
+                n_roundup += 1
+                flagged_roundups.append((note, kw))
             if status == "accept":
                 body, score, raw = payload
-                rev = {"restaurant_id": rid,
-                       "author_name": note_author(note)[:20],
+                rev = {"restaurant_id": rid, "author_name": note_author(note)[:20],
                        "source_platform": "小红书", "source_url": url, "content": body,
                        "review_kind": "diner", "is_verified_diner": True,
                        "trust_level": "mid", "aspect_taste": score,
-                       "aspect_json": {"via": f"apify-{provider}",
-                                       "taste_raw": raw,
-                                       "liked": note.get("liked_count")}}
-                if apply:
+                       "aspect_json": {"via": f"apify-{args.provider}",
+                                       "taste_raw": raw, "liked": note.get("liked_count")}}
+                if args.apply:
                     rr = C.req("POST", "/reviews", json=rev)
                     if rr.status_code in (200, 201):
                         got += 1
                         if url:
-                            existing_urls.add(url)
+                            gates["existing_urls"].add(url)
                     else:
-                        print("   insert fail", rr.status_code, rr.text[:140])
+                        print("   insert fail", rr.status_code, rr.text[:120])
                 else:
                     got += 1
             else:
                 reason_ct[status] = reason_ct.get(status, 0) + 1
                 if status == "无实物/软广模板":
                     blocked += 1
-        if got:
-            written += got
-            if rid not in st["shops_done"]:
-                st["shops_done"].append(rid)
-        else:
-            empty += 1
-        print(f"  [{rid}] {name[:22]} ← 笔记{len(notes)} 采信{got} {reason_ct if reason_ct else ''}")
-
-        # preflight 双确认：仅当连续 N 个“正常返回”的主流目标都 0 采信，
-        # 才判定 actor/查询系统性失效并熔断；中途任一目标达标即视为健康。
-        if not preflight_healthy:
-            preflight_obs += 1
-            if got >= PREFLIGHT_MIN:
-                preflight_healthy = True
-            elif preflight_obs >= PREFLIGHT_CONFIRM:
-                print(f"[PREFLIGHT 熔断] 前 {preflight_obs} 个主流目标正常返回但均 0 采信 "
-                      f"(< {PREFLIGHT_MIN})，判定 actor/查询系统性失效，本轮停止以免继续烧钱；已告警。")
-                _alert_preflight(provider, name, reason_ct)
-                break
-            else:
-                print(f"[preflight {preflight_obs}/{PREFLIGHT_CONFIRM}] 首目标 0 采信，"
-                      "再用下一个主流目标确认（避免单店误判）。")
-        if current_used() - round_start_used >= ROUND_CAP_USD:
-            print(f"[轮次门] 本轮真实花费达 ${ROUND_CAP_USD:.2f}，暂停。")
-            break
         time.sleep(PER_NOTE_PAUSE)
+    capture_roundups(flagged_roundups)
+    if got >= args.need:
+        if rid not in st["shops_done"]:
+            st["shops_done"].append(rid)
+        att["last"] = "达标"
+        return {"code": "DONE", "got": got, "blocked": blocked}
+    if n_roundup >= 5:
+        why = "合集主导，无单店食客帖"
+    elif n_anchor > 0:
+        why = "有锚定但无可用口味信号"
+    else:
+        why = "搜索跑题/无公开食客帖"
+    att["last"] = why
+    st["deferred"] = [d for d in st["deferred"] if d["id"] != rid]
+    st["deferred"].append({"id": rid, "name": name, "reason": why})
+    pure_offtarget = (n_roundup < 5 and n_anchor == 0)
+    return {"code": "DEFER", "got": got, "blocked": blocked,
+            "reason_ct": reason_ct, "pure_offtarget": pure_offtarget, "why": why}
+
+
+# ---------------------------------------------------------------- 离线计划
+def offline_plan(idx, st, args):
+    rem = remaining_credit()
+    targets = select_targets(idx, args.need, st)
+    print("=== 离线计划（不付费）===")
+    print(f"剩余额度≈${rem:.3f}；本月剩余 {_days_left()} 天，日预算≈${daily_allowance(rem):.3f}")
+    csecs = circuit_open_seconds(st)
+    print(f"熔断：{'开启，冷却剩 %ds' % csecs if csecs else '无'}；attempts 店 {len(st['attempts'])}；"
+          f"deferred {len(st['deferred'])}；shops_done {len(st['shops_done'])}")
+    print(f"待补目标 {len(targets)}（显示 {min(len(targets), args.limit)}）：")
+    for rec in targets[:args.limit]:
+        q1, q2 = keywords_for(rec)
+        a = st["attempts"].get(str(rec["id"]), {})
+        print(f"  [{rec['id']}] {rec['name'][:28]} att={a.get('n',0)}")
+        print(f"      q1: {q1}\n      q2: {q2}")
+
+
+# ---------------------------------------------------------------- 主流程
+def run(args):
+    if os.environ.get("APIFY_DISABLED", ""):
+        print("[已停用] APIFY_DISABLED 已设置；额度重置/充值后取消该变量。")
+        return
+    st = load_state()
+    reset_for_new_cycle(st)
+    idx = EM.get_index()
+
+    if not args.fetch:
+        offline_plan(idx, st, args)
+        return
+
+    rem = remaining_credit()
+    if rem < PER_RUN_FLOOR_USD:
+        if st.get("last_credit_alert") != C.today():
+            _notify("action", "fill_credit",
+                    f"Apify 本月额度仅剩 ${rem:.3f}（地板 ${PER_RUN_FLOOR_USD}），worth_fill 暂停。"
+                    "到 console.apify.com/billing 充值；额度恢复/下月重置后本服务自动续跑。",
+                    action_text="去充值", nudge_schedule=(9, 21))
+            st["last_credit_alert"] = C.today()
+            save_state(st)
+        if args.guard:
+            print(f"@@STATUS NO_CREDIT {CREDIT_WAIT} remaining=${rem:.3f}")
+        else:
+            print(f"额度不足（剩余 ${rem:.3f}），停止。")
+        return
+
+    csecs = circuit_open_seconds(st)
+    if csecs > 0:
+        if args.guard:
+            print(f"@@STATUS CIRCUIT_WAIT {csecs} {st['circuit'].get('reason','')}")
+        else:
+            print(f"熔断冷却中，剩 {csecs}s。")
+        return
+
+    targets = select_targets(idx, args.need, st)
+    if not targets:
+        save_state(st)
+        if args.guard:
+            print("@@STATUS DONE 0 worth_fill 已全部达标")
+        else:
+            print("worth_fill 已全部达标。")
+        return
+
+    gates = {"day_start_used": current_used(), "daily": daily_allowance(rem),
+             "round_start": current_used(),
+             "existing_urls": set(x.get("source_url")
+                                  for x in C.fetch_all("reviews", "source_url")
+                                  if x.get("source_url"))}
+    print(f"待补 {len(targets)}；本轮处理 {min(len(targets),args.limit)}；"
+          f"provider={args.provider}(${PROVIDERS[args.provider]['price_per_run']:.2f}/次)；"
+          f"日预算≈${gates['daily']:.2f}")
+
+    done_n, defer_n, applied, blocked_n = 0, 0, 0, 0
+    preflight_streak = 0
+    for rec in targets[:args.limit]:
+        res = process_shop(rec, idx, st, args, gates)
+        code = res["code"]
+        if code in ("NO_CREDIT", "TOKEN_BAD"):
+            save_state(st)
+            if args.guard:
+                print(f"@@STATUS {code} {CREDIT_WAIT} {res}")
+            return
+        if code in ("DAILY_CAP", "ROUND_CAP"):
+            save_state(st)
+            wait = _secs_to_tomorrow() if code == "DAILY_CAP" else 1800
+            if args.guard:
+                print(f"@@STATUS {code} {wait}")
+            return
+        save_state(st)
+        if code == "DONE":
+            preflight_streak = 0
+            clear_circuit(st)
+            done_n += 1
+            applied += res["got"]
+            blocked_n += res.get("blocked", 0)
+            print(f"  [{rec['id']}] {rec['name'][:24]} ← 采信{res['got']}")
+        else:
+            defer_n += 1
+            blocked_n += res.get("blocked", 0)
+            if res.get("pure_offtarget"):
+                preflight_streak += 1
+            else:
+                preflight_streak = 0
+            print(f"  [{rec['id']}] {rec['name'][:24]} ← 0采信（{res['why']}）")
+            if preflight_streak >= PREFLIGHT_CONFIRM:
+                cooldown = trip_circuit(st, "连续主流目标纯跑题0锚定")
+                _notify("action", "fill_preflight",
+                        f"[PREFLIGHT 熔断] 连续 {PREFLIGHT_CONFIRM} 个主流目标 0 锚定（非合集），"
+                        f"判定 actor 系统性失效，冷却 {cooldown//3600}h，以免继续烧钱。")
+                save_state(st)
+                if args.guard:
+                    print(f"@@STATUS CIRCUIT_WAIT {cooldown} preflight")
+                return
 
     st["token_bad"] = False
     save_state(st)
-    mode = "APPLY" if apply else "DRY-RUN"
-    print(f"\n[{mode}] 采信评论 {written} | 软广/无实物拦截 {blocked} | 0证据店 {empty}")
-    print(f"内部累计 ${st.get('billable_cost_usd',0):.3f}/{FREE_COST_CAP}；"
-          f"笔记 {st['billable_notes']}/{FREE_NOTE_CAP}")
-
-
-def _alert_token():
-    try:
-        import notifier
-        notifier.action(
-            "Apify token 无效（401），账号无关回填暂停。请到 console.apify.com 确认账号/"
-            "重新生成 token 并更新 deploy.env。",
-            key="apify_token_bad", action_text="去处理", nudge_schedule="6h")
-    except Exception as e:
-        print("notifier fail:", repr(e)[:100])
-
-
-def _alert_preflight(provider, name, reason_ct):
-    try:
-        import notifier
-        notifier.warn(
-            f"Apify preflight 熔断：首店「{name}」正常返回但 0 采信（{reason_ct}）。"
-            f"provider={provider} 可能已失效或相关度异常，本轮未继续烧钱；请人工确认或换 actor。",
-            key="apify_preflight", cooldown="6h")
-    except Exception as e:
-        print("notifier fail:", repr(e)[:100])
+    remain_targets = len(select_targets(idx, args.need, st))
+    if args.guard:
+        print(f"@@STATUS OK 30 done={done_n} deferred={defer_n} applied={applied} "
+              f"blocked={blocked_n} remain_targets={remain_targets} "
+              f"remain_credit=${remaining_credit():.2f}")
+    else:
+        print(f"本批：达标 {done_n}，deferred {defer_n}，采信 {applied}，拦截 {blocked_n}；"
+              f"剩余目标 {remain_targets}，剩余额度 ${remaining_credit():.2f}")
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--fetch", action="store_true")
+    ap.add_argument("--guard", action="store_true")
     ap.add_argument("--limit", type=int, default=12)
     ap.add_argument("--need", type=int, default=2)
     ap.add_argument("--provider", default=DEFAULT_PROVIDER, choices=list(PROVIDERS))
-    a = ap.parse_args()
-    run(a.apply, a.limit, a.need, a.provider)
+    run(ap.parse_args())
