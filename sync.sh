@@ -116,6 +116,36 @@ echo ""
 echo "📌 我的任务（$ROLE）:"
 python3 cloud/task_helper.py list "$ROLE" 2>/dev/null || echo "  (任务队列不可用)"
 
+# ────────────────────── 待认领强制提示 ──────────────────────
+TASKS_PY=$(mktemp)
+python3 - "$ROLE" > "$TASKS_PY" <<'EOF'
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path('cloud').resolve()))
+import os
+os.environ.setdefault('FOOD_APP_DIR', str(pathlib.Path('app').resolve()))
+try:
+    import task_helper
+    role = sys.argv[1]
+    tasks = task_helper.list_tasks(role) or []
+    todo = [t for t in tasks if t.get('status') == 'todo']
+    if todo:
+        print("HAS_TODO")
+        for t in todo[:5]:
+            print(f"  #{t.get('id','?')} [{t.get('priority','?')}] {t.get('title','')[:40]}")
+except Exception as e:
+    print(f"ERR {e}")
+EOF
+if grep -q "HAS_TODO" "$TASKS_PY" 2>/dev/null; then
+  echo ""
+  echo "🔴🔴 你有 $ROLE 待认领任务！未认领将上报PM："
+  grep -v "HAS_TODO" "$TASKS_PY" | head -6
+  echo "  认领: python3 cloud/task_helper.py claim <id>"
+else
+  echo ""
+  echo "✅ 无待认领任务"
+fi
+rm -f "$TASKS_PY"
+
 # ────────────────────── 最近commit ──────────────────────
 echo ""
 echo "📝 最近5条commit:"

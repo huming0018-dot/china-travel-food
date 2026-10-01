@@ -47,17 +47,24 @@ python3 cloud/task_helper.py stats
 - 推动P0任务优先解决
 - 验收已完成的任务
 
-## 四、当前状态（2026-09-30）
+## 四、当前状态（2026-10-01）
 
 ### 🔴 P0（必须立即处理）
-1. **Apify集成**（分配给dev）— 切换云采集方案，本地账号方案已失败
+1. **Apify集成（拆两半并行）**：
+   - 采集侧（collector）：要用户Token→确认actor→定义采接口schema
+   - 开发侧（dev）：实现apify_collect.py，4个调用方迁移，旧xhs_api归档
+2. **服务器SSH不可达**（collector→找用户，腾讯云控制台重启）
+3. **PM体系总图SYSTEM_ARCH.md**（你）
+4. **dev三组件**：account_registry（P0）/ common_core / data_gate
+5. **collector采集通道SOP**（COLLECTION_SOP.md）
 
 ### 🟡 P1（当前迭代）
-2. 新腾讯地图key（分配给collector）— 用户说可以配置新的
-3. 高德评论清理（分配给dev）— 625条高德聚合评论标记错误
-4. frontier污染验证（分配给collector）— 代码已修复待验证
-5. 口味分补全（分配给collector）— 1152家为空，等采集恢复
-6. PM: 建立项目推进机制（你自己的任务）
+6. 新腾讯地图key（collector）— 用户说可以配置新的
+7. 高德评论清理（collector）— 625条高德聚合评论标记错误
+8. frontier污染验证（collector）— 代码已修复待验证
+9. 口味分补全（collector）— 1152家为空，等采集恢复
+10. PM: 建立项目推进机制（你自己的任务）
+11. dev: common_core / data_gate
 
 ### 🟢 P2（可以排期）
 7. 营业时间补全（分配给collector）— 547家为空

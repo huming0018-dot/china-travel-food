@@ -22,7 +22,7 @@
 
 **当前你的任务**（task_queue）：
 - #9 P0 服务器SSH不可达排查恢复（**必须联系用户**，见下）
-- #1 P0 Apify集成（恢复采集的唯一路径）
+- #1 P0 Apify集成-采集侧（Token+采接口定义）
 - #2 P1 新腾讯地图key
 - #3 P1 高德评论清理（review_kind 在采集侧打对标）
 - #4 P1 frontier污染验证
@@ -111,3 +111,29 @@
 3. **不越界**：见各窗口红线
 4. **部署必验证**："应该好了"不算完成
 5. **状态必同步**：开工 `bash sync.sh <角色>`，结束 `bash sync.sh push`
+
+---
+
+## 📌 追加通知（2026-10-01 · QA发布 · 所有窗口必读）
+
+### 全体：认领机制升级
+- 开工 `bash sync.sh <角色>` 现在会**红字提示你的待认领任务**
+- 有todo任务不认领 → 上报PM → PM问责
+- 认领：`python3 cloud/task_helper.py claim <id>`；完成：`done <id>`（QA验证后生效）
+
+### dev 窗口新任务（P0/P1）
+- **#11 P0 account_registry**：账号统一管理模组，11个模块迁移删重复判定
+- **#12 P1 common_core**：req/config/notify/log 四件套
+- **#13 P1 data_gate**：数据二次验证（cross_check/dedupe/admit）
+- **#15 P0 apify_collect.py**：Apify集成代码侧，4个调用方迁移
+- 详见 ROLE_WORK_SPEC.md 方案B
+
+### collector 窗口新任务（P0）
+- **#14 P0 COLLECTION_SOP.md**：8条采集通道清单+数据规范+问题SOP
+- **#1 P0 Apify采集侧**：要Token→确认actor→定义schema
+- **#9 P0 服务器SSH恢复**：必须找用户（腾讯云控制台）
+- 详见 ROLE_WORK_SPEC.md 方案C
+
+### pm 窗口新任务（P0）
+- **#10 P0 SYSTEM_ARCH.md**：体系总图（角色→模块→数据流+三流程）
+- 详见 ROLE_WORK_SPEC.md 方案A

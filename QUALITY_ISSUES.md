@@ -1,13 +1,16 @@
 # 问题台账 · QUALITY_ISSUES
 
-> 最后更新：2026-09-29 | 维护者：QA监管官
+> 最后更新：2026-10-01 | 维护者：QA监管官
+> **⚠️ 真源声明（2026-10-01生效）**：任务与问题的**唯一真源是 task_queue 表**（Supabase）。
+> 本文件仅为"摘要+深度背景"，状态/负责人/进度一律以 task_queue 为准（按 issue_id 对应）。
+> 新增问题 → 直接 POST task_queue；本文件只做摘要更新，不双写状态。
 > 规则：问题不登记=不存在；P0不过夜；每条必须有状态和负责人。
 
 ## 状态定义
-- **open**：已发现未修复
-- **verifying**：修复中/待验证
-- **closed**：已修复并验证
-- **wontfix**：已知问题暂不处理（需说明理由）
+- **open**：已发现未修复（=task_queue status todo/in_progress）
+- **verifying**：修复中/待验证（=task_queue in_progress）
+- **closed**：已修复并验证（=task_queue done）
+- **wontfix**：已知问题暂不处理（=task_queue cancelled，需说明理由）
 
 ## 优先级
 - **P0**：数据虚假/功能不可用/安全合规，必须立即修复
