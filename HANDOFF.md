@@ -3772,3 +3772,10 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 格缺口：grid_gap_analysis.md（最大缺口=小红书 UGC「已存在但未跑」，非源不存在）。
 - 推荐接入顺序：① Apify XHS（sian.agency）→ ② 点评分店列表（已跑）→ ③ 地图配额（已跑）→ ④ 米其林/黑珍珠 sitemap（已跑）→ ⑤ TimeOut/SmartShanghai RSS → ⑥ 海外 Instagram/TripAdvisor → ⑦ 知乎 developer API。
 - apify_ingest.py 已就绪，待 APIFY_TOKEN 跑免费小样。
+
+## 2026-10-01 reconcile 链式闭环（dry-run）
+- 断点审计：findings.jsonl 已有 1380 条，但缺 curate_reconcile 跳；post_audit 07:47 只打字段、不重算精选层。
+- cloud/reconcile.py 已写：ingest(findings) -> 字段落位(price/investor/chain) -> 硬规则(curated_off) -> verify 回读断言。
+- dry-run 结果：curated_off=0（硬规则A已apply）、chain_set=58 待写、price_set=21 待写、investor_set=104 待写；verify 0 违规。
+- 状态转移契约：ck=确认/premade=高->自动移出精选；疑似->hold；chain->不自动下架只打标；ML门不自动套用。
+- 待用户确认后 --apply；接线 07:47 post_audit 之后。
