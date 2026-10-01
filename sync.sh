@@ -162,6 +162,31 @@ else
 fi
 rm -f "$TASKS_PY"
 
+# ────────────────────── 过时事实自动校验（PM 2026-10-01） ──────────────────────
+# 防止窗口读到旧状态事实（如"Apify需充值"）而误导工作。
+# 规则：key=<正则> 若匹配到任何工作文档，则判定为过时事实，强制提示。
+echo ""
+echo "🔍 过时事实校验（防止旧状态误导）:"
+STALE_FOUND=0
+check_stale() {
+  local desc="$1" pattern="$2"
+  local hits
+  hits=$(grep -rn "$pattern" HANDOFF.md STATUS.md PM_START_HERE.md ROLE_STANDARD.md 2>/dev/null | grep -v "^Binary" | head -3)
+  if [ -n "$hits" ]; then
+    echo "  ❌ 发现过时事实 [$desc]:"
+    echo "$hits" | sed 's/^/     /'
+    STALE_FOUND=1
+  fi
+}
+# 当前已确认的过时事实（随状态变更维护）：
+# Apify已充值Starter(2026-10-01 PM确认)，"首轮$10封顶/等10-28重置"为旧事实
+check_stale "Apify充值已完成,但文档仍写'首轮\$10封顶/等10-28重置'" '首轮 \$10 封顶\|等 10-28 月度重置\|需你本人在 https://console.apify.com/billing 加支付方式'
+if [ $STALE_FOUND -eq 0 ]; then
+  echo "  ✅ 无过时事实"
+else
+  echo "  ⚠️ 存在过时事实！请先修正文档再继续工作（或确认该行是历史日志段，非当前待办）"
+fi
+
 # ────────────────────── 最近commit ──────────────────────
 echo ""
 echo "📝 最近5条commit:"
