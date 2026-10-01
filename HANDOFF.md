@@ -10,6 +10,31 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 清晨【dev 统一写入门 gate_apply + 错挂修复 repair_misanchor 已交付】：commit `81211b9`
+
+**起因**：用户反复指出「跑过联网搜索后前后端状态没联动、连锁 518 vs apply 58」，这是**底层机制断点**：发现写进 findings 后没有统一、过闸、可审计的应用路径，旧 `post_audit` 单源即挂硬标、`reconcile.stage_curate` 直写未过 gate，标签变化也不确定驱动精选重算。本会话交付唯一写入门并修复了一批真实错挂。
+
+**`cloud/gate_apply.py`（发现→交叉校验→挂标→精选重算 唯一入口；先 dry 后 `--apply`）**：
+1. 读全部 findings，按 `(rid,field)` 聚合；独立源 `n_ind = max(不同域名数, 不同证据类数)`，证据类 `reg`（注册/工商/企查查/天眼查/股权）、`branch`（分店/加盟/官网）、`news`（媒体）。用户认可的「分店列表＋注册主体互证」天然计 2 源。
+2. **硬负面值**（连锁非独立 / 中央厨房疑似·确认 / 预制疑似·高 / 食安问题）须 `n_ind≥2` 才挂新标；单源 → `hold` 进 reverify 取证窗口，**不挂新硬标、不据此批量降级/下架**（DB 已有硬标保留）。
+3. **自证一致性门（新增，关键防错）**：`self_tokens` 从店名取中文（全段＋前2字）与拉丁（词＋前两词拼接）品牌 token；investor 文本 / price 证据若**未出现本店任一 token** → 判错挂 hold（即使点名的别家不在库也能拦）；点名别家在库品牌一并标注。
+4. price：`price_avg` 是 **integer 列**（发浮点 70.0 报 `22P02` 400），统一 `int(round())`；新价相对存量 `>2.5x` 或 `<0.4x` → hold。信息字段加**防 flap**（现值已在 conf≥0.8 候选中则保持，仅对信息字段生效，不影响枚举 hold）。
+5. 精选硬下架：`status=closed` / `central_kitchen=确认` / `premade_risk=高`；**连锁本身不下架**（好连锁可留），大型/资本化连锁且独立食客口味声音<2 → `chain_review` 交 ML 门（curate_v4 仍 dry-run，不自动改 is_curated）。
+
+**`cloud/repair_misanchor.py`（清错误 rid + 按品牌改挂正确 rid；`--apply` 写库）**：定位证据点名品牌的正确 rid，错误字段回 null，正确 rid 缺失才补；未定位值落 `misanchor_pending_reroute.json`、被清 price 落 `reprice_worklist.json`，**宁空不假、数据不丢**。
+
+**实测结果（2026-10-02，全部回读核验）**：
+- 修复 **11 起错挂**：丸龟制面(42)被写鮨一 1685、惠食佳·朱雀(489)被写小杨生煎 26（2 个 price，已清空进补价清单）；鲁采·兴(464)得孔乙己、御宝轩(495)得德兴馆、越厨西贡(1116)得克芮旺斯、Garuda(1135)得 Wolfgang、娘惹情(1136)得 Peet's、Masala Art(1138)得 Manner、Joël Robuchon(1139)得 Seesaw、莱美露滋(1141)得蓝瓶、PHO LA(1123)得 Da Vittorio（9 个 investor，已清空）。
+- 改挂 **6 个正确店**：孔乙己(533)、克芮旺斯(1198/1199)、Wolfgang(1214)、Seesaw(1684)；Manner(1683)/德兴馆(1000) 本就有正确数据。Da Vittorio(1173) 补齐本店主体。
+- pending 4（鮨一 1685 / 小杨 26 / Peet's / 蓝瓶——这些品牌确不在库，值已存档待品牌入库或建档时改挂）。
+- 现状：restaurants 1503；price 非空 **1500**；is_curated 164，**精选硬规则违规 0**；reverify 取证 **399**（386 单源连锁 ＋ 13 信息）；chain_review **6**（rid 463/524/871/903/1370/1951）。最终 dry `stores_to_patch=0`，幂等稳定。
+
+**教训沉淀（应进 lessons）**：① 采集端 name↔rid 锚定偏移（shard 机械改派）是错挂根源，gate 必须以「证据含本店品牌」做自证，不能只校验值；② integer 列不能发浮点；③ 防 flap 只可用于信息字段，否则会把枚举 hold 从取证清单抹掉；④ 单源硬负面一律 hold，DB 已有标不批量降级。
+
+**下一步（未做）**：① 386 单源连锁轻量二次取证补第 2 独立源；② reprice 2 店（丸龟/惠食佳朱雀）重取正确价；③ 6 chain_review 由 ML 门（curate_v4）裁决；④ 把 collector 各采集器写路径统一收口到 gate_apply，不再直写。
+
+---
+
 ### 2026-10-02 凌晨【dev P0 四件套已交付·容器冒烟通过】：common_core / account_registry / data_gate / apify_collect
 
 **背景**：用户明确「你就是 dev，接单」，由本会话直接认领并实现 task_queue 的 #11/#12/#13/#15（均已 `done`）。目标是把「采集→校验→入库→精选」从各自为政收敛为统一底座。四个模块已部署进 food 容器 `/app/cloud/`，commit `124fd7b`；另修 task_helper 误报 bug，commit `93e5843`。
