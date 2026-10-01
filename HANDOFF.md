@@ -3627,3 +3627,25 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **当前唯一卡点 = LLM key**：容器与 deuce 的 LLM key 均为空（仅 APIFY_TOKEN）；火山方舟登录交接一次被超时、一次被用户跳过。推荐火山方舟（豆包可联网、DeepSeek 极便宜，近免费）。
 
 **学习成果（已读并对齐）**：09-29 工程 `cloud/docs/source-classes-and-calibration.md`（三类来源分工、admission 三条件、来源独立性 C0–C4 分级）、`research/regression_set.json`（16条断言，宫鸠/大志/吉兆/晴川/鸟鸟/张记/帅帅/聪菜馆/泓0871/nagi/鮨照/言盐仍 hit=false，是机制必须自动召回的目标）、STATUS.md。v2 置信设计与校准口径一致。
+
+---
+
+## 2026-10-01 · 事实层污染核验 + 四轴证据机制（已写库/已部署）
+
+**起因**：用户要求已收录店的中央厨房/预制/crisis 等事实标签用搜索引擎即可核验，不必等 UGC；且要修底层机制而非补单店。
+
+**盘点**：`fill_negative_fields.py`（一次性回填，已跑完）、`negative_audit.py`（约60+条硬编码品牌词表，无证据 URL）、`fact_verify.py`（吃 claims_seed 做机械写库）。核查发现库内硬标签绝大多数来自词表、未经取证（claims_seed 仅3品牌）。
+
+**核心机制结论：规模轴与工艺/出品/安全轴是四条独立轴**——连锁≠中央厨房/预制。
+- 经 3 批 general_search 对 15 个硬标签品牌逐一取证，结论全部落 `claims_seed.json`（v2，18品牌，每条带 source_url/quote）。
+- **纠正为"无"（连锁但门店现做）**：丸龟制面（每店制面机、不建中央厨房）、费大厨（明档现切现炒、不做中央厨房、全直营）、Manner（半自动现制；自建的是咖啡豆烘焙厂）、星巴克臻选上海烘焙工坊（店内现场烘焙）。
+- **下调为"疑似"（证据不足/混合）**：小菜园 pr 高→疑似（CK粗加工但承诺不预制+炒菜机器人）、东发道 ck 确认→疑似（加盟供料无自建CK实证）、新白鹿/外婆家/盖饭邦 →疑似（委托加工/半成品或仅自述现炒）。
+- **证据坐实硬标签**：南京大牌档、点都德（另 food_safety=疑似：2026-07 猪肠粉脱氢乙酸市监通报）、新旺、望湘园、鲜芋仙、苹果花园（自有工厂/冷冻烘焙）。
+
+**写库结果**：`fact_verify.py --apply` 共 **26 店**写库并全部回读断言通过；`fact_evidence_gap.py` 质量门 = **0 缺口**（剩余硬标签全部带 source_url）。
+
+**根代码修复（已同步 skill + repo vendor/pipeline + 容器）**：
+- 新增 `fact_evidence_gap.py`：硬标签(ck确认/pr高/food_safety确认)无同 type 带 URL 证据即报缺口，`--strict` exit 1（应被 release_audit 串联）。
+- 改 `negative_audit.py`：词表命中只产生**候选、ck/pr 封顶疑似**（新增 rule_candidate/evidenced_types/CK_RANK/PR_RANK），且不覆盖带 URL 证据的字段；chain_type 规模轴仍按词表补。
+- 新增机制文档 `references/fact-evidence-mechanism.md`（repo 副本 cloud/docs/）；SKILL.md 引用、mechanism-master 绑定表、crawler-engineer 模块地图、lessons #77 均已更新。
+- 前端语义备忘（FE 恢复时）：「隐藏连锁」按 chain_type 规模轴、「去工业化」按工艺轴，二者独立；费大厨 std=False 但属大型连锁。

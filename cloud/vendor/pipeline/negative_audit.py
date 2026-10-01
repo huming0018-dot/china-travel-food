@@ -112,6 +112,24 @@ def match_premade_extra(name: str):
     return None
 
 
+# 严重度排序（用于"只补更弱、不覆盖更强"）
+CK_RANK = {"无": 0, "疑似": 1, "确认": 2}
+PR_RANK = {"无": 0, "低": 1, "疑似": 2, "高": 3}
+
+
+def evidenced_types(fact_claims):
+    """已有带 source_url 证据的 claim type 集合（证据为准，规则不得覆盖）。"""
+    return {c.get("type") for c in (fact_claims or [])
+            if c.get("source_url") and c.get("type")}
+
+
+def rule_candidate(ck, pr):
+    """词表只产生候选：硬标签(确认/高)未经取证一律封顶为疑似；
+    硬标签晋升必须经 claims_seed 带证据（fact_verify）。"""
+    return ("疑似" if ck == "确认" else ck,
+            "疑似" if pr == "高" else pr)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--commit", action="store_true")
@@ -121,7 +139,7 @@ def main():
         "restaurants",
         "id,name,status,chain_type,central_kitchen,premade_risk,review_count,"
         "score_total,review_confidence,soft_ad_flag,soft_ad_penalty,"
-        "is_chain_standardized,price_avg,investor_info",
+        "is_chain_standardized,price_avg,investor_info,fact_claims",
         order_col="id",
     )
     active = [r for r in rests if r["status"] == "active"]
@@ -135,28 +153,25 @@ def main():
         patch = {}
         reasons = []
 
-        # ---- R2: 预制品牌扩充词表 ----
+        # ---- R2: 预制品牌扩充词表（只产生候选；硬标签需证据→走 claims_seed）----
         m = match_premade_extra(name)
         if m:
             kw, ct, ck, pr = m
-            # 不覆盖已有更严格标签：已有 pr=高 不降级；已有 ck=确认 不降级
-            if not r.get("premade_risk"):
-                patch["premade_risk"] = pr
-            elif r["premade_risk"] in ("低", "疑似") and pr == "高":
-                patch["premade_risk"] = pr
-            if not r.get("central_kitchen"):
-                patch["central_kitchen"] = ck
-            elif r["central_kitchen"] == "疑似" and ck == "确认":
-                patch["central_kitchen"] = ck
+            ck_c, pr_c = rule_candidate(ck, pr)
+            ev = evidenced_types(r.get("fact_claims"))
+            # 已有带 URL 证据的字段以证据为准，规则不覆盖；否则只在现状更弱时补候选
+            if "central_kitchen" not in ev and CK_RANK.get(r.get("central_kitchen"), 0) < CK_RANK[ck_c]:
+                patch["central_kitchen"] = ck_c
+            if "premade_risk" not in ev and PR_RANK.get(r.get("premade_risk"), 0) < PR_RANK[pr_c]:
+                patch["premade_risk"] = pr_c
+            # chain_type 是规模轴，词表是合理信号：空或被误判为独立店时补
             if not r.get("chain_type"):
                 patch["chain_type"] = ct
             elif r["chain_type"] == "独立店" and ct in ("大型连锁", "资本化连锁"):
                 patch["chain_type"] = ct
-            # 标准化 → 可被前端"隐藏连锁"开关过滤
-            # 注意：is_chain_standardized 是 generated column，由 DB 自动根据
-            # chain_type/central_kitchen/premade_risk/soft_ad_flag 推导，禁止直接写。
-            reasons.append(f"R2预制品牌[{kw}]→{ct}/ck{ck}/pr{pr}")
-            stats["R2_premade_brand"] += 1
+            # is_chain_standardized 为 generated column，由 DB 据 chain_type/ck/pr/soft 推导，禁直写
+            reasons.append(f"R2候选品牌[{kw}](未经取证,ck/pr封顶疑似)")
+            stats["R2_premade_candidate"] += 1
 
         # ---- R1: 小型连锁 ck 补全 ----
         if r.get("chain_type") == "小型连锁" and not r.get("central_kitchen"):
