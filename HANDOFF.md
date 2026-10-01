@@ -3664,3 +3664,17 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **跨片错标修复**：回滚 63 店错挂 chain/investor/price，75 条证据按 finding_name 核心匹配改挂正确 rid（辛香汇/望湘园/甬府/菁禧荟等），33 个无匹配品牌丢弃（不新建店）；findings_extractor 已加 name 核心一致性闸门。
 - **最终标签（active 1497）**：chain 独立店 975 / 小型连锁 448 / 大型连锁 60 / 资本化连锁 10 / 未标 4；investor_info 518；price_avg 1494。
 - **行动项**：广州代理 2026-10-28 到期，**建议 2026-10-25 TG+飞书提醒续费**；如需 360 通道需换住宅代理或接浏览器。
+
+---
+
+## 2026-10-01｜权威召回回归闭环：名称缩写匹配 + 地图 suggestion 桥（16/16）
+
+- **背景**：对 `research/regression_set.json`（16 断言）跑只读检查器，初次 15/16，仅「鮨照」未命中。
+- **排查结论（非漏店）**：店**已在库**——id **1888「鮨·天照 Omakase(南京西路店)」**，静安区威海路500号丰盛商业中心一层R1-01，已挂 omakase 板前 325；多篇独立携程食客笔记（约598/人，2026 初新开）。用户简称「鮨照」漏了中间字「天」。
+- **根因**：匹配器只支持 exact 与**连续**包含，"鮨照"非"鮨天照"连续子串 → 别名漏匹配。
+- **机制修复（authority_sitemap.py）**：
+  1. 新增 `_han_abbrev_hit`：汉字**首尾相同 + 按序子序列 + 长度比≥0.5 + 唯一 → strong**（多候选 weak）。
+  2. 名称对不上先用腾讯 `/ws/place/v1/suggestion`（SK 签名、region_fix=1）取规范全称+地址再回匹配（搜"鮨照"唯一返回"鮨·天照"）；地图=POI 存在性权威，禁止凭字面猜合并。
+- **新增质量门 `regression_check.py`**：复用匹配器对回归集全断言重判，有 miss exit 1，结果落 FOOD_AUTHORITY_DIR；应进 release_audit。已同步 repo `cloud/vendor/pipeline/`、skill `scripts/food_pipeline/`、容器 `/app/pipeline/`。
+- **结果**：回归 15 → **16/16**，其余 15 条 conf 不变（无误伤）。提交 **06928fc**（rebase 后）已推送；文档 `authority-recall.md §2`、教训 **#78** 已更新。
+- **待办**：下次 build_sync 让缩写规则进镜像（当前容器运行时已注入最新）；扩 W1 集团/主厨树、黑珍珠 4 家 hold 新准入仍卡外部取证（Apify 充值 / 10-28 重置）。
