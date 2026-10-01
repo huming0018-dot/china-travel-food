@@ -3708,3 +3708,14 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **结论**：当前 cookie 不足以拉逐条食客评价正文；不伪造、不把聚合分当逐条评价。
 - 需用户重新登录点评（真实扫码）后再复跑；复跑成功则按 123标注+精选候选+7家hold 目标每店≥2独立菜品级声音。
 - 标注质量复核（只读）：diner_seed_labels 123 条 must=10/worth=52/average=61；worth 平均 taste 4.59 > must 4.47 倒挂，说明 must 中可能掺入口味以外口径（环境/服务/名气/人情），存疑清单需用户裁定后再改。
+
+## 2026-10-01 更正：点评 cookie 健康，评价正文端改版待定位（非 cookie 问题）
+- **cookie 健康**：search_branches 对南京大牌档返回 12 分店（obfuscated id 如 H5lyroniz6JBuZg8），chain_signal 正常。
+- **搜索页 44KB 无 /shop/ 链接** 是间歇反爬薄页，加退避/重试即可，非 cookie 失效。
+- **评价正文结构性限制**：GET /shop/<obf_id> 返回 256KB SSR 页，但：
+  - 无 window.__INITIAL_STATE__ / window.shop JSON 数据岛；
+  - 无 review-content HTML 片段；
+  - 无 ajax/mapi 内联端点；
+  - 旧 /shop/{id}/review_all 已 404。
+- **结论**：评价正文需 JS 动态生成签名 token（Playwright 渲染或 App），裸 requests 拿不到逐条正文/日期/菜品提及/食客标识。不伪造、不把聚合分当逐条。
+- **下一步**：如需点评逐条评价通道，需引入 Playwright headless（内存限制评估）或接 App 抓包；否则继续走 XHS verified-diner 为主、点评仅用于 chain 分店列表。
