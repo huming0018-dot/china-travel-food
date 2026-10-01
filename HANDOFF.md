@@ -3956,3 +3956,8 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 定时：/etc/cron.d/food_watchdog，`*/2 * * * *` root，flock -n /tmp/food_wd.lock；日志 /var/log/food_wd.log。
 - 已验证：手动 healthy；cron 连续触发日志 healthy；真实各发一条 TG status200/ok=true、飞书 code=0。
 - 遗留（非阻断）：①第一把主账号云API密钥 CAM 接口删停报 UinNotMatch（仅作用于子用户密钥），需网页 capi 删除，同账号不额外扩暴露面；②代理盒 10-28 到期，需续费或迁 SCF。
+
+## 2026-10-01 SYSTEM_ARCH v2（按方案B统一，收尾 #10）
+- 问题：#10 虽标 done，但 SYSTEM_ARCH.md 标题/一句话写"三窗口"，Mermaid/状态表/速查表仍是四窗口、QA 独立，自相矛盾。
+- 修正：Mermaid 收敛为 PM(含原QA验收/红队)+采集+开发 三窗口；流程1/2/3 中 QA 独立验证改 PM；状态表与"找谁"速查去 QA；刷新当前状态（Apify 已生效、外部看门狗、pm_dispatch）。
+- 验收对齐：新窗口 5 分钟能说清谁做什么/数据怎么流/问题找谁。
