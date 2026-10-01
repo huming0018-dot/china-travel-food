@@ -126,10 +126,11 @@ def run():
                 summary.append(f"{label}=全尽(解封{unblock})")
 
     if downs:
-        lines = [f"{label}：{n} 把 key 均不可用，最早解封 {ub}"
+        # 告警内容固定化：不包含动态解封时间，保证hash不变，冷却才能生效
+        lines = [f"{label} key配额不足（自动恢复中）"
                  for label, n, ub in downs]
-        lines.append("系统将在重置点自动恢复（日配额 0 点 / 高德搜索月初），无需操作。")
-        notifier.warn("\n".join(lines), key=key, cooldown=21600)
+        lines.append("系统将在重置点自动恢复，无需操作。")
+        notifier.warn("\n".join(lines), key=key, cooldown=21600*7)  # 7天冷却
     else:
         notifier.resolve(
             "地图通道全部恢复：" + "、".join(oks) + " 均有可用 key。", key)

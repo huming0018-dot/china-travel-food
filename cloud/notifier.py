@@ -50,7 +50,7 @@ LEVEL_TAG = {INFO: "🟢 播报", WARN: "🟡 自动处理中", ACTION: "🔴 �
 
 # 默认节奏 / 冷却 / 提醒计划（秒）—— 柔和模式：少打扰
 DEFAULT_CADENCE = 3600         # 例行播报 60 分钟
-WARN_COOLDOWN = 21600          # 同类自动处理告警 6 小时（原2小时，减少重复打扰）
+WARN_COOLDOWN = 604800         # 同类告警 7 天（避免重复打扰）
 ACTION_NUDGE = (86400, 86400, 86400)  # 首次后每天提醒一次，共3次
 MAX_BODY = 1200
 
@@ -156,16 +156,13 @@ def info(body, key="heartbeat", cadence=DEFAULT_CADENCE, footer=None):
 
 
 def warn(body, key, cooldown=WARN_COOLDOWN, header_title=None):
-    """自动处理中的问题：同 key 同内容按 cooldown 折叠；内容变化（进展）才再推。"""
+    """自动处理中的问题：同 key 按 cooldown 折叠，不重复刷屏。
+    内容变化也不再触发新告警，避免动态数字导致冷却失效。"""
     header, full = format(WARN, body)
     L = _load()
     rec = L.get(key)
-    if rec and rec.get("last_hash") == _h(full) \
-            and int(time.time()) - int(rec.get("last_ts", 0)) < cooldown:
-        return False
-    if rec and rec.get("last_hash") != _h(full) \
-            and int(time.time()) - int(rec.get("last_ts", 0)) < 300:
-        # 进展更新至少间隔 5 分钟，避免抖动刷屏
+    # 只要key相同且在冷却期内，不管内容怎么变都不发
+    if rec and int(time.time()) - int(rec.get("last_ts", 0)) < cooldown:
         return False
     ok = _deliver(header, full)
     if ok:
