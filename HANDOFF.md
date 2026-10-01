@@ -3890,3 +3890,11 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - docs/standards/db_schema_spec.json（机器可读）。
 - cloud/validate_schema.py（非阻断漂移校验，挂看门狗/发布前）。
 - 等 fix2(024 prior列)/fix4/5 回报后并入 spec。
+
+## 2026-10-01 收尾权威状态报告（容器 SSH 不可达，以已回读为准）
+- restaurants 1497（active 1490 / closed 7）；chain: 独立934/小型471/大型76/资本化16。
+- central_kitchen: 无1310/疑似169/确认20；premade_risk 分布待024后先验分离。
+- is_curated=true 156；硬规则A 23家已下架。
+- crontab 单一 07:47 reconcile.py（live+repo 对齐）。
+- 待用户：①Supabase SQL Editor 执行 024_prior_evidence_separation.sql（无直连PG，我无法DDL）；②广州代理10-25续费（10-28到期）；③Apify token。
+- release.sh 待容器恢复后跑（目标0 FAIL）。
