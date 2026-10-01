@@ -3927,3 +3927,13 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - crontab 单一 07:47 reconcile.py（live+repo 对齐）。
 - 待用户：①Supabase SQL Editor 执行 024_prior_evidence_separation.sql（无直连PG，我无法DDL）；②广州代理10-25续费（10-28到期）；③Apify token。
 - release.sh 待容器恢复后跑（目标0 FAIL）。
+
+## 2026-10-01 外部入站健康探针 + 自动关机/开机自愈（部署在广州代理盒）
+- 背景：food 盒反复「RUNNING/出站正常但公网全不通」，根因公网 NAT 映射陈旧，Reboot 无效、须 Stop/Start。
+- 探针独立部署在广州代理盒（139.199.90.169），代码 `cloud/external_watchdog/`（已入库）：
+  - food_watchdog.py：TCP 探 food 公网22，单轮3次/间隔5s；RUNNING 但连续2周期不可达且距上次重启≥900s，自动 Stop→Start 重建绑定，轮询至22恢复；非RUNNING视为正常窗口不动作。
+  - wd_notify.py：TG（走 Deno 反代、失败降级直连）+ 飞书自建应用双通道。
+  - 凭据 wd.env / notify.env（chmod600，不入库）；SDK /home/ubuntu/wdlib；状态 wd_state.json 防 flapping。
+- 定时：/etc/cron.d/food_watchdog，`*/2 * * * *` root，flock -n /tmp/food_wd.lock；日志 /var/log/food_wd.log。
+- 已验证：手动 healthy；cron 连续触发日志 healthy；真实各发一条 TG status200/ok=true、飞书 code=0。
+- 遗留（非阻断）：①第一把主账号云API密钥 CAM 接口删停报 UinNotMatch（仅作用于子用户密钥），需网页 capi 删除，同账号不额外扩暴露面；②代理盒 10-28 到期，需续费或迁 SCF。
