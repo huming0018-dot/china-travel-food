@@ -10,6 +10,25 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-01 深夜：Apify 采集根修复（统一实体匹配 + keywords 字段 + 熔断/硬 bound）
+
+**背景**：Starter $19 被烧到剩 $0.062，大量店"笔记20 采信0"或 http400 跳过。journalctl + 离线诊断锁定三条根因。
+
+**① 统一实体匹配模块 `entity_match.py`（核心产出，三处同步：repo `cloud/vendor/pipeline/`、容器 `/app/pipeline/`、skill `scripts/food_pipeline/`）**
+- 把 `xhs_to_reviews` 里成熟的匹配器（品牌多形态 brand_forms、KEY2RIDS 精确/包含索引、PREF 前缀索引、HEAD2 二元提及倒排、按 mall/地址分店消歧、证据化 is_roundup）抽成 **`EntityIndex` 类**（给定 rests 构建、可测试，`get_index()` 经 common 拉全库）。
+- 修正旧 NEG `"油腻": .3` 符号 bug → `-.3`；大幅扩充口味词（正评 不错/喜欢/推荐/很嫩/软烂/回头客/惊喜/锅气/外酥里嫩/汁水/软糯/回甘；负评 普通/平庸/没味道/偏咸偏甜/齁/发苦/不值/后悔/不会再来/名不副实）。
+- **离线验证（全部历史 opspilot run，零成本）：采信率 6.8% → 60.1%，误锚他店仅 0.3%**；剩余 37.9% 经抽查是**正确拦截跑题笔记**（原因标签由歧义的"库内无此店"改为"正文非目标店"）。
+
+**② `review_apify_fill.py` v3（repo `cloud/`、容器 `/app/cloud/`、主机运行目录 `/home/ubuntu/food-apify-fill/`）**
+- opspilot 输入字段 `keyword`（单数）→ **`keywords`（复数数组）**（旧字段必 http400 invalid-input；402 计费门证明复数被接受）。
+- 每次运行加 **`maxTotalChargeUsd=0.30` + `memory=512`** 硬 bound，杜绝单次超收（默认 4GB 太贵）。
+- **首店即 preflight**：第一家"正常返回但采信 <1"即熔断本轮 + notifier.warn，不为系统性错配持续烧钱。
+- 锚定全部委托 entity_match（删掉旧"完整长店名子串"粗糙 note_anchors，那是 78% 真实食客笔记被误判的根因）；搜索关键词加分店 mall/路 hint。
+
+**③ `xhs_to_reviews.py` 瘦身**：只保留"读 raw_xhs→锚定→过滤→生成 raw_reviews"管线，匹配/口味/疑问/清洗全部 import entity_match。容器实跑：**生成 709 条带口味分评论**，未锚 1020（正文非目标店535/合集480 为正确拒绝，真正"库内无此店"仅 3=有效发现线索、多分店待核2）。
+
+**现状/待办**：Apify 仍冻结（systemd food-apify-fill stopped、fill.env APIFY_DISABLED=1、剩 $0.062），**端到端验证/采集需等 11-01 额度重置或充值**；重置后 preflight 自动把关。舰队全量重探 detached 进行中（/app/data/hae_rerun.log），跑完审计新占位。commit `81996ac`。
+
 ### 2026-10-01 晚：food 盒子公网失联根治（公网 IP NAT 映射失效）+ 权威回读 ERROR=0
 
 **① 现象与根因（关键，勿再误判为"重启即可"）**
