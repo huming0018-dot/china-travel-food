@@ -10,6 +10,29 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-01 免费机制项：全量判重闭环 + release_audit 可移植并前置三门（已写库/已部署）
+
+**背景**：Apify 额度耗尽（剩约 $0.00067→http402）、方舟 LLM key 为空，本轮只推进**不依赖充值/密钥**的免费机制项。
+
+**① 只读全量审计（active 1497 / 总 1503）**
+- 字段缺口：phone **193**、location **4**、opening_hours **550**、price_avg **2**、chain_type **4**；active 零评论 **1176**。
+- 事实轴分布：chain_type 独立975/小型连锁448/大型连锁60/资本化10/NULL4；central_kitchen 无1305/疑似168/确认20/NULL4；premade_risk 无1305/低155/疑似16/高17/NULL4；soft_ad_flag none1268/suspected209/confirmed20。
+- 落盘容器 `/app/data/authority/full_audit.json`。
+
+**② 判重结论：同址真重复 = 0；92 组多店全部是异址分店（保留）**
+- 首版审计有键名 bug（地址存 "addr" 却读 "address"→恒 None），把 92 组误标真重复；修正为 `addr_core` 归一地址判定后：**0 同址真重复、92 异址分店组**。
+- 用户点名项现状：**南兴园已单条**（id478 徐汇淮海中路1728号）；**Pain Chaud 百丘** 2 条为异址分店（建国西路1164 / 番禺路1785，保留）；纹兵卫金虹桥44/天山1870 为异址分店（保留）。
+- 固化为只读硬门 **`duplicate_audit.py`**（同址真重复 exit1），已进 release_audit；实测 92 分店保留 / 0 真重复 / RC=0。
+
+**③ release_audit 可移植 + 前置三门（端到端冒烟通过）**
+- 去掉硬编码 MacBook 路径，改为 `FOOD_PROJECT`/repo 布局自适应、`FOOD_AUTHORITY_DIR` 自适应（容器 /app、报告落持久卷 /app/data/authority）。
+- CHECKS 前置并新增：`regression_check.py`（**PASS**，16/16）、`duplicate_audit.py`（PASS，0 真重复）、`fact_evidence_gap.py --strict`。
+- 冒烟结果：回归/跨菜系根/连锁/分类引擎/实体对齐/权威比对/总分漂移均 PASS；stage4、stage6、fact_gate 首跑 CHECK。
+- **修复唯一事实证据缺口**：id1496 松鹤楼面馆(豫园店) ck=确认但 0 证据 → 按规则降级"疑似"，重跑 fact_evidence_gap **0 缺口 / RC=0**。
+- 仍 CHECK 的 stage4（phone/hours 缺口）、stage6（覆盖账本）受地图配额/采集外部卡点，非本轮可解。
+
+**产物**：skill `scripts/food_pipeline/{release_audit,duplicate_audit}.py`、repo `cloud/vendor/pipeline/` 同步、容器 `/app/pipeline/` 已注入；教训 **#79**；SKILL.md 已更新。
+
 ### 2026-09-30 守门员·人工三档监督精选体系（评分v5方向，已提交 004d6c3）
 
 **北极星重申**：广泛收录（step1）之外，必须有独立的“真美食精选层”（step2），只保留真正好吃、可溯源的店；外婆家/圆苑/小菜园这类连锁预制/平庸店不得进精选。前端最后做，本轮只动数据库/管线。
