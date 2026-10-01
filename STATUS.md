@@ -1,6 +1,7 @@
 # 当前状态 · STATUS
 
-> 最后更新：2026-10-01 21:15（PM窗口维护）
+> 最后更新：2026-10-01 23:25（PM窗口维护）
+> **✅ PM主动调度器上线（2026-10-01晚）**：`cloud/pm_dispatch.py` + launchd每15分钟自动扫描task_queue，发现P0/用户点名工单超SLA未认领 → 自动推送TG+飞书（已验证TG+飞书双通道真实送达）+写INBOX双保险。**用户无需去窗口喊话**，PM系统自动调度唤醒窗口。见 ROLE_SYNC.md「提醒机制」。
 > **✅ Apify已充值成功+限额解锁（2026-10-01晚）**：Starter $19/月已生效（预付$19额度+64GB RAM/32并发/30数据中心代理/Bronze折扣），Mastercard 4395已绑定Primary。**平台限额已从$19调到$40（Update successful已验证）**：$19超额空间按量自动扣卡（$0.20/CU，超额达$20提前结算），opspilot 402已解除，采集可端到端实跑。task_queue #1 已解除blocked→todo。
 > **✅ 方案B（2026-10-01）：四窗口→三窗口**：QA职责并入PM，原QA窗口停用。用户只在PM窗口说话。见 ROLE_SYNC.md / WINDOWS.md / role-task-allocation.md。
 > **✅ sync.sh v3**：开工强制渲染统一状态卡（数据/任务/账号/配额+过时事实校验），三窗口看同一张卡。

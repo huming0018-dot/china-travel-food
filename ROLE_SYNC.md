@@ -43,12 +43,17 @@
 | 每日 | PM盘点task_queue，更新STATUS.md | PM |
 | 18:00 | 当日总结，更新STATUS+task_queue | 各窗口 |
 
-## 提醒机制（柔和模式）
+## 提醒机制（柔和模式 · 2026-10-01升级为"PM主动调度"）
 
-- **通道**：仅Telegram（飞书已关闭）
+- **通道**：Telegram + 飞书应用双通道（notifier.py，已验证：TG status200 / 飞书 code=0）
+- **PM主动调度器 `cloud/pm_dispatch.py`（新增，解决"窗口不读INBOX就静默"）**：
+  - 每15分钟（launchd `com.doubao.pmdispatch`）扫描 task_queue
+  - 发现 **P0 或 source=user** 且 status=todo 超SLA未认领 → 自动推送TG+飞书（"工单#N待认领"）
+  - 有界提醒（30m/1h/2h/1d，用尽不刷屏）+ 写INBOX双保险
+  - **用户无需去窗口喊话**：调度由PM系统自动完成，窗口收到推送即被唤醒
 - **心跳**：每60分钟一次，仅数据摘要，无需操作
 - **WARN**：系统自动处理中的问题，2小时冷却，无需操作
-- **ACTION**：仅P0且必须用户亲自处理（如扫码登录），首次立即推，之后每天提醒一次，共3次
+- **ACTION**：仅P0且必须用户亲自处理（如扫码登录），首次立即推，之后按计划有界提醒
 - **RESOLVED**：问题解决，只推一次收尾
 
 ## 问题流转
