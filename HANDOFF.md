@@ -10,6 +10,30 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 凌晨【dev P0 四件套已交付·容器冒烟通过】：common_core / account_registry / data_gate / apify_collect
+
+**背景**：用户明确「你就是 dev，接单」，由本会话直接认领并实现 task_queue 的 #11/#12/#13/#15（均已 `done`）。目标是把「采集→校验→入库→精选」从各自为政收敛为统一底座。四个模块已部署进 food 容器 `/app/cloud/`，commit `124fd7b`；另修 task_helper 误报 bug，commit `93e5843`。
+
+**四个模块（新代码一律在此之上写，不再各拼 requests / 各判账号 / 直写库）**：
+1. **`common_core.py`（#12，唯一底座）**：`config(KEY)`（环境变量→`cloud/env.sh`→`app/.env.local`）、`req()`/`fetch_all()`（service role + 指数退避）、结构化 `log()`（自动脱敏）、`notify.info/warn/action/resolved`（懒加载 notifier）、常量 TIERS/STATUS/DISTRICTS、`pipeline_common()` 定位确定性文本工具。只依赖 requests + 标准库，无密钥机 import 不报错。
+2. **`account_registry.py`（#11，全平台账号门面）**：标识 `platform:id`；`list/status/probe/mark/pick/summary`。**不造第二真源**——xhs 写操作路由到 `xhs_cookie_pool`、地图只读 `map_quota`（手工 mark 地图 key 被禁止，只能由返回码驱动）、其它平台独占账本 `account_registry.json`（原子写、last_used 轮询）。
+3. **`data_gate.py`（#13，入库前质量闸）**：`validate`（必填/类型/枚举/长度/范围/URL）、`cross_check`（电话 `clean_phone`、坐标 `in_shanghai`、店名 `looks_like_brand`）、`dedupe`（指纹 `cjk_norm(name)+addr_core`）、`admit`（error 拒收 / warn 标注）、`report`（拒收率与原因分布）。
+4. **`apify_collect.py`（#15，Apify 通用生命周期）**：`start_run/wait_for_run/get_dataset`（纯 REST、无 SDK）+ `normalize_note`（兼容 sian/atomus/zen 字段，归一到 part1 reviews 契约）+ 过 data_gate。
+
+**容器内冒烟事实（2026-10-02）**：
+- common_core：URL/service/anon key 均 configured，pipeline=/app/pipeline。
+- account_registry：xhs **2**（dead 1 / parked 1）、tencent_map 1（ok）、amap_map 2（ok）；`pick` 三平台均返回可用标识。
+- data_gate 合成样本：合法店放行、假电话（"000"）判 phone_unparseable 拒收，行为正确。
+- apify_collect：默认 sian actor 的 `/input-schema` 返 **404**（该 actor 未发布独立 schema），`describe_input` 已优雅返回；**首次付费跑前需在 Apify Console 核对 sian 的确切 run_input 键名**，不要凭 build_input 直接空跑。
+
+**与既有 Apify 代码的关系（避免两个 Apify 调用方打架）**：`review_apify_fill.py` 仍是**生产在用**的小红书评论填充器（已验证 opspilot 用单数字段 `keyword`、$0.10/run）；`apify_collect.py` 是更通用的生命周期 + 归一底座。后续应把 review_apify_fill 的 actor 调用收口到 apify_collect 再做合并，不要并行各跑。
+
+**另修复**：`task_helper.py` 的 claim/done/block 原先只认 200，而 PostgREST 默认 `Prefer:return=minimal` 返 **204**，导致每次都打印「失败」但实际已写入；现 200/204 均判成功。
+
+**下一步（未做）**：① Console 核对 sian 输入后再决定是否启用（当前生产 Apify 走 opspilot）；② 把各采集器接入 data_gate 再写库；③ 待 xhs 账号恢复或继续走 Apify；④ dev 侧 P1 待办 #36/#37/#39–#43（特质标签、连锁自动化、预制下架、评分升级、去广、采集名单）。
+
+---
+
 ### 2026-10-01 深夜【最终根因·已闭环】：opspilot 查询字段是 `keyword`（单数字符串），不是 `keywords` 数组
 
 **关键纠正（推翻上一版判断）**：上一版以为 opspilot 输入是 `keywords`（复数数组）。实测 dump 原始 dataset 后发现：传 `{"keywords":[...]}` 虽不报错，却被**静默忽略**，actor 回退到默认硬编码泛搜 **"美食推荐"**（每个返回项 `"keyword":"美食推荐"`），结果全是 viral 家常菜教程 + noteType=ads 广告，且忽略 maxItems（传6返20）。
