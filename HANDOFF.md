@@ -3719,3 +3719,10 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
   - 旧 /shop/{id}/review_all 已 404。
 - **结论**：评价正文需 JS 动态生成签名 token（Playwright 渲染或 App），裸 requests 拿不到逐条正文/日期/菜品提及/食客标识。不伪造、不把聚合分当逐条。
 - **下一步**：如需点评逐条评价通道，需引入 Playwright headless（内存限制评估）或接 App 抓包；否则继续走 XHS verified-diner 为主、点评仅用于 chain 分店列表。
+
+## 2026-10-01 Apify 采集方案成稿（待用户拍板）
+- 文档：research/apify_design/采集方案_Apify_2026-10-01.md（整合 part1-4）。
+- 推荐：小红书统一走 Apify，首选 sian.agency/xiaohongshu-rednote-scraper（646 users、免cookie），备选 zen-studio（量大）；接入用 apify-client Python SDK + 容器 cron，不选 MCP。
+- 三段式：首次全量(一次性) → 每日05:30增量 → 周日03:00全量复扫；与点评06:40、post_audit 07:47 衔接。
+- 费用估算：首次全量 $400–600，月均 $30–80（日常为主）。
+- **待拍板**：Apify账号/token、月度预算上限、首选actor确认、是否充值、其他平台本轮是否接入。
