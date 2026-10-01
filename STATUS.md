@@ -1,6 +1,7 @@
 # 当前状态 · STATUS
 
-> 最后更新：2026-10-01 10:05（PM窗口维护）
+> 最后更新：2026-10-01 11:35（PM窗口维护）
+> **✅ Apify已充值成功**：Starter $19/月已生效（预付$19额度+64GB RAM/32并发/30数据中心代理/Bronze折扣），Mastercard 4395已绑定Primary，账单地址已填（Shanghai, China），下次账单2026-11-01，超额$20才提前结算。task_queue #1 已解除blocked→todo，采集窗口已通知恢复。
 > **四窗口职责分配已定稿**：`role-task-allocation.md`（8逻辑角色→4窗口）
 > **2026-10-01 角色互换**：本窗口(CTFS_QA)任PM，原CTFS_PM任QA，见 ROLE_HANDOVER.md
 > 各窗口开始工作时运行 `bash sync.sh <角色>`，结束时运行 `bash sync.sh push "说明"`
