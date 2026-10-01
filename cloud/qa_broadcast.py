@@ -36,18 +36,21 @@ def build_broadcast():
     except Exception as e:
         lines.append(f"🍜 数据统计失败: {e}")
 
-    # ── 2. 采集账号 ──
+    # ── 2. Apify采集额度（替代原小红书账号状态） ──
     try:
         DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
-        pool_f = DATA / "_cookie_pool_state.json"
-        pool = json.loads(pool_f.read_text(encoding="utf-8")) if pool_f.exists() else {}
-        if pool:
-            acc_parts = []
-            for acc, info in pool.items():
-                s = info.get("status", "?")
-                icon = "🟢" if s == "active" else ("🔴" if s == "dead" else "🟡")
-                acc_parts.append(f"{icon}{acc.replace('account_','')}:{s}")
-            lines.append("📱 账号 " + " ".join(acc_parts))
+        apify_f = DATA / "apify_fill_state.json"
+        if apify_f.exists():
+            st = json.loads(apify_f.read_text(encoding="utf-8"))
+            used = st.get("billable_cost_usd", 0)
+            notes = st.get("billable_notes", 0)
+            token_bad = st.get("token_bad", False)
+            if token_bad:
+                lines.append(f"🤖 Apify token异常 (已花费${used:.2f}/{notes}条)")
+            else:
+                lines.append(f"🤖 Apify已花费 ${used:.2f} · {notes}条笔记")
+        else:
+            lines.append("🤖 Apify未配置")
     except Exception:
         pass
 

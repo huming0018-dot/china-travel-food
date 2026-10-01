@@ -138,7 +138,9 @@ def _web_search_extra(kind: str, model: str) -> dict:
     """返回要 merge 进 chat/completions body 的联网搜索参数。"""
     if kind == "ark_tools":
         # 豆包联网；DeepSeek 经 ARK 不支持联网（带了也会忽略/报错，调用方应跳过）
-        return {"tools": [{"type": "web_search"}], "tool_choice": "auto"}
+        if "doubao" not in model:
+            return {}
+        return {"tools": [{"type": "web_search", "web_search": {"enable": True}}]}
     if kind == "kimi_builtin":
         return {"tools": [{"type": "builtin_function",
                            "function": {"name": "$web_search"}}]}
@@ -186,7 +188,7 @@ def chat(provider: Provider, model: str, prompt: str,
          web_search: bool = True, timeout: int = 60) -> dict:
     """统一 OpenAI 兼容调用。返回 {ok, text, sources, model, provider, error}。
     绝不抛异常打断整舰队；失败记 error 继续其他模型。"""
-    use_web = bool(web_search and provider.supports_web)
+    use_web = bool(web_search and provider.supports_web and web_search_enabled())
     body = {
         "model": model,
         "messages": [
