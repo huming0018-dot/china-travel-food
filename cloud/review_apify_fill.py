@@ -398,6 +398,14 @@ def _days_left():
 
 
 def daily_allowance(rem):
+    # 显式覆盖（滚动测试）：APIFY_DAILY_CAP=10 → 当天最多烧 $10（"$10 一轮"），
+    # 烧到该额度睡到次日；剩余额度近 0 时 guard 先返 NO_CREDIT。
+    _env_cap = os.environ.get("APIFY_DAILY_CAP", "").strip()
+    if _env_cap:
+        try:
+            return max(float(_env_cap), 0.0)
+        except ValueError:
+            pass
     return max(rem, 0.0) / _days_left()
 
 
