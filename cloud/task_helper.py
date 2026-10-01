@@ -67,7 +67,8 @@ def list_tasks(filter_val=None):
 
 def claim(task_id):
     r = C.req("PATCH", f"{TABLE}?id=eq.{task_id}", json={"status": "in_progress"})
-    if r.status_code == 200:
+    # 200=return=representation；204=return=minimal（默认），两者都表示写入成功
+    if r.status_code in (200, 204):
         print(f"✅ 任务 #{task_id} 已认领（进行中）")
     else:
         print(f"❌ 认领失败: {r.status_code} {r.text}")
@@ -75,7 +76,7 @@ def claim(task_id):
 
 def done(task_id):
     r = C.req("PATCH", f"{TABLE}?id=eq.{task_id}", json={"status": "done"})
-    if r.status_code == 200:
+    if r.status_code in (200, 204):
         print(f"✅ 任务 #{task_id} 已完成")
     else:
         print(f"❌ 完成失败: {r.status_code} {r.text}")
@@ -83,7 +84,7 @@ def done(task_id):
 
 def block(task_id, reason):
     r = C.req("PATCH", f"{TABLE}?id=eq.{task_id}", json={"status": "blocked", "description": reason})
-    if r.status_code == 200:
+    if r.status_code in (200, 204):
         print(f"⚠️ 任务 #{task_id} 已阻塞: {reason}")
     else:
         print(f"❌ 阻塞失败: {r.status_code} {r.text}")
