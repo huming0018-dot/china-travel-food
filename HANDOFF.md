@@ -3678,3 +3678,11 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **新增质量门 `regression_check.py`**：复用匹配器对回归集全断言重判，有 miss exit 1，结果落 FOOD_AUTHORITY_DIR；应进 release_audit。已同步 repo `cloud/vendor/pipeline/`、skill `scripts/food_pipeline/`、容器 `/app/pipeline/`。
 - **结果**：回归 15 → **16/16**，其余 15 条 conf 不变（无误伤）。提交 **06928fc**（rebase 后）已推送；文档 `authority-recall.md §2`、教训 **#78** 已更新。
 - **待办**：下次 build_sync 让缩写规则进镜像（当前容器运行时已注入最新）；扩 W1 集团/主厨树、黑珍珠 4 家 hold 新准入仍卡外部取证（Apify 充值 / 10-28 重置）。
+
+## 2026-10-01 curate v4 dry-run（精选层模型，未 apply）
+- 监督集：diner_seed_labels 123 条（must_eat 10 / worth_eating 52 / average 61；精选=62 vs 非精选=61）。
+- 特征：独立作者数 n_ind、口味加权均分、分歧 std、负评占比、log(review_count)、price、chain one-hot、premade/ck 序数。
+- 5-fold CV：LogisticRegression acc=40.7%、GBDT acc=47.2%；对精选二分类 P=0.42 / R=0.45（小样本123，宁简勿过拟合）。
+- 学到系数：price=-0.38、indep=-0.35、small=+0.55、large=-0.20、premade=-0.29、ck=-0.29；avg_rating/std/neg 被正则压 0（现有口味特征与人工三档弱相关）。
+- 硬规则下架：23 店（ck=确认 或 premade=高）；模型拟入选 69 店。
+- 输出 /app/data/post_record/curate_v4_dryrun.json；**v4 dry-run 未写库**，curate_score.py 05:52 cron 不变，待用户确认 apply；是移出精选层/降权，不删店、不动电话/坐标/营业时间。
