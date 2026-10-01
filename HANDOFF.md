@@ -3789,3 +3789,9 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - crontab 仅一条 07:47：`flock /tmp/reconcile.lock python reconcile.py --apply`；旧 post_audit 独立行已注释。
 - reconcile.py 编排：ingest -> post_audit(subprocess --findings --apply) -> curate(字段落位+硬规则+疑似hold清单) -> verify(自动修+仍违规告警) -> notifier.info 漏斗报告。
 - 阶段失败：warn TG+飞书 + 非零退出；零变化写原因。
+
+## 2026-10-01 规范1 DB 治理标准
+- docs/standards/standard1_db_governance.md（表登记/字段分层/枚举/去重/迁移治理）。
+- docs/standards/db_schema_spec.json（机器可读）。
+- cloud/validate_schema.py（非阻断漂移校验，挂看门狗/发布前）。
+- 等 fix2(024 prior列)/fix4/5 回报后并入 spec。

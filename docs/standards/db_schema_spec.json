@@ -1,0 +1,19 @@
+{
+  "tables": {
+    "restaurants": {
+      "primary_key": "id",
+      "enums": {
+        "chain_type": ["独立店", "小型连锁", "大型连锁", "资本化连锁"],
+        "central_kitchen": ["无", "疑似", "确认"],
+        "premade_risk": ["无", "低", "疑似", "高"],
+        "food_safety": ["无", "疑似", "确认"],
+        "price_position": ["经济", "平价", "中端", "高端", "奢华"],
+        "status": ["active", "closed", "relocated"]
+      },
+      "patch_whitelist": ["chain_type", "central_kitchen", "premade_risk", "price_avg", "investor_info", "is_curated", "curate_badge", "curate_score", "curate_confidence", "curate_reason", "astroturf_score"],
+      "locked": ["phone", "lat", "lng", "opening_hours"]
+    },
+    "reviews": {"primary_key": "id", "dedup": ["platform", "post_id"]},
+    "diner_seed_labels": {"primary_key": ["restaurant_id", "labeler"], "enums": {"tier": ["must_eat", "worth_eating", "average"]}}
+  }
+}
