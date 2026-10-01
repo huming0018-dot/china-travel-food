@@ -3649,3 +3649,10 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 改 `negative_audit.py`：词表命中只产生**候选、ck/pr 封顶疑似**（新增 rule_candidate/evidenced_types/CK_RANK/PR_RANK），且不覆盖带 URL 证据的字段；chain_type 规模轴仍按词表补。
 - 新增机制文档 `references/fact-evidence-mechanism.md`（repo 副本 cloud/docs/）；SKILL.md 引用、mechanism-master 绑定表、crawler-engineer 模块地图、lessons #77 均已更新。
 - 前端语义备忘（FE 恢复时）：「隐藏连锁」按 chain_type 规模轴、「去工业化」按工艺轴，二者独立；费大厨 std=False 但属大型连锁。
+
+## 2026-10-01 权威全量召回对账闭环（米其林 + 黑珍珠）
+- **米其林**：sitemap 全量召回 154 家（全球聚合段 ae-az；ae-du 镜像 0 新增），与官方 156 差 2 为发布后动态关店/口径差（已记录、不硬追）；136 exact + 18 strong，**0 missing / 0 uncertain**（sitemap_shanghai.json、authority_sitemap_missing.json）。
+- **黑珍珠**：新增对账器 `blackpearl_reconcile.py`（对当前库实时重匹配，不依赖旧文件状态）；底册枚举 61=官方 61，结果 **57 在库 / 0 ready_raw / 4 hold_evidence**。4 家 hold（楼上菜馆静安嘉里店、成隆行怡丰园虹桥店、周舍海派菜、VALE）缺真实口味证据，写 `blackpearl_fill_queue.json`，属"新准入"候选（采集→admission→insert），不混入 worth_fill 存量补评论队列；不凭权威背书强收。
+- **匹配器增强（authority_sitemap.py）**：① 项目根改为可移植解析（FOOD_PROJECT 优先，禁硬编码单机路径），容器内 FOOD_PROJECT=/app；② 新增 `_distinct` 通用业态前后缀剥离，"宝丽轩中餐厅↔宝丽轩""中国菜·头灶↔头灶"专名相等（≥2汉字）判 strong，修复漏配。
+- 三副本已同步（repo cloud/vendor/pipeline、skill scripts/food_pipeline、容器 /app/pipeline + /app/research/authority）；authority-recall.md 已补 §4/§4.1。
+- 待外部：4 家黑珍珠 hold 店口味证据采集（Apify 充值/XHS 账号恢复）；官方完整名单真人登录点评复核。

@@ -30,6 +30,7 @@ navigate/wait_for_load 会超时）：
     S.reconcile_cached(bu)                        # 慢网络、已分页采集后
 """
 import json
+import os
 import pathlib
 import re
 import sys
@@ -41,8 +42,21 @@ except Exception:
     sys.path.insert(0, str(pathlib.Path(__file__).parent))
     import common as C
 
-PROJ = pathlib.Path(
-    "/Users/hubowen/Desktop/桌面 - 胡博文的MacBook Pro/china-travel-food")
+
+def _proj_root():
+    """项目根解析（可移植，禁止硬编码单机路径）：FOOD_PROJECT 环境变量优先，
+    其次按 repo 布局 <root>/cloud/vendor/pipeline/this_file 反推，再次 cwd。"""
+    env = os.environ.get("FOOD_PROJECT")
+    if env and pathlib.Path(env).exists():
+        return pathlib.Path(env)
+    here = pathlib.Path(__file__).resolve()
+    for cand in (list(here.parents) + [pathlib.Path.cwd()]):
+        if (cand / "research").exists() or (cand / "cloud").exists():
+            return cand
+    return here.parents[0]
+
+
+PROJ = _proj_root()
 AUTH = PROJ / "research" / "authority"
 SITEMAP_INDEX = "https://guide.michelin.com/sitemap.xml"
 LOCALE = "/sg/zh_CN"
@@ -113,6 +127,26 @@ def slug_brand_cores(slug):
     return {k for k in keys if eligible(k)}
 
 
+# 通用业态/品类前后缀：剥离后若专名相等，视为同一命名（"宝丽轩中餐厅"↔"宝丽轩"、
+# "中国菜·头灶"↔"头灶"）。仅用于名称召回，实体并另有 entity 校验。
+_GENERIC_AFFIX = ["中餐厅", "西餐厅", "茶餐厅", "餐厅", "饭店", "酒楼", "酒家", "菜馆",
+                  "小馆", "食堂", "料理", "美食", "中国菜", "总店", "分店", "旗舰店",
+                  "概念店", "精品店", "精品", "酒馆", "面馆", "烤场", "烧肉店", "烤肉店"]
+
+
+def _distinct(s):
+    out = (s or "").strip("·.,- ")
+    changed = True
+    while changed:
+        changed = False
+        for g in _GENERIC_AFFIX:
+            if len(out) > len(g) and out.endswith(g):
+                out = out[:-len(g)].strip("·.,- "); changed = True
+            if len(out) > len(g) and out.startswith(g):
+                out = out[len(g):].strip("·.,- "); changed = True
+    return out
+
+
 def make_matcher(rests):
     index = {}
     for r in rests:
@@ -141,8 +175,13 @@ def make_matcher(rests):
             for k, r in index.items():
                 k_han = _han(k)
                 hit = False
-                if ch and k_han and ch in k_han:
-                    hit = "strong"                      # 中文专名连续包含
+                if ch and k_han:
+                    # 剥离通用业态前后缀后专名相等（宝丽轩中餐厅↔宝丽轩、中国菜头灶↔头灶）
+                    ds, dk = _distinct(c), _distinct(k)
+                    if ds and ds == dk and len(_han(ds)) >= 2:
+                        hit = "strong"
+                    elif ch in k_han:
+                        hit = "strong"                      # 中文专名连续包含
                 elif c in k or k in c:
                     ratio = min(len(c), len(k)) / max(len(c), len(k))
                     hit = "strong" if (k.startswith(c) or ratio >= 0.6) else (
