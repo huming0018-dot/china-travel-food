@@ -473,12 +473,15 @@ def candidate_models(provider):
     return order
 
 
-EXTRACT_PRIMARY = "doubao-seed-2-0-mini-260428"
+# 主抽取模型＝已加入「协作奖励计划」授权的 DeepSeek-V4-Flash（预置接入点，
+# 每日采集量次日 11 点后按用量返免费资源包，个人单模型每日最高 200 万 token）。
+# 旧 mini-260428 不在奖励名单，故仅作兜底。PROD_MODEL 可覆盖。
+EXTRACT_PRIMARY = "deepseek-v4-flash-ga-260731"
 
 
 def extraction_models(provider):
-    """抽取模型（控成本版）：钉死最便宜且可靠的 mini；仅当它被暂停/不可用时，
-    才追加【至多 1 个】存活兜底，避免无证据品牌在多个模型间空打。
+    """抽取模型（控成本版）：钉死【已授权、可返免费包】的 V4-Flash；仅当它被
+    暂停/不可用时，才追加【至多 1 个】存活兜底，避免无证据品牌在多个模型间空打。
     PROD_MODEL 可显式覆盖主模型。"""
     models = list(provider.models)
     want = os.environ.get("PROD_MODEL", "") or EXTRACT_PRIMARY
