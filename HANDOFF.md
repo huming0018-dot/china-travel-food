@@ -4462,3 +4462,17 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 问题：#10 虽标 done，但 SYSTEM_ARCH.md 标题/一句话写"三窗口"，Mermaid/状态表/速查表仍是四窗口、QA 独立，自相矛盾。
 - 修正：Mermaid 收敛为 PM(含原QA验收/红队)+采集+开发 三窗口；流程1/2/3 中 QA 独立验证改 PM；状态表与"找谁"速查去 QA；刷新当前状态（Apify 已生效、外部看门狗、pm_dispatch）。
 - 验收对齐：新窗口 5 分钟能说清谁做什么/数据怎么流/问题找谁。
+
+## 2026-10-02 production_model 控量推进（ARK 恢复后；含 token 计量台账）
+- 背景：ARK 一度欠费/限流，恢复后做一次「控量」跑批并量化消耗。探针已加**永久性 token 计量器**：`meter_usage()` 把每次 LLM 调用 prompt/completion/total 追加到容器 `/app/data/post_record/llm_usage.jsonl`；流式请求加 `stream_options.include_usage`、在收尾 usage chunk 捕获；非流式也计量。提交 `dae4546`（与并行 `1505083` 合并：探针已重构为 `ingest.append_finding/supersede` 写共享 `findings.jsonl`，gate_apply 同读此文件）。同版已 docker cp 进容器、py_compile/导入冒烟通过。
+- 控量批次（RUN_BATCH=5、BRAND_GAP=8，full 模式；品牌总数 1398、已完成 11）：
+  - 纽约贝果博物馆(1788)：None，**源0**；老地方面馆(1950)：None，源0；丸龟制面(42)：None，源0（正确，未因"连锁"误判央厨，对齐 lesson77）；老吴(625)：None，源0。
+  - 苏小柳点心(499)：**门店现制·标准化**，本轮源1（叠加历史 findings 后满足 gate）。
+- gate_apply --apply：落库 3 家 → rid 3 岩田割烹鮨、rid 8 酉町·烧鸟、rid 499 苏小柳，均「门店现制·标准化」。
+- **结果**：restaurants 1519，有 production_model **9**（门店现制·标准化 7 + 中央厨房·门店加工 2）。
+- **消耗量（本控量会话，含 runner 预检）**：22 次 LLM 调用、总 **56,123 tokens**（输入 31,924 / 输出 24,199）；分模型 mini 28,130 / lite 14,246 / deepseek-v4-flash 13,747。搜索走 keyless SearXNG＝免费。
+- **成本（方舟 ≤32k 单价折算）**：闲时 ≈ **¥0.091**、高峰 ≈ **¥0.183**（单价 mini≈0.2–0.4/2–6、lite 0.6/3.6、ds-flash 闲1.5/4.5·峰3/9，元/百万 tokens）。
+- **优化方案（待落地）**：
+  1. **调用数偏多**：22 调用/5 品牌（≈4.4/品牌），因 extract 与 confirm 在 mini/lite/deepseek 间故障转移重试。改为：抽取固定钉死最便宜且稳定的 mini，仅在真实报错才升级；非严重标签跳过 confirm；命中即停不遍历 → 调用/ token 预计降 3–4×。
+  2. **召回稀疏**：4/5 品牌 0 接地源（keyless 引擎对这些品牌无品牌命中证据）。需检查 SearXNG 后端引擎是否启用、扩充/校准查询词（品牌+品类共现），让真实有报道的品牌能凑到 ≥2 独立源；准确性优先（宁空不假），覆盖随召回改善增长。
+  3. 计量台账已可长期统计，建议每周汇总一次实际账单对账，按"每标签成本"评估性价比。
