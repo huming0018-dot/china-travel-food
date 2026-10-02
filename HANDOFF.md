@@ -69,6 +69,7 @@
 - 加固（提交 1e21df6）：全局 `RateGate`（worker 共享最小请求间隔，普通429 全局退避、成功回落）；死号状态从镜像层 `/app/cloud/model_pool_state.json` 迁到数据卷 `/app/data/probe/model_pool_state.json`（跨重建持久、启动重载）。
 - 成本准确性（632b07e/5228c13）：chat_raw 默认改**非流式**（免费模型流式不回 usage、非流式可靠），修一行重复读流 bug；`log_usage` 兼容原始 `*_tokens` 与归一化键（此前 token 恒 0）。首判 max_tokens 2200→1500 省 token。
 - 跨账号分片（**2373c03**）：`probe_parallel.run()` 不再只用 ps[0]，改为遍历所有 provider 收集 (provider,model) 便宜/强槽位、worker 各自绑定；用户加更多 ARK key（写 deploy.env，每账号独立 RPM/配额）即真并行。
+- 多账号配置（**2c9214c**）：deploy.env 用复数键 `ARK_API_KEYS=k1,k2,k3`（逗号分隔，每把＝独立火山账号；旧单数 `ARK_API_KEY` 仍兼容），load_providers 每把 key 生成 ark/ark2/ark3…；死号状态按 `账号/模型` 隔离（存量已迁移为 ark/*）。
 - 结论：机制已完备，剩余瓶颈＝单账号免费额度/RPM；扩容靠加独立 ARK 账号（或关安心中心转后付费）。日常由 20:47 全扫 + 每2h cron 在额度重置后增量推进。
 
 ---
