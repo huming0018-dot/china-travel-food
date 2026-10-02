@@ -32,6 +32,7 @@ import sys
 import time
 import urllib.request
 import urllib.error
+from concurrent import futures as _cf
 
 sys.path.insert(0, "/app/cloud")
 sys.path.insert(0, "/app/pipeline")
@@ -351,21 +352,25 @@ def evidence_url_set(evidence):
 
 def gather_evidence(brand, n_queries=4, _retry=1):
     bterms = brand_terms(brand)
+    qs = standard_queries(brand)[:n_queries]
+
+    def _one_query(q):
+        # 每查询独立 failover；并发后整品牌取证墙钟≈单次查询（原串行≈35-50s→~12-18s）
+        res, eng = _keyless_search(q)
+        kept = [d for d in res if _mentions_brand(d, bterms)]
+        return {"query": q, "engine": eng, "raw": len(res), "results": kept}
 
     def _once():
-        ev = []
-        for q in standard_queries(brand)[:n_queries]:
-            res, eng = _keyless_search(q)
-            kept = [d for d in res if _mentions_brand(d, bterms)]
-            ev.append({"query": q, "engine": eng, "raw": len(res), "results": kept})
-            time.sleep(2)
-        return ev
+        if len(qs) <= 1:
+            return [_one_query(q) for q in qs]
+        with _cf.ThreadPoolExecutor(max_workers=len(qs)) as ex:
+            return list(ex.map(_one_query, qs))
 
     ev = _once()
     if _retry and not any(e["results"] for e in ev):
-        # 冷启动/上游瞬态导致 0 源：等待就绪后整轮重取一次，不产出空轮
+        # 冷启动/上游瞬态导致 0 源：等待就绪后整轮并发重取一次，不产出空轮
         ensure_search_ready(force=True)
-        time.sleep(12)
+        time.sleep(6)
         ev = _once()
     return ev
 

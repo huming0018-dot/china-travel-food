@@ -50,6 +50,10 @@ def _load_proxy():
 PROXIES = _load_proxy()
 print(f"[serp] proxy={'on' if PROXIES else 'off'}", file=sys.stderr)
 
+# 全局出站引擎并发上限：并发取证（多品牌 × 每品牌多查询）会瞬时打出大量请求、触发搜索
+# 引擎限流/验证码；用信号量把同时在飞的引擎 HTTP 调用压到安全范围（env SERP_OUTBOUND 可调）。
+_OUTBOUND = threading.BoundedSemaphore(max(1, int(os.environ.get("SERP_OUTBOUND", "6"))))
+
 
 def _get(url, timeout=12):
     import requests
@@ -307,10 +311,11 @@ def _hard_call(fn, q, deadline):
     box = {}
 
     def work():
-        try:
-            box["r"] = fn(q)
-        except Exception as e:
-            box["r"] = [], f"err {type(e).__name__}"
+        with _OUTBOUND:
+            try:
+                box["r"] = fn(q)
+            except Exception as e:
+                box["r"] = [], f"err {type(e).__name__}"
 
     th = threading.Thread(target=work, daemon=True)
     th.start()
@@ -320,7 +325,7 @@ def _hard_call(fn, q, deadline):
     return box.get("r", ([], "nores"))
 
 
-def search_with_failover(q, want=8, time_cap=25, max_fallback=1):
+def search_with_failover(q, want=8, time_cap=18, max_fallback=1):
     terms = _qterms(q)
     fallback = [e for e in ENGINES if e[0] not in PINNED]
     k = _ROT["i"] % len(fallback)
