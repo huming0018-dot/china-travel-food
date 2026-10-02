@@ -130,25 +130,29 @@ def main():
     print(f"[runner] mode={mode}；品牌总数 {len(brands)}；本轮 {len(targets)}；"
           f"已完成 {len(st['done'])}；reverify={st.get('reverify')}\n")
 
-    # 轻量 LLM 预检：限流/不可用班次立即暂停，避免对每个品牌空跑数分钟搜索
-    pf_model = PMP.candidate_models(p)[0]
+    # 轻量 LLM 预检：逐个测试抽取实际会用的模型（mini→兜底），任一可用即放行；
+    # 仅当全部模型限流/不可用才暂停，避免单模型 SetLimitExceeded 误杀整轮
+    pf_models = PMP.extraction_models(p)
 
-    def _pf():
+    def _pf(m):
         return PMP.chat_raw(
-            p, pf_model, [{"role": "user", "content": "ping，回复 ok"}],
+            p, m, [{"role": "user", "content": "ping，回复 ok"}],
             timeout=15, retries=1, hard_cap=30)
 
     llm_ok = False
-    try:
-        r, to = hard_watch(_pf, 45)
-        llm_ok = (not to) and bool(r)
-    except urllib.error.HTTPError as e:
-        print(f"[preflight] LLM HTTP {e.code}")
-        llm_ok = e.code not in (429, 503)
-    except Exception:
-        llm_ok = False
+    for m in pf_models:
+        try:
+            r, to = hard_watch(lambda m=m: _pf(m), 40)
+            if not to and bool(r):
+                llm_ok = True
+                print(f"[preflight] 可用模型 {m}")
+                break
+        except urllib.error.HTTPError as e:
+            print(f"[preflight] {m} HTTP {e.code}，试下一模型")
+        except Exception:
+            pass
     if not llm_ok:
-        print("⏸ LLM 预检未通过（账号限流/服务不可用），本轮不跑搜索，下一班再试。")
+        print("⏸ LLM 预检未通过（全部模型限流/不可用），本轮不跑搜索，下一班再试。")
         save_state(st)
         return
 
