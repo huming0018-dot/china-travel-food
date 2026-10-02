@@ -307,3 +307,15 @@
 2. **按你自报的顺序自主推进**：#14采集SOP → #30/#31修红灯 → #3/#4数据类 → #45地图解卡 → #33/#34/#38深覆盖机制
 3. **卡点等待**：#26方舟key（用户已选A，等用户登录）、#2腾讯key（等用户申请）、#1 Apify实跑（等用户充值$10）
 4. 完成后同步在窗口回报"已交付+工单号"，PM核对task_queue状态
+
+### 🧩 PM新工单 #46（P0，众包插件-采集端）2026-10-02
+用户已拍板：众包采集升级为「插件载体」——参与者装Chrome扩展、自有账号/设备/网络、全自动采集、直接回传Supabase。
+**请认领并开发**：
+1. manifest v3 插件骨架（background service worker + content script）
+2. 安全线硬编码（不可调）：日搜索≤30次/账号 · 间隔随机60-120s · 会话≤15min · 浏览停留≥30s · 触发"访问频繁"自动停15min · 一机一号
+3. 任务拉取：GET task_queue 中 assignee=crowd & status=todo 的词包+店铺包
+4. 采集执行：搜索→收录笔记(URL+标题+摘要+锚定候选)→全自动评分(规则初判)
+5. 回传：POST Supabase（task_proof），带 task_id/participant_id/时间戳
+6. 知情同意书：插件首启展示（采集范围/账号风险/计酬），同意才运行；**开源可审计**
+完整方案：research/crowd_collect/pm_v2_plugin_crowd.md
+完成后标done并回报。

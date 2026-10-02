@@ -231,3 +231,13 @@
 1. ✅ 你的gate_apply闭环（81211b9）记为#37前置工作，已认可；后续请把实际做的工单在task_queue登记并标done，勿只写HANDOFF
 2. **按用户"按顺序继续做"指令推进**：#36菜单特质 → #37连锁识别自动化（gate_apply基础上）→ #39预制下架 → #40打分 → #41连锁门槛 → #42去广 → #43采集名单
 3. 每完成一项即标done并窗口回报，PM做状态核对
+
+### 🧩 PM新工单 #47（P0，众包插件-回传校验与结算）2026-10-02
+用户已拍板：众包采集升级为「插件载体」全自动回传。你的部分：
+1. data_gate 扩展 crowd_proof 校验分支：URL有效性/去重/entity_match锚定到目标店
+2. crowd_reviews 表：store_id/score/evidence/reviewer_id/trust_level（真实口味评分落库）
+3. crowd_settlement 结算表：participant_id/有效条数/单价/应结金额/状态
+4. participants 表：实名/微信绑定/信用分/账号健康状态
+5. 任务包生成：待采集店铺池切 5-8店/包 发布为 crowd 工单（复用task_queue）
+完整方案：research/crowd_collect/pm_v2_plugin_crowd.md
+完成后标done并回报。
