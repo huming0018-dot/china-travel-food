@@ -123,16 +123,27 @@ class Provider:
 
 def load_providers() -> list:
     """读 env，返回【已配置（有 key 且声明了 models）】的 provider 列表。
-    缺 key / 未声明 models 的 provider 自动跳过，绝不报错中断。"""
+    缺 key / 未声明 models 的 provider 自动跳过，绝不报错中断。
+
+    多账号：优先读复数键 <KEY_ENV>S（逗号分隔的多把 key，如 ARK_API_KEYS=k1,k2），
+    每把 key 生成一个独立 Provider（name=ark / ark2 / ark3…），各自独立 RPM/配额；
+    未配复数键则回退到单数键 <KEY_ENV>（如 ARK_API_KEY）。"""
     out = []
     for name, spec in PROVIDER_SPECS.items():
-        key = os.environ.get(spec["key_env"], "").strip()
+        plural = os.environ.get(spec["key_env"] + "S", "").strip()
+        single = os.environ.get(spec["key_env"], "").strip()
+        if plural:
+            keys = [k.strip() for k in plural.split(",") if k.strip()]
+        else:
+            keys = [single] if single else []
         models_raw = os.environ.get(spec["models_env"], "").strip()
         base = os.environ.get(spec["base_url_env"], "").strip() or spec["default_base"]
-        if not key or not models_raw:
+        if not keys or not models_raw:
             continue  # 未配置 → 静默跳过
         models = [m.strip() for m in models_raw.split(",") if m.strip()]
-        out.append(Provider(name, spec, base, key, models))
+        for i, key in enumerate(keys):
+            pname = name if i == 0 else f"{name}{i + 1}"
+            out.append(Provider(pname, spec, base, key, models))
     return out
 
 

@@ -179,10 +179,11 @@ def worker(provider, model, q, done_flag, allow_strong, stats, lock):
                 except Exception:
                     pass
                 if e.code == 429 and "SetLimitExceeded" in body_txt:
-                    P.mark_model_dead(model)
+                    dk = f"{provider.name}/{model}"
+                    P.mark_model_dead(dk)
                     q.put(bname)   # 回队交其他模型
                     with lock:
-                        stats["dead"].append(model)
+                        stats["dead"].append(dk)
                     return
                 if e.code == 429:
                     RATE.backoff(15)   # 账号级 RPM：全局退避，再回队
@@ -238,7 +239,7 @@ def run():
     cheap_slots, strong_slots = [], []
     for prov in ps:
         for m in prov.models:
-            if m in P._POOL["dead"]:
+            if f"{prov.name}/{m}" in P._POOL["dead"]:
                 continue
             (strong_slots if is_strong(m) else cheap_slots).append((prov, m))
     first_pool = cheap_slots or strong_slots
@@ -269,7 +270,7 @@ def run():
             if remaining == 0:
                 break
             strong_live = [(p, m) for (p, m) in strong_slots
-                          if m not in stats["dead"]]
+                          if f"{p.name}/{m}" not in stats["dead"]]
             if alive == 0 and strong_live and args.allow_strong_fallback:
                 print(f"  [fallback] 便宜模型耗尽，强槽 {[p.name+'/'+m for p,m in strong_live]} "
                       f"接续 {remaining} 品牌")
