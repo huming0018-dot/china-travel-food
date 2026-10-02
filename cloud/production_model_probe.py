@@ -172,9 +172,9 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
     返回 message 形态 dict（content / tool_calls）。
     timeout=单次读空闲上限；hard_cap=整次请求墙钟硬上限（服务端挂起不返回时快速失败）。
     max_tokens=输出上限（封顶计费，防止冗长 JSON 失控）。"""
-    body = {"model": model, "messages": messages, "temperature": 0.2, "stream": True}
+    body = {"model": model, "messages": messages, "temperature": 0.2, "stream": False}
     if body["stream"]:
-        body["stream_options"] = {"include_usage": True}  # 末块回传 usage 用于成本核算
+        body["stream_options"] = {"include_usage": True}  # 流式末块才回 usage
     if max_tokens:
         body["max_tokens"] = int(max_tokens)
     if tools:
@@ -198,7 +198,6 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
                          "Authorization": f"Bearer {provider.api_key}"}, method="POST")
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 if not body["stream"]:
-                    d = json.loads(r.read().decode("utf-8"))
                     d = json.loads(r.read().decode("utf-8"))
                     meter_usage(model, d.get("usage"))
                     msg = d["choices"][0]["message"]
@@ -402,7 +401,7 @@ def extract_signals_once(provider, model, brand, locations, evidence,
     messages = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": prompt}]
     msg = chat_raw(provider, model, messages, timeout=30, retries=retries,
-                   max_tokens=2200)  # 单次、无工具；封顶输出
+                   max_tokens=1500)  # 单次、无工具；封顶输出，省 token
     MP.log_usage("production_probe",
                  {"provider": provider.name, "model": model, "usage": msg.get("_usage")})
     return _parse_signals(msg.get("content") or "")
