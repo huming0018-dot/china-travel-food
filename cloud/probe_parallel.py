@@ -229,15 +229,19 @@ def run():
     if not ps:
         print("未配置 LLM provider，退出。")
         return
-    provider = ps[0]
     brands, names = build_brands(args)
     if not names:
         print("无目标品牌。")
         return
 
-    live = [m for m in provider.models if m not in P._POOL["dead"]]
-    cheap = [m for m in live if not is_strong(m)]
-    first_pool = cheap or live
+    # 跨所有 provider(账号) 收集 (provider, model) 槽位；每账号独立 RPM/配额 → 真并行
+    cheap_slots, strong_slots = [], []
+    for prov in ps:
+        for m in prov.models:
+            if m in P._POOL["dead"]:
+                continue
+            (strong_slots if is_strong(m) else cheap_slots).append((prov, m))
+    first_pool = cheap_slots or strong_slots
     n_workers = args.workers or min(len(first_pool), max(1, len(names)))
 
     q = queue.Queue()
@@ -247,32 +251,36 @@ def run():
     done_flag = {"brands": brands, "ingest": args.ingest, "results": []}
     lock = threading.Lock()
 
-    print(f"provider={provider.name} 目标品牌{len(names)} workers={n_workers} "
-          f"首判模型={first_pool} ingest={args.ingest}\n")
+    slot_lbl = [f"{p.name}/{m}" for p, m in first_pool]
+    print(f"账号数={len(ps)} 目标品牌{len(names)} workers={n_workers} "
+          f"槽位={slot_lbl} ingest={args.ingest}\n")
     t0 = time.time()
     with concurrent.futures.ThreadPoolExecutor(max_workers=n_workers) as ex:
         futs = []
         for i in range(n_workers):
-            model = first_pool[i % len(first_pool)]
-            futs.append(ex.submit(worker, provider, model, q, done_flag,
+            prov, model = first_pool[i % len(first_pool)]
+            futs.append(ex.submit(worker, prov, model, q, done_flag,
                                   args.allow_strong_fallback, stats, lock))
-        # 便宜模型全死且仍有积压 → 用强模型补 worker
+        # 便宜槽全死且仍有积压 → 用强模型槽补 worker
         while True:
             time.sleep(5)
             remaining = q.qsize()
             alive = sum(1 for f in futs if f.running())
             if remaining == 0:
                 break
-            strong_live = [m for m in live if is_strong(m) and m not in stats["dead"]]
+            strong_live = [(p, m) for (p, m) in strong_slots
+                          if m not in stats["dead"]]
             if alive == 0 and strong_live and args.allow_strong_fallback:
-                print(f"  [fallback] 便宜模型耗尽，强模型 {strong_live} 接续 {remaining} 品牌")
-                with concurrent.futures.ThreadPoolExecutor(max_workers=len(strong_live)) as ex2:
-                    for m in strong_live:
-                        ex2.submit(worker, provider, m, q, done_flag,
+                print(f"  [fallback] 便宜模型耗尽，强槽 {[p.name+'/'+m for p,m in strong_live]} "
+                      f"接续 {remaining} 品牌")
+                with concurrent.futures.ThreadPoolExecutor(
+                        max_workers=len(strong_live)) as ex2:
+                    for p, m in strong_live:
+                        ex2.submit(worker, p, m, q, done_flag,
                                    args.allow_strong_fallback, stats, lock)
                 break
             if alive == 0 and not strong_live:
-                print(f"  [stop] 所有模型配额耗尽，剩余 {remaining} 品牌待下次")
+                print(f"  [stop] 所有账号模型配额耗尽，剩余 {remaining} 品牌待下次")
                 break
         for f in concurrent.futures.as_completed(futs):
             f.result()
