@@ -27,7 +27,7 @@ import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXT = os.path.join(ROOT, "crowd_extension")
-VERSION = "2.0.0"
+VERSION = "3.0.0"  # 众包美食家 v3（回流检测）
 OUT_DIR = os.path.join(EXT, "releases")
 OUT_ZIP = os.path.join(OUT_DIR, f"crowd-extension-v{VERSION}.zip")
 ENV_LOCAL = os.path.join(ROOT, "app", ".env.local")

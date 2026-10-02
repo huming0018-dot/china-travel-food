@@ -1,14 +1,15 @@
 /**
- * background.js — 众包采集插件后台 Service Worker（v2.1 报名即用 + 自动续领）
+ * background.js — 众包美食家插件后台 Service Worker（v3 回流检测 + 报名即用 + 自动续领）
  *
- * 职责（全部在插件内闭环，符合 CROWD-CONTRACT-001 + crowd_rpc_security.sql）：
+ * 职责（全部在插件内闭环，符合 CROWD-CONTRACT-003 + crowd_rpc_security.sql）：
  *  1. 任务拉取：RPC crowd_fetch_tasks(participant_id, exclude_task_ids) → 返回 open 任务包（排除已完成）
  *  2. 关键词轮转：任务包 pack 内按索引顺序逐个采集，每关键词回传 accepted 达 kpi_min 标记完成
  *  3. 完成续领：包内全部关键词完成 → 记录 done_task_ids + 清 active_task → 下轮 heartbeat 自动领新包
- *  4. 回传：RPC crowd_submit_proof(participant_id, envelope) → 服务端校验+幂等+落库
+ *  4. 回传 + 回流检测（v3）：RPC crowd_submit_proof → 服务端确认（ok=true 才算"真的入库"）→
+ *     recordFlow() 记录 accepted/new_progress，连续零有效 → 回流异常告警（防虚假通过）
  *  5. 参与者状态：不再直连 crowd_participants 表（防泄漏），由 RPC 服务端校验
  *
- * 安全模型（2026-10-02 加固 + 续领）：
+ * 安全模型（2026-10-02 加固 + 续领 + 回流检测）：
  *  - 插件只用 Supabase anon key（公开可分发），对 4 张表零直连权限
  *  - 所有读/写走 security definer RPC，服务端做：参与者状态/契约版本/域名/评分/幂等校验
  *  - anon 无法绕过 RPC 直写 proofs（42501 已实测验证）
@@ -44,11 +45,9 @@ async function callRpc(fn, body) {
 
 // ---------------------------------------------------------------- 参与者管控
 async function participantGate() {
-  // 本地存 participant_id（onboarding 写入，P- 编号格式已强制校验）
   const pid = await safety._get("participant_id", "");
   if (!pid) return { ok: false, reason: "未填写参与编号（请打开插件选项页填写）" };
   if (!/^P-[A-Z0-9]{6,12}$/.test(pid)) return { ok: false, reason: "参与编号格式错误（应为 P-XXXXXX）" };
-  // 服务端校验状态：由 RPC 内部完成，本地不再拉取任何参与者数据（防泄漏）
   return { ok: true, pid };
 }
 
@@ -56,7 +55,6 @@ async function participantGate() {
 async function kwState(taskId) {
   return (await safety._get("kw_state_" + taskId, null)) || {};
 }
-// kw_state = { idx: {accepted: N, done: bool} }  每个包内关键词的累计 accepted 与完成标记
 
 // 返回当前应采集的关键词索引：第一个未完成的关键词；全完成返回 -1
 async function nextKwIndex(task) {
@@ -188,7 +186,7 @@ async function doCollectOnce() {
   return { status: "collected", count: items.length, kw_index: idx, gate };
 }
 
-// ---------------------------------------------------------------- 回传（RPC）+ 进度累计 + 完成判定
+// ---------------------------------------------------------------- 回传（RPC）+ 回流检测 + 进度累计
 async function uploadProofs() {
   const q = await safety._get("proof_queue", []);
   if (!q.length) return { status: "empty" };
@@ -204,10 +202,15 @@ async function uploadProofs() {
       p_participant_id: participant,
       p_envelope: body,
     });
+    // v3 回流检测：无论 accepted 多少，服务端返回 ok=true 即"服务端确实接收"（防虚假通过）
     if (rpc.ok && rpc.data && rpc.data.ok) {
-      // 成功：累计该关键词 accepted（服务端去重后新增条数），完成判定在下方统一做
       const d = rpc.data;
       const accepted = (d.accepted || 0);
+      const flow = await safety.recordFlow(d);
+      if (flow.stalled) {
+        // 连续 N 次零有效 → 记录回流异常（popup 显示；不阻断采集，服务端去重属正常）
+        await safety._set({ flow_stall_warned_at: Date.now() });
+      }
       if (body.task_id != null && body.kw_index != null) {
         const key = "kw_state_" + body.task_id;
         const st = (await safety._get(key, {})) || {};
@@ -273,7 +276,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       safety._get("participant_id", ""),
       safety._get("gate_block_reason", ""),
       safety._get("done_task_ids", []),
-    ]).then(async ([cd, ds, q, task, pid, gate, done]) => {
+      safety.flowSnapshot(),
+    ]).then(async ([cd, ds, q, task, pid, gate, done, flow]) => {
       let kwProgress = null;
       if (task) {
         const st = (await safety._get("kw_state_" + task.task_id, {})) || {};
@@ -289,6 +293,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         participantId: pid,
         gateBlockReason: gate,
         doneCount: done.length,
+        flow, // v3: {zeroCount, stallThreshold, stalled, lastProgress, lastOkAgoSec}
         activeTask: task ? { task_id: task.task_id, pack_len: task.pack.length, kpi_min: task.kpi_min, kwProgress } : null,
       });
     });
@@ -307,5 +312,5 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.alarms.create("collect_heartbeat", { periodInMinutes: CONFIG.HEARTBEAT_MIN });
-  console.log("[crowd] installed v2.1 auto-rotate, sync_version=", CONFIG.SYNC_VERSION);
+  console.log("[crowd] installed v3 flow-check, sync_version=", CONFIG.SYNC_VERSION);
 });

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "上海美食图鉴·众包采集",
-  "version": "2.0.0",
-  "description": "知情自愿的众包采集插件：参与者用自有账号/设备/网络，按硬编码安全线采集小红书公开笔记与口味评分，经安全RPC回传（v2：插件零表权限、服务端校验）。开源可审计。",
+  "name": "众包美食家",
+  "version": "3.0.0",
+  "description": "知情自愿的众包采集插件（v3 回流检测）：参与者用自有账号/设备/网络，按服务端下发安全线采集小红书公开笔记与口味评分，经安全RPC回传，回传结果服务端确认、本地校验防止虚假通过。开源可审计。",
   "permissions": [
     "storage",
     "alarms",
@@ -16,7 +16,7 @@
     "service_worker": "src/background.js"
   },
   "action": {
-    "default_title": "美食图鉴众包采集",
+    "default_title": "众包美食家",
     "default_popup": "src/popup.html"
   },
   "options_page": "src/onboarding.html",

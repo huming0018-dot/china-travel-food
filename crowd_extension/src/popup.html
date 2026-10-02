@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>众包采集状态</title>
+<title>众包美食家 · 状态</title>
 <style>
 body{width:300px;font-family:-apple-system,'PingFang SC',sans-serif;padding:14px;font-size:13px;color:#1a1a2e}
 h1{font-size:15px;margin:0 0 10px}
@@ -16,12 +16,13 @@ h1{font-size:15px;margin:0 0 10px}
 </style>
 </head>
 <body>
-<h1>🍜 美食图鉴·众包采集</h1>
+<h1>🍜 众包美食家</h1>
 <div id="status">
   <div class="row"><span class="label">状态</span><span class="val" id="s_state">—</span></div>
   <div class="row"><span class="label">今日搜索</span><span class="val" id="s_searches">—</span></div>
   <div class="row"><span class="label">冷却</span><span class="val" id="s_cooldown">—</span></div>
   <div class="row"><span class="label">待回传</span><span class="val" id="s_queue">—</span></div>
+  <div class="row"><span class="label">回流健康</span><span class="val" id="s_flow">—</span></div>
   <div class="row"><span class="label">当前任务</span><span class="val" id="s_task">—</span></div>
   <div class="row"><span class="label">已完成任务</span><span class="val" id="s_done">—</span></div>
   <div id="kw_box" style="margin-top:8px;"></div>
@@ -45,6 +46,11 @@ function render(status) {
     $("s_cooldown").className = "val status-ok";
   }
   $("s_queue").textContent = status.queueLen + " 条";
+  // v3 回流健康：服务端确认次数（lastOkAgoSec）+ 连续零有效计数
+  const f = status.flow || {};
+  const lastOk = f.lastOkAgoSec != null ? (f.lastOkAgoSec < 3600 ? "最近确认" : f.lastOkAgoSec + "s前") : "未回传";
+  $("s_flow").textContent = f.stalled ? ("异常·连续" + (f.zeroCount || 0) + "次零有效") : (lastOk + (f.zeroCount ? " ·零有效" + f.zeroCount + "次" : ""));
+  $("s_flow").className = f.stalled ? "val status-bad" : "val status-ok";
   $("s_task").textContent = status.activeTask ? "#" + status.activeTask.task_id + "(" + status.activeTask.pack_len + "项, KPI " + status.activeTask.kpi_min + ")" : "无";
   $("s_done").textContent = status.doneCount ? status.doneCount + " 个包" : "0";
   // 关键词进度条

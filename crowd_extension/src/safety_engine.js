@@ -1,5 +1,5 @@
 /**
- * safety_engine.js — 众包采集安全线引擎 v2（服务端拟合下发 + 本地只降不升）
+ * safety_engine.js — 众包美食家安全线引擎 v3（服务端拟合下发 + 本地只降不升 + 回流检测）
  *
  * 铁律：
  * 1. 本地默认阈值 = 硬编码 SAFETY_LIMITS（保守基线，永不放大）。
@@ -8,16 +8,12 @@
  * 3. 日搜索、会话时长、动作间隔、冷却时间均在本地持久化，重启不重置。
  * 4. 触发"访问频繁"→ 强制冷却；冷却期任何采集动作都被拒绝。
  * 5. 一机一号：device_salt 在首次运行时生成并永久绑定，不随账号变化。
+ * 6. 回流检测（v3）：每次 RPC 回传后记录服务端返回 new_progress/accepted，
+ *    连续 N 次零有效回传 → 判定"回流失效"（防虚假通过）。
  *
- * 拟合依据（2026-10-02 调研固化，详见 cloud/COLLECTION_SOP.md §L1）：
- *   - XHS 实测安全节奏：搜索 ≤2 次/分（间隔 ≥28s），速率码永久翻倍（上限 120s）
- *   - 软限流信号：code=0 空 data → 长冷却自恢复，不重登/换号
- *   - 本地基线取更保守值（间隔 60-120s ≈ 1 次/分，为实测限值的 2 倍余量）
- *   - 日配额上限 = min(服务端拟合 quota_day, 本地 DAILY_SEARCH_MAX)
- *
- * 契约版本：CROWD-CONTRACT-002 (sync_version=1)
+ * 契约版本：CROWD-CONTRACT-003 (sync_version=1)
  */
-const SAFETY_VERSION = 2;
+const SAFETY_VERSION = 3;
 
 const SAFETY_LIMITS = Object.freeze({
   // 日搜索上限（本地保守基线；服务端拟合值只降不升）
@@ -36,6 +32,8 @@ const SAFETY_LIMITS = Object.freeze({
   KPI_MIN_DEFAULT: 5,
   // 本地回传队列上限（proof 条数），达到后暂停采集等待回传
   LOCAL_QUEUE_MAX: 100,
+  // 回流检测：连续 N 次回传零有效 → 判回流失效
+  FLOW_STALL_THRESHOLD: 3,
 });
 
 class SafetyEngine {
@@ -218,6 +216,44 @@ class SafetyEngine {
   async queueWatermark() {
     const q = await this._get("proof_queue", []);
     return { count: q.length, max: SAFETY_LIMITS.LOCAL_QUEUE_MAX, full: q.length >= SAFETY_LIMITS.LOCAL_QUEUE_MAX };
+  }
+
+  // ────────────────────── 回流检测（v3） ──────────────────────
+  /**
+   * 记录一次 RPC 回传结果，判定是否"回流失效"。
+   * rpcResp = {ok, accepted, new_progress} 来自 crowd_submit_proof。
+   * 判定规则：服务端返回 ok=true 视为"服务端确实接收"（防虚假通过）；
+   * 若连续 FLOW_STALL_THRESHOLD 次 accepted=0（全部去重/拒收）→ 回流失效告警。
+   */
+  async recordFlow(rpcResp) {
+    if (!rpcResp || rpcResp.ok !== true) {
+      // 网络失败/服务端拒：计数清零（这不是"回流失效"，是回传失败，下次会重试）
+      return { stalled: false, reason: "upload_failed" };
+    }
+    const accepted = rpcResp.accepted || 0;
+    const st = await this._get("flow_state", { zero_count: 0, last_progress: null, last_ok_ts: 0 });
+    st.last_ok_ts = Date.now();
+    if (rpcResp.new_progress != null) st.last_progress = rpcResp.new_progress;
+    if (accepted === 0) {
+      st.zero_count = (st.zero_count || 0) + 1;
+    } else {
+      st.zero_count = 0;
+    }
+    const stalled = st.zero_count >= SAFETY_LIMITS.FLOW_STALL_THRESHOLD;
+    await this._set({ flow_state: st, flow_last_result: { at: Date.now(), accepted, new_progress: rpcResp.new_progress } });
+    return { stalled, reason: stalled ? "flow_stalled" : "flow_ok", zero_count: st.zero_count };
+  }
+
+  /** 回流健康快照（供 popup 展示） */
+  async flowSnapshot() {
+    const st = await this._get("flow_state", { zero_count: 0, last_progress: null, last_ok_ts: 0 });
+    return {
+      zeroCount: st.zero_count || 0,
+      stallThreshold: SAFETY_LIMITS.FLOW_STALL_THRESHOLD,
+      stalled: (st.zero_count || 0) >= SAFETY_LIMITS.FLOW_STALL_THRESHOLD,
+      lastProgress: st.last_progress,
+      lastOkAgoSec: st.last_ok_ts ? Math.round((Date.now() - st.last_ok_ts) / 1000) : null,
+    };
   }
 }
 
