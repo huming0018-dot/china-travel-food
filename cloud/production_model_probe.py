@@ -694,16 +694,18 @@ def filter_signals_by_evidence(sig, evidence):
 SEVERE_MODELS = {"预制料理包·复热", "中央厨房·门店复热"}
 
 
-def _confirm_model(provider, exclude=""):
-    """选更强的存活模型做严判复核：优先 pro / glm-5-2 / turbo，否则取候选中最强。"""
+def _confirm_models(provider, exclude=""):
+    """按强→弱返回用于严判复核的模型列表：优先 pro / glm-5-2 / turbo，
+    其余候选兜底；供 confirm 逐个尝试，避免单点 HTTPError 即 hold。"""
     want = os.environ.get("CONFIRM_MODEL", "")
-    cands = candidate_models(provider)
+    cands = [m for m in candidate_models(provider) if m != exclude]
+    ordered = []
     if want and want in cands:
-        return want
-    prefs = [m for m in cands
-             if ("pro" in m or "glm-5-2" in m or "turbo" in m) and m != exclude]
-    pool = prefs or [m for m in cands if m != exclude]
-    return pool[-1] if pool else None
+        ordered.append(want)
+    strong = [m for m in cands
+              if ("pro" in m or "glm-5-2" in m or "turbo" in m) and m not in ordered]
+    rest = [m for m in cands if m not in ordered and m not in strong]
+    return ordered + strong + rest
 
 
 def _hold(verdict, why, v2=None):
@@ -716,29 +718,35 @@ def _hold(verdict, why, v2=None):
 
 
 def confirm_if_severe(provider, brand, locations, evidence, verdict):
-    """对触发下架的最严两档，用更强模型、同一证据复核一次；一致才保留，
-    不一致/无法复核 → 置空 hold（进复校），避免弱模型误杀好店。"""
+    """对触发下架的最严两档，用更强模型、同一证据复核；逐个尝试多个强模型，
+    任一复核一致才保留；出现非严判结论 → 不一致 hold；全部报错/无信号才 hold。"""
     if not verdict or verdict.get("production_model") not in SEVERE_MODELS:
         return verdict
-    cm = _confirm_model(provider)
-    if not cm:
+    cms = _confirm_models(provider)
+    if not cms:
         return _hold(verdict, verdict["rationale"] + "；无更强模型复核，严判暂缓")
-    try:
-        sig2 = extract_signals_once(provider, cm, brand, locations, evidence, retries=1)
-    except Exception as e:  # noqa: BLE001
-        return _hold(verdict, verdict["rationale"] + f"；复核失败({type(e).__name__})，暂缓")
-    if not sig2:
-        return _hold(verdict, verdict["rationale"] + "；复核无信号，暂缓")
-    sig2 = filter_signals_by_evidence(sig2, evidence)
-    v2 = adjudicate(sig2)
-    if v2.get("production_model") in SEVERE_MODELS:
-        v2["rationale"] = verdict["rationale"] + f"；强模型({cm})复核一致"
-        v2["sources"] = list({*(verdict.get("sources") or []),
-                              *(v2.get("sources") or [])})
-        return v2
-    return _hold(verdict,
-                 f"弱模型判[{verdict['production_model']}]，强模型({cm})复核为"
-                 f"[{v2.get('production_model')}]，不一致→暂缓", v2)
+    errors = []
+    for cm in cms[:3]:
+        try:
+            sig2 = extract_signals_once(provider, cm, brand, locations, evidence, retries=1)
+        except Exception as e:  # noqa: BLE001
+            errors.append(f"{cm}:{type(e).__name__}")
+            continue
+        if not sig2:
+            errors.append(f"{cm}:empty")
+            continue
+        sig2 = filter_signals_by_evidence(sig2, evidence)
+        v2 = adjudicate(sig2)
+        if v2.get("production_model") in SEVERE_MODELS:
+            v2["rationale"] = verdict["rationale"] + f"；强模型({cm})复核一致"
+            v2["sources"] = list({*(verdict.get("sources") or []),
+                                  *(v2.get("sources") or [])})
+            return v2
+        return _hold(verdict,
+                     f"弱模型判[{verdict['production_model']}]，强模型({cm})复核为"
+                     f"[{v2.get('production_model')}]，不一致→暂缓", v2)
+    return _hold(verdict, verdict["rationale"] +
+                 f"；复核均失败({';'.join(errors)})，暂缓")
 
 
 # ---------------------------------------------------------------------------
@@ -794,16 +802,24 @@ def adjudicate(sig):
     # 3) 中央厨房
     if ck_confirmed:
         srcs = list({it["url"] for it in (central + reheat + premade)})
-        if hot and (n_fresh >= 1 or n_onsite >= 1 or hot):
+        has_instore_craft = (n_fresh >= 1 or n_onsite >= 1)
+        if hot or has_instore_craft:
+            # 有热食制售许可，或有现炒/现制引据 → 央厨配送+门店加工（不下架）
             model = "中央厨房·门店加工"
-        elif n_reheat >= 1 and n_fresh == 0 and not hot:
+        elif n_reheat >= 1:
+            # 无热食许可、无现制信号，但有复热引据 → 门店复热
             model = "中央厨房·门店复热"
-        elif hot:
-            model = "中央厨房·门店加工"
         else:
-            model = "中央厨房·门店复热"
+            # 央厨确认，但门店如何出餐无任何信号：宁空不假，置空待补，不硬判复热
+            out.update(central_kitchen="确认", sources=srcs,
+                       rationale=f"央厨确认(许可/工厂/≥2源)，但门店热食制售={hot}/"
+                                 f"复热{n_reheat}/现炒{n_fresh}/现制{n_onsite}均无信号，待补")
+            if out["premade_risk"] is None:
+                out["premade_risk"] = "无"
+            return out
         out.update(central_kitchen="确认", production_model=model, sources=srcs,
-                   rationale=f"央厨确认(许可/工厂/≥2源)、门店热食制售={hot}、复热证据{n_reheat}/现炒{n_fresh}")
+                   rationale=f"{model}：央厨确认(许可/工厂/≥2源)、门店热食制售={hot}、"
+                             f"复热证据{n_reheat}/现炒{n_fresh}/现制{n_onsite}")
         if out["premade_risk"] is None:
             out["premade_risk"] = "无"
         return out
