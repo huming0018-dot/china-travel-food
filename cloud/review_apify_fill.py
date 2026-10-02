@@ -262,11 +262,16 @@ def reset_for_new_cycle(st):
         st["circuit"] = {}
 
 
-def worth_ids():
+def worth_order():
+    """gate brief（worth_fill.json，已按 P0→P1→P2 排序）-> {rid: (position, label)}。"""
     for p in (DATA / "worth_fill.json", HERE / "worth_fill.json"):
         if p.exists():
             d = json.loads(p.read_text(encoding="utf-8"))
-            return {x["id"] for x in d if isinstance(x, dict) and x.get("id") is not None}
+            out = {}
+            for i, x in enumerate(d):
+                if isinstance(x, dict) and x.get("id") is not None:
+                    out[x["id"]] = (i, x.get("label", "P9"))
+            return out
     return None
 
 
@@ -325,7 +330,8 @@ def select_targets(idx, need, st):
     info = {r["id"]: r for r in C.fetch_all(
         "restaurants",
         "id,is_chain_standardized,chain_type,price_avg,signature_dishes,status")}
-    allow = worth_ids()
+    order = worth_order()
+    allow = set(order) if order else None
     cap_ids = {int(rid) for rid, a in st.get("attempts", {}).items()
                if a.get("n", 0) >= MAX_SHOP_ATTEMPTS}
     deferred_ids = {d["id"] for d in st.get("deferred", [])}
@@ -345,15 +351,18 @@ def select_targets(idx, need, st):
             continue
         chain = r.get("chain_type") or "独立店"
         if chain in BIG_CHAIN:
-            big_hold.append({"id": rid, "name": d["name"], "chain_type": chain})
+            big_hold.append({"id": rid, "name": d["name"], "chain_type": chain,
+                             "brief_label": order[rid][1] if order else "P9"})
             continue
         targets.append({"id": rid, "name": d["name"],
                         "tier": CHAIN_TIER.get(chain, 1),
                         "price_avg": C.to_int(r.get("price_avg")) or 0,
-                        "signature_dishes": r.get("signature_dishes")})
-    # 独立店优先、小型连锁其次；同层本地(平价)优先以补本地化短板；
-    # 名字含合集/私房词的压后；有招牌菜(q2 可续)的略优先。
-    targets.sort(key=lambda x: (x["tier"],
+                        "signature_dishes": r.get("signature_dishes"),
+                        "brief_pos": order[rid][0] if order else 10 ** 9,
+                        "brief_label": order[rid][1] if order else "P9"})
+    # 第一排序=gate brief 位置（P0 捍卫精选 → P1 榜单核实 → P2 苗头）；
+    # 其余仅作并列兜底：独立/小型连锁、本地平价、有招牌菜(q2 可续)略优先。
+    targets.sort(key=lambda x: (x["brief_pos"], x["tier"],
                                1 if DEFER_NAME.search(x["name"]) else 0,
                                0 if x["signature_dishes"] else 1,
                                x["price_avg"], x["id"]))
