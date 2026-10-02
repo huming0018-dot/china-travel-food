@@ -10,6 +10,16 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 晚⑬【collector·点评公开榜单引线 dianping_lead 闭环，candidate_verify 双源合并，已 push `32550bb`】
+
+- **合规前提（不碰点评反爬）**：点评开放平台无第三方枚举接口、SVG 字体加密+强反爬+法律风险，星级是动态排位且刷评多 → **不抓店铺页、不当口味**；只取**公开榜单转载**（政府门户/澎湃/上观等全文转载必吃榜，含招牌菜）作权威候选清单。
+- **落地**：
+  - `cloud/dianping_seed.json`：从上观转载页（OCR 卡片，黄浦 34 家入围，source_url 见文件）整理店名；新转载页→补店名（信源沉淀 A4）。
+  - `cloud/dianping_lead.py`：逐名**容器内高德验真**（主机 fill.env 无 AMAP key，故在容器跑）——只收 typecode 05、sim≥0.7，含**查询变体回退**（全名→去分支核心→纯中文/纯英文首词），按 poi_id/核心去重，与现有库对账；产出 `dianping_lead_fill.json`（同 kol schema），再 docker cp 回主机 food-apify-fill。
+  - `candidate_verify.load_candidates` 改为**合并 kol_lead_fill + dianping_lead_fill**（poi_id→核心两级去重，标 `_src`）。实测合并 **43 候选（kol 29 / dianping 14）**；主机 cron `17 */3` 自动滚动两源（预算闸门自动停）。
+  - 本批 34 黄浦店：13 已在库、14 全新候选、7 暂未匹配（Professor Lee/泰珍荟/PALATINO/绿雅/祜care/赤龙/滇味园，多为高德英文检索弱，可由其他框补）。
+- **已知 caveat**：「岭海永记潮州牛肉店」高德最佳命中为仙霞路店（OCR 称进贤路店），候选 taste 核验仍按店名+区域再锚定；分支不符不硬取。
+
 ### 2026-10-02 晚⑫【collector·可信 KOL 精选池 + watchlist 信任分级，已 push `4cc3ff0`】
 
 **用户指令**：“调研之后给出口碑较好、立场清晰的 KOL 选池。” 现 watchlist 119 家无信任分级、混注销号/电视台/政务号。本轮：
