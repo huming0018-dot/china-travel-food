@@ -313,6 +313,8 @@ def amap_search(keywords, offset=10):
             "address": p.get("address", ""),
             "tel": p.get("tel", ""),
             "business": business,
+            "typecode": p.get("typecode", ""),
+            "type": p.get("type", ""),
             "lng": float(parts[0]) if parts[0] else None,
             "lat": float(parts[1]) if len(parts) > 1 and parts[1] else None,
         })
