@@ -152,6 +152,8 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
     timeout=单次读空闲上限；hard_cap=整次请求墙钟硬上限（服务端挂起不返回时快速失败）。
     max_tokens=输出上限（封顶计费，防止冗长 JSON 失控）。"""
     body = {"model": model, "messages": messages, "temperature": 0.2, "stream": True}
+    if body["stream"]:
+        body["stream_options"] = {"include_usage": True}  # 末块回传 usage 用于成本核算
     if max_tokens:
         body["max_tokens"] = int(max_tokens)
     if tools:
@@ -162,6 +164,7 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
     last = None
     for i in range(retries):
         content_parts, tool_calls = [], []
+        usage = None
         t_start = time.time()
         try:
             req = urllib.request.Request(
@@ -172,7 +175,9 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 if not body["stream"]:
                     d = json.loads(r.read().decode("utf-8"))
-                    return d["choices"][0]["message"]
+                    msg = d["choices"][0]["message"]
+                    msg["_usage"] = d.get("usage")
+                    return msg
                 for raw in r:
                     if time.time() - t_start > hard_cap:
                         raise TimeoutError("hard_cap")
@@ -183,7 +188,12 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
                     if data == "[DONE]":
                         break
                     chunk = json.loads(data)
-                    delta = chunk["choices"][0].get("delta") or {}
+                    if chunk.get("usage"):
+                        usage = chunk["usage"]
+                    choices = chunk.get("choices") or []
+                    if not choices:
+                        continue
+                    delta = choices[0].get("delta") or {}
                     if delta.get("content"):
                         content_parts.append(delta["content"])
                     if delta.get("tool_calls"):
@@ -191,7 +201,8 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
             if not content_parts and not tool_calls:
                 raise TimeoutError("empty_stream")
             return {"role": "assistant", "content": "".join(content_parts),
-                    "tool_calls": tool_calls or None}
+                    "tool_calls": tool_calls or None,
+                    "_usage": usage}
         except urllib.error.HTTPError as e:
             last = e
             if e.code == 429:
@@ -365,6 +376,8 @@ def extract_signals_once(provider, model, brand, locations, evidence,
                 {"role": "user", "content": prompt}]
     msg = chat_raw(provider, model, messages, timeout=30, retries=retries,
                    max_tokens=2200)  # 单次、无工具；封顶输出
+    MP.log_usage("production_probe",
+                 {"provider": provider.name, "model": model, "usage": msg.get("_usage")})
     return _parse_signals(msg.get("content") or "")
 
 
@@ -499,6 +512,8 @@ def agent_gather(provider, model, brand, locations, max_rounds=4, max_searches=3
             break
         try:
             msg = chat_raw(provider, model, messages, tools=WEB_SEARCH_TOOL)
+            MP.log_usage("production_agent",
+                         {"provider": provider.name, "model": model, "usage": msg.get("_usage")})
         except Exception as e:
             print("    [llm]", type(e).__name__, str(e)[:80])
             time.sleep(3)
@@ -553,6 +568,8 @@ def agent_gather(provider, model, brand, locations, max_rounds=4, max_searches=3
         "没有证据的字段一律填 null，不要解释、不要调用工具。"})
     try:
         msg = chat_raw(provider, model, messages, timeout=150)  # 不传 tools
+        MP.log_usage("production_agent_final",
+                     {"provider": provider.name, "model": model, "usage": msg.get("_usage")})
         sig = _parse_signals(msg.get("content") or "")
         if sig:
             return sig, evidence

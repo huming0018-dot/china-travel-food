@@ -30,9 +30,14 @@ model_providers.py — 国产大模型【知识源舰队】注册表（HAE / L0.
 """
 import json
 import os
+import pathlib
 import re
+import time
 import urllib.request
 import urllib.error
+
+COST_DIR = pathlib.Path(os.environ.get("HAE_COST_DIR", "/app/data/cost"))
+COST_LEDGER = COST_DIR / "model_usage.jsonl"
 
 # ---------------------------------------------------------------------------
 # 各 provider 规格：base_url 默认值（可被 env 覆盖）、联网搜索支持、注入语法
@@ -212,16 +217,69 @@ def chat(provider: Provider, model: str, prompt: str,
         with urllib.request.urlopen(req, timeout=timeout) as r:
             data = json.loads(r.read().decode("utf-8"))
         text = (data.get("choices") or [{}])[0].get("message", {}).get("content", "")
+        usage = data.get("usage") or {}
         return {"ok": True, "text": text, "sources": _extract_sources(data, text),
-                "model": model, "provider": provider.name, "web": use_web}
+                "model": model, "provider": provider.name, "web": use_web,
+                "usage": {"prompt": usage.get("prompt_tokens", 0),
+                          "completion": usage.get("completion_tokens", 0),
+                          "total": usage.get("total_tokens", 0)}}
     except urllib.error.HTTPError as e:
         detail = e.read().decode("utf-8", "ignore")[:200]
         return {"ok": False, "text": "", "sources": [], "model": model,
-                "provider": provider.name, "web": use_web,
+                "provider": provider.name, "web": use_web, "usage": {},
                 "error": f"HTTP {e.code}: {detail}"}
     except Exception as e:  # noqa: BLE001
         return {"ok": False, "text": "", "sources": [], "model": model,
-                "provider": provider.name, "web": use_web, "error": str(e)[:200]}
+                "provider": provider.name, "web": use_web, "usage": {},
+                "error": str(e)[:200]}
+
+
+def log_usage(task: str, result: dict) -> None:
+    """把一次调用的 token 用量追加到成本账本（best-effort，失败不影响主流程）。"""
+    u = result.get("usage") or {}
+    if not u:
+        return
+    rec = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "task": task,
+           "provider": result.get("provider"), "model": result.get("model"),
+           "prompt": u.get("prompt", 0), "completion": u.get("completion", 0),
+           "total": u.get("total", 0)}
+    try:
+        COST_DIR.mkdir(parents=True, exist_ok=True)
+        with COST_LEDGER.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
+def cost_summary(days: int = 1) -> dict:
+    """汇总成本账本：按模型/任务统计 token（默认当天，UTC+8 自然日）。"""
+    import collections
+    today = time.strftime("%Y-%m-%d")
+    by_model = collections.defaultdict(lambda: [0, 0, 0, 0])
+    by_task = collections.defaultdict(int)
+    n_calls = 0
+    if COST_LEDGER.exists():
+        for line in COST_LEDGER.read_text(encoding="utf-8").splitlines():
+            try:
+                r = json.loads(line)
+            except Exception:
+                continue
+            if not r.get("ts", "").startswith(today):
+                continue
+            n_calls += 1
+            key = f"{r.get('provider')}/{r.get('model')}"
+            m = by_model[key]
+            m[0] += r.get("prompt", 0)
+            m[1] += r.get("completion", 0)
+            m[2] += r.get("total", 0)
+            m[3] += 1
+            by_task[r.get("task", "?")] += r.get("total", 0)
+    return {
+        "date": today, "calls": n_calls,
+        "by_model": {k: {"prompt": v[0], "completion": v[1], "total": v[2], "calls": v[3]}
+                     for k, v in sorted(by_model.items(), key=lambda x: -x[1][2])},
+        "by_task": dict(sorted(by_task.items(), key=lambda x: -x[1])),
+    }
 
 
 def fleet_status() -> dict:
