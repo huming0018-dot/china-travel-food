@@ -415,8 +415,8 @@ def extract_signals_once(provider, model, brand, locations, evidence,
         + (("\n【复核特别要求】" + extra_instruct) if extra_instruct else ""))
     messages = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": prompt}]
-    msg = chat_raw(provider, model, messages, timeout=30, retries=retries,
-                   max_tokens=1500)  # 单次、无工具；封顶输出，省 token
+    msg = chat_raw(provider, model, messages, timeout=90, retries=1,
+                   max_tokens=1500)  # 单次、无工具；非流式免费档生成较慢，给足墙钟
     MP.log_usage("production_probe",
                  {"provider": provider.name, "model": model, "usage": msg.get("_usage")})
     return _parse_signals(msg.get("content") or "")
