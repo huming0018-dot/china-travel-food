@@ -10,7 +10,23 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
-### 2026-10-02 晚⑦【dev·机制先行：主身份回填 + 饮食特质标签；ML 门重跑仍不达标】
+### 2026-10-02 晚⑧【collector·最新动向改走 Apify 并接线 cron；工具注册表+能力路由器落地】
+
+**背景**：`events_collect` 依赖我方登录态浏览器、从未被调度（容器卷原本连 `research/social/` 目录与配置都没有）。改为 Apify 通道，我方零封号、按结果计费。
+
+1. **`cloud/events_apify.py`（新建，已部署容器 `/app/cloud/`，已 commit 3a83096）**：
+   - 读取与 events_build 相同配置 `/app/data/research/social/listen_keywords.json`（v3，11 类事件：新店/海外入沪/搬迁/闭店/主厨变化/飞行厨房/联名/快闪/荣誉/菜单更新/即将开业，每类 6–8 组 sweep 短语）。
+   - 产出与 events_collect **完全相同的 raw 信封** `{kind:sweep/watch, query/watch_name, category_hint, notes:[{title,author,date,desc,url,comments}]}` → 自动跑 `events_build.py` 判事件/归店/置信/去重 → `atlas_write --domain events`。
+   - 默认 provider=atomus（per-result，0 结果=$0），可选 opspilot/sian；参数 `--sweep/--watch --names --max-queries --roots-per-cat --max-items --budget --commit`。
+   - **额度守卫（已实测）**：每次调用前查 `/v2/users/me/limits`（响应在 `data` 下）；余量 <$0.15 报 NO_CREDIT 停止；按每次调用 usage 实际增量累计、超 `--budget`（默认 $0.5）即停；per-run maxTotalChargeUsd=$0.30（opspilot memory=512）。dry 实跑：remain **$0.085 → NO_CREDIT、ran=0、spent=0、build_rc=0**（零花费、全链路通）。
+2. **凭据**：容器 env.sh **没有** APIFY_TOKEN（早先一次 set=yes 是宿主命令替换的引号假象，已以容器内 python 实读为准）。改为读数据卷 `/app/data/.secrets/apify_token`（named volume、chmod600、已从主机 fill.env 写入，未打印）；events_apify 先 env 后该文件。
+3. **`cloud/tool_registry.json` + `cloud/tool_router.py`（新建，已部署、已 commit）**：12 工具注册表（provides 按五族 A–E 列字段＋auth/cost/ban/reliability/connector/boundary）＋能力路由器（CHAIN_POLICY 首选链＋`--health` 实时余量，默认只规划不花钱）。冒烟三族正确（TASTE 无额度→primary None；FACTS phone→amap；EVENTS→atomus）。
+4. **`events_build.py` 修复**：raw 文件缺失即按空（RAW_LINES=[]），不再 traceback；skill 母本与 repo vendored 副本同步（注：skill 母本曾是陈旧 MacBook 路径版，已用 /app 版本覆盖）。
+5. **cron（容器 root crontab，第 25 条）**：`27 8 * * 1,4` events_apify `--sweep --max-queries 6 --commit`，flock `/tmp/events_apify.lock`，日志 `/app/data/events_apify.log`。额度自守，NO_CREDIT 即安全退出。
+6. **未影响主线**：主机 `food-apify-fill.service` 仍 active（shops_done 107、deferred 50）。
+   - 待办：11-01 账期重置或再充值后事件 sweep 自动产出；watch（已知店保鲜）后续接 curated 名单。
+
+
 
 **新增两个通用引擎（非补单店，配置/规则驱动、幂等、保守、已接每日 cron）**：
 1. `cloud/name_cuisine_link.py` + `name_cuisine_rules.json`（店名/招牌→菜系叶 主身份回填）：
