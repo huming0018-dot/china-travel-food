@@ -149,11 +149,15 @@ def resolve_enum(field, rows):
     clear_rows = [r for r in buckets.get(CLEAR_VALUE[field], [])
                   if float(r.get("confidence", 0)) >= CONF_MIN]
 
+    # 只在“达到 n_ind≥2”的硬值里取【最严重者】；不被更严重但单源的取值
+    # 永久阻塞（修复证据充分的较低严重度取值无法挂标的缺陷）。
+    meeting = [c for c in hard_cands if c[3] >= 2]
+    if meeting:
+        sev, hv, cred, ni = meeting[0]
+        return {"action": "apply_hard", "value": hv, "n_ind": ni,
+                "why": f"硬标 {hv} 有 {ni} 独立源"}
     if hard_cands:
-        sev, hv, cred, ni = hard_cands[0]
-        if ni >= 2:
-            return {"action": "apply_hard", "value": hv, "n_ind": ni,
-                    "why": f"硬标 {hv} 有 {ni} 独立源"}
+        sev, hv, cred, ni = hard_cands[0]  # 最严重的单源硬值
         # 硬标仅单源
         if clear_rows and n_independent(clear_rows) >= 2:
             return {"action": "apply_clear", "value": CLEAR_VALUE[field], "n_ind": n_independent(clear_rows),

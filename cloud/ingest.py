@@ -17,8 +17,12 @@ LEDGER = pathlib.Path(os.environ.get(
     "FINDINGS_LEDGER", "/app/data/post_record/findings.jsonl"))
 
 
-def _key(rid, field, value):
-    return json.dumps([rid, field, value], ensure_ascii=False, sort_keys=True)
+def _key(rid, field, value, source_url=""):
+    # 幂等粒度 = 一条证据 = 同一来源(source)对同一(rid,field)提出同一 value；
+    # 必须含 source_url，否则同一结论的【第二条独立来源】会被误判重复丢弃，
+    # 使硬结论永远凑不齐 n_ind≥2（曾导致新 claim 永久卡 reverify）。
+    return json.dumps([rid, field, value, (source_url or "").strip()],
+                      ensure_ascii=False, sort_keys=True)
 
 
 def append_finding(rid, field, value, confidence, reason,
@@ -29,14 +33,16 @@ def append_finding(rid, field, value, confidence, reason,
            "confidence": float(confidence), "reason": reason,
            "source_url": source_url or "", "source_platform": source_platform or "",
            "captured_at": time.strftime("%Y-%m-%dT%H:%M:%S")}
-    key = _key(rec["restaurant_id"], rec["field"], rec["value"])
+    key = _key(rec["restaurant_id"], rec["field"], rec["value"],
+               rec.get("source_url"))
     if lp.exists():
         for line in lp.read_text(encoding="utf-8").splitlines():
             try:
                 d = json.loads(line)
             except Exception:
                 continue
-            if _key(d.get("restaurant_id"), d.get("field"), d.get("value")) == key:
+            if _key(d.get("restaurant_id"), d.get("field"), d.get("value"),
+                    d.get("source_url")) == key:
                 return False
     lp.parent.mkdir(parents=True, exist_ok=True)
     with lp.open("a", encoding="utf-8") as f:
