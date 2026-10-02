@@ -64,6 +64,13 @@
 - 日志：并发 `/app/data/probe_parallel.log`；findings `/app/data/post_record/findings.jsonl`；curate 账本 `/app/data/post_record/curate_gate_*.jsonl`。
 - 部署一律 ubuntu 用户跑 `bash /home/ubuntu/food-cloud/build_sync.sh`（不可 sudo，root 无 deploy key）。
 
+**⑮ 补丁（2026-10-02 晚，并发实测暴露）**：
+- 单账号下并发全扫，9 个免费模型的当日免费额度几乎全部耗尽：硬配额 SetLimitExceeded（glm-5-2/seed-2-1-lite/glm-5-3-flash/deepseek-v4-1-flash/seed-2-1-turbo/deepseek-flash），mini/lite 反复 RPM 429。每品牌约 2–4k token，500k/模型 ≈ 150–250 品牌。
+- 加固（提交 1e21df6）：全局 `RateGate`（worker 共享最小请求间隔，普通429 全局退避、成功回落）；死号状态从镜像层 `/app/cloud/model_pool_state.json` 迁到数据卷 `/app/data/probe/model_pool_state.json`（跨重建持久、启动重载）。
+- 成本准确性（632b07e/5228c13）：chat_raw 默认改**非流式**（免费模型流式不回 usage、非流式可靠），修一行重复读流 bug；`log_usage` 兼容原始 `*_tokens` 与归一化键（此前 token 恒 0）。首判 max_tokens 2200→1500 省 token。
+- 跨账号分片（**2373c03**）：`probe_parallel.run()` 不再只用 ps[0]，改为遍历所有 provider 收集 (provider,model) 便宜/强槽位、worker 各自绑定；用户加更多 ARK key（写 deploy.env，每账号独立 RPM/配额）即真并行。
+- 结论：机制已完备，剩余瓶颈＝单账号免费额度/RPM；扩容靠加独立 ARK 账号（或关安心中心转后付费）。日常由 20:47 全扫 + 每2h cron 在额度重置后增量推进。
+
 ---
 
 ### 2026-10-02 深夜⑭【production_model 出餐方式探针校准：零售/堂食区分、证据接地、并存封顶、空跑不覆盖】
