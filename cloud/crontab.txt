@@ -104,3 +104,8 @@ HAE_GRID_SLICE=20
 
 # 28) reconcile 统一编排 07:47
 47 7 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/reconcile.lock /usr/local/bin/python reconcile.py --apply >> /app/data/reconcile.log 2>&1
+
+# 29) 点评富源富化（keyless SERP 覆盖不到独立小店；点评服务端带星级/评价数/人均/分店数/关店）：
+#     只采集，产出 findings(chain/price)->gate_apply 与 claims(chain/platform_rating)->fact_verify；
+#     --driver 自动过两个既有写门、保证联动；每20分钟一批12家，优先无证据店，按rid断点。
+8,28,48 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/dpenrich.lock /usr/local/bin/python dianping_enrich.py --max 12 --priority-empty --driver >> /app/data/dianping_enrich.log 2>&1

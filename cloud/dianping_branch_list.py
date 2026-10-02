@@ -136,11 +136,78 @@ def chain_signal(brand: str) -> dict:
     }
 
 
+def _fetch_search_html(brand: str):
+    """请求点评关键词搜索页，返回 (http_status, html)。礼貌 sleep 在调用处控制。"""
+    import requests
+    cookie = _load_cookie_str()
+    if not cookie:
+        print("[dianping] cookie missing/empty", file=sys.stderr)
+        return 0, ""
+    url = "https://www.dianping.com/search/keyword/1/0_" + requests.utils.quote(brand)
+    r = requests.get(url, headers={"User-Agent": UA, "Cookie": cookie,
+                                   "Referer": "https://www.dianping.com/"}, timeout=15)
+    return r.status_code, r.text
+
+
+def _parse_shop_cards(html: str):
+    """解析 shop-all-list 内每个 <li>，服务端直接带：星级/评价数/人均/菜系/商圈/团购。
+    返回结构化记录列表。点评评分/评论为 JS 加密的部分不在此列（只取服务端稳定字段）。"""
+    m = re.search(r'<div class="shop-list[^"]*"[^>]*id="shop-all-list">(.*?)</div>\s*<!--',
+                  html, re.S)
+    block = m.group(1) if m else html
+    out = []
+    for li in re.split(r"<li\b", block)[1:]:
+        li = li.split("</li>", 1)[0]
+
+        def g(pat, default="", flags=0):
+            mm = re.search(pat, li, re.S | flags)
+            return mm.group(1).strip() if mm else default
+
+        sid = g(r'data-shopid="([^"]+)"')
+        if not sid:
+            continue
+        name = g(r"<h4>([^<]+)</h4>") or g(
+            r'data-click-name="shop_title_click"[^>]*title="([^"]*)"')
+        url = g(r'href="(https://www\.dianping\.com/shop/[^"]+)"')
+        star = g(r"star_(\d{2})")
+        reviews = g(r'class="review-num"[^>]*>\s*<b>([\d,]+)</b>')
+        price = g(r'class="mean-price"[^>]*>.*?<b>[￥¥]?\s*([\d]+)</b>')
+        cate = g(r'shop_tag_cate_click"[^>]*><span class="tag">([^<]+)</span>')
+        cate_code = g(r'href="https://www\.dianping\.com/shanghai/(ch\d+/g\d+)"')
+        region = g(r'shop_tag_region_click"[^>]*><span class="tag">([^<]+)</span>')
+        deals = re.findall(
+            r'data-click-name="shop_group_icon_click"[^>]*title="([^"]+)"', li)
+        closed = bool(re.search(r"已关闭|暂停营业|停业|歇业", name + li))
+        out.append({
+            "shop_id": sid, "name": name, "url": url,
+            "stars": (int(star) / 10.0) if star else None,
+            "review_count": int(reviews.replace(",", "")) if reviews else None,
+            "avg_price": int(price) if price else None,
+            "category": cate, "category_code": cate_code, "region": region,
+            "group_deals": deals, "is_closed": closed})
+    return out
+
+
+def search_shops(brand: str, pause: float = 2.5):
+    """高频入口：一次搜索请求解析全部结构化店铺卡片（含独立小店）。
+    返回 []；cookie 缺失/非200/被拦均优雅降级。"""
+    time.sleep(pause)
+    status, html = _fetch_search_html(brand)
+    if status != 200:
+        print("[dianping] search http %s -> []" % status, file=sys.stderr)
+        return []
+    return _parse_shop_cards(html)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("brand")
+    ap.add_argument("--full", action="store_true")
     a = ap.parse_args()
-    print(json.dumps(chain_signal(a.brand), ensure_ascii=False, indent=2))
+    if a.full:
+        print(json.dumps(search_shops(a.brand), ensure_ascii=False, indent=2))
+    else:
+        print(json.dumps(chain_signal(a.brand), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
