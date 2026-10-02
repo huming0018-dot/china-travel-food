@@ -335,7 +335,8 @@ def _evidence_brief(evidence, top=5, snip=170):
     return "\n".join(lines)
 
 
-def extract_signals_once(provider, model, brand, locations, evidence, retries=2):
+def extract_signals_once(provider, model, brand, locations, evidence,
+                         retries=2, extra_instruct=""):
     brief = _evidence_brief(evidence)
     prompt = (
         f"品牌：{brand}\n库内分店：{locations}\n"
@@ -358,7 +359,8 @@ def extract_signals_once(provider, model, brand, locations, evidence, retries=2)
         "只把最关键的相关句子放进对应数组（每类≤6条）并保留其 URL；"
         "布尔许可字段 true/false/null；financing=上市/VC融资/无/未知；n_locations 为整数或null；"
         "production_guess 取 " + "/".join(PRODUCTION_LABELS) + "；confidence 0-1。\n"
-        "只能引用上面真实出现的引文和 URL，禁止编造；完全无据的字段填 null；不要输出 JSON 以外的话。")
+        "只能引用上面真实出现的引文和 URL，禁止编造；完全无据的字段填 null；不要输出 JSON 以外的话。"
+        + (("\n【复核特别要求】" + extra_instruct) if extra_instruct else ""))
     messages = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": prompt}]
     msg = chat_raw(provider, model, messages, timeout=30, retries=retries,
@@ -728,7 +730,12 @@ def confirm_if_severe(provider, brand, locations, evidence, verdict):
     errors = []
     for cm in cms[:3]:
         try:
-            sig2 = extract_signals_once(provider, cm, brand, locations, evidence, retries=1)
+            sig2 = extract_signals_once(
+                provider, cm, brand, locations, evidence, retries=1,
+                extra_instruct="你是独立复核人，须双向核查，不得只数料理包："
+                "①门店是否现场烹制（明厨亮灶/现炒/锅气/现切/现烤/厨师在后厨制作）；"
+                "②只有当证据表明门店【仅复热、不现场烹制】时，才可维持预制料理包·复热/门店复热；"
+                "若存在任何门店现制证据，production_guess 必须为中央厨房·门店加工或现做档。")
         except Exception as e:  # noqa: BLE001
             errors.append(f"{cm}:{type(e).__name__}")
             continue
@@ -791,10 +798,21 @@ def adjudicate(sig):
     reg_premade = any(r in (it.get("url", "") + domain(it.get("url", "")))
                       for it in premade for r in REG_DOMAINS)
     if n_premade >= 2 or (reg_premade and n_premade >= 1):
+        n_craft_now, _ = n_independent_ev(fresh + onsite)
+        if hot or n_craft_now >= 1:
+            # 料包/央厨供应与门店现炒/现制【并存】→ 央厨门店加工（非纯复热，不下架）
+            srcs = list({it["url"] for it in premade + fresh + onsite})
+            out.update(central_kitchen="确认" if ck_confirmed else "疑似",
+                       premade_risk="低", production_model="中央厨房·门店加工",
+                       sources=srcs,
+                       rationale=f"料包/央厨供应 {n_premade} 源与门店现炒/现制 {n_craft_now} 源并存"
+                                 f"→门店加工，非纯复热（热食许可={hot}）")
+            return out
+        # 无热食许可、无任何门店现制信号 → 纯复热，下架
         srcs = list({it["url"] for it in premade})
         out.update(central_kitchen="确认" if ck_confirmed else "疑似",
                    premade_risk="高", production_model="预制料理包·复热",
-                   sources=srcs, rationale=f"料理包证据 {n_premade} 独立源")
+                   sources=srcs, rationale=f"料理包证据 {n_premade} 独立源、门店无现制信号")
         return out
     if n_premade == 1:
         out["premade_risk"] = "疑似"  # 单源挂疑似，标签暂不写
