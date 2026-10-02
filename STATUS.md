@@ -1,6 +1,38 @@
 # 当前状态 · STATUS
 
-> 最后更新：2026-10-02 06:00（PM窗口维护 · 夜间执行报告）
+> 最后更新：2026-10-02 15:30（PM窗口维护 · 众包建表+凭证整理）
+> **✅ 众包插件依赖表已建（2026-10-02）**：Supabase `crowd_*` 5表真实建库（participants/tasks/proofs/reviews/settlements），建表SQL在 `cloud/sql/crowd_tables.sql`；`app/.env.local` anon key 已从官方 API 补齐（208字符）。
+> **🔑 凭证总表已整理**：明文在 `~/.food_atlas_credentials.md`（权限600）；HANDOFF.md 顶部新增「凭证与登录信息索引」。
+
+## 🚀 众包采集上线 · 傻瓜式三步（2026-10-02，PM 已跑通）
+
+### 第1步：发插件给参与者
+1. `cd /Users/deuce/Doubao/chats/2026-09-29/new-chat/china-travel-food/crowd_extension`
+2. 打开 `src/background.js` 顶部，把 `CROWD_API_BASE` / `CROWD_API_KEY` 换成真实值（anon key 在 `~/.food_atlas_credentials.md`）
+3. Chrome → `chrome://extensions` → 右上角开「开发者模式」→ 「加载已解压的扩展程序」→ 选 `crowd_extension/` 目录
+4. 参与者打开插件选项页（扩展详情→扩展程序选项），读协议、填 **P- 开头正式编号**（需先报名审核）
+
+### 第2步：报名入口（让参与者自己报名）
+1. 打开 `crowd_extension/apply.html`，把文件里 `REPLACE_WITH_SUPABASE_ANON_KEY` 换成 anon key（同上）
+2. 用任意方式给参与者看这个页面（本地打开/发给别人/放静态托管都行）
+3. 参与者填昵称+联系方式提交 → 得到 **TMP-** 报名编号
+
+### 第3步：审核发编号（PM 操作，一条命令）
+```bash
+cd /Users/deuce/Doubao/chats/2026-09-29/new-chat/china-travel-food
+export HTTPS_PROXY=http://127.0.0.1:7897 && export FOOD_APP_DIR="$(pwd)/app"
+python3 cloud/crowd_admin.py list --status pending        # 看待审报名
+python3 cloud/crowd_admin.py approve TMP-XXXXXX --quota 20 # 批准，发放 P- 编号
+python3 cloud/crowd_admin.py stats                          # 看全局状态
+```
+把 **P- 编号**发给参与者 → 插件里填上 → 自动开始采集。
+
+### 任务包已就绪（正式表 crowd_tasks）
+- #1：新荣记/荣小馆/利苑/西塔老太太/甬府/外滩壹号（6店）
+- #2：雍福会/福1015/逸龙阁（3店）
+- 插件拉取→采集→回传→ingest校验→落库→进度回写，全链路已端到端验证通过
+
+---
 > **🌙 夜间执行报告（06:00）**：工单37 | todo 22 | 进行中 6 | done 9。
 > - ✅ **整夜完成9项**：dev三组件(#11/#12/#13)+Apify开发侧(#15)+搜索校准(#28)；collector证据机制(#24/#25)
 > - 🔄 **进行中6项**：#1 Apify实跑 / #9 SSH / #23 舰队catchup / #27 findings / #29 三段式cron / **#44 Apify方案(新认领)**

@@ -10,6 +10,29 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+---
+
+## 🔑 凭证与登录信息索引（2026-10-02 整理 · 必读）
+
+> **明文总表在本机**：`~/.food_atlas_credentials.md`（权限600，git仓库外，勿外发/勿截图）
+> 本索引只给位置与取法，**严禁**在本仓库任何文件写入明文密钥。
+
+| 用途 | 变量/文件位置 | 取法 |
+|---|---|---|
+| **Supabase 主库** | `app/.env.local`（URL/anon/service_role） | 已含真实值；anon 208字符已补齐 |
+| **Supabase Management 令牌**（建表/执行SQL） | `~/.food_atlas_credentials.md` 一节 | 44位 `sbp_` 开头，执行SQL走 `POST api.supabase.com/v1/projects/bdwrhshgdeghgyzwpxnl/database/query` |
+| **云端运行时 env**（TG/飞书/高德/小红书cookie/编排） | `cloud/deploy.env`（gitignored） | 15变量；服务器版18变量（含ARK）在主机 `/home/ubuntu/food-cloud/deploy.env` |
+| **小红书登录态** | `cloud/deploy.env XHS_COOKIE_FILE` | cookie文件挂服务器 compose 卷 |
+| **Apify Token** | 服务器数据卷 `/app/data/.secrets/apify_token` | 容器内读取，禁止入仓 |
+| **ARK 火山方舟**（LLM 舰队） | 服务器 deploy.env `ARK_API_KEY/ARK_BASE_URL` | 本地未存，需从服务器取 |
+| **服务器 SSH** | `~/.ssh/food_cloud_deploy`（ubuntu@49.234.35.92） | 直连被运营商拦，走 Clash 代理 127.0.0.1:7897 或境外节点 |
+| **GitHub 部署** | `~/.ssh/ctfs_github` | git push 用 |
+| **众包插件配置**（构建时注入） | `crowd_extension/src/background.js` 顶部 `CROWD_API_BASE/CROWD_API_KEY` | 值取自 `~/.food_atlas_credentials.md`（anon key） |
+
+**新增（2026-10-02）**：Supabase `crowd_*` 5表已建（participants/tasks/proofs/reviews/settlements），SQL 在 `cloud/sql/crowd_tables.sql`；`app/.env.local` 的 anon key 已从官方 API 补齐（此前为空，报名入口 apply.html 依赖它）。
+
+---
+
 ### 2026-10-02 深夜⑭【production_model 出餐方式探针校准：零售/堂食区分、证据接地、并存封顶、空跑不覆盖】
 
 **起因**：最弱模型（doubao-seed-2-0-mini）把绿波廊误判「预制料理包·复热」（最严下架档），并出现模型杜撰来源 URL。
