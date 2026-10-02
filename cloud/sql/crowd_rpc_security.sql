@@ -21,7 +21,10 @@ drop policy if exists "crowd_apply_self_read" on public.crowd_participants;
 -- 1) crowd_fetch_tasks(pid) — 插件领任务（security definer）
 --    校验：参与者存在且非黑名单（pending 即用）；返回 status=open 任务包（不含 progress 细节）
 -- ------------------------------------------------------------
-create or replace function public.crowd_fetch_tasks(p_participant_id text)
+create or replace function public.crowd_fetch_tasks(
+  p_participant_id text,
+  p_exclude_task_ids bigint[] default '{}'
+)
 returns jsonb
 language plpgsql
 security definer
@@ -43,24 +46,36 @@ begin
     return jsonb_build_object('ok', false, 'reason', 'participant_unavailable');
   end if;
 
-  select coalesce(jsonb_agg(jsonb_build_object(
-           'task_id', t.task_id,
-           'pack_type', t.pack_type,
-           'pack', t.pack,
-           'target', t.target,
-           'kpi_min', t.kpi_min,
-           'quota_day', t.quota_day
-         ) order by t.task_id), '[]'::jsonb)
+  select coalesce(jsonb_agg(sub.row order by sub.task_id), '[]'::jsonb)
     into v_rows
-    from public.crowd_tasks t
-   where t.status = 'open';
+    from (
+      select t.task_id,
+             t.pack_type,
+             t.pack,
+             t.target,
+             t.kpi_min,
+             t.quota_day,
+             jsonb_build_object(
+               'task_id', t.task_id,
+               'pack_type', t.pack_type,
+               'pack', t.pack,
+               'target', t.target,
+               'kpi_min', t.kpi_min,
+               'quota_day', t.quota_day
+             ) as row
+        from public.crowd_tasks t
+       where t.status = 'open'
+         and not (t.task_id = any(coalesce(p_exclude_task_ids, '{}'::bigint[])))
+       order by t.task_id
+       limit 3
+    ) sub;
 
   return jsonb_build_object('ok', true, 'tasks', v_rows);
 end;
 $$;
 
-revoke all on function public.crowd_fetch_tasks(text) from public;
-grant execute on function public.crowd_fetch_tasks(text) to anon, authenticated, service_role;
+revoke all on function public.crowd_fetch_tasks(text, bigint[]) from public;
+grant execute on function public.crowd_fetch_tasks(text, bigint[]) to anon, authenticated, service_role;
 
 -- ------------------------------------------------------------
 -- 2) crowd_submit_proof(pid, envelope jsonb) — 插件回传（security definer）

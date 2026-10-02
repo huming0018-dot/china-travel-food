@@ -1,6 +1,7 @@
 # 当前状态 · STATUS
 
-> 最后更新：2026-10-02 21:30（PM窗口 · 报名页托管 + 任务包扩容）
+> 最后更新：2026-10-02 22:05（PM窗口 · 报名即用 + 自动续领）
+> **✅ 自动续领上线（2026-10-02 晚）**：修复「回传后不领新任务」bug——插件端关键词轮转+按关键词累计accepted判定完成+完成自动归档续领；服务端 fetch_tasks 支持 exclude_task_ids（排除已完成包）；popup 新增关键词进度条（可视化）。端到端验证：报名→领#1→排除#1→自动切#2 ✅。线上插件已更新（25KB）。
 > **✅ 报名页已托管上线（2026-10-02 晚）**：Supabase Storage public bucket `crowd`，公网可直接访问：
 > - 📄 报名页：`https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/apply.html`
 > - 📦 插件下载：`https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v2.0.0.zip`
