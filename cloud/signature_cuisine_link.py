@@ -24,9 +24,10 @@ import sys, os, json, re, pathlib, argparse
 from collections import defaultdict
 
 HERE = pathlib.Path(__file__).resolve().parent
-# 运行时用 cloud/vendor/pipeline/common.py（共享连接层）；skill 沉淀副本旁有 common.py，作 fallback。
-for _p in (HERE / "vendor" / "pipeline", HERE):
-    if (_p / "common.py").exists():
+# 标准连接层在 FOOD_PIPELINE_DIR（容器 /app/pipeline）；cloud/vendor/pipeline 与 skill 副本作 fallback。
+PIPE = os.environ.get("FOOD_PIPELINE_DIR", str(HERE / "vendor" / "pipeline"))
+for _p in (HERE, PIPE, HERE / "vendor" / "pipeline"):
+    if (pathlib.Path(_p) / "common.py").exists():
         sys.path.insert(0, str(_p))
         break
 import common as C  # noqa: E402
