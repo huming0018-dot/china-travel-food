@@ -55,6 +55,7 @@ def _load_token():
 TOKEN = _load_token()
 STATE_F = DATA / "apify_fill_state.json"
 ROUNDUP_QUEUE = DATA / "roundup_queue.jsonl"
+BOUNDARY_QUEUE = DATA / "boundary_notes.jsonl"
 BIG_HOLD = DATA / "big_brand_hold.json"
 ALERT_QUEUE = HERE / "alert_queue.jsonl"
 
@@ -418,6 +419,38 @@ def capture_roundups(flagged):
     return n
 
 
+# ---------------------------------------------------------------- 跑题/边界笔记捕获
+def capture_boundary(idx, note, target_rid, target_name, status, prov):
+    """未锚定到目标店、但有食物实质的笔记不直接丢弃（用户指示）：
+    落 boundary_notes.jsonl，供 boundary_revalidate 做①他店改投 ②LLM 新店线索提取。
+    合集已由 capture_roundups 处理；无食物实质（纯情绪/软广模板）不收。"""
+    desc = note.get("desc", "") or ""
+    body = EM.clean_content(desc)
+    if len(body) < 8 or not C.quote_has_substance(body):
+        return
+    o_rid, reason = idx.anchor_note(note, target_name)
+    if reason == "合集":
+        return
+    url = note.get("url")
+    if not url:
+        return
+    seen = set()
+    if BOUNDARY_QUEUE.exists():
+        for line in BOUNDARY_QUEUE.read_text(encoding="utf-8").splitlines():
+            try:
+                seen.add(json.loads(line).get("url"))
+            except Exception:
+                pass
+    if url in seen:
+        return
+    rec = {"url": url, "title": (note.get("title", "") or "")[:200],
+           "desc": desc[:1200], "target_rid": target_rid, "target_name": target_name,
+           "other_rid": (o_rid if (o_rid and o_rid != target_rid) else None),
+           "reason": reason or status, "prov": prov, "ts": C.today()}
+    with BOUNDARY_QUEUE.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+
 # ---------------------------------------------------------------- 熔断 / 日预算
 def circuit_open_seconds(st):
     until = (st.get("circuit") or {}).get("cooldown_until")
@@ -544,6 +577,7 @@ def process_shop(rec, idx, st, args, gates):
                     reason_ct[status] = reason_ct.get(status, 0) + 1
                     if status == "无实物/软广模板":
                         blocked += 1
+                    capture_boundary(idx, note, rid, name, status, prov)
             time.sleep(PER_NOTE_PAUSE)
             if got >= args.need:
                 break
