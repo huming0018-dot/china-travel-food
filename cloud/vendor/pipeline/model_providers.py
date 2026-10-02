@@ -239,10 +239,15 @@ def log_usage(task: str, result: dict) -> None:
     u = result.get("usage") or {}
     if not u:
         return
+    # 兼容归一化键(prompt/completion/total)与各家原始键(*_tokens)
+    def pick(a, b):
+        v = u.get(a)
+        return v if v is not None else u.get(b, 0)
     rec = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "task": task,
            "provider": result.get("provider"), "model": result.get("model"),
-           "prompt": u.get("prompt", 0), "completion": u.get("completion", 0),
-           "total": u.get("total", 0)}
+           "prompt": pick("prompt", "prompt_tokens"),
+           "completion": pick("completion", "completion_tokens"),
+           "total": pick("total", "total_tokens")}
     try:
         COST_DIR.mkdir(parents=True, exist_ok=True)
         with COST_LEDGER.open("a", encoding="utf-8") as fh:
