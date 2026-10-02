@@ -10,6 +10,26 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 深夜【dev·findings 错挂清洗 + gate 关系感知 investor 校验，commit `8f753b7`】
+
+**触发**：收尾「单源连锁补第 2 源」时发现 findings.jsonl 内大量历史错挂（别家品牌资料挂到本店 rid），需清洗且不能误杀。
+
+**根因机制（已固化，防复发）**：
+1. **name↔rid 锚定在 shard 改派时偏移** → 别家品牌的 investor/price 落到本店。
+2. 旧清洗/校验只看"文本是否含本店品牌"，但有两类**合法的不含本店**情形，会误杀：
+   - **运营公司本名≠品牌**（福1015←仙锦福园、老乾杯←乾杯上海、Mi Thai←米泰、Indian Kitchen←印迪、Pain Chaud←亚法、1886←外滩啤酒总汇、喜来稀肉←摄来、青春贝壳←时间的礼物）；
+   - **集团子/母/姐妹/合作品牌互点名**（荣府宴←新荣记、小大董←大董、Speak Low←SG Group/Sober、空蝉←外滩源、Jellooo←好利来/EHB、凌珑←刘禾森、狮王府←南京大惠、东方景宴←逸道、福1039←福集团）。
+
+**已落地（repo `cloud/`，已 docker cp 部署、git push `8f753b7`）**：
+1. `gate_apply.py`：①新增 `RELATION_CUE`（旗下/隶属/同集团/姐妹/子品牌/高端品牌/控股/联袂/品牌管理/运营主体/团队/合作…）；②`build_relations()` 从带连接词的 investor finding 自动构建 `rid→关联品牌` allowlist；③investor 校验改为：仅当点名**非关联**别家品牌（`named - relations` 非空）才 hold，自证缺失但未点名非关联品牌 → 放行；④`self_tokens` 补「汉字+数字」品牌（福1039/福1088）。
+2. `cleanup_findings.py`（重写为安全口径、幂等）：D1 仅在 `brand_contradiction` 点名别家在库品牌才丢；D2 分店店 price 须含该分店后缀。
+3. 配套通道（本阶段早些已提交）：`national_count.py`（高德/腾讯**全国 count** 判规模，读 `count` 不枚举 pois）、`reverify_supply.py`（地图 POI 数分店）、`independence_probe.py`、`map_quota.py`（chain=2 优先级）。
+
+**实测结果（对现网回读）**：findings 清洗 1833→1726（真错挂），再恢复 12 条误杀 investor、补 1 条荣府宴集团归属 → 现 **1739**；gate `reverify_holds` **151→138**，最终 `--apply` **patched 10 店 / 0 错误**（填回 10 家集团店）；rid489 惠食佳 investor（误挂小杨生煎，小杨不在库故规则漏判，已人工确认）置空、price 正确保留 **162**；rid470 等真错挂置空。连锁/集团口径以全国 count 为准。
+**教训**：错挂判定不能只靠"含本店"，需关系 allowlist；也不能只靠"别家在库品牌"（小杨生煎不在库会漏）→ 后续录后校验需引入外部品牌词典。
+
+---
+
 ### 2026-10-02 下午【collector·Apify 硬上限提至 $50 + 选目标/熔断三处根因修复，今日 +21 店】
 
 **账单硬上限 $40→$50（REST，UI 做不通）**：`console.apify.com/billing/limits` 的 "Edit limit" 按钮经 ref 点击与归一化坐标点击均无弹窗（DOM 无 dialog/input、无报错，多次验证做不通）。正解走 REST：`GET https://api.apify.com/v2/users/me/limits?token=` 取完整 limits → 改 `maxMonthlyUsageUsd=50` → **`PUT` 必须用 flat limits 对象**（包一层 `{"limits":...}` 返 400 invalid-value），成功返 201（响应 `{}`）；GET 核验 max=50。
