@@ -42,6 +42,25 @@
 
 ---
 
+### 2026-10-02 傍晚【collector·覆盖闸门根治：stage6 升级"供给感知 + 合格店计数"，免费通道实测，采集 SOP 交付】
+
+**根因（治"假覆盖/以次充好"）**：旧 `stage6_coverage.py` ① 对全部叶子一刀切 `LEAF_MIN=3/LEAF_GOOD=5`，不区分真实供给稀缺/充足；② **按全部 active 行计数**——插入无口味证据的行即可把格子刷绿，掩盖"raw 多但没验证过好吃"。实测点名：徽菜 raw23/合格仅2、东北菜 raw24/合格1、江西菜 raw12/合格1。
+
+**落地（skill `food_pipeline/stage6_coverage.py` v5，已 docker cp 进容器 /app/pipeline，py_compile OK）**：
+1. **合格口径**：active 店仅当 `score_taste 非空`（有真实食客口味证据）才计入覆盖；无证据行只入 raw（存在性）。现网 active 1497、合格 **376**。
+2. **供给感知目标**：新增 `leaf_supply_probe.py`，用高德上海餐饮 POI 密度经验测定每叶子 expected_supply/target_min/target_good（稀缺 min2、一般/充足 min3、good 4–5），产出 `research/coverage/leaf_supply.json`（24 叶；西南/内蒙古=scarce，青藏/广西=normal，其余 rich）。stage6 读取该文件，找不到回退 3/5。
+3. 报告同时给 raw 与合格两列；`--strict` 按**合格缺口**返回 1，并生成 `coverage_tasks.json` 深采施工图。
+
+**诚实结论**：strict 现为 rc=1，**应保持红色**——12 个叶子合格未达标（薄6：徽菜/东北/台湾/江西/湖北/创新；空6：西南/海南/青藏/河南/内蒙古/中式烧烤）。薄格多已有 raw 候选（缺的是口味采集），空格需发现+采集。这是真实口味证据缺口、不是 bug；靠放松闸门或塞未验证行变绿=违反北极星，已明确不做。闸门随采集逐格转绿。
+
+**免费通道实测（回答"更省钱/不封号"，详见 `cloud/COLLECTION_SOP.md`）**：
+- 搜索引擎免费发现小红书笔记=**不成立**：cn/www Bing 结果页 0 条小红书链接（XHS noindex + 登录/token 墙）。
+- Trip.com 详情页=JS 薄壳(7625B)需渲染；B 站搜索匿名 412（需 wbi+真实 cookie，单视频评论更开放）；SmartShanghai 经 Clash 可访问但旧 /database/search 已 404。
+- 口径：小红书访问全部交 **Apify（actor 账号，我方零封号）**，停用"我方登录账号自跑搜索"（唯一封自己号的做法）；免费 L0/L2 先覆盖，Apify 仅对覆盖不到的店用 atomus 按结果计费（0 结果=$0）。多账号注册薅免费额度违反 ToS、永不采用。
+- `cloud/COLLECTION_SOP.md`（#14）：采集五族、通道 L0–L3、routing、校准去重、配额/封号、错误码动作表、全部爬虫模块清单、release_audit 验收。
+
+**#30 实测已解决**：stage4 rc=0、ERROR=0（303 条 WARN=缺电话/形式标签/午晚餐时段，非错误）。**#31 机制已修、12 合格缺口转为采集任务**（见 coverage_tasks.json），闸门随采集转绿。
+
 ### 2026-10-02 下午【collector·Apify 硬上限提至 $50 + 选目标/熔断三处根因修复，今日 +21 店】
 
 **账单硬上限 $40→$50（REST，UI 做不通）**：`console.apify.com/billing/limits` 的 "Edit limit" 按钮经 ref 点击与归一化坐标点击均无弹窗（DOM 无 dialog/input、无报错，多次验证做不通）。正解走 REST：`GET https://api.apify.com/v2/users/me/limits?token=` 取完整 limits → 改 `maxMonthlyUsageUsd=50` → **`PUT` 必须用 flat limits 对象**（包一层 `{"limits":...}` 返 400 invalid-value），成功返 201（响应 `{}`）；GET 核验 max=50。

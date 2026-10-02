@@ -1,0 +1,194 @@
+{
+  "鲁菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "鲁菜",
+    "basis": "高德上海餐饮POI密度(关键词=['鲁菜'])"
+  },
+  "川菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "川菜",
+    "basis": "高德上海餐饮POI密度(关键词=['川菜'])"
+  },
+  "粤菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "粤菜",
+    "basis": "高德上海餐饮POI密度(关键词=['粤菜'])"
+  },
+  "苏菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "苏菜",
+    "basis": "高德上海餐饮POI密度(关键词=['苏菜'])"
+  },
+  "浙菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "浙菜",
+    "basis": "高德上海餐饮POI密度(关键词=['浙菜'])"
+  },
+  "闽菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "闽菜",
+    "basis": "高德上海餐饮POI密度(关键词=['闽菜'])"
+  },
+  "湘菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "湘菜",
+    "basis": "高德上海餐饮POI密度(关键词=['湘菜'])"
+  },
+  "徽菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "徽菜",
+    "basis": "高德上海餐饮POI密度(关键词=['徽菜'])"
+  },
+  "本帮菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "本帮菜",
+    "basis": "高德上海餐饮POI密度(关键词=['本帮菜'])"
+  },
+  "京菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "京菜",
+    "basis": "高德上海餐饮POI密度(关键词=['京菜'])"
+  },
+  "东北菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "东北菜",
+    "basis": "高德上海餐饮POI密度(关键词=['东北菜'])"
+  },
+  "西北菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "西北菜",
+    "basis": "高德上海餐饮POI密度(关键词=['西北菜'])"
+  },
+  "新疆菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "新疆菜",
+    "basis": "高德上海餐饮POI密度(关键词=['新疆菜'])"
+  },
+  "西南菜": {
+    "poi_n": 1,
+    "expected_supply": "scarce",
+    "target_min": 2,
+    "target_good": 2,
+    "root": "西南菜",
+    "basis": "高德上海餐饮POI密度(关键词=['西南菜'])"
+  },
+  "台湾菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "台湾菜",
+    "basis": "高德上海餐饮POI密度(关键词=['台湾菜'])"
+  },
+  "海南菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "海南菜",
+    "basis": "高德上海餐饮POI密度(关键词=['海南菜'])"
+  },
+  "青藏菜": {
+    "poi_n": 8,
+    "expected_supply": "normal",
+    "target_min": 3,
+    "target_good": 4,
+    "root": "青藏菜",
+    "basis": "高德上海餐饮POI密度(关键词=['青藏菜'])"
+  },
+  "广西菜": {
+    "poi_n": 16,
+    "expected_supply": "normal",
+    "target_min": 3,
+    "target_good": 4,
+    "root": "广西菜",
+    "basis": "高德上海餐饮POI密度(关键词=['广西菜'])"
+  },
+  "江西菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "江西菜",
+    "basis": "高德上海餐饮POI密度(关键词=['江西菜'])"
+  },
+  "河南菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "河南菜",
+    "basis": "高德上海餐饮POI密度(关键词=['河南菜'])"
+  },
+  "湖北菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "湖北菜",
+    "basis": "高德上海餐饮POI密度(关键词=['湖北菜'])"
+  },
+  "内蒙古菜": {
+    "poi_n": 6,
+    "expected_supply": "scarce",
+    "target_min": 2,
+    "target_good": 2,
+    "root": "内蒙古菜",
+    "basis": "高德上海餐饮POI密度(关键词=['内蒙古菜'])"
+  },
+  "创新菜": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "创新菜",
+    "basis": "高德上海餐饮POI密度(关键词=['创新菜', '创意菜', '创意融合菜'])"
+  },
+  "中式烧烤/烤串": {
+    "poi_n": 25,
+    "expected_supply": "rich",
+    "target_min": 3,
+    "target_good": 5,
+    "root": "中式烧烤/烤串",
+    "basis": "高德上海餐饮POI密度(关键词=['中式烧烤/烤串', '烧烤', '烤串'])"
+  }
+}
