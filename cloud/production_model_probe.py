@@ -279,7 +279,10 @@ SIGNALS_FIELDS = [
     "premade_packet_evidence", "fresh_wok_evidence", "onsite_prep_evidence",
     "retail_packaged_products",
     "direct_franchise", "financing", "n_locations", "production_guess",
-    "confidence", "supply_chain_entity"]
+    "confidence", "supply_chain_entity",
+    # —— 知识先验（模型自身知识/品类常识，非网页直引；只用于非严判，严判仍须证据）——
+    "knowledge_production_guess", "knowledge_confidence",
+    "knowledge_basis", "known_chain"]
 
 SYSTEM = (
     "你是上海美食图鉴的【出餐方式】调查员。目标：用证据判断一个餐饮品牌的菜是怎么做出来、"
@@ -425,7 +428,15 @@ def extract_signals_once(provider, model, brand, locations, evidence,
         "只把最关键的相关句子放进对应数组（每类≤6条）并保留其 URL；"
         "布尔许可字段 true/false/null；financing=上市/VC融资/无/未知；n_locations 为整数或null；"
         "production_guess 取 " + "/".join(PRODUCTION_LABELS) + "；confidence 0-1。\n"
-        "只能引用上面真实出现的引文和 URL，禁止编造；完全无据的字段填 null；不要输出 JSON 以外的话。"
+        "另外给出你的【知识先验】（与上面证据严格分开）：knowledge_production_guess 同样取 "
+        + "/".join(PRODUCTION_LABELS) + " 或 null；knowledge_confidence 0-1；"
+        "knowledge_basis 用一句话说明依据（你对该品牌的了解，或由其业态推断，例如"
+        "“独立小型寿司店，omakase 现场握制、无连锁央厨”）；known_chain=true/false/null。\n"
+        "知识先验规则：①*_evidence / supply_chain_entity 只能引用上面真实出现的引文和 URL，"
+        "禁止编造；②knowledge_* 才允许用你自己的知识和业态常识，不知道就填 null，"
+        "并如实区分“确知该品牌”与“仅按业态推断”（后者 confidence 不超过 0.75）；"
+        "③若你认为它是预制/复热（严判），也只填进 knowledge_*，不得据此当作证据结论。\n"
+        "完全无据的证据字段填 null；不要输出 JSON 以外的话。"
         + (("\n【复核特别要求】" + extra_instruct) if extra_instruct else ""))
     messages = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": prompt}]
@@ -858,6 +869,49 @@ def confirm_if_severe(provider, brand, locations, evidence, verdict):
                  f"；复核均失败({';'.join(errors)})，暂缓")
 
 
+# 知识先验可直接采纳的只有「现场烹制」家族（非严判、不触发下架）；
+# 央厨/复热/预制一律不得仅凭知识写库。
+_KNOWLEDGE_ADMIT = {"现炒现做", "门店现制·标准化"}
+_KNOWLEDGE_MINCONF = 0.70
+
+
+def _as_float01(x):
+    try:
+        v = float(x)
+        return v if 0.0 <= v <= 1.0 else None
+    except (TypeError, ValueError):
+        return None
+
+
+def apply_knowledge_prior(verdict, sig, evidence):
+    """证据不足以直判时，用模型知识先验补【现场烹制】类非严判结论；严判/工业化
+    一律不由此路径产出。要求：①先验置信≥阈值；②证据里无任何工业化/复热/料片
+    痕迹（不矛盾）；③至少 1 条接地 URL（证实品牌/业态真实存在）。"""
+    if not verdict or verdict.get("production_model"):
+        return verdict
+    if not sig:
+        return verdict
+    klabel = sig.get("knowledge_production_guess") or ""
+    kconf = _as_float01(sig.get("knowledge_confidence"))
+    if klabel not in _KNOWLEDGE_ADMIT or kconf is None or kconf < _KNOWLEDGE_MINCONF:
+        return verdict
+    # 证据不得出现工业化倾向（哪怕单源疑似也放弃，宁空不假）
+    if (verdict.get("central_kitchen") == "疑似"
+            or verdict.get("premade_risk") == "疑似"
+            or sig.get("known_chain") is True):
+        return verdict
+    grounded = sorted(evidence_url_set(evidence))
+    if not grounded:
+        return verdict  # 无任何接地 URL：不写，守住"必须可追溯"底线
+    basis = (sig.get("knowledge_basis") or "").strip()
+    out = dict(verdict)
+    out.update(production_model=klabel, central_kitchen="无", premade_risk="无",
+               sources=grounded, provenance="knowledge_prior",
+               rationale=f"【知识先验·非证据直引,置信{kconf:.2f}】{basis}；"
+                         f"证据已确认品牌/业态真实存在，无工业化信号")
+    return out
+
+
 # ---------------------------------------------------------------------------
 # 确定性仲裁（docs §4）
 # ---------------------------------------------------------------------------
@@ -1016,12 +1070,15 @@ def write_findings(brand, rids, verdict):
     for rid in rids:
         # 出餐方式标签：每独立源一条；仅当本轮有接地的非空结论才取代旧值
         if model:
+            is_kp = verdict.get("provenance") == "knowledge_prior"
+            mconf = 0.6 if is_kp else 0.9
+            mplat = "production_probe_kp" if is_kp else "production_probe"
             ingest.supersede(rid, ["production_model"], platform=plats)
             for u in srcs:
                 if ingest.append_finding(
-                        rid, "production_model", model, 0.9,
+                        rid, "production_model", model, mconf,
                         _class_reason(u, f"{brand}出餐方式为{model}；{verdict['rationale']}"),
-                        source_url=u, source_platform="production_probe"):
+                        source_url=u, source_platform=mplat):
                     n_add += 1
         # 央厨 / 预制 支撑字段（同样仅在本轮接地时取代该字段）
         for field, val in (("central_kitchen", ck), ("premade_risk", pr)):
