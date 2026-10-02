@@ -42,6 +42,7 @@ import common as C          # noqa: E402
 import map_helpers as M     # noqa: E402  仅复用 pick_best/cjk_sim/addr_core_sim
 import map_quota as MQ      # noqa: E402  全字段走配额池（consumer=full，给电话让路）
 import health               # noqa: E402
+import ingest               # noqa: E402  统一取证入口（不直写 restaurants）
 
 STATE_F = pathlib.Path(DATA) / "_amap_fill_state.json"
 CACHE_F = pathlib.Path(DATA) / "amap_poi_cache.jsonl"
@@ -575,10 +576,22 @@ def build_patch(rest, poi):
     return patch, actions, will_review
 
 
-def _apply_patch(rid, patch):
-    r = requests.patch(C.BASE + f"/restaurants?id=eq.{rid}",
-                       headers=C.headers(), json=patch, timeout=30)
-    return r.status_code in (200, 204)
+def _poi_source(poi, name):
+    if poi.get("poi_id"):
+        return f"https://www.amap.com/detail/{poi['poi_id']}"
+    return "https://www.amap.com/search?query=" + quote(f"{name} 上海")
+
+
+def ingest_patch(rid, name, addr, poi, patch):
+    """把全字段 patch 逐字段写 findings（统一门收口），不直写 restaurants。"""
+    src = _poi_source(poi, name)
+    reason = f"高德POI全字段核验：{name} {addr}".strip()
+    conf_map = {"price_avg": 0.85, "phone": 0.9, "location": 0.9, "opening_hours": 0.85}
+    for fld, val in patch.items():
+        ingest.append_finding(rid, fld, val, confidence=conf_map.get(fld, 0.85),
+                              reason=reason, source_url=src,
+                              source_platform="amap_poi")
+    return True
 
 
 # ------------------------------------------------------------ 主流程
@@ -729,7 +742,7 @@ def main():
         if apply:
             ok = True
             if patch:
-                ok = _apply_patch(rid, patch)
+                ok = ingest_patch(rid, name, addr, poi, patch)
             if ok and will_review:
                 if write_review(rid, poi):
                     stats["reviews"] += 1
