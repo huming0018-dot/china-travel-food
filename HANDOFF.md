@@ -10,6 +10,35 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 深夜⑬【容器重建来源定位并闭环（代码烘焙+数据入卷）；本地账号 vs Apify 四维对比】
+
+**一、容器重建来源（用户已同意处理，已定位+验证闭环）**
+- 现象：food-cloud 在 16:32 SGT（08:32Z）被 recreate（RestartCount=0、StartedAt 重置），镜像层 `/app/cloud` 内只 `docker cp` 的运行文件丢失（dianping 76、blocklist）。
+- **根因（非异常进程、非 cron 误杀）**：部署脚本 `cloud/build_sync.sh` 流程＝fetch origin/main → rsync `cloud/*.py` 进构建上下文 → `docker build` 重建镜像 → `docker compose up -d`；**镜像哈希变化，compose 即 recreate 容器**（属正常发版动作；当日 16:32、16:54 各发生一次，系并行部署 agent 跑 build_sync）。`/etc/cron.d/food_restart`（每日03:14 `docker restart`）只 restart 不 recreate、时间也不符，已排除。
+- **闭环（已实测）**：①代码烘焙——Dockerfile `COPY *.py /app/cloud/`、`COPY vendor/pipeline /app/pipeline`，最新镜像（314115688c10）已确认烘焙 `candidate_chain_branchcount.py`、`candidate_verify.py`（共119个脚本），**只要脚本已 push origin/main，重建后自动在镜像内**；②数据入卷——所有运行期产物改写到 named volume `/app/data`（重建后实测 research/dianping_lead_fill.json 35937B、chain_brand_blocklist.json cores38+auto_cores32、candidate_chain_verdict.json 33609B、kol 29 全部存活）；③cron 随容器自起（实测 cron 进程在、29 条 crontab）。
+- **纪律（写入 COLLECTION_SOP）**：任何新运行期产物（state/fill/中间 json）一律写 `/app/data/...`，禁止写 `/app/cloud`（镜像层，recreate 即丢）；代码改动必须先 push 再让 build_sync 烘焙，不靠 docker cp 常驻。
+
+**二、本地登录账号采集 vs Apify（2026-10-02 实测；口径见下注）**
+
+| 维度 | 本地登录账号（account_a ahuhu / account_b 猪蛤蛤） | Apify（actor 账号承担封号） |
+|---|---|---|
+| 现金成本 | **$0** | 权威月花费 **≈$79.98**（硬顶 $80 已触顶，余额 ≈$0.023；含 fill+候选15新店+events+A/B） |
+| 入库小红书评论 | **817 条**（created 9/24–9/29） | **698 条**（10/1:162 + 10/2:536；其中 619 在 157 家存量店、79 在 15 家新建店 rid2054–2068） |
+| 抓取笔记总量 | 入库即 817（早期未单独计 fetch） | **5234 条计费笔记**（多数经反软广/非口味过滤，未入库） |
+| 覆盖店铺 | 早期基础集，reviews 目标"已采完"即停滞 | 157 家存量补评 + **15 家全新建店** |
+| 效率 / 可持续 | 账号频繁受限、需人工扫码；9/29 后两号全挂、产出归零，**无法扩到剩余 ~1000 店** | 连续跑、按结果计费；我方账号**零封禁**，受预算约束（账期 10-31 重置） |
+| 封号风险 | 高：a web_session 过期判死、b 短信日配额超额，**连用户手机端都被限** | 我方零封号（actor 侧承担） |
+| 单位成本 | 0，但有上限、不可持续 | 全量摊 ≈ **$0.115/采纳评论**（$80/698，含过滤/事件/A/B）；定向候选 routed 实测 **≈$0.18/店** |
+
+- **免费 L0 通道（应最先吃满）**：高德地图评论 **921 条 $0**（9/26:899、9/30:22）；地图/官方/集团树等 L0 通道继续优先。
+- **口径限制（诚实标注）**：reviews 表**无"采集通道"列**，本地 vs Apify 的小红书拆分按 `created_at` 日期（Apify incident/upgrade 始于 10/1）代理，10/1 边界可能有少量交叉；Apify **权威成本以月度 usage（≈$80）为准**，主机 inline `billable_cost_usd=23.22` 因 usage 秒级延迟系统性低估，不可当真实成本。
+
+**三、collector 未完成任务（task_queue 实测 21：in_progress 3 / todo 13 / done 5）**
+- in_progress：#1 Apify集成-采集侧、#9 服务器SSH排查（主机健康/deuce 网络路径被拦）、#23 舰队v2每日catchup（待 LLM key 提速）。
+- todo P0：#26 LLM key方舟登录（ARK key 已配跑通，待复核可否标 done）。
+- todo P1：#2 新腾讯地图key、#3 高德评论清理、#4 frontier污染验证、#5 口味分补全（现覆盖仅29.7%）、#31 CHECK A网格覆盖、#32 LLM舰队统一接口、#33 搜索引擎探针、#34 采集扩面、#35 采集范畴扩展（点赞/收藏/评论区）、#38 跑题边界再验证、#45 地图类不被卡优化。
+- todo P2：#6 营业时间补全（剩约546家）。
+
 ### 2026-10-02 深夜⑪【出餐方式 production_model 六档：探针+配额调度器+自建 SearXNG+gate 仲裁，首批写库；调度全链路有界自愈】
 
 **用户主线**：继续升级二次校验，把「所有权/资本结构」（已有 chain_type）与「生产/出餐方式」（**新增 production_model，与 chain_type 正交**）分开，区分真实连锁/商业化预制/资本化/大型连锁及**出餐方式六档**：现炒现做 / 门店现制·标准化 / 中央厨房·门店加工 / 中央厨房·门店复热 / 预制料理包·复热 / 外购成品·无堂食厨房。用户反复强调不要只讲机制、要看到写库结果；点名店仅说明流程缺陷，不接受特征枚举式补单店。
