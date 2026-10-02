@@ -305,7 +305,9 @@ agg, new_shops, dropped = {}, [], []
 seen_note = set()
 ALLOW_NULL = {"new_open", "coming_soon", "popup", "collaboration", "guest_kitchen"}
 
-for line in pathlib.Path(RAW_P).read_text(encoding="utf-8").splitlines():
+_raw_p = pathlib.Path(RAW_P)
+RAW_LINES = _raw_p.read_text(encoding="utf-8").splitlines() if _raw_p.exists() else []
+for line in RAW_LINES:
     line = line.strip()
     if not line:
         continue

@@ -1,0 +1,102 @@
+{
+  "version": "2026-10-02",
+  "note": "静态能力真相；健康度/配额为运行时，由 tool_router 实时读取。cost: free/flat/per_result/per_usage。ban_risk 对我方账号。",
+  "tools": [
+    {
+      "tool_id": "amap_rest",
+      "family": "map",
+      "provides": {"B_facts": ["phone", "address", "location", "price_avg", "opening_hours", "aggregate_rating"]},
+      "auth_level": "L0", "cost": {"type": "free", "unit": 0, "limit": "daily_quota"},
+      "ban_risk": 0, "reliability": 0.85, "connector": "cloud/cloud_amap_fill.py",
+      "boundary": "无点评正文，仅聚合星级；多 key 池"
+    },
+    {
+      "tool_id": "tencent_rest",
+      "family": "map",
+      "provides": {"B_facts": ["phone", "address", "location", "price_avg", "opening_hours", "aggregate_rating"]},
+      "auth_level": "L0", "cost": {"type": "free", "unit": 0, "limit": "daily_quota"},
+      "ban_risk": 0, "reliability": 0.80, "connector": "cloud/map_helpers.py",
+      "boundary": "配额耗尽需跨源故障转移"
+    },
+    {
+      "tool_id": "michelin_public",
+      "family": "authority",
+      "provides": {"A_universe": ["authority_list", "endorsement_tag"], "E_relations": ["group_tree"]},
+      "auth_level": "L0", "cost": {"type": "free", "unit": 0},
+      "ban_risk": 0, "reliability": 0.95, "connector": "pipeline/authority_sitemap.py",
+      "boundary": "纯 requests 202 空体须浏览器"
+    },
+    {
+      "tool_id": "blackpearl_public",
+      "family": "authority",
+      "provides": {"A_universe": ["authority_list", "endorsement_tag"]},
+      "auth_level": "L0", "cost": {"type": "free", "unit": 0},
+      "ban_risk": 0, "reliability": 0.95, "connector": "cloud/cloud_blackpearl_collect.py",
+      "boundary": "对账后 0 真缺"
+    },
+    {
+      "tool_id": "ark_fleet",
+      "family": "discovery",
+      "provides": {"A_universe": ["leaf_hypothesis", "candidate_entity"], "E_relations": ["chef_tree", "group_tree"], "B_facts": ["classification"]},
+      "auth_level": "L0", "cost": {"type": "per_usage", "unit": "token"},
+      "ban_risk": 0, "reliability": 0.70, "connector": "pipeline/fleet_grid_run.py",
+      "boundary": "产出=假设，须过闸才晋升；deepseek-flash 主力"
+    },
+    {
+      "tool_id": "bili_monitor",
+      "family": "social",
+      "provides": {"A_universe": ["kol_lead"], "D_events": ["kol_event"]},
+      "auth_level": "L2", "cost": {"type": "free", "unit": 0},
+      "ban_risk": 0, "reliability": 0.70, "connector": "cloud/kol_monitor.py",
+      "boundary": "搜索需 wbi+真实 cookie；单视频评论更开放"
+    },
+    {
+      "tool_id": "kol_cross_wechat",
+      "family": "social",
+      "provides": {"A_universe": ["kol_lead"]},
+      "auth_level": "L2", "cost": {"type": "free", "unit": 0},
+      "ban_risk": 0, "reliability": 0.60, "connector": "cloud/kol_cross.py",
+      "boundary": "搜狗常风控/验证码；微博/知乎/抖音 keyless 跳过"
+    },
+    {
+      "tool_id": "smartshanghai",
+      "family": "media",
+      "provides": {"B_facts": ["aggregate_rating"], "C_taste": ["media_review"]},
+      "auth_level": "L2", "cost": {"type": "free", "unit": 0, "limit": "proxy"},
+      "ban_risk": 0, "reliability": 0.65, "connector": "L2 web read",
+      "boundary": "旧 /database/search 404 需重定位；媒体不冒充 UGC"
+    },
+    {
+      "tool_id": "xhs_sig",
+      "family": "ugc",
+      "provides": {"C_taste": ["feed_detail", "comment"], "D_events": ["feed_detail"]},
+      "auth_level": "L1", "cost": {"type": "free", "unit": 0, "limit": "needs_cookie"},
+      "ban_risk": 2, "reliability": 0.60, "connector": "cloud/xhs_api.py",
+      "boundary": "匿名搜索 -101；feed/评论需 xsec_token；不做搜索"
+    },
+    {
+      "tool_id": "apify_atomus",
+      "family": "ugc",
+      "provides": {"C_taste": ["reviews", "comment"], "D_events": ["event_note"]},
+      "auth_level": "L3", "cost": {"type": "per_result", "unit": 0, "note": "0结果=$0"},
+      "ban_risk": 0, "reliability": 0.80, "connector": "Apify atomus~xiaohongshu-scraper",
+      "boundary": "采信率最高、召回略低；账号是 actor 的"
+    },
+    {
+      "tool_id": "apify_opspilot",
+      "family": "ugc",
+      "provides": {"C_taste": ["reviews"], "D_events": ["event_note"]},
+      "auth_level": "L3", "cost": {"type": "flat", "unit": 0.10, "note": "/启动 memory=512"},
+      "ban_risk": 0, "reliability": 0.75, "connector": "Apify opspilot keyword-search",
+      "boundary": "只认单数 keyword；适合召回"
+    },
+    {
+      "tool_id": "apify_sian",
+      "family": "ugc",
+      "provides": {"C_taste": ["reviews", "fulltext", "comment"], "D_events": ["event_note"]},
+      "auth_level": "L3", "cost": {"type": "per_usage", "unit": "usage"},
+      "ban_risk": 0, "reliability": 0.80, "connector": "Apify sian rednote-scraper",
+      "boundary": "召回最大；适合大品牌/全文/评论"
+    }
+  ]
+}

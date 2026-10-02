@@ -152,3 +152,59 @@ Dev 以 `release_audit.py`（只读串联各质量门）做二次验证：stage4
 - **collector（本窗口）**：对“数据能否稳定、完整、准确、低成本、零封号地拿到”负责，产出标准信封与数据包。
 - **dev**：二次验证、工程化接线、纳入镜像、前端联动、入库收口。
 - **pm**：调度、验收、裁决（QA 已并入），以真实口味为唯一收录原则。
+
+---
+
+## 9. 工具调度机制（Tool Orchestration）
+
+### 9.1 工具注册表（Tool Registry，能力真相）
+每个工具注册一条能力描述（`cloud/tool_registry.json`，版本化）：
+`{tool_id, family, capabilities:[数据族+可出字段], auth_level L0–L3, cost_model{free/flat/per_result/per_usage, unit}, rate_limit, ban_risk 0–3, output_schema, health, connector_module, reliability 0–1}`
+- **静态能力**走注册表；**健康度/配额是运行时**，从各账本实时读取（不写死）。
+
+### 9.2 能力路由（Capability Router）—— 选工具的决策函数
+对任务 `{data_family, entity, required_fields, priority}`，路由器对每个工具算：
+`score = w_cap·能力匹配 − w_cost·预期成本 − w_ban·封号风险 + w_rel·可靠性 + w_health·实时健康`
+在满足所需字段的前提下，选成本最低的可行**工具链**，并按数据族内置 L0→L3 确定性降级链。
+- 硬规则：① L0/L2 免费能拿到就不调 L3；② 0 结果=$0 通道先试（atomus），再固定费/全文通道；③ health=dead/quota=0 直接跳过换源；④ 我方账号不跑搜索，需登录能力走 Apify。
+- 模型只做语义环节（实体匹配、归类、事件判定）；选路/退避/去重/预算门控一律确定性脚本。
+- 产出 **tool plan**（有序调用 + 每步预算 + 降级方案），runner 执行；每次结果回记 tool_id + 成本，喂给工具表现账本。
+
+### 9.3 运行时健康与配额感知
+路由在每次规划前刷新：地图 per-key 配额账本、Apify `/limits`、cookie pool 状态、actor 熔断、各工具 reliability；**绝不对已知死亡工具规划**。
+
+### 9.4 并发、锁与资源调度（2GB 主机，防卡死）
+- **可并行（独立 HTTP）**：phone/coord/hours/amap 字段填充——错峰分钟、`flock -n`（锁不到就跳过本轮）。
+- **必须串行（共享资源）**：浏览器 `flock /tmp/browser.lock`、每账号锁、Apify 全局额度锁（防并发超额）。
+- 调度分层：
+
+| 层 | 模块 | 节奏 |
+|---|---|---|
+| 常驻 backlog | food-apify-fill（口味）、gap_pool（有号时） | 持续 |
+| 高频 | router、watchdog、字段填充、evidence、播报 | 20min / 1h |
+| 周期深采 | fleet、KOL、**events**、coverage、blackpearl | 每日 / 每 6h |
+| 维护 | self_evolve、post_audit、镜像构建 | 02:00 / 每周 |
+
+- 所有 cron **错峰**（不挤 :00）；actor memory=512；watchdog 20min；非阻塞 flock 防堆积。
+
+---
+
+## 10. 工具优化升级子模块（含论证）
+
+| 子模块 | 现状短板 | 优化机制 | 为什么这样做（论证） | 验证闸门 |
+|---|---|---|---|---|
+| **map_router** 地图统一路由 | 单源配额即停、分店误配、缓存陈旧 | 高德/腾讯抽象为同一接口；per-key 配额账本+重置预测；跨源故障转移、区域 token 选分店、改逻辑即清缓存（均已落地）；配额预测+预取 | 地图是 L0 免费且覆盖 5 个事实字段，把它用到极致可直接**顶替付费调用**，零封号、降本最直接 | stage4 / patrol |
+| **fleet_optimizer** 舰队调度 | 单模型扛全量、假设未核验、无模型产出对比 | 按难度路由模型（flash 走量 / turbo 攻难叶 / 不确定用自一致性）；假设合并去重；模型×叶子表现账本；自动接 prove/promote | LLM 很便宜但错配即浪费；按难度路由**降 token、提假设精度**，表现账本让收益复利 | hae_grid / stage6 |
+| **actor_router** Apify 成本路由 | actor 固定、被合集烧钱、无单位成本学习 | 按学习到的 **$/采信条 与召回**选 actor（atomus 按结果先试、opspilot 召回、sian 全文/大品牌）；q1→q2 招牌菜扩展；0 结果即停；合集入队；每店 attempts 封顶（v4 已落地） | Apify 的钱本质是账号/代理租金；按预期产出选路并对 0 结果短路，是**最大的成本杠杆** | review_apify guard |
+| **kol_router** KOL 统一 | B站/公众号割裂、跨平台身份不清、可靠性未加权 | 统一 KOL watchlist + 全局名单；mention 汇入单一线索流；身份归并；可靠性/软广加权；线索去重 | KOL 是本地/小众店最好的**免费发现**源，统一提召回、可靠性加权把软广挡在准入外 | kol ledgers / admission |
+| **events_router** 事件路由（新建） | 事件靠自有登录浏览器、从未被调度 | 事件**改走 Apify**（我方零封号）；事件词根+类型法；events_build 语义判定/归店；起始日期+报名入口抽取；去重/新颖度；sweep+watch 定时 | 事件天然稀疏、强时效，Apify 按结果计费（多数查询 0 结果=$0）最契合；定时即以**近零成本**消除“事件从不跑” | events_build / post_audit |
+| **sig_direct** 签名直连 | 匿名搜索死、需 cookie、有 token 风险 | 限定健康 cookie 下取低风险 feed/评论；**不做搜索**；搜索能力让给 Apify | 保留一条免费的详情/评论通道且不暴露账号，边界使用 | xhs_api 健康探测 |
+| **watchdog_orchestrator** 看门狗编排 | 噪声多、探测不权威、告警重复 | 信号-模块映射；user/me 权威判活；只报可操作项；account_repair 自动阶梯；二维码经 TG+飞书；设 warning 专项处理 | 降低运维负担与无效劳动；每条告警必须能映射到 owner+动作，否则抑制 | watchdog 账本 |
+
+---
+
+## 11. 优化落地顺序与“不干扰采集”保证
+
+1. **先加后改**：router/registry 以新增脚本落地（不重启 food-apify-fill）→ docker cp 进容器 → `--plan/--dry-run` 冒烟 → 错峰接线 cron → 最后才切流量；镜像构建避开正在跑的任务。
+2. **隔离保证**：food-apify-fill 进程与状态不动；新任务用独立锁/独立 state/独立小预算；Apify 全局额度守卫；非阻塞 flock；每个子模块可独立回滚。
+3. **闭环**：子模块上线后必须被对应闸门调用（§10），否则按“未实现”处理；纳入每日 02:00 复盘与 release_audit。
