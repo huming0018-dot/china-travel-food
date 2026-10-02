@@ -116,40 +116,235 @@ def search_sogou(q):
 def search_bing(q):
     import requests
     from bs4 import BeautifulSoup
-    # 加引号消歧
-    qq = f'"{q.split()[0]}" ' + " ".join(q.split()[1:])
     try:
-        r = _get("https://cn.bing.com/search?q=" + requests.utils.quote(qq))
+        url = ("https://www.bing.com/search?q=" + requests.utils.quote(q)
+               + "&setlang=zh-CN&cc=CN&ensearch=0")
+        r = _get(url)
         if r.status_code != 200:
             return None, f"bing http {r.status_code}"
         s = BeautifulSoup(r.text, "html.parser")
-        items = s.select("li.b_algo")
         out = []
-        for it in items:
-            a = it.find("a")
-            if not a: continue
-            txt = it.get_text(" ", strip=True)
-            out.append({"source_url": a.get("href", ""), "source_title": txt[:120],
-                        "snippet": txt[:400], "source_host": "bing.com"})
+        for it in s.select("li.b_algo"):
+            a = it.select_one("h2 a")
+            if not a:
+                continue
+            href = a.get("href", "")
+            if not href.startswith("http"):
+                continue
+            title = a.get_text(" ", strip=True)
+            cap = it.select_one(".b_caption p") or it.select_one("p")
+            snippet = cap.get_text(" ", strip=True) if cap else title
+            host = href.split("://", 1)[-1].split("/", 1)[0]
+            out.append({"source_url": href, "source_title": title[:120],
+                        "snippet": snippet[:400], "source_host": host})
         return out[:8], None
     except Exception as e:
         return None, f"bing err {type(e).__name__}"
 
 
-ENGINES = [("360", search_360), ("sogou", search_sogou), ("bing", search_bing)]
-BLOCK_MARKERS = ["qcaptcha.so.com", "antispider", "captcha", "verify", "安全验证"]
+def search_baidu(q):
+    import requests
+    from bs4 import BeautifulSoup
+    try:
+        r = _get("https://www.baidu.com/s?wd=" + requests.utils.quote(q))
+        if r.status_code != 200 or len(r.text) < 5000:
+            return None, f"baidu http {r.status_code}"
+        if _is_blocked(r.url, r.text):
+            return None, "baidu blocked"
+        s = BeautifulSoup(r.text, "html.parser")
+        out, seen = [], set()
+        for h3 in s.select("h3"):
+            a = h3.find("a")
+            if not a:
+                continue
+            href = a.get("href", "")
+            if not href.startswith("http"):
+                continue
+            box = a
+            for _ in range(5):
+                box = box.parent
+                if box is not None and box.name == "div" and "c-container" in (box.get("class") or []):
+                    break
+            txt = (box.get_text(" ", strip=True) if box is not None else a.get_text(" ", strip=True))
+            real = href
+            try:
+                rr = requests.head(href, headers={"User-Agent": random.choice(UAS)},
+                                   timeout=5, allow_redirects=True)
+                real = rr.url
+            except Exception:
+                pass
+            if any(x in real for x in ("image.baidu", "tieba.baidu", "baike.baidu",
+                                       "video.baidu", "wenku.baidu", "pan.baidu",
+                                       "pic.baidu", "haokan.baidu")):
+                continue
+            if "百度图片" in txt:
+                continue
+            host = real.split("://", 1)[-1].split("/", 1)[0]
+            if host in seen:
+                continue
+            seen.add(host)
+            out.append({"source_url": real, "source_title": txt[:120],
+                        "snippet": txt[:400], "source_host": host})
+        return out[:8], None
+    except Exception as e:
+        return None, f"baidu err {type(e).__name__}"
+
+
+def search_ddg(q):
+    import requests
+    from bs4 import BeautifulSoup
+    import urllib.parse as up
+    try:
+        r = _get("https://html.duckduckgo.com/html/?q=" + requests.utils.quote(q))
+        if r.status_code != 200:
+            return None, f"ddg http {r.status_code}"
+        s = BeautifulSoup(r.text, "html.parser")
+        out = []
+        for it in s.select("div.result"):
+            a = it.select_one("a.result__a")
+            if not a:
+                continue
+            href = a.get("href", "")
+            m = re.search(r"uddg=([^&]+)", href)
+            if m:
+                href = up.unquote(m.group(1))
+            if not href.startswith("http"):
+                continue
+            sn = it.select_one(".result__snippet")
+            title = a.get_text(" ", strip=True)
+            snippet = sn.get_text(" ", strip=True) if sn else title
+            host = href.split("://", 1)[-1].split("/", 1)[0]
+            out.append({"source_url": href, "source_title": title[:120],
+                        "snippet": snippet[:400], "source_host": host})
+        return out[:8], None
+    except Exception as e:
+        return None, f"ddg err {type(e).__name__}"
+
+
+SEARX_URL = os.environ.get("SEARX_URL", "http://searxng:8080")
+
+
+def search_searxng(q):
+    """自建 SearXNG 元搜索：服务端聚合 bing/mojeek/startpage/yandex 等，返回去重 JSON。"""
+    import requests
+    for attempt in range(2):
+        try:
+            r = requests.get(SEARX_URL + "/search",
+                             params={"q": q, "format": "json", "safesearch": 0},
+                             timeout=12)
+            if r.status_code != 200:
+                if attempt == 0:
+                    time.sleep(2)
+                    continue
+                return [], f"searxng http {r.status_code}"
+            d = r.json()
+            out = []
+            for x in d.get("results", []):
+                pu = x.get("parsed_url") or []
+                host = pu[1] if len(pu) > 1 else ""
+                out.append({
+                    "source_url": x.get("url", ""),
+                    "source_title": (x.get("title") or "").strip(),
+                    "source_host": host,
+                    "snippet": (x.get("content") or "").strip()})
+            if out or attempt == 1:
+                return out, ("searxng" if out else "empty")
+            time.sleep(2)
+        except Exception as e:
+            if attempt == 1:
+                return [], f"searxng {type(e).__name__}"
+            time.sleep(2)
+    return [], "searxng empty"
+
+
+ENGINES = [("searxng", search_searxng), ("ddg", search_ddg), ("baidu", search_baidu),
+           ("sogou", search_sogou), ("360", search_360), ("bing", search_bing)]
+# 首选固定引擎（始终先试），其余按计数器轮换作为回退
+PINNED = ["searxng"]
+BLOCK_MARKERS = ["qcaptcha.so.com", "antispider", "captcha", "verify", "安全验证", "百度安全验证"]
 
 
 def _is_blocked(url, html):
     return any(m in (url or "") for m in BLOCK_MARKERS) or any(m in (html or "")[:3000] for m in BLOCK_MARKERS)
 
 
-def search_with_failover(q):
-    for name, fn in ENGINES:
-        res, err = fn(q)
+def _qterms(q):
+    """查询的显著词：CJK 整段+二元组，拉丁整词。用于相关性过滤首页垃圾。"""
+    terms = set()
+    for raw in re.split(r"\s+", q):
+        raw = raw.strip('"\'')
+        if not raw:
+            continue
+        if re.fullmatch(r"[A-Za-z0-9.&+\-]+", raw):
+            if len(raw) >= 3:
+                terms.add(raw.lower())
+            continue
+        for run in re.findall(r"[\u4e00-\u9fa5]+", raw):
+            if len(run) >= 2:
+                terms.add(run)
+            for i in range(len(run) - 1):
+                terms.add(run[i:i + 2])
+    return terms
+
+
+def _rel(terms, doc):
+    blob = (doc.get("source_title", "") + " " + doc.get("snippet", "") + " " + doc.get("source_url", ""))
+    blob_l = blob.lower()
+    return sum(1 for t in terms if t in (blob_l if t.isascii() else blob))
+
+
+_ROT = {"i": 0}
+
+
+def _hard_call(fn, q, deadline):
+    """独立于 HTTP 库内部超时的硬墙钟：守护线程跑一次引擎，到点未返回即强弃，
+    杜绝 SearXNG/上游挂起导致的整轮卡死。"""
+    box = {}
+
+    def work():
+        try:
+            box["r"] = fn(q)
+        except Exception as e:
+            box["r"] = [], f"err {type(e).__name__}"
+
+    th = threading.Thread(target=work, daemon=True)
+    th.start()
+    th.join(deadline)
+    if th.is_alive():
+        return [], "hard_deadline"
+    return box.get("r", ([], "nores"))
+
+
+def search_with_failover(q, want=8, time_cap=25, max_fallback=1):
+    terms = _qterms(q)
+    fallback = [e for e in ENGINES if e[0] not in PINNED]
+    k = _ROT["i"] % len(fallback)
+    _ROT["i"] += 1
+    pinned = [e for e in ENGINES if e[0] in PINNED]
+    order = pinned + fallback[k:] + fallback[:k]
+    best = None
+    t0 = time.time()
+    fb_tried = 0
+    for name, fn in order:
+        if name not in PINNED:
+            if fb_tried >= max_fallback:
+                break
+            fb_tried += 1
+        if time.time() - t0 > time_cap:
+            break
+        res, err = _hard_call(fn, q, min(14, max(4, time_cap - (time.time() - t0))))
         if res:
-            return res, name
-        time.sleep(3)
+            kept = [d for d in res if _rel(terms, d) >= 1]
+            kept.sort(key=lambda d: -_rel(terms, d))
+            if kept:
+                score = sum(_rel(terms, d) for d in kept)
+                if best is None or score > best[0]:
+                    best = (score, name, kept[:want])
+                if score >= 6:
+                    break
+        time.sleep(0.6)
+    if best:
+        return best[2], best[1]
     return [], "all_blocked"
 
 

@@ -67,6 +67,13 @@ INFO_FIELDS = {"investor_info", "price_avg"}
 FACT_FIELDS = {"phone", "location", "opening_hours", "open_days"}
 CONF_MIN = 0.8
 
+# 出餐方式（与 chain_type 正交的描述性枚举，非硬负面）：由 production_model_probe 取证，
+# 标签需 n_ind≥2 才挂；复热/料包/外购三类联动精选下架。
+PRODUCTION_ENUM = ["现炒现做", "门店现制·标准化", "中央厨房·门店加工",
+                   "中央厨房·门店复热", "预制料理包·复热", "外购成品·无堂食厨房"]
+PRODUCTION_FIELDS = {"production_model"}
+REHEAT_LABELS = {"中央厨房·门店复热", "预制料理包·复热", "外购成品·无堂食厨房"}
+
 RE_PHONE = re.compile(r"^(?:0\d{2,3}-?)?\d{7,8}$|^1[3-9]\d{9}$")
 RE_LOC = re.compile(r"^SRID=4326;POINT\(-?\d+(?:\.\d+)?\s+-?\d+(?:\.\d+)?\)$")
 
@@ -121,6 +128,8 @@ def n_independent(rows):
 
 def schema_for(field):
     """data_gate 校验 schema（枚举 / 数值范围）。"""
+    if field in PRODUCTION_FIELDS:
+        return {"fields": {field: {"type": "string", "enum": PRODUCTION_ENUM}}}
     if field in ENUMS:
         return {"fields": {field: {"type": "string", "enum": ENUMS[field]}}}
     if field == "price_avg":
@@ -223,6 +232,33 @@ def resolve_fact(field, rows):
     cand.sort(key=lambda r: float(r.get("confidence", 0)), reverse=True)
     return {"action": "apply", "value": cand[0]["value"],
             "why": f"{field} 最高置信={cand[0].get('confidence')}"}
+
+
+def resolve_production_model(rows):
+    """出餐方式标签仲裁：探针已确定性裁决，gate 仅校验该标签证据 n_ind≥2。
+
+    同一标签每独立源一条；多标签冲突时取独立源最多者，并列则 hold（不猜）。
+    """
+    buckets = defaultdict(list)
+    for r in rows:
+        v = r.get("value")
+        if v in PRODUCTION_ENUM and float(r.get("confidence", 0)) >= CONF_MIN:
+            buckets[v].append(r)
+    cands = []
+    for v, rs in buckets.items():
+        ni = n_independent(rs)
+        if ni >= 2:
+            cands.append((ni, v))
+    cands.sort(reverse=True, key=lambda x: x[0])
+    if not cands:
+        return {"action": "none", "value": None,
+                "why": "出餐方式标签无 ≥2 独立源，保持 NULL（宁空不假）"}
+    if len(cands) > 1 and cands[0][0] == cands[1][0]:
+        return {"action": "hold", "value": None,
+                "why": f"出餐方式标签冲突 {[c[1] for c in cands[:3]]}，取证窗口"}
+    ni, v = cands[0]
+    return {"action": "apply", "value": v,
+            "why": f"出餐方式 {v} 有 {ni} 独立源"}
 
 
 def _brand_core(name):
@@ -339,7 +375,7 @@ def build_plan():
             grouped[(rid, fld)].append(d)
 
     rests = core.fetch_all("restaurants",
-        "id,name,status,is_curated,chain_type,central_kitchen,premade_risk,price_avg,investor_info")
+        "id,name,status,is_curated,chain_type,central_kitchen,premade_risk,production_model,price_avg,investor_info")
     cur = {r["id"]: r for r in rests}
     P = core.pipeline_common()
     brand_index = build_brand_index(rests, P)
@@ -350,7 +386,9 @@ def build_plan():
     reverify = []
 
     for (rid, fld), rows in sorted(grouped.items()):
-        if fld in ENUM_FIELDS:
+        if fld in PRODUCTION_FIELDS:
+            dec = resolve_production_model(rows)
+        elif fld in ENUM_FIELDS:
             dec = resolve_enum(fld, rows)
         elif fld in INFO_FIELDS:
             dec = resolve_info(fld, rows)
@@ -459,10 +497,12 @@ def build_plan():
         rid = r["id"]
         if r.get("status") == "closed":
             curated_off.append((rid, "已关店，移出精选"))
-        elif r.get("central_kitchen") == "确认":
-            curated_off.append((rid, "中央厨房确认，移出精选"))
+        elif r.get("production_model") in REHEAT_LABELS:
+            curated_off.append((rid, f"出餐方式为{r.get('production_model')}（复热/料包），移出精选"))
         elif r.get("premade_risk") == "高":
             curated_off.append((rid, "预制风险高，移出精选"))
+        # 注：central_kitchen=确认但门店仍现做(中央厨房·门店加工，如火锅/现炒)不再自动下架；
+        # 仅复热/料包/食安硬证据才下架（连锁本身不下架）。
     for rid, why in curated_off:
         label_patches[rid]["is_curated"] = False
         label_patches[rid]["curate_reason"] = why

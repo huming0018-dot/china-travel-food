@@ -112,3 +112,8 @@ cloud/vendor/pipeline/recalc_report.json
 cloud/vendor/pipeline/mismatch_report.json
 cloud/vendor/pipeline/fill_plan.json
 cloud/vendor/pipeline/negative_plan.json
+
+# 调试/运行草稿（非核心代码）
+batch6_work/
+batch8_work/
+research/post_record/
