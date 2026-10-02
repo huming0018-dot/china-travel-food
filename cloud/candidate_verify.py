@@ -39,6 +39,7 @@ C = RF.C
 EM = RF.EM
 DATA = RF.DATA
 CAND_F = DATA / "kol_lead_fill.json"
+DIAN_F = DATA / "dianping_lead_fill.json"
 STATE_F = DATA / "candidate_verify_state.json"
 ADMIT_F = DATA / "candidate_admit_package.json"
 HOLD_F = DATA / "candidate_hold.json"
@@ -57,9 +58,31 @@ INDUSTRIAL_RE = re.compile(
 
 
 def load_candidates():
-    if not CAND_F.exists():
-        sys.exit(f"找不到 {CAND_F}（先 docker cp 容器 kol_lead_fill.json 到主机）")
-    return json.loads(CAND_F.read_text(encoding="utf-8"))
+    merged, seen_poi, seen_core = [], set(), set()
+
+    def _add(rows, src):
+        for c in rows or []:
+            c = dict(c)
+            c["_src"] = src
+            poi = c.get("poi_id")
+            core = C.cjk_norm(c.get("core") or c.get("name") or "")
+            if poi and poi in seen_poi:
+                continue
+            if core and core in seen_core:
+                continue
+            if poi:
+                seen_poi.add(poi)
+            if core:
+                seen_core.add(core)
+            merged.append(c)
+
+    if CAND_F.exists():
+        _add(json.loads(CAND_F.read_text(encoding="utf-8")), "kol")
+    if DIAN_F.exists():
+        _add(json.loads(DIAN_F.read_text(encoding="utf-8")), "dianping")
+    if not merged:
+        sys.exit(f"找不到候选（{CAND_F.name} / {DIAN_F.name}）")
+    return merged
 
 
 def load_state():
