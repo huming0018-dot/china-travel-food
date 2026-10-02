@@ -55,6 +55,7 @@ def _load_token():
 TOKEN = _load_token()
 STATE_F = DATA / "apify_fill_state.json"
 ROUNDUP_QUEUE = DATA / "roundup_queue.jsonl"
+BIG_HOLD = DATA / "big_brand_hold.json"
 ALERT_QUEUE = HERE / "alert_queue.jsonl"
 
 PROVIDERS = {
@@ -94,13 +95,23 @@ def remaining_credit():
     if not TOKEN:
         return 0.0
     try:
-        me = requests.get("https://api.apify.com/v2/users/me",
-                          params={"token": TOKEN}, timeout=30).json()["data"]
-        cap = (me.get("plan") or {}).get("maxMonthlyUsageUsd") or 0
         d = requests.get("https://api.apify.com/v2/users/me/usage/monthly",
                          params={"token": TOKEN}, timeout=30).json()["data"]
-        used = d.get("totalUsageCreditsUsdAfterVolumeDiscount") or 0
-        return max(0.0, float(cap) - float(used))
+        used = float(d.get("totalUsageCreditsUsdAfterVolumeDiscount") or 0)
+        # 权威硬上限优先取自定义 limits（REST /v2/users/me/limits 可调，如 $50），
+        # 再回退 plan 基准（STARTER base，不含自定义提额）。
+        cap = 0.0
+        try:
+            lj = requests.get("https://api.apify.com/v2/users/me/limits",
+                              params={"token": TOKEN}, timeout=30).json()["data"]
+            cap = float((lj.get("limits") or {}).get("maxMonthlyUsageUsd") or 0)
+        except Exception:
+            cap = 0.0
+        if not cap:
+            me = requests.get("https://api.apify.com/v2/users/me",
+                              params={"token": TOKEN}, timeout=30).json()["data"]
+            cap = float((me.get("plan") or {}).get("maxMonthlyUsageUsd") or 0)
+        return max(0.0, cap - used)
     except Exception:
         return 0.0
 
@@ -297,6 +308,14 @@ def keywords_for(rec):
 
 
 # ---------------------------------------------------------------- 目标选择
+# 连锁规模 -> opspilot 搜索级通道优先级（A/B 实测 2026-10-02）
+# 独立/名字独特的店，品牌词能出单店食客帖（Tacolicious 9采信/4口味）；
+# 大型/资本化多分店品牌（新荣记/遇外滩）品牌词甚至招牌菜词都被合集淹没、0采信，
+# 不应在 opspilot 通道白烧——摘出记 big_brand_hold，后续走 sian 全文/评论路由。
+CHAIN_TIER = {"独立店": 0, "小型连锁": 1}
+BIG_CHAIN = {"大型连锁", "资本化连锁"}
+
+
 def select_targets(idx, need, st):
     revs = C.fetch_all("reviews", "restaurant_id,trust_level,is_verified_diner")
     have = {}
@@ -304,12 +323,13 @@ def select_targets(idx, need, st):
         if r.get("is_verified_diner") and r.get("trust_level") in ("mid", "high"):
             have[r["restaurant_id"]] = have.get(r["restaurant_id"], 0) + 1
     info = {r["id"]: r for r in C.fetch_all(
-        "restaurants", "id,is_chain_standardized,price_avg,signature_dishes,status")}
+        "restaurants",
+        "id,is_chain_standardized,chain_type,price_avg,signature_dishes,status")}
     allow = worth_ids()
     cap_ids = {int(rid) for rid, a in st.get("attempts", {}).items()
                if a.get("n", 0) >= MAX_SHOP_ATTEMPTS}
     deferred_ids = {d["id"] for d in st.get("deferred", [])}
-    targets = []
+    targets, big_hold = [], []
     for d in idx.RMD:
         rid = d["id"]
         r = info.get(rid)
@@ -323,11 +343,25 @@ def select_targets(idx, need, st):
             continue
         if rid in cap_ids or rid in deferred_ids:
             continue
+        chain = r.get("chain_type") or "独立店"
+        if chain in BIG_CHAIN:
+            big_hold.append({"id": rid, "name": d["name"], "chain_type": chain})
+            continue
         targets.append({"id": rid, "name": d["name"],
+                        "tier": CHAIN_TIER.get(chain, 1),
                         "price_avg": C.to_int(r.get("price_avg")) or 0,
                         "signature_dishes": r.get("signature_dishes")})
-    targets.sort(key=lambda x: (1 if DEFER_NAME.search(x["name"]) else 0,
-                                -x["price_avg"], x["id"]))
+    # 独立店优先、小型连锁其次；同层本地(平价)优先以补本地化短板；
+    # 名字含合集/私房词的压后；有招牌菜(q2 可续)的略优先。
+    targets.sort(key=lambda x: (x["tier"],
+                               1 if DEFER_NAME.search(x["name"]) else 0,
+                               0 if x["signature_dishes"] else 1,
+                               x["price_avg"], x["id"]))
+    if big_hold:
+        BIG_HOLD.write_text(json.dumps(
+            {"note": "大型/资本化多分店品牌，opspilot 搜索级0采信，留待 sian 全文/评论路由",
+             "count": len(big_hold), "shops": big_hold},
+            ensure_ascii=False, indent=2), encoding="utf-8")
     return targets
 
 
@@ -584,7 +618,7 @@ def run(args):
           f"日预算≈${gates['daily']:.2f}")
 
     done_n, defer_n, applied, blocked_n = 0, 0, 0, 0
-    preflight_streak = 0
+    preflight_n = 0
     for rec in targets[:args.limit]:
         res = process_shop(rec, idx, st, args, gates)
         code = res["code"]
@@ -601,7 +635,6 @@ def run(args):
             return
         save_state(st)
         if code == "DONE":
-            preflight_streak = 0
             clear_circuit(st)
             done_n += 1
             applied += res["got"]
@@ -611,19 +644,20 @@ def run(args):
             defer_n += 1
             blocked_n += res.get("blocked", 0)
             if res.get("pure_offtarget"):
-                preflight_streak += 1
-            else:
-                preflight_streak = 0
+                preflight_n += 1
             print(f"  [{rec['id']}] {rec['name'][:24]} ← 0采信（{res['why']}）")
-            if preflight_streak >= PREFLIGHT_CONFIRM:
-                cooldown = trip_circuit(st, "连续主流目标纯跑题0锚定")
-                _notify("action", "fill_preflight",
-                        f"[PREFLIGHT 熔断] 连续 {PREFLIGHT_CONFIRM} 个主流目标 0 锚定（非合集），"
-                        f"判定 actor 系统性失效，冷却 {cooldown//3600}h，以免继续烧钱。")
-                save_state(st)
-                if args.guard:
-                    print(f"@@STATUS CIRCUIT_WAIT {cooldown} preflight")
-                return
+
+    # 熔断只在「整轮无一家达标 + 多家纯跑题(非合集)」时判定 actor 系统性失效；
+    # 只要本轮有达标店即说明 actor 正常，冷门无帖店仅 defer、不全局停。
+    if done_n == 0 and preflight_n >= PREFLIGHT_CONFIRM:
+        cooldown = trip_circuit(st, "整轮纯跑题0锚定0达标")
+        _notify("action", "fill_preflight",
+                f"[PREFLIGHT 熔断] 本轮 0 达标、{preflight_n} 家纯跑题 0 锚定（非合集），"
+                f"判定 actor 系统性失效，冷却 {cooldown//3600}h，以免继续烧钱。")
+        save_state(st)
+        if args.guard:
+            print(f"@@STATUS CIRCUIT_WAIT {cooldown} preflight")
+        return
 
     st["token_bad"] = False
     save_state(st)

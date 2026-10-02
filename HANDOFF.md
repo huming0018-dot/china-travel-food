@@ -10,6 +10,19 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 下午【collector·Apify 硬上限提至 $50 + 选目标/熔断三处根因修复，今日 +21 店】
+
+**账单硬上限 $40→$50（REST，UI 做不通）**：`console.apify.com/billing/limits` 的 "Edit limit" 按钮经 ref 点击与归一化坐标点击均无弹窗（DOM 无 dialog/input、无报错，多次验证做不通）。正解走 REST：`GET https://api.apify.com/v2/users/me/limits?token=` 取完整 limits → 改 `maxMonthlyUsageUsd=50` → **`PUT` 必须用 flat limits 对象**（包一层 `{"limits":...}` 返 400 invalid-value），成功返 201（响应 `{}`）；GET 核验 max=50。
+
+**A/B 9 cell 已跑完（详见 AB_RESULT.md，控制器顶部 `ab_compare.py --auto`，结果存在即 AB_SKIP 不花钱）**：opspilot 每条口味 $0.036（最省，精准/外文默认）、atomus 采信率最高 17%（空跑免费，名品牌先探测）、sian 召回最大但 $0.099/口味（要量/中文消歧）；名品牌（新荣记）三家全 0 采信→不为固定价合集付费。
+
+**三处根因修复（均已本地+主机 py_compile、scp 部署、重启 live 验证）**：
+1. **选目标排序错误（大品牌白烧）**：旧 `select_targets` 排序键 `-price_avg`=最贵/最知名多分店大品牌优先，它们品牌词甚至招牌菜词都被合集淹没（首轮 12 家全 0 采信）。改为：大型/资本化连锁（`chain_type∈{大型连锁,资本化连锁}`）摘出 opspilot 通道、登记 `big_brand_hold.json`（**45 家**，留待 sian 全文/评论路由）；其余按 `(独立店优先, 合集/私房词压后, 有招牌菜优先, price_avg 升序=本地平价优先)` 排序，直接补本地化短板。
+2. **熔断误判（轮内连续计数）**：旧 `preflight_streak` 在一轮末尾连续 2 家"无帖店"即触发 3h 全局熔断，尽管整轮 7 家成功。改为只在**整轮 `done_n==0 且纯跑题≥PREFLIGHT_CONFIRM(2)`** 才 trip；有达标店即 actor 正常、冷门无帖店仅 defer。
+3. **remaining_credit 读错源**：旧版读 `me.plan.maxMonthlyUsageUsd`（STARTER 基准 $40，不含自定义提额）→ used>$40 即误判 NO_CREDIT。改为优先读 `/v2/users/me/limits` 的 `limits.maxMonthlyUsageUsd`（$50），回退 plan。
+
+**今日结果**：shops_done **37→58（+21 本地独立店）**，新增如潘记羌饼/汕鹤甜汤/糯米帝温州糯米饭(采信9)/drunk baker(8)/无锡小笼梅岭北路(6)/贵州冰浆/林氏海蛎煎/萝春阁生煎等；used **$49.81**、距 $50 仅 $0.19，服务自然 NO_CREDIT 暂停（控制器长睡，到点轻探），**remain_targets=857**；待充值或 11-01 月度重置后续跑。DB 评论均经 `--apply` 真实写入（apify 通道，review_kind=diner）。
+
 ### 2026-10-02 中午【collector·三家 A/B 对照器已交付并 live】：sian/atomus/opspilot 同店实测每采信成本，充值后自动先跑
 
 **触发**：用户批准"$10 一轮滚动测试"，并从 $10 拨 $2–3 对 sian/atomus/opspilot 做同口径 A/B，把成本路由从"标价推断"升级为"实测结论"。
