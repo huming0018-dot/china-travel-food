@@ -76,7 +76,11 @@ PROVIDERS = {
                 "/run-sync-get-dataset-items"),
         "price_per_run": 0.17},
 }
-DEFAULT_PROVIDER = os.environ.get("APIFY_PROVIDER", "opspilot")
+DEFAULT_PROVIDER = os.environ.get("APIFY_PROVIDER", "routed")
+# 成本路由：atomus 按结果计费（0结果=$0）先探，不足再 opspilot；可用 APIFY_PROVIDER_CHAIN 覆盖。
+_prov_chain = os.environ.get("APIFY_PROVIDER_CHAIN", "atomus,opspilot")
+PROVIDER_CHAIN = [p.strip() for p in _prov_chain.split(",") if p.strip() in PROVIDERS] \
+    or ["atomus", "opspilot"]
 
 PER_NOTE_PAUSE = float(os.environ.get("APIFY_NOTE_PAUSE", "4.0"))
 PER_RUN_FLOOR_USD = float(os.environ.get("APIFY_PER_RUN_FLOOR_USD", "0.15"))
@@ -468,73 +472,84 @@ def process_shop(rec, idx, st, args, gates):
     reason_ct = {}
     n_roundup, n_anchor = 0, 0
     flagged_roundups = []
+    chain = PROVIDER_CHAIN if args.provider == "routed" else [args.provider]
     while att["n"] < MAX_SHOP_ATTEMPTS and got < args.need:
         kw = q1 if att["n"] == 0 else q2
-        rem = remaining_credit()
-        if rem < PER_RUN_FLOOR_USD:
-            att["last"] = "额度地板"
-            return {"code": "NO_CREDIT", "got": got}
-        used_today = current_used() - gates["day_start_used"]
-        if used_today >= gates["daily"] or gates["daily"] < PER_RUN_FLOOR_USD:
-            att["last"] = "日预算"
-            return {"code": "DAILY_CAP", "got": got}
-        if current_used() - gates["round_start"] >= ROUND_CAP_USD:
-            att["last"] = "轮次上限"
-            return {"code": "ROUND_CAP", "got": got}
-        try:
-            raw_notes, err = apify_search(args.provider, kw, max_items=6)
-        except TokenBad as e:
-            st["token_bad"] = True
-            save_state(st)
-            _notify("action", "apify_token_bad",
-                    "Apify token 无效（401），账号无关回填暂停。请到 console.apify.com 确认账号/"
-                    "重新生成 token 并更新凭据。", action_text="去处理", nudge_schedule=(6,))
-            return {"code": "TOKEN_BAD", "got": got}
-        att["n"] += 1
-        att["kws"].append(kw)
-        st["billable_notes"] += len(raw_notes) if raw_notes else 0
-        st["billable_cost_usd"] = round(
-            st.get("billable_cost_usd", 0.0) + PROVIDERS[args.provider]["price_per_run"], 4)
-        if err:
-            att["last"] = err
-            st["skipped"][str(rid)] = err
-            break
-        for note in [normalize_note(args.provider, x) for x in raw_notes]:
-            url = note.get("url")
-            if url and url in gates["existing_urls"]:
+        for prov in chain:
+            rem = remaining_credit()
+            if rem < PER_RUN_FLOOR_USD:
+                att["last"] = "额度地板"
+                return {"code": "NO_CREDIT", "got": got}
+            used_today = current_used() - gates["day_start_used"]
+            if used_today >= gates["daily"] or gates["daily"] < PER_RUN_FLOOR_USD:
+                att["last"] = "日预算"
+                return {"code": "DAILY_CAP", "got": got}
+            if current_used() - gates["round_start"] >= ROUND_CAP_USD:
+                att["last"] = "轮次上限"
+                return {"code": "ROUND_CAP", "got": got}
+            u0 = current_used()
+            try:
+                raw_notes, err = apify_search(prov, kw, max_items=6)
+            except TokenBad as e:
+                st["token_bad"] = True
+                save_state(st)
+                _notify("action", "apify_token_bad",
+                        "Apify token 无效（401），账号无关回填暂停。请到 console.apify.com 确认账号/"
+                        "重新生成 token 并更新凭据。", action_text="去处理", nudge_schedule=(6,))
+                return {"code": "TOKEN_BAD", "got": got}
+            du = max(0.0, round(current_used() - u0, 4))
+            att["kws"].append(f"{kw}@{prov}")
+            cbp = st.setdefault("cost_by_provider", {})
+            cbp[prov] = round(cbp.get(prov, 0.0) + du, 4)
+            cap = st.setdefault("calls_by_provider", {})
+            cap[prov] = cap.get(prov, 0) + 1
+            st["billable_notes"] += len(raw_notes) if raw_notes else 0
+            st["billable_cost_usd"] = round(st.get("billable_cost_usd", 0.0) + du, 4)
+            if err:
+                att["last"] = err
+                st["skipped"][str(rid)] = err
                 continue
-            if is_brand_author(note, base_core):
-                blocked += 1
-                continue
-            status, payload, anchored, rp = accepted_note(idx, note, rid, name)
-            if anchored:
-                n_anchor += 1
-            if rp:
-                n_roundup += 1
-                flagged_roundups.append((note, kw))
-            if status == "accept":
-                body, score, raw = payload
-                rev = {"restaurant_id": rid, "author_name": note_author(note)[:20],
-                       "source_platform": "小红书", "source_url": url, "content": body,
-                       "review_kind": "diner", "is_verified_diner": True,
-                       "trust_level": "mid", "aspect_taste": score,
-                       "aspect_json": {"via": f"apify-{args.provider}",
-                                       "taste_raw": raw, "liked": note.get("liked_count")}}
-                if args.apply:
-                    rr = C.req("POST", "/reviews", json=rev)
-                    if rr.status_code in (200, 201):
-                        got += 1
-                        if url:
-                            gates["existing_urls"].add(url)
-                    else:
-                        print("   insert fail", rr.status_code, rr.text[:120])
-                else:
-                    got += 1
-            else:
-                reason_ct[status] = reason_ct.get(status, 0) + 1
-                if status == "无实物/软广模板":
+            for note in [normalize_note(prov, x) for x in raw_notes]:
+                url = note.get("url")
+                if url and url in gates["existing_urls"]:
+                    continue
+                if is_brand_author(note, base_core):
                     blocked += 1
-        time.sleep(PER_NOTE_PAUSE)
+                    continue
+                status, payload, anchored, rp = accepted_note(idx, note, rid, name)
+                if anchored:
+                    n_anchor += 1
+                if rp:
+                    n_roundup += 1
+                    flagged_roundups.append((note, kw))
+                if status == "accept":
+                    body, score, raw = payload
+                    rev = {"restaurant_id": rid, "author_name": note_author(note)[:20],
+                           "source_platform": "小红书", "source_url": url, "content": body,
+                           "review_kind": "diner", "is_verified_diner": True,
+                           "trust_level": "mid", "aspect_taste": score,
+                           "aspect_json": {"via": f"apify-{prov}",
+                                           "taste_raw": raw, "liked": note.get("liked_count")}}
+                    if args.apply:
+                        rr = C.req("POST", "/reviews", json=rev)
+                        if rr.status_code in (200, 201):
+                            got += 1
+                            if url:
+                                gates["existing_urls"].add(url)
+                        else:
+                            print("   insert fail", rr.status_code, rr.text[:120])
+                    else:
+                        got += 1
+                else:
+                    reason_ct[status] = reason_ct.get(status, 0) + 1
+                    if status == "无实物/软广模板":
+                        blocked += 1
+            time.sleep(PER_NOTE_PAUSE)
+            if got >= args.need:
+                break
+        att["n"] += 1
+        if got >= args.need:
+            break
     capture_roundups(flagged_roundups)
     if got >= args.need:
         if rid not in st["shops_done"]:
@@ -622,9 +637,12 @@ def run(args):
              "existing_urls": set(x.get("source_url")
                                   for x in C.fetch_all("reviews", "source_url")
                                   if x.get("source_url"))}
+    if args.provider == "routed":
+        prov_desc = "routed(链:" + ">".join(PROVIDER_CHAIN) + ")"
+    else:
+        prov_desc = f"{args.provider}(${PROVIDERS[args.provider]['price_per_run']:.2f}/次)"
     print(f"待补 {len(targets)}；本轮处理 {min(len(targets),args.limit)}；"
-          f"provider={args.provider}(${PROVIDERS[args.provider]['price_per_run']:.2f}/次)；"
-          f"日预算≈${gates['daily']:.2f}")
+          f"provider={prov_desc}；日预算≈${gates['daily']:.2f}")
 
     done_n, defer_n, applied, blocked_n = 0, 0, 0, 0
     preflight_n = 0
@@ -687,5 +705,6 @@ if __name__ == "__main__":
     ap.add_argument("--guard", action="store_true")
     ap.add_argument("--limit", type=int, default=12)
     ap.add_argument("--need", type=int, default=2)
-    ap.add_argument("--provider", default=DEFAULT_PROVIDER, choices=list(PROVIDERS))
+    ap.add_argument("--provider", default=DEFAULT_PROVIDER,
+                    choices=["routed"] + list(PROVIDERS))
     run(ap.parse_args())

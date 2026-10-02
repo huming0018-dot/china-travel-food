@@ -10,6 +10,21 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 晚⑨【collector·成本路由 atomus→opspilot 测试通过，单店成本 $0.56→约$0.18】
+
+**背景**：纯 opspilot 约 $0.10/次，对合集/0采信店也收费，上周期折算约 **$0.56/店**。用户再放 $10（月度硬顶 $60→**$70**，PUT `/v2/users/me/limits` flat 对象，201），验证「atomus 先探（per-result，0结果=$0），不足再 opspilot」。
+
+1. **`cloud/review_apify_fill.py`（已更新、已部署主机 `/home/ubuntu/food-apify-fill/`，旧版备份 `.bak_<ts>`）**：
+   - 新增伪 provider `routed`（默认）与 `PROVIDER_CHAIN=[atomus,opspilot]`（env `APIFY_PROVIDER_CHAIN` 覆盖）。
+   - `process_shop` 重构为「关键词轮(q1/q2) × provider 链」：**每次计费调用前**重过三道闸门（余量≥$0.15、日预算、轮 $2）；同一关键词 atomus 达标(got≥need)即不再调 opspilot，atomus 0结果/不足自动升级 opspilot 补足。
+   - 新增 state 账本 `cost_by_provider` / `calls_by_provider`（按 usage 实差累计）。
+2. **受控实测（6 家，--apply 真实写库）**：Gregorius SHADE/老地方面馆/是隆路船面/Sit Gelato/沪西老弄堂/大壶春 全部达标，采信 **29 条**。
+   - calls：atomus **6**、opspilot **5**（1 家 atomus 单独达标，未调 opspilot）。
+   - **权威成本以月度 usage 增量为准**：可用 $10.085 → $8.98，本批实花约 **$1.10（≈$0.18/店）**，较纯 opspilot $0.56/店降约 **2/3**。
+   - 诚实注记：inline `cost_by_provider` 因 usage 接口有秒级延迟、合计仅记 $0.46（atomus 记 $0），**低估**；月度 usage 增量（$1.10）才是权威口径。后续如需精确分 provider 摊分，应在批次结束 settle 后再读一次。
+3. **服务与免费管线**：`food-apify-fill.service` 已重启、active，按 routed 逻辑继续（日预算 $10 闸门）；容器免费 cron 全部存活（amap/phone/watchdog/evidence/kol/bili/patrol 日志 11:40–11:55 持续更新；crontab 76 行、gap_pool 常驻）。
+4. 剩余 worth_fill 目标 **75 家**（另有 deferred 50）。
+
 ### 2026-10-02 晚⑧【collector·最新动向改走 Apify 并接线 cron；工具注册表+能力路由器落地】
 
 **背景**：`events_collect` 依赖我方登录态浏览器、从未被调度（容器卷原本连 `research/social/` 目录与配置都没有）。改为 Apify 通道，我方零封号、按结果计费。
