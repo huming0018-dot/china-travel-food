@@ -431,8 +431,8 @@ def probe_brand(provider, model, brand, locations, n_queries=3):
         try:
             sig = extract_signals_once(provider, m, brand, locations, evidence)
             if sig:
-                # 只允许真实取证 URL 进入裁决，剔除模型杜撰来源
-                sig = filter_signals_by_urls(sig, evidence_url_set(evidence))
+                # 证据接地到真实检索结果，剔除模型杜撰来源
+                sig = filter_signals_by_evidence(sig, evidence)
                 clear_model_dead(m)
                 print(f"    [model] {m}")
                 return sig, evidence, "ok"
@@ -599,22 +599,81 @@ _EV_KEYS = ["central_delivery_evidence", "reheat_evidence",
             "onsite_prep_evidence", "retail_packaged_products"]
 
 
-def filter_signals_by_urls(sig, urls):
-    """只保留 url 命中真实取证集合的证据项，杜绝模型杜撰来源进入裁决；其余字段保留。"""
+def _norm_u(u):
+    u = (u or "").strip().lower().split("#", 1)[0]
+    if "://" in u:
+        u = u.split("://", 1)[1]
+    return u.replace("www.", "").rstrip("/")
+
+
+def _norm_text(t):
+    return re.sub(r"\s+", "", (t or ""))
+
+
+def _ground_index(evidence):
+    """真实取证的接地索引：归一 URL → 真实 URL；主机 → [(真实URL, 标题+摘要归一文本)]。"""
+    by_url, by_host = {}, {}
+    for e in evidence:
+        for d in e.get("results", []):
+            u = d.get("source_url", "")
+            if not is_real_url(u):
+                continue
+            by_url[_norm_u(u)] = u
+            host = domain(u).lower().replace("www.", "")
+            txt = _norm_text(d.get("source_title", "") + d.get("snippet", ""))
+            by_host.setdefault(host, []).append((u, txt))
+    return by_url, by_host
+
+
+def _ground_item(it, by_url, by_host):
+    """把一条 LLM 证据接地到真实来源：
+    ①归一 URL 精确命中；②同主机且引文能在该真实页标题/摘要中找到连续片段
+    （容忍模型返回 canonical/协议/www 差异），并把 URL 重锚为真实地址；
+    两者都不满足 = 杜撰，丢弃。"""
+    u = it.get("url", "")
+    if not is_real_url(u):
+        return None
+    nu = _norm_u(u)
+    if nu in by_url:
+        return dict(it, url=by_url[nu])
+    host = domain(u).lower().replace("www.", "")
+    q = _norm_text(it.get("quote", ""))
+    if q:
+        L = min(len(q), 12)
+
+        def _in(real_txt):
+            if len(q) <= 12:
+                return q in real_txt
+            return any(q[i:i + L] in real_txt
+                       for i in range(0, len(q) - L + 1))
+
+        for real_u, txt in by_host.get(host, []):
+            if _in(txt):
+                return dict(it, url=real_u)
+    return None
+
+
+def filter_signals_by_evidence(sig, evidence):
+    """每条证据必须接地到真实检索结果（URL/主机+引文），杜撰来源一律剔除；其余字段保留。"""
     if not sig:
         return sig
-    allowed = set(urls)
+    by_url, by_host = _ground_index(evidence)
     out = dict(sig)
     for k in _EV_KEYS:
-        kept = [it for it in (out.get(k) or [])
-                if isinstance(it, dict) and is_real_url(it.get("url", ""))
-                and it.get("url") in allowed]
+        kept = []
+        for it in (out.get(k) or []):
+            if isinstance(it, dict):
+                g = _ground_item(it, by_url, by_host)
+                if g:
+                    kept.append(g)
         out[k] = kept
-    # supply_chain_entity：无 url 的实体名无法溯源，一律不采信
-    out["supply_chain_entity"] = [
-        it for it in (out.get("supply_chain_entity") or [])
-        if isinstance(it, dict) and is_real_url(it.get("url", ""))
-        and it.get("url") in allowed]
+    sce = []
+    for it in (out.get("supply_chain_entity") or []):
+        if isinstance(it, dict):
+            g = _ground_item(it, by_url, by_host)
+            if g:
+                sce.append(g)
+    out["supply_chain_entity"] = sce
     return out
 
 
@@ -656,7 +715,7 @@ def confirm_if_severe(provider, brand, locations, evidence, verdict):
         return _hold(verdict, verdict["rationale"] + f"；复核失败({type(e).__name__})，暂缓")
     if not sig2:
         return _hold(verdict, verdict["rationale"] + "；复核无信号，暂缓")
-    sig2 = filter_signals_by_urls(sig2, evidence_url_set(evidence))
+    sig2 = filter_signals_by_evidence(sig2, evidence)
     v2 = adjudicate(sig2)
     if v2.get("production_model") in SEVERE_MODELS:
         v2["rationale"] = verdict["rationale"] + f"；强模型({cm})复核一致"
