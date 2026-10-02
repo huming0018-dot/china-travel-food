@@ -325,22 +325,55 @@ def standard_queries(brand):
     ]
 
 
+# 通用品类/食材/业态词：单独出现不代表在讲该品牌（如「sushi」命中小游戏页）。
+# 品牌命中过滤只认【专属词】；专属词为空（名字本身即通用词）才回退全量。
+_GENERIC_LAT = {
+    "sushi", "ramen", "udon", "soba", "pho", "coffee", "cafe", "espresso", "bar",
+    "pub", "bistro", "restaurant", "restaurants", "dining", "diner", "kitchen",
+    "food", "eat", "eats", "bakery", "baking", "baker", "bread", "pastry", "cake",
+    "cakes", "dessert", "desserts", "gelato", "tea", "cocktail", "whiskey", "whisky",
+    "wine", "sake", "grill", "bbq", "steak", "steaks", "pizza", "pasta", "noodle",
+    "noodles", "curry", "taco", "tacos", "burger", "burgers", "salad", "soup",
+    "hotpot", "seafood", "crab", "salmon", "tuna", "lobster", "shrimp", "chicken",
+    "beef", "pork", "lamb", "duck", "rice", "toast", "sandwich", "brunch",
+    "sourdough", "croissant", "bagel", "donut", "cookie", "biscuit", "cuisine",
+    "house", "home", "garden", "table", "lounge", "club", "market", "fresh",
+    "homemade", "artisan", "craft", "the", "and", "for"}
+_GENERIC_CJK = {
+    "寿司", "刺身", "拉面", "乌冬", "荞麦", "料理", "日料", "日式", "咖啡", "餐厅",
+    "饭店", "饭馆", "火锅", "烤肉", "烧肉", "烧烤", "烤串", "烧鸟", "甜品", "甜点",
+    "蛋糕", "面包", "烘焙", "西点", "面馆", "面店", "食堂", "酒家", "酒楼", "酒肆",
+    "酒馆", "酒吧", "菜馆", "餐馆", "厨房", "咖喱", "牛排", "披萨", "比萨", "意面",
+    "茶室", "茶楼", "茶馆", "茶餐厅", "冷饮", "糖水", "甜汤", "小吃", "点心", "便当",
+    "快餐", "简餐", "私房菜", "家常菜", "地方菜", "餐饮", "连锁", "小厨", "小馆",
+    "小筑", "食府", "食集", "市集", "菜场", "厨师", "美食"}
+
+
 def brand_terms(brand):
-    """品牌的显著词（用于"必须真在讲该品牌"过滤）：CJK 整段+二元组，拉丁整词。"""
-    terms = set()
+    """品牌【专属】显著词（用于“必须真在讲该品牌”过滤）：CJK 整段+二元组、拉丁整词，
+    但剔除通用品类/食材/业态词，避免「sushi/咖啡/火锅」等词单独造成误匹配。
+    混写 token（晴川sushi）保留专属「晴川」、剔除通用「sushi」。
+    若剔除后无任何专属词（名字本身即通用词），回退返回全部词。"""
+    all_terms, distinctive = set(), set()
+
+    def _consider(term, generic):
+        all_terms.add(term)
+        if term not in generic:
+            distinctive.add(term)
+
     for raw in re.split(r"[\s·・•&]+", brand):
         raw = raw.strip("'\"()（）")
         if not raw:
             continue
         for run in re.findall(r"[A-Za-z0-9.'+\-]+", raw):
             if len(run) >= 3:
-                terms.add(run.lower())
-        for run in re.findall(r"[\u4e00-\u9fa5]+", raw):
+                _consider(run.lower(), _GENERIC_LAT)
+        for run in re.findall(r"[一-龥]+", raw):
             if len(run) >= 2:
-                terms.add(run)
+                _consider(run, _GENERIC_CJK)
             for i in range(len(run) - 1):
-                terms.add(run[i:i + 2])
-    return terms
+                _consider(run[i:i + 2], _GENERIC_CJK)
+    return distinctive if distinctive else all_terms
 
 
 def _mentions_brand(doc, bterms):
