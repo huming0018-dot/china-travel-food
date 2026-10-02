@@ -97,6 +97,8 @@ declare
   v_task_open   boolean;
   v_new_progress int;
   v_row         jsonb;
+  v_quota       int;
+  v_today_used  int;
 begin
   -- ① 参与者管控闸门
   select status into v_status
@@ -124,11 +126,29 @@ begin
     return jsonb_build_object('ok', false, 'reason', 'envelope_missing_task_or_seq');
   end if;
 
+  -- ②b 【安全】envelope内 participant_id 必须与调用参数一致（防跨参与者污染他人记录）
+  if coalesce(p_envelope->>'participant_id','') <> p_participant_id then
+    return jsonb_build_object('ok', false, 'reason', 'participant_id_mismatch');
+  end if;
+
   -- ③ 任务必须存在且 open
   select (status = 'open') into v_task_open
     from public.crowd_tasks where task_id = v_task_id;
   if v_task_open is distinct from true then
     return jsonb_build_object('ok', false, 'reason', 'task_not_open');
+  end if;
+
+  -- ③b 【安全】日配额强制：当日已 accepted 条数 ≥ quota_day 即拒（防刷单/DoS）
+  select quota_day into v_quota
+    from public.crowd_participants where participant_id = p_participant_id;
+  select count(*) into v_today_used
+    from public.crowd_proofs
+   where participant_id = p_participant_id
+     and gate_status = 'accepted'
+     and created_at >= date_trunc('day', now());
+  if coalesce(v_quota, 0) > 0 and v_today_used >= v_quota then
+    return jsonb_build_object('ok', false, 'reason', 'quota_exceeded',
+                              'quota_day', v_quota, 'used_today', v_today_used);
   end if;
 
   -- ④ 逐条校验+落库（幂等键由唯一约束兜底，重复静默跳过）
