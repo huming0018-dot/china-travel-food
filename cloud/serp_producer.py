@@ -25,7 +25,12 @@ UAS = [
 
 
 def _load_proxy():
-    """从 /app/data/account_proxies.json 读 account_b 的代理（广州）。"""
+    """SERP 默认【直连】：住宅代理（account_b 广州）经实测对 360/搜狗/bing 等搜索引擎
+    全超时（见 HANDOFF 已验证死路），每次 12s 超时才回落直连、严重拖慢采集。
+    仅当显式设置 SERP_PROXY=1 时，才读 /app/data/account_proxies.json 走代理。
+    （account_proxies 仅供小红书浏览器账号使用，与 SERP 无关。）"""
+    if os.environ.get("SERP_PROXY", "0").strip() not in ("1", "true", "True"):
+        return None
     import json
     p = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data")) / "account_proxies.json"
     try:
