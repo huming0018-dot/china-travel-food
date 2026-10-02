@@ -160,7 +160,7 @@ def main():
         locs = "; ".join(r["name"] for r in rs[:6])
         print(f"● {bname} | 分店 {rids}")
         res, timed_out = hard_watch(
-            lambda: PMP.probe_brand(p, PMP.candidate_models(p), bname, locs),
+            lambda: PMP.probe_brand(p, PMP.extraction_models(p), bname, locs),
             brand_hard)
         if timed_out:
             timeouts += 1

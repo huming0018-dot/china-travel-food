@@ -225,7 +225,10 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
                         tool_calls += delta["tool_calls"]
             meter_usage(model, usage)
             if not content_parts and not tool_calls:
-                raise TimeoutError("empty_stream")
+                # 模型 200 但空输出：视为"已作答为空"，不就地重试（省一次同模型调用），
+                # 返回空 content，由上层 _parse→None 判定后最多升级到一个兜底模型
+                return {"role": "assistant", "content": "",
+                        "tool_calls": None, "_usage": usage}
             return {"role": "assistant", "content": "".join(content_parts),
                     "tool_calls": tool_calls or None,
                     "_usage": usage}
@@ -456,6 +459,26 @@ def candidate_models(provider):
     if want and want in models:
         order = [want] + [m for m in order if m != want]
     return order
+
+
+EXTRACT_PRIMARY = "doubao-seed-2-0-mini-260428"
+
+
+def extraction_models(provider):
+    """抽取模型（控成本版）：钉死最便宜且可靠的 mini；仅当它被暂停/不可用时，
+    才追加【至多 1 个】存活兜底，避免无证据品牌在多个模型间空打。
+    PROD_MODEL 可显式覆盖主模型。"""
+    models = list(provider.models)
+    want = os.environ.get("PROD_MODEL", "") or EXTRACT_PRIMARY
+    live = [m for m in models if m not in _POOL["dead"]]
+    pool = live if live else models
+    primary = want if want in models else (pool[0] if pool else models[0])
+    out = [primary]
+    for m in pool:
+        if m != primary:
+            out.append(m)
+            break
+    return out
 
 
 def probe_brand(provider, model, brand, locations, n_queries=3):
@@ -771,7 +794,7 @@ def confirm_if_severe(provider, brand, locations, evidence, verdict):
     if not cms:
         return _hold(verdict, verdict["rationale"] + "；无更强模型复核，严判暂缓")
     errors = []
-    for cm in cms[:3]:
+    for cm in cms[:2]:
         try:
             sig2 = extract_signals_once(
                 provider, cm, brand, locations, evidence, retries=1,
@@ -1042,7 +1065,7 @@ def run():
         rids = [r["id"] for r in rs]
         locs = "; ".join(f"{r['name']}" for r in rs[:6])
         print(f"● {bname} | 分店 {rids}")
-        sig, evidence, _status = probe_brand(p, candidate_models(p), bname, locs)
+        sig, evidence, _status = probe_brand(p, extraction_models(p), bname, locs)
         if not sig:
             print("    取证失败/无信号（不写）\n")
             report.append({"brand": bname, "rids": rids, "verdict": None,
