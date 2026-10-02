@@ -33,6 +33,39 @@
 
 ---
 
+### 2026-10-02 ⑮【标签→算法分级准入闭环：curate_gate 决策门 + token 成本账本 + 多模型并发 runner】
+
+**背景**：用户 5 项指令——①标签归类整合赋值；②算法控制门店准入/评分；③评估消耗优化路径；④并发并行提速；⑤其他认领任务。对全量 restaurants（67 列）做只读审计后发现：标签字段分层不清、大量成对冗余（central_kitchen/_prior、premade_risk/_prior、astroturf 全 NULL、curate_score/confidence）；价格 6 字段、评分 6 字段、精选 5 字段；production_model 仅 6 店非空、score_taste 仅 ~449 非空。
+
+**关键校准发现（决定架构）**：用用户人工三分层（`diner_seed_labels` 123 行＝必吃10/值得52/一般61，labeler=expert）对照现网无监督 score_taste：必吃中位 77.25、值得中位 75.7、**一般中位 77.62（反高于值得/必吃）**，三档完全重叠 → 当前聚合口味分与专家判断零相关（印证 ML 门 5 折 CV 0.439<基线 0.504 死路）。成因：评论量少+时间衰减使有效权重小、菜系先验(~70)主导压缩，且专家标注此前未被采用。
+
+**交付 1 · `cloud/curate_gate.py`（提交 5af56f2，已 apply、已 build_sync、已接 cron）——精选唯一决策门，两层决策**：
+- **专家层（权威）**：must_eat→必吃、worth_eating→值得（入选）；average→移出；专家亲口体验高于推断标签；status=closed 对所有店生效。
+- **证据层（无专家标签，临时档）**：复热三档/premade 高→移出；score_endorsement≥80（米其林/黑珍珠/必吃榜）→精选；或 score_taste≥78 且独立食客 nind≥4→精选；确认软广且 nind<2→移出；其余暂不入选。
+- 徽章语义：必吃/值得＝专家认证；精选＝权威榜单/强证据待复核。只 PATCH is_curated/curate_badge/curate_reason。
+- **apply 结果：330 PATCH、0 错误；回读 255 精选（必吃10/值得52/精选193）**。未标注名店（甬府/明阁/南兴园/鹿园/食庐等）属「证据未到、临时不入选」，随专家标注/Apify/奖项回流。外婆家/圆苑/小菜园/盖饭邦/望湘园判不入选。
+
+**交付 2 · token 成本账本（提交 99147ef）**：`model_providers.py` chat() 回传 usage{prompt/completion/total}，新增 `log_usage()` 与 `cost_summary()`；账本 `/app/data/cost/model_usage.jsonl`。`production_model_probe.py` chat_raw 加 `stream_options.include_usage`、末块捕获 usage，3 调用点（probe/agent/final）接入 log_usage。
+
+**交付 3 · `cloud/probe_parallel.py`（提交 402ab17/c50e51c）——多模型分片并发 runner**：
+- 品牌进共享队列；每个**便宜模型**（非 pro/glm-5-2/turbo）一个 worker 绑定模型并行首判，吞吐≈可用便宜模型数；证据按品牌持久缓存 `/app/data/probe/evidence_cache`（检索限并发 4、复跑不重搜）；仅严判/低置信升级强模型对抗复核（confirm_if_severe）。
+- 模型 429 SetLimitExceeded→mark dead、品牌回队交其余 worker；便宜模型全死→强模型兜底（--allow-strong-fallback 默认开）。
+- **pending-only 增量**：默认跳过所有分店已有 production_model 的品牌，每晚推进尾部；--reprocess-all 才全量。冒烟 2 品牌 0 剩余 0 死号。
+
+**调度（宿主 cron）**：
+- `/etc/cron.d/food_indep`（每日 00:10 序列）已在 dietary_trait_link 后、gate_apify_brief 前插入 `curate_gate.py --apply`。
+- 新增 `/etc/cron.d/food_parallel`：**每日 20:47** `probe_parallel.py --all --ingest` → `gate_apply.py --apply` → `curate_gate.py --apply`（夜间闭环，前端次晨反映下架/评分变化）。
+
+**交付 4 · 治理校正（提交 765b51f，docs/standards/standard1_db_governance.md）**：校正价位三字段（tier 全局五档由触发器派生 / price_band 场景内绝对 1–5 P25·50·75·90 / price_position 场景内相对 入门·主流·进阶·高端·旗舰 P20·40·60·80；非正餐各用各分布）；新增「单写入者表」（每决策字段唯一写入者）与「冗余字段停用清单」（central_kitchen_prior/premade_prior/astroturf_score/curate_score/curate_confidence/price_range 等停写、只读兼容）。
+
+**复现/验收**：
+- 状态：`docker exec food-cloud sh -lc '. /app/cloud/env.sh; python3 /tmp/verify_after.py'`（回读 curated 数与徽章分布）。
+- 成本：部署后调用 `MP.cost_summary()`；账本 `/app/data/cost/model_usage.jsonl`。
+- 日志：并发 `/app/data/probe_parallel.log`；findings `/app/data/post_record/findings.jsonl`；curate 账本 `/app/data/post_record/curate_gate_*.jsonl`。
+- 部署一律 ubuntu 用户跑 `bash /home/ubuntu/food-cloud/build_sync.sh`（不可 sudo，root 无 deploy key）。
+
+---
+
 ### 2026-10-02 深夜⑭【production_model 出餐方式探针校准：零售/堂食区分、证据接地、并存封顶、空跑不覆盖】
 
 **起因**：最弱模型（doubao-seed-2-0-mini）把绿波廊误判「预制料理包·复热」（最严下架档），并出现模型杜撰来源 URL。
