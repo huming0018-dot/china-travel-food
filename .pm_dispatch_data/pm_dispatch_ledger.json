@@ -1,0 +1,82 @@
+{
+ "dispatch:dev:42": {
+  "last_ts": 1790879103,
+  "nudges": 3
+ },
+ "dispatch:dev:43": {
+  "last_ts": 1790879103,
+  "nudges": 3
+ },
+ "dispatch:collector:44": {
+  "last_ts": 1790879103,
+  "nudges": 3
+ },
+ "dispatch:collector:45": {
+  "last_ts": 1790879103,
+  "nudges": 3
+ },
+ "dispatch:collector:1": {
+  "last_ts": 1790870038,
+  "nudges": 1
+ },
+ "dispatch:collector:2": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:dev:11": {
+  "last_ts": 1790870038,
+  "nudges": 1
+ },
+ "dispatch:collector:14": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:dev:15": {
+  "last_ts": 1790870038,
+  "nudges": 1
+ },
+ "dispatch:collector:26": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:collector:32": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:collector:33": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:collector:34": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:collector:35": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:dev:36": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:dev:37": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:collector:38": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:dev:39": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:dev:40": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ },
+ "dispatch:dev:41": {
+  "last_ts": 1790880913,
+  "nudges": 3
+ }
+}

@@ -86,14 +86,40 @@ def load_state():
                                "stall_open": False})
 
 
+def apify_cost_line():
+    """当月 Apify 实际消耗（USD），从 Apify API 实时拉取。"""
+    token = os.environ.get("APIFY_TOKEN", "").strip()
+    if not token:
+        fp = DATA / ".secrets" / "apify_token"
+        try:
+            token = fp.read_text(encoding="utf-8").strip()
+        except Exception:
+            token = ""
+    if not token:
+        return ""
+    try:
+        import requests
+        d = requests.get(
+            "https://api.apify.com/v2/users/me/usage/monthly",
+            params={"token": token}, timeout=15).json().get("data", {})
+        used = float(d.get("totalUsageCreditsUsdAfterVolumeDiscount") or 0)
+        return f"💰 Apify本月已耗 ${used:.2f}"
+    except Exception:
+        return ""
+
+
 def heartbeat_body(c, delta, mins):
     trend = f"近{mins}min +{delta}条 · 流动正常" if delta > 0 else f"近{mins}min +0条"
-    return "\n".join([
+    lines = [
         f"口味覆盖：{c['ver_stores']} 店有真实食客评价（≥2条 {c['ge2']}）",
         f"评价库：{c['rev']} 条（小红书 {c['xhs']}）｜在营 {c['active']} 家",
         account_line(),
-        f"进度（{now_str()}）：{trend}",
-    ])
+    ]
+    apify = apify_cost_line()
+    if apify:
+        lines.append(apify)
+    lines.append(f"进度（{now_str()}）：{trend}")
+    return "\n".join(lines)
 
 
 def stall_body(c, mins, raw_idle):

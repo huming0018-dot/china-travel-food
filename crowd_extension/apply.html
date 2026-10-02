@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>上海美食图鉴 · 众包采集志愿者报名</title>
+<title>上海美食图鉴 · 众包采集志愿者报名与插件下载</title>
 <style>
   :root{--bg:#faf8f5;--card:#fff;--line:#e7e2da;--ink:#2a2419;--sub:#8a8172;--brand:#b3541e;--ok:#2e7d32;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px;}
   .wrap{max-width:560px;width:100%;}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 28px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 28px;margin-bottom:16px;}
   h1{font-size:22px;margin-bottom:6px;}
   .sub{color:var(--sub);font-size:13px;line-height:1.7;margin-bottom:20px;}
   .tag{display:inline-block;background:#fdf0e6;color:var(--brand);font-size:12px;padding:2px 10px;border-radius:99px;margin-bottom:12px;}
@@ -19,17 +19,25 @@
   .hint{font-size:12px;color:var(--sub);margin-top:4px;line-height:1.6;}
   button{width:100%;margin-top:24px;padding:13px;background:var(--brand);color:#fff;border:none;border-radius:10px;font-size:16px;cursor:pointer;font-weight:600;}
   button:disabled{opacity:.5;cursor:not-allowed;}
-  .msg{margin-top:16px;padding:12px;border-radius:10px;font-size:14px;display:none;line-height:1.7;}
+  button.alt{background:#fff;color:var(--brand);border:1.5px solid var(--brand);margin-top:12px;}
+  .msg{margin-top:16px;padding:12px;border-radius:10px;font-size:14px;display:none;line-height:1.7;white-space:pre-line;}
   .msg.ok{display:block;background:#e8f5e9;color:var(--ok);border:1px solid #a5d6a7;}
   .msg.err{display:block;background:#fdecea;color:#b3261e;border:1px solid #ef9a9a;}
   .steps{margin-top:20px;border-top:1px dashed var(--line);padding-top:16px;}
   .steps b{font-size:14px;}
   .steps ol{margin:10px 0 0 18px;font-size:13px;color:var(--sub);line-height:2;}
+  .dl{margin-top:20px;border-top:1px dashed var(--line);padding-top:16px;text-align:center;}
+  .dl .zip-name{font-size:13px;color:var(--sub);margin-top:8px;}
+  .dl a{display:inline-block;margin-top:12px;padding:12px 28px;background:var(--ok);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;}
+  .dl a:hover{opacity:.9;}
+  .hidden{display:none;}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="card">
+
+  <!-- ============ 报名卡 ============ -->
+  <div class="card" id="applyCard">
     <span class="tag">招募中 · 灵活报名</span>
     <h1>众包采集志愿者报名</h1>
     <p class="sub">参与「上海美食图鉴」收录与真实口味评分。使用你自己的小红书账号、设备与网络，安装浏览器插件全自动采集，采集强度有硬性安全线保护，绝不触碰账号风控红线。</p>
@@ -48,6 +56,31 @@
     <div id="msg" class="msg"></div>
   </div>
 
+  <!-- ============ 报名成功卡（在线下载插件） ============ -->
+  <div class="card hidden" id="successCard">
+    <span class="tag">✅ 报名成功</span>
+    <h1>欢迎加入！</h1>
+    <p class="sub" id="successText"></p>
+
+    <div class="dl">
+      <div style="font-size:14px;font-weight:600;">第一步：下载插件（Chrome 浏览器扩展）</div>
+      <p class="hint" style="text-align:left;">下载后解压 → Chrome 地址栏输入 <b>chrome://extensions</b> → 右上角开启「开发者模式」→ 点「加载已解压的扩展程序」→ 选择解压出的文件夹。</p>
+      <a id="dlLink" href="crowd-extension-v2.0.0.zip" download>⬇️ 下载插件 v2.0.0（zip）</a>
+      <p class="zip-name">文件：crowd-extension-v2.0.0.zip · 全自动采集 · 安全线保护</p>
+    </div>
+
+    <div class="steps">
+      <b>接下来</b>
+      <ol>
+        <li>安装插件后，打开插件选项页（onboarding），阅读协议</li>
+        <li>PM 审核通过后会发放正式 <b>P-</b> 参与编号，填入插件即可开始</li>
+        <li>插件自动领取任务包、按安全线采集、自动回传</li>
+        <li>按有效条数结算（细则见插件内 README）</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ============ 参与流程卡 ============ -->
   <div class="card steps">
     <b>参与流程</b>
     <ol>
@@ -63,11 +96,14 @@
 <script>
 (function(){
   const BASE = "https://bdwrhshgdeghgyzwpxnl.supabase.co/rest/v1";
-  // 构建时替换：报名入口使用 Supabase anon key（最小权限，仅可 insert pending / 自查 status）
+  // 构建时替换：报名入口使用 Supabase anon key（sb_pub_ 开头，46字符，最小权限）
   const ANON_KEY = "REPLACE_WITH_SUPABASE_ANON_KEY";
 
   const submit = document.getElementById("submit");
   const msg = document.getElementById("msg");
+  const applyCard = document.getElementById("applyCard");
+  const successCard = document.getElementById("successCard");
+  const successText = document.getElementById("successText");
 
   function show(ok, text){
     msg.className = "msg " + (ok ? "ok" : "err");
@@ -110,7 +146,14 @@
         body: JSON.stringify(payload)
       });
       if(resp.ok || resp.status === 201){
-        show(true, "报名成功！\n你的报名编号：" + tmp + "\n请保存此编号，等待 PM 审核通过后发放正式参与编号。");
+        // 报名成功 → 切换卡片，展示编号 + 插件下载
+        applyCard.classList.add("hidden");
+        successCard.classList.remove("hidden");
+        successText.textContent = "你的报名编号：" + tmp + "\n请保存此编号，等待 PM 审核通过后发放正式参与编号（P-开头）。\n现在就可以先下载插件熟悉流程。";
+        // 回填下载链接相对路径（与 apply.html 同目录的 releases/ 下，由构建脚本生成）
+        const rel = document.getElementById("dlLink");
+        rel.href = "releases/crowd-extension-v2.0.0.zip";
+        rel.setAttribute("download", "crowd-extension-v2.0.0.zip");
       } else {
         const t = await resp.text();
         show(false, "提交失败（" + resp.status + "）：" + t.slice(0,120));

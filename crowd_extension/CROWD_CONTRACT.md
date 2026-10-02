@@ -3,6 +3,37 @@
 > PM 窗口独立开发 · 2026-10-02
 > 原则：**格式、获取、回传、同步四方一致**——同一份 schema 同时约束插件端采集、HTTP 回传、服务端校验、库表落点。任何一方读到的字段名/类型/枚举都必须与此文档逐字一致。
 
+
+## ⚡ v2 安全架构变更（2026-10-02 · smoke审计后）
+
+**为什么改**：原方案插件用 anon key 直连表（GET crowd_tasks / POST crowd_proofs），
+实测发现 crowd_tasks/proofs 无 anon policy → 插件拉不到任务、回传 42501 被拒；
+且 crowd_participants 的 anon SELECT(pending|approved) 会泄漏全部参与者联系方式。
+
+**新架构（本契约 v2 唯一有效版本）**：
+```
+参与者浏览器 (Chrome 扩展 v2.0.0)
+   │ ① RPC crowd_fetch_tasks(participant_id)     — security definer，服务端校验 approved
+   │    → 返回 {ok, tasks:[{task_id,pack_type,pack,target,kpi_min,quota_day}]}
+   ▼
+扩展本地队列 (chrome.storage.local)
+   │ ② 按安全线节奏采集 → 组 envelope（格式不变，§2/§3）
+   ▼
+   │ ③ RPC crowd_submit_proof(participant_id, envelope) — security definer
+   │    → 服务端校验：approved / sync_version=1 / note_url 含 xiaohongshu.com /
+   │      rating∈[1,5] / rating_reason≥8字 / 幂等(unique 四元组)
+   │    → 落库 + 回写 crowd_tasks.progress + crowd_participants.total_effective
+   │    → 返回 {ok, accepted, rejected[], results[], new_progress}
+   ▼
+Supabase 表（anon 零权限，报名 insert pending 除外）
+```
+**安全边界（已实测）**：
+- anon 对 crowd_tasks/proofs/reviews/settlements SELECT/INSERT/UPDATE/DELETE 全部 401 ✓
+- anon 无法绕过 RPC 伪造回传（直写 proofs 被 42501 拒）✓
+- 参与者隐私：crowd_participants 的 anon SELECT 策略已撤销 ✓
+- 插件包仅含 anon key（sb_pub_，公开可分发），绝不含 service_role ✓
+- SQL 实现见 cloud/sql/crowd_rpc_security.sql（可重复执行，幂等）
+
 ## 1. 参与方与数据流
 
 ```
