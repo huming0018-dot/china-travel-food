@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上海美食图鉴 · 众包采集志愿者报名</title>
+<style>
+  :root{--bg:#faf8f5;--card:#fff;--line:#e7e2da;--ink:#2a2419;--sub:#8a8172;--brand:#b3541e;--ok:#2e7d32;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px;}
+  .wrap{max-width:560px;width:100%;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 28px;}
+  h1{font-size:22px;margin-bottom:6px;}
+  .sub{color:var(--sub);font-size:13px;line-height:1.7;margin-bottom:20px;}
+  .tag{display:inline-block;background:#fdf0e6;color:var(--brand);font-size:12px;padding:2px 10px;border-radius:99px;margin-bottom:12px;}
+  label{display:block;font-size:13px;color:var(--sub);margin:16px 0 6px;}
+  input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#fff;}
+  input:focus{outline:2px solid #e8b48c;border-color:var(--brand);}
+  .hint{font-size:12px;color:var(--sub);margin-top:4px;line-height:1.6;}
+  button{width:100%;margin-top:24px;padding:13px;background:var(--brand);color:#fff;border:none;border-radius:10px;font-size:16px;cursor:pointer;font-weight:600;}
+  button:disabled{opacity:.5;cursor:not-allowed;}
+  .msg{margin-top:16px;padding:12px;border-radius:10px;font-size:14px;display:none;line-height:1.7;}
+  .msg.ok{display:block;background:#e8f5e9;color:var(--ok);border:1px solid #a5d6a7;}
+  .msg.err{display:block;background:#fdecea;color:#b3261e;border:1px solid #ef9a9a;}
+  .steps{margin-top:20px;border-top:1px dashed var(--line);padding-top:16px;}
+  .steps b{font-size:14px;}
+  .steps ol{margin:10px 0 0 18px;font-size:13px;color:var(--sub);line-height:2;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <span class="tag">招募中 · 灵活报名</span>
+    <h1>众包采集志愿者报名</h1>
+    <p class="sub">参与「上海美食图鉴」收录与真实口味评分。使用你自己的小红书账号、设备与网络，安装浏览器插件全自动采集，采集强度有硬性安全线保护，绝不触碰账号风控红线。</p>
+
+    <label>你的昵称（展示用）</label>
+    <input id="name" maxlength="20" placeholder="例如：小鹿">
+
+    <label>联系方式（微信 / 邮箱）</label>
+    <input id="contact" maxlength="60" placeholder="用于发放参与编号与结算通知">
+    <p class="hint">仅用于审核与结算，不会公开。提交后生成 TMP 报名编号，等待审核通过后转为正式参与编号（P-开头）。</p>
+
+    <label>备注（可选）</label>
+    <input id="note" maxlength="200" placeholder="常用设备 / 常驻区域 / 每周可用时间…">
+
+    <button id="submit">提交报名</button>
+    <div id="msg" class="msg"></div>
+  </div>
+
+  <div class="card steps">
+    <b>参与流程</b>
+    <ol>
+      <li>提交上方报名 → 获得 <b>TMP-</b> 开头报名编号</li>
+      <li>PM 审核（1-2 个工作日）→ 发放正式 <b>P-</b> 参与编号与每日配额</li>
+      <li>安装 Chrome 插件，在插件选项页（onboarding）输入参与编号并同意协议</li>
+      <li>插件自动领取任务包、按安全线采集、自动回传</li>
+      <li>按有效条数结算（细则见插件内 README）</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+(function(){
+  const BASE = "https://bdwrhshgdeghgyzwpxnl.supabase.co/rest/v1";
+  // 构建时替换：报名入口使用 Supabase anon key（最小权限，仅可 insert pending / 自查 status）
+  const ANON_KEY = "REPLACE_WITH_SUPABASE_ANON_KEY";
+
+  const submit = document.getElementById("submit");
+  const msg = document.getElementById("msg");
+
+  function show(ok, text){
+    msg.className = "msg " + (ok ? "ok" : "err");
+    msg.textContent = text;
+  }
+
+  submit.addEventListener("click", async () => {
+    const name = document.getElementById("name").value.trim();
+    const contact = document.getElementById("contact").value.trim();
+    const note = document.getElementById("note").value.trim();
+
+    if(!name){ show(false, "请填写昵称"); return; }
+    if(!contact){ show(false, "请填写联系方式"); return; }
+    if(ANON_KEY.startsWith("REPLACE")){ show(false, "报名入口未配置完成，请联系 PM 获取入口链接"); return; }
+
+    // 生成 TMP 报名编号（客户端生成，服务端仅接受 pending 态写入）
+    const tmp = "TMP-" + Date.now().toString(36).toUpperCase() + "-" +
+                Math.random().toString(36).slice(2,6).toUpperCase();
+
+    const payload = {
+      participant_id: tmp,
+      display_name: name,
+      contact: contact,
+      status: "pending",
+      source: "public",
+      review_note: note || ""
+    };
+
+    submit.disabled = true;
+    submit.textContent = "提交中…";
+    try {
+      const resp = await fetch(BASE + "/crowd_participants", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": ANON_KEY,
+          "Authorization": "Bearer " + ANON_KEY,
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify(payload)
+      });
+      if(resp.ok || resp.status === 201){
+        show(true, "报名成功！\n你的报名编号：" + tmp + "\n请保存此编号，等待 PM 审核通过后发放正式参与编号。");
+      } else {
+        const t = await resp.text();
+        show(false, "提交失败（" + resp.status + "）：" + t.slice(0,120));
+      }
+    } catch(e) {
+      show(false, "网络错误：" + e.message);
+    } finally {
+      submit.disabled = false;
+      submit.textContent = "提交报名";
+    }
+  });
+})();
+</script>
+</body>
+</html>

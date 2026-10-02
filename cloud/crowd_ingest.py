@@ -111,8 +111,27 @@ def _fmt_ewkt(lng, lat):
     return f"SRID=4326;POINT({lng} {lat})" if lng and lat else None
 
 
+def _check_participant(pid):
+    """管控闸门：参与者必须 approved 才能回传（suspended/blacklisted/rejected/pending 一律拒）。
+
+    返回 (ok, reason)。
+    """
+    if not pid:
+        return False, "participant_id 为空"
+    r = C.req("GET", f"/crowd_participants?select=participant_id,status,quota_day,total_effective&participant_id=eq.{pid}")
+    if r.status_code != 200:
+        return False, f"参与者状态查询失败 {r.status_code}"
+    rows = r.json()
+    if not rows:
+        return False, "参与者不存在（未报名或编号错误）"
+    st = rows[0].get("status")
+    if st != "approved":
+        return False, f"参与者状态为 {st}，非 approved（被暂停/驳回/拉黑或未通过审核）"
+    return True, ""
+
+
 def ingest(envelope, dry_run=False):
-    """主流程：校验 → 幂等查重 → 落库 → 状态回写。返回结果 dict。"""
+    """主流程：管控闸门 → 校验 → 幂等查重 → 落库 → 状态回写。返回结果 dict。"""
     env_issues, _ = validate_envelope(envelope)
     hard_reject = [x for x in env_issues if x["level"] == G.ERROR]
     if hard_reject:
@@ -122,6 +141,12 @@ def ingest(envelope, dry_run=False):
     pid = envelope["participant_id"]
     tid = envelope["task_id"]
     seq = envelope["proof_seq"]
+
+    # 管控闸门：非 approved 参与者直接拒收（服务端兜底，插件侧也有前置拦截）
+    ok, reason = _check_participant(pid)
+    if not ok:
+        return {"status": "rejected", "reason": f"参与者管控拦截: {reason}",
+                "rejected_items": 0, "accepted_items": 0}
 
     # 幂等：同 (participant_id, task_id, proof_seq) 已存在 → 直接忽略
     dup = C.req("GET", f"/crowd_proofs?select=id&participant_id=eq.{pid}&task_id=eq.{tid}&proof_seq=eq.{seq}")
@@ -166,9 +191,21 @@ def ingest(envelope, dry_run=False):
 
     # 状态回写：crowd_tasks.progress 累计
     _update_task_progress(tid, accepted)
+    # 参与者累计有效条数回写
+    if accepted:
+        _update_participant_stats(pid, accepted)
 
     return {"status": "ok", "rejected_items": len(rejected), "accepted_items": accepted,
             "reject_reasons": [i["_reject"] for i in rejected][:10]}
+
+
+def _update_participant_stats(pid, accepted):
+    """累计参与者有效条数（settlements 计酬依据之一）。"""
+    r = C.req("GET", f"/crowd_participants?select=total_effective&participant_id=eq.{pid}")
+    if r.status_code == 200 and r.json():
+        cur = (r.json()[0].get("total_effective") or 0) + accepted
+        C.req("PATCH", f"/crowd_participants?participant_id=eq.{pid}",
+              json={"total_effective": cur, "last_active_at": "now()"})
 
 
 def _mask_author(name):

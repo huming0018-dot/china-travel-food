@@ -24,11 +24,44 @@ importScripts("safety_engine.js");
 
 const safety = new SafetyEngine(chrome.storage.local);
 
+// ---------------------------------------------------------------- 参与者管控
+async function participantGate() {
+  // 从本地拿 participant_id（onboarding 写入），无 ID 则不发任务
+  const pid = await safety._get("participant_id", "");
+  if (!pid) return { ok: false, reason: "未填写参与编号（请打开插件选项页填写）" };
+  // 服务端校验状态：approved 才放行；suspended/blacklisted 不发任务
+  const url = CONFIG.API_BASE + "/crowd_participants" +
+    "?select=participant_id,status,quota_day,total_effective&participant_id=eq." + encodeURIComponent(pid);
+  try {
+    const resp = await fetch(url, {
+      headers: { apikey: CONFIG.API_KEY, Authorization: "Bearer " + CONFIG.API_KEY },
+    });
+    if (!resp.ok) return { ok: false, reason: "参与者状态查询失败" };
+    const rows = await resp.json();
+    if (!rows || !rows.length) return { ok: false, reason: "参与者不存在（编号错误）" };
+    const st = rows[0].status;
+    if (st !== "approved") {
+      return { ok: false, reason: "参与者状态为 " + st + "（待审核/暂停/拉黑，请联系 PM）" };
+    }
+    return { ok: true, quota_day: rows[0].quota_day || 20 };
+  } catch (e) {
+    return { ok: false, reason: "网络错误，稍后重试" };
+  }
+}
+
 // ---------------------------------------------------------------- 任务拉取
 async function fetchActiveTask() {
   const q = await safety._get("active_task", null);
   // 已有进行中的任务包则复用（防重复领取）
   if (q && q.task_id) return q;
+
+  // 管控闸门：approved 参与者才发任务
+  const gate = await participantGate();
+  if (!gate.ok) {
+    await safety._set({ gate_block_reason: gate.reason });
+    return null;
+  }
+  await safety._set({ gate_block_reason: "" });
 
   // 优先从 crowd_tasks 表拉取（契约 §4.1，status=open，按序）
   const url = CONFIG.API_BASE + CONFIG.CROWD_TASKS +
@@ -209,11 +242,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       safety._get("day_state", null),
       safety._get("proof_queue", []),
       safety._get("active_task", null),
-    ]).then(([cd, ds, q, task]) => {
+      safety._get("participant_id", ""),
+      safety._get("gate_block_reason", ""),
+    ]).then(([cd, ds, q, task, pid, gate]) => {
       sendResponse({
         cooldown: cd,
         day: ds,
         queueLen: q.length,
+        participantId: pid,
+        gateBlockReason: gate,
         activeTask: task ? { task_id: task.task_id, pack_len: task.pack.length, progress: task.progress } : null,
       });
     });

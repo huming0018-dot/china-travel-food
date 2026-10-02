@@ -23,6 +23,8 @@ h1{font-size:15px;margin:0 0 10px}
   <div class="row"><span class="label">冷却</span><span class="val" id="s_cooldown">—</span></div>
   <div class="row"><span class="label">待回传</span><span class="val" id="s_queue">—</span></div>
   <div class="row"><span class="label">当前任务</span><span class="val" id="s_task">—</span></div>
+  <div class="row"><span class="label">参与编号</span><span class="val" id="s_pid">—</span></div>
+  <div class="row"><span class="label">拦截原因</span><span class="val" id="s_gate">—</span></div>
 </div>
 <button class="btn btn-start" id="start">▶ 启动采集</button>
 <button class="btn btn-stop" id="stop">⏸ 停止</button>
@@ -42,6 +44,10 @@ function render(status) {
   }
   $("s_queue").textContent = status.queueLen + " 条";
   $("s_task").textContent = status.activeTask ? "#" + status.activeTask.task_id + "(" + status.activeTask.pack_len + "项)" : "无";
+  $("s_pid").textContent = status.participantId || "未填写";
+  const gate = status.gateBlockReason || "";
+  $("s_gate").textContent = gate || "正常";
+  $("s_gate").className = gate ? "val status-bad" : "val status-ok";
 }
 chrome.runtime.sendMessage({ type: "CROWD_STATUS" }, (resp) => {
   if (resp) render(resp);

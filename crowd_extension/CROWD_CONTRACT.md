@@ -70,16 +70,29 @@ assignee=pm 且标题带 [CROWD] 前缀的工单，插件拉取端两者都兼�
 | raw_query | string | ✓ | 本次搜索用的词包项（溯源） |
 | client_ip_salt | string | ✓ | 客户端设备指纹盐（一机一号校验，不传明文 IP） |
 
-## 4. 服务端库表（Supabase，dev 建表或 PM 直接建）
+## 4. 服务端库表（Supabase，建表 SQL 见 cloud/sql/crowd_tables.sql）
+
+### 4.0 crowd_participants —— 参与者报名与管控（灵活报名闭环）
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| participant_id | text PK | `TMP-`* 报名临时 / `P-`* 审核后正式编号 |
+| display_name / contact | text | 报名信息（contact 回传前脱敏展示） |
+| status | enum | `pending` / `approved` / `suspended` / `blacklisted` / `rejected` |
+| quota_day | int | 审核时设定日配额（默认 20） |
+| device_salt | text | 一机一号，首次回传绑定 |
+| total_effective / reject_rate | int/float | 累计有效条数 / 拒收率（ingest 回写，风控参考） |
+
+**管控闸门（两端双层）**：
+- 插件端：`fetchActiveTask` 前先查本表，非 `approved` 不发任务（popup 显示拦截原因）。
+- 服务端：`crowd_ingest` 回传时复查，非 `approved` 整包拒收（防绕过插件直发）。
 
 ### 4.1 crowd_tasks —— 任务包状态（与 task_queue 联动）
 | 字段 | 类型 | 说明 |
 |---|---|---|
-| task_id | int PK | = task_queue.id |
+| task_id | bigint PK 自增 | 独立于 task_queue（crowd 不是内部窗口角色） |
 | pack_type / pack / target / kpi_min / quota_day | — | 与 §2 一致 |
-| assigned_count | int | 已领取次数（防超领） |
 | progress | int | 有效 proof 累计条数 |
-| status | enum | `open` / `in_progress` / `fulfilled` / `rejected` |
+| status | enum | `open` / `in_progress` / `fulfilled` / `closed` |
 
 ### 4.2 crowd_proofs —— 回传明细（校验后落点）
 | 字段 | 类型 | 说明 |
@@ -87,14 +100,14 @@ assignee=pm 且标题带 [CROWD] 前缀的工单，插件拉取端两者都兼�
 | id | bigserial PK | — |
 | participant_id / task_id / proof_seq / captured_at / sync_version | — | 信封字段原样 |
 | kind / note_id / note_url / title / excerpt / author / rating / rating_reason / matched_store / anchor_score / raw_query / client_ip_salt | — | §3 字段原样 |
-| gate_status | enum | `pending` / `accepted` / `rejected`（data_gate 判定） |
-| reject_reason | string | 拒收原因（缺锚定/重复/URL非法/评分空话） |
+| gate_status | enum | `accepted` / `rejected`（data_gate 判定） |
 | dedupe_key | string | cjk_norm(title)+note_id 指纹，唯一约束防重 |
+| unique(participant_id, task_id, proof_seq) | — | 幂等键 |
 
 ### 4.3 crowd_reviews —— 口味评分（仅 rating 类 accepted 后落此）
 | 字段 | 类型 | 说明 |
 |---|---|---|
-| store_id | int | 锚定后的 restaurants.id（entity_match 解析） |
+| store_name | text | 锚定店铺名（entity_match 二次解析） |
 | participant_id / rating / rating_reason / note_id / captured_at | — | 同上 |
 | trust_level | enum | `crowd_single` / `crowd_crossed`（多参与者交叉后升） |
 
@@ -103,11 +116,11 @@ assignee=pm 且标题带 [CROWD] 前缀的工单，插件拉取端两者都兼�
 |---|---|---|
 | id | bigserial PK | — |
 | participant_id | string | — |
-| period | string(YYYY-MM-DD) | 结算周期 |
-| effective_count | int | 有效条数（gate_status=accepted） |
-| unit_price | number | 单价（试点：笔记 0.5 / 评分 1.0，元） |
-| amount | number | = effective_count × unit_price |
-| status | enum | `pending` / `paid` |
+| period | string(YYYY-Www) | 结算周期 |
+| effective_notes / effective_ratings | int | 有效笔记 / 有效评分（accepted） |
+| unit_note / unit_rating | number | 单价（默认试点：0.5 / 1.0 元，可配置） |
+| amount | number | 合计 |
+| unique(participant_id, period) | — | 每周期一条流水 |
 
 ## 5. 同步一致性规则（防漂移，铁律）
 
@@ -119,7 +132,27 @@ assignee=pm 且标题带 [CROWD] 前缀的工单，插件拉取端两者都兼�
 6. **断点续传**：插件本地队列未回传成功的 proof 不删除，重连后按 seq 续传；服务端按 (participant_id, task_id, proof_seq) 幂等去重。
 7. **状态回写**：服务端校验完成后 PATCH crowd_tasks.progress / task_queue（fulfilled 时 PM 调度器自动标 done），插件拉取任务时可见进度，避免重复采集同一包。
 
-## 6. 安全线（插件硬编码，独立于本契约，见 safety_engine.js）
+## 7. 报名与管控（灵活报名闭环）
+
+```
+参与者                        PM/服务端
+  │ ① apply.html 填写报名
+  ├──────────────────────────▶ POST /crowd_participants (status=pending, participant_id=TMP-*)
+  │                             
+  │ ② 审核（crowd_admin.py approve）
+  │◀─────────────────────────── 发放正式编号 P-XXXXXX + quota_day
+  │                             
+  │ ③ onboarding 填 P- 编号 → 插件 fetchActiveTask 先查管控闸门
+  │ ④ 采集回传 → ingest 复查状态 + 累计 total_effective
+  │ ⑤ 违规/异常 → suspend / blacklist → 插件端不再派任务、服务端拒回传
+```
+
+- **灵活报名**：apply.html 匿名提交（anon key 仅可 insert pending 行），无需预发名单；审核通过即获得正式编号随时加入。
+- **管控入口**：cloud/crowd_admin.py（list/approve/suspend/blacklist/reject/stats）。
+- **双层拦截**：插件端发任务前查状态；服务端回传时再查（防绕过插件直发）。
+- **配额**：quota_day 审核时设定，服务端为上限，安全线引擎只降不升。
+
+## 8. 安全线（插件硬编码，独立于本契约，见 safety_engine.js）
 
 | 动作 | 阈值 |
 |---|---|
