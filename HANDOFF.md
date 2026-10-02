@@ -10,6 +10,18 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 深夜②【dev·精选层 chain_review：ML 门 dry-run 未达标，改硬规则，commit `e62da8b`】
+
+**curate_v4 dry-run 结论（ML logistic 门暂不启用）**：以 diner_seed_labels 为标签、真实食客 taste(180d 半衰期加权) 与高德聚合分拆开训练，5 折 CV 二分类准确率 **0.455 < 平凡基线 0.504**，且标准化系数 `diner_avg=-0.249`（味道越高越不入选，明显反常）。根因：约 120 条人工标注里，绝大多数店尚未采到真实食客评价（Apify 仅覆盖约 58 店），特征几乎全 0 → 学不出味道关系。**前置条件是扩大真实食客评价覆盖（卡在 Apify $50 上限/充值或月度重置）**；达标前不写 is_curated。
+
+**改用确定性硬规则 `chain_review_apply.py`（只降不升）**：
+- A：status=closed / central_kitchen=确认 / premade_risk=高 → 移出精选（本次 0，本就不在精选）；
+- B：chain_type∈{大型连锁,资本化连锁} 且不同 verified diner 口味作者 <2 → 移出精选。本次移出 **4 家**：rid871/1370 新荣记(南京西路/BFC)、1055 南门涮肉、1951 小陶面馆；**当前精选 160**。
+- 已接入每日 00:10 cron（gate_apply 之后跑 chain_review_apply，日志同 indep_probe.log）；只 PATCH is_curated=false，绝不自动加精选。
+- 新荣记等名店待 Apify 采到 ≥2 独立食客声音后，由后续 ML/规则门重新评估，不靠品牌直接进精选。
+
+---
+
 ### 2026-10-02 深夜【dev·findings 错挂清洗 + gate 关系感知 investor 校验，commit `8f753b7`】
 
 **触发**：收尾「单源连锁补第 2 源」时发现 findings.jsonl 内大量历史错挂（别家品牌资料挂到本店 rid），需清洗且不能误杀。
