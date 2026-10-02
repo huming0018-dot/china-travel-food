@@ -127,7 +127,7 @@ def _cache_fresh(cp):
     return None
 
 
-def gather_cached(brand, n_queries=3):
+def gather_cached(brand, n_queries=5):
     """证据按品牌缓存：命中（非空，或空且在 TTL 内）直接读；否则限并发检索后落盘。"""
     cp = cache_path(brand)
     cached = _cache_fresh(cp)

@@ -319,6 +319,7 @@ def standard_queries(brand):
     bq = _split_cjk_lat(brand)
     return [
         f'{bq} 中央厨房 料理包 预制菜 复热 供应链',
+        f'{bq} 招股书 供应商 加盟费 中央工厂 代工厂 招商',
         f'{bq} 招牌菜 现炒 现做 厨师 明厨亮灶 锅气',
         f'{bq} 上海 菜单 人均 怎么样 好吃吗 推荐 探店',
         f'{bq} 门店 直营 加盟 上市 集团 公司',
@@ -393,7 +394,7 @@ def evidence_url_set(evidence):
     return {u for u in s if is_real_url(u)}
 
 
-def gather_evidence(brand, n_queries=4, _retry=1):
+def gather_evidence(brand, n_queries=5, _retry=1):
     bterms = brand_terms(brand)
     qs = standard_queries(brand)[:n_queries]
 
