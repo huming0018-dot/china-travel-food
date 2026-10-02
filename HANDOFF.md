@@ -33,6 +33,37 @@
 
 ---
 
+### 2026-10-03 凌晨⑯【production_model 管线 9 项加固 + 确定性工业化扫描（防公关洗白央厨）；keyless SERP 能力边界经三方实测坐实】
+
+**背景**：20:47 cron 全扫卡住、production_model 仅 1.3%，校准发现外婆家误判「门店现制」、小菜园被「明厨亮灶」公关稿带偏。本轮对 `production_model_probe.py` / `probe_parallel.py` / `serp_producer.py` / `model_providers.py` 做 9 项加固，全部提交并 `build_sync` 部署（最新 commit `277c2ea`）。
+
+**9 项修复（commit 链 0b8c535→d1bed1d→9a28c0f→6ec8651→07c5db1→f65d20a→1675ea9→195ed91→06f5fdf→277c2ea）**：
+1. **SERP 默认直连**（0b8c535）：`_load_proxy()` 此前默认走 account_b 广州住宅代理跑搜索（全超时、每次 12s 才回落）；改默认直连，仅 `SERP_PROXY=1` 用代理。
+2. **非流式判读超时 90/retries 1**（d1bed1d）：免费档生成 1500 token 常超 30s 被误判「证据不足」；extract 改 `chat_raw(timeout=90)`。
+3. **每 Provider 在飞 LLM 信号量**（9a28c0f）：单账号多 worker 抢同一 key 活锁；加 `BoundedSemaphore`（默认每账号 3，env `LLM_CONCURRENCY_PER_ACCOUNT`）。
+4. **取证并发 + 出站限流**（6ec8651）：`gather_evidence` 改 `ThreadPoolExecutor` 并发（串行 34–37s→并发 6–18s）；serp 全局出站 `BoundedSemaphore`（默认 6，env `SERP_OUTBOUND`）；failover time_cap 25→18。
+5. **默认仅授权模型**（07c5db1）：默认便宜槽只收 `deepseek-v4-flash`（glm-5-2 为强模型），其余模型不默认参与，防免费额度耗尽转付费。
+6. **混写召回 + 空缓存 TTL + 专属词**（f65d20a / 195ed91）：新增 `_split_cjk_lat()`（CJK↔拉丁边界插空格，「晴川sushi」→「晴川 sushi」）；`brand_terms()` 只返回**专属词**、剔除 `_GENERIC_LAT/_GENERIC_CJK` 通用词（杜绝「sushi」命中小游戏页 orange-roulette）；非空缓存长期复用、**空缓存仅 6h 复用**、raw=0 不写缓存；清 33 个中毒空缓存。
+7. **LLM 知识先验**（1675ea9）：SIGNALS_FIELDS 加 4 字段 `knowledge_*`；`apply_knowledge_prior()` 仅在证据不足、先验属现做家族、conf≥0.70、有≥1 接地 URL、known_chain 非 true 时补非严判结论（provenance=knowledge_prior、置信降 0.6）；央厨/复热/预制绝不由此产出。
+8. **确定性工业化扫描**（06f5fdf，核心）：新增 `_CK_PH/_REHEAT_PH/_PREMADE_PH/_FRESH_PH/_PR_FRAME/_NEWS_DOMAINS`、`_kind_of()`、`scan_industrial()`、`merge_deterministic()`——直接读证据原文把央厨/料片事实注入仲裁，**LLM 漏提也抹不掉**；「明厨亮灶/开放后厨/升级透明」公关框架里的「现炒」不计入现场证据。`confirm_if_severe()` 扩为双触发：A 严判两档强模型复核；B **fresh 结论 vs 权威(reg/news)工业化硬表述矛盾**→强模型对抗复核，识别出央厨改判、无法以独立食客 UGC 解释则保留央厨/预制「疑似」hold（不让公关洗白）。
+9. **取证词 3→5**（277c2ea）：新增「招股书/供应商/加盟费/中央工厂/代工厂」定向词，不同角度召回不同域名，为连锁凑第二独立源；`gather_cached/gather_evidence` n_queries 默认提至 5。
+
+**校准实测（部署后，关键结论）**：
+- **外婆家 → 中央厨房·门店加工，CK=确认，risk=低，srcs=4**（正确，对齐 ground truth；此前误判门店现制）。
+- **小菜园 → 中央厨房·门店加工，CK=确认，srcs=3**（5 词后凑到 3 独立源；此前被公关带偏判门店现制）。⚠️ 与用户 CALIBRATE「预制料理包·复热（下架）」存在分歧：现证据含非公关来源的门店现制信号故走「并存→门店加工」。已正确识别为工业化连锁（关键），但是否纯复热/下架需用户拍板 coexistence 阈值。
+- **老吴家川菜 → None，srcs=0**（ground truth 现炒）：独立小店通用搜索**完全无证据**。
+
+**三方实测坐实的战略结论（keyless 通用 SERP 能力边界）**：
+1. keyless SERP **只覆盖有新闻/招股书的连锁**（工业化证据，外婆家/小菜园已正确），**覆盖不到独立小店**（老吴家川菜 srcs=0），部分连锁仅单源只能 hold；
+2. **独立小店真覆盖 + 连锁自信分级**都必须接 **dianping（已可登录）/ xhs（走 Apify）/ 地图 POI** 源；
+3. 纯无监督 ML 评分走不通（5 折 CV 0.439 < 基线 0.504；专家三档与聚合口味分零相关），**专家/真实食客证据为权威**。
+
+**下一步（按优先级）**：① 接 dianping/xhs(Apify)/map POI 三类富源（独立小店覆盖的唯一路径）；② 用户拍板小菜园类「央厨 vs 纯复热」coexistence 阈值；③ 多账号独立 ARK key（代码已支持 `ARK_API_KEYS=k1,k2,k3`，当前仅 1 把）。
+
+**临时调试脚本**（容器重建会丢，源在 deuce `/tmp/fooddeploy_local/`）：`trace_one.py`（分阶段计时）、`kp_probe.py`（证据命中）、`dbg_brand.py`（全缓存+raw sig）、`calib.py`（多品牌 filter→merge_det→adjudicate→confirm→KP）。
+
+---
+
 ### 2026-10-02 ⑮【标签→算法分级准入闭环：curate_gate 决策门 + token 成本账本 + 多模型并发 runner】
 
 **背景**：用户 5 项指令——①标签归类整合赋值；②算法控制门店准入/评分；③评估消耗优化路径；④并发并行提速；⑤其他认领任务。对全量 restaurants（67 列）做只读审计后发现：标签字段分层不清、大量成对冗余（central_kitchen/_prior、premade_risk/_prior、astroturf 全 NULL、curate_score/confidence）；价格 6 字段、评分 6 字段、精选 5 字段；production_model 仅 6 店非空、score_taste 仅 ~449 非空。
