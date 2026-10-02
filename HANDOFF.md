@@ -4596,3 +4596,30 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - **停采分层（lesson 92，三闸正交）**：①付费闸 Apify $90 耗尽（待用户 A 提额/B 暂停）；②登录闸 a 死/b 短信配额 parked；③配额闸腾讯地图 10-04 解封。0 增量＝等决策/解封，不硬刷不造数据。
 - **沉淀**：lessons #91（cron 判活看 comm 不看 cmdline）、#92（停采三闸分层）。
 - **明日待办**：等 Apify 决策；腾讯地图解封；ARK production_model 探针与 amap 字段填充等不依赖付费/登录模块照常；#38 待 Apify 恢复后跑真实端到端。
+
+## 2026-10-03 早 · 点评富源富化上线（独立小店覆盖 + 连锁/人均校准 + 平台评分落地）
+
+### 一、根因（keyless 通用 SERP 能力边界，已三方实测坐实）
+- 通用搜索（searxng/keyless）**只覆盖有新闻/招股书的连锁，覆盖不到独立小店**：老吴家川菜 srcs=0；部分连锁仅单源只能 hold。
+- 点评 cookie（`/app/data/.dianping_cookies.json`，9/28，600）**仍有效**；服务端关键词搜索页**直接带结构化字段**（无需 JS/不踩加密）：星级 / 评价数 / 人均 / 菜系 / 商圈 / 团购 / 关店 / 分店数，**独立小店也齐全**。
+
+### 二、新增/改动（提交 `5135b2b`，已 BUILD_SYNC_DONE）
+1. `cloud/dianping_branch_list.py` 新增 `search_shops(brand)`：一次搜索请求解析 `shop-all-list` 全部卡片，返回 stars/review_count/avg_price/category/category_code/region/group_deals/is_closed。
+   - 实测：老吴家川菜 2 分店（4.0★/2190评/¥97/中山公园；4.0★/794评/¥94/长寿路）；小菜园 **15 分店、点评分类徽菜**（4.0–4.5★、单店千至六千评，强连锁坐实）。
+2. `cloud/dianping_enrich.py`（新）：**只采集、不直接写库**，复用既有单一写门（保证联动、可审计）：
+   - chain_type / price_avg → 标准 findings 追加 `post_record/findings.jsonl` → `gate_apply --apply` 仲裁（硬标需 n_independent≥2，点评=branch 类）；
+   - 连锁硬主张 + `platform_rating`（星级/评价数，带 source_url）→ 生成 `fact_verify/dp_claims_seed.json` → `fact_verify --apply`（FOOD_FACT_SEED 指向）合并 `fact_claims`、写后回读；
+   - **平台评分暂只作带出处主张落地，不直接改 score_***（后续 scoring_engine 统一读取，避免与触发器派生冲突）。
+3. **精度闸（防短名误判连锁）**：只统计店名【包含品牌本名】的卡片，排除点评关键词的模糊/相关推荐；无本名命中→不主张连锁/评分（宁空不假）。
+   - 实测纠正：海宫 由模糊"9 分店"→ **独立店（1 本名命中）**；鳗重 由"5 分店"→ **独立店**。
+4. crontab **#29**：`8,28,48 * * *` 每 20 分钟一批 12 家、`--priority-empty`（优先无 score_taste/无证据店）、`--driver` 自动过 gate_apply/fact_verify；按 rid 断点（`dianping_enrich.done`，随 fooddata 卷持久）。
+
+### 三、已验证（权威回读）
+- driver 批跑：fact_verify APPLY 5 店（海宫/鳗重/尚膳天焱/老山东×2）claims +2 回读✓；
+- gate_apply dry-run 基线：stores_to_patch=0（能落的都已落）、reverify_holds=132（单源硬标，点评 branch 补第二源后逐批关闭）、chain_review=5。
+- 重建容器后 cron #29 在镜像内、checkpoint（12 店）随卷保留。
+
+### 四、下一步
+- cron #29 持续滚动：约 36 店/小时，优先补无证据独立店的 chain/price/平台评分；132 hold 随第二源关闭。
+- 待办（未在本轮）：把 `fact_claims.platform_rating` 接入 scoring_engine 作为「平台评分柱」（与 UGC 口味柱、榜单背书柱三角校准）；新开店/关店的 status 自动联动仍只 watch、不自动改。
+- 覆盖源仍是举例非穷举：点评之外，xhs(Apify 待决策)、地图 POI、公众号/视频号/抖音/B站按既定方案推进。
