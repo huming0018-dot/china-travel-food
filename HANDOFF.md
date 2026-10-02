@@ -4513,3 +4513,26 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
   | 折算成本 | ¥0.091–0.183 | **¥0.023–0.094** | **−49%~−74%** |
 - gate_apply --apply：本窗口写 3 家（593/729/1788，0 错误）；并发的 fleet_grid catchup 亦在写标签。**全库 production_model 由 9 增至 18**（门店现制·标准化 15 + 中央厨房·门店加工 3）。
 - **待用户决策**：看上述真实消耗后，是否转**解法 A（协作奖励计划，个人每日/单模型 200 万 token 免费、企业 500 万）**；入口在开通管理「活动二·立即参与」（安心体验已关闭、前提满足）。
+
+## 2026-10-03 凌晨 · 解法 A（协作奖励计划）落地 + 并行付费泄漏堵漏（关键）
+
+### 一、解法 A 已执行：授权 2 模型 + 主抽取切换 + 烘焙
+- 开通管理「活动二·立即参与」进入 **rewardPlan**。机制（页面原文）：①**授权模型及接入点，无授权不采集**；②**调用授权接入点产生用量、用多少返多少**（每日按模型累积，**次日 11 点后**得等量免费资源包、**30 天有效**）；③资源中心查看。首次授权有**冷启动包（每模型最高 500 万 token）**；个人多数模型**每日单模型上限 200 万**，企业权益 500 万。**只认"已授权接入点 endpoint"调用，直接 model id 未授权不计。**
+- 奖励名单逐 tab 实测（列表滚到底）：字节仅 7 个（Seed-Evolving / 2.1-turbo / 2.1-pro / Character / Seedream5.0-pro / Smart-Router 等），**不含原 mini/lite-260428、2.1-lite/mini**；DeepSeek 含 V4-Pro / **V4-Flash**；智谱仅 **GLM-5.2**（不含 glm-5-3-flash）。
+- **已授权（卡片「已授权」）**：**DeepSeek-V4-Flash正式版**（endpoint `deepseek-v4-flash-ga-260731`，200 万/日）与 **GLM-5.2**（endpoint `glm-5-2-260617`，200 万/日）。
+- 代码：`EXTRACT_PRIMARY` 由 mini-260428 改为 **`deepseek-v4-flash-ga-260731`**（已授权返免费包；旧 mini 仅兜底）；`candidate_models` 默认授权优先。
+
+### 二、★ 烘焙后仍现付费调用 → 定位为 probe_parallel 并行探针泄漏（已修）
+- 现象：舰队授权过滤代码（`2ca09db`，fleet `api_tasks()` 默认只留授权模型、授权≥2才用）烘焙后，meter 仍出现大量未授权模型（glm-5-3-flash / mini / lite / v4.1-flash…）。
+- 逐一排除：①容器内直接调 `fleet_grid_run.api_tasks()` 正确返回**恰好 2 个授权任务**（flash+glm-5-2）；②`gap_pool.py` 全文确认只做 XHS 账号健康探测+subprocess 拉 gap_runner，账号全死不 spawn、**不直接调 LLM**；③hae_grid.log 尾部的全模型 providers 块实为**烘焙前 00:10 旧运行**（recall 文件 `fleet_recall_20261003-001021.json`）。
+- **根因**：枚举 /proc 发现 `python3 probe_parallel.py --all --ingest --workers 6`（cron `food_parallel` 20:47 拉起），其 main 跨**全部 provider 的全部模型**建 cheap/strong 槽位（`for prov: for m in prov.models`），6 worker 绑定 6 个最便宜（含未授权）模型 → 即泄漏源，**不走 fleet 的 api_tasks 过滤**。
+- **修复（提交 `07c5db1`，已烘焙）**：
+  1. `probe_parallel` 新增 `AUTHORIZED_MODELS={deepseek-v4-flash-ga-260731, glm-5-2-260617}` 与 `--full-models` 开关；槽位构建默认**只纳入授权模型**（全量须显式 flag）。
+  2. `production_model_probe._confirm_models` 排序改为**已授权(免费) glm-5-2 优先于付费 pro**，复核不先打付费模型。
+- **验证（权威）**：烘焙后 meter 新增 **15 行全部为 deepseek-v4-flash（AUTH）**，未授权付费模型 **0 新增**；付费泄漏彻底止住。
+
+### 三、工单状态（collector）
+- 本轮关闭：**#26（LLM key 方舟，用户选 A）、#32（舰队统一接口，api_tasks 回读）、#33（搜索引擎探针，第4高召回词烘焙；"2源 cross_check"由 gate_apply n_independent≥2 承担）**。
+- 仍 in_progress：#1 / #9 / #23 / #2（腾讯地图 key，需控制台）/ #34（采集扩面）/ #35（互动量+评论区，需 schema、部分 dev）/ #38（跑题笔记再验证）/ #45（地图解卡，跨源故障转移已落地待验收）。
+- todo：#3 高德评论清理 / #4 frontier 污染验证 / #5 口味分补全 / #31 CHECK A 网格覆盖 / #6 营业时间补全(P2)。
+- **待外部验证**：授权后用量的免费包在**次日 11 点后**到账；冷启动包（最高500万）是否授权即到账需在资源中心确认。
