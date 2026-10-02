@@ -81,7 +81,8 @@ def gather_cached(brand, n_queries=3):
 
 def build_brands(args):
     rests = core.fetch_all("restaurants",
-                           "id,name,status,chain_type,review_count", order_col="id")
+                           "id,name,status,chain_type,review_count,production_model",
+                           order_col="id")
     brands = {}
     for r in rests:
         if r.get("status") == "closed":
@@ -94,14 +95,22 @@ def build_brands(args):
             if hit:
                 out.append(hit)
         return brands, out
+
+    def resolved(rows):
+        # 品牌下所有分店都已有出餐方式结论 → 视为已处理（pending-only 跳过）
+        return all(r.get("production_model") for r in rows)
+
     if args.all:
-        names = list(brands.keys())
+        names = [b for b in brands
+                 if args.reprocess_all or not resolved(brands[b])]
     else:
         def rank(b):
             rs = brands[b]
             chain = 0 if all(r.get("chain_type") == "独立店" for r in rs) else 1
             return (chain, max(r.get("review_count") or 0 for r in rs))
-        names = sorted(brands, key=rank, reverse=True)[:args.limit]
+        pool = [b for b in brands
+                if args.reprocess_all or not resolved(brands[b])]
+        names = sorted(pool, key=rank, reverse=True)[:args.limit]
     return brands, names
 
 
@@ -165,6 +174,8 @@ def run():
     ap.add_argument("--ingest", action="store_true")
     ap.add_argument("--workers", type=int, default=0, help="0=按便宜模型数")
     ap.add_argument("--allow-strong-fallback", action="store_true", default=True)
+    ap.add_argument("--reprocess-all", action="store_true",
+                    help="含已有 production_model 结论的品牌（默认 pending-only 推进尾部）")
     args = ap.parse_args()
 
     P.ensure_search_ready()
