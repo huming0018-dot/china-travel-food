@@ -906,9 +906,10 @@ def write_findings(brand, rids, verdict):
     srcs = verdict.get("sources") or []
     n_add = 0
     for rid in rids:
-        # 本轮取证取代该店上一轮探针结论（仅 production_probe 来源），
-        # 最新可溯源证据为准；随后只 append 本轮仍成立的结论
-        ingest.supersede(rid, ["production_model", "central_kitchen", "premade_risk"])
+        # 本轮取证取代该店上一轮探针结论（覆盖 production_probe 与
+        # production_probe_replay 两个历史来源），最新可溯源证据为准
+        ingest.supersede(rid, ["production_model", "central_kitchen", "premade_risk"],
+                         platform=("production_probe", "production_probe_replay"))
         # 出餐方式标签：每独立源一条（需 ≥2 才会被 gate 挂）
         if model:
             for u in srcs:

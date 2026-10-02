@@ -72,8 +72,10 @@ def append_finding(rid, field, value, confidence, reason,
 def supersede(rid, fields, platform="production_probe", ledger=None):
     """用更新一轮的取证【取代】该 rid 在指定 fields 上、来自 platform 的旧证据：
     从账本物理移除匹配行（新证据更强/可溯源，旧弱证据不应再参与裁决）。
-    platform=None 表示不限来源。返回移除行数。"""
+    platform 可为字符串，或集合/元组（多来源），None 表示不限来源。返回移除行数。"""
     lp = pathlib.Path(ledger) if ledger else LEDGER
+    plats = platform if isinstance(platform, (set, tuple, list)) else \
+        (None if platform is None else {platform})
     if not lp.exists():
         return 0
     kept, dropped = [], 0
@@ -83,8 +85,9 @@ def supersede(rid, fields, platform="production_probe", ledger=None):
         except Exception:
             kept.append(line)
             continue
-        if d.get("restaurant_id") == int(rid) and d.get("field") in fields and \
-           (platform is None or d.get("source_platform") == platform):
+        sp = d.get("source_platform")
+        match_plat = True if plats is None else sp in plats
+        if d.get("restaurant_id") == int(rid) and d.get("field") in fields and match_plat:
             dropped += 1
             continue
         kept.append(line)
