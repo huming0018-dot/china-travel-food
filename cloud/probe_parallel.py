@@ -42,6 +42,10 @@ REPORT_DIR = pathlib.Path("/app/data/research/atlas")
 _search_sem = threading.Semaphore(4)   # 证据检索并发上限
 _cache_lock = threading.Lock()
 
+# 默认只跑「协作奖励计划」已授权模型（调用按日返免费包），避免并行探针遍历全模型付费；
+# --full-models 才放开全量（可能付费）。与 fleet_grid_run.AUTHORIZED_MODELS 保持一致。
+AUTHORIZED_MODELS = {"deepseek-v4-flash-ga-260731", "glm-5-2-260617"}
+
 # 死号状态持久化到数据卷（默认在镜像层 /app/cloud，重建即丢）；重定向后重新加载
 P._POOL_STATE_PATH = "/app/data/probe/model_pool_state.json"
 try:
@@ -227,6 +231,8 @@ def run():
     ap.add_argument("--allow-strong-fallback", action="store_true", default=True)
     ap.add_argument("--reprocess-all", action="store_true",
                     help="含已有 production_model 结论的品牌（默认 pending-only 推进尾部）")
+    ap.add_argument("--full-models", action="store_true",
+                    help="放开全部模型（默认仅授权免费模型；全量可能付费）")
     args = ap.parse_args()
 
     P.ensure_search_ready()
@@ -246,9 +252,12 @@ def run():
         return
 
     # 跨所有 provider(账号) 收集 (provider, model) 槽位；每账号独立 RPM/配额 → 真并行
+    # 默认仅授权（免费）模型；--full-models 才纳入全量。
     cheap_slots, strong_slots = [], []
     for prov in ps:
         for m in prov.models:
+            if not args.full_models and m not in AUTHORIZED_MODELS:
+                continue
             if f"{prov.name}/{m}" in P._POOL["dead"]:
                 continue
             (strong_slots if is_strong(m) else cheap_slots).append((prov, m))

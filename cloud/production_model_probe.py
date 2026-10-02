@@ -785,7 +785,7 @@ SEVERE_MODELS = {"预制料理包·复热", "中央厨房·门店复热"}
 
 
 def _confirm_models(provider, exclude=""):
-    """按强→弱返回用于严判复核的模型列表：优先 pro / glm-5-2 / turbo，
+    """按强→弱返回用于严判复核的模型列表：优先已授权(免费) glm-5-2 / pro / turbo，
     其余候选兜底；供 confirm 逐个尝试，避免单点 HTTPError 即 hold。"""
     want = os.environ.get("CONFIRM_MODEL", "")
     cands = [m for m in candidate_models(provider) if m != exclude]
@@ -794,6 +794,8 @@ def _confirm_models(provider, exclude=""):
         ordered.append(want)
     strong = [m for m in cands
               if ("pro" in m or "glm-5-2" in m or "turbo" in m) and m not in ordered]
+    # 已授权（协作奖励·免费）强模型优先，避免复核先打付费 pro
+    strong.sort(key=lambda m: 0 if m in {"deepseek-v4-flash-ga-260731", "glm-5-2-260617"} else 1)
     rest = [m for m in cands if m not in ordered and m not in strong]
     return ordered + strong + rest
 
