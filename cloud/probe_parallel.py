@@ -100,27 +100,50 @@ def cache_path(brand):
     return CACHE_DIR / f"{h}.json"
 
 
+_ZERO_TTL = 6 * 3600   # 空取证缓存复用窗口：过期重搜，恢复中毒/瞬时空结果
+
+
+def _ev_hits(ev):
+    return sum(len(e.get("results", [])) for e in ev)
+
+
+def _ev_raw(ev):
+    return sum(e.get("raw", 0) for e in ev)
+
+
+def _cache_fresh(cp):
+    """非空缓存长期复用；空缓存仅在 TTL 内复用（过期视为 miss 重搜）。"""
+    try:
+        cached = json.loads(cp.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    if _ev_hits(cached) > 0:
+        return cached
+    try:
+        if time.time() - cp.stat().st_mtime < _ZERO_TTL:
+            return cached
+    except Exception:
+        return None
+    return None
+
+
 def gather_cached(brand, n_queries=3):
-    """证据按品牌缓存：命中文件直接读；否则限并发检索后落盘。"""
+    """证据按品牌缓存：命中（非空，或空且在 TTL 内）直接读；否则限并发检索后落盘。"""
     cp = cache_path(brand)
-    with _cache_lock:
-        if cp.exists():
-            try:
-                return json.loads(cp.read_text(encoding="utf-8"))
-            except Exception:
-                pass
+    cached = _cache_fresh(cp)
+    if cached is not None:
+        return cached
     with _search_sem:
-        # 双检（可能在等信号量期间已被其他线程取到）
-        if cp.exists():
+        cached = _cache_fresh(cp)   # 双检（等信号量期间可能已被他线程取到）
+        if cached is not None:
+            return cached
+        ev = P.gather_evidence(brand, n_queries=n_queries)
+        # 全部搜索失败(raw=0，基础设施瞬态)：不写缓存、下次重试；raw>0（真搜过）才落盘
+        if _ev_raw(ev) > 0:
             try:
-                return json.loads(cp.read_text(encoding="utf-8"))
+                cp.write_text(json.dumps(ev, ensure_ascii=False), encoding="utf-8")
             except Exception:
                 pass
-        ev = P.gather_evidence(brand, n_queries=n_queries)
-        try:
-            cp.write_text(json.dumps(ev, ensure_ascii=False), encoding="utf-8")
-        except Exception:
-            pass
     return ev
 
 

@@ -302,15 +302,23 @@ def _keyless_search(q):
         return [], f"err {e}"
 
 
+def _split_cjk_lat(brand):
+    """在 CJK 与拉丁/数字边界插空格，便于搜索引擎分词（「晴川sushi」→「晴川 sushi」）。"""
+    s = re.sub(r"([一-龥])([A-Za-z0-9])", r"\1 \2", brand)
+    s = re.sub(r"([A-Za-z0-9])([一-龥])", r"\1 \2", s)
+    return s
+
+
 def standard_queries(brand):
-    """标准地毯搜索词根：复热向（品牌加引号，强制精确、压制行业泛文）/
-    手艺现做向 / 高召回点评向（不加引号，捞小店的探店/菜单/口碑）/
-    资本规模向（不加引号以保召回）。结果再经品牌命中过滤（双重保险）。"""
+    """标准地毯搜索词根：复热向 / 手艺现做向 / 高召回点评向 / 资本规模向。
+    品牌词在 CJK↔拉丁边界加空格、不再加引号——引号对混写/小店/异写名零召回，
+    相关性改由 _mentions_brand 品牌命中后置过滤保证（双重保险）。"""
+    bq = _split_cjk_lat(brand)
     return [
-        f'"{brand}" 中央厨房 料理包 预制菜 复热 供应链',
-        f'{brand} 招牌菜 现炒 现做 厨师 明厨亮灶 锅气',
-        f'{brand} 上海 菜单 人均 怎么样 好吃吗 推荐 探店',
-        f'{brand} 门店 直营 加盟 上市 集团 公司',
+        f'{bq} 中央厨房 料理包 预制菜 复热 供应链',
+        f'{bq} 招牌菜 现炒 现做 厨师 明厨亮灶 锅气',
+        f'{bq} 上海 菜单 人均 怎么样 好吃吗 推荐 探店',
+        f'{bq} 门店 直营 加盟 上市 集团 公司',
     ]
 
 
@@ -321,10 +329,9 @@ def brand_terms(brand):
         raw = raw.strip("'\"()（）")
         if not raw:
             continue
-        if re.fullmatch(r"[A-Za-z0-9.'+\-]+", raw):
-            if len(raw) >= 3:
-                terms.add(raw.lower())
-            continue
+        for run in re.findall(r"[A-Za-z0-9.'+\-]+", raw):
+            if len(run) >= 3:
+                terms.add(run.lower())
         for run in re.findall(r"[\u4e00-\u9fa5]+", raw):
             if len(run) >= 2:
                 terms.add(run)
