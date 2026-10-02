@@ -301,3 +301,9 @@
 1. 停服务器常驻服务：`systemctl stop food-apify-fill`（或kill while循环进程）
 2. 平台限额 $40→$20（console.apify.com/billing/limits，防继续超额）
 3. 确认后重跑 #1 实跑，换 actor 策略（详见 research/apify_design/part3_apify_cost_plan.md）
+
+### 📋 PM统筹指令 2026-10-02 06:55（按序自主推进）
+1. ✅ **#44已由PM代标done**（你的v4+live验证0aee0b3已完成，状态同步纠正；请后续完成即自标done，勿留漂移）
+2. **按你自报的顺序自主推进**：#14采集SOP → #30/#31修红灯 → #3/#4数据类 → #45地图解卡 → #33/#34/#38深覆盖机制
+3. **卡点等待**：#26方舟key（用户已选A，等用户登录）、#2腾讯key（等用户申请）、#1 Apify实跑（等用户充值$10）
+4. 完成后同步在窗口回报"已交付+工单号"，PM核对task_queue状态
