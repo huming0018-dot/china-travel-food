@@ -169,6 +169,54 @@ dev/collector 本地改 → git commit+push
 ```
 **铁律**：部署必验证；"应该好了"不算完成。
 
+### 4.5 三模块收口闭环（口味标注 / 录后校验 / 联想探针）★2026-10-02 收口
+
+用户定义的三个能力模块不是三条独立流水线，而是**同一闭环上的三段**，共用唯一写入门与一个真源：
+
+```mermaid
+flowchart TB
+    subgraph M3["③ 联想探针 · collector"]
+        SEED["精选/种子店"] --> COMENT["搜索联想·同被提及<br/>comention_probe"] --> CAND["候选新店"]
+    end
+    CAND --> EVID["多源食客证言<br/>admission_gate；Apify 仅按 brief 付费"]
+    EVID --> INGEST
+
+    subgraph GATE["统一写入门 · dev"]
+        INGEST["ingest.append_finding（幂等去重）"] --> ARB["gate_apply 仲裁<br/>validate·cross·dedupe·关系感知"]
+    end
+    ARB -->|"够门槛"| DB[("Supabase 唯一真源")]
+    ARB -->|"不足/矛盾"| HOLD["hold/拒收·留原因，不硬造"]
+
+    subgraph M2["② 录后校验 · dev+collector"]
+        DB -. "定期：首扫全量→日常增量→周期全量" .-> REV["搜索矩阵复核<br/>连锁/预制/人均/投资集团"] --> INGEST
+    end
+
+    subgraph M1["① 口味标注 · dev算法 + 用户(专家)"]
+        DB --> LABEL["专家分档 diner_seed_labels"] --> ML["curate_v4 ML 门<br/>当前 HELD（不达标，断开）"]
+        DB --> HARD["chain_review 确定性硬规则"]
+        ML -. "达标后接通" .-> CURATE["is_curated 精选层"]
+        HARD --> CURATE
+    end
+    CURATE --> DB
+    DB --> APP["前端 Feed/详情/地图"]
+```
+
+**模块 → 责任窗口 → 规范脚本/表 → 输入/输出**：
+
+| 模块 | 责任窗口 | 规范脚本（canonical） | 核心表 | 输入 → 输出 |
+|---|---|---|---|---|
+| ① 口味标注 | dev 算法；用户=专家；PM 组织标注 | `label_tool.py`（录入）→ `curate_v4.py`（**ML 门 dry-run，当前断开**）；生产裁判=`chain_review_apply.py`（只降不升） | diner_seed_labels → is_curated/curate_badge/curate_score | 种子店+专家分档 → 精选层（后续开放终端用户口味众包） |
+| ② 录后校验 | dev（数据完整性）+ collector（取证） | `reverify_supply.py`/`independence_probe.py`/`national_count.py`(scale·dispute) → `ingest.py`；仲裁 `gate_apply.py`；分类完整性 `cuisine_plane_audit.py`；硬下架 `chain_review_apply.py` | findings → 各枚举/price_avg/is_curated | 存量目录 → 改挂标、权威改价、淘汰 |
+| ③ 联想探针 | collector | `comention_probe.py`（同被提及）→ 证言 `admission_gate.py`；付费取证 `gate_apify_brief.py`→`review_apify_fill.py`；统一 `ingest.py` | findings/restaurants | 精选种子 → 新收录店+证据 |
+| 共用底座 | dev | **唯一写入门 `ingest.py` + 仲裁 `gate_apply.py`**；任何模块不得直改核心列；付费 Apify 只打 brief 的 P0/P1/P2，硬负面排除 | findings / task_queue | 全模块读写收敛 |
+
+**合并清单（精益；按 §6.1 先 dry-run 回归、差异=0 才删，不在本步直接删）**：
+- `national_scale.py` → 已被 `national_count.py` 取代（untracked，可删）。
+- `cloud_phone_fill/cloud_coord_fill/cloud_amap_fill` → 已收口为写 findings；重复的 place/search 逻辑并入 `map_quota.py` + 单一 place 客户端，三个 fill 退化为薄调度。
+- `cleanup_findings.py` + `entity_match.py` 为错挂/去重权威；`repair_misanchor.py`、重复的 `entity_dedup` 折叠之。
+- `group_chef_tree`（cloud 与 vendor 各一份）→ vendor/pipeline 留唯一版，cloud 仅 import。
+- 一次性 /tmp 探针脚本不进仓库、不维护。
+
 ---
 
 ## 5. 模块及组件功能（谁拥有什么）
