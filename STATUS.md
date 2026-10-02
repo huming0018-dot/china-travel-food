@@ -1,9 +1,11 @@
 # 当前状态 · STATUS
 
-> 最后更新：2026-10-02 20:30（PM窗口 · 安全回归+任务包发布+服务器同步）
-> **✅ 众包系统安全加固完成（2026-10-02 晚）**：安全攻击审计19轮 → 3高危+3中危+1回归发现，**7个漏洞全部修复复测通过**（H1配额逐条限流/H2跨参与者伪造/H3防枚举/M1报名XSS/M2配额默认/M3同title去重/单批塞量绕过）；回归脚本 `cloud/security_regression.py` R1-R7 全绿，每次迭代必跑。
-> **✅ 正式任务包已发布（2026-10-02 晚）**：dianping必吃榜种子 160 家未收录店铺 → **29 个 crowd 任务包**（6店/包，kpi=5 quota=20），端到端验证通过（拉取→回传→进度回写）。crowd_pack.py 修复外文店名误判 bug（pack_type 由输入来源显式决定）。
-> **✅ 服务器已同步（2026-10-02 晚）**：`build_sync.sh --no-build` 同步到 8060905（含 crowd_* + security_regression.py）；SQL 留档到 `/home/ubuntu/food-cloud/sql/`；SSH 双通道（food-cloud 直连 / food-cloud-proxy 代理兜底）实测均通。
+> 最后更新：2026-10-02 21:30（PM窗口 · 报名页托管 + 任务包扩容）
+> **✅ 报名页已托管上线（2026-10-02 晚）**：Supabase Storage public bucket `crowd`，公网可直接访问：
+> - 📄 报名页：`https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/apply.html`
+> - 📦 插件下载：`https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v2.0.0.zip`
+> - 在线报名即得 TMP 编号 → 下载插件（同目录相对路径自动关联）；anon 上传策略已配置
+> **✅ 任务包扩容机制上线（2026-10-02 晚）**：`cloud/crowd_scale.py`（seed/db/fill 三源 → 过滤 → 库内+已发布双重去重 → 评分降序 → 切包发布）；机制文档 `CROWD_SCALE.md`。已扩容：奢华档 94 家未覆盖店 → 16 个新包。**当前共 45 个 open 任务包，覆盖 254 家未收录店铺**。扩容后安全回归 R1-R7 全绿。
 > **🔑 凭证总表**：明文在 `~/.food_atlas_credentials.md`（权限600）；HANDOFF.md 顶部「凭证与登录信息索引」。
 
 ## 🚀 众包采集上线 · 傻瓜式三步（2026-10-02，PM 已跑通）
