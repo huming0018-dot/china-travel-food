@@ -1,0 +1,131 @@
+# 众包采集插件 · 数据契约 v1（CROWD-CONTRACT-001）
+
+> PM 窗口独立开发 · 2026-10-02
+> 原则：**格式、获取、回传、同步四方一致**——同一份 schema 同时约束插件端采集、HTTP 回传、服务端校验、库表落点。任何一方读到的字段名/类型/枚举都必须与此文档逐字一致。
+
+## 1. 参与方与数据流
+
+```
+参与者浏览器 (Chrome 扩展)
+   │ ① GET /crowd_tasks?status=eq.open   → 任务包 task_pack（契约 §2）
+   ▼
+扩展本地队列 (chrome.storage.local)  — 离线可排队，重连续传
+   │ ② 按安全线节奏执行采集 → 产出 proof 记录（格式见 §3）
+   ▼
+POST /crowd/proof  (带 participant_id + 签名)
+   │ ③ 服务端 data_gate.crowd_validate() 校验
+   ▼
+Supabase 表：crowd_proofs / crowd_reviews / crowd_tasks
+   │ ④ 状态回写（proof_status / task_status / 结算流水）
+   ▼
+结算：crowd_settlements（有效条数 × 单价）
+
+注：task_queue 的 assignee 有 check 约束（仅 dev/collector/qa/pm，众包参与者
+不是内部窗口角色），故任务包落独立表 crowd_tasks（契约 §4.1）。
+若 crowd_tasks 尚未建表，crowd_pack.py 自动回退发布为 task_queue 中
+assignee=pm 且标题带 [CROWD] 前缀的工单，插件拉取端两者都兼容。
+```
+
+## 2. 任务包 task_pack（插件从 task_queue 获取）
+
+字段与 Supabase task_queue 行对齐，插件只读不改：
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| task_id | int | task_queue.id（**回传必须原样带还**，用于同步锚定） |
+| task_type | enum | `store_pack` / `keyword_pack` |
+| pack | array | 词包或店铺包：`["店名A","店名B",...]` 或 `["词1","词2",...]`，5-8 项 |
+| target | enum | `notes`（收录笔记）/ `review`（口味评分）/ `both` |
+| kpi_min | int | 该包最低有效收录条数（默认 5），未达标不计酬 |
+| quota_day | int | 该任务单账号日采集上限（默认 20，安全线引擎读取，只降不升） |
+| created_at | string(ISO8601) | 任务创建时间 |
+
+## 3. 采集 proof（插件产出 → 回传 payload）
+
+**回传信封**（POST /crowd/proof 的 body，顶层固定）：
+
+| 字段 | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| participant_id | string | ✓ | 参与者注册 ID（uuid，参与协议时生成，插件本地保存） |
+| task_id | int | ✓ | 原样回传（§2 锚定） |
+| proof_seq | int | ✓ | 本次回传内记录序号，从 0 递增（断点续传排序用） |
+| captured_at | string(ISO8601) | ✓ | 捕获时间（插件本地时钟） |
+| sync_version | int | ✓ | 契约版本号=1（服务端拒绝不匹配版本） |
+| items | array | ✓ | proof 记录数组，格式见下 |
+
+**proof 记录 items[]（每条一篇笔记或一条评分）**：
+
+| 字段 | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| kind | enum | ✓ | `note`（笔记收录）/ `rating`（口味评分） |
+| note_id | string | ✓ | 小红书笔记 ID（URL 末段，如 explore/xxxx） |
+| note_url | string(url) | ✓ | 完整 URL（服务端校验 https://www.xiaohongshu.com） |
+| title | string | note 必填 | 笔记标题 |
+| excerpt | string | 否 | 正文前 200 字摘要（脱敏后） |
+| author | string | 否 | 作者昵称（**服务端脱敏存储**，仅保留首尾字符） |
+| rating | number(1-5) | rating 必填 | 口味评分 |
+| rating_reason | string | rating 必填 | 评分理由（≥8 字，含具体菜品/口感词，防空话） |
+| matched_store | string | 否 | 插件侧锚定的店铺名（服务端用 entity_match 二次校验） |
+| anchor_score | number(0-1) | 否 | 插件侧锚定置信度（服务端复核） |
+| raw_query | string | ✓ | 本次搜索用的词包项（溯源） |
+| client_ip_salt | string | ✓ | 客户端设备指纹盐（一机一号校验，不传明文 IP） |
+
+## 4. 服务端库表（Supabase，dev 建表或 PM 直接建）
+
+### 4.1 crowd_tasks —— 任务包状态（与 task_queue 联动）
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| task_id | int PK | = task_queue.id |
+| pack_type / pack / target / kpi_min / quota_day | — | 与 §2 一致 |
+| assigned_count | int | 已领取次数（防超领） |
+| progress | int | 有效 proof 累计条数 |
+| status | enum | `open` / `in_progress` / `fulfilled` / `rejected` |
+
+### 4.2 crowd_proofs —— 回传明细（校验后落点）
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| id | bigserial PK | — |
+| participant_id / task_id / proof_seq / captured_at / sync_version | — | 信封字段原样 |
+| kind / note_id / note_url / title / excerpt / author / rating / rating_reason / matched_store / anchor_score / raw_query / client_ip_salt | — | §3 字段原样 |
+| gate_status | enum | `pending` / `accepted` / `rejected`（data_gate 判定） |
+| reject_reason | string | 拒收原因（缺锚定/重复/URL非法/评分空话） |
+| dedupe_key | string | cjk_norm(title)+note_id 指纹，唯一约束防重 |
+
+### 4.3 crowd_reviews —— 口味评分（仅 rating 类 accepted 后落此）
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| store_id | int | 锚定后的 restaurants.id（entity_match 解析） |
+| participant_id / rating / rating_reason / note_id / captured_at | — | 同上 |
+| trust_level | enum | `crowd_single` / `crowd_crossed`（多参与者交叉后升） |
+
+### 4.4 crowd_settlements —— 结算
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| id | bigserial PK | — |
+| participant_id | string | — |
+| period | string(YYYY-MM-DD) | 结算周期 |
+| effective_count | int | 有效条数（gate_status=accepted） |
+| unit_price | number | 单价（试点：笔记 0.5 / 评分 1.0，元） |
+| amount | number | = effective_count × unit_price |
+| status | enum | `pending` / `paid` |
+
+## 5. 同步一致性规则（防漂移，铁律）
+
+1. **task_id 原样回传**：插件领取什么包，回传就必须带同一 task_id；服务端不认"看起来像"的包。
+2. **sync_version 门槛**：契约版本不符 → 409 拒绝，插件弹更新提示。
+3. **proof_seq 单调**：同一 participant+task 内 seq 必须严格递增；重复 seq → 幂等忽略，不重复计酬。
+4. **gate_status 唯一权威**：计酬只认 `accepted`；`pending` 不结算、`rejected` 记录原因供参与者申诉。
+5. **一机一号**：client_ip_salt + participant_id 绑定；同 salt 出现多 participant → 触发人工审计。
+6. **断点续传**：插件本地队列未回传成功的 proof 不删除，重连后按 seq 续传；服务端按 (participant_id, task_id, proof_seq) 幂等去重。
+7. **状态回写**：服务端校验完成后 PATCH crowd_tasks.progress / task_queue（fulfilled 时 PM 调度器自动标 done），插件拉取任务时可见进度，避免重复采集同一包。
+
+## 6. 安全线（插件硬编码，独立于本契约，见 safety_engine.js）
+
+| 动作 | 阈值 |
+|---|---|
+| 日搜索 | ≤ quota_day（默认 20，max 30） |
+| 搜索间隔 | 随机 60-120s（硬下限 60s，不可调） |
+| 单次会话 | ≤15min 后强制冷却 30min |
+| 浏览停留 | ≥30s/篇 |
+| 触发"访问频繁" | 立即停 15min（只读恢复） |
+| 一机一号 | 绑定 device salt，禁止多账号切换 |

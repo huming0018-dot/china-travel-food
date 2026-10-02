@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "上海美食图鉴·众包采集",
+  "version": "1.0.0",
+  "description": "知情自愿的众包采集插件：参与者用自有账号/设备/网络，按硬编码安全线采集小红书公开笔记与口味评分，直接回传。开源可审计。",
+  "permissions": [
+    "storage",
+    "alarms",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "https://www.xiaohongshu.com/*",
+    "https://bdwrhshgdeghgyzwpxnl.supabase.co/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_title": "美食图鉴众包采集",
+    "default_popup": "src/popup.html"
+  },
+  "options_page": "src/onboarding.html",
+  "content_scripts": [
+    {
+      "matches": ["https://www.xiaohongshu.com/*"],
+      "js": ["src/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "128": "icons/icon128.png"
+  }
+}
