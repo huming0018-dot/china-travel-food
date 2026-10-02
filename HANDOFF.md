@@ -4555,3 +4555,13 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 ### 六、Apify $90 月度硬顶已耗尽（2026-10-03 01:18）
 - food-apify-fill 重启后即 `@@STATUS NO_CREDIT remaining=$0.022`（<地板 $0.15），长睡 14400s。即本月 $90 cap 已用 ≈$89.98。
 - **需用户决策**：①继续提额（REST PUT maxMonthlyUsageUsd）让 worth_fill + boundary 续跑；②或暂停付费采集、等 ARK 免费额度覆盖的轻量通道。提额/支付必须本人。
+
+### 七、2026-10-03 02:00 每日复盘摘要
+- **管线存活**：容器 food-cloud（cron 健康，pid comm=cron；fleet_grid/gap_pool/production_runner 进程均在）、searxng 正常。
+- **DB 口径**：restaurants 1520/active 1514；reviews **2553（10-03 当日新增 0）**，含 aspect_taste 2552。
+- **字段覆盖率（active）**：电话 1319＝87.1%；坐标 1513＝99.9%；营业时间 947＝62.5%；score_taste 454＝30.0%；production_model 19。
+- **chain 分布**：独立 989 / 小型 351 / 大型 140 / 资本化 17 / null 17。
+- **看门狗语义判定**：每 20min 的 account "unknown—双出口网络失败"＝基础设施探测噪声（真实 a=dead/b=parked 已在 cookie 池与工单）；腾讯地图全尽（解封 10-04 00:00）、高德 2 key 健康故障转移正常；**无真故障、无新错误**。
+- **停采分层（lesson 92，三闸正交）**：①付费闸 Apify $90 耗尽（待用户 A 提额/B 暂停）；②登录闸 a 死/b 短信配额 parked；③配额闸腾讯地图 10-04 解封。0 增量＝等决策/解封，不硬刷不造数据。
+- **沉淀**：lessons #91（cron 判活看 comm 不看 cmdline）、#92（停采三闸分层）。
+- **明日待办**：等 Apify 决策；腾讯地图解封；ARK production_model 探针与 amap 字段填充等不依赖付费/登录模块照常；#38 待 Apify 恢复后跑真实端到端。
