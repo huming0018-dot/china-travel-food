@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美食图鉴·众包采集 手机版(Android)安装</title>
+<style>
+  :root{--brand:#b45309;--bg:#faf7f2;--card:#fff;--sub:#6b7280;--ok:#059669;--warn:#b45309}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;color:#1a1a2e;min-height:100vh;display:flex;justify-content:center;padding:20px 14px}
+  .wrap{max-width:520px;width:100%}
+  h1{font-size:22px;margin-bottom:6px}
+  .sub{color:var(--sub);margin-bottom:20px;line-height:1.6;font-size:14px}
+  .card{background:var(--card);border-radius:14px;padding:20px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+  .card h2{font-size:16px;margin-bottom:12px}
+  .step{display:flex;gap:10px;margin:10px 0;font-size:14px;line-height:1.6;color:#374151}
+  .step b{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:#eef2f7;color:#6b7280;display:flex;align-items:center;justify-content:center;font-size:13px;margin-top:1px}
+  code{background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:12px;word-break:break-all}
+  .btn{display:block;background:var(--brand);color:#fff;border:none;border-radius:10px;padding:13px 20px;font-size:15px;cursor:pointer;font-weight:600;text-decoration:none;margin-top:12px;text-align:center}
+  .btn.alt{background:#fff;color:var(--brand);border:1.5px solid var(--brand)}
+  .note{font-size:12px;color:var(--sub);margin-top:10px;line-height:1.6}
+  .ok-note{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.7;margin-top:8px}
+  .warn-note{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.7;margin-top:8px}
+  .qr-box{text-align:center;padding:14px}
+  .qr-box img{width:170px;height:170px;border-radius:10px;border:1px solid #e5e7eb}
+  .qr-hint{font-size:12px;color:var(--sub);margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📱 美食图鉴 · 手机版采集（Android）</h1>
+  <p class="sub">手机也能采集：用 Kiwi 浏览器加载插件，与电脑版同一任务池、同一安全线。无需电脑，全自动。</p>
+
+  <!-- ============ 前置说明 ============ -->
+  <div class="card">
+    <h2>⚠️ 先确认</h2>
+    <div class="warn-note">
+      手机版仅支持 <b>Android</b>（需安装 Kiwi 浏览器）。<br>
+      <b>iPhone（iOS）暂不支持</b>——苹果系统限制第三方扩展加载，这是平台硬限制，无法绕过。
+    </div>
+    <div class="ok-note" style="margin-top:8px;">
+      你仍需要先 <b>报名获取参与编号（P-XXXXXX）</b>。<br>
+      已报名：直接按下面步骤安装。<br>
+      未报名：<a href="apply.html" style="color:var(--brand);font-weight:600;">先点此报名（立即可用）</a>
+    </div>
+  </div>
+
+  <!-- ============ 步骤 ============ -->
+  <div class="card">
+    <h2>📲 Android 安装步骤（约 3 分钟）</h2>
+    <div class="step"><b>1</b><div>打开 <b>Google Play</b>，搜索 <b>Kiwi Browser</b>（橙色图标），点击安装</div></div>
+    <div class="step"><b>2</b><div>下载插件压缩包（见下方按钮），下载完成后点通知栏提示 → 用 <b>Kiwi</b> 打开（或先在文件管理器解压到 <code>Download/crowd-extension-v2.0.0</code>）</div></div>
+    <div class="step"><b>3</b><div>在 Kiwi 地址栏输入 <code>chrome://extensions</code> 回车</div></div>
+    <div class="step"><b>4</b><div>打开右上角「开发者模式」开关</div></div>
+    <div class="step"><b>5</b><div>点 <b>「+ 从 .zip/.crx/.user.js 加载」</b> → 选择刚才下载的 <code>crowd-extension-v2.0.0.zip</code>（Kiwi 会自动解压安装）</div></div>
+    <div class="step"><b>6</b><div>回到小红书 App/网页登录你的账号，打开 <code>m.xiaohongshu.com</code>（或任意小红书页面），插件会自动开始工作</div></div>
+    <div class="dl-row">
+      <a class="btn" href="crowd-extension-v2.0.0.zip" download="crowd-extension-v2.0.0.zip">⬇️ 下载插件 zip（手机）</a>
+    </div>
+    <p class="note">提示：若 Kiwi 找不到 zip 文件，先把压缩包下载后用文件管理器（如 Files by Google）解压，再在扩展页选「加载已解压的扩展程序」选解压出的文件夹。</p>
+  </div>
+
+  <!-- ============ 完成后 ============ -->
+  <div class="card">
+    <h2>✅ 安装完成后（一步开启）</h2>
+    <div class="step"><b>1</b><div>点 Kiwi 右上角 <b>⋮</b> → 扩展程序 → 找到插件 → 「选项」→ 填写参与编号并同意协议</div></div>
+    <div class="step"><b>2</b><div>打开小红书任意页面，保持页面打开即可，插件每 3 分钟自动：领任务 → 搜索 → 回传 → 领下一个</div></div>
+    <div class="ok-note">✅ 手机版与电脑版完全同步：同一个任务池、同一套安全线（每日配额、间隔、冷却一致），可随时换设备继续。</div>
+  </div>
+</div>
+</body>
+</html>

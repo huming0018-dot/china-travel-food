@@ -90,16 +90,26 @@ python3 cloud/crowd_admin.py stats                           # 全局统计
 | 回传 | POST /crowd/proof → crowd_ingest 校验（sync_version 不符拒/schema拒/评分空话拒/URL域名拒/note_id长度拒/参与者状态拒）→ 落 crowd_proofs → 回写 progress/total_effective |
 | 同步 | task_id 原样回传 · proof_seq 幂等 · dedupe_key 防重 · 一机一号 · 断点续传 |
 
-## 安全线（插件硬编码，不可调）
+## 安全线（服务端拟合下发，插件只降不升）
+
+安全线由服务端按拟合模型计算后随任务包下发（`safety_limits` 字段），插件本地基线兜底、任何远程值都不能放宽基线：
 
 | 动作 | 阈值 |
 |---|---|
-| 日搜索 | ≤ quota_day（默认20，max 30） |
-| 搜索间隔 | 随机 60-120s |
-| 单次会话 | ≤15min 后强制冷却 30min |
+| 日搜索 | ≤ min(服务端拟合 quota_day, 本地 max 30) |
+| 搜索间隔 | 随机 60-120s（服务端可按实测收紧，不低于 60s） |
+| 单次会话 | ≤15min 后强制冷却 30min（服务端可收紧） |
 | 浏览停留 | ≥30s/篇 |
 | 触发"访问频繁" | 立即停 15min |
 | 一机一号 | 绑定 device salt，禁止多账号切换 |
+
+拟合依据（调研固化）：XHS 实测安全节奏搜索≤2次/分（间隔≥28s）、速率码翻倍上限120s、软限流长冷却自恢复——本地基线取 2 倍余量（间隔60-120s≈1次/分），服务端可按参与者健康度/时段动态收紧。
+
+## 手机版（Android）
+
+- Android 用 Kiwi Browser（Chromium 内核，Google Play 免费）加载同一 zip：`chrome://extensions` → 开发者模式 → 「+ 从 .zip/.crx 加载」
+- iPhone 暂不支持（苹果系统限制第三方扩展加载）
+- 手机与电脑同一任务池、同一安全线，可换设备续采
 
 ## 参与协议要点（onboarding.html 完整版）
 采集范围仅限小红书**公开展示**笔记；不采集私信/设置/隐私字段；账号风险自负（限流/降权/封禁自担）；数据回传项目云端，按有效条数计酬。

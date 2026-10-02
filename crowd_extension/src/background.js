@@ -105,6 +105,8 @@ async function fetchActiveTask() {
     quota_day: r.quota_day || 20,
     progress: 0,
   };
+  // 应用服务端拟合安全参数（只降不升：远程值永不放宽本地基线）
+  await safety.applyRemoteLimits(r.safety_limits || null);
   await safety._set({ active_task: task, active_task_claimed_at: Date.now() });
   return task;
 }
