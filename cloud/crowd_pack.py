@@ -41,7 +41,7 @@ def chunks(lst, n):
         yield lst[i:i + n]
 
 
-def publish(pack_items, pack_size, target, kpi_min, quota_day, source="qa"):
+def publish(pack_items, pack_size, target, kpi_min, quota_day, source="qa", pack_type=None):
     """发布众包任务包到 crowd_tasks 表（契约 §4.1）。
 
     说明：task_queue 有 assignee/source check 约束（assignee 仅 dev/collector/qa/pm，
@@ -49,11 +49,15 @@ def publish(pack_items, pack_size, target, kpi_min, quota_day, source="qa"):
     故任务包优先落 crowd_tasks 独立表，由 crowd_ingest 校验回传时回写 progress/status，
     插件从 crowd_tasks 拉取；crowd_tasks 未建表时回退发布为 task_queue
     assignee=pm + 标题 [CROWD] 前缀的工单（source 用 qa 以通过约束）。
+
+    pack_type 显式指定 store/keyword（由调用方输入类型决定，不猜测——外文店名
+    含空格会被误判为词包）。
     """
     packs = list(chunks(pack_items, pack_size))
     created = []
     for i, p in enumerate(packs, 1):
-        is_store = all(not any(x in s for x in (" ", "，" "，")) for s in p)  # 粗略判断
+        is_store = pack_type == "store" if pack_type else all(
+            " " not in s and "，" not in s and "、" not in s for s in p)
         title = f"crowd词包-第{i}包({len(p)}项)" if not is_store else f"crowd店铺包-第{i}包({len(p)}店)"
         meta = {
             "pack": p,
@@ -111,4 +115,6 @@ if __name__ == "__main__":
         ap.print_help()
         sys.exit(0)
     items = _load(a.stores) if a.stores else _load(a.keywords)
-    publish(items, a.pack_size, a.target, a.kpi, a.quota)
+    # pack_type 由输入来源决定：--stores → store，--keywords → keyword（避免外文店名误判）
+    publish(items, a.pack_size, a.target, a.kpi, a.quota,
+            pack_type="store" if a.stores else "keyword")
