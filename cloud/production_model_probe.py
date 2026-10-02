@@ -145,6 +145,27 @@ def ensure_search_ready(force=False):
 # ---------------------------------------------------------------------------
 # LLM 原始调用（支持 tools / tool_calls；MP.chat 不处理工具，故在此实现）
 # ---------------------------------------------------------------------------
+LLM_LEDGER = REPORT_DIR / "llm_usage.jsonl"
+
+
+def meter_usage(model, usage):
+    """控量计量：每次 LLM 调用落一条 token 用量（prompt/completion/total），
+    供控量跑批后汇总成本；ARK 流式需 stream_options.include_usage 才回 usage。"""
+    if not usage:
+        return
+    try:
+        REPORT_DIR.mkdir(parents=True, exist_ok=True)
+        rec = {"ts": datetime.datetime.now().isoformat(timespec="seconds"),
+               "model": model,
+               "prompt": usage.get("prompt_tokens"),
+               "completion": usage.get("completion_tokens"),
+               "total": usage.get("total_tokens")}
+        with open(LLM_LEDGER, "a", encoding="utf-8") as f:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_cap=60,
              max_tokens=None):
     """OpenAI 兼容 chat completion；使用 SSE 流式累积，避免大输出在读上空闲超时。
@@ -159,6 +180,9 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
     if tools:
         body["tools"] = tools
         body["stream"] = False  # 工具调用路径不流式（当前主流程不用）
+    if body["stream"]:
+        body["stream_options"] = {"include_usage": True}
+    usage = None
     waits = [8, 16, 30, 60]
     net_waits = [10, 20, 30]
     last = None
@@ -175,6 +199,8 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 if not body["stream"]:
                     d = json.loads(r.read().decode("utf-8"))
+                    d = json.loads(r.read().decode("utf-8"))
+                    meter_usage(model, d.get("usage"))
                     msg = d["choices"][0]["message"]
                     msg["_usage"] = d.get("usage")
                     return msg
@@ -198,6 +224,7 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
                         content_parts.append(delta["content"])
                     if delta.get("tool_calls"):
                         tool_calls += delta["tool_calls"]
+            meter_usage(model, usage)
             if not content_parts and not tool_calls:
                 raise TimeoutError("empty_stream")
             return {"role": "assistant", "content": "".join(content_parts),
