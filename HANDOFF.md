@@ -10,6 +10,24 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 深夜⑪【出餐方式 production_model 六档：探针+配额调度器+自建 SearXNG+gate 仲裁，首批写库；调度全链路有界自愈】
+
+**用户主线**：继续升级二次校验，把「所有权/资本结构」（已有 chain_type）与「生产/出餐方式」（**新增 production_model，与 chain_type 正交**）分开，区分真实连锁/商业化预制/资本化/大型连锁及**出餐方式六档**：现炒现做 / 门店现制·标准化 / 中央厨房·门店加工 / 中央厨房·门店复热 / 预制料理包·复热 / 外购成品·无堂食厨房。用户反复强调不要只讲机制、要看到写库结果；点名店仅说明流程缺陷，不接受特征枚举式补单店。
+
+1. **migration 025（已在 Supabase 执行并回读核验，commit af6bc80）`db/migrations/025_production_model.sql`**：restaurants 增 `production_model`（CHECK 六档）+ STORED 生成列 `is_reheat_served`（后三档复热为真）。经 Supabase Management API `POST https://api.supabase.com/v1/projects/bdwrhshgdeghgyzwpxnl/database/query`（Bearer sbp 个人令牌，成功 201；令牌存仓库外 600 文件，勿入库）。
+2. **取证探针（新建 `cloud/production_model_probe.py`）**：确定性「引号品牌标准词根 standard_queries（复热向/手艺向/资本向 3 查询，品牌加双引号强制精确匹配、压制行业泛文）→ gather_evidence（品牌命中 brand_terms 过滤）→ 单次无工具 LLM 抽取 JSON extract_signals_once → 确定性 adjudicate」。关键：放弃模型多轮驱动搜索（不 finalize/超时）；craft 合并 fresh+onsite，有现炒引据→现炒现做，仅门店现制→标准化。
+3. **自建 SearXNG 元搜索（容器 `searxng`，已部署）**：镜像 searxng/searxng，接入 `food-cloud_default`（food-cloud 内 `http://searxng:8080`），宿主 `127.0.0.1:8888`。**精简配置（`cloud/gen_searx_lean.py`）只留 bing/mojeek/startpage/yandex 四引擎、outgoing 6s/上限 9s、limiter=false、不挂代理**（经广州住宅代理时全部超时，直连才稳；google/ddg/brave/qwant/wikipedia 全禁用）。`serp_producer` 设 PINNED 首选 searxng，返空最多再试 1 个 keyless 兜底。
+4. **gate 仲裁（`cloud/gate_apply.py`）**：新增 PRODUCTION_ENUM/字段、专属 resolver `resolve_production_model`（标签桶须 n_ind≥2 才 apply，多标签冲突则 hold）；精选下架条件改为 closed / production_model∈复热三档 / premade_risk=高——**central_kitchen=确认但门店仍现做（中央厨房·门店加工，如火锅）不再自动下架，连锁本身不下架**。
+5. **首批真实写库（已回读一致）**：小菜园 2 分店（rid 559、1525）production_model=预制料理包·复热、is_reheat_served=true、**is_curated=false（移出精选）**；经免 LLM 的 `cloud/replay_anchors.py` 用确定性 SearXNG 取回 9 个独立支撑域（163/36kr/tmtpost/ifeng/sina/smzdm/bjnews/nbd/21jingji）写 18 条 findings，gate `--apply` patched=2/err=0。新荣记确定性路径 0 支撑域（craft 证据多在 UGC/音视频）、保持 NULL（NULL 不影响精选）。
+6. **配额感知调度器（新建 `cloud/production_runner.py`，已部署、cron 已接）**：状态 `production_runner_state.json`，自动切换「首次全量→日常增量（仍无标签且 attempts<2）→每周一全量复校」；遇账号级限流立即暂停、断点续跑。
+   - **LLM 预检**：每轮先 ~45s 轻量 ping，限流/不可用即**不跑搜索直接暂停**（实测约 10s 退出，避免每个限流班次空跑数分钟）。
+   - **单品牌硬墙钟看门狗 hard_watch**：整个 probe 放守护线程，BRAND_HARD 默认 240s 到点强弃；连续 2 品牌超时即暂停，杜绝搜索/LLM/代理挂起导致永久卡死。
+   - chat_raw 用 SSE 流式 + 单次读 30s + 整次 hard_cap 60s；两模型都 429 或都 stall 即快速判账号级限流（同一 ARK key 下轮换模型对账号级限流无效）。
+7. **cron（主机）**：新增 `/etc/cron.d/food_production`（每 2 小时 `:7` 跑 auto/RUN_BATCH=6，周一 `1:37` 跑 full/RUN_BATCH=8，wrapper `/home/ubuntu/food_production.sh`= `cloud/host_food_production.sh`，runner 后链 gate_apply --apply）；新增 `/etc/cron.d/food_restart`（每日 03:14 重启 food-cloud+searxng，清理泄漏线程/连接）。
+
+**当前阻塞（需用户操作，非代码问题）**：ARK 账号级 LLM 配额——实测 lite/turbo 均 HTTP 429（预检即拦），deepseek 早前因「安全体验模式」用量封顶被暂停（SetLimitExceeded，账号 2132598367，非时间重置）。**需用户到 ARK Model Activation 提高/关闭用量上限或充值，恢复后调度器每 2 小时自动续跑 1386 个品牌**（当前 production_model 仅 2 店有值、其余 NULL）。
+**commit（main）**：`af6bc80`（出餐方式全套+migration025）。草稿目录 batch6_work/batch8_work/research/post_record 已 gitignore、不入库。
+
 ### 2026-10-02 晚⑭【collector·点评种子扩至66家(黄浦34/普陀6/徐汇26)，lead合并25候选/总合并54；Apify月度$70用满付费全停；填充前治理核查达标，已 push `9f15a9e`】
 
 - **种子扩容（`cloud/dianping_seed.json`，含 `districts[]` 分区结构＋扁平 `shops`）**：在黄浦34基础上，据政府/上观转载补 **普陀6**（韩渔面馆/金湘隆清派湘菜/温州牛肉馆/伊祥敦煌楼/宁夏印象滩羊/红子鸡凤凰楼，源 shanghai.gov.cn 普陀转载）＋**徐汇26**（HOMES/Alimentari Grande/O'mills/阿吾罗月咏/冰城老于家/东北四季饺子王/菰城宴/恒悦轩/龙华素斋/人和馆/瑞俪泰/四面泰/威皇/细记/池仔记/新苑/徐记/四季农圃/今日牛事/沪西老弄堂/忆家一宴/意膳坊/宁国素斋/御鲤湘/云里/啫苑，源 jfdaily id=4014786）。扁平按完整归一去重＝**66**。
