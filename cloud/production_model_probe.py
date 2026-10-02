@@ -303,10 +303,12 @@ def _keyless_search(q):
 
 def standard_queries(brand):
     """标准地毯搜索词根：复热向（品牌加引号，强制精确、压制行业泛文）/
-    手艺现做向 / 资本规模向（不加引号以保召回）。结果再经品牌命中过滤（双重保险）。"""
+    手艺现做向 / 高召回点评向（不加引号，捞小店的探店/菜单/口碑）/
+    资本规模向（不加引号以保召回）。结果再经品牌命中过滤（双重保险）。"""
     return [
         f'"{brand}" 中央厨房 料理包 预制菜 复热 供应链',
         f'{brand} 招牌菜 现炒 现做 厨师 明厨亮灶 锅气',
+        f'{brand} 上海 菜单 人均 怎么样 好吃吗 推荐 探店',
         f'{brand} 门店 直营 加盟 上市 集团 公司',
     ]
 
@@ -347,7 +349,7 @@ def evidence_url_set(evidence):
     return {u for u in s if is_real_url(u)}
 
 
-def gather_evidence(brand, n_queries=3, _retry=1):
+def gather_evidence(brand, n_queries=4, _retry=1):
     bterms = brand_terms(brand)
 
     def _once():
@@ -462,10 +464,12 @@ def clear_model_dead(model):
 
 
 def candidate_models(provider):
-    """候选顺序：PROD_MODEL 指定优先；否则【最便宜的存活模型优先】，把一个模型的免费
-    额度用完再用下一个。已暂停(dead)模型不参与（仅当全部暂停才返回全部用于恢复探测）。"""
+    """候选顺序：默认【已授权、可返免费包的主模型 EXTRACT_PRIMARY 优先】（协作奖励
+    计划，每日最高 200 万 token 免费）；PROD_MODEL 可显式覆盖。其余存活模型作为
+    兜底；已暂停(dead)模型不参与（仅当全部暂停才返回全部用于恢复探测）。
+    注：fleet_grid 的多模型共识走 provider.models 全量遍历，不受此顺序影响。"""
     models = list(provider.models)
-    want = os.environ.get("PROD_MODEL", "")
+    want = os.environ.get("PROD_MODEL", "") or EXTRACT_PRIMARY
     live = [m for m in models if m not in _POOL["dead"]]
     order = list(live if live else models)
     if want and want in models:
@@ -496,7 +500,7 @@ def extraction_models(provider):
     return out
 
 
-def probe_brand(provider, model, brand, locations, n_queries=3):
+def probe_brand(provider, model, brand, locations, n_queries=4):
     """model 可为单个模型或候选列表；自动在 429 时轮换模型。
     返回 (sig, evidence, status)；status ∈ ok / no_evidence / llm_ratelimit / llm_error。"""
     ensure_search_ready()

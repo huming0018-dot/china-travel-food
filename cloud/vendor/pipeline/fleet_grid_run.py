@@ -43,6 +43,12 @@ VIRTUAL_ROOTS = {"中餐", "亚洲菜", "西餐", "其他"}
 SLICE = int(os.environ.get("HAE_GRID_SLICE", "8"))
 PROBE_VERSION = "fleetgrid-v2"  # 稳定 prompt_hash：同店重跑 hid 幂等
 
+# 已加入方舟「协作奖励计划」并授权的模型（每日采集量次日 11 点后返免费包）。
+# 默认舰队只跑这些模型，保证 catchup 共识（≥2 模型）且零付费；--full-fleet /
+# FLEET_FULL=1 时才纳入未授权模型（按量付费，仅在需要更广共识时手动开启）。
+AUTHORIZED_MODELS = {"deepseek-v4-flash-ga-260731", "glm-5-2-260617"}
+_FLEET_FULL = os.environ.get("FLEET_FULL", "") == "1"
+
 # ---------------------------------------------------------------------------
 # 叶子枚举 / 游标
 # ---------------------------------------------------------------------------
@@ -127,6 +133,13 @@ def api_tasks():
     if not provs:
         return None, ["无可用 API 适配器（缺 key），降级占位"]
     tasks = [(p, m) for p in provs for m in getattr(p, "models", [])]
+    if not _FLEET_FULL:
+        auth = [t for t in tasks if t[1] in AUTHORIZED_MODELS]
+        # 至少保留 2 个授权模型才能形成共识；授权模型不足则退回全量（并标注）
+        if len(auth) >= 2:
+            tasks = auth
+        else:
+            return (MP, tasks), ["授权模型<2，临时使用全量舰队（可能产生付费）"]
     return (MP, tasks), []
 
 
@@ -433,7 +446,11 @@ def main():
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--slice", type=int, default=SLICE)
     ap.add_argument("--max-leaves", type=int, default=10 ** 9)
+    ap.add_argument("--full-fleet", action="store_true",
+                    help="纳入未授权模型（按量付费）；默认只跑授权免费模型")
     args = ap.parse_args()
+    if args.full_fleet:
+        globals()["_FLEET_FULL"] = True
 
     leaves = enum_leaves()
     st = load_state(len(leaves))
