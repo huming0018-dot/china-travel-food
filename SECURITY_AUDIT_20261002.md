@@ -22,8 +22,10 @@
 ### H1 【已修复】日配额未强制 → 可无限刷单/DoS
 - **攻击路径**：`crowd_submit_proof` RPC 不检查 `quota_day`。攻击者用 quota_day=20 的参与者连发 6 批×5 条=**30条全部 accepted**。
 - **危害**：刷结算金额、污染数据、耗尽任务包、批量 DoS。
-- **修复**：函数增加配额闸门——当日已 accepted ≥ quota_day 即返 `quota_exceeded`。
-- **复测**：quota=3 参与者回传 5 条 → 只收 3 条，第 2 批被拒 ✅
+- **修复（两段式）**：
+  1. 批前快速失败——当日已 accepted ≥ quota_day 直接返 `quota_exceeded`；
+  2. **循环内逐条限流**——本批 `v_accepted` 与当日累计相加 ≥ quota_day 时该条拒收（封堵"把超量条目塞进单一批次绕过批前检查"）。
+- **复测**：quota=3 单批塞 8 条 → 只收 3 条；二次回传 → `quota_exceeded` ✅
 
 ### H2 【已修复】跨参与者伪造回传 → 数据错挂他人
 - **攻击路径**：调用参数 `p_participant_id=P-ATTACK01`（approved），envelope 内 `participant_id=P-VICTIM01` → 校验用参数、落库用 envelope → **数据错挂受害者名下**。
@@ -97,10 +99,17 @@
 - [x] M2 quota_day 默认值 → 报名 RLS with check 强制 quota_day=20
 - [x] M3 dedupe 增强 → dedupe_key 归一化 title + accepted 态唯一索引
 
-### 运维建议
-- [ ] 服务器 SSH 走代理（127.0.0.1:7897）恢复部署通道
-- [ ] 报名审核端（crowd_admin.py）确认用 textContent 渲染
-- [ ] 定期重跑本报告的攻击用例作为回归（可做成脚本）
+### 运维建议（已全部落实 2026-10-02）
+- [x] 服务器 SSH 双通道：`~/.ssh/config` 新增 `food-cloud`（直连）与 `food-cloud-proxy`（Clash 代理兜底），实测均通
+- [x] 报名审核端（crowd_admin.py）：确认纯 CLI 终端输出无 HTML 渲染路径，且 display_name/contact 输出前已做 `html.escape` 双保险
+- [x] **回归脚本固化**：`cloud/security_regression.py`（R1-R7 自动化断言，退出码 0=通过；每次迭代/上线前必跑）
+
+### 回归脚本说明
+```
+python3 cloud/security_regression.py
+```
+覆盖：R1 H1 逐条配额限流 / R2 H2 跨参与者伪造 / R3 H3 防枚举 / R4 M1 报名XSS /
+R5 M2 自定配额 / R6 M3 同title去重 / R7 anon 直连 RLS。测试数据自动按外键顺序清理。
 
 ---
 

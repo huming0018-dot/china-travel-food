@@ -136,6 +136,7 @@ begin
   end if;
 
   -- ③b 【安全】日配额强制：当日已 accepted 条数 ≥ quota_day 即拒（防刷单/DoS）
+  --   批前快速失败 + 循环内逐条限流（v_accepted 累计，单批也不能超 quota）
   select quota_day into v_quota
     from public.crowd_participants where participant_id = p_participant_id;
   select count(*) into v_today_used
@@ -181,6 +182,13 @@ begin
     end if;
     if v_kind = 'rating' and coalesce(length(v_rating_reason),0) < 8 then
       v_rejected := v_rejected || format('item_rating_reason_too_short:%s', v_note_id);
+      continue;
+    end if;
+
+    -- 【安全】逐条配额限流：本批已 accepted + 当日已 accepted ≥ quota → 本条拒
+    --   防止攻击者把 > quota 的条目塞进单一批次绕过批前检查
+    if coalesce(v_quota, 0) > 0 and (v_today_used + v_accepted) >= v_quota then
+      v_rejected := v_rejected || format('item_quota_exceeded:%s', coalesce(v_note_id,'?'));
       continue;
     end if;
 

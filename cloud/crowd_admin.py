@@ -18,6 +18,7 @@ crowd_admin.py — 众包参与者管控 CLI（PM 窗口使用）
   python3 cloud/crowd_admin.py stats
 """
 import argparse
+import html
 import secrets
 import string
 import sys
@@ -40,11 +41,14 @@ def _gen_pid():
 
 
 def _row_fmt(r):
+    """格式化一行参与者；昵称/联系方式做 HTML 转义兜底（防审核日志被粘贴渲染成 HTML 时触发 XSS）。"""
+    name = html.escape(r.get('display_name') or '')
+    contact = html.escape(r.get('contact') or '')
     return (f"  {r.get('participant_id'):<14} {r.get('status'):<12} "
             f"配额{r.get('quota_day') or '-'}/日 有效{r.get('total_effective') or 0} "
             f"拒收率{(r.get('reject_rate') or 0)*100:.0f}%  "
-            f"昵称:{r.get('display_name') or ''} 联系:{r.get('contact') or ''} "
-            f"来源:{r.get('source') or ''}")
+            f"昵称:{name} 联系:{contact} "
+            f"来源:{html.escape(r.get('source') or '')}")
 
 
 def cmd_list(args):
