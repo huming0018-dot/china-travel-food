@@ -1,0 +1,66 @@
+{
+  "_doc": "上海美食图鉴·可信 KOL 精选池（curated KOL pool）",
+  "updated_at": "2026-10-02",
+  "north_star": "口味唯一最高、宁空不假；KOL 只作发现入口与特征标签，不计 score_taste；其门店线索须回真实食客 UGC 口味核验 + admission 才收录。",
+  "selection_rules": [
+    "先买单/无提前招待（pay-first, no special treatment）",
+    "有可验证的独立立场记录（敢打假、公开不接广、不被充值）",
+    "内容落到具体菜品/做法/食材，而非'绝绝子/天花板'空话",
+    "按价位适配评价标准，大小店不双标",
+    "专业背景可溯（厨师/美食作家/饮食研究/独立媒体）"
+  ],
+  "exclusion_rules": [
+    "大胃王/娱乐猎奇、纯颜值'漂亮饭'",
+    "模板化种草、团购引流、MCN 矩阵号",
+    "已注销账号、官方电视台/政务转载号",
+    "地域与上海无关、探店内容占比极低"
+  ],
+  "tiers": {
+    "S": "权威：专业声誉即立场（美食家/评论家 或 先买单的独立真探/特厨）",
+    "A": "可信独立：独立媒体或上海本地、立场清晰、内容扎实",
+    "B": "观察：立场相对干净但需持续监控，仅作线索"
+  },
+  "pool": [
+    {"name": "沈宏非", "platform": "cross", "tier": "S", "kind": "美食作家/评论家", "focus": "上海/江南、饮食文化", "in_watchlist": true, "evidence": ["https://www.globalpeople.com.cn"]},
+    {"name": "陈晓卿", "platform": "cross", "tier": "S", "kind": "纪录片导演/美食研究者", "focus": "全国地方风味、小吃", "in_watchlist": true, "evidence": []},
+    {"name": "殳俏", "platform": "cross", "tier": "S", "kind": "美食作家", "focus": "悦食/高端餐饮、食材", "in_watchlist": true, "evidence": []},
+    {"name": "蔡澜", "platform": "cross", "tier": "S", "kind": "香港美食家/作家", "focus": "港式/享乐、食材", "in_watchlist": true, "evidence": []},
+    {"name": "董克平", "platform": "cross", "tier": "S", "kind": "美食评论家", "focus": "正餐、菜系", "in_watchlist": true, "evidence": []},
+    {"name": "小宽", "platform": "cross", "tier": "S", "kind": "美食作家/一大口创始人", "focus": "独立探店（偏北京）", "in_watchlist": true, "evidence": []},
+    {"name": "欧阳应霁", "platform": "cross", "tier": "S", "kind": "香港跨媒体/美食作家", "focus": "饮食生活、家常", "in_watchlist": true, "evidence": []},
+    {"name": "叶怡兰", "platform": "cross", "tier": "S", "kind": "台湾饮食生活作家", "focus": "高端餐饮/茶/食材", "in_watchlist": true, "evidence": []},
+    {"name": "焦桐", "platform": "cross", "tier": "S", "kind": "台湾美食作家", "focus": "台湾菜、饮食文化", "in_watchlist": true, "evidence": []},
+
+    {"name": "真探唐仁杰", "platform": "bilibili/douyin", "tier": "S", "kind": "退休厨师长·独立真探", "focus": "全价位打假、以次充好/缺斤短两", "in_watchlist": true,
+     "stance": "公开承诺若被证明收钱即销号；先吃后评，对养家小店宽容",
+     "evidence": ["https://www.iesdouyin.com/share/video/7175501237662665996", "https://www.iesdouyin.com/share/video/7592874049983766184"]},
+    {"name": "特厨隋坡", "aliases": ["隋卞"], "platform": "bilibili/douyin", "tier": "S", "kind": "特级厨师（师承国宴大师）", "focus": "专业探店+教学，按价位适配", "in_watchlist": true,
+     "stance": "不双标，大小店不同标准；内行揪乱象也科普",
+     "evidence": ["https://www.iesdouyin.com/share/video/7633750334326861683", "https://www.iesdouyin.com/share/video/7645670537474418825"]},
+    {"name": "真探高文麒", "platform": "bilibili/douyin", "tier": "S", "kind": "《舌尖》美食顾问·独立真探", "focus": "先买单再点评、讲菜品来路", "in_watchlist": true,
+     "stance": "先亮消费小票；按价格/原料/手工多维评价，曾被餐饮集团'通缉'",
+     "evidence": ["https://www.iesdouyin.com/share/video/7239236040467303740", "https://www.iesdouyin.com/share/video/7665310976569058662"]},
+    {"name": "二百者也", "platform": "douyin", "tier": "A", "kind": "独立探店", "focus": "不打招呼、无特殊招待", "in_watchlist": false,
+     "stance": "真实无套路，私房菜/家常菜探店",
+     "evidence": ["https://www.iesdouyin.com/share/video/7660736719352647921"]},
+    {"name": "特厨魏味", "platform": "bilibili", "tier": "S", "kind": "专业厨师探店", "focus": "专业口味评判", "in_watchlist": true, "evidence": []},
+
+    {"name": "企鹅吃喝指南", "platform": "bilibili/wechat", "tier": "A", "kind": "独立美食自媒体", "focus": "探店报告/评测/科普", "in_watchlist": true,
+     "stance": "自称国内最具公信力独立美食媒体；注意其电商'企鹅市集'需与评测区分",
+     "evidence": ["http://mp.sohu.com/media/113612"]},
+    {"name": "米雪食记", "platform": "bilibili/douyin", "tier": "A", "kind": "资深老吃家", "focus": "上海餐厅/小吃/蟹宴/面馆", "in_watchlist": true,
+     "stance": "推荐具体到菜品与隐藏吃法，内容扎实",
+     "evidence": ["https://www.iesdouyin.com/share/video/7643783894294170943", "https://www.iesdouyin.com/share/video/7623338817369574696"]},
+    {"name": "米莲娜 Mylène Mathieu", "aliases": ["法国小蹦蹦", "小蹦蹦吃法餐", "米莲娜Mylène"], "platform": "douyin/视频号/bilibili", "tier": "A", "kind": "法国美食博主（里昂商学院美食国际管理硕士）", "focus": "上海在地小店/社区食堂/法式、中法饮食", "in_watchlist": false,
+     "stance": "因真实测评遭商家与水军攻击仍坚持讲真话",
+     "evidence": ["https://www.globalpeople.com.cn/n4/2025/0609/c305916-21624516.html", "http://www.ctnews.com.cn/renwu/m/content/2026-06/25/content_188942.html", "https://www.bilibili.com/video/BV1s6Tu6pEMi/"]},
+
+    {"name": "食帖WithEating", "platform": "bilibili", "tier": "B", "kind": "饮食文化媒体", "focus": "偏饮食文化/人物，探店线索少", "in_watchlist": true, "evidence": []},
+    {"name": "曼食慢语", "platform": "bilibili", "tier": "B", "kind": "烹饪创作者", "focus": "偏菜谱教学", "in_watchlist": true, "evidence": []},
+    {"name": "老饭骨", "platform": "bilibili", "tier": "B", "kind": "资深厨师讲菜", "focus": "偏技法教学", "in_watchlist": true, "evidence": []},
+    {"name": "无所尉吃什么", "platform": "bilibili", "tier": "B", "kind": "美食老饕向探店", "focus": "上海/各地", "in_watchlist": true, "evidence": []},
+    {"name": "减减的魔都吃喝日常", "platform": "douyin", "tier": "B", "kind": "上海本地探店", "focus": "无噱头、纯菜品评价", "in_watchlist": false, "evidence": []},
+    {"name": "any味", "platform": "douyin/xiaohongshu", "tier": "B", "kind": "品鉴向博主", "focus": "菜品品鉴", "in_watchlist": false, "evidence": []}
+  ],
+  "watchlist_cleanup_notes": "现 watchlist 119 家无信任分级，建议：① 按本池给 S/A 标 trust_level=high、B=mid；② 剔除/降级 '账号已注销'、'东南卫视'、政务转载号、纯娱乐大胃王、地域不相关号；③ 新入库 KOL 须补平台永久 id 与主页 URL。"
+}
