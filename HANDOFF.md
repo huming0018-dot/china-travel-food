@@ -10,6 +10,21 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 晚⑫【collector·可信 KOL 精选池 + watchlist 信任分级，已 push `4cc3ff0`】
+
+**用户指令**：“调研之后给出口碑较好、立场清晰的 KOL 选池。” 现 watchlist 119 家无信任分级、混注销号/电视台/政务号。本轮：
+1. **精选池 `research/authority/kol_curated_pool.{json,md}`（新建）**：5 条入选标准（先买单/独立立场可验证/内容有实物/按价位不双标/专业背景可溯）+ 排除规则；分 **S/A/B** 三级。
+   - **S（14）**：美食家/评论家（沈宏非、陈晓卿、殳俏、蔡澜、董克平、小宽、欧阳应霁、叶怡兰、焦桐）＋独立真探/特厨（真探唐仁杰、特厨隋坡、真探高文麒、特厨魏味）。
+   - **A（4）**：企鹅吃喝指南、米雪食记、米莲娜 Mylène（法国小蹦蹦）、二百者也。
+   - **B（7 观察）**：食帖/曼食慢语/老饭骨、无所尉、减减魔都吃喝、any味。
+2. **机制化分级脚本 `cloud/kol_trust_grade.py`（新建，已部署容器）**：按池给 watchlist 标 trust（S/A=high、B=mid），幂等、可复跑。**已给 20 家在库 KOL 标 trust（16 high / 余 mid）**；trust 现网分布 16 high / 102 mid / 1 low。
+3. **4 家精选尚未入库**（二百者也、米莲娜、减减、any味）：多为抖音/视频号，缺平台永久 id/profile，确认 id 后再入库，不臆造。
+4. 立场不变：KOL 仅作发现/特征标签，**不进 score_taste**；其线索须回 UGC 口味核验 + admission。
+5. **候选人口味核验 runner 已建成并闭环（`cloud/candidate_verify.py`，部署主机 food-apify-fill）**：import review_apify_fill 复用 routed 搜索(atomus→opspilot)/采信/三道预算闸门，按**店名**锚定（无需 rid），含**工业/酒店反链过滤**（自助餐/宜家/大酒店/机场/景区/连锁等即便好评也不自动收录）。admission：≥2 独立食客且均分≥3.5 建店，<3.3 reject，余 hold，关店信号 closed；建店前再查重。
+   - **首批实测（3 家，实花≈$0.34）**：The COOK（浦东嘉里大酒店自助餐）被**工业反链过滤**；**宽馬记大排档（10 评，均分4.1，已建 rid 2054，score_taste 74.17）**、**不籍风牛肉面 by 罗福索（6 评/3 独立食客，均分4.33，已建 rid 2055，score_taste 75.71）** 已建店写评。
+   - **待办**：余 26 家候选随预算滚动核验（注意与 food-apify-fill 共用月度额度）；2 新店 cuisine 留空待招牌菜分类机制回填（needs_cuisine），district 待补。
+   - **完整闭环**：KOL线索→高德验真(kol_router)→candidate_verify取真实口味→工业反链→admission→建店写评→ugc_longrun重算score_taste。
+
 ### 2026-10-02 晚⑪【collector·KOL 线索路由器落地接 cron + 全类型信源规划 SOURCE-PLAN，已 push `3004f95`】
 
 **用户指令**：“继续，这一轮还要增加对**源的计划**，如网站、KOL、综艺、独立 App 等。” 本轮把上轮提议的 kol_router 真正落地，并产出覆盖全类型信源的规划文档。
