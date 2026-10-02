@@ -235,6 +235,18 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
         except urllib.error.HTTPError as e:
             last = e
             if e.code == 429:
+                err_code = ""
+                try:
+                    d = json.loads(e.read().decode("utf-8", "ignore"))
+                    err_code = (d.get("error") or {}).get("code", "")
+                except Exception:
+                    pass
+                e._ark_code = err_code
+                if err_code == "SetLimitExceeded":
+                    # 单模型用量上限被暂停（非瞬时 RPM）：不做退避、立即失败，
+                    # 交上层标记该模型暂停并切换兜底，避免长 backoff 假卡死
+                    print("    [429] SetLimitExceeded：该模型用量上限暂停，立即跳过")
+                    raise
                 wait = waits[i] if i < len(waits) else 60
                 print("    [429] backoff", wait, "s")
                 time.sleep(wait)
@@ -503,11 +515,14 @@ def probe_brand(provider, model, brand, locations, n_queries=3):
             fail_codes.append("empty")
         except urllib.error.HTTPError as e:
             body_txt = ""
-            try:
-                body_txt = e.read().decode("utf-8", "ignore")
-            except Exception:
-                pass
-            if e.code == 429 and "SetLimitExceeded" in body_txt:
+            err_code = getattr(e, "_ark_code", "")
+            if not err_code:
+                try:
+                    body_txt = e.read().decode("utf-8", "ignore")
+                except Exception:
+                    pass
+            if e.code == 429 and (err_code == "SetLimitExceeded"
+                                   or "SetLimitExceeded" in body_txt):
                 # 该模型免费额度耗尽并暂停：记入 dead，本进程后续不再空打，继续试下一个模型
                 mark_model_dead(m)
                 print(f"    [model-paused] {m} -> 免费额度耗尽，换下一个")
