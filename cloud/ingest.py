@@ -11,10 +11,26 @@
 import json
 import os
 import pathlib
+import re
 import time
 
 LEDGER = pathlib.Path(os.environ.get(
     "FINDINGS_LEDGER", "/app/data/post_record/findings.jsonl"))
+
+_RE_URL = re.compile(r"^https?://[^\s/$.?#].[^\s]*$", re.I)
+
+
+def valid_source_url(u):
+    """来源 URL 必须真实可定位（scheme+点分主机，无省略号/空白/截断）；
+    空串允许（表示无来源），但给了就必须合法——宁空不假。"""
+    if not u:
+        return True
+    if not isinstance(u, str) or not _RE_URL.match(u.strip()):
+        return False
+    if "..." in u or "…" in u or " " in u:
+        return False
+    host = u.split("://", 1)[-1].split("/", 1)[0].split("?", 1)[0]
+    return ("." in host) and host[-1].isalnum()
 
 
 def _key(rid, field, value, source_url=""):
@@ -27,7 +43,10 @@ def _key(rid, field, value, source_url=""):
 
 def append_finding(rid, field, value, confidence, reason,
                    source_url="", source_platform="", ledger=None):
-    """追加一条证据；已存在同 rid+field+value 返回 False，否则写入返回 True。"""
+    """追加一条证据；已存在同 rid+field+value 返回 False，否则写入返回 True。
+    来源 URL 非法（杜撰/残缺）一律拒收。"""
+    if not valid_source_url(source_url):
+        return False
     lp = pathlib.Path(ledger) if ledger else LEDGER
     rec = {"restaurant_id": int(rid), "field": field, "value": value,
            "confidence": float(confidence), "reason": reason,
@@ -48,6 +67,32 @@ def append_finding(rid, field, value, confidence, reason,
     with lp.open("a", encoding="utf-8") as f:
         f.write(json.dumps(rec, ensure_ascii=False) + "\n")
     return True
+
+
+def supersede(rid, fields, platform="production_probe", ledger=None):
+    """用更新一轮的取证【取代】该 rid 在指定 fields 上、来自 platform 的旧证据：
+    从账本物理移除匹配行（新证据更强/可溯源，旧弱证据不应再参与裁决）。
+    platform=None 表示不限来源。返回移除行数。"""
+    lp = pathlib.Path(ledger) if ledger else LEDGER
+    if not lp.exists():
+        return 0
+    kept, dropped = [], 0
+    for line in lp.read_text(encoding="utf-8").splitlines():
+        try:
+            d = json.loads(line)
+        except Exception:
+            kept.append(line)
+            continue
+        if d.get("restaurant_id") == int(rid) and d.get("field") in fields and \
+           (platform is None or d.get("source_platform") == platform):
+            dropped += 1
+            continue
+        kept.append(line)
+    tmp = lp.with_name(lp.name + ".tmp")
+    body = "\n".join(kept)
+    tmp.write_text(body + ("\n" if body else ""), encoding="utf-8")
+    os.replace(tmp, lp)
+    return dropped
 
 
 def append_many(rows, ledger=None):

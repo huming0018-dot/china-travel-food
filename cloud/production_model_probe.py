@@ -89,6 +89,60 @@ def brand_core(name):
 
 
 # ---------------------------------------------------------------------------
+# 真实 URL 校验 + SearXNG 就绪（防杜撰来源 / 冷启动 0 源）
+# ---------------------------------------------------------------------------
+RE_URL = re.compile(r"^https?://[^\s/$.?#].[^\s]*$", re.I)
+
+
+def is_real_url(u):
+    """来源 URL 必须是真实可定位的 http(s) 地址：有 scheme + 点分主机，
+    且不含省略号/空白/截断尾巴。用于剔除模型杜撰的来源（曾出现
+    "post.smzdm.com/2026年春节前夕..." 这种残缺串）。"""
+    if not isinstance(u, str):
+        return False
+    u = u.strip()
+    if not RE_URL.match(u) or "..." in u or "…" in u or " " in u:
+        return False
+    host = u.split("://", 1)[-1].split("/", 1)[0].split("?", 1)[0]
+    return ("." in host) and host[-1].isalnum()
+
+
+def _searxng_base():
+    return os.environ.get("SEARX_URL", "http://searxng:8080")
+
+
+def searxng_ready():
+    try:
+        with urllib.request.urlopen(_searxng_base() + "/healthz", timeout=6) as r:
+            if r.status == 200:
+                return True
+    except Exception:
+        pass
+    try:
+        with urllib.request.urlopen(
+                _searxng_base() + "/search?q=test&format=json", timeout=8) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+
+_READY_DONE = {"v": False}
+
+
+def ensure_search_ready(force=False):
+    """容器刚重建后的前几十秒，food-cloud→searxng 的网络/DNS 可能尚未就绪；
+    首轮取证前先等待，避免整批 0 源。"""
+    if _READY_DONE["v"] and not force:
+        return True
+    for _ in range(6):
+        if searxng_ready():
+            _READY_DONE["v"] = True
+            return True
+        time.sleep(5)
+    return False
+
+
+# ---------------------------------------------------------------------------
 # LLM 原始调用（支持 tools / tool_calls；MP.chat 不处理工具，故在此实现）
 # ---------------------------------------------------------------------------
 def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_cap=60,
@@ -170,6 +224,7 @@ SIGNALS_FIELDS = [
     "license_hot_cook", "license_packaged_only", "central_kitchen_license",
     "factory_sc", "central_delivery_evidence", "reheat_evidence",
     "premade_packet_evidence", "fresh_wok_evidence", "onsite_prep_evidence",
+    "retail_packaged_products",
     "direct_franchise", "financing", "n_locations", "production_guess",
     "confidence", "supply_chain_entity"]
 
@@ -195,12 +250,12 @@ def _keyless_search(q):
 
 
 def standard_queries(brand):
-    """品牌加引号（强制精确匹配、压制行业泛文）的标准地毯搜索词根：
-    复热向 / 手艺现做向 / 资本规模向。结果再经品牌命中过滤（双重保险）。"""
+    """标准地毯搜索词根：复热向（品牌加引号，强制精确、压制行业泛文）/
+    手艺现做向 / 资本规模向（不加引号以保召回）。结果再经品牌命中过滤（双重保险）。"""
     return [
         f'"{brand}" 中央厨房 料理包 预制菜 复热 供应链',
-        f'"{brand}" 招牌菜 现做 厨师 家烧 堂烹',
-        f'"{brand}" 门店 直营 加盟 上市 IPO',
+        f'{brand} 招牌菜 现炒 现做 厨师 明厨亮灶 锅气',
+        f'{brand} 门店 直营 加盟 上市 集团 公司',
     ]
 
 
@@ -230,14 +285,34 @@ def _mentions_brand(doc, bterms):
     return any(t in (blob_l if t.isascii() else blob) for t in bterms)
 
 
-def gather_evidence(brand, n_queries=3):
+def evidence_url_set(evidence):
+    s = set()
+    for e in evidence:
+        for d in e.get("results", []):
+            u = d.get("source_url")
+            if u:
+                s.add(u)
+    return {u for u in s if is_real_url(u)}
+
+
+def gather_evidence(brand, n_queries=3, _retry=1):
     bterms = brand_terms(brand)
-    ev = []
-    for q in standard_queries(brand)[:n_queries]:
-        res, eng = _keyless_search(q)
-        kept = [d for d in res if _mentions_brand(d, bterms)]
-        ev.append({"query": q, "engine": eng, "raw": len(res), "results": kept})
-        time.sleep(2)
+
+    def _once():
+        ev = []
+        for q in standard_queries(brand)[:n_queries]:
+            res, eng = _keyless_search(q)
+            kept = [d for d in res if _mentions_brand(d, bterms)]
+            ev.append({"query": q, "engine": eng, "raw": len(res), "results": kept})
+            time.sleep(2)
+        return ev
+
+    ev = _once()
+    if _retry and not any(e["results"] for e in ev):
+        # 冷启动/上游瞬态导致 0 源：等待就绪后整轮重取一次，不产出空轮
+        ensure_search_ready(force=True)
+        time.sleep(12)
+        ev = _once()
     return ev
 
 
@@ -269,12 +344,17 @@ def extract_signals_once(provider, model, brand, locations, evidence, retries=2)
         "必须同时收集两类（裁决由后续程序做；每类只留信息量最高的 ≤6 条，引文 ≤40 字，不要长篇照抄）：\n"
         "(A) 复热/工业化：中央厨房、料理包、预制菜、复热、统一配送、供应链公司、工厂、SC许可、门店只做加热；\n"
         "(B) 现做/门店制作：明厨亮灶、现炒、锅气、现包、现切、现烤、现擀、门店后厨、厨师现场制作。\n"
+        "关键区分（极易误判，务必遵守）：若证据是品牌【售卖/推出】预制菜、年夜饭/年货礼盒、"
+        "伴手礼、电商旗舰店或到家速冻产品（语境为 推出/上线/开售/礼盒/年货/电商/购买/包邮），"
+        "一律放进 retail_packaged_products，绝不能作为堂食出餐方式证据；"
+        "只有明确描述【门店/堂食/到店食客】吃到的是料理包复热、统一配送、门店仅做加热"
+        "（语境 后厨/上菜/堂食/到店/门店只做加热），才可计入 (A) 类。\n"
         "并提取：是否上市/股票代码、融资、门店总数、直营/加盟、背后餐饮或供应链公司。\n"
         "字段映射（出现即填，不得留空）：证据含 IPO/上市/港交所/深交所/上交所/股票代码/招股书 → financing=上市；"
         "含“共N家门店/N家直营/直营店N家” → n_locations=N（整数）；含 VC/天使/融资轮 → financing=VC融资；"
         "提到的供应链/母公司/集团名放进 supply_chain_entity。\n"
         "只输出一个 JSON 对象，字段：" + ", ".join(SIGNALS_FIELDS) + "。\n"
-        "*_evidence 与 supply_chain_entity 为数组，元素 {quote(原文短句,尽量保留关键事实),url,kind(reg/news/ugc)}；"
+        "*_evidence、retail_packaged_products 与 supply_chain_entity 为数组，元素 {quote(原文短句,尽量保留关键事实),url,kind(reg/news/ugc)}；"
         "只把最关键的相关句子放进对应数组（每类≤6条）并保留其 URL；"
         "布尔许可字段 true/false/null；financing=上市/VC融资/无/未知；n_locations 为整数或null；"
         "production_guess 取 " + "/".join(PRODUCTION_LABELS) + "；confidence 0-1。\n"
@@ -340,6 +420,7 @@ def candidate_models(provider):
 def probe_brand(provider, model, brand, locations, n_queries=3):
     """model 可为单个模型或候选列表；自动在 429 时轮换模型。
     返回 (sig, evidence, status)；status ∈ ok / no_evidence / llm_ratelimit / llm_error。"""
+    ensure_search_ready()
     evidence = gather_evidence(brand, n_queries=n_queries)
     candidates = [model] if isinstance(model, str) else list(model or [])
     if not candidates:
@@ -350,6 +431,8 @@ def probe_brand(provider, model, brand, locations, n_queries=3):
         try:
             sig = extract_signals_once(provider, m, brand, locations, evidence)
             if sig:
+                # 只允许真实取证 URL 进入裁决，剔除模型杜撰来源
+                sig = filter_signals_by_urls(sig, evidence_url_set(evidence))
                 clear_model_dead(m)
                 print(f"    [model] {m}")
                 return sig, evidence, "ok"
@@ -509,6 +592,83 @@ def _as_bool(v):
 
 
 # ---------------------------------------------------------------------------
+# 真实 URL 白名单过滤 + 严判强模型复核
+# ---------------------------------------------------------------------------
+_EV_KEYS = ["central_delivery_evidence", "reheat_evidence",
+            "premade_packet_evidence", "fresh_wok_evidence",
+            "onsite_prep_evidence", "retail_packaged_products"]
+
+
+def filter_signals_by_urls(sig, urls):
+    """只保留 url 命中真实取证集合的证据项，杜绝模型杜撰来源进入裁决；其余字段保留。"""
+    if not sig:
+        return sig
+    allowed = set(urls)
+    out = dict(sig)
+    for k in _EV_KEYS:
+        kept = [it for it in (out.get(k) or [])
+                if isinstance(it, dict) and is_real_url(it.get("url", ""))
+                and it.get("url") in allowed]
+        out[k] = kept
+    # supply_chain_entity：无 url 的实体名无法溯源，一律不采信
+    out["supply_chain_entity"] = [
+        it for it in (out.get("supply_chain_entity") or [])
+        if isinstance(it, dict) and is_real_url(it.get("url", ""))
+        and it.get("url") in allowed]
+    return out
+
+
+SEVERE_MODELS = {"预制料理包·复热", "中央厨房·门店复热"}
+
+
+def _confirm_model(provider, exclude=""):
+    """选更强的存活模型做严判复核：优先 pro / glm-5-2 / turbo，否则取候选中最强。"""
+    want = os.environ.get("CONFIRM_MODEL", "")
+    cands = candidate_models(provider)
+    if want and want in cands:
+        return want
+    prefs = [m for m in cands
+             if ("pro" in m or "glm-5-2" in m or "turbo" in m) and m != exclude]
+    pool = prefs or [m for m in cands if m != exclude]
+    return pool[-1] if pool else None
+
+
+def _hold(verdict, why, v2=None):
+    out = dict(verdict)
+    out["production_model"] = None
+    out["central_kitchen"] = (v2 or {}).get("central_kitchen")
+    out["premade_risk"] = (v2 or {}).get("premade_risk")
+    out["rationale"] = why
+    return out
+
+
+def confirm_if_severe(provider, brand, locations, evidence, verdict):
+    """对触发下架的最严两档，用更强模型、同一证据复核一次；一致才保留，
+    不一致/无法复核 → 置空 hold（进复校），避免弱模型误杀好店。"""
+    if not verdict or verdict.get("production_model") not in SEVERE_MODELS:
+        return verdict
+    cm = _confirm_model(provider)
+    if not cm:
+        return _hold(verdict, verdict["rationale"] + "；无更强模型复核，严判暂缓")
+    try:
+        sig2 = extract_signals_once(provider, cm, brand, locations, evidence, retries=1)
+    except Exception as e:  # noqa: BLE001
+        return _hold(verdict, verdict["rationale"] + f"；复核失败({type(e).__name__})，暂缓")
+    if not sig2:
+        return _hold(verdict, verdict["rationale"] + "；复核无信号，暂缓")
+    sig2 = filter_signals_by_urls(sig2, evidence_url_set(evidence))
+    v2 = adjudicate(sig2)
+    if v2.get("production_model") in SEVERE_MODELS:
+        v2["rationale"] = verdict["rationale"] + f"；强模型({cm})复核一致"
+        v2["sources"] = list({*(verdict.get("sources") or []),
+                              *(v2.get("sources") or [])})
+        return v2
+    return _hold(verdict,
+                 f"弱模型判[{verdict['production_model']}]，强模型({cm})复核为"
+                 f"[{v2.get('production_model')}]，不一致→暂缓", v2)
+
+
+# ---------------------------------------------------------------------------
 # 确定性仲裁（docs §4）
 # ---------------------------------------------------------------------------
 def adjudicate(sig):
@@ -639,6 +799,9 @@ def write_findings(brand, rids, verdict):
     srcs = verdict.get("sources") or []
     n_add = 0
     for rid in rids:
+        # 本轮取证取代该店上一轮探针结论（仅 production_probe 来源），
+        # 最新可溯源证据为准；随后只 append 本轮仍成立的结论
+        ingest.supersede(rid, ["production_model", "central_kitchen", "premade_risk"])
         # 出餐方式标签：每独立源一条（需 ≥2 才会被 gate 挂）
         if model:
             for u in srcs:
@@ -733,6 +896,7 @@ def run():
                            "searches": len(evidence)})
             continue
         verdict = adjudicate(sig)
+        verdict = confirm_if_severe(p, bname, locs, evidence, verdict)
         mark = ""
         if expect:
             mark = "  ✅符合预期" if verdict["production_model"] == expect else (

@@ -178,6 +178,7 @@ def main():
             break
         if status == "ok" and sig:
             verdict = PMP.adjudicate(sig)
+            verdict = PMP.confirm_if_severe(p, bname, locs, _ev, verdict)
             n_add = PMP.write_findings(bname, rids, verdict)
             label = verdict["production_model"]
             n_dom = len(verdict.get("sources") or [])
