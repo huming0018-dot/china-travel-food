@@ -10,6 +10,23 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 上午⑤【dev·gate 产出 Apify 采证 brief + 硬负面清单，把门决定预算，commit `8d08c6e`】
+
+**痛点（用户）**：二次验证只出报告、看不到对在架店的处理与评分变化；Apify 撒网 ~986 家、钱没花在刀刃上；没有明确探针 brief。
+
+**已落地**：
+- 新增 `cloud/gate_apify_brief.py`：读 restaurants + verified-diner 声音（trust mid/high 的不同作者数）+ 当前奖项，产出分层名单：
+  - **P0 捍卫精选 63**：精选店但独立食客声音 <2；
+  - **P1 榜单核实 12**：非精选但当前在榜（米其林星/必比登/黑珍珠）且声音 <2，采证定晋升；
+  - **P2 苗头 73**：other_list 或聚合口味≥4 且声音 <2；
+  - 其余 0 声音/无榜单/非精选 **1033 家不付费**（不撒胡椒面）。
+  - 硬排除 **22 家**（central_kitchen=确认 或 premade_risk=高：南京大牌档/点都德/望湘园/小菜园/新旺/东发道/鲜芋仙/苹果花园/云海肴等）→ 写 `post_record/negative_list.json`，不采证、不精选。
+- 产出：容器 `research/atlas/apify_brief.json`（机器）+ `apify_brief.md`（人工）+ `worth_fill.json`（控制器队列，已 docker cp 到主机 `/home/ubuntu/food-apify-fill/`）。
+- 改 `review_apify_fill.py`：`worth_ids()`→`worth_order()`，`select_targets` 第一排序改为 brief 位置（P0→P1→P2），实测 123 个可采目标（148 减大型/资本连锁 big_hold）前 10 全 P0。
+- **闭环**：chain_review 下架的新荣记南京西路/BFC、小陶面馆进入 P1，采到 ≥2 强食客声音即可回提；下架与回提都由证据驱动。
+- 已接每日 cron：`/etc/cron.d/food_indep` 在 gate_apply+chain_review 后跑 gate_apify_brief（00:10），00:20 docker cp worth_fill 到主机。
+- 待前端放行：默认发现/好店视图按 negative_list 隐藏 central=确认/premade=高（规则并入 standard2 显示映射）；评分变化随 Apify 采到真实评价由 trigger 重算（卡在 Apify 充值/11-01 重置）。
+
 ### 2026-10-02 凌晨④【dev·统一写入门：采集器只写 findings，事实列由 gate 收口】
 
 **目标**：消除各采集器对 `restaurants` 事实列的直写，统一为「采集 → findings 证据 → gate_apply 仲裁 → 写库」。
