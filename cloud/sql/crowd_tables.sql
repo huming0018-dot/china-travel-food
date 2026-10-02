@@ -81,7 +81,7 @@ create table if not exists public.crowd_proofs (
                   check (gate_status in ('accepted','rejected')),
   dedupe_key      text,                            -- md5(cjk_norm(title)|note_id) 防同篇重复
   created_at      timestamptz not null default now(),
-  unique (participant_id, task_id, proof_seq)      -- 幂等：同包同序只收一次
+  unique (participant_id, task_id, proof_seq, note_id)      -- 幂等：信封级 seq + item级 note_id 双维度去重
 );
 create index if not exists idx_crowd_proofs_pid    on public.crowd_proofs(participant_id);
 create index if not exists idx_crowd_proofs_task   on public.crowd_proofs(task_id);

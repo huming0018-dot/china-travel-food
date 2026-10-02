@@ -63,7 +63,7 @@ def publish(pack_items, pack_size, target, kpi_min, quota_day, source="qa"):
             "pack_seq": i,
         }
         body = {
-            "task_id": 0,  # 自增由库分配（若表无 task_id 自增则用外部序号）
+            # task_id 为 generated always as identity，POST 时禁止传值（库自增）
             "pack_type": "keyword" if not is_store else "store",
             "pack": p,
             "target": target,
