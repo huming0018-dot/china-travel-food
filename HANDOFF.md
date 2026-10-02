@@ -4483,3 +4483,19 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
   1. **调用数偏多**：22 调用/5 品牌（≈4.4/品牌），因 extract 与 confirm 在 mini/lite/deepseek 间故障转移重试。改为：抽取固定钉死最便宜且稳定的 mini，仅在真实报错才升级；非严重标签跳过 confirm；命中即停不遍历 → 调用/ token 预计降 3–4×。
   2. **召回稀疏**：4/5 品牌 0 接地源（keyless 引擎对这些品牌无品牌命中证据）。需检查 SearXNG 后端引擎是否启用、扩充/校准查询词（品牌+品类共现），让真实有报道的品牌能凑到 ≥2 独立源；准确性优先（宁空不假），覆盖随召回改善增长。
   3. 计量台账已可长期统计，建议每周汇总一次实际账单对账，按"每标签成本"评估性价比。
+
+---
+
+## 2026-10-02 晚 · 优化#1 落地 → 对比批 → 撞「安心体验模式」总闸（关键）
+
+- **优化 #1 已落地并烘焙**（提交 `51ac270`，与 dev 的 cost 修复 `5228c13/632b07e` 合并）：
+  - 新增 `EXTRACT_PRIMARY=doubao-seed-2-0-mini-260428` 与 `extraction_models(provider)`：返回 `[mini 主模型]` 且**至多追加 1 个存活兜底**；`probe_brand`/runner 抽取改走此列表（原 `candidate_models` 遍历多模型）。
+  - `chat_raw`：模型 200 但 content/tool_calls 全空时**不再同模型重试**，返回空 content，parse→None 后最多升级 1 个兜底；`confirm_if_severe` 强模型遍历 `cms[:3]→cms[:2]`，非严重标签本就零调用。
+- **两个运行期卡点修复（均已推送+烘焙）**：
+  1. `cdfc615`：429 响应体 `error.code=SetLimitExceeded`（单模型用量上限/安心体验暂停，**非瞬时 RPM**）时**立即失败、不做 8/16s 退避**；错误码挂 `e._ark_code`，避免 chat_raw 与 probe_brand 重复 `e.read()` 取空。
+  2. `79103fe`：runner 预检由"只 ping 最便宜模型、429 即整轮中止"改为**遍历 extraction_models 逐个 ping，任一健康即放行**。
+- **部署脆弱性根治**：此前另一个会话（dev）跑 build_sync 会 recreate food-cloud、回退我 `docker cp` 的运行期改动并杀死手工批次。现所有改动走 git 提交→主机以 **ubuntu** 用户跑 `bash /home/ubuntu/food-cloud/build_sync.sh`（root/sudo 跑会因 `/root/china-travel-food` 不存在 fresh clone、host key 校验失败）；批次用宿主 `sudo docker exec -d food-cloud bash -c '...'` 脱离启动（不能在容器内嵌套 docker exec）。
+- **★ 真正总闸＝方舟「安心体验模式 Safe Experience Mode」**：控制台「开通管理」顶部显示"已开启"。该模式下**每个模型仅 50 万 token 免费额度、用尽即自动暂停且不产生费用**；本项目累计跑批已把几乎所有模型的 50 万耗尽（mini 剩 2,327；ds-flash/turbo/glm5.3 剩 0；glm5.2 剩 1,539），故全部模型 `SetLimitExceeded`。免费额度**一次性、不按日重置**；无公开 OpenAPI 可切换，只能在控制台操作。
+  - **解法 A（推荐，继续免费）**：开通管理顶部把「安心体验」**关闭**（需模型已正式开通/实名），再点协作奖励计划「**立即参与**」→ **个人每日单模型 200 万 token、企业认证后 500 万 token 免费**（每日刷新，约为现额度的 4×/天）。
+  - **解法 B（极廉价兜底）**：关闭安心体验→按量付费；按单价这批 50 万/模型的量折算仅约 ¥1 上下，并在控制台设**月度预算硬顶**替代安心体验做防失控。
+- **对比批现状**：优化后 5 品牌批次因安心体验总闸在第 1 店（南翔馒头店 1584）即暂停，未取得完整优化口径；仅预检 lite ping 205 token。**待解法 A/B 落地后重跑**，再与基线（22 调用 / 56,123 token / ¥0.091–0.183）做降幅对比。
