@@ -91,11 +91,15 @@ def brand_core(name):
 # ---------------------------------------------------------------------------
 # LLM 原始调用（支持 tools / tool_calls；MP.chat 不处理工具，故在此实现）
 # ---------------------------------------------------------------------------
-def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_cap=60):
+def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_cap=60,
+             max_tokens=None):
     """OpenAI 兼容 chat completion；使用 SSE 流式累积，避免大输出在读上空闲超时。
     返回 message 形态 dict（content / tool_calls）。
-    timeout=单次读空闲上限；hard_cap=整次请求墙钟硬上限（服务端挂起不返回时快速失败）。"""
+    timeout=单次读空闲上限；hard_cap=整次请求墙钟硬上限（服务端挂起不返回时快速失败）。
+    max_tokens=输出上限（封顶计费，防止冗长 JSON 失控）。"""
     body = {"model": model, "messages": messages, "temperature": 0.2, "stream": True}
+    if max_tokens:
+        body["max_tokens"] = int(max_tokens)
     if tools:
         body["tools"] = tools
         body["stream"] = False  # 工具调用路径不流式（当前主流程不用）
@@ -237,12 +241,22 @@ def gather_evidence(brand, n_queries=3):
     return ev
 
 
-def _evidence_brief(evidence, top=6, snip=220):
+def _evidence_brief(evidence, top=5, snip=170):
+    """跨查询按 source_url 去重（同一篇常被多个词命中，避免重复喂给 LLM 浪费输入 token）。"""
     lines = []
+    seen = set()
     for e in evidence:
         lines.append(f"【搜索】{e['query']}（引擎 {e['engine']}）")
-        for d in e["results"][:top]:
-            lines.append(f"- {d.get('source_host')} | {d.get('source_title','')[:70]}\n  {(d.get('snippet') or '')[:snip]}")
+        n = 0
+        for d in e["results"]:
+            key = d.get("source_url") or (d.get("source_host", "") + d.get("source_title", ""))
+            if key in seen:
+                continue
+            seen.add(key)
+            lines.append(f"- {d.get('source_host')} | {d.get('source_title','')[:60]}\n  {(d.get('snippet') or '')[:snip]}")
+            n += 1
+            if n >= top:
+                break
     return "\n".join(lines)
 
 
@@ -251,8 +265,8 @@ def extract_signals_once(provider, model, brand, locations, evidence, retries=2)
     prompt = (
         f"品牌：{brand}\n库内分店：{locations}\n"
         f"以下是已检索到的网页证据（可能含无关或营销内容，需甄别）：\n{brief}\n\n"
-        "任务：从证据中【充分摘录】与该品牌【出餐方式/供应链/资本规模】有关的所有原文句子。\n"
-        "必须同时、尽量完整地收集两类（不要自行取舍，宁可多摘录，裁决由后续程序做）：\n"
+        "任务：从证据中摘录与该品牌【出餐方式/供应链/资本规模】最关键的原文句子。\n"
+        "必须同时收集两类（裁决由后续程序做；每类只留信息量最高的 ≤6 条，引文 ≤40 字，不要长篇照抄）：\n"
         "(A) 复热/工业化：中央厨房、料理包、预制菜、复热、统一配送、供应链公司、工厂、SC许可、门店只做加热；\n"
         "(B) 现做/门店制作：明厨亮灶、现炒、锅气、现包、现切、现烤、现擀、门店后厨、厨师现场制作。\n"
         "并提取：是否上市/股票代码、融资、门店总数、直营/加盟、背后餐饮或供应链公司。\n"
@@ -261,29 +275,66 @@ def extract_signals_once(provider, model, brand, locations, evidence, retries=2)
         "提到的供应链/母公司/集团名放进 supply_chain_entity。\n"
         "只输出一个 JSON 对象，字段：" + ", ".join(SIGNALS_FIELDS) + "。\n"
         "*_evidence 与 supply_chain_entity 为数组，元素 {quote(原文短句,尽量保留关键事实),url,kind(reg/news/ugc)}；"
-        "凡证据中出现的相关句子都要放进对应数组并保留其 URL；"
+        "只把最关键的相关句子放进对应数组（每类≤6条）并保留其 URL；"
         "布尔许可字段 true/false/null；financing=上市/VC融资/无/未知；n_locations 为整数或null；"
         "production_guess 取 " + "/".join(PRODUCTION_LABELS) + "；confidence 0-1。\n"
         "只能引用上面真实出现的引文和 URL，禁止编造；完全无据的字段填 null；不要输出 JSON 以外的话。")
     messages = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": prompt}]
-    msg = chat_raw(provider, model, messages, timeout=30, retries=retries)  # 单次、无工具
+    msg = chat_raw(provider, model, messages, timeout=30, retries=retries,
+                   max_tokens=2200)  # 单次、无工具；封顶输出
     return _parse_signals(msg.get("content") or "")
 
 
+# 模型池状态：记录已被「安心体验」暂停（SetLimitExceeded）的模型，
+# 避免每个品牌都对死模型空打一遍；状态持久化，跨 cron 生效。
+_POOL_STATE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                "model_pool_state.json")
+
+
+def _load_pool_state():
+    try:
+        with open(_POOL_STATE_PATH, encoding="utf-8") as f:
+            return {"dead": set(json.load(f).get("dead", []))}
+    except Exception:
+        return {"dead": set()}
+
+
+_POOL = _load_pool_state()
+
+
+def _save_pool_state():
+    try:
+        tmp = _POOL_STATE_PATH + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump({"dead": sorted(_POOL["dead"])}, f, ensure_ascii=False)
+        os.replace(tmp, _POOL_STATE_PATH)
+    except Exception:
+        pass
+
+
+def mark_model_dead(model):
+    if model not in _POOL["dead"]:
+        _POOL["dead"].add(model)
+        _save_pool_state()
+
+
+def clear_model_dead(model):
+    if model in _POOL["dead"]:
+        _POOL["dead"].discard(model)
+        _save_pool_state()
+
+
 def candidate_models(provider):
-    """候选模型顺序：环境指定优先，其余按全局计数器轮换起点（避开被限流模型）。"""
+    """候选顺序：PROD_MODEL 指定优先；否则【最便宜的存活模型优先】，把一个模型的免费
+    额度用完再用下一个。已暂停(dead)模型不参与（仅当全部暂停才返回全部用于恢复探测）。"""
     models = list(provider.models)
     want = os.environ.get("PROD_MODEL", "")
-    k = (_ROT_MODEL["i"] % len(models)) if models else 0
-    _ROT_MODEL["i"] += 1
-    order = models[k:] + models[:k]
-    if want and want in order:
+    live = [m for m in models if m not in _POOL["dead"]]
+    order = list(live if live else models)
+    if want and want in models:
         order = [want] + [m for m in order if m != want]
     return order
-
-
-_ROT_MODEL = {"i": 0}
 
 
 def probe_brand(provider, model, brand, locations, n_queries=3):
@@ -299,23 +350,30 @@ def probe_brand(provider, model, brand, locations, n_queries=3):
         try:
             sig = extract_signals_once(provider, m, brand, locations, evidence)
             if sig:
+                clear_model_dead(m)
                 print(f"    [model] {m}")
                 return sig, evidence, "ok"
             fail_codes.append("empty")
         except urllib.error.HTTPError as e:
-            print(f"    [model-skip] {m} -> HTTPError {e.code}")
-            fail_codes.append("429" if e.code == 429 else f"http{e.code}")
-            # 同一 ARK key/账号：两个模型都 429，即账号级限流，快速判定不空转
-            if e.code == 429 and fail_codes.count("429") >= 2:
-                return None, evidence, "llm_ratelimit"
+            body_txt = ""
+            try:
+                body_txt = e.read().decode("utf-8", "ignore")
+            except Exception:
+                pass
+            if e.code == 429 and "SetLimitExceeded" in body_txt:
+                # 该模型免费额度耗尽并暂停：记入 dead，本进程后续不再空打，继续试下一个模型
+                mark_model_dead(m)
+                print(f"    [model-paused] {m} -> 免费额度耗尽，换下一个")
+                fail_codes.append("quota")
+            else:
+                print(f"    [model-skip] {m} -> HTTPError {e.code}")
+                fail_codes.append("429" if e.code == 429 else f"http{e.code}")
             continue
         except TimeoutError:
-            # 服务端挂起/排队到近乎零吞吐：两个模型都 stall 即服务不可用，快速暂停
+            # 服务端挂起/排队到近乎零吞吐：记 stall，但仍试完所有候选再判定
             stalls += 1
             print(f"    [model-skip] {m} -> service stall")
             fail_codes.append("stall")
-            if stalls >= 2:
-                return None, evidence, "llm_ratelimit"
             continue
         except Exception as e:
             print(f"    [model-skip] {m} -> {type(e).__name__}")
@@ -324,7 +382,7 @@ def probe_brand(provider, model, brand, locations, n_queries=3):
     has_kept = any(e.get("results") for e in evidence)
     if not has_kept:
         return None, evidence, "no_evidence"
-    if fail_codes and all(c in ("429", "stall") for c in fail_codes):
+    if fail_codes and all(c in ("quota", "429", "stall") for c in fail_codes):
         return None, evidence, "llm_ratelimit"
     return None, evidence, "llm_error"
 
