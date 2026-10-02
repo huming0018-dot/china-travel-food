@@ -50,18 +50,18 @@ python3 cloud/crowd_pack.py --stores stores.json --pack-size 6   # 5-8店/包
 ```
 参与者                    PM                         服务端
   │ ① apply.html 提交报名
-  ├────────────────────────────────────────▶ POST /crowd_participants (pending, TMP-编号)
+  ├────────────────────────────────────────▶ POST /crowd_participants (pending, P-编号)
   │
-  │ ② 审核：crowd_admin.py approve
+  │ ② 报名即用（P-编号）；异常时 crowd_admin.py 干预
   │◀───────────────────────────────────────── 发放正式编号 P-XXXXXX + quota_day
   │
   │ ③ onboarding 填 P-编号，同意协议 → 插件自动拉任务
-  │ ④ 采集回传 → ingest 复查 approved + 累计有效条数
+  │ ④ 采集回传 → ingest 复查非黑名单 + 累计有效条数
   │ ⑤ 违规 → suspend/blacklist → 插件不再派任务 + 服务端拒回传
 ```
 
 ### 报名（参与者）
-打开 `apply.html` → 填昵称/联系方式 → 提交 → 获得 **TMP-** 报名编号 → 等待 PM 审核（1-2 工作日）。
+打开 `apply.html` → 填昵称/联系方式 → 提交 → **立刻获得 P- 参与编号**（报名即用，无需等待审核）。
 
 ### 审核（PM 用 crowd_admin.py）
 ```bash

@@ -40,14 +40,14 @@
   <div class="card" id="applyCard">
     <span class="tag">招募中 · 灵活报名</span>
     <h1>众包采集志愿者报名</h1>
-    <p class="sub">参与「上海美食图鉴」收录与真实口味评分。使用你自己的小红书账号、设备与网络，安装浏览器插件全自动采集，采集强度有硬性安全线保护，绝不触碰账号风控红线。</p>
+    <p class="sub">参与「上海美食图鉴」收录与真实口味评分。使用你自己的小红书账号，安装浏览器插件全自动采集。报名即得参与编号，立即可用，采集强度有安全线保护。</p>
 
     <label>你的昵称（展示用）</label>
     <input id="name" maxlength="20" placeholder="例如：小鹿">
 
     <label>联系方式（微信 / 邮箱）</label>
     <input id="contact" maxlength="60" placeholder="用于发放参与编号与结算通知">
-    <p class="hint">仅用于审核与结算，不会公开。提交后生成 TMP 报名编号，等待审核通过后转为正式参与编号（P-开头）。</p>
+    <p class="hint">仅用于结算与风控，不会公开。提交后立刻获得正式参与编号，立即可开始采集。</p>
 
     <label>备注（可选）</label>
     <input id="note" maxlength="200" placeholder="常用设备 / 常驻区域 / 每周可用时间…">
@@ -58,7 +58,7 @@
 
   <!-- ============ 报名成功卡（在线下载插件） ============ -->
   <div class="card hidden" id="successCard">
-    <span class="tag">✅ 报名成功</span>
+    <span class="tag">✅ 报名成功 · 立即可用</span>
     <h1>欢迎加入！</h1>
     <p class="sub" id="successText"></p>
 
@@ -84,8 +84,8 @@
   <div class="card steps">
     <b>参与流程</b>
     <ol>
-      <li>提交上方报名 → 获得 <b>TMP-</b> 开头报名编号</li>
-      <li>PM 审核（1-2 个工作日）→ 发放正式 <b>P-</b> 参与编号与每日配额</li>
+      <li>提交上方报名 → 立刻获得 <b>P-</b> 参与编号</li>
+      <li>编号立即可用（风控后置，异常行为会被暂停/拉黑）</li>
       <li>安装 Chrome 插件，在插件选项页（onboarding）输入参与编号并同意协议</li>
       <li>插件自动领取任务包、按安全线采集、自动回传</li>
       <li>按有效条数结算（细则见插件内 README）</li>
@@ -119,12 +119,12 @@
     if(!contact){ show(false, "请填写联系方式"); return; }
     if(ANON_KEY.startsWith("REPLACE")){ show(false, "报名入口未配置完成，请联系 PM 获取入口链接"); return; }
 
-    // 生成 TMP 报名编号（客户端生成，服务端仅接受 pending 态写入）
-    const tmp = "TMP-" + Date.now().toString(36).toUpperCase() + "-" +
+    // 生成正式参与编号 P- 开头（客户端生成唯一id，服务端仅接受 pending 态写入）
+    const pid = "P-" + Date.now().toString(36).toUpperCase() + "-" +
                 Math.random().toString(36).slice(2,6).toUpperCase();
 
     const payload = {
-      participant_id: tmp,
+      participant_id: pid,
       display_name: name,
       contact: contact,
       status: "pending",
@@ -149,7 +149,7 @@
         // 报名成功 → 切换卡片，展示编号 + 插件下载
         applyCard.classList.add("hidden");
         successCard.classList.remove("hidden");
-        successText.textContent = "你的报名编号：" + tmp + "\n请保存此编号，等待 PM 审核通过后发放正式参与编号（P-开头）。\n现在就可以先下载插件熟悉流程。";
+        successText.textContent = "你的参与编号：" + pid + "\n请保存此编号（找回需要提供昵称+联系方式）。\n现在即可下载插件，安装后填入编号开始采集。";
         // 回填下载链接相对路径（与 apply.html 同目录的 releases/ 下，由构建脚本生成）
         const rel = document.getElementById("dlLink");
         rel.href = "releases/crowd-extension-v2.0.0.zip";

@@ -5,10 +5,10 @@ crowd_admin.py — 众包参与者管控 CLI（PM 窗口使用）
 
 灵活报名后的审核/管控入口：
   - list [--status pending|approved|suspended|blacklisted|all]  列出参与者
-  - approve <TMP-xxx> [--quota N] [--note 备注]                  批准 → 发放正式 P- 编号
+  - approve <P-xxx> [--quota N] [--note 备注]                     调整配额/留档（报名即用，无需批准）
   - suspend <P-xxx> [--note 备注]                                暂停（拉不到新任务）
   - blacklist <P-xxx> [--note 备注]                              拉黑（永久拒绝回传）
-  - reject <TMP-xxx> [--note 备注]                               驳回报名
+  - reject <P-xxx> [--note 备注]                                  驳回报名
   - stats                                                        全局统计
 
 用法示例：

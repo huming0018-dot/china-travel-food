@@ -13,14 +13,14 @@
 **新架构（本契约 v2 唯一有效版本）**：
 ```
 参与者浏览器 (Chrome 扩展 v2.0.0)
-   │ ① RPC crowd_fetch_tasks(participant_id)     — security definer，服务端校验 approved
+   │ ① RPC crowd_fetch_tasks(participant_id)     — security definer，非黑名单即放行
    │    → 返回 {ok, tasks:[{task_id,pack_type,pack,target,kpi_min,quota_day}]}
    ▼
 扩展本地队列 (chrome.storage.local)
    │ ② 按安全线节奏采集 → 组 envelope（格式不变，§2/§3）
    ▼
    │ ③ RPC crowd_submit_proof(participant_id, envelope) — security definer
-   │    → 服务端校验：approved / sync_version=1 / note_url 含 xiaohongshu.com /
+   │    → 服务端校验：非黑名单 / sync_version=1 / note_url 含 xiaohongshu.com /
    │      rating∈[1,5] / rating_reason≥8字 / 幂等(unique 四元组)
    │    → 落库 + 回写 crowd_tasks.progress + crowd_participants.total_effective
    │    → 返回 {ok, accepted, rejected[], results[], new_progress}
@@ -106,7 +106,7 @@ assignee=pm 且标题带 [CROWD] 前缀的工单，插件拉取端两者都兼�
 ### 4.0 crowd_participants —— 参与者报名与管控（灵活报名闭环）
 | 字段 | 类型 | 说明 |
 |---|---|---|
-| participant_id | text PK | `TMP-`* 报名临时 / `P-`* 审核后正式编号 |
+| participant_id | text PK | `P-`* 参与编号（报名即发，直接可用） |
 | display_name / contact | text | 报名信息（contact 回传前脱敏展示） |
 | status | enum | `pending` / `approved` / `suspended` / `blacklisted` / `rejected` |
 | quota_day | int | 审核时设定日配额（默认 20） |
@@ -114,8 +114,8 @@ assignee=pm 且标题带 [CROWD] 前缀的工单，插件拉取端两者都兼�
 | total_effective / reject_rate | int/float | 累计有效条数 / 拒收率（ingest 回写，风控参考） |
 
 **管控闸门（两端双层）**：
-- 插件端：`fetchActiveTask` 前先查本表，非 `approved` 不发任务（popup 显示拦截原因）。
-- 服务端：`crowd_ingest` 回传时复查，非 `approved` 整包拒收（防绕过插件直发）。
+- 插件端：`fetchActiveTask` 前先查本表，非黑名单（suspended/blacklisted/rejected）不发任务（popup 显示拦截原因）。
+- 服务端：`crowd_ingest` 回传时复查，黑名单/暂停/驳回整包拒收（防绕过插件直发）。
 
 ### 4.1 crowd_tasks —— 任务包状态（与 task_queue 联动）
 | 字段 | 类型 | 说明 |
@@ -168,9 +168,9 @@ assignee=pm 且标题带 [CROWD] 前缀的工单，插件拉取端两者都兼�
 ```
 参与者                        PM/服务端
   │ ① apply.html 填写报名
-  ├──────────────────────────▶ POST /crowd_participants (status=pending, participant_id=TMP-*)
+  ├──────────────────────────▶ POST /crowd_participants (status=pending, participant_id=P-*)
   │                             
-  │ ② 审核（crowd_admin.py approve）
+  │ ② 报名即用（P-编号）；异常时 crowd_admin.py 干预
   │◀─────────────────────────── 发放正式编号 P-XXXXXX + quota_day
   │                             
   │ ③ onboarding 填 P- 编号 → 插件 fetchActiveTask 先查管控闸门
@@ -178,8 +178,8 @@ assignee=pm 且标题带 [CROWD] 前缀的工单，插件拉取端两者都兼�
   │ ⑤ 违规/异常 → suspend / blacklist → 插件端不再派任务、服务端拒回传
 ```
 
-- **灵活报名**：apply.html 匿名提交（anon key 仅可 insert pending 行），无需预发名单；审核通过即获得正式编号随时加入。
-- **管控入口**：cloud/crowd_admin.py（list/approve/suspend/blacklist/reject/stats）。
+- **报名即用**：apply.html 匿名提交（anon key 仅可 insert pending 行），提交即得 P- 编号立即可用；风控后置（黑名单/暂停/驳回即时拦截）。
+- **管控入口**：cloud/crowd_admin.py（list/suspend/blacklist/reject/stats），审核后置为风控抽查。
 - **双层拦截**：插件端发任务前查状态；服务端回传时再查（防绕过插件直发）。
 - **配额**：quota_day 审核时设定，服务端为上限，安全线引擎只降不升。
 

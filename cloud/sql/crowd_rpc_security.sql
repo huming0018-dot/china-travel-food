@@ -19,7 +19,7 @@ drop policy if exists "crowd_apply_self_read" on public.crowd_participants;
 
 -- ------------------------------------------------------------
 -- 1) crowd_fetch_tasks(pid) — 插件领任务（security definer）
---    校验：参与者存在且 approved；返回 status=open 任务包（不含 progress 细节）
+--    校验：参与者存在且非黑名单（pending 即用）；返回 status=open 任务包（不含 progress 细节）
 -- ------------------------------------------------------------
 create or replace function public.crowd_fetch_tasks(p_participant_id text)
 returns jsonb
@@ -37,7 +37,9 @@ begin
   select status into v_status
     from public.crowd_participants
    where participant_id = p_participant_id;
-  if v_status is distinct from 'approved' then
+  -- 【报名即用】H3 防枚举：编号不存在 / suspended / blacklisted / rejected
+  --   一律返回 participant_unavailable；pending（新报名）直接放行，立即可用
+  if v_status is null or v_status in ('suspended', 'blacklisted', 'rejected') then
     return jsonb_build_object('ok', false, 'reason', 'participant_unavailable');
   end if;
 
@@ -62,7 +64,7 @@ grant execute on function public.crowd_fetch_tasks(text) to anon, authenticated,
 
 -- ------------------------------------------------------------
 -- 2) crowd_submit_proof(pid, envelope jsonb) — 插件回传（security definer）
---    服务端校验：approved → sync_version=1 → 幂等 → 域名/字段规则
+--    服务端校验：非黑名单 → sync_version=1 → 幂等 → 域名/字段规则
 --    返回逐条结果：{ok, accepted: N, rejected: [...], new_progress}
 -- ------------------------------------------------------------
 create or replace function public.crowd_submit_proof(p_participant_id text, p_envelope jsonb)
@@ -104,7 +106,9 @@ begin
   select status into v_status
     from public.crowd_participants
    where participant_id = p_participant_id;
-  if v_status is distinct from 'approved' then
+  -- 【报名即用】H3 防枚举：编号不存在 / suspended / blacklisted / rejected
+  --   一律返回 participant_unavailable；pending（新报名）直接放行，立即可用
+  if v_status is null or v_status in ('suspended', 'blacklisted', 'rejected') then
     return jsonb_build_object('ok', false, 'reason', 'participant_unavailable');
   end if;
 
