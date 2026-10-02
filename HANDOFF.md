@@ -4542,3 +4542,16 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - 高德 0 产出经逐家核验为**真实无来源**：汕鹤甜汤/苏三姑 高德 **0 命中**（极新/极小未入 POI）；留住阁/好好彩 返回的 10 条**全是其他品牌**（文潮苑/啫苑…），`pick_best` 按 0.85 阈值正确拒绝，**绝不挪用他店号码**（对齐硬约束）。
 - 结论：跨源故障转移（lesson80）+ 正确分店选择（lesson81）+ 防错分号码均已 live 验证，**#45 关闭**。
 - 遗留＝**#2 腾讯 key**：当前 key 在新日仅 ~278 次（wrapper 口径）即 121，说明该 key 该接口实际配额远低于假设 10000 或被 wrapper 外的消费占用；需在 lbs.qq.com 控制台核对配额/建新 key（可能需用户实名）。这些小店电话的真正增量源是其小红书/抖音官方或点评（登录门，属 #34），非地图通道。
+
+### 五、#38 跑题/边界笔记再验证机制落地（2026-10-03 01:20）
+- 机制（用户指示"不直接淘汰、进候选池再验证"），三段全 live：
+  1. **捕获**：`review_apify_fill.process_shop` 对"未锚定目标店但有食物实质"的笔记调 `capture_boundary`，落 `boundary_notes.jsonl`（url 去重；合集仍走 roundup、纯情绪/软广模板不收）。
+  2. **确定性他店改投**：`boundary_revalidate.reroute_to_other`——anchor_note 已识别"唯一主角"为库内他店 other_rid 且正文有口味信号 → 直接作为该他店真实食客评价入库，不张冠李戴给搜索目标、不经 LLM。
+  3. **LLM 新店线索**：未匹配库内店的笔记按 BATCH_N=8 批量交【已授权免费 glm-5-2，故障回落 flash】判 recover/lead/drop；lead 按店名聚合（≥2 次、或 1 次带可定位区域）→ `boundary_leads.jsonl` 交 discovery/frontier。幂等＝boundary_state.json processed urls，中断未覆盖不标 done。
+- **已验证（合成测试）**：LLM 分类正确（omakase"鮓福@静安寺"→lead；提问→drop）；他店改投正确（红烧肉口味→reroute:3；只谈环境停车→拒"无实物"）。
+- **部署**：代码 commit `5feb846`、烘焙 BUILD_SYNC_DONE；host food-apify-fill 已同步新 review_apify_fill + restart；新增 host cron `/etc/cron.d/food_boundary`（7,27,47 分，boundary_relay.sh 把 host 账本 docker cp 进容器并跑 revalidate --apply；ARK 密钥只在容器、不外传）。
+- **状态：机制完整落地、各代码路径已验证；真实规模化仅卡在 Apify 余额（见下），故 #38 暂留 in_progress，待首批真实 boundary 端到端跑通即关。**
+
+### 六、Apify $90 月度硬顶已耗尽（2026-10-03 01:18）
+- food-apify-fill 重启后即 `@@STATUS NO_CREDIT remaining=$0.022`（<地板 $0.15），长睡 14400s。即本月 $90 cap 已用 ≈$89.98。
+- **需用户决策**：①继续提额（REST PUT maxMonthlyUsageUsd）让 worth_fill + boundary 续跑；②或暂停付费采集、等 ARK 免费额度覆盖的轻量通道。提额/支付必须本人。
