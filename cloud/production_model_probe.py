@@ -903,28 +903,30 @@ def _class_reason(url, base_reason):
 
 def write_findings(brand, rids, verdict):
     model = verdict["production_model"]
-    srcs = verdict.get("sources") or []
+    srcs = [u for u in (verdict.get("sources") or []) if ingest.valid_source_url(u)]
+    ck = verdict.get("central_kitchen")
+    pr = verdict.get("premade_risk")
+    plats = ("production_probe", "production_probe_replay")
     n_add = 0
+    if not srcs:
+        # 本轮无接地来源（源0/空跑）：不取代、不写，避免稀疏跑抹掉既有好标签
+        return 0
     for rid in rids:
-        # 本轮取证取代该店上一轮探针结论（覆盖 production_probe 与
-        # production_probe_replay 两个历史来源），最新可溯源证据为准
-        ingest.supersede(rid, ["production_model", "central_kitchen", "premade_risk"],
-                         platform=("production_probe", "production_probe_replay"))
-        # 出餐方式标签：每独立源一条（需 ≥2 才会被 gate 挂）
+        # 出餐方式标签：每独立源一条；仅当本轮有接地的非空结论才取代旧值
         if model:
+            ingest.supersede(rid, ["production_model"], platform=plats)
             for u in srcs:
                 if ingest.append_finding(
                         rid, "production_model", model, 0.9,
                         _class_reason(u, f"{brand}出餐方式为{model}；{verdict['rationale']}"),
                         source_url=u, source_platform="production_probe"):
                     n_add += 1
-        # 央厨 / 预制 支撑字段
-        ck = verdict.get("central_kitchen")
-        pr = verdict.get("premade_risk")
+        # 央厨 / 预制 支撑字段（同样仅在本轮接地时取代该字段）
         for field, val in (("central_kitchen", ck), ("premade_risk", pr)):
             if not val:
                 continue
-            for u in (srcs or ["https://www.sogou.com/web?query=" + brand]):
+            ingest.supersede(rid, [field], platform=plats)
+            for u in srcs:
                 if ingest.append_finding(
                         rid, field, val, 0.85,
                         _class_reason(u, f"{brand}{field}={val}；{verdict['rationale']}"),
