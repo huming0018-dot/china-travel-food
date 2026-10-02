@@ -67,8 +67,8 @@
       <p class="hint" style="text-align:left;">电脑（macOS/Windows）：<a href="install.html" style="color:var(--brand);font-weight:600;">点此打开安装引导</a>（自动检测系统，一键脚本）<br>
       Android 手机：<a href="install-mobile.html" style="color:var(--brand);font-weight:600;">点此打开手机版教程</a>（需 Kiwi 浏览器）<br>
       iPhone 暂不支持（苹果系统限制）。</p>
-      <a id="dlLink" href="crowd-extension-v3.0.0.zip" download>⬇️ 下载插件 v3.0.0（zip）</a>
-      <p class="zip-name">文件：crowd-extension-v3.0.0.zip · 全自动采集 · 安全线保护 · 支持电脑/Android</p>
+      <a id="dlLink" href="crowd-extension-v3.1.0.zip" download>⬇️ 下载插件 v3.1.0（zip）</a>
+      <p class="zip-name">文件：crowd-extension-v3.1.0.zip · 全自动采集 · 安全线保护 · 支持电脑/Android</p>
     </div>
 
     <div class="steps">
@@ -167,8 +167,8 @@
         successText.textContent = "你的参与编号：" + pid + "\n请保存此编号（找回需要提供昵称+联系方式）。\n现在即可下载插件，安装后填入编号开始采集。";
         // 回填下载链接相对路径（与 apply.html 同目录的 releases/ 下，由构建脚本生成）
         const rel = document.getElementById("dlLink");
-        rel.href = "releases/crowd-extension-v3.0.0.zip";
-        rel.setAttribute("download", "crowd-extension-v3.0.0.zip");
+        rel.href = "releases/crowd-extension-v3.1.0.zip";
+        rel.setAttribute("download", "crowd-extension-v3.1.0.zip");
       } else {
         const t = await resp.text();
         show(false, "提交失败（" + resp.status + "）：" + t.slice(0,120));

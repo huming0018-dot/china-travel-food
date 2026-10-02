@@ -23,10 +23,55 @@ import os
 import sys
 import time
 import urllib.request
+import fcntl  # 进程锁（防多监听实例并发互相覆盖快照）
 
 TOKEN_PATH = "/Users/deuce/Library/Application Support/Doubao/Default/.doubao/agent_mode/workspace/.sessions/38444479935001090/agents/m_0cwp6SalkKS/system/sbp_token.txt"
 PROJECT = "bdwrhshgdeghgyzwpxnl"
 SNAP_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".data", "crowd_smoke_last.json")
+LOCK_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".data", "crowd_smoke.lock")
+
+
+class SnapshotLock:
+    """跨进程互斥：多个监听实例并发跑时，只有持锁者读写快照。
+    其他实例不阻塞，而是读取当前快照计算自己的 diff（避免互相覆盖）。"""
+
+    def __init__(self):
+        self._fd = None
+
+    def acquire(self):
+        os.makedirs(os.path.dirname(LOCK_FILE), exist_ok=True)
+        self._fd = open(LOCK_FILE, "w")
+        try:
+            fcntl.flock(self._fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            return True  # 拿到锁：本次快照可写
+        except (OSError, IOError):
+            return False  # 已有实例持锁：只读快照，不写
+
+    def release(self):
+        if self._fd:
+            try:
+                fcntl.flock(self._fd, fcntl.LOCK_UN)
+            except Exception:
+                pass
+            self._fd.close()
+
+
+def read_snapshot():
+    if os.path.exists(SNAP_FILE):
+        try:
+            with open(SNAP_FILE) as f:
+                return json.load(f)
+        except Exception:
+            return None
+    return None
+
+
+def write_snapshot(cur):
+    os.makedirs(os.path.dirname(SNAP_FILE), exist_ok=True)
+    tmp = SNAP_FILE + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(cur, f)
+    os.replace(tmp, SNAP_FILE)  # 原子替换，防半写文件
 
 
 def get_token():
@@ -88,16 +133,15 @@ def main():
         i = sys.argv.index("--loop")
         loop = int(sys.argv[i + 1]) if i + 1 < len(sys.argv) else 300
 
-    prev = None
-    if os.path.exists(SNAP_FILE):
-        try:
-            prev = json.load(open(SNAP_FILE))
-        except Exception:
-            prev = None
-
+    prev = read_snapshot()
     cur = snapshot()
-    os.makedirs(os.path.dirname(SNAP_FILE), exist_ok=True)
-    json.dump(cur, open(SNAP_FILE, "w"))
+
+    # 并发保护：仅持锁者更新共享快照；未持锁实例只读快照计算自己的 diff
+    lock = SnapshotLock()
+    has_lock = lock.acquire()
+    if has_lock:
+        write_snapshot(cur)
+    lock.release()
 
     d = diff(prev, cur)
     if as_json:
@@ -125,7 +169,10 @@ def main():
             time.sleep(loop)
             prev2 = cur
             cur = snapshot()
-            json.dump(cur, open(SNAP_FILE, "w"))
+            lk = SnapshotLock()
+            if lk.acquire():
+                write_snapshot(cur)
+            lk.release()
             d2 = diff(prev2, cur)
             if d2:
                 print(f"  [{cur['at']}] 变化: {json.dumps(d2, ensure_ascii=False)}")

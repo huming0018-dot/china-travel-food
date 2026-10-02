@@ -110,7 +110,23 @@ async function fetchActiveTask() {
 }
 
 // ---------------------------------------------------------------- 采集执行
+// 并发互斥（v3.1）：service worker 单线程但 alarm 周期触发可能重入
+// （例如上次采集/回传因网络慢超过 HEARTBEAT_MIN），必须防重入：
+//  - _running 标志：doCollectOnce 执行期间拒绝再次进入（busy 直接跳过）
+//  - finally 释放：无论成功/异常都复位，避免永久锁死
+let _running = false;
+
 async function doCollectOnce() {
+  if (_running) return { status: "busy" }; // 防重入：上次任务未结束
+  _running = true;
+  try {
+    return await _collectOnceInner();
+  } finally {
+    _running = false;
+  }
+}
+
+async function _collectOnceInner() {
   const wm = await safety.queueWatermark();
   if (wm.full) {
     await uploadProofs();
