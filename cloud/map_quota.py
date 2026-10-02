@@ -42,7 +42,7 @@ PHONE_RESERVE = int(os.environ.get("MAP_PHONE_RESERVE", 3000))
 AMAP_PHONE_RESERVE = int(os.environ.get("AMAP_PHONE_RESERVE", 800))
 
 # 消费者优先级：数字越小优先级越高
-CONSUMER_PRIORITY = {"phone": 0, "coord": 1, "hours": 2, "full": 3}
+CONSUMER_PRIORITY = {"phone": 0, "coord": 1, "chain": 2, "hours": 3, "full": 4}
 
 # 腾讯默认 key/SK（与 tencent_sig 保持一致；可用 TENCENT_MAP_KEYS/SKS 覆盖）
 TENCENT_FALLBACK_KEY = "7PQBZ-7IDKZ-YUHXF-7V2GG-M2B3O-4OBT6"

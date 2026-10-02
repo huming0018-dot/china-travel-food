@@ -69,6 +69,10 @@ RE_REG = re.compile(r"注册|工商|企查查|天眼查|爱企查|股权|控股|
 RE_BRANCH = re.compile(r"分店|分支|门店|加盟|官网|连锁|门店列表")
 RE_NEWS = re.compile(r"新闻|报道|媒体|公众号|测评")
 RE_DOM = re.compile(r"https?://([^/]+)")
+# 集团关系连接词：出现即表明文本里点名的别家品牌与本店是母/子/姐妹/合作关系
+RELATION_CUE = re.compile(
+    r"旗下|隶属|所属|同集团|集团|姐妹|子品牌|高端品牌|高端版本|高端线|控股|联袂|联创|"
+    r"品牌管理|运营主体|运营方|运营|团队|合作|联手|携手|背书")
 
 
 def domain(url):
@@ -205,7 +209,7 @@ def build_brand_index(rests, P):
 
 
 def self_tokens(store_name, P):
-    """本店品牌的自证 token 集合（中文含首2字/分段；拉丁含词与前两词拼接）。"""
+    """本店品牌的自证 token 集合（中文含首2字/分段/汉字+数字；拉丁含词与前两词拼接）。"""
     core_name = _brand_core(store_name)
     toks = set()
     # 中文：按非汉字切段，每段取归一全段 + 前 2 字（品牌前缀最具区分度）
@@ -215,6 +219,11 @@ def self_tokens(store_name, P):
             toks.add(ns)
         if len(seg) >= 2:
             toks.add(P.cjk_norm(seg[:2]))
+    # 汉字+数字品牌（福1039 / 福1088）：保留相邻数字
+    for seg in re.findall(r"[一-鿿]+[0-9]+", core_name):
+        ns = P.cjk_norm(seg)
+        if ns and len(ns) >= 2:
+            toks.add(ns)
     # 拉丁：小写词(≥3) + 前两词拼接
     words = re.findall(r"[A-Za-z]+", core_name.lower())
     for w in words:
@@ -240,6 +249,28 @@ def brand_contradiction(store_name, text, brand_index, self_rid, P):
         if bname in nt and self_rid not in rids:
             return bname
     return None
+
+
+def named_other_brands(text, brand_index, self_rid, P):
+    """文本中点名的、非本店的在库品牌集合。"""
+    nt = P.cjk_norm(text or "")
+    return {b for b, rids in brand_index.items()
+            if b in nt and self_rid not in rids}
+
+
+def build_relations(findings, brand_index, P):
+    """rid -> 关联品牌集合：仅当 finding 带【关系连接词】且点名别家品牌时建立。"""
+    rel = defaultdict(set)
+    for d in findings:
+        if d.get("field") != "investor_info":
+            continue
+        rid = d.get("restaurant_id")
+        text = (d.get("reason") or "") + " " + str(d.get("value") or "")
+        if not RELATION_CUE.search(text):
+            continue
+        for b in named_other_brands(text, brand_index, rid, P):
+            rel[rid].add(b)
+    return rel
 
 
 def price_implausible(newv, oldv):
@@ -272,6 +303,7 @@ def build_plan():
     cur = {r["id"]: r for r in rests}
     P = core.pipeline_common()
     brand_index = build_brand_index(rests, P)
+    relations = build_relations(findings, brand_index, P)
 
     label_patches = defaultdict(dict)
     decisions = []
@@ -303,13 +335,16 @@ def build_plan():
         if fld in INFO_FIELDS and nowv is not None and nowv in credible_vals:
             dec = {"action": "none", "value": None, "why": "现值已在可信候选中，保持"}
 
-        # 防错一：investor 文本未出现本店品牌（自证缺失=错挂），或点名别家 → hold
+        # 防错一：investor 点名【非关联】别家在库品牌（且无本店）= 错挂 → hold；
+        # 点名母/子/姐妹/合作品牌（在 relations 内）或仅自证缺失 → 放行
+        # （运营公司本名常与品牌不同，集团子品牌也只写母公司）。
         if fld == "investor_info" and dec.get("action") == "apply" and dec.get("value"):
             if not self_present(store_name, dec["value"], P):
-                other = brand_contradiction(store_name, dec["value"], brand_index, rid, P)
-                tail = f"，点名别家「{other}」" if other else ""
-                dec = {"action": "hold", "value": None,
-                       "why": f"investor 文本未出现本店品牌{tail}，疑似错挂"}
+                named = named_other_brands(dec["value"], brand_index, rid, P)
+                unrelated = named - relations.get(rid, set())
+                if unrelated:
+                    dec = {"action": "hold", "value": None,
+                           "why": f"investor 点名非关联别家「{sorted(unrelated)[0]}」、未出现本店，疑似错挂"}
         # 防错二：price 证据未出现本店品牌，或相对存量极端偏离 → hold
         if fld == "price_avg" and dec.get("action") == "apply":
             if not self_present(store_name, evidence_text, P):
