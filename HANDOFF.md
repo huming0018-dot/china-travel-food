@@ -10,6 +10,20 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 晚⑪【collector·KOL 线索路由器落地接 cron + 全类型信源规划 SOURCE-PLAN，已 push `3004f95`】
+
+**用户指令**：“继续，这一轮还要增加对**源的计划**，如网站、KOL、综艺、独立 App 等。” 本轮把上轮提议的 kol_router 真正落地，并产出覆盖全类型信源的规划文档。
+
+1. **`cloud/kol_router.py`（新建，已部署容器 `/app/cloud/`，已接免费 cron）**：
+   - 管线＝拉 `food_kol_mentions`(unmatched/ambiguous，共 **300**) JOIN `food_kol_posts`(post_id→kol_id) → 碎片/地名/分店守卫 `is_clean_brand` → 按品牌核心聚合 distinct kol_id（独立声音）→ 高德 POI 验真 → 与现有 restaurants 核心比对分流。
+   - **两道关键防污染（迭代修复）**：① 守卫拦截句子碎片（「希望店/锅底味道还行/号线世博会博物馆/免费续面…」）、纯地名/业态（「正大广场店/上海本帮菜馆/牛排馆」）、剥离后为空、地区词+纯品类；② 验真**只接受餐饮 POI（高德 typecode 以 05 开头）**，排除公证处/三丽鸥/酒店/宜家等非餐饮，并按 **poi_id 去重**（修「苍蝇小馆」重复）。
+   - **首次全量实跑（109 候选做验真）**：**29 家全新餐饮候选（A 级 1 / B 级 28）+ 4 家已在库(alias) + 75 无 POI 剔除**。产物 `/app/data/research/kol/{kol_lead_fill.json, kol_lead_rejected.jsonl, kol_alias_link.jsonl, kol_router_state.json}`。
+   - 铁律：**绝不直接建 restaurants、绝不把 KOL 声音当口味**；KOL 仅作发现/特征标签。
+   - **cron（容器 root crontab 第 26 条，78 行）**：`53 */6 * * *`（kol_monitor `:37` 后 16 分钟），flock `/tmp/kolrouter.lock`，`--verify --apply --max-check 40`，免费、配额自守、断点续跑。
+2. **`cloud/SOURCE-PLAN.md`（新建）**：信源→五族数据→证据等级总表；分类规划覆盖**权威榜单/地图/UGC/KOL/综艺/独立 App/官方/媒体/监管/海外** 10 类，每类列具体源、L0–L3 通道、节奏、可靠性与「证据 vs 线索」；含综艺核实事实（**《一饭封神》冠军邓华东、总顾问陈晓卿、美食顾问谭国锋、评审谢霆锋/张勇/郑永麒**）与独立 App 参照（omakase.sg 策展、GMO OMAKASE 预约、一休 Ikyu 高端）。
+3. **源注册表 `research/coverage/source_registry.jsonl`（99→103）**：修订 `tv_yifan`（补冠军/顾问）；新增 `omakase_sg`、`gmo_omakase`、`ikyu_restaurant`、`tv_yifan_roster`。`cloud/map_helpers.py` 的 `amap_search` 增返 `typecode/type`（已同步容器 /app/cloud 与 /app/pipeline）。
+4. **仍待建（下一个 collector 任务，已写入 SOURCE-PLAN 路线图）**：**候选人口味核验 runner**——对 `kol_lead_fill.json` 用 routed Apify **按店名搜（无需 rid）**，≥2 独立食客且均分 ≥3.5 才 admission 建店；这是 KOL 线索闭环的最后一块。omakase.inc 待 URL 确认后补登（不臆造）。
+
 ### 2026-10-02 晚⑩【二次验证校准：证据账本两缺陷修复 + 品牌级 chain_type 归一 + 零证据硬负面重置，均已写库回读】
 
 **用户主张**：“二次验证数据还不对，继续校准”。点名店仅用来说明流程缺陷，不接受特征枚举式补单店；要求硬负面可复现、chain_type 全分店一致、评分/精选联动。本轮修复三个【底层根因】，非改表面标签：
