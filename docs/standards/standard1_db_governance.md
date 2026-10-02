@@ -35,11 +35,40 @@
 | restaurants.central_kitchen | 无 / 疑似 / 确认 |
 | restaurants.premade_risk | 无 / 低 / 疑似 / 高 |
 | restaurants.food_safety | 无 / 疑似 / 确认 |
-| restaurants.price_position | 经济 / 平价 / 中端 / 高端 / 奢华 |
+| restaurants.tier（全局，触发器据 price_avg 派生） | 经济 / 平价 / 中档 / 高档 / 奢华 |
+| restaurants.price_band（场景内绝对 1–5，边界 P25/50/75/90） | 1 / 2 / 3 / 4 / 5 |
+| restaurants.price_position（场景内相对分位，P20/40/60/80） | 入门 / 主流 / 进阶 / 高端 / 旗舰 |
 | restaurants.status | active / closed / relocated |
 | diner_seed_labels.tier | must_eat / worth_eating / average |
 
+价位三字段定义（回答「何为旗舰/进阶」，均绑定该场景真实数值，非主观）：
+- `tier`＝跨场景全局档，由触发器按 price_avg 全局分布派生（经济≈≤45 / 平价 / 中档 / 高档 / 奢华≥≈500）；
+- `price_band`＝同场景内绝对档，边界取该场景 price_avg 的 P25/P50/P75/P90（取整 5）；
+- `price_position`＝同场景内相对位置，P20/40/60/80 切 入门/主流/进阶/高端/旗舰；
+  非正餐（快餐小吃/咖啡茶饮/面包/甜品/酒吧）各用各自分布，不套正餐。
+
 禁临时字符串；新增枚举走迁移 + CHECK。
+
+## 3.1 单写入者与冗余字段停用（多窗口唯一来源）
+
+每个决策/派生字段只有一个写入者，其他窗口只读，避免多窗口写冲突：
+
+| 字段 | 唯一写入者 | 说明 |
+|---|---|---|
+| chain_type / central_kitchen / production_model / is_reheat_served | production_model_probe → gate_apply | 出餐方式链 |
+| premade_risk / food_safety / soft_ad_flag / soft_ad_penalty | gate_apply（findings 门） | 风险/软广 |
+| price_band / price_position | price_realign | 双轨价位 |
+| tier | DB 触发器 tier_for_price | 脚本不写 |
+| score_taste / score_diner / score_endorsement / score_objective | scoring_engine | 组件分 |
+| score_total / score_evidence_level | DB 触发器 trg_restaurants_derive | 组件 blend |
+| is_curated / curate_badge / curate_reason | curate_gate | 精选唯一决策门 |
+
+停用（停止写入，只读兼容，后续迁移删除；以 canonical 字段为准）：
+- `central_kitchen_prior` → central_kitchen；`premade_prior` → premade_risk；
+- `astroturf_score`（全 NULL 未启用）→ soft_ad_flag / soft_ad_penalty；
+- `curate_confidence`、`curate_score` → curate_badge + curate_reason；
+- `price_range`、`price_scene`（旧）→ price_band / price_position；
+- `score_evidence`（旧）→ score_evidence_level。
 
 ## 4. 身份/去重
 
