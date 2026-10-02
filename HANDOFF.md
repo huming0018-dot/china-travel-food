@@ -10,6 +10,25 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 凌晨④【dev·统一写入门：采集器只写 findings，事实列由 gate 收口】
+
+**目标**：消除各采集器对 `restaurants` 事实列的直写，统一为「采集 → findings 证据 → gate_apply 仲裁 → 写库」。
+
+**已落地（本批）**：
+- 新增 `cloud/ingest.py`：`append_finding(rid,field,value,confidence,reason,source_url,source_platform)`，是采集器提交证据的**唯一通道**；按 (rid,field,归一value) 幂等去重；另有 `append_many`。
+- `gate_apply.py` 新增 **FACT_FIELDS={phone,location,opening_hours,open_days}**：`valid_fact()`（phone 正则/EWKT 坐标/非空，宁空不假）+ `resolve_fact()`（取通过校验的最高置信值；phone/location 须 http 来源），接入字段分发与 apply。
+- 已迁移两个 live filler 为写 findings：`cloud_phone_fill.py`（phone）、`cloud_coord_fill.py`（location），source_url 用 `https://www.amap.com/search?query=<店名 上海>`、confidence 0.9、platform=map_poi。
+- 四文件 py_compile 通过、已部署；gate `--apply` 复跑 0 错误、事实字段路径不崩（本轮无新证据故 0 patch）。
+
+**仍直写、待下一批迁移（按风险/频次排序）**：
+1. `cloud_amap_fill.py --apply`（全字段，3次/小时，requests.patch 直连，最该收口）；
+2. `cloud_hours_fill.py` / `cloud_hours_fill2.py`（opening_hours/open_days）；
+3. `cloud_dianping_phone.py`（phone）；
+4. `cloud_patrol.py --apply`（含 chefs/多字段，需逐字段判断）；
+5. 其余 `post_audit.py`（已按 findings 消费、但仍直 PATCH）、`reconcile.py`、`fact_verify.py`、`selling_points_fill.py`、`signature_cuisine_link.py`、`patrol_classify.py`、`private_kitchen_club_resolver.py`、`group_chef_tree.py`、`candidate_apply.py` 等：逐一判定 live 还是遗留，迁移或归档。
+- 注意：`reviews` 表由 Apify 直写是**正确**的（reviews 本身即原始证据，类比 findings；taste 由 DB trigger 重算），不在收口范围；关系/挂标表（restaurant_cuisines/chefs）后续再议。
+
+
 ### 2026-10-02 深夜②【dev·精选层 chain_review：ML 门 dry-run 未达标，改硬规则，commit `e62da8b`】
 
 **curate_v4 dry-run 结论（ML logistic 门暂不启用）**：以 diner_seed_labels 为标签、真实食客 taste(180d 半衰期加权) 与高德聚合分拆开训练，5 折 CV 二分类准确率 **0.455 < 平凡基线 0.504**，且标准化系数 `diner_avg=-0.249`（味道越高越不入选，明显反常）。根因：约 120 条人工标注里，绝大多数店尚未采到真实食客评价（Apify 仅覆盖约 58 店），特征几乎全 0 → 学不出味道关系。**前置条件是扩大真实食客评价覆盖（卡在 Apify $50 上限/充值或月度重置）**；达标前不写 is_curated。

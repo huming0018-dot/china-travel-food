@@ -24,6 +24,7 @@ sys.path.insert(0, PIPE)
 
 import common as C
 import health
+import ingest
 from map_helpers import resolve_poi, is_fake_address, in_shanghai
 
 STATS_F = pathlib.Path(DATA) / "fill_stats.json"
@@ -88,13 +89,14 @@ def main():
 
         ewkt = C.point_ewkt(lng, lat)
         try:
-            pr = C.req("PATCH", f"/restaurants?id=eq.{rid}", json={"location": ewkt})
-            if pr.status_code in (200, 204):
-                stats["filled"] += 1
-                print(f"  [{rid}] {name} → ✓ ({lng:.6f},{lat:.6f}) [{poi.get('source')}] score={poi.get('score',0):.2f}")
-            else:
-                stats["skipped"] += 1
-                print(f"  [{rid}] {name} → PATCH失败 {pr.status_code}")
+            from urllib.parse import quote
+            src = "https://www.amap.com/search?query=" + quote(f"{name} 上海")
+            ingest.append_finding(
+                rid, "location", ewkt, confidence=0.9,
+                reason=f"地图POI核验坐标：{name} {addr}", source_url=src,
+                source_platform="map_poi")
+            stats["filled"] += 1
+            print(f"  [{rid}] {name} → ✓ finding ({lng:.6f},{lat:.6f}) [{poi.get('source')}]")
         except Exception as e:
             stats["skipped"] += 1
             print(f"  [{rid}] {name} → 写入异常: {e}")

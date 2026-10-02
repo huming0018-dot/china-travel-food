@@ -63,7 +63,25 @@ SEVERITY = {"资本化连锁": 3, "大型连锁": 2, "小型连锁": 1,
             "确认": 2, "高": 2, "疑似": 1, "问题": 2}
 ENUM_FIELDS = set(ENUMS)
 INFO_FIELDS = {"investor_info", "price_avg"}
+# 客观事实字段（低主观性）：单一权威源（地图/官网）即可，但仍经 gate 校验、不直写
+FACT_FIELDS = {"phone", "location", "opening_hours", "open_days"}
 CONF_MIN = 0.8
+
+RE_PHONE = re.compile(r"^(?:0\d{2,3}-?)?\d{7,8}$|^1[3-9]\d{9}$")
+RE_LOC = re.compile(r"^SRID=4326;POINT\(-?\d+(?:\.\d+)?\s+-?\d+(?:\.\d+)?\)$")
+
+
+def valid_fact(field, value):
+    """事实字段轻校验：宁空不假。"""
+    if value is None or value == "":
+        return False
+    if field == "phone":
+        return bool(RE_PHONE.match(str(value).replace(" ", "")))
+    if field == "location":
+        return bool(RELOC.match(str(value)))
+    if field in ("opening_hours", "open_days"):
+        return len(str(value)) >= 1
+    return True
 
 RE_REG = re.compile(r"注册|工商|企查查|天眼查|爱企查|股权|控股|法人|主体")
 RE_BRANCH = re.compile(r"分店|分支|门店|加盟|官网|连锁|门店列表")
@@ -183,6 +201,24 @@ def resolve_info(field, rows):
     if not txt:
         return {"action": "none", "value": None, "why": "investor 空"}
     return {"action": "apply", "value": txt[:200], "why": "investor 高置信"}
+
+
+def resolve_fact(field, rows):
+    """客观事实字段：取通过校验的最高置信值；phone/location 须有来源。"""
+    need_src = field in ("phone", "location")
+    cand = []
+    for r in rows:
+        v = r.get("value")
+        if not valid_fact(field, v):
+            continue
+        if need_src and not str(r.get("source_url", "")).startswith("http"):
+            continue
+        cand.append(r)
+    if not cand:
+        return {"action": "none", "value": None, "why": f"{field} 无合法证据"}
+    cand.sort(key=lambda r: float(r.get("confidence", 0)), reverse=True)
+    return {"action": "apply", "value": cand[0]["value"],
+            "why": f"{field} 最高置信={cand[0].get('confidence')}"}
 
 
 def _brand_core(name):
@@ -314,6 +350,8 @@ def build_plan():
             dec = resolve_enum(fld, rows)
         elif fld in INFO_FIELDS:
             dec = resolve_info(fld, rows)
+        elif fld in FACT_FIELDS:
+            dec = resolve_fact(fld, rows)
         else:
             continue
         nowv = (cur.get(rid) or {}).get(fld)

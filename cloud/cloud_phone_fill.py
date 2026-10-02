@@ -23,6 +23,7 @@ sys.path.insert(0, PIPE)
 
 import common as C
 import health
+import ingest
 from map_helpers import resolve_poi, tencent_suggestion, tencent_search, amap_search, pick_best
 
 STATE_F = pathlib.Path(DATA) / "_phone_fill_state.json"
@@ -158,14 +159,16 @@ def main():
             continue
 
         try:
-            pr = C.req("PATCH", f"/restaurants?id=eq.{rid}", json={"phone": cleaned})
-            if pr.status_code in (200, 204):
-                stats["filled"] += 1
-                state["last_processed_id"] = rid
-                print(f"  [{rid}] {name} → ✓ phone={cleaned}")
-            else:
-                stats["skipped"] += 1
-                print(f"  [{rid}] {name} → PATCH失败 {pr.status_code}")
+            from urllib.parse import quote
+            src = "https://www.amap.com/search?query=" + quote(f"{name} 上海")
+            ok = ingest.append_finding(
+                rid, "phone", cleaned, confidence=0.9,
+                reason=f"地图POI核验电话：{name} {addr}", source_url=src,
+                source_platform="map_poi")
+            stats["filled"] += 1
+            state["last_processed_id"] = rid
+            print(f"  [{rid}] {name} → ✓ finding phone={cleaned}"
+                  + ("" if ok else "（已存在）"))
         except Exception as e:
             stats["skipped"] += 1
             print(f"  [{rid}] {name} → 写入异常: {e}")
