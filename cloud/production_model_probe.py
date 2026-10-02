@@ -610,12 +610,26 @@ def _norm_text(t):
     return re.sub(r"\s+", "", (t or ""))
 
 
+_RE_HOSTISH = re.compile(r"^[a-z0-9.\-]+\.[a-z]{2,}(?::\d+)?(/[^\s]*)?$", re.I)
+
+
+def _ensure_scheme(u):
+    """模型常省略协议头（返回 www.host/path 或裸 host）：补 https://，
+    使后续校验/接地能识别。"""
+    u = (u or "").strip()
+    if u.startswith(("http://", "https://")):
+        return u
+    if _RE_HOSTISH.match(u):
+        return "https://" + u
+    return u
+
+
 def _ground_index(evidence):
     """真实取证的接地索引：归一 URL → 真实 URL；主机 → [(真实URL, 标题+摘要归一文本)]。"""
     by_url, by_host = {}, {}
     for e in evidence:
         for d in e.get("results", []):
-            u = d.get("source_url", "")
+            u = _ensure_scheme(d.get("source_url", ""))
             if not is_real_url(u):
                 continue
             by_url[_norm_u(u)] = u
@@ -630,7 +644,7 @@ def _ground_item(it, by_url, by_host):
     ①归一 URL 精确命中；②同主机且引文能在该真实页标题/摘要中找到连续片段
     （容忍模型返回 canonical/协议/www 差异），并把 URL 重锚为真实地址；
     两者都不满足 = 杜撰，丢弃。"""
-    u = it.get("url", "")
+    u = _ensure_scheme(it.get("url", ""))
     if not is_real_url(u):
         return None
     nu = _norm_u(u)
