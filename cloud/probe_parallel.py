@@ -228,6 +228,8 @@ def worker(provider, model, q, done_flag, allow_strong, stats, lock):
                     continue
                 RATE.relax()
                 sig = P.filter_signals_by_evidence(sig, evidence)
+                # 确定性工业化扫描并入：LLM 漏提/被公关带偏时，央厨事实仍进入仲裁
+                sig = P.merge_deterministic(sig, evidence)
                 verdict = P.adjudicate(sig)
                 verdict = P.confirm_if_severe(provider, bname, locs, evidence, verdict)
                 # 证据不足直判时，用知识先验补「现场烹制」非严判结论（严判不由此路径）

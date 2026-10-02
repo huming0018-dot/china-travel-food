@@ -866,22 +866,42 @@ def _hold(verdict, why, v2=None):
 
 
 def confirm_if_severe(provider, brand, locations, evidence, verdict):
-    """对触发下架的最严两档，用更强模型、同一证据复核；逐个尝试多个强模型，
-    任一复核一致才保留；出现非严判结论 → 不一致 hold；全部报错/无信号才 hold。"""
-    if not verdict or verdict.get("production_model") not in SEVERE_MODELS:
+    """两种情形都升级强模型、同一证据对抗复核：
+      A. 触发下架的最严两档（预制复热/门店复热）——复核一致才保留；
+      B. 弱模型判【现场烹制】但证据里存在权威(reg/news)来源的央厨/预制/料片硬表述
+         （典型：被"明厨亮灶"公关稿带偏）——复核后若工业化成立则改判，仍无法解释
+         则至少保留央厨疑似、不写现场烹制（不让公关洗白）。
+    逐个尝试多个强模型；全部报错/无信号才 hold。"""
+    if not verdict:
+        return verdict
+    model_now = verdict.get("production_model")
+    industrial = _has_authoritative_industrial(evidence)
+    is_severe = model_now in SEVERE_MODELS
+    is_contradiction = (bool(industrial) and model_now in _KNOWLEDGE_ADMIT)
+    if not is_severe and not is_contradiction:
         return verdict
     cms = _confirm_models(provider)
     if not cms:
-        return _hold(verdict, verdict["rationale"] + "；无更强模型复核，严判暂缓")
+        return _hold(verdict, verdict["rationale"] + "；无更强模型复核，暂缓")
     errors = []
+    if is_contradiction:
+        extra = ("你是独立复核人。证据中有权威来源明确提及“"
+                 + (industrial.get("quote") or "").strip()
+                 + "”（中央厨房/预制菜/料理包/复热），但初审却判现场烹制。"
+                 "注意：「明厨亮灶/开放后厨/升级透明」是行业公关框架，其中的'现炒'表述"
+                 "不能推翻已被权威来源报道的央厨事实。只有当存在【独立食客UGC】证实门店"
+                 "确实现场烹制时，才可判中央厨房·门店加工；若央厨/预制被权威源确认而无"
+                 "独立现制证据，应判 中央厨房·门店复热 或 预制料理包·复热。")
+    else:
+        extra = ("你是独立复核人，须双向核查，不得只数料理包："
+                 "①门店是否现场烹制（明厨亮灶/现炒/锅气/现切/现烤/厨师在后厨制作）；"
+                 "②只有当证据表明门店【仅复热、不现场烹制】时，才可维持预制料理包·复热/门店复热；"
+                 "若存在任何门店现制证据，production_guess 必须为中央厨房·门店加工或现做档。")
     for cm in cms[:2]:
         try:
             sig2 = extract_signals_once(
                 provider, cm, brand, locations, evidence, retries=1,
-                extra_instruct="你是独立复核人，须双向核查，不得只数料理包："
-                "①门店是否现场烹制（明厨亮灶/现炒/锅气/现切/现烤/厨师在后厨制作）；"
-                "②只有当证据表明门店【仅复热、不现场烹制】时，才可维持预制料理包·复热/门店复热；"
-                "若存在任何门店现制证据，production_guess 必须为中央厨房·门店加工或现做档。")
+                extra_instruct=extra)
         except Exception as e:  # noqa: BLE001
             errors.append(f"{cm}:{type(e).__name__}")
             continue
@@ -889,15 +909,32 @@ def confirm_if_severe(provider, brand, locations, evidence, verdict):
             errors.append(f"{cm}:empty")
             continue
         sig2 = filter_signals_by_evidence(sig2, evidence)
+        sig2 = merge_deterministic(sig2, evidence)
         v2 = adjudicate(sig2)
-        if v2.get("production_model") in SEVERE_MODELS:
-            v2["rationale"] = verdict["rationale"] + f"；强模型({cm})复核一致"
+        if is_severe:
+            if v2.get("production_model") in SEVERE_MODELS:
+                v2["rationale"] = verdict["rationale"] + f"；强模型({cm})复核一致"
+                v2["sources"] = list({*(verdict.get("sources") or []),
+                                      *(v2.get("sources") or [])})
+                return v2
+            return _hold(verdict,
+                         f"弱模型判[{model_now}]，强模型({cm})复核为"
+                         f"[{v2.get('production_model')}]，不一致→暂缓", v2)
+        # 矛盾复核：强模型若识别出央厨（CK 非无）→ 采纳其工业化结论
+        if v2.get("central_kitchen") in ("确认", "疑似") or \
+                v2.get("production_model") not in (None, *_KNOWLEDGE_ADMIT):
+            v2["rationale"] = verdict["rationale"] + \
+                f"；权威工业化证据与'现场烹制'矛盾，强模型({cm})复核改判"
             v2["sources"] = list({*(verdict.get("sources") or []),
-                                  *(v2.get("sources") or [])})
+                                  *(v2.get("sources") or []), industrial.get("url")})
             return v2
-        return _hold(verdict,
-                     f"弱模型判[{verdict['production_model']}]，强模型({cm})复核为"
-                     f"[{v2.get('production_model')}]，不一致→暂缓", v2)
+        # 强模型仍判现场烹制：权威工业化硬表述未被独立食客证据解释 → 不洗白，置疑似 hold
+        held = _hold(verdict,
+                     f"初审现场烹制，但权威源提及工业化（{industrial.get('quote')}）；"
+                     f"强模型({cm})未能以独立食客证据排除，保留央厨疑似、暂缓", v2)
+        held["central_kitchen"] = "疑似"
+        held["premade_risk"] = "疑似"
+        return held
     return _hold(verdict, verdict["rationale"] +
                  f"；复核均失败({';'.join(errors)})，暂缓")
 
@@ -943,6 +980,98 @@ def apply_knowledge_prior(verdict, sig, evidence):
                rationale=f"【知识先验·非证据直引,置信{kconf:.2f}】{basis}；"
                          f"证据已确认品牌/业态真实存在，无工业化信号")
     return out
+
+
+# ---------------------------------------------------------------------------
+# 确定性工业化扫描（不依赖 LLM 是否提取：直接读证据原文，防止公关稿抹掉央厨事实）
+# ---------------------------------------------------------------------------
+_CK_PH = ("中央厨房", "央厨", "中央工厂", "中心厨房")
+_REHEAT_PH = ("复热", "加热即食", "微波炉加热", "微波加热", "开水冲泡", "沸水冲泡",
+              "简单加热", "回炉加热")
+_PREMADE_PH = ("料理包", "预制菜", "速冻", "半成品", "速食包", "调理包", "料包",
+               "速冻食品", "料理煲")
+_FRESH_PH = ("现炒", "锅气", "现切", "现包", "现烤", "现捏", "现握", "现做",
+             "现煮", "现蒸", "现擀")
+# 「明厨亮灶/开放后厨/升级透明」属公关高频框架，其中的"现炒"不单独构成门店真实现制证据
+_PR_FRAME = ("明厨亮灶", "明灶亮厨", "开放后厨", "可视", "透明厨房", "升级", "焕新")
+_NEWS_DOMAINS = ("36kr.com", "donews.com", "ifeng.com", "sina.com", "sohu.com",
+                 "163.com", "thepaper.cn", "qq.com", "baijiahao.baidu.com", "people.cn",
+                 "chinanews.com", "ce.cn", "yicai.com", "21jingji.com", "stcn.com",
+                 "eastmoney.com", "cls.cn", "tmtpost.com", "huxiu.com", "leiphone.com")
+
+
+def _kind_of(url, text):
+    u = url or ""
+    if any(r in (u + domain(u)) for r in REG_DOMAINS):
+        return "reg"
+    if any(w in (text or "") for w in _PR_FRAME):
+        return "pr"
+    if any(d in domain(u) for d in _NEWS_DOMAINS):
+        return "news"
+    return "ugc"
+
+
+def _rows_with(evidence, phrases, allow_pr=True):
+    rows, seen = [], set()
+    for e in evidence:
+        for d in e["results"]:
+            url = d.get("source_url") or ""
+            if not is_real_url(url) or url in seen:
+                continue
+            text = (d.get("source_title") or "") + "。" + (d.get("snippet") or "")
+            for ph in phrases:
+                if ph in text:
+                    kind = _kind_of(url, text)
+                    if kind == "pr" and not allow_pr:
+                        break
+                    i = text.find(ph)
+                    rows.append({"quote": text[max(0, i - 12):i + 18],
+                                 "url": url, "kind": kind})
+                    seen.add(url)
+                    break
+    return rows
+
+
+def scan_industrial(evidence):
+    return {
+        "central": _rows_with(evidence, _CK_PH),
+        "reheat": _rows_with(evidence, _REHEAT_PH),
+        "premade": _rows_with(evidence, _PREMADE_PH),
+        # 现场烹制：公关框架(明厨亮灶)里的"现炒"不算真实现制
+        "fresh": _rows_with(evidence, _FRESH_PH, allow_pr=False)}
+
+
+def _merge_rows(existing, additions):
+    out = list(existing)
+    have = {r.get("url") for r in existing}
+    for r in additions:
+        if r.get("url") not in have:
+            out.append(r); have.add(r.get("url"))
+    return out
+
+
+def merge_deterministic(sig, evidence):
+    """确定性扫描并入证据数组：LLM 漏提时，已被报道的央厨/料片事实仍进入仲裁；
+    公关框架(明厨亮灶)中的现炒不计入现场证据。"""
+    if not sig:
+        return sig
+    scan = scan_industrial(evidence)
+    field = {"central": "central_delivery_evidence", "reheat": "reheat_evidence",
+             "premade": "premade_packet_evidence", "fresh": "fresh_wok_evidence"}
+    out = dict(sig)
+    for key, fld in field.items():
+        out[fld] = _merge_rows(_ev_rows(out, fld), scan[key])
+    return out
+
+
+def _has_authoritative_industrial(evidence):
+    """证据中是否存在权威(reg/news)来源的工业化硬表述（央厨/预制/料片/复热）。"""
+    for key, phrases in (("central", _CK_PH), ("premade", _PREMADE_PH),
+                         ("reheat", _REHEAT_PH)):
+        for r in _rows_with(evidence, phrases):
+            if r.get("kind") in ("reg", "news"):
+                return r
+    return None
 
 
 # ---------------------------------------------------------------------------
