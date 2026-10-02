@@ -169,38 +169,42 @@ def worker(provider, model, q, done_flag, allow_strong, stats, lock):
             rids = [r["id"] for r in rows]
             locs = "; ".join(r["name"] for r in rows[:6])
             evidence = gather_cached(bname)
-            RATE.acquire()
+            provider._llm_sem.acquire()   # 占该账号一个在飞 LLM 名额
             try:
-                sig = P.extract_signals_once(provider, model, bname, locs, evidence)
-            except urllib.error.HTTPError as e:
-                body_txt = ""
+                RATE.acquire()
                 try:
-                    body_txt = e.read().decode("utf-8", "ignore")
-                except Exception:
-                    pass
-                if e.code == 429 and "SetLimitExceeded" in body_txt:
-                    dk = f"{provider.name}/{model}"
-                    P.mark_model_dead(dk)
-                    q.put(bname)   # 回队交其他模型
+                    sig = P.extract_signals_once(provider, model, bname, locs, evidence)
+                except urllib.error.HTTPError as e:
+                    body_txt = ""
+                    try:
+                        body_txt = e.read().decode("utf-8", "ignore")
+                    except Exception:
+                        pass
+                    if e.code == 429 and "SetLimitExceeded" in body_txt:
+                        dk = f"{provider.name}/{model}"
+                        P.mark_model_dead(dk)
+                        q.put(bname)   # 回队交其他模型
+                        with lock:
+                            stats["dead"].append(dk)
+                        return
+                    if e.code == 429:
+                        RATE.backoff(15)   # 账号级 RPM：全局退避，再回队
+                    q.put(bname)
+                    continue
+                except TimeoutError:
+                    RATE.backoff(8)
+                    q.put(bname)  # 服务挂起，回队重试
+                    continue
+                if not sig:
                     with lock:
-                        stats["dead"].append(dk)
-                    return
-                if e.code == 429:
-                    RATE.backoff(15)   # 账号级 RPM：全局退避，再回队
-                q.put(bname)
-                continue
-            except TimeoutError:
-                RATE.backoff(8)
-                q.put(bname)  # 服务挂起，回队重试
-                continue
-            if not sig:
-                with lock:
-                    stats["no_signal"].append(bname)
-                continue
-            RATE.relax()
-            sig = P.filter_signals_by_evidence(sig, evidence)
-            verdict = P.adjudicate(sig)
-            verdict = P.confirm_if_severe(provider, bname, locs, evidence, verdict)
+                        stats["no_signal"].append(bname)
+                    continue
+                RATE.relax()
+                sig = P.filter_signals_by_evidence(sig, evidence)
+                verdict = P.adjudicate(sig)
+                verdict = P.confirm_if_severe(provider, bname, locs, evidence, verdict)
+            finally:
+                provider._llm_sem.release()
             n_add = 0
             if done_flag["ingest"]:
                 n_add = P.write_findings(bname, rids, verdict)
@@ -230,6 +234,12 @@ def run():
     if not ps:
         print("未配置 LLM provider，退出。")
         return
+    # 每账号在飞 LLM 并发硬上限：免费/单账号并发低，worker 数（按便宜模型）会远超账号
+    # 实际并发，不限就会在服务端排队→非流式尾部超时→回队再挤的活锁。等待信号量的线程
+    # 不发请求，故不占服务端队列。多账号（ARK_API_KEYS）自动线性放大总并发。
+    _per_acct = max(1, int(os.environ.get("LLM_CONCURRENCY_PER_ACCOUNT", "3")))
+    for _prov in ps:
+        _prov._llm_sem = threading.BoundedSemaphore(_per_acct)
     brands, names = build_brands(args)
     if not names:
         print("无目标品牌。")
