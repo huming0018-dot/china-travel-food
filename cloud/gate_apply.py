@@ -419,6 +419,38 @@ def build_plan():
             reverify.append({"rid": rid, "name": (cur.get(rid) or {}).get("name"),
                              "field": fld, "hard_value": hv, "reason": dec.get("why")})
 
+    # 零证据硬负面纠正（宁空不假）：DB 挂 central_kitchen/premade_risk 硬值，但账本对
+    # 【任一硬值】都无可信证据(最大 n_ind=0) → 重置为“无”并进 reverify 重取证。
+    # 仅零证据触发；单源(hold)保留不降级；chain_type 不在此自动重置（另由品牌归一处理）。
+    for r in rests:
+        rid = r["id"]
+        if r.get("status") == "closed":
+            continue
+        for fld in ("central_kitchen", "premade_risk"):
+            nowv = r.get(fld)
+            if nowv not in HARD_VALUES[fld]:
+                continue
+            rows = grouped.get((rid, fld), [])
+            if resolve_enum(fld, rows).get("action") == "apply_hard":
+                continue  # 有 n_ind≥2 支撑，保留
+            best_ni = 0
+            for hv in HARD_VALUES[fld]:
+                cred = [x for x in rows if x.get("value") == hv
+                        and float(x.get("confidence", 0)) >= CONF_MIN]
+                best_ni = max(best_ni, n_independent(cred))
+            if best_ni >= 1:
+                continue  # 单源 → 保留+reverify，不重置
+            clearv = CLEAR_VALUE[fld]
+            if nowv != clearv:
+                label_patches[rid][fld] = clearv
+                r[fld] = clearv  # 同步内存，避免下面误触发精选下架
+                why = (f"硬标 {nowv} 无任何证据(0独立源)，按宁空不假重置为{clearv}，"
+                       "进reverify重取证")
+                decisions.append({"rid": rid, "field": fld, "decision": "reset_unsupported",
+                                  "value": clearv, "current": nowv, "why": why, "urls": []})
+                reverify.append({"rid": rid, "name": r.get("name"), "field": fld,
+                                 "hard_value": nowv, "reason": why})
+
     # 精选重算（硬规则）。closed 直接采信平台状态；确认/高 采信 DB 标签。
     curated_off = []
     for r in rests:
