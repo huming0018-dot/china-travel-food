@@ -112,6 +112,18 @@
     msg.textContent = text;
   }
 
+  function getDeviceSalt() {
+    // 设备指纹：同一浏览器复用同一 salt（一机一号，防同机无限注册）
+    let s = "";
+    try { s = localStorage.getItem("crowd_device_salt") || ""; } catch(e) {}
+    if (!s || s.length < 8) {
+      s = "D" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 8);
+      s = s.slice(0, 40);
+      try { localStorage.setItem("crowd_device_salt", s); } catch(e) {}
+    }
+    return s;
+  }
+
   submit.addEventListener("click", async () => {
     const name = document.getElementById("name").value.trim();
     const contact = document.getElementById("contact").value.trim();
@@ -131,7 +143,8 @@
       contact: contact,
       status: "pending",
       source: "public",
-      review_note: note || ""
+      review_note: note || "",
+      device_salt: getDeviceSalt()   // 一机一号：设备指纹必填
     };
 
     submit.disabled = true;
