@@ -28,6 +28,20 @@
 **当前阻塞（需用户操作，非代码问题）**：ARK 账号级 LLM 配额——实测 lite/turbo 均 HTTP 429（预检即拦），deepseek 早前因「安全体验模式」用量封顶被暂停（SetLimitExceeded，账号 2132598367，非时间重置）。**需用户到 ARK Model Activation 提高/关闭用量上限或充值，恢复后调度器每 2 小时自动续跑 1386 个品牌**（当前 production_model 仅 2 店有值、其余 NULL）。
 **commit（main）**：`af6bc80`（出餐方式全套+migration025）。草稿目录 batch6_work/batch8_work/research/post_record 已 gitignore、不入库。
 
+### 2026-10-02 晚⑮【collector·必吃榜160官方H5完整提取(31在库/129全新)；免费高德「分店计数」连锁花费前拦截机制闭环，70连锁入清单】
+
+- **必吃榜全市160家完整提取（官方 H5，合规不碰反爬）**：区级转载名单始终被抖音个人榜淹没，改走官方 H5。入口 `h5.dianping.com/app/zaku/biindex/index.html` → 榜单页 `plat.dianping.com/app/femember-musteat-web/musteat-rank?ranktype=3&cityid=1`（**cityid=1=上海/10=天津**）。数据 XHR 受 mtgsig 保护（外部难复现），改 **DOM 滚动提取**：卡片 `div.poi-card.poi-card-2026`，选择器 `.shop-name/.score-text/.price-text/.info-item-category/.tag-style-text`，滚动容器 `.index-list-view`；**须 scrollTop=scrollHeight 后 dispatchEvent(new Event('scroll'))** 才逐页加载（单纯设 scrollTop 不触发），10→160 全进 DOM。160 条无缺、59 品类（本帮16/面馆10/日料9/粤菜8/潮汕牛肉火锅7/川菜7…）。权威存档 `research/authority/dianping_bcb_shanghai_2026.json`，扁平种子 `cloud/dianping_seed.json`（source=dianping_bcb_2026_official_h5）。
+- **与库比对（约1518家）：31 命中、129 全新候选**（口径＝汉字核心 exact/prefix/contain ＋拉丁核心去停用词 the/cafe/bar/bistro 等）。
+- **免费「分店计数」连锁拦截（新脚本 `cloud/candidate_chain_branchcount.py`，容器内跑、仅用高德）**：在花 Apify 钱做口味核验前，先免费判连锁。读 dianping76＋kol29（去重105），跳过已知连锁，对每品牌高德文本搜索统计同品牌·同品类餐饮 POI（typecode 05）。
+  - **计数判据（保守，防通名假阳性）**：标题含品牌【专属名 mark】（首段去通用品类后缀）；**能识别品类组时一律要求 mark＋同品类组词共现**（28 组：noodle/hotpot/offal/restaurant/teppanyaki…，修「陶陶居酒家」因归一「餐厅」漏配）；mark 无区分度（农场/农家/老街…）→ independent；**2 字短名且品类组不明 → 绝不判连锁**（匠心 n=6 仍 independent）。
+  - **高德漂移治理**：text search 快速调用下软限流（code=0 空 data / 宽泛集），同一查询时 0 时 10。对策＝品牌间 sleep 0.6、空结果用「mark+品类」与「mark」两查询重试（间隔1.2s）、保守判定（宁可不判连锁）。
+  - 判定阈值：**n≥3 chain | n==2 small | n≤1 independent**。
+- **结果（105）：已知连锁8、计数连锁32、小型15、独立50**。自动连锁 **回写清单 `auto_cores`（32）**，与精选 `cores`（38）合并＝**70 连锁**；主机 `candidate_verify.load_blocklist` 已改读 cores＋auto_cores，命中即 industrial、**零 Apify 花费**。已实测拦截鮨谷/红辣椒/成妈/鲜主。
+- **经原始 POI 核实的真连锁**：鮨谷7-8、红辣椒拉面9-10、赤龙牛杂9、陶陶居5、成妈串串4、鲜主4、圈儿潮汕牛肉4、啊增今牛4、福禄居3（兴业太古汇/凯德晶萃/浦东嘉里城）、人生一串体验店3、陶香煲仔饭3。**假阳性已排除**：御香(1)、农场(通名)、嘉御坊(2)、匠心(2字品类不明)、福禄邨/居委会(非餐饮)、郭淑芬(异品牌)。
+- **⚠ 容器在 16:32 被重建（RestartCount=0，非原地 restart），清空镜像层 `/app/cloud`**：dianping76、脚本一度全丢，仅 named volume `/app/data` 存活。**已把全部工作文件迁到持久卷 `/app/data/research/`**（dianping_lead_fill/chain_brand_blocklist/kol/verdict/state）。教训：持久产物只写 `/app/data`；`/app/cloud` 代码重建即丢，需重做镜像或加挂载（重建来源待查）。
+- **Apify 权威余额仅 $0.023**（food-apify-fill 把约 $1.3 自动花在存量 worth_fill；硬顶 $80，账期 10-31 重置）。连锁现已在花费前拦截；候选口味核验待账期重置或再提额（支付本人）。
+- **待 PM/dev**：已建 rid2068 红辣椒（连锁）等需按治理流程降级（collector 不删店）；15 新店 needs_cuisine/district 回填；129 全新候选随预算滚动。
+
 ### 2026-10-02 晚⑭【collector·点评种子扩至66家(黄浦34/普陀6/徐汇26)，lead合并25候选/总合并54；Apify月度$70用满付费全停；填充前治理核查达标，已 push `9f15a9e`】
 
 - **种子扩容（`cloud/dianping_seed.json`，含 `districts[]` 分区结构＋扁平 `shops`）**：在黄浦34基础上，据政府/上观转载补 **普陀6**（韩渔面馆/金湘隆清派湘菜/温州牛肉馆/伊祥敦煌楼/宁夏印象滩羊/红子鸡凤凰楼，源 shanghai.gov.cn 普陀转载）＋**徐汇26**（HOMES/Alimentari Grande/O'mills/阿吾罗月咏/冰城老于家/东北四季饺子王/菰城宴/恒悦轩/龙华素斋/人和馆/瑞俪泰/四面泰/威皇/细记/池仔记/新苑/徐记/四季农圃/今日牛事/沪西老弄堂/忆家一宴/意膳坊/宁国素斋/御鲤湘/云里/啫苑，源 jfdaily id=4014786）。扁平按完整归一去重＝**66**。

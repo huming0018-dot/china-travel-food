@@ -56,6 +56,48 @@ CLOSURE_RE = re.compile(r"关门|倒闭|停业|关店|关了|已经关|搬走|�
 INDUSTRIAL_RE = re.compile(
     r"自助餐|宜家|大酒店|机场|服务区|高铁站?|景区内|风景区|环球影城|迪士尼|乐园|影城|员工食堂|连锁")
 
+# 已知连锁/工业化品牌核心拦截清单（花费前自动跳过，避免把预算浪费在连锁上）。
+BLOCKLIST_F = HERE / "chain_brand_blocklist.json"
+
+
+def load_blocklist():
+    if not BLOCKLIST_F.exists():
+        return set()
+    try:
+        bl = json.loads(BLOCKLIST_F.read_text(encoding="utf-8"))
+        cores = list(bl.get("cores", [])) + list(bl.get("auto_cores", []))
+        # 统一字形（漢→汉、繁→简）后再匹配，避免漏配
+        return {C.cjk_norm(b) for b in cores if b}
+    except (json.JSONDecodeError, OSError):
+        return set()
+
+
+CHAIN_BLOCKLIST = load_blocklist()
+
+
+def candidate_brand_cores(cand):
+    """从候选核心提取 汉字品牌 / 拉丁品牌 两个核心。"""
+    s = C.cjk_unify(cand.get("core") or cand.get("name") or "").lower()
+    han = "".join(ch for ch in s if "\u4e00" <= ch <= "\u9fff")
+    lat = re.sub(r"[^a-z]", "", s)
+    return han, lat
+
+
+def is_known_chain(cand):
+    """候选品牌核心命中已知连锁清单。
+    2 字汉字品牌→按开头匹配（品牌通常在句首，防误伤）；汉字≥3→包含；拉丁≥5→包含。"""
+    han, lat = candidate_brand_cores(cand)
+    for b in CHAIN_BLOCKLIST:
+        if re.search(r"[\u4e00-\u9fff]", b):
+            if len(b) == 2 and han.startswith(b):
+                return b
+            if len(b) >= 3 and b in han:
+                return b
+        else:
+            if len(b) >= 5 and b in lat:
+                return b
+    return None
+
 
 def load_candidates():
     merged, seen_poi, seen_core = [], set(), set()
@@ -174,6 +216,13 @@ def process_candidate(cand, st, gates, args):
     # 工业/酒店反链：不花钱，直接过滤
     if INDUSTRIAL_RE.search(cand.get("name", "") + cand.get("address", "")):
         item["status"] = "industrial"
+        item["accepted_at"] = C.today()
+        return "industrial", 0.0
+    # 已知连锁品牌核心：不花钱，直接过滤
+    chain_hit = is_known_chain(cand)
+    if chain_hit:
+        item["status"] = "industrial"
+        item["chain_hit"] = chain_hit
         item["accepted_at"] = C.today()
         return "industrial", 0.0
     q1, q2 = keywords(cand)
