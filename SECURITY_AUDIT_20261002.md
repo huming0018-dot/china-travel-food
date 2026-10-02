@@ -31,28 +31,32 @@
 - **修复**：强制 `envelope.participant_id == 调用参数`，不符返 `participant_id_mismatch`。
 - **复测**：攻击请求被拒 ✅
 
-### H3 【待修复】参与编号枚举（信息泄露）
+### H3 【已修复】参与编号枚举（信息泄露）
 - **攻击路径**：`crowd_fetch_tasks` 对 pending 参与者返回 `participant_status_pending`、对不存在编号返回 `participant_not_found` —— **可区分**。攻击者批量探测可枚举全部有效编号及状态。
 - **危害**：中危。为 H2 类攻击提供目标清单。
-- **修复建议**：错误信息统一为 `participant_not_found`（不区分存在与否），或对查询失败返回随机延迟防时序侧信道。
+- **修复**：错误信息统一为 `participant_unavailable`（不存在 / pending / suspended / blacklisted / rejected 一律同文案，不区分）。
+- **复测**：3 种编号（不存在 / pending / 不存在）→ 全部返回 `participant_unavailable` ✅
 
 ---
 
 ## 三、🟠 中危漏洞（待修复）
 
-### M1 报名 XSS 原文入库
+### M1 报名 XSS 原文入库 【已修复】
 - **攻击路径**：`display_name="<script>alert(1)</script>"`、`contact="<img src=x onerror=alert(2)>"` → **201 入库原文**。
 - **危害**：PM 审核端若用 `innerHTML` 渲染报名列表即触发 XSS（窃取审核会话/执行任意操作）。
-- **修复建议**：① 服务端拒绝含 `<`/`>` 的字段；② 审核端必须用 `textContent` 渲染；③ crowd_admin.py 输出前做 HTML 转义。
+- **修复**：报名 RLS with check 拒绝含 `<`/`>` 的 display_name/contact，并限制长度（display_name≤20、contact≤100）。
+- **复测**：script/img 报名 → 42501 被拒；正常报名 → 201 ✅
 
-### M2 报名者自定超大配额
+### M2 报名者自定超大配额 【已修复】
 - **攻击路径**：报名 payload 带 `quota_day:999999` → **201 入库**（pending 态虽不生效，审核时若沿用即获得无限配额）。
-- **修复建议**：报名 INSERT 时强制 `quota_day` 为服务端默认值（RLS with check 里限定 `quota_day = 20`），审核时才允许改。
+- **修复**：报名 RLS with check 强制 `quota_day = 20`（服务端默认值），审核时才允许调整。
+- **复测**：quota=999999 报名 → 42501 被拒 ✅
 
-### M3 dedupe_key 可绕过（同笔记多收录）
+### M3 dedupe_key 可绕过（同笔记多收录）【已修复】
 - **攻击路径**：同一篇笔记改 3 个 `note_id`、同 title → **3 条全 accepted**。dedupe_key=md5(title|note_id) 随 note_id 变化，无法识别"同篇不同ID"。
 - **危害**：重复收录、结算虚增。
-- **修复建议**：dedupe 键改为 `md5(title)` 或 `md5(作者+title)` 的归一化版本（配合 note_id 前缀匹配）；或服务端对同 title 近 N 天内已收录的做 reject。
+- **修复**：dedupe_key 改为 `md5(归一化 title)`（不含 note_id），并新增 accepted 态唯一索引 `idx_crowd_proofs_dedupe_title`（防并发）。
+- **复测**：同 title 3 个 note_id → 仅 1 条入库，其余被唯一索引拦截 ✅
 
 ---
 
@@ -88,13 +92,10 @@
 ### 已交付修复（SQL 已执行 + 复测通过）
 - [x] H1 配额强制（crowd_submit_proof）
 - [x] H2 参与者ID一致性校验（crowd_submit_proof）
-
-### 待修复（建议下轮迭代）
-- [ ] H3 编号枚举 → 统一错误信息
-- [ ] M1 XSS 入库 → 服务端拒绝 + 审核端 textContent
-- [ ] M2 quota_day 默认值 → RLS with check 限定
-- [ ] M3 dedupe 增强 → 归一化 dedupe 键
-- [ ] L1 并发优化（可选）
+- [x] H3 编号枚举 → 统一错误信息 participant_unavailable
+- [x] M1 XSS 入库 → 报名 RLS with check 拒绝 < > + 长度限制
+- [x] M2 quota_day 默认值 → 报名 RLS with check 强制 quota_day=20
+- [x] M3 dedupe 增强 → dedupe_key 归一化 title + accepted 态唯一索引
 
 ### 运维建议
 - [ ] 服务器 SSH 走代理（127.0.0.1:7897）恢复部署通道

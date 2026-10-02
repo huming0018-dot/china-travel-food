@@ -32,14 +32,13 @@ declare
   v_rows jsonb;
 begin
   -- 参与者管控闸门（与 ingest 一致的口径）
+  -- 【安全】H3 防枚举：编号不存在 / pending / suspended / blacklisted / rejected
+  --   一律返回 participant_unavailable，不区分"存在与否"与"具体状态"
   select status into v_status
     from public.crowd_participants
    where participant_id = p_participant_id;
-  if v_status is null then
-    return jsonb_build_object('ok', false, 'reason', 'participant_not_found');
-  end if;
-  if v_status <> 'approved' then
-    return jsonb_build_object('ok', false, 'reason', 'participant_status_' || v_status);
+  if v_status is distinct from 'approved' then
+    return jsonb_build_object('ok', false, 'reason', 'participant_unavailable');
   end if;
 
   select coalesce(jsonb_agg(jsonb_build_object(
@@ -101,14 +100,12 @@ declare
   v_today_used  int;
 begin
   -- ① 参与者管控闸门
+  -- 【安全】H3 防枚举：不存在 / 非approved 一律 participant_unavailable
   select status into v_status
     from public.crowd_participants
    where participant_id = p_participant_id;
-  if v_status is null then
-    return jsonb_build_object('ok', false, 'reason', 'participant_not_found');
-  end if;
-  if v_status <> 'approved' then
-    return jsonb_build_object('ok', false, 'reason', 'participant_status_' || v_status);
+  if v_status is distinct from 'approved' then
+    return jsonb_build_object('ok', false, 'reason', 'participant_unavailable');
   end if;
 
   -- ② 信封结构
@@ -188,6 +185,9 @@ begin
     end if;
 
     -- 幂等写入（唯一约束冲突=已存在，静默跳过）
+    -- 【安全】M3 防去重绕过：dedupe_key 只由归一化 title 决定（不含 note_id）
+    --   同篇笔记无论怎么改 note_id，title 一致 → dedupe 唯一索引拦截
+    --   配合下方 create unique index idx_crowd_proofs_dedupe_title（partial, gate_status='accepted'）
     begin
       insert into public.crowd_proofs
         (participant_id, task_id, proof_seq, captured_at, sync_version,
@@ -198,7 +198,7 @@ begin
         (p_participant_id, v_task_id, v_seq, v_captured, v_sync,
          v_kind, v_note_id, v_note_url, v_title, v_excerpt, v_author,
          v_rating, v_rating_reason, v_matched, v_anchor, v_raw,
-         'accepted', md5(coalesce(v_title,'') || '|' || coalesce(v_note_id,'')))
+         'accepted', md5(regexp_replace(coalesce(v_title,''), '\s', '', 'g')))
       on conflict (participant_id, task_id, proof_seq, note_id) do nothing;
       if found then
         v_accepted := v_accepted + 1;
@@ -249,6 +249,33 @@ revoke select, insert, update, delete on public.crowd_reviews     from anon;
 revoke select, insert, update, delete on public.crowd_settlements from anon;
 -- participants：仅保留报名 insert(pending)；SELECT 已撤销策略
 revoke select, update, delete on public.crowd_participants from anon;
+
+-- ------------------------------------------------------------
+-- 4) M3 去重增强：accepted 态 dedupe_key 唯一索引（同 title 全局唯一，防并发绕过）
+--    注意：必须与函数内 dedupe_key 算法一致 —— md5(regexp_replace(title,'\s','','g'))
+-- ------------------------------------------------------------
+drop index if exists idx_crowd_proofs_dedupe;
+create unique index if not exists idx_crowd_proofs_dedupe_title
+  on public.crowd_proofs(dedupe_key) where gate_status = 'accepted';
+
+-- ------------------------------------------------------------
+-- 5) M1+M2 报名策略加固：
+--    - M1：拒绝含 HTML 标签字符的 display_name / contact（防 XSS 原文入库）
+--    - M2：报名时 quota_day 强制服务端默认值 20（审核时才可改，防自定超大配额）
+--    重建原 insert 策略（with check 加强版）
+-- ------------------------------------------------------------
+drop policy if exists "crowd_apply_anon_insert" on public.crowd_participants;
+create policy "crowd_apply_anon_insert" on public.crowd_participants
+  for insert to anon with check (
+    status = 'pending'
+    and quota_day = 20
+    and length(display_name) between 1 and 20
+    and length(contact) between 1 and 100
+    and position('<' in display_name) = 0
+    and position('>' in display_name) = 0
+    and position('<' in contact) = 0
+    and position('>' in contact) = 0
+  );
 
 -- 验证：
 --   select public.crowd_fetch_tasks('P-TEST') ;
