@@ -1,6 +1,7 @@
 # 当前状态 · STATUS
 
-> 最后更新：2026-10-02 22:05（PM窗口 · 报名即用 + 自动续领）
+> 最后更新：2026-10-02 23:10（PM窗口 · 红队对抗加固完成）
+> **✅ 红队对抗加固完成（2026-10-02 深夜）**：以投机者身份实测攻击 10 类向量（一机一号/URL白名单绕过/垃圾灌库/任务DoS/去重绕过/伪评分/时间伪造/并发竞态/幂等绕过/评分去重混淆）→ 全部修复并回归验证。核心：报名强制 device_salt + 同设备唯一索引（一机一号闭环）；URL 严格正则（仅 `www.xiaohongshu.com/explore/[0-9a-f]{24}`）；note_id 强制 24hex；评分锚定已收录笔记；captured_at 时间窗；参与者行锁防并发超配额；循环内任务状态复查防刷满；dedupe 升级（note 全局 title 归一 / rating 按参与者+笔记）；拒收率>0.6 自动 suspend。报告：`cloud/REDTEAM_REPORT.md`。commit `0132590`，服务器已同步。
 > **✅ 自动续领上线（2026-10-02 晚）**：修复「回传后不领新任务」bug——插件端关键词轮转+按关键词累计accepted判定完成+完成自动归档续领；服务端 fetch_tasks 支持 exclude_task_ids（排除已完成包）；popup 新增关键词进度条（可视化）。端到端验证：报名→领#1→排除#1→自动切#2 ✅。线上插件已更新（25KB）。
 > **✅ 报名页已托管上线（2026-10-02 晚）**：Supabase Storage public bucket `crowd`，公网可直接访问：
 > - 📄 报名页：`https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/apply.html`
