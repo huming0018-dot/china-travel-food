@@ -10,6 +10,24 @@
 >
 > 在任何提交 / 截图 / 产物中出现明文密钥；本文档只写变量名与读取位置。
 
+### 2026-10-02 晚⑩【二次验证校准：证据账本两缺陷修复 + 品牌级 chain_type 归一 + 零证据硬负面重置，均已写库回读】
+
+**用户主张**：“二次验证数据还不对，继续校准”。点名店仅用来说明流程缺陷，不接受特征枚举式补单店；要求硬负面可复现、chain_type 全分店一致、评分/精选联动。本轮修复三个【底层根因】，非改表面标签：
+
+1. **根因①（第二独立源被静默丢弃）`cloud/ingest.py`**：`append_finding` 旧幂等键只含 `(rid,field,value)`，同一结论的**第二条独立来源被当重复丢弃**，任何全新硬结论永远凑不齐 n_ind=2、gate 永久 reverify。改为幂等键含 `source_url`（一条证据=同一来源对同一 rid+field 提同一 value），两处调用点同步。
+2. **根因②（单源高严重度永久阻塞）`cloud/gate_apply.py resolve_enum`**：旧逻辑只取“严重度最高的硬候选”，它单源就直接 hold，**从不尝试证据充分的较低严重度取值**（单源错误“资本化”会永久阻塞证据充分的“大型”）。改为：只在 n_ind≥2 的硬值中取最严重者 apply；无达阈值才 hold。
+3. **品牌级 chain_type 归一（按单店判定是结构缺陷）新建 `cloud/brand_chain_normalize.py`**：店名主干聚品牌 + RESOLVE 双源证据表（10 品牌，URL 见该文件），对全分店写品牌级证据（经 ingest 幂等），gate 统一。**已 apply 11 PATCH、回读 10 品牌全一致**：点都德/莆田/蜀谭记/家府/烤匠/东来顺/柴门荟=大型连锁；小菜园(00999.HK)/唐宫(01181.HK)=资本化；广舟=小型。
+4. **零证据硬负面重置（gate 新增确定性 pass）**：复现 central_kitchen=确认 仅 1496/1525 有 n_ind≥2、18 家零证据；premade=高 **0** 家有证据、17 家零证据。系统原本只遍历 findings 中出现的 (rid,field)，零证据硬标签永不被纠正。新增 pass（仅 central_kitchen/premade_risk；有 n_ind≥2 保留、单源 best_ni≥1 保留+reverify、**仅对任何硬值都 0 独立源才重置为“无”**，同步内存值以免同轮误触发精选下架，进 reverify 重取证；chain_type 不在此自动重置）。**已 apply 35 店/57 字段，curated_off=0**（连锁不下架、好连锁可留）。
+
+**写库后回读（实测）**：
+- chain_type（active）：独立店 **989** / 小型连锁 **350** / 大型连锁 **141** / 资本化连锁 **17**。
+- central_kitchen：无 **1491** / 确认 **2**（1496、1525，均有双源）/ None 4；premade_risk：无 **1490** / 低 3 / None 4。
+- 校验脚本断言：“仍无证据的硬负面：无 —— 全部硬负面均可复现”。
+
+**cron 固化**：`/etc/cron.d/food_indep` 每日序列在 `gate_apply --apply` 前插入 `brand_chain_normalize.py`（grep 实测 1 处），防止单店探针再次造成跨分店不一致。
+**commits（已 push main）**：`5c5bba7`（ingest 幂等含 source + gate 取达阈值最严重硬值 + 品牌归一器）、`2e0178e`（gate 零证据硬负面重置）。
+**剩余（交既有 reverify 闭环，cron 持续，不手补）**：约 60 家单源 held chain_type、4 个全“独立”漏标品牌（顺峰顺水/新旺/家全七福/鮨升）、约 190 reverify holds 均需补第二独立源（reg 工商或第二域名 branch）；reset 后变“无”的品牌若取证到 n_ind≥2 再挂。chain_review 1：480 柴门荟(BFC) 大型连锁、独立食客声音 0，交 ML 门。
+
 ### 2026-10-02 晚⑨【collector·成本路由 atomus→opspilot 测试通过，单店成本 $0.56→约$0.18】
 
 **背景**：纯 opspilot 约 $0.10/次，对合集/0采信店也收费，上周期折算约 **$0.56/店**。用户再放 $10（月度硬顶 $60→**$70**，PUT `/v2/users/me/limits` flat 对象，201），验证「atomus 先探（per-result，0结果=$0），不足再 opspilot」。
