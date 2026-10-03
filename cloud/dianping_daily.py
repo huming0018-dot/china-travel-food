@@ -17,6 +17,29 @@ CHECKPOINT = LEDGER / "dianping_daily.done"
 UA = DBL.UA
 
 
+def flush_findings(findings):
+    """增量去重 append 到 findings.jsonl，返回新增条数；清空缓冲（中途断也不丢）。"""
+    seen = set()
+    if FINDINGS.exists():
+        for l in FINDINGS.read_text().splitlines():
+            if l.strip():
+                d = json.loads(l)
+                seen.add((d.get("restaurant_id"), d.get("field"), d.get("source_url")))
+    new = [f for f in findings
+           if (f["restaurant_id"], f["field"], f["source_url"]) not in seen]
+    with FINDINGS.open("a") as fh:
+        for f in new:
+            fh.write(json.dumps(f, ensure_ascii=False) + "\n")
+    findings.clear()
+    return len(new)
+
+
+def save_closed_watch(closed_watch):
+    if closed_watch:
+        (LEDGER / "closed_watch_latest.json").write_text(
+            json.dumps(closed_watch, ensure_ascii=False, indent=1))
+
+
 def main():
     res = C.fetch_all("/restaurants", "id,name,status,chain_type,price_avg", order_col="id")
     act = [r for r in res if r.get("status") == "active"]
@@ -28,6 +51,7 @@ def main():
 
     findings = []
     closed_watch = []
+    total_new = 0
     for i, r in enumerate(todo):
         rid, name = r["id"], r["name"]
         try:
@@ -53,21 +77,16 @@ def main():
         with CHECKPOINT.open("a") as fh:
             fh.write(f"{rid}\n")
         time.sleep(random.uniform(1.5, 3.0))
-        if (i + 1) % 20 == 0:
-            print(f"  progress {i+1}/{len(todo)} findings={len(findings)} closed_watch={len(closed_watch)}")
+        if (i + 1) % 40 == 0:
+            total_new += flush_findings(findings)
+            save_closed_watch(closed_watch)
+            print(f"  progress {i+1}/{len(todo)} new_findings_so_far={total_new} "
+                  f"closed_watch={len(closed_watch)}", flush=True)
 
-    # append findings (dedup)
-    seen = set()
-    if FINDINGS.exists():
-        for l in FINDINGS.read_text().splitlines():
-            if l.strip():
-                d = json.loads(l)
-                seen.add((d.get("restaurant_id"), d.get("field"), d.get("source_url")))
-    new = [f for f in findings if (f["restaurant_id"], f["field"], f["source_url"]) not in seen]
-    with FINDINGS.open("a") as fh:
-        for f in new:
-            fh.write(json.dumps(f, ensure_ascii=False) + "\n")
-    print(f"[dianping_daily] new_findings={len(new)} closed_watch={len(closed_watch)}")
+    total_new += flush_findings(findings)
+    save_closed_watch(closed_watch)
+    print(f"[dianping_daily] DONE total_new_findings={total_new} "
+          f"closed_watch={len(closed_watch)}", flush=True)
 
     if closed_watch:
         N.send("ACTION", f"点评发现 {len(closed_watch)} 家疑似关店，待 host 侧确认三要素："
