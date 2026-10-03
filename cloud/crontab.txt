@@ -35,6 +35,8 @@ SHELL=/bin/bash
 
 # 9b) 守门员·精选评分（在 softad 05:37 + 证据/评论更新之后；只 PATCH 精选层列，不碰 score_total）：每天 5:52
 52 5 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/curate.lock /usr/local/bin/python /app/pipeline/curate_score.py --apply >> /app/data/curate.log 2>&1
+# 9c) 真实口味门：专家标签确定性 curate + astroturf 负向门 + ML 诚实自校（06:05；评论深度到位后 ML 自动就绪）
+5 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/tastegate.lock /usr/local/bin/python taste_gate.py --apply >> /app/data/taste_gate.log 2>&1
 
 # 10) 并行采集池常驻（容器启动即拉起；每个健康账号一个签名 HTTP worker，自动认领缺口叶子）
 @reboot sleep 25 && cd /app/cloud && . /app/cloud/env.sh && nohup /usr/local/bin/python gap_pool.py 6 >> /app/data/pool.log 2>&1
