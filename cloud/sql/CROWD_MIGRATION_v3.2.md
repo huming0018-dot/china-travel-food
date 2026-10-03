@@ -20,6 +20,7 @@
 | 02 | `crowd_migration_v3.2_02_identity.sql` | #6 身份绑定 / #61 管理字段收紧 | ✅ 已上线（Auth 已启用 + 报名页走 RPC） | 产品决策（已同意） |
 | 03 | `crowd_migration_v3.2_03_lease.sql` | #14 任务租约与名额预留 | ✅ 已上线（提交函数含租约校验） | 备份 crowd_tasks |
 | 04 | `crowd_migration_v3.2_04_settlement.sql` | #13 结算闭环 | ✅ 已上线（crowd_settle RPC + 结算工具） | 备份 crowd_settlements |
+| 05 | `crowd_migration_v3.2_05_store_ingest.sql` | #13 入库链路 | ✅ 已上线（crowd_store_evidence + 候选 + score_diner 回写） | 备份 crowd_proofs / restaurants |
 
 ## 执行前备份（Supabase SQL Editor）
 

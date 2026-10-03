@@ -78,25 +78,18 @@ def cmd_approve(args):
     row = _get_one(args.pid)
     if row["status"] not in ("pending", "rejected"):
         sys.exit(f"{args.pid} 当前状态是 {row['status']}，不可批准")
-    new_pid = _gen_pid()
+    # v3.2.1 起报名走 crowd_register RPC（服务端直接生成 P-[A-Z0-9]{8} 编号），
+    # 不再存在 TMP→P 主键变更；批准 = 原地 UPDATE（一步原子，无复制/删除竞态）
     body = {
         "status": "approved",
-        "participant_id": new_pid,  # TMP → P- 正式编号（主键更新，需 on conflict 语义下用 DELETE+INSERT 或直接 UPDATE PK）
         "quota_day": args.quota,
         "reviewed_at": "now()",
         "review_note": (args.note or ""),
     }
-    # 注意：Supabase REST 不支持更新主键列，这里采用「复制到新编号 + 删除旧行」的两步事务
-    body2 = dict(row)
-    body2.update(body)
-    body2.pop("participant_id", None)  # POST 新行用新 PID
-    r_new = C.req("POST", TABLE, json={**body2, "participant_id": new_pid})
-    if r_new.status_code not in (200, 201):
-        sys.exit(f"发放新编号失败: {r_new.status_code} {r_new.text[:200]}")
-    r_del = C.req("DELETE", TABLE + f"?participant_id=eq.{args.pid}")
-    if r_del.status_code not in (200, 204):
-        sys.exit(f"删除旧 TMP 行失败: {r_del.status_code}（新编号已发放，请手动清理 {args.pid}）")
-    print(f"✅ 已批准 {args.pid} → {new_pid}（配额 {args.quota}/日）")
+    r = C.req("PATCH", TABLE + f"?participant_id=eq.{args.pid}", json=body)
+    if r.status_code not in (200, 204):
+        sys.exit(f"批准失败: {r.status_code} {r.text[:200]}")
+    print(f"✅ 已批准 {args.pid}（配额 {args.quota}/日，原地 UPDATE 原子完成）")
 
 
 def cmd_suspend(args):

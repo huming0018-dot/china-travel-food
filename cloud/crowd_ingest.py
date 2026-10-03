@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# ⚠️ DEPRECATED（2026-10-03 v3.2.1）— 仅保留作历史参考，禁止生产使用
+# 本文件是旧入口：crowd_ingest.py 曾直写 crowd_proofs，已被 security definer RPC
+# `crowd_submit_proof`（插件回传唯一入口）取代。继续直写会绕过：
+#   - URL-ID 一致性 / note_id 去重 / 拒收落库 / 租约与身份校验（迁移01-03）
+# 新入口：插件 POST /rest/v1/rpc/crowd_submit_proof；入库聚合走 crowd_ingest_stores。
+# 如需恢复使用，须先与 PM 确认并迁移到 RPC 语义。
 # -*- coding: utf-8 -*-
 """
 crowd_ingest.py — 众包插件回传服务端校验与落库（PM窗口自承接，#50）

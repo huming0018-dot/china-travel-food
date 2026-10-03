@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# ⚠️ DEPRECATED（2026-10-03 v3.2.1）— 仅保留作历史参考，禁止生产使用
+# 本文件是旧入口：crowd_pack.py 曾把任务包降级写入 task_queue（assignee=crowd），
+# 已被 crowd_tasks 表 + crowd_scale.py（seed/db/fill → 去重 → 切包 → 发布）取代。
+# 新入口：cloud/crowd_scale.py（任务包） + RPC crowd_fetch_tasks（领取）。
+# 双口径已收敛，继续写 task_queue 会造成任务池分裂。
 # -*- coding: utf-8 -*-
 """
 crowd_pack.py — 众包任务包生成与发布（PM窗口自承接，#50 配套）
