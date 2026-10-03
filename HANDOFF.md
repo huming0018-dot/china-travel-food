@@ -4652,3 +4652,37 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - ledger 1516 rids（含少量 closed；active 1514）、findings 2418 行；chain 分布 独立1050/小型329/大型103/资本化15/null17；premade 无1482/低8/高5。
 - 录后校验管线已可长期自运行：周一至六增量（新增/更新/被标记复查）、周日全量复扫；新 findings 才入库，幂等可复跑。
 - 待办（未在本轮）：点评日更明早确认全量刷新；investor_info 仅569（随 reg 源补）；其余见上节"下一步"与全局 OPEN 项。
+
+## 2026-10-03 傍晚 · 点评全量提前启动 + ARK 个人额度结论 + 长期模块周期优化
+
+### 一、点评全量提前启动（detached、断点续跑）
+- 健壮性改造 `cloud/dianping_daily.py`（commit `9bba25d`）：新增 `flush_findings()`（去重 append findings.jsonl 后清缓冲）与 `save_closed_watch()`；主循环**每40店增量落盘**并打印 progress，结束再 flush 余数（原仅整轮结束落盘，3h 全量中途断全丢）。
+- `docker exec -d ... dianping_daily.py` 启动全量：active=1514、起始 done=57；checkpoint 持续增长（傍晚 99→428）。点评cookie（9/28）仍有效。
+- 挂一次性守护 `daily_then_audit.sh`（docker cp，procs=1）：每5min 轮询，无 dianping_daily 进程且 checkpoint≥1514 时自动 `post_audit.py --findings findings.jsonl --apply` 入库；关店只进 closed_watch 复查、不自动改 status。
+  注：守护与即时版 dianping_daily 均 docker cp、容器重建即丢（每日03:14 food_restart 会杀手动全量，断点保留、次日06:40 cron 续跑）。
+
+### 二、ARK 个人额度结论：现阶段个人够用
+- 实测账本 `/app/data/cost/model_usage.jsonl`（738条）：10-02 **35.8k** tokens/91次；10-03 **1.96M** tokens/647次（重测试+探针峰值）。
+- 1.96M **分散在7个模型**，单模型两日峰值 deepseek-v4-flash 812k（折算单日远低于200万）；主力 flash/glm-5-2 为协作奖励授权 endpoint、用多少次日等量返还（30天有效）→ 近似自续。
+- 口径（联网核实）：协作奖励二期个人单模型每日约**200万**、企业最高**500万**；安心体验每模型50万；一个主体仅一个账号参加。
+- 结论：峰值单模型用量不到个人日上限一半 → **个人够用**；仅当持续单模型>200万/日（重并行全量重算）才需企业认证（需营业执照）。保免费护栏：优先返还模型、跨模型分片、证据缓存、便宜模型首判、独立 key（`ARK_API_KEYS`）真并行。
+
+### 三、长期模块周期优化（commit `e478f03`，已热加载，下次 build_sync 烘焙）
+原则：**按数据变化率分层 + 强制依赖排序 + 错峰**。4h 内容轮内顺序：身份 cross :11（8h）→ bili :30 → kol_monitor :37 → patrol :52。
+
+| 模块 | 原 | 新 | 理由 |
+|---|---|---|---|
+| kol_cross（身份/公众号） | 6h :23 | **8h :11** | 身份变化慢，省空转 |
+| group_chef_tree（集团/主厨树） | 未排期 | **每天 02:11/14:11 --apply** | 补缺口，反向枚举 groups/members |
+| cloud_bili_collect | 6h :30 | **4h :30** | 内容鲜度提速 |
+| kol_monitor | 6h :37 | **4h :37** | 内容鲜度提速 |
+| cloud_patrol | 3h :42 | **4h :52** | 内容轮末尾收口 |
+| fleet_grid_run | 1x 09:17 | **2x 09:17/21:17**（max80/段） | 深网格覆盖提速一倍 |
+| chef_tracker | 每周一 09:03 | **每周一/四 09:05** | 更快跟主厨动向 |
+
+- events_collect（美食动态）：是浏览器/XHS 采集器、非 keyless，**不进 cron**，仍走 Apify/浏览器流；重型 ML（softad 5:37/curate 5:52/self_evolve 01:00）与凌晨序列不变。
+- 部署方式：为不杀点评全量，采用 `docker cp crontab.txt` + 容器内 `crontab /app/cloud/crontab.txt` **热加载**（已回读新行、两后台进程仍存活）；文件已入 git，下次 build_sync 正规烘焙。
+
+### 四、长期表现状（实测）
+food_kol_watchlist 126、identity 78、posts 493、mentions 410；chefs 60、restaurant_chefs 84；restaurant_groups 13、group_members 54；restaurant_awards 155；food_events 40。
+（排查坑：关联表复合主键无 id 列，`fetch_all` 须显式 `order_col=restaurant_id/group_id`，否则 400 HTTPError。）
