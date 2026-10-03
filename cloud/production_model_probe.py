@@ -322,17 +322,24 @@ def _split_cjk_lat(brand):
 
 
 def standard_queries(brand):
-    """标准地毯搜索词根：复热向 / 手艺现做向 / 高召回点评向 / 资本规模向。
-    品牌词在 CJK↔拉丁边界加空格、不再加引号——引号对混写/小店/异写名零召回，
-    相关性改由 _mentions_brand 品牌命中后置过滤保证（双重保险）。"""
+    """标准地毯搜索词根：高召回点评向 / 手艺现做向 / 复热工业化向 / 资本规模向。
+    铁律：每个查询只在品牌词后接【1 个】概念词——多同义词堆叠会被搜索引擎按 AND
+    处理（要求全部出现）→ 几乎零召回（旧版“品牌 中央厨房 料理包 预制菜 复热 供应链”
+    实测绝大多数 0 结果）。各维度按轮交错，保证切片到前 N 条也能覆盖每个维度。
+    品牌词在 CJK↔拉丁边界加空格、不加引号（引号对混写/小店/异写名零召回），
+    相关性由 _mentions_brand 品牌命中后置过滤保证（双重保险）。"""
     bq = _split_cjk_lat(brand)
-    return [
-        f'{bq} 中央厨房 料理包 预制菜 复热 供应链',
-        f'{bq} 招股书 供应商 加盟费 中央工厂 代工厂 招商',
-        f'{bq} 招牌菜 现炒 现做 厨师 明厨亮灶 锅气',
-        f'{bq} 上海 菜单 人均 怎么样 好吃吗 推荐 探店',
-        f'{bq} 门店 直营 加盟 上市 集团 公司',
-    ]
+    generic = ["上海 探店", "菜单 推荐", "好吃吗", "人均 怎么样", "测评"]
+    craft = ["现炒", "明厨亮灶", "现做", "招牌菜", "锅气", "厨师 后厨"]
+    industrial = ["中央厨房", "料理包", "预制菜", "复热", "统一配送", "代工厂"]
+    capital = ["加盟", "直营", "上市", "招股书", "门店 数量", "集团 公司"]
+    buckets = [generic, craft, industrial, capital]
+    out = []
+    for i in range(max(len(b) for b in buckets)):
+        for b in buckets:
+            if i < len(b):
+                out.append(f"{bq} {b[i]}")
+    return out
 
 
 # 通用品类/食材/业态词：单独出现不代表在讲该品牌（如「sushi」命中小游戏页）。
@@ -403,7 +410,7 @@ def evidence_url_set(evidence):
     return {u for u in s if is_real_url(u)}
 
 
-def gather_evidence(brand, n_queries=5, _retry=1):
+def gather_evidence(brand, n_queries=8, _retry=1):
     bterms = brand_terms(brand)
     qs = standard_queries(brand)[:n_queries]
 
@@ -439,7 +446,7 @@ def _evidence_raw(ev):
     return sum(e.get("raw", 0) for e in ev)
 
 
-def gather_evidence_cached(brand, n_queries=5):
+def gather_evidence_cached(brand, n_queries=8):
     """证据按品牌持久缓存（与 probe_parallel 共享目录）：非空长期复用，空结果 6h 内复用，
     避免被杀批次 / 复校 / 多班 cron 对同一品牌重复搜索、重复喂大 prompt。"""
     PROBE_CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -592,7 +599,7 @@ def extraction_models(provider):
     return cands[:2]
 
 
-def probe_brand(provider, model, brand, locations, n_queries=4):
+def probe_brand(provider, model, brand, locations, n_queries=8):
     """model 可为单个模型或候选列表；自动在 429/异常时轮换模型。
     返回 (sig, evidence, status)；status ∈ ok / no_evidence / no_signal /
     llm_ratelimit / llm_error。"""
