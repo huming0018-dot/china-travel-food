@@ -23,6 +23,18 @@
 - **运维发现**：容器在 11:43/11:44/11:53 被三次 `docker restart`（非 cron、非崩溃，疑另一会话发版），杀掉在飞手动批次；已由增量状态+短超时+偶数点 cron 自愈。重启触发源未定位，复发时查宿主 `~/food-cloud` 与并发会话。
 - 决定**不做**脆弱的"证据关键词预筛"零 LLM 门（语义判断归模型；非空缓存长期复用会永久漏标）；零 LLM 门只保留"全网零提及"。
 
+### 2026-10-03 · Docker 生产容器治理 + Lean 瘦身（commit 791f04c，容器已重建验证）
+- **一键重建固化**：`bash ~/food-cloud/build_sync.sh`（pull→rsync→build→compose up）；手册 `cloud/CONTAINER_REBUILD_RUNBOOK.md`。修两个隐性坑——rsync 加 `--delete` 清手工 cp 残留（cloud 143→136、pipeline 71→70）、build_sync 同步自身可随 git 更新；LLM 舰队网页层 web_chat_providers 纳入 git。
+- **闭包审计**：`cloud/container_closure_audit.py` 从 59 入口递归得活闭包 93，126 静态孤儿交叉验证后删真死肉 **13 个 / 3048 行**（_archived 8 retired + oneoff 5）+ 中间容器 sleepy_carson；手动运维工具箱与 Apify 备用通道甄别保留。
+- **核心发现（比死代码更严重）**：**13 个功能模块"建了零接线"**（chain_identify/chain_gate/menu_traits/premade_takedown/prefill_governance/softad_learn/coverage_matrix/independence_probe/findings_planner·ingest/selling_points/scene_ingredient/national_scale，含 dev #36/#37/#39/#41/#42 成果）——功能实际未生效，需派 dev 按治理报告第五节接入 crontab/入库管线。
+- 权威文档：`cloud/DOCKER_GOVERNANCE_REPORT_20261003.md`；最新状态见 `STATUS.md`。待确认：`~/food-cloud-v2` 非 git 旧沙盒可整体删。
+
+### 2026-10-03 · 众包美食家插件 v3.2.x 全链路闭环（外部审阅 14 项 P0 修复）
+- **服务端迁移 01–05 全部部署**（备份 `*_bak_20261003`）：①证据真实性（URL 内 note_id 一致 / note_id 去重 / 拒收落库 / per-kw 完成判定）；②身份绑定（Supabase Auth 启用，报名页改走 `crowd_register` RPC，RLS 收紧，存量可 `crowd_bind_participant`）；③任务租约（`crowd_fetch_tasks` 原子 `SKIP LOCKED` + claimed_by/lease_until 防超发）；④结算闭环（`crowd_settle` RPC + 每周一 09:00 cron，note ¥2/条、rating ¥1/条）；⑤入库链路（`crowd_store_evidence` 按店聚合 accepted、≥3 真实评分才回写 score_diner，无匹配入 crowd_store_candidates；`crowd_store_ingest.py` 每日 06:30）。
+- **插件**：v3.2.0 外部审阅修复（CSP/编号统一/keyword 接线/即时上传/轮转 done/安全线/永久失败/device_salt/restoreRemote）→ v3.2.1（报名 RPC 化+版本号），均上传 Storage 公网；crowd_admin approve 改原地 PATCH 原子，旧 crowd_ingest/pack 加 DEPRECATED。
+- 端到端已验证（注入证据→聚合/回写/候选正确→测试数据清理）。权威文档：`cloud/sql/CROWD_MIGRATION_v3.2.md`、`CROWD_SCALE.md`、`cloud/AUDIT_FIX_REPORT_20261003.md`、`STATUS.md`。
+- 待办：存量 3 名测试参与者需登录绑定；任务包共 45 个、覆盖 254 家未收录店。
+
 ### 2026-10-03 · 无头深覆盖发现编排器 deep_coverage（已烘焙 b5b8af1）
 - 背景：用户最高频未达成项＝sourcing 深覆盖；点名店（望庐/Cheeva Thai/nagi 等）是**回归用例**，禁止逐店枚举补单。
 - 新模块 `cloud/deep_coverage.py`（纯 SSH/SQL+REST，无浏览器、不碰 Apify 额度）：
@@ -36,6 +48,7 @@
 - **cron**：`23 */2 * * * deep_coverage.py --max-leaves 8 --max-confirm 20 --apply`（约一日遍历全部缺口叶，随后 stall 饱和）。
 - 关键坑：① `cuisines.parent_category` 存父**名**非 id，root_path 须 byname 上溯；② children 按 parent_category 建键（误按子名会把叶子判成根）；③ 串行 searxng 超时→4 线程；④ 并发 8 线程疑似 137→降 4；⑤ **docker cp 为临时、容器被 build_sync 重建即丢，持久化必须 commit + build_sync（ubuntu 用户，勿 sudo）**；⑥ 另有并发 actor 会重建容器/清缓存，部署一律走烘焙。
 - **下一步（未做）**：deep_candidates strong → raw_place/堂食原话 evidence-gate → stage1-4 建店的桥接；回归集 `research/regression_set.json` 自动比对命中率。
+- **增强 `4ae6c8f`（同日）**：发现召回改走「联网豆包」并加**严格证据门**——候选须同时满足含店名 / 在上海 / 有口味信号，过滤泛称（无具体店名）结果，失败重试并回退；进一步压低噪声候选。
 
 ### 2026-10-03 · 平台评分柱（migration 027，已烘焙 6cb240a）
 - 新表 `platform_ratings(restaurant_id,platform,rating,review_count,source_url,captured_at)`；restaurants 加列 `score_platform`；`derive_restaurant` 升级 **v6**。
