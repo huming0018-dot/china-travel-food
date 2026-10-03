@@ -4623,3 +4623,32 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 - cron #29 持续滚动：约 36 店/小时，优先补无证据独立店的 chain/price/平台评分；132 hold 随第二源关闭。
 - 待办（未在本轮）：把 `fact_claims.platform_rating` 接入 scoring_engine 作为「平台评分柱」（与 UGC 口味柱、榜单背书柱三角校准）；新开店/关店的 status 自动联动仍只 watch、不自动改。
 - 覆盖源仍是举例非穷举：点评之外，xhs(Apify 待决策)、地图 POI、公众号/视频号/抖音/B站按既定方案推进。
+
+## 2026-10-03 上午 · 录后校验 SERP 管线根因修复（producer 真正入库 + ledger 增量落盘 + 只消费新增）
+
+### 一、前提被实测推翻（"10-01 已全量"不成立）
+- `scan_ledger.json` 原本仅 **30 rid**；`full_run.log`（`mode=full todo=1497`）只走到 ~rid455/progress50；
+  `audit_10-01` 仅 571 distinct rid、`audit_10-02` 553。即所谓首次全量实际只覆盖约 38%，且 ledger 记账不全。
+- 但**现网 DB 字段其实已近全量**（多管线累积）：active 1514，chain_type 1497、central_kitchen/premade_risk/price_avg 各 1495、investor_info 569、电话 1319。
+  → 是 ledger 漏记，不是数据缺失；对"剩余934"再盲扫 2× 搜索几乎全 0、纯属浪费。
+
+### 二、根因（容器 `/app/cloud/serp_producer.py`，467行）
+1. **扫描结果被丢弃**：`scan_one` 调 `FX.validate(payload, apply=False)` 只校验不 append；main 从不跑 post_audit → kept findings 不落 findings.jsonl、不入库。
+2. **ledger 不增量落盘**：仅整轮 ThreadPoolExecutor 结束后 write 一次，中途超时/被杀则全部进度丢失（解释全量中断后 ledger 只剩30）。
+3. **点评日更 cron 路径错**：crontab 第100行用 `python dianping_daily.py`，容器内无 `python`（仅 `/usr/local/bin/python`），日志 `failed to execute python`。
+
+### 三、修复（commit `144a5b9`，已 BUILD_SYNC_DONE based on 144a5b9）
+- `scan_one(restaurant, do_apply=False)`：`--apply` 时 `FX.validate(..., apply=True)` 真正 append findings.jsonl。
+- main：ledger 每 10 店 + 结束 `save_ledger()` 增量落盘；批后只把**本轮新增**findings（记 n_before 行号）导出 `findings_new_<ts>.jsonl` 交 `post_audit.apply_findings(apply=True)`，不再每批重 PATCH 全量（原会重写600+店）。
+- crontab 第100行改 `/usr/local/bin/python dianping_daily.py`。
+
+### 四、真实执行与回读
+- 增量批 24 店（ledger 582→606）；post_audit 当次因旧逻辑重处理全量写 612 店（幂等、无错）。
+- ledger↔DB 对账：889 店字段已≥3项→标记 `db_reconcile`（1495 rids），**真正缺证据仅 21 店**（新 rid 2006–2070）。
+- 定点扫 21 店：5 findings 过门槛、写 2 店——2062 宝泰面馆 price_avg=30；2069 茹丝葵 chain=小型连锁/price=600；其余独立店因不足 2 独立可信源被正确丢弃（宁空不假，闸门口径生效）。
+- 手动验证 dianping_daily 修复路径可执行（跑40店/18 findings，后遇搜索接口临时404，明早06:40 cron 全新跑）。
+
+### 五、现状与下一步
+- ledger 1516 rids（含少量 closed；active 1514）、findings 2418 行；chain 分布 独立1050/小型329/大型103/资本化15/null17；premade 无1482/低8/高5。
+- 录后校验管线已可长期自运行：周一至六增量（新增/更新/被标记复查）、周日全量复扫；新 findings 才入库，幂等可复跑。
+- 待办（未在本轮）：点评日更明早确认全量刷新；investor_info 仅569（随 reg 源补）；其余见上节"下一步"与全局 OPEN 项。
