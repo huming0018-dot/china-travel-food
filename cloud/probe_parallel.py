@@ -196,6 +196,12 @@ def worker(provider, model, q, done_flag, allow_strong, stats, lock):
             rids = [r["id"] for r in rows]
             locs = "; ".join(r["name"] for r in rows[:6])
             evidence = gather_cached(bname)
+            # 无证据空跑门：零提及品牌直接记无信号、不占 LLM 名额、零调用
+            # （ALLOW_LLM_NO_EVIDENCE=1 可显式放开，如需要知识先验）。
+            if _ev_hits(evidence) == 0 and os.environ.get("ALLOW_LLM_NO_EVIDENCE", "") != "1":
+                with lock:
+                    stats["no_signal"].append(bname)
+                continue
             provider._llm_sem.acquire()   # 占该账号一个在飞 LLM 名额
             try:
                 RATE.acquire()
@@ -262,6 +268,7 @@ def run():
                     help="放开全部模型（默认仅授权免费模型；全量可能付费）")
     args = ap.parse_args()
 
+    os.environ.setdefault("FOOD_LLM_TASK", "probe_parallel")
     P.ensure_search_ready()
     ps = MP.load_providers()
     if not ps:

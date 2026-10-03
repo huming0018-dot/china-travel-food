@@ -118,6 +118,7 @@ def select_targets(brands, st, batch):
 
 
 def main():
+    os.environ.setdefault("FOOD_LLM_TASK", "production_runner")
     batch = int(os.environ.get("RUN_BATCH", os.environ.get("BATCH", "5")))
     st = load_state()
     brands = build_brands()

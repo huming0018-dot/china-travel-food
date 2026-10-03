@@ -135,11 +135,13 @@ def api_tasks():
     tasks = [(p, m) for p in provs for m in getattr(p, "models", [])]
     if not _FLEET_FULL:
         auth = [t for t in tasks if t[1] in AUTHORIZED_MODELS]
-        # 至少保留 2 个授权模型才能形成共识；授权模型不足则退回全量（并标注）
-        if len(auth) >= 2:
-            tasks = auth
-        else:
-            return (MP, tasks), ["授权模型<2，临时使用全量舰队（可能产生付费）"]
+        # 只跑已授权（免费、可返包）模型：哪怕只有 1 个也单跑（标注无共识），绝不静默
+        # 退回全量付费舰队；0 授权则跳过本轮（下次授权恢复后再跑）。
+        if not auth:
+            return None, ["无任何已授权模型，跳过（不使用付费全量舰队）"]
+        tasks = auth
+        if len(auth) < 2:
+            return (MP, tasks), ["授权模型<2，仅用现有授权模型单跑（无共识）"]
     return (MP, tasks), []
 
 

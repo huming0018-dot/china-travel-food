@@ -24,6 +24,7 @@
 """
 import argparse
 import datetime
+import hashlib
 import json
 import os
 import pathlib
@@ -47,6 +48,13 @@ except Exception:
 
 DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
 REPORT_DIR = DATA / "post_record"
+
+# 方舟「协作奖励计划」已授权接入点（2026-10-03 逐厂商面板核实）：只有这些模型的调用才
+# 被采集、次日约 11 点返等额免费资源包（个人单模型每日最高 200 万 token）。
+# 铁律：所有 LLM 任务只允许这两个模型；未授权模型调用不返包＝纯自费，绝不静默使用。
+REWARD_AUTHORIZED = ["deepseek-v4-flash-ga-260731", "glm-5-2-260617"]
+# 证据按品牌持久缓存（与 probe_parallel 共享同一目录）：非空长期复用、空结果短时复用。
+PROBE_CACHE_DIR = DATA / "probe" / "evidence_cache"
 
 PRODUCTION_LABELS = [
     "现炒现做", "门店现制·标准化", "中央厨房·门店加工",
@@ -158,6 +166,7 @@ def meter_usage(model, usage):
         REPORT_DIR.mkdir(parents=True, exist_ok=True)
         rec = {"ts": datetime.datetime.now().isoformat(timespec="seconds"),
                "model": model,
+               "task": os.environ.get("FOOD_LLM_TASK", ""),
                "prompt": usage.get("prompt_tokens"),
                "completion": usage.get("completion_tokens"),
                "total": usage.get("total_tokens")}
@@ -419,6 +428,41 @@ def gather_evidence(brand, n_queries=5, _retry=1):
     return ev
 
 
+_ZERO_CACHE_TTL = 6 * 3600   # 空取证缓存复用窗口：过期重搜，避免中毒/瞬时空结果长期复用
+
+
+def _evidence_hits(ev):
+    return sum(len(e.get("results", [])) for e in ev)
+
+
+def _evidence_raw(ev):
+    return sum(e.get("raw", 0) for e in ev)
+
+
+def gather_evidence_cached(brand, n_queries=5):
+    """证据按品牌持久缓存（与 probe_parallel 共享目录）：非空长期复用，空结果 6h 内复用，
+    避免被杀批次 / 复校 / 多班 cron 对同一品牌重复搜索、重复喂大 prompt。"""
+    PROBE_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    cp = PROBE_CACHE_DIR / f"{hashlib.sha1(brand.encode('utf-8')).hexdigest()[:16]}.json"
+    if cp.exists():
+        try:
+            cached = json.loads(cp.read_text(encoding="utf-8"))
+            if _evidence_hits(cached) > 0:
+                return cached
+            if time.time() - cp.stat().st_mtime < _ZERO_CACHE_TTL:
+                return cached
+        except Exception:
+            pass
+    ev = gather_evidence(brand, n_queries=n_queries)
+    # 真搜过（raw>0，哪怕 0 命中）才落盘；全搜索失败的基础设施瞬态不缓存、下次重试
+    try:
+        if _evidence_raw(ev) > 0:
+            cp.write_text(json.dumps(ev, ensure_ascii=False), encoding="utf-8")
+    except Exception:
+        pass
+    return ev
+
+
 def _evidence_brief(evidence, top=5, snip=170):
     """跨查询按 source_url 去重（同一篇常被多个词命中，避免重复喂给 LLM 浪费输入 token）。"""
     lines = []
@@ -445,7 +489,7 @@ def extract_signals_once(provider, model, brand, locations, evidence,
         f"品牌：{brand}\n库内分店：{locations}\n"
         f"以下是已检索到的网页证据（可能含无关或营销内容，需甄别）：\n{brief}\n\n"
         "任务：从证据中摘录与该品牌【出餐方式/供应链/资本规模】最关键的原文句子。\n"
-        "必须同时收集两类（裁决由后续程序做；每类只留信息量最高的 ≤6 条，引文 ≤40 字，不要长篇照抄）：\n"
+        "必须同时收集两类（裁决由后续程序做；每类只留信息量最高的 ≤4 条，引文 ≤30 字、只留关键事实，不要长篇照抄）：\n"
         "(A) 复热/工业化：中央厨房、料理包、预制菜、复热、统一配送、供应链公司、工厂、SC许可、门店只做加热；\n"
         "(B) 现做/门店制作：明厨亮灶、现炒、锅气、现包、现切、现烤、现擀、门店后厨、厨师现场制作。\n"
         "关键区分（极易误判，务必遵守）：若证据是品牌【售卖/推出】预制菜、年夜饭/年货礼盒、"
@@ -459,7 +503,7 @@ def extract_signals_once(provider, model, brand, locations, evidence,
         "提到的供应链/母公司/集团名放进 supply_chain_entity。\n"
         "只输出一个 JSON 对象，字段：" + ", ".join(SIGNALS_FIELDS) + "。\n"
         "*_evidence、retail_packaged_products 与 supply_chain_entity 为数组，元素 {quote(原文短句,尽量保留关键事实),url,kind(reg/news/ugc)}；"
-        "只把最关键的相关句子放进对应数组（每类≤6条）并保留其 URL；"
+        "只把最关键的相关句子放进对应数组（每类≤4条、引文≤30字）并保留其 URL；"
         "布尔许可字段 true/false/null；financing=上市/VC融资/无/未知；n_locations 为整数或null；"
         "production_guess 取 " + "/".join(PRODUCTION_LABELS) + "；confidence 0-1。\n"
         "另外给出你的【知识先验】（与上面证据严格分开）：knowledge_production_guess 同样取 "
@@ -470,7 +514,7 @@ def extract_signals_once(provider, model, brand, locations, evidence,
         "禁止编造；②knowledge_* 才允许用你自己的知识和业态常识，不知道就填 null，"
         "并如实区分“确知该品牌”与“仅按业态推断”（后者 confidence 不超过 0.75）；"
         "③若你认为它是预制/复热（严判），也只填进 knowledge_*，不得据此当作证据结论。\n"
-        "完全无据的证据字段填 null；不要输出 JSON 以外的话。"
+        "完全无据的证据字段填 null；紧凑输出（键值简短、不重述证据、不加解释），不要输出 JSON 以外的话。"
         + (("\n【复核特别要求】" + extra_instruct) if extra_instruct else ""))
     messages = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": prompt}]
@@ -521,52 +565,50 @@ def clear_model_dead(model):
 
 
 def candidate_models(provider):
-    """候选顺序：默认【已授权、可返免费包的主模型 EXTRACT_PRIMARY 优先】（协作奖励
-    计划，每日最高 200 万 token 免费）；PROD_MODEL 可显式覆盖。其余存活模型作为
-    兜底；已暂停(dead)模型不参与（仅当全部暂停才返回全部用于恢复探测）。
-    注：fleet_grid 的多模型共识走 provider.models 全量遍历，不受此顺序影响。"""
+    """只返回【协作奖励已授权、可返免费包】模型，按 REWARD_AUTHORIZED 顺序；已暂停(dead)
+    模型排后，全部暂停时仍返回授权列表用于恢复探测。未授权模型绝不作为兜底
+    （其调用不返包＝纯自费）。授权模型都不在该 provider 时返回 []，由调用方 hold/跳过。"""
     models = list(provider.models)
-    want = os.environ.get("PROD_MODEL", "") or EXTRACT_PRIMARY
-    live = [m for m in models if m not in _POOL["dead"]]
-    order = list(live if live else models)
-    if want and want in models:
-        order = [want] + [m for m in order if m != want]
-    return order
+    present = [m for m in REWARD_AUTHORIZED if m in models]
+    live = [m for m in present if m not in _POOL["dead"]]
+    return live or present
 
 
 # 主抽取模型＝已加入「协作奖励计划」授权的 DeepSeek-V4-Flash（预置接入点，
 # 每日采集量次日 11 点后按用量返免费资源包，个人单模型每日最高 200 万 token）。
-# 旧 mini-260428 不在奖励名单，故仅作兜底。PROD_MODEL 可覆盖。
+# 与 REWARD_AUTHORIZED[0] 一致；旧 mini-260428 不在奖励名单，不再使用。
 EXTRACT_PRIMARY = "deepseek-v4-flash-ga-260731"
 
 
 def extraction_models(provider):
-    """抽取模型（控成本版）：钉死【已授权、可返免费包】的 V4-Flash；仅当它被
-    暂停/不可用时，才追加【至多 1 个】存活兜底，避免无证据品牌在多个模型间空打。
-    PROD_MODEL 可显式覆盖主模型。"""
+    """抽取模型（控成本版）：钉死【已授权、可返免费包】模型（V4-Flash 主、GLM-5.2
+    兜底），至多 2 个；PROD_MODEL 仅在它本身已授权时才覆盖主模型。绝不追加未授权模型，
+    避免无证据品牌在多个（自费）模型间空打。"""
     models = list(provider.models)
-    want = os.environ.get("PROD_MODEL", "") or EXTRACT_PRIMARY
-    live = [m for m in models if m not in _POOL["dead"]]
-    pool = live if live else models
-    primary = want if want in models else (pool[0] if pool else models[0])
-    out = [primary]
-    for m in pool:
-        if m != primary:
-            out.append(m)
-            break
-    return out
+    cands = candidate_models(provider)
+    want = os.environ.get("PROD_MODEL", "")
+    if want and want in REWARD_AUTHORIZED and want in cands:
+        cands = [want] + [m for m in cands if m != want]
+    return cands[:2]
 
 
 def probe_brand(provider, model, brand, locations, n_queries=4):
-    """model 可为单个模型或候选列表；自动在 429 时轮换模型。
-    返回 (sig, evidence, status)；status ∈ ok / no_evidence / llm_ratelimit / llm_error。"""
+    """model 可为单个模型或候选列表；自动在 429/异常时轮换模型。
+    返回 (sig, evidence, status)；status ∈ ok / no_evidence / no_signal /
+    llm_ratelimit / llm_error。"""
     ensure_search_ready()
-    evidence = gather_evidence(brand, n_queries=n_queries)
+    evidence = gather_evidence_cached(brand, n_queries=n_queries)
+    has_kept = any(e.get("results") for e in evidence)
+    # 无证据空跑门：全网无提及该品牌的文档时，模型没有接地信息，调用只会返回空或编造，
+    # 直接记无证据、零 LLM 调用（可用 ALLOW_LLM_NO_EVIDENCE=1 显式放开，如需要知识先验）。
+    if not has_kept and os.environ.get("ALLOW_LLM_NO_EVIDENCE", "") != "1":
+        return None, evidence, "no_evidence"
     candidates = [model] if isinstance(model, str) else list(model or [])
     if not candidates:
         candidates = candidate_models(provider)
     fail_codes = []
     stalls = 0
+    normal_empty = False
     for m in candidates:
         try:
             sig = extract_signals_once(provider, m, brand, locations, evidence)
@@ -576,7 +618,11 @@ def probe_brand(provider, model, brand, locations, n_queries=4):
                 clear_model_dead(m)
                 print(f"    [model] {m}")
                 return sig, evidence, "ok"
+            # 模型正常作答但无信号：同一证据下换模型增益极低（严重情形另有 confirm 复核），
+            # 只打 1 个模型即止，不再空打第二模型。
             fail_codes.append("empty")
+            normal_empty = True
+            break
         except urllib.error.HTTPError as e:
             body_txt = ""
             err_code = getattr(e, "_ark_code", "")
@@ -605,9 +651,13 @@ def probe_brand(provider, model, brand, locations, n_queries=4):
             print(f"    [model-skip] {m} -> {type(e).__name__}")
             fail_codes.append(type(e).__name__)
             continue
-    has_kept = any(e.get("results") for e in evidence)
     if not has_kept:
         return None, evidence, "no_evidence"
+    if not candidates:
+        # 无任何已授权模型可用：按限流处理、下一班再试，不静默改用付费模型
+        return None, evidence, "llm_ratelimit"
+    if normal_empty:
+        return None, evidence, "no_signal"
     if fail_codes and all(c in ("quota", "429", "stall") for c in fail_codes):
         return None, evidence, "llm_ratelimit"
     return None, evidence, "llm_error"
@@ -842,19 +892,14 @@ SEVERE_MODELS = {"预制料理包·复热", "中央厨房·门店复热"}
 
 
 def _confirm_models(provider, exclude=""):
-    """按强→弱返回用于严判复核的模型列表：优先已授权(免费) glm-5-2 / pro / turbo，
-    其余候选兜底；供 confirm 逐个尝试，避免单点 HTTPError 即 hold。"""
+    """严判复核只在【已授权、可返免费包】模型内进行：GLM-5.2 优先（独立强复核），
+    V4-Flash 次之。CONFIRM_MODEL 仅在它本身已授权时生效；绝不退回未授权（付费）模型。"""
     want = os.environ.get("CONFIRM_MODEL", "")
     cands = [m for m in candidate_models(provider) if m != exclude]
-    ordered = []
-    if want and want in cands:
-        ordered.append(want)
-    strong = [m for m in cands
-              if ("pro" in m or "glm-5-2" in m or "turbo" in m) and m not in ordered]
-    # 已授权（协作奖励·免费）强模型优先，避免复核先打付费 pro
-    strong.sort(key=lambda m: 0 if m in {"deepseek-v4-flash-ga-260731", "glm-5-2-260617"} else 1)
-    rest = [m for m in cands if m not in ordered and m not in strong]
-    return ordered + strong + rest
+    ordered = sorted(cands, key=lambda m: 0 if "glm-5-2" in m else 1)
+    if want and want in REWARD_AUTHORIZED and want in cands:
+        ordered = [want] + [m for m in ordered if m != want]
+    return ordered
 
 
 def _hold(verdict, why, v2=None):

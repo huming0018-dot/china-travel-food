@@ -53,6 +53,11 @@ HYP_TABLE = "lead_hypotheses"
 DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
 HAE_DIR = DATA / "hae"
 
+# 方舟「协作奖励计划」已授权接入点（2026-10-03 核实）：默认舰队只 fan-out 这些免费模型，
+# 未授权模型调用不返包＝纯自费；FLEET_FULL=1 时才放开全量（手动、按需）。
+AUTHORIZED_MODELS = {"deepseek-v4-flash-ga-260731", "glm-5-2-260617"}
+_FLEET_FULL = os.environ.get("FLEET_FULL", "") == "1"
+
 VALID_SUBJECT = {"chef", "owner", "restaurant", "blogger", "list", "brand", "group"}
 VALID_RELATION = {"worked_at", "career_period", "teacher", "founded", "owns",
                   "related_to", "award", "show_appearance", "signature_dish",
@@ -300,7 +305,10 @@ def fleet_recall(seed: dict, apply: bool) -> dict:
     ph = hashlib.sha1(prompt.encode("utf-8")).hexdigest()[:12]
     out_rows, calls = [], []
     for p in providers:
-        for model in p.models:
+        models = list(getattr(p, "models", []))
+        if not _FLEET_FULL:
+            models = [m for m in models if m in AUTHORIZED_MODELS]
+        for model in models:
             r = MP.chat(p, model, prompt, web_search=MP.web_search_enabled())
             calls.append({"provider": p.name, "model": model, "ok": r["ok"],
                           "web": r["web"], "sources_n": len(r.get("sources", [])),
