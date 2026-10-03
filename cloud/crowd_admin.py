@@ -19,8 +19,6 @@ crowd_admin.py — 众包参与者管控 CLI（PM 窗口使用）
 """
 import argparse
 import html
-import secrets
-import string
 import sys
 import pathlib
 
@@ -32,12 +30,6 @@ import common as C  # noqa: E402
 
 TABLE = "/crowd_participants"
 VALID_STATUS = ("pending", "approved", "suspended", "blacklisted", "rejected")
-
-
-def _gen_pid():
-    """生成正式参与编号：P- + 6位大写字母数字。"""
-    alphabet = string.ascii_uppercase + string.digits
-    return "P-" + "".join(secrets.choice(alphabet) for _ in range(6))
 
 
 def _row_fmt(r):

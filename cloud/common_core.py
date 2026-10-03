@@ -42,7 +42,6 @@ _ENV_FILES = [
 ]
 
 # ---------------------------------------------------------------- 常量
-TIERS = ["经济", "平价", "中档", "高档", "奢华"]
 STATUS_OPEN = "active"
 STATUS_CLOSED = "closed"
 VALID_STATUS = {STATUS_OPEN, STATUS_CLOSED}
