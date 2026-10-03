@@ -34,6 +34,19 @@ Supabase 表（anon 零权限，报名 insert pending 除外）
 - 插件包仅含 anon key（sb_pub_，公开可分发），绝不含 service_role ✓
 - SQL 实现见 cloud/sql/crowd_rpc_security.sql（可重复执行，幂等）
 
+## ⚡ v3.2 外部审计修复（2026-10-03 · 外部 bot 审阅 14 项）
+
+> 迁移文件：`cloud/sql/crowd_migration_v3.2_01_evidence.sql`（02 身份绑定 / 03 租约见总纲 `cloud/sql/CROWD_MIGRATION_v3.2.md`）。
+> 插件端（v3.2.0）与服务端校验已对齐，01 迁移部署后生效：
+
+- **URL-ID 一致性**：URL 内提取的 24hex note_id 必须等于 `note_id` 字段，不一致 → `invalid` 拒收落库
+- **note_id 去重（替代标题去重）**：note 按 `platform+note_id` 全局唯一（改标题不可绕过）；rating 按 `participant+note_id` 唯一
+- **拒收逐条落库**：`gate_status` 扩展枚举 `accepted/rejected/duplicate_skipped/task_closed/invalid/error`；拒收率风控从此统计真实
+- **per-kw 完成判定**：keyword 包按 `kw_progress[kw_index]` 每词达 kpi_min 才 fulfilled（与插件轮转 done 对齐）
+- **任务租约（迁移03）**：`crowd_fetch_tasks` 原子领取，`claimed_by` 归属校验，非认领人提交 → `task_claimed_by_other`
+- **身份绑定（迁移02，待决策）**：`auth_user_id` 绑定后，`auth.uid()` 必须等于绑定值，否则 `auth_identity_mismatch`
+- **envelope 新增 `device_salt`（插件 v3.2 已发送）**：一机一号进提交链路，服务端首次回传绑定
+
 ## 1. 参与方与数据流
 
 ```
