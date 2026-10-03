@@ -199,5 +199,11 @@
   "last_ts": 1790978888,
   "last_hash": "b4fec46b592c43fc",
   "count": 1
+ },
+ "crowd_store_ingest": {
+  "level": "INFO",
+  "last_ts": 1790996699,
+  "last_hash": "0ad630c980093434",
+  "count": 1
  }
 }
