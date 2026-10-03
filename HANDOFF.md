@@ -14,6 +14,15 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 2026-10-03 · 建店桥接 build_bridge（commit 82e66d8，已烘焙 BUILD_SYNC_DONE）
+- 定位：deep_coverage 只【发现】，本模块把通过全文核验门的 admit 候选补成可入库实体，闭合"发现→建店"。
+- 流程：读全部 `deep_candidates_*.jsonl`（按 norm 名去重、strong 优先）→ 已验证 URL + 点评/评价补充查询，抓含店名整页合并 → **一次 LLM 只依据全文起草 raw_place**（地址/人均/电话/堂食原话/平台分拿不到一律 null，禁止编造）→ 菜系路径**确定性**地由分类树父链生成（不让模型编）→ 跑确定性 **stage1 质量门**。
+- 分流（宁空不假）：过门 → `raw_place_<date>.jsonl` 并 `--apply` 走 stage1→2→3→4 建店；缺地址/人均 → `need_poi.jsonl`（交地图管线）；缺≥2含菜名食客UGC原话/平台分 → `need_ugc.jsonl`（交 Apify）。
+- **关键兼容修复**：`cuisines.parent_category` 库里两种存法混用（父名 / 数字 id，如酱蟹父=「35」），cuisine_path_of 同时兼容名与数字 id、链上统一存名。
+- **端到端实测（诚实结果）**：88食堂·烤肉酱蟹虽真实 admit，但无头网页给不出地址/人均/≥2条食客原话/平台分/≥2类来源，stage1 正确拦下，同时进 need_poi + need_ugc，**不硬建**——符合"证据不足落取证队列"。
+- cron：发现 `23 */2` → 桥接 `47 */2 --apply`（flock /tmp/bridge.lock），日志 /app/data/build_bridge.log；状态断点 build_bridge_state.json。
+- **下一步**：把 need_ugc 队列接 apify_priority brief、need_poi 接地图配额管线；证据补齐后下一轮桥接自动建店。
+
 ### 2026-10-03 · deep_coverage 全页抓取+LLM全文核验门（commit c0e001c，已烘焙 BUILD_SYNC_DONE）
 - 背景：无头深覆盖最早靠「短 snippet + 正则/便宜模型抽取」，反复误报——菜名/形容词/泛称（破破烂烂、苍蝇馆子）、地名（京都一乘寺）、榜单误配（沈大成→Diner）、香川县乌冬旅游页当上海店。逐次堆正则是打地鼠。
 - **发现通道定为自建 SearXNG**（ARK 联网已四连实测走不通：chat 传 web_search 400 缺 tools.function；Responses API 404 ToolNotOpen 需付费开通插件，开通须本人）。候选店名**必须真实出现在结果原文**（`llm_extract` 有依据抽取，禁止参数记忆）。
