@@ -31,7 +31,7 @@ rsync -a --delete --include='*.py' --exclude='*' "$SRC_DIR/cloud/" "$BUILD_DIR/"
 echo "==> [3/4] rsync pipeline/*.py -> $BUILD_DIR/vendor/pipeline/（--delete 清手工cp残留）"
 mkdir -p "$BUILD_DIR/vendor/pipeline"
 rsync -a --delete --include='*.py' --exclude='*' "$SRC_DIR/cloud/vendor/pipeline/" "$BUILD_DIR/vendor/pipeline/" 2>/dev/null || true
-for f in Dockerfile crontab.txt entrypoint.sh requirements.txt docker-compose.yml; do
+for f in build_sync.sh Dockerfile crontab.txt entrypoint.sh requirements.txt docker-compose.yml; do
   [ -f "$SRC_DIR/cloud/$f" ] && cp -f "$SRC_DIR/cloud/$f" "$BUILD_DIR/$f"
 done
 echo "    cloud/*.py=$(ls "$BUILD_DIR"/*.py | wc -l)  pipeline/*.py=$(ls "$BUILD_DIR"/vendor/pipeline/*.py | wc -l)"
