@@ -85,7 +85,7 @@ HAE_GRID_SLICE=20
 # 20b) 无头深覆盖发现( deep_coverage )：菜系叶子缺口 × 词矩阵 × LLM舰队+searxng召回 × 证据确认。
 #      只发现不建店，候选落 /app/data/coverage/deep_candidates_<date>.jsonl 交 evidence-gate。
 #      每 2h 一轮 8 叶(指针轮转、stall≥3 判饱和)；约一日遍历全部缺口叶。
-23 */2 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/deepcov.lock /usr/local/bin/python deep_coverage.py --max-leaves 8 --max-confirm 20 --apply >> /app/data/deep_coverage.log 2>&1
+23 */2 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/deepcov.lock /usr/local/bin/python deep_coverage.py --max-leaves 6 --max-confirm 18 --apply >> /app/data/deep_coverage.log 2>&1
 
 # 21) 批次7·营业时间/营业日重补( cloud_hours_fill2 )：
 #     Pass A 从既有 opening_hours.raw 确定性反推 open_days(零API,首晚跑透后自thinning)；

@@ -153,10 +153,12 @@ def load_providers() -> list:
 def _web_search_extra(kind: str, model: str) -> dict:
     """返回要 merge 进 chat/completions body 的联网搜索参数。"""
     if kind == "ark_tools":
-        # 豆包联网；DeepSeek 经 ARK 不支持联网（带了也会忽略/报错，调用方应跳过）
+        # 豆包联网（当前 ARK chat/completions：仅需 {"type":"web_search"}；
+        # 嵌套 web_search.enable 会 400 MissingParameter tools.function）。
+        # DeepSeek 经 ARK 不支持联网，调用方应跳过。
         if "doubao" not in model:
             return {}
-        return {"tools": [{"type": "web_search", "web_search": {"enable": True}}]}
+        return {"tools": [{"type": "web_search"}]}
     if kind == "kimi_builtin":
         return {"tools": [{"type": "builtin_function",
                            "function": {"name": "$web_search"}}]}
@@ -242,6 +244,69 @@ def chat(provider: Provider, model: str, prompt: str,
     except Exception as e:  # noqa: BLE001
         return {"ok": False, "text": "", "sources": [], "model": model,
                 "provider": provider.name, "web": use_web, "usage": {},
+                "error": str(e)[:200]}
+
+
+def responses_chat(provider: Provider, model: str, prompt: str,
+                   tools=None, timeout: int = 90) -> dict:
+    """走【Responses API】(/responses + input)：当前 ARK 内置 web_search 仅在此可用，
+    chat/completions 传 web_search 会 400 MissingParameter tools.function。
+    返回与 chat() 同形：{ok,text,sources,model,provider,web,usage,error}。"""
+    tools = tools or [{"type": "web_search"}]
+    body = {
+        "model": model,
+        "input": [{"role": "user",
+                   "content": [{"type": "input_text", "text": prompt}]}],
+        "tools": tools,
+        "stream": False,
+    }
+    req = urllib.request.Request(
+        provider.base_url + "/responses",
+        data=json.dumps(body).encode("utf-8"),
+        headers={"Content-Type": "application/json",
+                 "Authorization": f"Bearer {provider.api_key}"},
+        method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            data = json.loads(r.read().decode("utf-8"))
+        texts, srcs = [], []
+        for item in data.get("output", []) or []:
+            if item.get("type") == "message":
+                for c in item.get("content", []) or []:
+                    if c.get("type") == "output_text" and c.get("text"):
+                        texts.append(c["text"])
+                    for a in c.get("annotations", []) or []:
+                        u = a.get("url") or a.get("link")
+                        if u and str(u).startswith("http"):
+                            srcs.append(u)
+            if item.get("type") == "web_search_call":
+                act = item.get("action") or {}
+                for u in (act.get("urls") or []):
+                    if str(u).startswith("http"):
+                        srcs.append(u)
+        text = "\n".join(texts)
+        for u in _URL_RE.findall(text or ""):
+            srcs.append(u)
+        # 去重保序
+        seen, out_s = set(), []
+        for u in srcs:
+            u = u.rstrip(".,;，。；")
+            if u not in seen:
+                seen.add(u); out_s.append(u)
+        usage = data.get("usage") or {}
+        return {"ok": True, "text": text, "sources": out_s, "model": model,
+                "provider": provider.name, "web": True,
+                "usage": {"prompt": usage.get("input_tokens", 0),
+                          "completion": usage.get("output_tokens", 0),
+                          "total": usage.get("total_tokens", 0)}}
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", "ignore")[:200]
+        return {"ok": False, "text": "", "sources": [], "model": model,
+                "provider": provider.name, "web": True, "usage": {},
+                "error": f"HTTP {e.code}: {detail}"}
+    except Exception as e:  # noqa: BLE001
+        return {"ok": False, "text": "", "sources": [], "model": model,
+                "provider": provider.name, "web": True, "usage": {},
                 "error": str(e)[:200]}
 
 
