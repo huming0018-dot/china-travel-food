@@ -100,7 +100,7 @@ def snapshot():
     tasks = sql(
         "select coalesce(sum(progress),0) as total_progress, "
         "coalesce(sum(case when status='open' then 1 else 0 end),0) as open_n, "
-        "coalesce(sum(case when status='done' then 1 else 0 end),0) as done_n "
+        "coalesce(sum(case when status='fulfilled' then 1 else 0 end),0) as done_n "
         "from crowd_tasks;")[0]
     parts = sql(
         "select count(*) as n, coalesce(sum(total_effective),0) as effective "
@@ -133,12 +133,12 @@ def main():
         i = sys.argv.index("--loop")
         loop = int(sys.argv[i + 1]) if i + 1 < len(sys.argv) else 300
 
-    prev = read_snapshot()
-    cur = snapshot()
-
-    # 并发保护：仅持锁者更新共享快照；未持锁实例只读快照计算自己的 diff
+    # 并发保护（外部审计 #54 修复）：锁必须覆盖"读旧快照 + 抓当前数据 + 写新快照"，
+    # 否则慢实例可能在持锁者写完后仍读旧快照、晚写入旧数据。
     lock = SnapshotLock()
     has_lock = lock.acquire()
+    prev = read_snapshot()
+    cur = snapshot()
     if has_lock:
         write_snapshot(cur)
     lock.release()

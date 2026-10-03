@@ -199,11 +199,11 @@ def run(apply: bool = False, limit: int = 50, fields: list = None):
 
 
 if __name__ == "__main__":
+    import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--limit", type=int, default=50)
-    ap.add_argument("--fields", type=str, default="")
+    ap.add_argument("--fields", default="")
     args = ap.parse_args()
-
-    fields = args.fields.split(",") if args.fields else None
-    run(apply=args.apply, limit=args.limit, fields=fields)
+    run(apply=args.apply, limit=args.limit,
+        fields=args.fields.split(",") if args.fields else None)

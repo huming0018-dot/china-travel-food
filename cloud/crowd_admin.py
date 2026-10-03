@@ -129,11 +129,14 @@ def cmd_reject(args):
 def cmd_stats(args):
     out = {}
     for st in VALID_STATUS:
-        r = C.req("GET", TABLE + f"?select=id&status=eq.{st}")
-        out[st] = len(r.json()) if r.status_code == 200 else 0
+        r = C.req("GET", TABLE + f"?select=participant_id&status=eq.{st}")
+        if r.status_code == 200:
+            out[st] = len(r.json())
+        else:
+            out[st] = None  # 查询失败显示故障而非 0（外部审计 #52 表格项）
     print("参与者状态统计：")
     for k, v in out.items():
-        print(f"  {k:<12} {v}")
+        print(f"  {k:<12} {'故障' if v is None else v}")
     # 任务包进度
     r = C.req("GET", "/crowd_tasks?select=task_id,status,progress,kpi_min&limit=50")
     if r.status_code == 200:

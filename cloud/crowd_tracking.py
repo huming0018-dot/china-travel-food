@@ -98,8 +98,16 @@ def _pack_types(tasks):
 
 
 def _ts(v):
+    """带时区解析（外部审计 #52：原实现去时区后按本地解释，24h 窗口漂移）"""
     try:
-        return time.mktime(time.strptime(str(v)[:19], "%Y-%m-%dT%H:%M:%S"))
+        from datetime import datetime, timezone
+        s = str(v)
+        if s.endswith("Z"):
+            s = s[:-1] + "+00:00"
+        dt = datetime.fromisoformat(s)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.timestamp()
     except Exception:
         return 0
 
@@ -130,7 +138,7 @@ def render(a):
         f"📦 任务池 {open_t}个open/共{open_t + done_t} 已收{_cnt(t.get('pack_types'))}类",
         f"进度 {_n(t.get('open_prog'))}/{_n(t.get('open_kpi'))} 缺口{_n(t.get('open_gap'))}",
         f"↩️ 回流 {_n(f.get('accepted'))}有效/{_n(f.get('duplicate'))}去重/{_n(f.get('rejected'))}拒 评分{_n(f.get('rating'))}",
-        f"近24h +{_n(f.get('day_accepted'))} 拒收率{_n(f.get('reject_rate') or 0) * 100}%",
+        f"近24h +{_n(f.get('day_accepted'))} 拒收率{round((float(f.get('reject_rate') or 0) * 100), 0):g}%",
     ]
     if _n(p.get("active")):
         top = "，".join(f"{x.get('id','?')[:8]} {_n(x.get('acc'))}条" for x in (p.get("top") or [])[:3])

@@ -47,25 +47,10 @@ li{margin:6px 0}
 <p>我确认：<strong>已完整阅读并理解上述条款，知情且自愿参与</strong>，知悉账号风险自担，同意采集公开数据并按上述规则结算。</p>
 <p style="font-size:13px;color:#6b7280">还没有编号？打开 <strong>apply.html 报名页</strong>提交报名 → 审核通过后由 PM 发放正式 <strong>P-</strong> 编号。TMP- 报名编号不能用于开始采集。</p>
 
-<input type="text" id="participant" placeholder="输入正式参与者编号（P-开头，审核后发放）" style="width:100%;padding:10px;margin-top:12px;border:1px solid #d1d5db;border-radius:6px;box-sizing:border-box">
+<input type="text" id="participant" placeholder="输入正式参与者编号（P-开头+8位，审核后发放）" style="width:100%;padding:10px;margin-top:12px;border:1px solid #d1d5db;border-radius:6px;box-sizing:border-box">
 <button class="btn agree" id="agree">同意并开始使用</button>
 <button class="btn disable" id="refuse">不同意（卸载插件）</button>
 
-<script>
-document.getElementById("agree").onclick = () => {
-  const pid = document.getElementById("participant").value.trim();
-  if (!pid) { alert("请填写参与者编号"); return; }
-  if (!/^P-[A-Z0-9]{6}$/.test(pid)) {
-    alert("编号格式不正确：应为 P- 开头 + 6位大写字母/数字（例如 P-A1B2C3）。报名编号 TMP- 需先通过审核转为正式编号。");
-    return;
-  }
-  chrome.storage.local.set({ participant_id: pid, agreed_at: new Date().toISOString() }, () => {
-    document.body.innerHTML = "<h1>✅ 已同意</h1><p>参与协议已签署。返回小红书页面，插件将自动开始拉取任务并采集。</p>";
-  });
-};
-document.getElementById("refuse").onclick = () => {
-  document.body.innerHTML = "<h1>已退出</h1><p>感谢了解。请在扩展管理中移除本插件。</p>";
-};
-</script>
+<script src="onboarding.js"></script>
 </body>
 </html>

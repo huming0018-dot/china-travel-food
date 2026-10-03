@@ -15,15 +15,15 @@ echo.
 rem 0) 脚本所在目录
 set "SCRIPT_DIR=%~dp0"
 set "WORK_DIR=%USERPROFILE%\.food-crowd"
-set "EXT_DIR=%WORK_DIR%\crowd-extension-v2.0.0"
+set "EXT_DIR=%WORK_DIR%\crowd-extension-v3.2.0"
 
 rem 1) 找 zip
 set "ZIP_SRC="
-if exist "%SCRIPT_DIR%crowd-extension-v2.0.0.zip" set "ZIP_SRC=%SCRIPT_DIR%crowd-extension-v2.0.0.zip"
-if not defined ZIP_SRC if exist "%USERPROFILE%\Downloads\crowd-extension-v2.0.0.zip" set "ZIP_SRC=%USERPROFILE%\Downloads\crowd-extension-v2.0.0.zip"
+if exist "%SCRIPT_DIR%crowd-extension-v3.2.0.zip" set "ZIP_SRC=%SCRIPT_DIR%crowd-extension-v3.2.0.zip"
+if not defined ZIP_SRC if exist "%USERPROFILE%\Downloads\crowd-extension-v3.2.0.zip" set "ZIP_SRC=%USERPROFILE%\Downloads\crowd-extension-v3.2.0.zip"
 
 if not defined ZIP_SRC (
-  echo [X] 没找到 crowd-extension-v2.0.0.zip
+  echo [X] 没找到 crowd-extension-v3.2.0.zip
   echo     请先回到报名/安装页下载插件 zip（与安装器放同一文件夹即可）。
   echo.
   pause
@@ -32,10 +32,13 @@ if not defined ZIP_SRC (
 echo [OK] 找到插件包: %ZIP_SRC%
 
 rem 2) 解压到固定目录（用系统自带 tar，Windows 10 1803+ 均有）
+rem    修复（外部审计 #57）：zip 根目录即插件本体（无外层文件夹），必须解压到 EXT_DIR，
+rem    与 mac 安装器保持一致，避免加载路径指向不存在的目录。
 if not exist "%WORK_DIR%" mkdir "%WORK_DIR%"
 if exist "%EXT_DIR%" rmdir /s /q "%EXT_DIR%"
+mkdir "%EXT_DIR%"
 echo [OK] 解压中…
-tar -xf "%ZIP_SRC%" -C "%WORK_DIR%"
+tar -xf "%ZIP_SRC%" -C "%EXT_DIR%"
 if errorlevel 1 (
   echo [X] 解压失败，请确认 zip 文件完整后重试。
   pause

@@ -12,7 +12,7 @@
 
 **新架构（本契约 v2 唯一有效版本）**：
 ```
-参与者浏览器 (Chrome 扩展 v2.0.0)
+参与者浏览器 (Chrome 扩展 v3.2.0)
    │ ① RPC crowd_fetch_tasks(participant_id)     — security definer，非黑名单即放行
    │    → 返回 {ok, tasks:[{task_id,pack_type,pack,target,kpi_min,quota_day}]}
    ▼

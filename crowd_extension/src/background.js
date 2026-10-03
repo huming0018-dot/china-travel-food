@@ -27,6 +27,8 @@ const CONFIG = {
 importScripts("safety_engine.js");
 
 const safety = new SafetyEngine(chrome.storage.local);
+// 重启后恢复服务端下发安全线（外部审计 #11：原实现重启丢 remote）
+safety.restoreRemote().catch(() => {});
 
 // ---------------------------------------------------------------- RPC 封装
 async function callRpc(fn, body) {
@@ -47,7 +49,7 @@ async function callRpc(fn, body) {
 async function participantGate() {
   const pid = await safety._get("participant_id", "");
   if (!pid) return { ok: false, reason: "未填写参与编号（请打开插件选项页填写）" };
-  if (!/^P-[A-Z0-9]{6,12}$/.test(pid)) return { ok: false, reason: "参与编号格式错误（应为 P-XXXXXX）" };
+  if (!/^P-[A-Z0-9]{8}$/.test(pid)) return { ok: false, reason: "参与编号格式错误（应为 P- + 8位大写字母数字）" };
   return { ok: true, pid };
 }
 
@@ -128,8 +130,10 @@ async function doCollectOnce() {
 
 async function _collectOnceInner() {
   const wm = await safety.queueWatermark();
+  // v3.2：满队列 → 暂停采集、只回传（水位是暂停信号，不是"攒够才回传"门槛）
   if (wm.full) {
     await uploadProofs();
+    return { status: "queue_full_uploaded", count: wm.count };
   }
 
   const task = await fetchActiveTask();
@@ -137,6 +141,10 @@ async function _collectOnceInner() {
 
   const gate = await safety.canSearch();
   if (!gate.ok) return { status: "gated", reason: gate.reason };
+  // v3.2：遵守安全线返回的动作间隔（外部审计 #11：原实现忽略 waitMs）
+  if (gate.waitMs > 0) {
+    await new Promise((r) => setTimeout(r, gate.waitMs));
+  }
 
   // 轮转：取第一个未完成的关键词
   const idx = await nextKwIndex(task);
@@ -159,6 +167,17 @@ async function _collectOnceInner() {
 
   if (!search.ok) return { status: "search_failed", reason: search.reason };
 
+  // v3.2：单篇详情页模式 → 保证每篇阅读停留 ≥ VIEW_STAY_MIN_S（外部审计 #11）
+  if (search.mode === "detail" && search.items && search.items.length) {
+    const nid = search.items[0].note_id;
+    if (nid) {
+      const stay = await safety.ensureViewStay(nid);
+      if (!stay.first && !stay.ok && stay.elapsed < SAFETY_LIMITS.VIEW_STAY_MIN_S) {
+        await new Promise((r) => setTimeout(r, (SAFETY_LIMITS.VIEW_STAY_MIN_S - stay.elapsed) * 1000));
+      }
+    }
+  }
+
   await safety.markSearch();
 
   if (search.rateLimited) {
@@ -166,6 +185,7 @@ async function _collectOnceInner() {
   }
 
   const participant = await safety._get("participant_id", null);
+  const deviceSalt = await safety.getDeviceSalt(); // 一机一号辅助信号进提交链路（#12）
   const now = new Date().toISOString();
   const seqBase = await safety._get("proof_seq_" + task.task_id + "_" + idx, 0);
 
@@ -190,6 +210,7 @@ async function _collectOnceInner() {
     proof_seq: seqBase,
     captured_at: now,
     sync_version: CONFIG.SYNC_VERSION,
+    device_salt: deviceSalt, // v3.2：设备指纹辅助风控（服务端校验绑定）
     items,
   };
   if (participant) {
@@ -199,10 +220,18 @@ async function _collectOnceInner() {
     update["proof_seq_" + task.task_id + "_" + idx] = seqBase + 1;
     await safety._set(update);
   }
-  return { status: "collected", count: items.length, kw_index: idx, gate };
+
+  // v3.2：每批采集后立即尝试回传（外部审计 #4：不再等队列满才回传）
+  const up = await uploadProofs();
+  return { status: "collected", count: items.length, kw_index: idx, gate, upload: up.status };
 }
 
 // ---------------------------------------------------------------- 回传（RPC）+ 回流检测 + 进度累计
+// v3.2 修复（外部审计 #10）：
+//  - 服务端已提交但响应丢失 → 本地保留信封重试，服务端幂等返回原结果（accepted 恢复）
+//  - 永久错误（任务关闭/参与者停用/任务不存在）→ 移出队列记录 permanent_failures，不再无限重试
+const PERMANENT_REASONS = ["task_not_open", "task_closed", "task_not_found", "participant_suspended", "participant_not_found", "invalid_participant"];
+
 async function uploadProofs() {
   const q = await safety._get("proof_queue", []);
   if (!q.length) return { status: "empty" };
@@ -212,6 +241,7 @@ async function uploadProofs() {
 
   // 逐个信封回传（服务端幂等，重复静默跳过；失败保留队列下次重试）
   const failed = [];
+  const permanent = [];
   const touchedTasks = new Set();
   for (const body of q) {
     const rpc = await callRpc("crowd_submit_proof", {
@@ -232,30 +262,43 @@ async function uploadProofs() {
         const st = (await safety._get(key, {})) || {};
         const cur = st["" + body.kw_index] || { accepted: 0, done: false };
         cur.accepted = (cur.accepted || 0) + accepted;
+        // v3.2：每词 accepted ≥ kpi_min → 置 done=true（外部审计 #5：原实现永不置位导致不轮转）
+        if ((cur.accepted || 0) >= (d.kpi_min || 5)) cur.done = true;
         st["" + body.kw_index] = cur;
         await safety._set({ [key]: st });
         touchedTasks.add(body.task_id);
       }
     } else {
-      failed.push(body);
+      // 区分永久失败与临时失败（外部审计 #10：永久失败不得无限重试）
+      const reason = ((rpc.data && rpc.data.reason) || rpc.reason || "").toLowerCase();
+      if (PERMANENT_REASONS.some((r) => reason.includes(r))) {
+        permanent.push(body);
+      } else {
+        failed.push(body);
+      }
     }
   }
 
-  // 完成判定：包内所有关键词 accepted >= kpi_min → 归档任务
+  // 完成判定：包内所有关键词 done → 归档任务（外部审计 #5：前后端完成标准统一为"每词达标"）
   const active = await safety._get("active_task", null);
   if (active && touchedTasks.has(active.task_id)) {
     const st = (await safety._get("kw_state_" + active.task_id, {})) || {};
     let allDone = active.pack.length > 0;
     for (let i = 0; i < active.pack.length; i++) {
       const k = st["" + i];
-      if (!k || (k.accepted || 0) < active.kpi_min) { allDone = false; break; }
+      if (!k || !k.done) { allDone = false; break; }
     }
     if (allDone) await finalizeTask(active);
   }
 
-  // 全部成功则清队列；有失败保留失败子集（下次重试）
+  // 成功清除、临时失败保留重试、永久失败移出并留痕
   await safety._set({ proof_queue: failed });
-  return { status: failed.length ? "partial_failed" : "uploaded", failed: failed.length };
+  if (permanent.length) {
+    const rec = await safety._get("permanent_failures", []);
+    rec.push({ at: Date.now(), task_id: permanent[0].task_id, reason: permanent[0].task_id ? "permanent" : "permanent", envelopes: permanent.length });
+    await safety._set({ permanent_failures: rec });
+  }
+  return { status: failed.length ? "partial_failed" : "uploaded", failed: failed.length, permanent: permanent.length };
 }
 
 // ---------------------------------------------------------------- 任务归档（完成 → 续领）
@@ -293,7 +336,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       safety._get("gate_block_reason", ""),
       safety._get("done_task_ids", []),
       safety.flowSnapshot(),
-    ]).then(async ([cd, ds, q, task, pid, gate, done, flow]) => {
+      safety._get("permanent_failures", []),
+    ]).then(async ([cd, ds, q, task, pid, gate, done, flow, perm]) => {
       let kwProgress = null;
       if (task) {
         const st = (await safety._get("kw_state_" + task.task_id, {})) || {};
@@ -310,6 +354,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         gateBlockReason: gate,
         doneCount: done.length,
         flow, // v3: {zeroCount, stallThreshold, stalled, lastProgress, lastOkAgoSec}
+        permanentCount: perm.length, // v3.2: 永久失败信封数（任务关闭/参与者停用）
         activeTask: task ? { task_id: task.task_id, pack_len: task.pack.length, kpi_min: task.kpi_min, kwProgress } : null,
       });
     });

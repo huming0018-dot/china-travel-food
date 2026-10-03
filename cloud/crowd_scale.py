@@ -35,27 +35,36 @@ import crowd_pack  # noqa: E402
 
 
 def load_covered():
-    """已覆盖店铺集合 = 库内 restaurants.name + 已发布 crowd_tasks.pack"""
+    """已覆盖店铺集合 = 已有有效证据(matched_store)的店铺 + 已发布任务包（外部审计 #52 表格项：
+    原实现把所有现存餐厅算已覆盖导致候选全被过滤；改为按'已有证明'计算覆盖）"""
     covered = set()
-    r = C.req("GET", "/restaurants?select=name&limit=10000")
-    if r.status_code == 200:
-        for x in r.json():
-            if x.get("name"):
-                covered.add(x["name"])
-    rt = C.req("GET", "/crowd_tasks?select=pack&limit=200")
+    # 有 accepted 证据的店铺视为已覆盖（证据可能来自众包回流）
+    pr = C.req("GET", "/crowd_proofs?select=matched_store,gate_status&limit=10000")
+    if pr.status_code == 200:
+        for x in pr.json():
+            if x.get("gate_status") == "accepted" and x.get("matched_store"):
+                covered.add(x["matched_store"])
+    # 已发布任务包中的店铺视为在采（open/in_progress/fulfilled/closed 都算）
+    rt = C.req("GET", "/crowd_tasks?select=pack,status&limit=200")
     if rt.status_code == 200:
         for t in rt.json():
             p = t.get("pack")
             if isinstance(p, list):
                 covered.update(p)
             elif isinstance(p, str):
-                covered.update(re.findall(r"[^\"{}\[\],]+", p))
+                covered.update(re.findall(r"[^\"\"{}\[\],]+", p))
     return covered
 
 
 def from_seed(path, limit=None):
     data = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
-    shops = data.get("shops") or data.get("stores") or (data if isinstance(data, list) else [])
+    # 先判输入类型（外部审计 #52 表格项：list 直接 .get 会抛 AttributeError）
+    if isinstance(data, list):
+        shops = data
+    elif isinstance(data, dict):
+        shops = data.get("shops") or data.get("stores") or []
+    else:
+        shops = []
     return shops[:limit] if limit else shops
 
 

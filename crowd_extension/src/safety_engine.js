@@ -45,18 +45,28 @@ class SafetyEngine {
   /** 应用服务端拟合参数（只降不升：任何远程值不能放宽本地基线） */
   async applyRemoteLimits(remote) {
     if (!remote || typeof remote !== "object") return;
-    const clamp = (val, base, fallback) => {
-      if (typeof val !== "number" || !(val > 0)) return fallback;
-      return Math.min(val, base); // 只降不升
-    };
+    // 收紧方向：次数/会话上限取 min（越少越严）；间隔/冷却下限取 max（越长越严）
+    const clampUpper = (val, base) => (typeof val === "number" && val > 0 ? Math.min(val, base) : null);
+    const clampLower = (val, base) => (typeof val === "number" && val > 0 ? Math.max(val, base) : null);
     this.remote = {
-      quota_day: clamp(remote.quota_day, SAFETY_LIMITS.DAILY_SEARCH_MAX, null),
-      gap_min: clamp(remote.gap_min, SAFETY_LIMITS.SEARCH_GAP_MAX, null),   // 下限也封顶在基线 max
-      gap_max: clamp(remote.gap_max, SAFETY_LIMITS.SEARCH_GAP_MAX, null),
-      session_min: clamp(remote.session_min, SAFETY_LIMITS.SESSION_MAX_MIN, null),
-      cooldown_min: clamp(remote.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN, null),
+      quota_day: clampUpper(remote.quota_day, SAFETY_LIMITS.DAILY_SEARCH_MAX),
+      gap_min: clampLower(remote.gap_min, SAFETY_LIMITS.SEARCH_GAP_MIN),   // 下限不低于本地 60s
+      gap_max: clampUpper(remote.gap_max, SAFETY_LIMITS.SEARCH_GAP_MAX),   // 上限不高于本地 120s
+      session_min: clampUpper(remote.session_min, SAFETY_LIMITS.SESSION_MAX_MIN),
+      cooldown_min: clampLower(remote.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN), // 冷却不短于本地 30min
     };
     await this._set({ remote_limits_applied: this.remote, remote_limits_at: Date.now() });
+  }
+
+  /** 重启后从 storage 恢复已应用的服务端配置（外部审计 #11：原实现重启丢 remote） */
+  async restoreRemote() {
+    try {
+      const saved = await this._get("remote_limits_applied", null);
+      if (saved && typeof saved === "object" && saved.cooldown_min !== undefined) {
+        this.remote = saved;
+      }
+    } catch (e) { /* storage 异常时保持 null，走本地基线 */ }
+    return this.remote;
   }
 
   async _get(key, fallback) {
@@ -118,7 +128,7 @@ class SafetyEngine {
       ? Math.min(this.remote.session_min, SAFETY_LIMITS.SESSION_MAX_MIN)
       : SAFETY_LIMITS.SESSION_MAX_MIN;
     const cooldownMin = this.remote && this.remote.cooldown_min
-      ? Math.min(this.remote.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN)
+      ? Math.max(this.remote.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN)
       : SAFETY_LIMITS.SESSION_COOLDOWN_MIN;
     if (!st.sessionStart) {
       st.sessionStart = now;
@@ -150,7 +160,7 @@ class SafetyEngine {
       gapMin,
       gapMax,
       sessionMin: this.remote && this.remote.session_min ? Math.min(this.remote.session_min, SAFETY_LIMITS.SESSION_MAX_MIN) : SAFETY_LIMITS.SESSION_MAX_MIN,
-      cooldownMin: this.remote && this.remote.cooldown_min ? Math.min(this.remote.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN) : SAFETY_LIMITS.SESSION_COOLDOWN_MIN,
+      cooldownMin: this.remote && this.remote.cooldown_min ? Math.max(this.remote.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN) : SAFETY_LIMITS.SESSION_COOLDOWN_MIN,
       source: this.remote ? "remote_fitted" : "local_base",
     };
   }

@@ -82,6 +82,12 @@ def http_post(url: str, data: dict, timeout: int = 15) -> dict:
 # ── 数据库（Supabase REST）──
 def db_get(table: str, query: str = "", limit: int = 100) -> list:
     """从Supabase读数据。"""
+    if not table or not isinstance(table, str):
+        log.error(f"DB读失败：无效表名={table}")
+        return []
+    if not config.SUPABASE_URL:
+        log.error("DB未配置SUPABASE_URL")
+        return []
     url = f"{config.SUPABASE_URL}/rest/v1/{table}?select=*&limit={limit}"
     if query:
         url += f"&{query}"
@@ -99,6 +105,18 @@ def db_get(table: str, query: str = "", limit: int = 100) -> list:
 
 def db_patch(table: str, rid: str, data: dict) -> bool:
     """写库。"""
+    if not table or not isinstance(table, str):
+        log.error(f"DB写失败：无效表名={table}")
+        return False
+    if not rid:
+        log.error(f"DB写失败：无效id={rid}")
+        return False
+    if not data or not isinstance(data, dict):
+        log.error(f"DB写失败：无效data={type(data)}")
+        return False
+    if not config.SUPABASE_URL:
+        log.error("DB未配置SUPABASE_URL")
+        return False
     url = f"{config.SUPABASE_URL}/rest/v1/{table}?id=eq.{rid}"
     body = json.dumps(data).encode("utf-8")
     req = Request(url, data=body, headers={

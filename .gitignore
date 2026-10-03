@@ -117,3 +117,5 @@ cloud/vendor/pipeline/negative_plan.json
 batch6_work/
 batch8_work/
 research/post_record/
+.data/
+cloud/.data/pm_dispatch_ledger.json.bak
