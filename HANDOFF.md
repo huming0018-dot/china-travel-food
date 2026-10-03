@@ -14,6 +14,15 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 2026-10-03 · collector·探针效率优化三版（减少"无证据空跑"，已烘焙 2020ce8）
+- 目标：免费 ARK 通道下，减少无证据/无信号品牌的无效 LLM 调用与重启/stall 空耗。
+- **v1（f5d6435）**：①零 LLM 门——全网零提及品牌直接 `no_evidence`、零调用（`ALLOW_LLM_NO_EVIDENCE=1` 可放开）；②证据缓存 `probe/evidence_cache`（非空长期复用、空结果 6h TTL、真有 raw 才落盘）；③模型只用授权 `deepseek-v4-flash-ga-260731`/`glm-5-2-260617`，删除 fleet「授权<2 退回全量 9 模型」与 hae 未授权 fan-out（杜绝自费）；④模型正常作答无信号 1 次即 break；⑤紧凑抽取 prompt。
+- **v2（53954d6）**：取证查询从「品牌+堆叠 5–7 同义词」（AND 致零召回）改为「品牌+单个概念词」，generic/craft/industrial/capital 四桶 round-robin 交错 23 条、`n_queries=8`。实测召回：福和慧/功德林 探店/现炒/加盟 各 6–8 条（原多条 n=0）。
+- **v3（2020ce8）**：①runner 每处理完一家 `save_state` 增量落盘；②抽取非流式 socket 超时 90→55s（两候选累计~130s < 240s 硬墙钟）。
+- **验证**：稳态最近 40 次调用**全部走免费授权 v4-flash**、均 ~4,949 token（证据变厚致略增、换取召回大增）；state done 52→58 且经容器 recreate 后保留（增量存状态实战生效）；DB production_model 已标 **82/1514**（门店现制 70 / 央厨加工 8 / 现炒 4）。
+- **运维发现**：容器在 11:43/11:44/11:53 被三次 `docker restart`（非 cron、非崩溃，疑另一会话发版），杀掉在飞手动批次；已由增量状态+短超时+偶数点 cron 自愈。重启触发源未定位，复发时查宿主 `~/food-cloud` 与并发会话。
+- 决定**不做**脆弱的"证据关键词预筛"零 LLM 门（语义判断归模型；非空缓存长期复用会永久漏标）；零 LLM 门只保留"全网零提及"。
+
 ### 2026-10-03 · 无头深覆盖发现编排器 deep_coverage（已烘焙 b5b8af1）
 - 背景：用户最高频未达成项＝sourcing 深覆盖；点名店（望庐/Cheeva Thai/nagi 等）是**回归用例**，禁止逐店枚举补单。
 - 新模块 `cloud/deep_coverage.py`（纯 SSH/SQL+REST，无浏览器、不碰 Apify 额度）：
