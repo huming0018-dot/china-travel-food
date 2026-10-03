@@ -105,6 +105,8 @@ HAE_GRID_SLICE=20
 
 # 27) 点评cookie日更 06:40(post_audit 07:47之前)
 40 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/dianping_day.lock /usr/local/bin/python dianping_daily.py >> /app/data/dianping_daily.log 2>&1
+# 27b) 平台评分柱：amap/点评原始星级入库 + 校准 score_platform + 奖项严格重算 endorsement（07:15）
+15 7 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/platscore.lock /usr/local/bin/python platform_score.py --ingest-amap /app/data/amap_poi_cache.jsonl --apply >> /app/data/platform_score.log 2>&1
 30 3 * * 1 cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python code_audit.py >> /app/data/code_audit.log 2>&1
 
 # 28) reconcile 统一编排 07:47
