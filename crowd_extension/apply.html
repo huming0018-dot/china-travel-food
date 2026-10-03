@@ -67,8 +67,8 @@
       <p class="hint" style="text-align:left;">电脑（macOS/Windows）：<a href="install.html" style="color:var(--brand);font-weight:600;">点此打开安装引导</a>（自动检测系统，一键脚本）<br>
       Android 手机：<a href="install-mobile.html" style="color:var(--brand);font-weight:600;">点此打开手机版教程</a>（需 Kiwi 浏览器）<br>
       iPhone 暂不支持（苹果系统限制）。</p>
-      <a id="dlLink" href="crowd-extension-v3.2.0.zip" download>⬇️ 下载插件 v3.2.0（zip）</a>
-      <p class="zip-name">文件：crowd-extension-v3.2.0.zip · 全自动采集 · 安全线保护 · 支持电脑/Android</p>
+      <a id="dlLink" href="crowd-extension-v3.2.1.zip" download>⬇️ 下载插件 v3.2.1（zip）</a>
+      <p class="zip-name">文件：crowd-extension-v3.2.1.zip · 全自动采集 · 安全线保护 · 支持电脑/Android</p>
     </div>
 
     <div class="steps">
@@ -133,48 +133,39 @@
     if(!contact){ show(false, "请填写联系方式"); return; }
     if(ANON_KEY.startsWith("REPLACE")){ show(false, "报名入口未配置完成，请联系 PM 获取入口链接"); return; }
 
-    // 生成正式参与编号 P- 开头（schema 统一：P- + 8 位大写字母数字，无连字符；
-    // 与 onboarding/background/service 三方一致，外部审计 #2 修复）
-    const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let rand = "";
-    for (let i = 0; i < 8; i++) rand += CHARS[Math.floor(Math.random() * CHARS.length)];
-    const pid = "P-" + rand;
-
-    const payload = {
-      participant_id: pid,
-      display_name: name,
-      contact: contact,
-      status: "pending",
-      source: "public",
-      review_note: note || "",
-      device_salt: getDeviceSalt()   // 一机一号：设备指纹必填
-    };
-
     submit.disabled = true;
     submit.textContent = "提交中…";
     try {
-      const resp = await fetch(BASE + "/crowd_participants", {
+      // v3.2 迁移02：身份绑定后 anon 直写已被禁，报名改走 security definer RPC
+      //（RPC 内生成 P-[A-Z0-9]{8} 编号并写库；客户端不再自行构造编号/status/source）
+      const resp = await fetch(BASE + "/rpc/crowd_register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "apikey": ANON_KEY,
-          "Authorization": "Bearer " + ANON_KEY,
-          "Prefer": "return=minimal"
+          "Authorization": "Bearer " + ANON_KEY
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          p_display_name: name,
+          p_contact: contact,
+          p_note: note || "",
+          p_device_salt: getDeviceSalt()
+        })
       });
-      if(resp.ok || resp.status === 201){
+      const data = await resp.json().catch(() => null);
+      if(resp.ok && data && data.ok){
+        const pid = data.participant_id;
         // 报名成功 → 切换卡片，展示编号 + 插件下载
         applyCard.classList.add("hidden");
         successCard.classList.remove("hidden");
         successText.textContent = "你的参与编号：" + pid + "\n请保存此编号（找回需要提供昵称+联系方式）。\n现在即可下载插件，安装后填入编号开始采集。";
         // 回填下载链接（与报名/安装页同级路径，外部审计 #58 统一；构建脚本同步放置 zip）
         const rel = document.getElementById("dlLink");
-        rel.href = "crowd-extension-v3.2.0.zip";
-        rel.setAttribute("download", "crowd-extension-v3.2.0.zip");
+        rel.href = "crowd-extension-v3.2.1.zip";
+        rel.setAttribute("download", "crowd-extension-v3.2.1.zip");
       } else {
-        const t = await resp.text();
-        show(false, "提交失败（" + resp.status + "）：" + t.slice(0,120));
+        const msgTxt = data && data.message ? data.message : (await resp.text().catch(()=>"")).slice(0,120);
+        show(false, "提交失败（" + resp.status + "）：" + msgTxt);
       }
     } catch(e) {
       show(false, "网络错误：" + e.message);

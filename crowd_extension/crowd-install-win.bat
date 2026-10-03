@@ -15,15 +15,15 @@ echo.
 rem 0) 脚本所在目录
 set "SCRIPT_DIR=%~dp0"
 set "WORK_DIR=%USERPROFILE%\.food-crowd"
-set "EXT_DIR=%WORK_DIR%\crowd-extension-v3.2.0"
+set "EXT_DIR=%WORK_DIR%\crowd-extension-v3.2.1"
 
 rem 1) 找 zip
 set "ZIP_SRC="
-if exist "%SCRIPT_DIR%crowd-extension-v3.2.0.zip" set "ZIP_SRC=%SCRIPT_DIR%crowd-extension-v3.2.0.zip"
-if not defined ZIP_SRC if exist "%USERPROFILE%\Downloads\crowd-extension-v3.2.0.zip" set "ZIP_SRC=%USERPROFILE%\Downloads\crowd-extension-v3.2.0.zip"
+if exist "%SCRIPT_DIR%crowd-extension-v3.2.1.zip" set "ZIP_SRC=%SCRIPT_DIR%crowd-extension-v3.2.1.zip"
+if not defined ZIP_SRC if exist "%USERPROFILE%\Downloads\crowd-extension-v3.2.1.zip" set "ZIP_SRC=%USERPROFILE%\Downloads\crowd-extension-v3.2.1.zip"
 
 if not defined ZIP_SRC (
-  echo [X] 没找到 crowd-extension-v3.2.0.zip
+  echo [X] 没找到 crowd-extension-v3.2.1.zip
   echo     请先回到报名/安装页下载插件 zip（与安装器放同一文件夹即可）。
   echo.
   pause

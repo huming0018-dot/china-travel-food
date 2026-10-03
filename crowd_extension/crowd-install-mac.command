@@ -14,16 +14,16 @@ echo ""
 # 0) 脚本所在目录（下载文件通常在 ~/Downloads 或当前目录）
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WORK_DIR="${HOME}/.food-crowd"
-EXT_DIR="${WORK_DIR}/crowd-extension-v3.2.0"
+EXT_DIR="${WORK_DIR}/crowd-extension-v3.2.1"
 
 # 1) 找 zip：优先脚本同目录，其次 Downloads
 ZIP_SRC=""
-for cand in "${SCRIPT_DIR}/crowd-extension-v3.2.0.zip" "${HOME}/Downloads/crowd-extension-v3.2.0.zip"; do
+for cand in "${SCRIPT_DIR}/crowd-extension-v3.2.1.zip" "${HOME}/Downloads/crowd-extension-v3.2.1.zip"; do
   if [ -f "$cand" ]; then ZIP_SRC="$cand"; break; fi
 done
 
 if [ -z "$ZIP_SRC" ]; then
-  echo "❌ 没找到 crowd-extension-v3.2.0.zip"
+  echo "❌ 没找到 crowd-extension-v3.2.1.zip"
   echo "   请先回到报名/安装页下载插件 zip（与安装器放同一文件夹即可）。"
   echo ""
   read -p "按回车退出…" _
