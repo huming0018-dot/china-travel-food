@@ -33,7 +33,35 @@
 
 ---
 
-### 2026-10-03 凌晨⑯【production_model 管线 9 项加固 + 确定性工业化扫描（防公关洗白央厨）；keyless SERP 能力边界经三方实测坐实】
+### 2026-10-03 傍晚⑰【dev 7 点名工单 #36/#37/#39/#40/#41/#42/#43 全部落地并 --apply；评分 v5；commit `13afbbe`】
+
+**背景**：用户追问 dev 的 7 条点名工单此前确实未做（`task_queue` assignee=dev、status=todo）。本轮按 PM 指定顺序 #36→#37→#39→#40→#41→#42→#43 全部实现、dry-run 校验、--apply 入库，并在 task_queue 标 done。
+
+**迁移 `db/migrations/026_dev_tickets_36_39_40_42.sql`（已应用 OK []）**：
+- #36 新增 `dietary_tags jsonb`（标签+字段+原文片段证据）。
+- #39 新增 `is_delisted boolean / delist_reason / delisted_at`（与 status='closed' 区分，可审计、可恢复）；部分索引 `idx_rest_list_clean`（active 且未下架）。
+- #40/#42 重写 `derive_restaurant()` 为**评分 v5（单一事实源）**：
+  - `soft_ad_penalty = greatest(硬信号, astroturf 自学)`；硬信号仅采信 CK/premade **证据列**（非正餐豁免；CK确认/premade高=25，CK疑似/premade疑似=10），**不因连锁规模本身扣分**（避免误伤新荣记等高端现做集团）；astroturf = `round(astroturf_score*0.28)`（0..100→0..28）。
+  - 口味主导权重：`0.50 taste + 0.22 diner + 0.16 COALESCE(objective,taste) + 0.12 COALESCE(endorsement,0)`。
+  - evidence level/上限沿用 v4：独立食客作者 nind≥2 → verified 无上限；否则 provisional 上限82；仅客观/背书 → 上限70；无证据 → score_total NULL。is_delisted 强制移出精选。
+
+**6 个 cloud 模块（均 docker cp 部署 /app/cloud 并已 --apply；文件入 git）**：
+- `menu_traits.py`（#36）：扫招牌菜/卖点/语义简介/别名，明确特征词才打标签。命中 **14 店**（清真3/素食友好8/全素3）。
+- `chain_identify.py`（#37）：品牌归一（去分店括号、取 · 前段、去尾词、norm），库内同品牌≥2 判连锁（2–9 小型/≥10 大型），过短/过泛核心（GENERIC 集合）不合并。**16 品牌组、31 店升级**（南京大牌档/松鹤楼/桂满陇/FASCINO 等）；库外分店数继续由 dianping 管线补。
+- `softad_learn.py`（#42）：从 reviews 分布算 astroturf_score。**收紧后非零 36 店**（TOP 约15，对应扣分≈4，温和）。关键防误伤：n<5 不判；burst 需 n≥8 且有 promo/dup 硬信号佐证（采集批次造成的时间聚集不算）；评分雷同只看原始 `rating_total`（LLM 抽取的 aspect_taste 系统性雷同，不采信）；dup 阈值提至 0.9/同 15 字段；PROMO 去掉「套餐/预约/私信」等正常用词。
+- `premade_takedown.py`（#39）：硬门 A=is_reheat_served；硬门 B=资本化+CK确认+央厨门店加工+fact_claims 有 high 陈述明确「大部分/绝大多数烹饪转移央厨 / 全自动工厂产能」（附权威 URL）。**下架 2 店＝小菜园 rid559/1525**（stcn 1296988 证据）；丸龟（claims 反证无 CK）、点都德/淳百味（非资本化）、望湘园（production null、字段矛盾）保守不下架，16 店列复查。
+- `chain_gate.py`（#41）：is_chain_standardized=true 不得必吃；强口味证据（taste≥80 且独立食客≥4 且 conf≥0.5）才保留/降值得，否则移出精选。现网无标准化连锁占必吃/值得，本轮处理 0（门已就位）。
+- `apify_priority.py`（#43）：按预期信息增益排序，输出 `research/atlas/apify_brief.json/.md`（候选 1440、top150、高优先≥60 共45）。专家档取自独立表 **`diner_seed_labels.tier`**（英文枚举 must_eat/worth_eating/average；average 不加分），必吃/值得且口味证据稀疏者置顶；标准化连锁降权、已下架排除。
+
+**现网实测（应用后）**：下架 2；dietary 14；astroturf 非零 36；chain 独立990/小型384/大型112/资本化18（连锁合计≈514，与全量审计 518 对齐，**解决前端「连锁仅58 vs 探针518」冲突**）；curate 必吃10/值得52/精选121 完好；verified 439；active 无分 6；未下架在营均分 65.4。
+
+**SQL 执行助手 `cloud/apply_sql.py`**：经 Management API 执行，令牌优先读会话系统文件 `.../system/sbp_token.txt`（`~/.food_atlas_credentials.md` 里只有占位符 `sbp_token`），全程不打印令牌。全量 v5 重算方法：`UPDATE restaurants SET updated_at=updated_at;`（仍触发 BEFORE UPDATE，已执行）。
+
+**部署状态说明**：6 模块与 crontab 目前为 docker cp 热部署（重建即丢，断点/数据保留）；代码已入 git（`13afbbe`），下次以 ubuntu 用户跑 `/home/ubuntu/food-cloud/build_sync.sh` 即正规烘焙（勿 sudo）。点评全量 detached 仍在后台跑，`daily_then_audit.sh` 守护将在 checkpoint≥1514 后自动 post_audit。
+
+---
+
+
 
 **背景**：20:47 cron 全扫卡住、production_model 仅 1.3%，校准发现外婆家误判「门店现制」、小菜园被「明厨亮灶」公关稿带偏。本轮对 `production_model_probe.py` / `probe_parallel.py` / `serp_producer.py` / `model_providers.py` 做 9 项加固，全部提交并 `build_sync` 部署（最新 commit `277c2ea`）。
 
