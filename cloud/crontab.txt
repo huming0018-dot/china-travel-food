@@ -86,6 +86,9 @@ HAE_GRID_SLICE=20
 #      只发现不建店，候选落 /app/data/coverage/deep_candidates_<date>.jsonl 交 evidence-gate。
 #      每 2h 一轮 8 叶(指针轮转、stall≥3 判饱和)；约一日遍历全部缺口叶。
 23 */2 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/deepcov.lock /usr/local/bin/python deep_coverage.py --max-leaves 6 --max-confirm 18 --apply >> /app/data/deep_coverage.log 2>&1
+# 20c) 建店桥接( build_bridge )：发现后 24min，把 admit 候选补证据过 stage1 门——
+#      过则 stage1→2→3→4 建店；缺地址/人均→need_poi，缺食客UGC/平台分→need_ugc，不硬建。
+47 */2 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/bridge.lock /usr/local/bin/python build_bridge.py --apply >> /app/data/build_bridge.log 2>&1
 
 # 21) 批次7·营业时间/营业日重补( cloud_hours_fill2 )：
 #     Pass A 从既有 opening_hours.raw 确定性反推 open_days(零API,首晚跑透后自thinning)；
