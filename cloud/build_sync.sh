@@ -24,13 +24,13 @@ fi
 HEAD=$(git -C "$SRC_DIR" rev-parse --short HEAD)
 echo "    build 基于 commit: $HEAD"
 
-echo "==> [2/4] rsync cloud/*.py -> $BUILD_DIR/"
+echo "==> [2/4] rsync cloud/*.py -> $BUILD_DIR/（--delete 清残留，仅删多余.py；deploy.env/账号受exclude保护）"
 mkdir -p "$BUILD_DIR"
-rsync -a --include='*.py' --exclude='*' "$SRC_DIR/cloud/" "$BUILD_DIR/"
+rsync -a --delete --include='*.py' --exclude='*' "$SRC_DIR/cloud/" "$BUILD_DIR/"
 
-echo "==> [3/4] rsync pipeline/*.py -> $BUILD_DIR/vendor/pipeline/"
+echo "==> [3/4] rsync pipeline/*.py -> $BUILD_DIR/vendor/pipeline/（--delete 清手工cp残留）"
 mkdir -p "$BUILD_DIR/vendor/pipeline"
-rsync -a --include='*.py' --exclude='*' "$SRC_DIR/cloud/vendor/pipeline/" "$BUILD_DIR/vendor/pipeline/" 2>/dev/null || true
+rsync -a --delete --include='*.py' --exclude='*' "$SRC_DIR/cloud/vendor/pipeline/" "$BUILD_DIR/vendor/pipeline/" 2>/dev/null || true
 for f in Dockerfile crontab.txt entrypoint.sh requirements.txt docker-compose.yml; do
   [ -f "$SRC_DIR/cloud/$f" ] && cp -f "$SRC_DIR/cloud/$f" "$BUILD_DIR/$f"
 done
