@@ -200,6 +200,8 @@ def main():
         if mode == "reverify":
             st["reverify_cursor"].append(bname)
         processed += 1
+        # 增量落盘：容器可能被发版/重启，逐家存状态避免已处理品牌下一班重跑
+        save_state(st)
         gap = int(os.environ.get("BRAND_GAP", "12"))
         if gap:
             time.sleep(gap)
