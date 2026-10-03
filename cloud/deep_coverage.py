@@ -25,6 +25,7 @@ import json
 import pathlib
 import re
 import sys
+import time
 
 import requests
 
@@ -78,7 +79,7 @@ def in_shanghai(text):
     return any(d in text for d in SH_DISTRICTS)
 
 
-def searx(q, timeout=8):
+def _searx_once(q, timeout):
     try:
         r = requests.get(SEARX + "/search",
                          params={"q": q, "format": "json", "safesearch": 0},
@@ -90,6 +91,17 @@ def searx(q, timeout=8):
                 r.json().get("results", [])[:8]]
     except Exception:
         return []
+
+
+def searx(q, timeout=8, retries=1):
+    """零结果（后端引擎瞬时抖动/请求失败）即时重试一次，短退避；仍空则如实返回 []。"""
+    hits = _searx_once(q, timeout)
+    attempt = 0
+    while not hits and attempt < retries:
+        attempt += 1
+        time.sleep(2.5)
+        hits = _searx_once(q, timeout)
+    return hits
 
 
 def fetch_fulltext(url, max_chars=4200, timeout=12):
