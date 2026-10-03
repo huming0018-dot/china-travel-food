@@ -14,6 +14,16 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 2026-10-03 · deep_coverage 全页抓取+LLM全文核验门（commit c0e001c，已烘焙 BUILD_SYNC_DONE）
+- 背景：无头深覆盖最早靠「短 snippet + 正则/便宜模型抽取」，反复误报——菜名/形容词/泛称（破破烂烂、苍蝇馆子）、地名（京都一乘寺）、榜单误配（沈大成→Diner）、香川县乌冬旅游页当上海店。逐次堆正则是打地鼠。
+- **发现通道定为自建 SearXNG**（ARK 联网已四连实测走不通：chat 传 web_search 400 缺 tools.function；Responses API 404 ToolNotOpen 需付费开通插件，开通须本人）。候选店名**必须真实出现在结果原文**（`llm_extract` 有依据抽取，禁止参数记忆）。
+- **主题锚点** `leaf_anchors/on_topic`：只保留与该叶【品类】相关的页，剔泛化"上海必吃"榜单；LEAF_ALIASES 补外来叶中文叫法。
+- **全页核验门** `fetch_fulltext`（整页去 script/style、bs4/正则兜底）+ `verify_lead`（抓最多3个含店名整页合并，便宜模型只依据全文判 JSON：地名/人名、真实在营、在上海、属该品类、具体菜名、真实食客好评/差评、连锁预制 → admit/hold/reject）。
+- **硬规则**：admit 需 上海+品类+≥1具体菜名+真实好评，且非地名非连锁；strong 需≥2独立整页互证，否则 weak；证据不足的真实店落 hold（取证队列），不硬建。
+- **实测**：niche 外来叶（Fish&Chips/Bobotie/Empanada）如实 0；乌冬·赞岐 17 相关页全为香川县旅游/菜名/概念 → 全 reject（诚实判无）；**正向：88食堂·烤肉酱蟹 admit（上海+品类+酱梭子蟹母蟹/辣椒蟹/烤鳗鱼+好评）**。
+- cron 每 2h（`23`）6 叶/18 确认，指针轮转、stall≥3 判饱和；账本/候选已重置 pointer=0 干净起步。
+- **下一步（未写代码）**：建店桥接——admit 候选 → evidence-gate（≥2含菜名堂食原话+差评交叉+反软广+来源≥2类含UGC）→ raw_place → stage1-4 建店；weak/hold 继续取证。
+
 ### 2026-10-03 · collector·探针效率优化三版（减少"无证据空跑"，已烘焙 2020ce8）
 - 目标：免费 ARK 通道下，减少无证据/无信号品牌的无效 LLM 调用与重启/stall 空耗。
 - **v1（f5d6435）**：①零 LLM 门——全网零提及品牌直接 `no_evidence`、零调用（`ALLOW_LLM_NO_EVIDENCE=1` 可放开）；②证据缓存 `probe/evidence_cache`（非空长期复用、空结果 6h TTL、真有 raw 才落盘）；③模型只用授权 `deepseek-v4-flash-ga-260731`/`glm-5-2-260617`，删除 fleet「授权<2 退回全量 9 模型」与 hae 未授权 fan-out（杜绝自费）；④模型正常作答无信号 1 次即 break；⑤紧凑抽取 prompt。
