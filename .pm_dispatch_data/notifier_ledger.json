@@ -91,20 +91,20 @@
  },
  "dispatch:dev:36": {
   "level": "ACTION",
-  "last_ts": 1790880925,
+  "last_ts": 1790967418,
   "last_hash": "0d38fda0831c970a",
   "count": 1,
   "state": "open",
-  "nudges": 3,
+  "nudges": 4,
   "opened": 1790868205
  },
  "dispatch:dev:37": {
   "level": "ACTION",
-  "last_ts": 1790880927,
+  "last_ts": 1790967420,
   "last_hash": "2aef05ab84007f9a",
   "count": 1,
   "state": "open",
-  "nudges": 3,
+  "nudges": 4,
   "opened": 1790868207
  },
  "dispatch:collector:38": {
@@ -118,47 +118,47 @@
  },
  "dispatch:dev:39": {
   "level": "ACTION",
-  "last_ts": 1790880930,
+  "last_ts": 1790967422,
   "last_hash": "c1acb6fabac68d95",
   "count": 1,
   "state": "open",
-  "nudges": 3,
+  "nudges": 4,
   "opened": 1790868210
  },
  "dispatch:dev:40": {
   "level": "ACTION",
-  "last_ts": 1790880932,
+  "last_ts": 1790967424,
   "last_hash": "8f54d1564fc17f06",
   "count": 1,
   "state": "open",
-  "nudges": 3,
+  "nudges": 4,
   "opened": 1790868212
  },
  "dispatch:dev:41": {
   "level": "ACTION",
-  "last_ts": 1790880933,
+  "last_ts": 1790967425,
   "last_hash": "ba99cb8b15b7742f",
   "count": 1,
   "state": "open",
-  "nudges": 3,
+  "nudges": 4,
   "opened": 1790868213
  },
  "dispatch:dev:42": {
   "level": "ACTION",
-  "last_ts": 1790879103,
+  "last_ts": 1790965612,
   "last_hash": "c14816eccc628203",
   "count": 1,
   "state": "open",
-  "nudges": 2,
+  "nudges": 3,
   "opened": 1790868215
  },
  "dispatch:dev:43": {
   "level": "ACTION",
-  "last_ts": 1790879106,
+  "last_ts": 1790965614,
   "last_hash": "53052a7b2a9e2ce1",
   "count": 1,
   "state": "open",
-  "nudges": 2,
+  "nudges": 3,
   "opened": 1790868217
  },
  "dispatch:collector:44": {
@@ -192,6 +192,12 @@
   "level": "INFO",
   "last_ts": 1790870780,
   "last_hash": "3fbaf02377bbc30a",
+  "count": 1
+ },
+ "nightly_report": {
+  "level": "INFO",
+  "last_ts": 1790978888,
+  "last_hash": "b4fec46b592c43fc",
   "count": 1
  }
 }

@@ -1,6 +1,7 @@
 # 当前状态 · STATUS
 
-> 最后更新：2026-10-02 23:20（PM窗口 · 回流tracking报告上线 + Lean Refactor）
+> 最后更新：2026-10-03 06:00（夜间执行报告：完成4 / 进行中9 / 待认领7 / 异常0）
+> **🌙 夜间执行报告·06点（2026-10-03 06:00，已推 TG+飞书）**：整夜（00:00→06:00）**完成 4 条**（collector：#26 P0 LLM key / #32 舰队统一接口 / #33 探针 / #45 地图解卡）、**进行中 9 条**（#1/#9/#23/#27/#29/#2/#34/#35/#38）、**待认领 7 条**（dev：#36/#37/#39/#40/#41/#42/#43，用户点名，nudge 4轮已用尽→需人工点名施压）。PM 调度：00:00 首推 15 条 ACTION（nudge#1）+ 02:00 第2轮 7 条（nudge#2），launchd 每15分钟持续调度（dev 已 4 轮用尽）。**⚠️ 已修复 PM 双账本问题**：00:00/02:00 盘点误用 `.data/` 新账本造成 dev 7 条重复推送 1-2 轮 → 已合并统一到 `.pm_dispatch_data/`（20 条，dev 保持用尽态），删除 `.data` 账本（bak 保留）。云端整夜无异常（三段式 06:07 跑 / candidate_verify 03:17 / tracking 06:07 / catchup 正常）。task_queue：todo 16 / in_progress 9 / done 16。
 > **✅ 回流 tracking 报告上线（2026-10-02 深夜）**：`cloud/crowd_tracking.py` —— 每小时从库实时聚合 crowd_proofs/participants/tasks → 人类可读报告（任务池进度/回流有效·去重·拒收/近24h增量/参与者活跃Top）→ JSONL 落盘（`.data/crowd_tracking.jsonl` 可回溯）→ notifier.info 柔和推送（cadence 3600 不刷屏）。服务器 cron 已挂载（`7 * * * *`），直连 Supabase 已验证推送成功（report #1 已发 TG+飞书）。安全测试 T1-T7 全过（None/恶意输入/超长/除零/缺字段/落盘失败）。Lean Refactor 审计文档：`cloud/CODE_AUDIT_V1/V2/V3_20261002.md`。commit `356c962`。
 > **✅ 红队对抗加固完成（2026-10-02 深夜）**：以投机者身份实测攻击 10 类向量（一机一号/URL白名单绕过/垃圾灌库/任务DoS/去重绕过/伪评分/时间伪造/并发竞态/幂等绕过/评分去重混淆）→ 全部修复并回归验证。核心：报名强制 device_salt + 同设备唯一索引（一机一号闭环）；URL 严格正则（仅 `www.xiaohongshu.com/explore/[0-9a-f]{24}`）；note_id 强制 24hex；评分锚定已收录笔记；captured_at 时间窗；参与者行锁防并发超配额；循环内任务状态复查防刷满；dedupe 升级（note 全局 title 归一 / rating 按参与者+笔记）；拒收率>0.6 自动 suspend。报告：`cloud/REDTEAM_REPORT.md`。commit `0132590`，服务器已同步。
 > **✅ 自动续领上线（2026-10-02 晚）**：修复「回传后不领新任务」bug——插件端关键词轮转+按关键词累计accepted判定完成+完成自动归档续领；服务端 fetch_tasks 支持 exclude_task_ids（排除已完成包）；popup 新增关键词进度条（可视化）。端到端验证：报名→领#1→排除#1→自动切#2 ✅。线上插件已更新（25KB）。
