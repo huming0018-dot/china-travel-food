@@ -12,6 +12,36 @@
 
 ---
 
+## 🆕 更新日志（最新在最上）
+
+### 2026-10-03 · 无头深覆盖发现编排器 deep_coverage（已烘焙 b5b8af1）
+- 背景：用户最高频未达成项＝sourcing 深覆盖；点名店（望庐/Cheeva Thai/nagi 等）是**回归用例**，禁止逐店枚举补单。
+- 新模块 `cloud/deep_coverage.py`（纯 SSH/SQL+REST，无浏览器、不碰 Apify 额度）：
+  1. **缺口**：cuisines 菜系叶子 × 在营挂载数；实测 278 叶中 **115 叶低于目标 TARGET_N=4**（empty 6 / 1店47 / 2店28 / 3店34）。
+  2. **词矩阵**：叶子名 × MODIFIERS（推荐必吃 / 宝藏私藏本地人 / 不网红苍蝇馆预约难）。
+  3. **双通道召回**：LLM 舰队（ARK 便宜模型 `deepseek-v4-flash`，每 6 叶一批，列真正好吃店含俗称/英文/小众/新店，排除连锁预制）+ SearXNG（自建元搜索 `http://searxng:8080/search?format=json`，免 key）。
+  4. **对齐**：norm 去重、剔已收录（名/别名/去括号主名/包含匹配）、剔 GENERIC 噪声。
+  5. **证据确认**：`"<name> 上海 好吃 评价"`，strong≥2 独立好评 URL / weak 1；searx 与确认均 4 线程并发。
+  6. **产物**：`/app/data/coverage/deep_candidates_<date>.jsonl`（只发现、不直接建店，交下游 evidence-gate）；账本 `/app/data/coverage/deep_loop.json`（每叶 last_run/n_new/stall，指针轮转，stall≥3 判饱和）。
+- 实测：首批 8 叶 → 11 候选（strong 9 / weak 2）。
+- **cron**：`23 */2 * * * deep_coverage.py --max-leaves 8 --max-confirm 20 --apply`（约一日遍历全部缺口叶，随后 stall 饱和）。
+- 关键坑：① `cuisines.parent_category` 存父**名**非 id，root_path 须 byname 上溯；② children 按 parent_category 建键（误按子名会把叶子判成根）；③ 串行 searxng 超时→4 线程；④ 并发 8 线程疑似 137→降 4；⑤ **docker cp 为临时、容器被 build_sync 重建即丢，持久化必须 commit + build_sync（ubuntu 用户，勿 sudo）**；⑥ 另有并发 actor 会重建容器/清缓存，部署一律走烘焙。
+- **下一步（未做）**：deep_candidates strong → raw_place/堂食原话 evidence-gate → stage1-4 建店的桥接；回归集 `research/regression_set.json` 自动比对命中率。
+
+### 2026-10-03 · 平台评分柱（migration 027，已烘焙 6cb240a）
+- 新表 `platform_ratings(restaurant_id,platform,rating,review_count,source_url,captured_at)`；restaurants 加列 `score_platform`；`derive_restaurant` 升级 **v6**。
+- `cloud/platform_score.py --ingest-amap --apply`：从 `/app/data/amap_poi_cache.jsonl` upsert 896 行；分段锚点去通胀（4.6→80 / 4.5→75）、评论可信度 n/(n+200) 加权；endorsement 严格按 restaurant_awards 收敛到 125 店。
+- v6 blend：0.58 taste + 0.20 diner + 0.12 COALESCE(platform,taste) + 0.10 COALESCE(endorsement,0)；独立食客≥2→verified 无上限，否则 provisional 上限 82；仅平台/背书无 UGC→上限 68；全无→insufficient。
+- cron `15 7 platform_score`（dianping_daily 06:40 后、reconcile 07:47 前）。
+
+### 2026-10-03 · ML 真实口味门 taste_gate（已烘焙 100fdf8）
+- 专家标注 `diner_seed_labels` 123 条（must 10 / worth 52 / average 61）。
+- 诚实诊断：9 特征下 ML（logistic）MAE 0.667，"全猜值得"平凡基线 0.577 更优 → 当前每店仅约 3 条评论、先验收缩 M=8 主导，**ML 不应自动 curate**；需 ≥8 条真实评论（Apify 目标）数据才占主导。
+- `cloud/taste_gate.py` 三层：A 专家标签（must→必吃 / worth→值得 / average→出精选）；B astroturf 硬门（astroturf_score≥20 出精选）；C ML 序数门（仅 CV 显著优于平凡基线才 model_ready，否则落 `/app/data/ml_gate/ml_hold.jsonl`）。
+- cron `5 6 taste_gate --apply`。
+
+---
+
 ## 🔑 凭证与登录信息索引（2026-10-02 整理 · 必读）
 
 > **明文总表在本机**：`~/.food_atlas_credentials.md`（权限600，git仓库外，勿外发/勿截图）
