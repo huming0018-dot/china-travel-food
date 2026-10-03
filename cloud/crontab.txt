@@ -82,6 +82,11 @@ HAE_GRID_SLICE=20
 #     轻HTTP只读,不占浏览器;每日 02:52 低峰(避开 coord 3:00/hours 4:00)。
 52 2 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/comention.lock /usr/local/bin/python comention_probe.py --enqueue >> /app/data/comention_probe.log 2>&1
 
+# 20b) 无头深覆盖发现( deep_coverage )：菜系叶子缺口 × 词矩阵 × LLM舰队+searxng召回 × 证据确认。
+#      只发现不建店，候选落 /app/data/coverage/deep_candidates_<date>.jsonl 交 evidence-gate。
+#      每 2h 一轮 8 叶(指针轮转、stall≥3 判饱和)；约一日遍历全部缺口叶。
+23 */2 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/deepcov.lock /usr/local/bin/python deep_coverage.py --max-leaves 8 --max-confirm 20 --apply >> /app/data/deep_coverage.log 2>&1
+
 # 21) 批次7·营业时间/营业日重补( cloud_hours_fill2 )：
 #     Pass A 从既有 opening_hours.raw 确定性反推 open_days(零API,首晚跑透后自thinning)；
 #     Pass B 高德补 oh+od 双空店(每晚60家,错分店/地址含糊保守拒)。每日 03:17(coord 3:00之后)。
