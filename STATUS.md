@@ -1,6 +1,9 @@
 # 当前状态 · STATUS
 
-> 最后更新：2026-10-03 11:20（众包美食家完整闭环交付：采集→验证→入库→评分→结算全链路）
+> 最后更新：2026-10-03 11:50（docker 生产容器治理完成：一键重建固化+删13死肉/3048行+识别13个"建了未接线"模块）
+> **✅ docker 容器治理（2026-10-03 中午，commit 791f04c，容器已重建验证）**：①一键重建固化——`bash ~/food-cloud/build_sync.sh`（pull→rsync→build→compose up），新增《CONTAINER_REBUILD_RUNBOOK.md》；修复两个隐性坑（rsync 加 `--delete` 清残留、build_sync 同步自身可随 git 更新）；②依赖闭包审计工具 `container_closure_audit.py`：59 入口递归得活闭包 93，126 静态孤儿交叉验证后删真死肉 13 个（_archived 8 retired + oneoff 5，3048 行）+ 构建中间容器 sleepy_carson；③版本严格对齐：cloud **136**/pipeline **70**（本地=容器，全量编译过、cron 32 任务、高频日志持续产出）；web_chat_providers（LLM舰队网页层）纳入 git。
+> **⚠️ 核心发现待派单**：**13 个功能模块"建了零接线"**（chain_identify/chain_gate/menu_traits/premade_takedown/prefill_governance/softad_learn/coverage_matrix/independence_probe/findings_planner·ingest/selling_points/scene_ingredient/national_scale 等，含 dev #36/#37/#39/#41/#42 成果）——功能实际未生效，需派 dev 按治理报告第五节"接线方式"接入 crontab/入库管线。另：`~/food-cloud-v2` 非 git 旧沙盒待用户确认后删。
+
 > **✅ 众包美食家完整闭环（2026-10-03 上午）**：入库链路 05 已上线——crowd_store_evidence 按店聚合 accepted 证据、匹配主库 restaurants 回写 score_diner（≥3 条真实评分防污染）、无匹配新店入 crowd_store_candidates 待人工收录；`crowd_store_ingest.py` 每日 06:30 服务器 cron。**端到端已验证**（注入模拟证据→聚合/回写/候选全部正确→测试数据清理，米桃 score_diner 已按快照恢复 null）。crowd_admin approve 改原地 PATCH 原子（废弃复制+删除竞态）；crowd_ingest/crowd_pack 旧入口加 DEPRECATED 退役（新入口=RPC）。**服务器 crontab 5 条**：relay/candidate_verify/tracking(7点)/settlement(周一9点)/store_ingest(6:30)。commit `919b1d0`，服务器已同步。
 > **⚠️ 待办**：dev 7 条用户点名工单（#36-43）仍未认领，nudge 已用尽，需人工点名施压；存量 3 名测试参与者需登录后 crowd_bind_participant 绑定（Auth 生效后旧编号参与者提交将 auth_identity_mismatch）。
 > **✅ 三决策落地（2026-10-03 上午，老板"都同意"）**：①**迁移01 证据真实性已部署**（备份 `*_bak_20261003`，URL-ID一致/note_id去重/拒收落库/per-kw 生效）；②**迁移02 身份绑定已部署**（Supabase Auth 已启用，报名页 apply.html 改走 `crowd_register` RPC，anon 直写已禁 with_check=false，RLS 收紧 auth.uid() 校验，存量参与者可 crowd_bind_participant 绑定）；③**迁移03 任务租约已部署**（crowd_tasks 含 claimed_by/claimed_at/lease_until，原子领取防超发）；④**结算闭环 04 已部署**（`crowd_settle` 周期结算 RPC + `cloud/crowd_settlement.py` 工具 + 服务器每周一 09:00 cron，note ¥2/条 rating ¥1/条 可调，无 accepted 证据时结算为空）。插件升 **v3.2.1**（报名页 RPC 化+版本号），已上传 Storage 公网 200。commit `b3ea113`，服务器已同步。
