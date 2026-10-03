@@ -55,11 +55,11 @@
 
 ## 二、未决事项（需老板/PM 拍板）
 
-| 项 | 说明 | 影响 |
+| 项 | 说明 | 状态 |
 |---|---|---|
-| ① 迁移01 部署 | SQL 已写好，需备份后整体单次提交（plpgsql 拆行会 FAIL）。**执行窗口建议：001 smoke 期间不停服直接部署，插件 v3.2 已兼容** | 不部署则 URL-ID/dedupe/拒收/租约校验不生效 |
-| ② 是否启用 Supabase Auth（迁移02） | 引入登录门槛，改变"报名即用"体验；换取身份真实绑定 | 不启用：编号仍是弱凭证（已用 device_salt+风控缓解） |
-| ③ 结算闭环（审阅#13） | 评分/入库/结算仍未打通；报告建议"per-store 证据采集试点"重构 | 影响"按条计酬"承诺的可验证性 |
+| ① 迁移01 部署 | SQL 已写好，需备份后整体单次提交（plpgsql 拆行会 FAIL） | ✅ 已部署（备份 `*_bak_20261003`） |
+| ② 是否启用 Supabase Auth（迁移02） | 引入登录门槛，改变"报名即用"体验；换取身份真实绑定 | ✅ 已启用+部署（老板"都同意"；报名页已改走 crowd_register RPC；存量参与者需 crowd_bind_participant 绑定） |
+| ③ 结算闭环（审阅#13） | 评分/入库/结算仍未打通 | ✅ 已部署结算闭环 04（crowd_settle RPC + crowd_settlement.py + 周一 09:00 cron，note ¥2/条 rating ¥1/条 可调）。**评分→入库→结算中的"入库"（accepted→restaurants）仍未打通**，建议下一轮 per-store 证据采集试点 |
 | ④ crowd_admin approve 非事务 | 复制同 salt 新行撞唯一索引 + 两 HTTP 非原子 | 待修（改主键原地 UPDATE） |
 | ⑤ crowd_pack 降级写 task_queue、crowd_ingest 旧入口 | 双口径遗留 | 建议退役，以 RPC 为唯一入口 |
 | ⑥ crowd_tables.sql 非幂等 | 建议有序迁移（本次已按迁移文件执行） | — |
