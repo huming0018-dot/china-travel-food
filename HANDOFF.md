@@ -4686,3 +4686,10 @@ UNIQUE(restaurant_id,labeler,experienced_at)+索引；幂等可重跑。
 ### 四、长期表现状（实测）
 food_kol_watchlist 126、identity 78、posts 493、mentions 410；chefs 60、restaurant_chefs 84；restaurant_groups 13、group_members 54；restaurant_awards 155；food_events 40。
 （排查坑：关联表复合主键无 id 列，`fetch_all` 须显式 `order_col=restaurant_id/group_id`，否则 400 HTTPError。）
+
+### 八、免费 ARK「协作奖励计划」通道验证成功（2026-10-03 上午）
+- **授权状态**：DeepSeek-V4-Flash（deepseek-v4-flash-ga-260731）、GLM-5.2（glm-5-2-260617）均已授权。
+- **今日采集**：V4-Flash **913,802 / 2,000,000 tokens**（个人每日上限 200 万，企业可升 500 万）；冷启动包最高 500 万/模型；次日 11 点后按用量返等额包（30 天有效）。
+- **实际产出**：production_model 标注由凌晨 19 → **79**（门店现制·标准化 68 / 中央厨房·门店加工 7 / 现炒现做 4），production_runner 持续跑、gate_apply 写库。
+- **结论**：分类/机制类 LLM 工作（production_model、#38 边界 LLM 判定）可由免费通道基本零成本覆盖；**口味食客真实评论不能由 LLM 凭空生成**，仍需 Apify 提额（A）或可用小红书账号，这是唯一仍待付费/登录决策的环节。
+- 待办：次日 11 点后核验 V4-Flash 奖励包到账；腾讯地图 10-04 解封。
