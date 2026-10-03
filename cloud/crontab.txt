@@ -97,7 +97,7 @@ HAE_GRID_SLICE=20
 47 3 * * 3 cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/intruder.lock /usr/local/bin/python classification_intruder_audit.py --json /app/data/intruder_audit_report.json >> /app/data/intruder_audit.log 2>&1
 
 # 27) 点评cookie日更 06:40(post_audit 07:47之前)
-40 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/dianping_day.lock python dianping_daily.py >> /app/data/dianping_daily.log 2>&1
+40 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/dianping_day.lock /usr/local/bin/python dianping_daily.py >> /app/data/dianping_daily.log 2>&1
 30 3 * * 1 cd /app/cloud && . /app/cloud/env.sh && /usr/local/bin/python code_audit.py >> /app/data/code_audit.log 2>&1
 
 # 28) reconcile 统一编排 07:47

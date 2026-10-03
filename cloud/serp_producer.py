@@ -401,7 +401,7 @@ def extract_claims(name, results):
     return claims
 
 
-def scan_one(restaurant):
+def scan_one(restaurant, do_apply=False):
     rid = restaurant["id"]; name = restaurant["name"]
     q1 = f"{name} 上海 连锁 加盟 分店 预制菜 料理包 中央厨房"
     q2 = f"{name} 人均 价格 老板 集团 投资方"
@@ -414,7 +414,7 @@ def scan_one(restaurant):
         time.sleep(random.uniform(3.0, 5.0))
     claims = extract_claims(name, results)
     payload = {"restaurant_id": rid, "name": name, "claims": claims}
-    kept = FX.validate(payload, apply=False)
+    kept = FX.validate(payload, apply=do_apply)
     return rid, len(results), used, kept
 
 
@@ -442,10 +442,19 @@ def main():
         todo = todo[: a.limit]
 
     print(f"[producer] mode={'full' if a.full else 'inc' if a.incremental else 'dry30'} "
-          f"todo={len(todo)}")
+          f"todo={len(todo)} apply={a.apply}")
     total_kept = 0; engine_stats = {}
+    findings_path = LEDGER / "findings.jsonl"
+    n_before = (sum(1 for _ in findings_path.open(encoding="utf-8"))
+                if findings_path.exists() else 0)
+
+    def save_ledger():
+        # 增量落盘：中断/超时也不丢已扫进度
+        SCAN_LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=2),
+                               encoding="utf-8")
+
     with ThreadPoolExecutor(max_workers=1) as ex:
-        futs = {ex.submit(scan_one, r): r for r in todo}
+        futs = {ex.submit(scan_one, r, a.apply): r for r in todo}
         for i, fut in enumerate(as_completed(futs)):
             rid, nres, used, kept = fut.result()
             for e in used:
@@ -457,10 +466,24 @@ def main():
                 "n_kept": len(kept)}
             if (i + 1) % 10 == 0:
                 print(f"  progress {i+1}/{len(todo)} kept_so_far={total_kept}")
+                save_ledger()
     if a.full:
         ledger["last_full_date"] = time.strftime("%Y-%m-%d")
-    SCAN_LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=2), encoding="utf-8")
+    save_ledger()
     print(f"[producer] done. total_kept={total_kept} engine_stats={engine_stats}")
+
+    if a.apply and total_kept > 0:
+        # 只把【本轮新增】findings 经唯一入库门 post_audit 写库，避免每批重 PATCH 全量
+        all_lines = findings_path.read_text(encoding="utf-8").splitlines()
+        new_lines = all_lines[n_before:]
+        new_path = LEDGER / f"findings_new_{time.strftime('%Y-%m-%d_%H%M')}.jsonl"
+        new_path.write_text("\n".join(new_lines), encoding="utf-8")
+        print(f"[producer] new findings={len(new_lines)} -> {new_path}")
+        sys.path.insert(0, "/app/cloud")
+        import post_audit as PA
+        PA.apply_findings(str(new_path), apply=True)
+    elif a.apply:
+        print("[producer] no kept findings; post_audit skipped")
 
 
 if __name__ == "__main__":
