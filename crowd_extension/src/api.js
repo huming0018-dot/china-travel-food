@@ -1,7 +1,7 @@
 (function (root) {
   'use strict';
   class CrowdAPI {
-    constructor(config, storage, fetcher = fetch) {
+    constructor(config, storage, fetcher = (...args) => root.fetch(...args)) {
       this.config = config; this.storage = storage; this.fetcher = fetcher;
       const u = new URL(config.url);
       if (u.protocol !== 'https:' || !u.hostname.endsWith('.supabase.co')) throw new Error('invalid_backend');

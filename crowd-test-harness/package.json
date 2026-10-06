@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node ../crowd_extension/tests/run.cjs"
+    "test": "node ../crowd_extension/tests/run.cjs",
+    "test:puppeteer": "node ../crowd_extension/tests/puppeteer.cjs"
   },
   "keywords": [],
   "author": "",
