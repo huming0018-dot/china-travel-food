@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { createHash, randomBytes, timingSafeEqual } from 'crypto';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { gatewayClient } from './crowd-gateway';
 
 export const platforms = ['android', 'ios', 'harmony', 'windows', 'macos'] as const;
 export type Platform = typeof platforms[number];
@@ -29,12 +30,17 @@ export function releases(): Partial<Record<Platform, Release>> {
   }
   return output;
 }
-export function adminClient() {
+export function adminClient(): ReturnType<typeof gatewayClient> {
+  if (process.env.CROWD_GATEWAY_TOKEN) return gatewayClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, process.env.CROWD_GATEWAY_TOKEN);
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) throw new Error('backend_not_configured');
-  return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, key, { auth: { persistSession: false, autoRefreshToken: false } });
+  const client = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, key, { auth: { persistSession: false, autoRefreshToken: false } });
+  return { rpc: async (name, args) => await client.rpc(name, args), auth: { admin: {
+    getUserById: async id => await client.auth.admin.getUserById(id),
+    createUser: async user => await client.auth.admin.createUser(user)
+  } } };
 }
-export async function inviteRPC(client: ReturnType<typeof adminClient>, action: string, payload: object) {
+export async function inviteRPC(client: ReturnType<typeof adminClient>, action: string, payload: Record<string, unknown>) {
   const { data, error } = await client.rpc('crowd_v4_invite', { p_action: action, p_payload: payload });
   if (error) {
     const known = ['invalid_invite', 'invite_expired', 'invite_full', 'installation_already_joined', 'consent_required'];

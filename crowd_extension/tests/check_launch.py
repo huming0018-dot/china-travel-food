@@ -27,6 +27,16 @@ with tempfile.TemporaryDirectory() as temporary:
     env={'SUPABASE_SERVICE_ROLE_KEY':'sb_secret_TEST_ONLY','SUPABASE_DB_URL':'postgresql://postgres:test-only@db.test.supabase.co/postgres','VERCEL_TOKEN':'TEST_ONLY','SUPABASE_CLI':'fake-supabase','VERCEL_CLI':'fake-vercel','CROWD_RELEASES_JSON':json.dumps({'android':release})}
     with patch.object(launch,'ROOT',root),patch.object(launch,'EXT',ext),patch.object(launch,'config',return_value=conf),patch.object(launch,'source_integrity',side_effect=lambda platform:native):
         assert launch.check(env)[0]['ready']
+        gateway_env={**env,'CROWD_GATEWAY_TOKEN':'a'*64}
+        for field in ['SUPABASE_SERVICE_ROLE_KEY','SUPABASE_DB_URL','SUPABASE_CLI']: gateway_env.pop(field,None)
+        gateway_conf={**conf,'key':'eyJ.TEST_PUBLIC_ONLY'}
+        # No release is allowed to bypass artifact checks. With no channels,
+        # isolate the backend credential requirements instead of faking a package.
+        with patch.object(launch,'config',return_value=gateway_conf),patch.object(launch.shutil,'which',return_value=None):
+            report=launch.check({**gateway_env,'CROWD_RELEASES_JSON':'{}'})[0]
+            assert not any(k in report['missing'] for k in ['SUPABASE_SERVICE_ROLE_KEY','SUPABASE_DB_URL','Supabase CLI'])
+            assert any('channel' in k for k in report['missing'])
+            assert not launch.check({**gateway_env,'CROWD_GATEWAY_TOKEN':'short','CROWD_RELEASES_JSON':'{}'})[0]['ready']
         assert not launch.check({**env,'SUPABASE_DB_URL':'postgresql://postgres:test-only@db.other.supabase.co/postgres'})[0]['ready']
         assert not launch.check({**env,'CROWD_RELEASES_JSON':json.dumps({'android':{**release,'verified':False}})})[0]['ready']
         assert not launch.check({**env,'CROWD_RELEASES_JSON':json.dumps({'android':{**release,'sha256':'0'*64}})})[0]['ready']

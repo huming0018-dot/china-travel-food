@@ -1,6 +1,12 @@
+> **2026-10-07 续接**：用户选择继续云工作区，并已安装 Vercel；安装状态经查询确认。当前任务仍未暴露 Vercel 调用接口，CLI 请求 `api.vercel.com` 仍被代理拒绝（403），未完成网站发布。无需重复建议安装或刷新。
+>
+> 新增 `crowd-gateway` v1 已部署到现有 Supabase，真实 HTTP 权限/健康回验和实际 Next 服务端连接均通过；参与者/邀请/任务未创建，渠道保持关闭。详情见 REPAIR_VERIFICATION.md。当前私有 `.crowd-launch/gateway-token` 已保存随机网关密钥，发布脚本可自动读取；新部署模式无需 Supabase 管理员密钥、数据库密码或 Supabase CLI。跨工作区迁移该私有值应走可信环境配置，不放进源码包。
+>
+> 当前工作区已按 Vercel bot 的权威元数据准备 `app/.vercel/project.json`，CLI 在 `/tmp/crowd-vercel-tools/node_modules/.bin/vercel`。检查时指定 `VERCEL_CLI` 和现有 `VERCEL_GLOBAL_CONFIG`，仍缺账号授权及至少一个设备验收渠道；没有执行网站发布。中台不替代这些验收条件。
+
 # 部署续接记录 · 2026-10-06
 
-用户已明确要求执行部署并开始短信/二维码分发；无需再询问是否部署。当前尚未部署成功，没有正式可开工邀请。用户可切换到 Mac Codex 工作区；续接后由 Codex 执行操作，只把账号登录确认留给本人。
+用户已明确要求执行部署并开始短信/二维码分发；无需再询问是否部署。当前尚未部署成功，没有正式可开工邀请。用户选择继续云工作区；续接后由 Codex 执行操作，只把账号登录确认留给本人。
 
 ## 当前代码和中台
 

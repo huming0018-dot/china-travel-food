@@ -12,7 +12,7 @@ function load(file,imports={}) {
  vm.runInNewContext(source,{module,exports:module.exports,require:name=>imports[name]||require(name.startsWith('qrcode')?path.join(root,'app/node_modules/qrcode'):name),process:{env},Buffer,URL,Error,console});
  return module.exports;
 }
-const server=load('app/lib/crowd-server.ts',{'@supabase/supabase-js':{createClient:()=>client}});
+const server=load('app/lib/crowd-server.ts',{'@supabase/supabase-js':{createClient:()=>client},'./crowd-gateway':load('app/lib/crowd-gateway.ts')});
 const enroll=load('app/pages/api/crowd/enroll.ts',{'@/lib/crowd-server':server}).default;
 const publish=load('app/pages/api/crowd/invite.ts',{'@/lib/crowd-server':server}).default;
 const manifest=load('app/pages/api/crowd/manifest.ts',{'@/lib/crowd-server':server}).default;

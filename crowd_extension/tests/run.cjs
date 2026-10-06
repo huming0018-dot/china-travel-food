@@ -7,6 +7,7 @@ const commands=[
   [process.execPath,'crowd_extension/tests/check.cjs'],
   [process.execPath,'crowd_extension/tests/worker.cjs'],
   [process.execPath,'crowd_extension/tests/join.cjs'],
+  [process.execPath,'crowd_extension/tests/gateway.mjs'],
   [process.execPath,'crowd_extension/tests/native.cjs'],
   [process.env.PYTHON||'python3','crowd_extension/tests/check_operator.py'],
   [process.env.PYTHON||'python3','crowd_extension/tests/check_launch.py'],

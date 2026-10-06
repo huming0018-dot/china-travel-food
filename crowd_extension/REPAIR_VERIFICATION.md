@@ -32,9 +32,17 @@ API 和小红书页面使用固定响应；系统桥模拟持久化/调度/网�
 
 部署后执行安全 advisor。新对象包含 8 项 [RLS 无策略 INFO](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy) 和 5 项 [authenticated 可执行 SECURITY DEFINER WARN](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable)。这是当前 RPC 权限设计：私有表拒绝直读，参与者经有 auth.uid()/身份/租约校验的 RPC 执行指定操作；保持权限边界，不添加宽松表策略。既有库另有 public RLS、旧函数和视图等警报，不在本次修复范围，不能据新接口回验宣称整个存量库已完成安全整改。
 
+## 服务端接入部署 · 2026-10-07
+
+已通过 Supabase MCP 部署 `crowd-gateway` v1，保留原 `crowd-page`。平台 JWT 校验开启，函数还要求独立的随机服务端密钥；部署代码只包含其 SHA256，实际密钥保留在忽略提交的私有状态中。网关允许邀请 RPC；Auth 操作必须重新核对有效邀请、预留 UUID、安装凭证哈希和研究账号身份，拒绝任意管理 RPC，不返回管理员凭据、登录 token 或其他账号资料。
+
+网关和实际网站服务端适配器测试通过：缺密钥、浏览器 Origin、任意 RPC、错误 UUID、错误安装密码、邀请过期、重试不重设密码及账号隔离。真实线上 HTTP 回验：无密钥/错密钥/浏览器请求 403、任意管理 RPC 400、服务端健康检查 200。Next.js 构建和类型检查通过；实际 Next 网站服务器经网关连接生产邀请 RPC，manifest 返回 HTTP 200、ready=false、空安装渠道；未授权发布请求返回 403，没有生成邀请。
+
+当前公开配置匹配项目启用的 publishable key，旧 anon key 已禁用；没有改用旧 key。云环境 Node 24 的本地网站测试使用 `NODE_USE_ENV_PROXY=1`，保留现有代理和 CA 信任。首次真实网站检查暴露了适配器仅允许旧 JWT 的错误，已修复并回验现代 publishable key。未在生产创建参与者、邀请、任务或付款。
+
 ## 验证边界
 
-SQL 行为测试使用临时本地数据库；生产只执行上文两项迁移及只读权限回验。网站没有发布到生产，也没有可开工的生产邀请。未连接 Windows/Mac/Android/iOS/Harmony 实机；真实小红书登录、页面变化、锁屏/后台与系统协议关联仍待验收。
+SQL 行为测试使用临时本地数据库；生产执行上文两项迁移、独立网关部署及只读回验。网站没有发布到生产，也没有可开工的生产邀请。未连接 Windows/Mac/Android/iOS/Harmony 实机；真实小红书登录、页面变化、锁屏/后台与系统协议关联仍待验收。
 
 Android 产物为内部 debug 签名。Apple/Harmony 编译、发布签名和正式分发仍需对应环境/身份。当前管理员策略禁止 Chromium 加载未打包扩展，因此扩展后台适配由源码 API 检查验证；未绕过该策略，也未将其算作实机通过。
 

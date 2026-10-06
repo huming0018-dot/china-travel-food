@@ -15,7 +15,7 @@
 以下为部署负责人资料，不需要发给参与者：
 
 - `cloud/crowd_launch.py` 默认只检查；部署环境连接后，`--apply` 一次处理未执行迁移、网站发布、真实入口检查及首次邀请/二维码生成。没有部署权限、绑定域名、有效安装渠道或最新客户端配置时会拒绝发出邀请。
-- 入口默认复用 HANDOFF 记录的现有网站 `app-lyart-eta-22.vercel.app`，该站尚未发布本次入口。改域名才需设置 `CROWD_PUBLIC_ORIGIN`。发布环境提供 `SUPABASE_DB_URL`、`SUPABASE_SERVICE_ROLE_KEY`、`VERCEL_TOKEN`，并连接现有 Vercel 网站项目；公开 Supabase 配置复用现有 app 配置。`CROWD_OPERATOR_KEY` 可自动生成并只存 `.crowd-launch/`；这些值不能放进参与链接或版本库。
+- 入口默认复用 HANDOFF 记录的现有网站 `app-lyart-eta-22.vercel.app`，该站尚未发布本次入口。改域名才需设置 `CROWD_PUBLIC_ORIGIN`。接入网关已部署，新模式由发布脚本读取私有 `CROWD_GATEWAY_TOKEN`，不再要求数据库密码或 Supabase 管理员密钥。Vercel 需要正常登录或 `VERCEL_TOKEN`（已有 CLI 登录可用 `VERCEL_GLOBAL_CONFIG` 选择）。旧直连模式才提供 `SUPABASE_DB_URL`、`SUPABASE_SERVICE_ROLE_KEY`，并连接现有 Vercel 网站项目；公开 Supabase 配置复用现有 app 配置。`CROWD_OPERATOR_KEY` 可自动生成并只存 `.crowd-launch/`；这些值不能放进参与链接或版本库。
 - `CROWD_RELEASES_JSON` 按平台记录 channel/url/version/sha256/verified。verified 只能在真实设备验收后置 true。desktop/apk 渠道只能引用本站 `/crowd/releases/` 的匹配文件；首次构建务必设置真实 `CROWD_PUBLIC_ORIGIN`，部署检查同时验证包的配置、源码和哈希，拒绝发送旧包。
 - 示例结构：`{"android":{"channel":"apk","url":"https://你的域名/crowd/releases/crowd-android-v4.0.0-debug.apk","version":"4.0.0","sha256":"构建产生的64位摘要","verified":false}}`。原生鸿蒙为 appgallery，iOS 为 testflight/appstore；只有通过验收的项开放。
 - 构建独立桌面源码后，`python cloud/crowd_desktop_build.py --platform win32 --arch x64` 打包官方校验过的 Electron runtime；Mac 对应 darwin/arm64 或 x64，需在 Mac 重签。桌面默认没有添加商店依赖，仍需实际 OS 安装/协议关联/登录/后台验收。Windows 当前已产生可执行客户端 ZIP，未作 Windows 实机验收；Mac 当前没有完成打包。

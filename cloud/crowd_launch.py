@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import secrets
+import re
 import shutil
 import subprocess
 import sys
@@ -25,8 +26,13 @@ def check(env):
         conf=config()
         if not conf.get('portal'): missing.append('HTTPS participation origin')
     except (ValueError,KeyError): conf={}; missing.append('public Supabase configuration')
-    for key in ['SUPABASE_SERVICE_ROLE_KEY','SUPABASE_DB_URL','VERCEL_TOKEN']:
+    gateway=env.get('CROWD_GATEWAY_TOKEN','')
+    if gateway and not re.fullmatch('[a-f0-9]{64}',gateway):
+        missing.append('valid gateway key')
+    for key in ([] if gateway else ['SUPABASE_SERVICE_ROLE_KEY','SUPABASE_DB_URL']):
         if not env.get(key): missing.append(key)
+    cli_profile=env.get('VERCEL_GLOBAL_CONFIG')
+    if not env.get('VERCEL_TOKEN') and not (cli_profile and (Path(cli_profile)/'auth.json').is_file()): missing.append('Vercel login or VERCEL_TOKEN')
     role_key=env.get('SUPABASE_SERVICE_ROLE_KEY','')
     if role_key and not role_key.startswith('sb_secret_'):
         try:
@@ -43,7 +49,7 @@ def check(env):
     if not (ROOT/'app/.vercel/project.json').exists(): missing.append('linked existing website project')
     cli=env.get('SUPABASE_CLI') or shutil.which('supabase')
     vercel=env.get('VERCEL_CLI') or shutil.which('vercel')
-    if not cli: missing.append('Supabase CLI')
+    if not cli and not gateway: missing.append('Supabase CLI')
     if not vercel: missing.append('Vercel CLI')
     try: releases=json.loads(env.get('CROWD_RELEASES_JSON','{}'))
     except ValueError: releases={}; missing.append('valid release manifest')
@@ -109,7 +115,10 @@ def stage_download(source,destination):
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__); ap.add_argument('--apply',action='store_true'); args=ap.parse_args()
-    env={**values(),**os.environ}; report,conf,releases,cli,vercel=check(env)
+    env={**values(),**os.environ}
+    gateway_file=ROOT/'.crowd-launch/gateway-token'
+    if not env.get('CROWD_GATEWAY_TOKEN') and gateway_file.is_file(): env['CROWD_GATEWAY_TOKEN']=gateway_file.read_text().strip()
+    report,conf,releases,cli,vercel=check(env)
     if not args.apply or not report['ready']:
         print(json.dumps(report,ensure_ascii=False,indent=2)); return 0 if report['ready'] else 2
     state=ROOT/'.crowd-launch'; state.mkdir(mode=0o700,exist_ok=True)
@@ -118,8 +127,16 @@ def main():
     key_file.write_text(operator); key_file.chmod(0o600)
     env.update(CROWD_OPERATOR_KEY=operator,CROWD_RELEASES_JSON=json.dumps(releases,separators=(',',':')),CROWD_PUBLIC_ORIGIN=conf['portal'])
     # CLI migration history makes repeated rollouts safe; do not recreate existing v4 tables.
-    print('Applying pending migrations…')
-    run([cli,'db','push','--db-url',env['SUPABASE_DB_URL'],'--workdir',str(ROOT/'cloud'),'--yes'],env,ROOT)
+    if env.get('CROWD_GATEWAY_TOKEN'):
+        # The gateway uses the project's built-in server identity. Verify that
+        # the installed invitation migration is callable without a DB password.
+        request=urllib.request.Request(conf['url']+'/functions/v1/crowd-gateway',data=b'{"action":"health"}',headers={'Content-Type':'application/json','Authorization':'Bearer '+conf['key'],'apikey':conf['key'],'X-Crowd-Gateway-Key':env['CROWD_GATEWAY_TOKEN']},method='POST')
+        with urllib.request.urlopen(request,timeout=20) as response: health=json.load(response)
+        if health.get('data',{}).get('ready') is not True: raise RuntimeError('Gateway or installed migration is not ready')
+        print('Existing backend gateway verified; no database password needed.')
+    else:
+        print('Applying pending migrations…')
+        run([cli,'db','push','--db-url',env['SUPABASE_DB_URL'],'--workdir',str(ROOT/'cloud'),'--yes'],env,ROOT)
     destination=ROOT/'app/public/crowd/releases'; destination.mkdir(parents=True,exist_ok=True)
     for item in releases.values():
         if item['channel'] in ('desktop','apk'):
@@ -128,8 +145,11 @@ def main():
             else: shutil.copyfile(EXT/'releases'/name,destination/name)
     print('Building and publishing the connected website…')
     run([sys.executable,str(ROOT/'cloud/crowd_build.py')],env,ROOT)
-    command=[vercel,'deploy','--prod','--yes','--token',env['VERCEL_TOKEN']]
-    for name in ['NEXT_PUBLIC_SUPABASE_URL','NEXT_PUBLIC_SUPABASE_ANON_KEY','SUPABASE_SERVICE_ROLE_KEY','CROWD_PUBLIC_ORIGIN','CROWD_OPERATOR_KEY','CROWD_RELEASES_JSON']:
+    command=[vercel,'deploy','--prod','--yes']
+    if env.get('VERCEL_TOKEN'): command.extend(['--token',env['VERCEL_TOKEN']])
+    elif env.get('VERCEL_GLOBAL_CONFIG'): command.extend(['--global-config',env['VERCEL_GLOBAL_CONFIG']])
+    for name in ['NEXT_PUBLIC_SUPABASE_URL','NEXT_PUBLIC_SUPABASE_ANON_KEY','SUPABASE_SERVICE_ROLE_KEY','CROWD_GATEWAY_TOKEN','CROWD_PUBLIC_ORIGIN','CROWD_OPERATOR_KEY','CROWD_RELEASES_JSON']:
+        if name not in env: continue
         command.extend(['--env',name+'='+env[name]])
     for name in ['NEXT_PUBLIC_SUPABASE_URL','NEXT_PUBLIC_SUPABASE_ANON_KEY']: command.extend(['--build-env',name+'='+env[name]])
     run(command,env,ROOT/'app')
