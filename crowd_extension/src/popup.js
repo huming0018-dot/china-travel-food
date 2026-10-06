@@ -38,9 +38,12 @@ function render(status) {
     $("s_pid").textContent = status.participantId;
     $("s_pid").className = "val";
   } else {
-    // 未注册：引导去选项页点「我要加入」自动获取编号（v3.2.3 起报名在插件内完成）
-    $("s_pid").textContent = "未注册 → 选项页「我要加入」";
-    $("s_pid").className = "val status-warn";
+    // 未注册：一键直达注册页（v3.4.9：手机端"选项页"太难找，提示本身做成可点按钮）
+    const el = $("s_pid");
+    el.textContent = "👉 点这里注册领取编号（30 秒）";
+    el.className = "val status-warn";
+    el.style.cssText += "cursor:pointer;text-decoration:underline;text-underline-offset:3px";
+    el.onclick = () => chrome.runtime.openOptionsPage();
   }
   const gate = status.gateBlockReason || "";
   $("s_gate").textContent = gate || "正常";
