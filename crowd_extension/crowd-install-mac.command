@@ -6,7 +6,7 @@
 # 需要：管理员密码一次（写策略用）；本机装有 Chrome。
 set -e
 EXT_ID="licijehcpohikchlnkbpjdjdfkcocndg"
-UPDATE_URL="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/updates.xml"
+UPDATE_URL="https://huming0018-dot.github.io/crowd-pages/updates.xml"
 ENTRY="$EXT_ID;$UPDATE_URL"
 PLIST="/Library/Managed Preferences/com.google.Chrome"
 
@@ -31,8 +31,15 @@ echo "请输入开机密码（输入时不显示，输完回车）："
 if sudo -v; then :; else echo "❌ 需要管理员权限才能写入 Chrome 策略。"; read -r -p "按回车退出..."; exit 1; fi
 
 if sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" >/dev/null 2>&1; then
-  if sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | grep -q "$EXT_ID"; then
-    echo "✅ 安装策略已存在（之前装过），跳过登记。"
+  if sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | grep -q "$EXT_ID;$UPDATE_URL"; then
+    echo "✅ 安装策略已存在且为最新（之前装过），跳过登记。"
+  elif sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | grep -q "$EXT_ID"; then
+    # v3.4.8 通道迁移：条目在但更新地址是旧的（bucket 已废）→ 原地替换
+    IDX=$(sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | grep -n "$EXT_ID" | cut -d: -f1)
+    IDX=$((IDX-1))
+    sudo /usr/libexec/PlistBuddy -c "Delete :ExtensionInstallForcelist:$IDX" "$PLIST.plist"
+    sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist:$IDX string $ENTRY" "$PLIST.plist"
+    echo "✅ 安装策略的更新地址已迁移到国内可达通道。"
   else
     IDX=$(sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | grep -cE "^    " || true)
     sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist:$IDX string $ENTRY" "$PLIST.plist"
@@ -43,13 +50,20 @@ else
   echo "✅ 已登记到 Chrome 策略（新建）。"
 fi
 
-# 2. 重启 Chrome 让策略生效
+# 1.5 刷新 macOS 偏好缓存（cfprefsd 会缓存 plist，不刷 Chrome 可能读到旧的空策略）
+sudo killall cfprefsd 2>/dev/null || true
+
+# 2. 重启 Chrome 让策略生效（CROWD_NO_RESTART=1 时跳过：策略会在 Chrome 下次自然重启时生效）
+if [ "${CROWD_NO_RESTART:-0}" = "1" ]; then
+  echo "（按约定不重启 Chrome；策略已生效，插件会在 Chrome 下次启动时自动安装/升级）"
+else
 echo
 echo "即将重启 Chrome 让插件自动安装（请先保存浏览器里未提交的页面）。"
 read -r -p "按回车重启 Chrome，或 Ctrl+C 取消..."
 osascript -e 'tell application "Google Chrome" to quit' 2>/dev/null || true
 sleep 2
 open -a "Google Chrome"
+fi
 
 echo
 echo "==============================================="

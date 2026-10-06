@@ -7,7 +7,7 @@ rem 需要：管理员权限一次（脚本会自动弹 UAC 请求）；本机�
 chcp 65001 >nul
 setlocal
 set EXT_ID=licijehcpohikchlnkbpjdjdfkcocndg
-set UPDATE_URL=https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/updates.xml
+set UPDATE_URL=https://huming0018-dot.github.io/crowd-pages/updates.xml
 set ENTRY=%EXT_ID%;%UPDATE_URL%
 
 title 众包美食家 · 一键安装（Windows）

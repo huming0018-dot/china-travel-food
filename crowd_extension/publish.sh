@@ -162,4 +162,33 @@ upload icons/icon192.png icon192.png "image/png"
 upload icons/icon512.png icon512.png "image/png"
 upload crowd-install-mac.command crowd-install-mac.command "application/octet-stream"
 upload crowd-install-win.bat crowd-install-win.bat "application/octet-stream"
-[ "$FAIL" = "0" ] && echo "== 发布完成：v$VER 已上线，已装插件的参与者将在 Chrome 下次检查更新时自动升级" || { echo "❌ 部分上传失败"; exit 1; }
+[ "$FAIL" = "0" ] && # 6. Chrome 更新通道同步到 GitHub Pages（bucket 对 .xml 强制 text/plain，Chrome 更新客户端拒收——
+#    updates.xml 和 crx 必须在 Pages 上才是有效的安装/升级链路）
+if command -v gh >/dev/null 2>&1 && gh auth token >/dev/null 2>&1; then
+  echo "== 同步 Chrome 更新通道到 Pages =="
+  TMP_GH=$(mktemp -d)
+  cp "$OUT/updates.xml" "$TMP_GH/updates.xml"
+  cp "$CRX" "$TMP_GH/crowd-extension-v$VER.crx"
+  # codebase 指向 Pages 上的 crx
+  sed -i '' "s|https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v$VER.crx|https://huming0018-dot.github.io/crowd-pages/crowd-extension-v$VER.crx|g" "$TMP_GH/updates.xml"
+  GHT=$(gh auth token)
+  for F in updates.xml "crowd-extension-v$VER.crx"; do
+    SHA=$(curl -s -H "Authorization: token $GHT" "https://api.github.com/repos/huming0018-dot/crowd-pages/contents/$F" | python3 -c "import json,sys; print(json.load(sys.stdin).get('sha',''))" 2>/dev/null)
+    python3 - "$GHT" "$TMP_GH/$F" "$F" "$SHA" <<'PYEOF'
+import json, sys, base64, urllib.request
+token, fp, name, sha = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+content = base64.b64encode(open(fp,'rb').read()).decode()
+body = {"message": "publish.sh 同步 v"+content[:0]+"更新通道", "content": content}
+if sha: body["sha"] = sha
+req = urllib.request.Request("https://api.github.com/repos/huming0018-dot/crowd-pages/contents/"+name,
+    data=json.dumps(body).encode(), method="PUT",
+    headers={"Authorization":"token "+token,"Content-Type":"application/json","Accept":"application/vnd.github+json"})
+print("Pages 同步:", name, json.loads(urllib.request.urlopen(req).read())["commit"]["sha"][:8])
+PYEOF
+  done
+  rm -rf "$TMP_GH"
+else
+  echo "⚠️ 未检测到 gh 登录：updates.xml/crx 未同步到 Pages（Chrome 安装通道不会更新）"
+fi
+
+echo "== 发布完成：v$VER 已上线，已装插件的参与者将在 Chrome 下次检查更新时自动升级" || { echo "❌ 部分上传失败"; exit 1; }
