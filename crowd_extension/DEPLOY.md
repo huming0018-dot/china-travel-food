@@ -155,6 +155,7 @@ update crowd_participants set quota_day=50 where participant_id='P-XXXXXX';
 | 队列丢信封/假死 | 回传在途时新入队信封被旧快照覆盖（读-改-写竞态） | v3.4.6 写回前重读 merge；看门狗不再提前放锁 |
 | 永久错误无限重试 | 死信正则与服务端 reason 词表漂移 | v3.4.6 已对齐；**服务端新增 reason 时必须同步插件词表** |
 | bucket 托管的 HTML 打开是源码 | Supabase Storage 对 text/* 强制 text/plain | 页面一律走 GitHub Pages，bucket 只放下载物 |
+| **Chrome 策略安装/自动升级全断** | bucket 把 updates.xml 强制成 text/plain+nosniff，Chrome 更新客户端拒收（静默无任何提示）；连 crx 的 octet-stream 也难保 | **Chrome 更新通道（updates.xml+crx）一律走 GitHub Pages**（application/xml + x-chrome-extension 都是对的）；manifest update_url/安装器 UPDATE_URL 已迁；publish.sh 自动同步 Pages |
 | 匿名调新 RPC 报 PGRST202 | PostgREST schema 缓存未刷新 | 等 1 分钟或 `select pg_notify('pgrst','reload schema')` |
 | 短链解析超时 | anon 角色 statement_timeout 默认 3s | 已放宽到 40s（alter role anon） |
 | 状态页"最新 N 条"不对 | 同批插入 created_at 相同乱序 | 已改按自增 id 排序 |
