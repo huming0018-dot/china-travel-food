@@ -25,6 +25,13 @@
 | 手机页/状态页/安装引导 | **GitHub Pages** | 正式页面（bucket 的 HTML 是 text/plain 无法渲染，仅作下载镜像） |
 | 定时任务 | 腾讯云服务器 cron（ubuntu@49.234.35.92） | 回流监控（每小时 :07）、证据入库（06:30）、周结算（周一 09:00） |
 
+## 一·五、代码真相源
+
+**GitHub 主仓库 `huming0018-dot/china-travel-food` 已是正式真相源**（2026-10-06 起）：
+`crowd_extension/`（插件源码，当前 3.4.8）· `cloud/sql/crowd_fix_v3*.sql`（迁移链）·
+`cloud/crowd_tracking.py`、`cloud/health.py`（服务器脚本，与线上同步）· `crowd-test-harness/`（回归套件）。
+安装产物在 `huming0018-dot/crowd-pages` 的 Releases。改代码后：本地 crowd-platform 提交 → 同步主仓库。
+
 ## 二、凭据索引（都不进 git）
 
 | 凭据 | 位置 | 用途 |
