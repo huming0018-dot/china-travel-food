@@ -15,6 +15,7 @@ import urllib.request
 import urllib.parse
 import zipfile
 from crowd_build import ROOT, EXT, VERSION, config, values, source_integrity, controller_html
+from crowd_share import write_share
 
 
 def check(env):
@@ -57,6 +58,16 @@ def check(env):
             name=Path(url.path).name; local=EXT/'releases'/name
             if url.netloc!=urllib.parse.urlsplit(conf.get('portal','')).netloc or url.path!='/crowd/releases/'+name or not local.is_file(): missing.append(platform+' release artifact'); continue
             if hashlib.sha256(local.read_bytes()).hexdigest()!=item.get('sha256'): missing.append(platform+' release checksum'); continue
+            if local.suffix=='.exe':
+                try:
+                    build=json.loads(local.with_suffix('.exe.build.json').read_text())
+                    expected={filename:hashlib.sha256((controller_html(conf).encode() if filename=='controller.html' else (EXT/'src'/filename).read_bytes())).hexdigest()
+                              for filename in ['core.js','agent.js','api.js','join.js','native-runtime.js','controller.js','controller.css','content.js','controller.html']}
+                    if platform!='windows' or item['channel']!='desktop' or build.get('platform')!=platform or build.get('version')!=VERSION or build.get('sha256')!=item['sha256'] or build.get('config')!=conf or build.get('shared_sources')!=expected or build.get('native_sources')!=source_integrity('desktop'):
+                        missing.append(platform+' installer is stale or mismatched'); continue
+                except (OSError,ValueError): missing.append(platform+' installer build record required'); continue
+                accepted[platform]={key:item[key] for key in ['channel','url','version','verified','sha256'] if key in item}
+                continue
             with zipfile.ZipFile(local) as archive:
                 candidates=[name for name in archive.namelist() if name.endswith('assets/config.js')]
                 if not candidates: missing.append(platform+' bundled configuration'); continue
@@ -132,10 +143,9 @@ def main():
         time.sleep(2)
     request=urllib.request.Request(url+'/api/crowd/invite',data=b'{}',headers={'Content-Type':'application/json','Authorization':'Bearer '+operator},method='POST')
     with urllib.request.urlopen(request,timeout=20) as response: invitation=json.load(response)
-    (state/'invite-link.txt').write_text(invitation['link']+'\n')
-    (state/'invite-qr.png').write_bytes(base64.b64decode(invitation['qr'].split(',',1)[1]))
+    share=write_share(invitation,state,releases)
     # The sole result the owner distributes. Private operator credentials remain local.
-    print(json.dumps({'link':invitation['link'],'qr_file':str(state/'invite-qr.png')},ensure_ascii=False))
+    print(json.dumps({'link':invitation['link'],'qr_file':str(state/'invite-qr.png'),'share_page':str(share)},ensure_ascii=False))
     return 0
 
 

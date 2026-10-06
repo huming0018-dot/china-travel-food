@@ -11,7 +11,7 @@ try {
  const page=await context.newPage();await page.goto(base+'/crowd#invite='+token);
  await assert.doesNotReject(()=>page.getByRole('link',{name:'首次参与：安装客户端'}).waitFor());
  assert.equal(await page.locator('#device').inputValue(),'android');assert.equal(await page.getByRole('link',{name:'首次参与：安装客户端'}).getAttribute('href'),'https://crowd.example.test/crowd/releases/crowd-android-v4.0.0-debug.apk');
- await page.locator('#device').selectOption('ios');await page.getByText('这类设备的安装渠道尚未开放。',{exact:false}).waitFor();assert.equal(await page.getByRole('link',{name:'首次参与：安装客户端'}).count(),0);
+ await page.getByText('设备识别有误？点这里切换').click();await page.locator('#device').selectOption('ios');await page.getByText('这类设备的安装渠道尚未开放。',{exact:false}).waitFor();assert.equal(await page.getByRole('link',{name:'首次参与：安装客户端'}).count(),0);
  await page.locator('#device').selectOption('android');
  if(process.env.CROWD_PORTAL_PREVIEW)await page.screenshot({path:process.env.CROWD_PORTAL_PREVIEW,fullPage:true});
  await page.goto(base+'/crowd');await page.getByText('请打开邀请人发来的完整链接或扫描二维码。').waitFor();assert.equal(await page.getByRole('link',{name:'首次参与：安装客户端'}).count(),0);
@@ -21,10 +21,10 @@ try {
  let partHash=digest;
  await context.route('**/crowd/releases/*.json',r=>r.fulfill({json:{file:filename,bytes:bytes.length,sha256:digest,parts:[{url:'/crowd/releases/'+filename+'.part0',bytes:bytes.length,sha256:partHash}]}}));
  await context.route('**/crowd/releases/*.part0',r=>r.fulfill({body:bytes,contentType:'application/octet-stream'}));
- await page.goto(base+'/crowd#invite='+token);await page.locator('#device').selectOption('windows');
+ await page.goto(base+'/crowd#invite='+token);await page.getByText('设备识别有误？点这里切换').click();await page.locator('#device').selectOption('windows');
  const downloaded=page.waitForEvent('download');await page.getByRole('button',{name:'首次参与：安装客户端'}).click();const file=await downloaded;
  assert.equal(file.suggestedFilename(),filename);assert.deepEqual(await fs.readFile(await file.path()),bytes);
- partHash='0'.repeat(64);await page.getByRole('button',{name:'首次参与：安装客户端'}).click();await page.getByText('下载未完成或校验失败，请点安装按钮重试。').waitFor();
+ partHash='0'.repeat(64);await page.getByRole('button',{name:'重新下载安装包'}).click();await page.getByText('下载未完成或校验失败，请点安装按钮重试。').waitFor();
  // Publisher stays closed until live readiness; no offline/cached success.
  await context.unroute('**/api/crowd/manifest');await context.route('**/api/crowd/manifest',r=>r.fulfill({status:503,json:{error:'backend_unavailable'}}));
  await page.goto(base+'/crowd/admin');assert.equal(await page.getByRole('button',{name:'生成邀请链接和二维码'}).isDisabled(),true);

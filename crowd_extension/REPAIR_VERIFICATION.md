@@ -8,7 +8,7 @@
 
 使用 Puppeteer Core 23.11.1 / Chromium 151，点击本地生产邀请入口及实际共享 controller/native-runtime 界面。首次执行发现 CrowdAPI 将浏览器 fetch 保存为实例方法后使用错误的 receiver，真实浏览器报 Illegal invocation，邀请接入失败；先前接口模拟未覆盖这个行为。已改为保留全局 fetch 调用上下文，并由真实浏览器回归。
 
-10 个场景通过：短信邀请/安卓识别、未开放苹果渠道/缺邀请、桌面下载与坏摘要拒绝、未就绪发布入口、显式同意、不在注册中断后自动启动、同意后启动实际运行时、搜索/详情/字段/丢失回执保留、重启稳定 UUID 重试、验证码停批次与用户停止。核心测试重新执行通过；客户端安装包随共享 API 修复重新生成。
+12 个场景通过：短信邀请/安卓识别、未开放苹果渠道/缺邀请、Windows EXE 分片下载与坏摘要拒绝、未就绪发布入口、整条短信与复制权限拒绝后的自动选中、内置浏览器复制系统浏览器入口、显式同意、不在注册中断后自动启动、同意后启动实际运行时、搜索/详情/字段/丢失回执保留、重启稳定 UUID 重试、验证码停批次与用户停止。核心测试重新执行通过；客户端安装包随共享 API 修复重新生成。
 
 API 和小红书页面使用固定响应；系统桥模拟持久化/调度/网页操作，时钟加速。没有验证真实平台、实际操作系统原生桥、安装/锁屏或手机后台。`npm run test:puppeteer --prefix crowd-test-harness` 为复现入口，详细环境见 harness README。报告不记录凭据。
 
@@ -20,12 +20,21 @@ API 和小红书页面使用固定响应；系统桥模拟持久化/调度/网�
 - Chromium 真实 DOM：自动搜索、访问详情、停留/滚动、标准/非标字段及回传通过。页面与 API 使用本地固定响应，未访问真实小红书。
 - 本地生产网站浏览器流程：安卓识别、短信邀请、安装链接、桌面自动分片下载与摘要验证、校验失败和未开放渠道通过。
 - Next.js 生产构建及 TypeScript 检查通过；依赖复用与本分支 package-lock 完全一致的已有安装树。
-- Android SDK35/Java21 编译 APK；v2/v3 签名验证通过。Windows x64 用官方 SHA256 校验的 Electron runtime 打包通过。原生项目与共享资源随构建分发。
+- Android SDK35/Java21 编译 APK；v2/v3 签名验证通过。Windows x64 用官方 SHA256 校验的 Electron runtime 打包，并用 NSIS 3.11 编译普通安装程序；PE 格式、摘要及发布检查通过。没有在 Windows 执行该安装程序。原生项目与共享资源随构建分发。
+- 分发材料生成检查通过：短信/二维码/离线分享页只导出公开邀请资料，拒绝不合规 URL，不包含发布身份。分享页无需外部二维码服务。
 - 发布器验证包摘要、当前公开配置、解析器/界面源码与原生主程序源文件摘要；任何相关源码变动后旧包不能继续发布。默认检查不写生产、不生成假邀请。
+
+## 现有中台部署
+
+2026-10-06 通过已连接的 Supabase MCP，在项目 `bdwrhshgdeghgyzwpxnl` 执行经本地 PostgreSQL 验证的两项迁移。远端记录为 `20261006145016_crowd_v4`、`20261006145030_crowd_v4_invites`；仓库文件名已同步远端版本，SQL 内容未变。独立 `crowd_v4` 空间保留旧 v3 表和账本。
+
+只读回验：8 张表均启用 RLS，anon/authenticated 无直接 SELECT 权限；7 项 RPC 固定空 search_path，anon 不可执行，邀请/管理 RPC 仅 service_role；服务端邀请列表为空。未创建生产参与者、邀请、任务、证据或付款，未启用现网调度。
+
+部署后执行安全 advisor。新对象包含 8 项 [RLS 无策略 INFO](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy) 和 5 项 [authenticated 可执行 SECURITY DEFINER WARN](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable)。这是当前 RPC 权限设计：私有表拒绝直读，参与者经有 auth.uid()/身份/租约校验的 RPC 执行指定操作；保持权限边界，不添加宽松表策略。既有库另有 public RLS、旧函数和视图等警报，不在本次修复范围，不能据新接口回验宣称整个存量库已完成安全整改。
 
 ## 验证边界
 
-SQL 使用临时本地数据库，没有执行生产迁移。网站没有发布到生产，也没有可开工的生产邀请。未连接 Windows/Mac/Android/iOS/Harmony 实机；真实小红书登录、页面变化、锁屏/后台与系统协议关联仍待验收。
+SQL 行为测试使用临时本地数据库；生产只执行上文两项迁移及只读权限回验。网站没有发布到生产，也没有可开工的生产邀请。未连接 Windows/Mac/Android/iOS/Harmony 实机；真实小红书登录、页面变化、锁屏/后台与系统协议关联仍待验收。
 
 Android 产物为内部 debug 签名。Apple/Harmony 编译、发布签名和正式分发仍需对应环境/身份。当前管理员策略禁止 Chromium 加载未打包扩展，因此扩展后台适配由源码 API 检查验证；未绕过该策略，也未将其算作实机通过。
 
@@ -37,4 +46,4 @@ Android 产物为内部 debug 签名。Apple/Harmony 编译、发布签名和正
 
 运行 `python3 cloud/crowd_build.py --dry` 检查公开配置，实际生成包用 `python3 cloud/crowd_build.py`。SDK/runtime/产物、私钥与本机会话不提交到源码仓库。
 
-部署步骤和各端边界见 DEPLOY.md / README.md。先完成试点验收并提供可信部署环境，再用发布者脚本执行迁移/发布；参与者只收到链接或二维码。回滚停止 v4 客户端与调度，保留证据和已付账本。
+部署步骤和各端边界见 DISTRIBUTION.md / DEPLOY.md / README.md。先完成试点验收并提供可信网站部署环境，再用发布者脚本处理未执行迁移/发布；参与者只收到链接或二维码。回滚停止 v4 客户端与调度，保留证据和已付账本。

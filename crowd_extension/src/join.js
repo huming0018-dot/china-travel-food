@@ -37,7 +37,7 @@
       const response = await fetch(u, {cache: 'no-store', credentials: 'omit'}); if (!response.ok) throw new Error('download_unavailable'); return response;
     };
     const descriptor = await (await fetchBytes(base.href + '.json')).json();
-    if (descriptor.sha256 !== release.sha256 || !Number.isSafeInteger(descriptor.bytes) || descriptor.bytes < 1 || descriptor.bytes > 768*1024*1024 || !Array.isArray(descriptor.parts) || descriptor.parts.length < 1 || descriptor.parts.length > 32 || !/^crowd-[a-z0-9.-]+\.zip$/.test(descriptor.file)) throw new Error('invalid_download');
+    if (descriptor.sha256 !== release.sha256 || !Number.isSafeInteger(descriptor.bytes) || descriptor.bytes < 1 || descriptor.bytes > 768*1024*1024 || !Array.isArray(descriptor.parts) || descriptor.parts.length < 1 || descriptor.parts.length > 32 || !/^crowd-[a-z0-9.-]+\.(zip|exe|dmg)$/.test(descriptor.file) || descriptor.file !== base.pathname.split('/').pop()) throw new Error('invalid_download');
     const digest = async bytes => [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(n => n.toString(16).padStart(2, '0')).join('');
     const chunks = []; let received = 0;
     for (const part of descriptor.parts) {
@@ -46,7 +46,7 @@
       if (bytes.byteLength !== part.bytes || await digest(bytes) !== part.sha256) throw new Error('download_integrity');
       chunks.push(bytes); received += bytes.byteLength; progress(Math.floor(received * 100 / descriptor.bytes));
     }
-    const file = new Blob(chunks, {type: 'application/zip'});
+    const file = new Blob(chunks, {type: descriptor.file.endsWith('.zip') ? 'application/zip' : 'application/octet-stream'});
     if (file.size !== descriptor.bytes || await digest(await file.arrayBuffer()) !== descriptor.sha256) throw new Error('download_integrity');
     const url = URL.createObjectURL(file), a = document.createElement('a'); a.href = url; a.download = descriptor.file; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 60000);

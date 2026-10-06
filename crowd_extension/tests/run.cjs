@@ -9,7 +9,8 @@ const commands=[
   [process.execPath,'crowd_extension/tests/join.cjs'],
   [process.execPath,'crowd_extension/tests/native.cjs'],
   [process.env.PYTHON||'python3','crowd_extension/tests/check_operator.py'],
-  [process.env.PYTHON||'python3','crowd_extension/tests/check_launch.py']
+  [process.env.PYTHON||'python3','crowd_extension/tests/check_launch.py'],
+  [process.env.PYTHON||'python3','crowd_extension/tests/check_share.py']
 ];
 if(process.env.CROWD_TEST_TOOLS)commands.push([process.execPath,'crowd_extension/tests/browser.mjs']);
 if(process.env.CROWD_PORTAL_TEST_ORIGIN) {

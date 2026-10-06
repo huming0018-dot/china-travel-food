@@ -69,8 +69,8 @@ async function databaseChecks() {
   create function auth.uid() returns uuid language sql as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
   create function auth.role() returns text language sql as $$ select current_setting('request.jwt.claim.role',true) $$;
   grant usage on schema auth to authenticated,service_role;grant execute on function auth.uid(),auth.role() to authenticated,service_role;`);
-  await pool.query(fs.readFileSync(path.join(root,'cloud/supabase/migrations/20261005142718_crowd_v4.sql'),'utf8'));
-  await pool.query(fs.readFileSync(path.join(root,'cloud/supabase/migrations/20261005152612_crowd_v4_invites.sql'),'utf8'));
+  await pool.query(fs.readFileSync(path.join(root,'cloud/supabase/migrations/20261006145016_crowd_v4.sql'),'utf8'));
+  await pool.query(fs.readFileSync(path.join(root,'cloud/supabase/migrations/20261006145030_crowd_v4_invites.sql'),'utf8'));
   const users=[randomUUID(),randomUUID()];for(const user of users)await pool.query('insert into auth.users(id)values($1)',[user]);
   async function call(user,name,params=[],role='authenticated') {
    const client=await pool.connect();try{await client.query('begin');await client.query(`set local role ${role}`);

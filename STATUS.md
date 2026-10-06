@@ -1,4 +1,4 @@
-> **2026-10-06 众包 v4 整合修复**：基于主仓库 `1b4006b` + `cd10128`，接入此前已验证的统一短信/二维码入口、邀请自动身份、自动采集/断点回传及标准/非标证据。旧 v3 数据和账本保留，`health.py`/`crowd_tracking.py` 新修复保留。权威说明为 `crowd_extension/README.md`、`DEPLOY.md`、`AUDIT_REPORT.md`；v4 SQL 在 `cloud/supabase/migrations/`。现网发布未执行；苹果完整目标保留，发布账号后补，各端实机验收仍待完成。下面旧上线数字不代表 v4 已上线。
+> **2026-10-06 众包 v4 整合修复**：基于主仓库 `1b4006b` + `cd10128`，接入此前已验证的统一短信/二维码入口、邀请自动身份、自动采集/断点回传及标准/非标证据。旧 v3 数据和账本保留，`health.py`/`crowd_tracking.py` 新修复保留。权威说明为 `crowd_extension/README.md`、`DEPLOY.md`、`AUDIT_REPORT.md`；v4 SQL 在 `cloud/supabase/migrations/`。2026-10-06 已在现有 Supabase 安装两项 v4 迁移并回验权限；网站未发布、无正式邀请、调度未启用。分发改为整条短信/二维码，安装引导三步，Windows 普通安装程序已编译；详见 `crowd_extension/DISTRIBUTION.md`、`REPAIR_VERIFICATION.md`。苹果完整目标保留，发布账号后补，各端实机验收仍待完成。下面旧上线数字不代表 v4 已上线。
 
 # 当前状态 · STATUS
 

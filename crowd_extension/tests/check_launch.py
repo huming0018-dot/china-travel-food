@@ -39,6 +39,20 @@ with tempfile.TemporaryDirectory() as temporary:
         native['mobile/android/CollectorService.java']='fixture-current-native-digest'
         (ext/'src/agent.js').write_text('new implementation')
         report=launch.check(env)[0];assert not report['ready'];assert any('stale' in item for item in report['missing'])
+        (ext/'src/agent.js').write_bytes((actual/'src/agent.js').read_bytes())
+        installer=ext/'releases/crowd-windows-x64-v4.0.0-setup.exe';installer.write_bytes(b'MZfixture-not-an-installable-program')
+        shared={file:hashlib.sha256((actual/'src'/file).read_bytes()).hexdigest() for file in files}
+        shared['controller.html']=hashlib.sha256(launch.controller_html(conf).encode()).hexdigest()
+        record={'platform':'windows','version':'4.0.0','arch':'x64','sha256':hashlib.sha256(installer.read_bytes()).hexdigest(),'config':conf,'shared_sources':shared,'native_sources':native}
+        buildfile=installer.with_suffix('.exe.build.json');buildfile.write_text(json.dumps(record))
+        windows={**release,'channel':'desktop','url':conf['portal']+'/crowd/releases/'+installer.name,'sha256':record['sha256']}
+        winenv={**env,'CROWD_RELEASES_JSON':json.dumps({'windows':windows})}
+        assert launch.check(winenv)[0]['ready']
+        record['config']={**conf,'portal':'https://other.example.test'};buildfile.write_text(json.dumps(record))
+        assert not launch.check(winenv)[0]['ready'],'installer cannot point participants at a different portal'
+        record['config']=conf;record['shared_sources']={**shared,'join.js':'0'*64};buildfile.write_text(json.dumps(record))
+        assert not launch.check(winenv)[0]['ready'],'old installation helpers must invalidate EXE release'
+        buildfile.unlink();assert not launch.check(winenv)[0]['ready'],'opaque EXE without build provenance is not publishable'
     assert not (root/'.crowd-launch').exists(),'checks cannot create operator credentials or an invitation'
     staged=root/'downloads';staged.mkdir(); descriptor=launch.stage_download(package,staged)
     rebuilt=b''.join((staged/Path(part['url']).name).read_bytes() for part in descriptor['parts'])

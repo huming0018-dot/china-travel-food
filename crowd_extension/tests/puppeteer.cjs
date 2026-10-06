@@ -30,13 +30,14 @@ async function intercept(page,handler){
  await page.setBypassServiceWorker(true);
  await page.setUserAgent('Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/151.0.0.0 Mobile Safari/537.36');
  await page.setViewport({width:390,height:844});
- const bytes=Buffer.from('Puppeteer fixture installer'),filename='crowd-windows-x64-v4.0.0.zip';
+ const bytes=Buffer.from('Puppeteer fixture installer'),filename='crowd-windows-x64-v4.0.0-setup.exe';
  let ready=true,badHash=false,platform='android';
  await intercept(page,req=>{
   const u=new URL(req.url());
   if(u.origin===base){
    if(u.pathname==='/api/crowd/manifest')return req.respond(response(ready?{ready:true,origin:base,releases:{[platform]:{channel:platform==='android'?'apk':'desktop',url:base+'/crowd/releases/'+(platform==='android'?'crowd-android-v4.0.0-debug.apk':filename),version:'4.0.0',sha256:hash(bytes),verified:true}}}:{error:'backend_unavailable'},ready?200:503));
-   if(u.pathname.endsWith('.zip.json'))return req.respond(response({file:filename,bytes:bytes.length,sha256:hash(bytes),parts:[{url:'/crowd/releases/'+filename+'.part0',bytes:bytes.length,sha256:badHash?'0'.repeat(64):hash(bytes)}]}));
+   if(u.pathname==='/api/crowd/invite')return req.respond(response({link:base+'/crowd#invite='+invite,qr:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jWZkAAAAASUVORK5CYII=',expires_at:'2026-10-13T12:00:00Z'}));
+   if(u.pathname.endsWith('.exe.json'))return req.respond(response({file:filename,bytes:bytes.length,sha256:hash(bytes),parts:[{url:'/crowd/releases/'+filename+'.part0',bytes:bytes.length,sha256:badHash?'0'.repeat(64):hash(bytes)}]}));
    if(u.pathname.endsWith('.part0'))return req.respond({status:200,contentType:'application/octet-stream',body:bytes});
    return req.continue();
   }
@@ -50,25 +51,46 @@ async function intercept(page,handler){
   await page.screenshot({path:path.join(output,'portal-android.png'),fullPage:true});
  });
  await test('Puppeteer portal: unavailable Apple channel and missing invite stay closed',async()=>{
-  await page.select('#device','ios');await page.waitForFunction(()=>document.body.innerText.includes('这类设备的安装渠道尚未开放'));
+  await page.click('details:has(#device) > summary');await page.select('#device','ios');await page.waitForFunction(()=>document.body.innerText.includes('这类设备的安装渠道尚未开放'));
   assert.equal(await page.$('a[href$="debug.apk"]'),null);
   await page.goto(base+'/crowd');await page.waitForFunction(()=>document.body.innerText.includes('请打开邀请人发来的完整链接'));
   assert.equal(await page.$('a[href$="debug.apk"]'),null);
  });
  await test('Puppeteer portal: desktop download bytes verified; corrupted part rejected',async()=>{
-  platform='windows';await page.goto(base+'/crowd#invite='+invite);await page.select('#device','windows');
+  platform='windows';await page.goto(base+'/crowd#invite='+invite);await page.click('details:has(#device) > summary');await page.select('#device','windows');
   await page.waitForFunction(()=>[...document.querySelectorAll('button')].some(b=>b.textContent==='首次参与：安装客户端'&&!b.disabled));
   const cdp=await browser.target().createCDPSession();await cdp.send('Browser.setDownloadBehavior',{behavior:'allow',downloadPath:output,browserContextId:context.id});
   await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent==='首次参与：安装客户端').click());
   await wait(async()=>{try{return (await fs.readFile(path.join(output,filename))).equals(bytes);}catch{return false;}});
   await page.waitForFunction(()=>document.body.innerText.includes('下载完成。'));
-  badHash=true;await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent==='首次参与：安装客户端').click());
+  assert.ok((await page.evaluate(()=>document.body.innerText)).includes('无需解压或输入命令'));
+  badHash=true;await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent==='重新下载安装包').click());
   await page.waitForFunction(()=>document.body.innerText.includes('下载未完成或校验失败'));
+ });
+ await test('Puppeteer embedded browser: explains system-browser path and blocks APK handoff',async()=>{
+  platform='android';await page.setUserAgent('Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 MicroMessenger/8.0');
+  await page.goto(base+'/crowd#invite='+invite);await page.reload();await page.waitForFunction(()=>document.body.innerText.includes('微信、QQ 等内置浏览器'));
+  await page.click('a[href$="debug.apk"]');await page.waitForFunction(()=>document.body.innerText.includes('请先用系统浏览器打开邀请链接'));
+  assert.ok(page.url().includes('/crowd#invite='));
+  assert.equal(await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent==='已安装，继续参与').disabled),true);
  });
  await test('Puppeteer publisher: unready backend prevents invitation creation',async()=>{
   ready=false;await page.goto(base+'/crowd/admin');await page.waitForFunction(()=>document.body.innerText.includes('入口尚未完成部署'));
   await page.type('input[type="password"]','TEST_ONLY_OPERATOR_KEY_32_CHARACTERS');
   assert.equal(await page.$eval('button',el=>el.disabled),true);
+ });
+ await test('Puppeteer publisher: copy/select one complete SMS without leaking publisher identity',async()=>{
+  ready=true;await page.goto(base+'/crowd/admin');await page.type('input[type="password"]','TEST_ONLY_OPERATOR_KEY_32_CHARACTERS');
+  await page.waitForFunction(()=>!document.querySelector('button').disabled);await page.click('button');await page.waitForSelector('textarea[aria-label="分发短信"]');
+  const sms=await page.$eval('textarea',el=>el.value);assert.ok(sms.includes(base+'/crowd#invite='+invite));assert.ok(sms.includes('可随时停止'));assert.equal(sms.includes('TEST_ONLY_OPERATOR'),false);
+  await context.overridePermissions(base,['clipboard-read','clipboard-write']);await page.bringToFront();
+  await page.click('text/复制整条短信');
+  await page.waitForFunction(()=>document.body.innerText.includes('整条短信已复制')||document.body.innerText.includes('短信已选中'));
+  const copied=await page.evaluate(()=>document.body.innerText.includes('整条短信已复制'));
+  if(copied)assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),sms);
+  else assert.deepEqual(await page.$eval('textarea',el=>[el.selectionStart,el.selectionEnd]),[0,sms.length]);
+  const smsURL=await page.$eval('a[href^="sms:"]',el=>el.getAttribute('href'));assert.equal(new URLSearchParams(smsURL.split('?')[1]).get('body'),sms);
+  await page.screenshot({path:path.join(output,'publisher-share.png'),fullPage:true});
  });
  const work=await context.newPage(),control=await context.newPage();
  await intercept(work,req=>{
