@@ -28,6 +28,18 @@ NO_UPLOAD=0
 [ "${1:-}" = "--no-upload" ] && NO_UPLOAD=1
 
 VER=$(sed -n 's/.*"version": *"\([0-9.]*\)".*/\1/p' manifest.json | head -1)
+
+# Chrome 打包用单形态 manifest（service_worker only）：manifest.json 里的双形态是给 Firefox 的，
+# Chrome <121 不认 MV3 里的 background.scripts 键会拒装。打包时临时摘掉，打完恢复。
+cp manifest.json "$OUT/manifest.with-scripts.bak"
+python3 - "$OUT/manifest.with-scripts.bak" <<'PYEOF'
+import json, sys
+m = json.load(open(sys.argv[1]))
+if isinstance(m.get("background"), dict) and "scripts" in m["background"]:
+    del m["background"]["scripts"]
+json.dump(m, open("manifest.json","w"), ensure_ascii=False, indent=2)
+PYEOF
+trap 'cp "$OUT/manifest.with-scripts.bak" manifest.json' EXIT
 [ -n "$VER" ] || { echo "❌ 读不到 manifest 版本号"; exit 1; }
 echo "== 发布众包美食家 v$VER（扩展 ID $EXT_ID）"
 
@@ -85,6 +97,9 @@ cat > "$OUT/updates.xml" <<XML
 </gupdate>
 XML
 echo "== updates.xml 完成"
+
+# 恢复双形态 manifest（Firefox 打包需要 scripts 数组；Chrome 包已在前面用单形态打完）
+cp "$OUT/manifest.with-scripts.bak" manifest.json
 
 # ---- 4.5 Firefox xpi（v3.4.8 起纳入流程；此前 Firefox 包是手工一次性产物，版本停在 v3.4.1）----
 # 只含扩展运行时文件：manifest.json + src/ + icons/icon128.png
