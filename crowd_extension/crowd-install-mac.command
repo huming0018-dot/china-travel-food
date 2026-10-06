@@ -35,11 +35,21 @@ if sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.pl
     echo "✅ 安装策略已存在且为最新（之前装过），跳过登记。"
   elif sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | grep -q "$EXT_ID"; then
     # v3.4.8 通道迁移：条目在但更新地址是旧的（bucket 已废）→ 原地替换
-    IDX=$(sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | grep -n "$EXT_ID" | cut -d: -f1)
-    IDX=$((IDX-1))
-    sudo /usr/libexec/PlistBuddy -c "Delete :ExtensionInstallForcelist:$IDX" "$PLIST.plist"
-    sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist:$IDX string $ENTRY" "$PLIST.plist"
-    echo "✅ 安装策略的更新地址已迁移到国内可达通道。"
+    # 用 awk 按"数组开括号后第几个元素"算真实下标（grep 行号含表头行，直接减会错位）
+    IDX=$(sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | awk -v ext="$EXT_ID" '
+      /Array \{/ {inarr=1; idx=0; next}
+      inarr && /^[[:space:]]*\}/ {inarr=0}
+      inarr { if (index($0, ext)) { print idx; found=1; exit } idx++ }
+    ')
+    if [ -n "$IDX" ]; then
+      sudo /usr/libexec/PlistBuddy -c "Delete :ExtensionInstallForcelist:$IDX" "$PLIST.plist" || true
+      sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist:$IDX string $ENTRY" "$PLIST.plist"
+      echo "✅ 安装策略的更新地址已迁移到国内可达通道。"
+    else
+      echo "⚠️ 没找到旧条目下标，改为追加新条目。"
+      CNT=$(sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | awk '/Array \{/{f=1;c=0;next} f&&/^[[:space:]]*\}/{f=0} f{c++} END{print c+0}')
+      sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist:$CNT string $ENTRY" "$PLIST.plist"
+    fi
   else
     IDX=$(sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" | grep -cE "^    " || true)
     sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist:$IDX string $ENTRY" "$PLIST.plist"
