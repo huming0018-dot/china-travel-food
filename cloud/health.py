@@ -198,6 +198,21 @@ def _telegram(message, title):
         return None
     body = {"chat_id": chat, "text": f"{title}\n{message}",
             "disable_web_page_preview": True}
+    # 2026-10-06 Supabase RPC relay first (pg_net from DB reaches TG; deno relay suspended, direct TG blocked from CN)
+    sb_url = (os.environ.get("NEXT_PUBLIC_SUPABASE_URL") or "").strip().rstrip("/")
+    sb_key = (os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or "").strip()
+    ops_secret = (os.environ.get("CROWD_OPS_SECRET") or "").strip()
+    if sb_url and sb_key and ops_secret:
+        try:
+            r = _post_with_retry(sb_url + "/rest/v1/rpc/crowd_notify_tg",
+                                 json={"p_text": body["text"], "p_secret": ops_secret},
+                                 headers={"apikey": sb_key,
+                                          "Authorization": "Bearer " + sb_key})
+            if r.status_code == 200 and r.json().get("ok") is True:
+                return True
+            print("TG supabase-relay bad", r.status_code, r.text[:120])
+        except Exception as e:
+            print("TG supabase-relay fail", repr(e)[:120])
     cfg = (os.environ.get("TELEGRAM_API_BASE") or "").strip().rstrip("/")
     bases = [b for b in (cfg, "https://api.telegram.org") if b]
     bases = list(dict.fromkeys(bases))   # 配置在前、直连兜底在后；去重

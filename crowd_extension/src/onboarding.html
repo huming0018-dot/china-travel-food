@@ -45,12 +45,18 @@ li{margin:6px 0}
 
 <h2>五、协议与参与编号</h2>
 <p>我确认：<strong>已完整阅读并理解上述条款，知情且自愿参与</strong>，知悉账号风险自担，同意采集公开数据并按上述规则结算。</p>
-<p style="font-size:13px;color:#6b7280">还没有编号？打开 <strong>apply.html 报名页</strong>提交报名 → 审核通过后由 PM 发放正式 <strong>P-</strong> 编号。TMP- 报名编号不能用于开始采集。</p>
+<p style="font-size:13px;color:#6b7280">还没有编号？点击下方「我要加入」自动获取 <strong>P-</strong> 参与编号（编号与本设备绑定，一机一号；报名即用，无需等待审核）。</p>
 
-<input type="text" id="participant" placeholder="输入正式参与者编号（P-开头+8位，审核后发放）" style="width:100%;padding:10px;margin-top:12px;border:1px solid #d1d5db;border-radius:6px;box-sizing:border-box">
+<input type="text" id="display_name" placeholder="昵称（可选，展示用）" maxlength="20" style="width:100%;padding:10px;margin-top:12px;border:1px solid #d1d5db;border-radius:6px;box-sizing:border-box">
+<input type="text" id="contact" placeholder="联系方式（可选，微信/邮箱，用于结算通知）" maxlength="60" style="width:100%;padding:10px;margin-top:8px;border:1px solid #d1d5db;border-radius:6px;box-sizing:border-box">
+<button class="btn agree" id="join">我要加入（自动获取编号）</button>
+
+<input type="text" id="participant" placeholder="输入参与编号（P- 开头；已有编号者直接填写，或点上方按钮自动获取）" style="width:100%;padding:10px;margin-top:12px;border:1px solid #d1d5db;border-radius:6px;box-sizing:border-box">
 <button class="btn agree" id="agree">同意并开始使用</button>
 <button class="btn disable" id="refuse">不同意（卸载插件）</button>
 
+<script src="config.js"></script>
+<script src="safety_engine.js"></script>
 <script src="onboarding.js"></script>
 </body>
 </html>

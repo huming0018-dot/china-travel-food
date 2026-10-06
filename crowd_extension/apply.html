@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>众包美食家 · 报名与插件下载</title>
+<title>众包美食家 · 插件下载</title>
 <style>
   :root{--bg:#faf8f5;--card:#fff;--line:#e7e2da;--ink:#2a2419;--sub:#8a8172;--brand:#b3541e;--ok:#2e7d32;}
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -13,69 +13,43 @@
   h1{font-size:22px;margin-bottom:6px;}
   .sub{color:var(--sub);font-size:13px;line-height:1.7;margin-bottom:20px;}
   .tag{display:inline-block;background:#fdf0e6;color:var(--brand);font-size:12px;padding:2px 10px;border-radius:99px;margin-bottom:12px;}
-  label{display:block;font-size:13px;color:var(--sub);margin:16px 0 6px;}
-  input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#fff;}
-  input:focus{outline:2px solid #e8b48c;border-color:var(--brand);}
   .hint{font-size:12px;color:var(--sub);margin-top:4px;line-height:1.6;}
-  button{width:100%;margin-top:24px;padding:13px;background:var(--brand);color:#fff;border:none;border-radius:10px;font-size:16px;cursor:pointer;font-weight:600;}
-  button:disabled{opacity:.5;cursor:not-allowed;}
-  button.alt{background:#fff;color:var(--brand);border:1.5px solid var(--brand);margin-top:12px;}
-  .msg{margin-top:16px;padding:12px;border-radius:10px;font-size:14px;display:none;line-height:1.7;white-space:pre-line;}
-  .msg.ok{display:block;background:#e8f5e9;color:var(--ok);border:1px solid #a5d6a7;}
-  .msg.err{display:block;background:#fdecea;color:#b3261e;border:1px solid #ef9a9a;}
   .steps{margin-top:20px;border-top:1px dashed var(--line);padding-top:16px;}
   .steps b{font-size:14px;}
   .steps ol{margin:10px 0 0 18px;font-size:13px;color:var(--sub);line-height:2;}
   .dl{margin-top:20px;border-top:1px dashed var(--line);padding-top:16px;text-align:center;}
   .dl .zip-name{font-size:13px;color:var(--sub);margin-top:8px;}
-  .dl a{display:inline-block;margin-top:12px;padding:12px 28px;background:var(--ok);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;}
-  .dl a:hover{opacity:.9;}
-  .hidden{display:none;}
+  .dl a.zip{display:inline-block;margin-top:12px;padding:12px 28px;background:var(--ok);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;}
+  .dl a.zip:hover{opacity:.9;}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- ============ 报名卡 ============ -->
-  <div class="card" id="applyCard">
-    <span class="tag">招募中 · 灵活报名</span>
-    <h1>众包美食家 · 志愿者报名</h1>
-    <p class="sub">参与「众包美食家」收录与真实口味评分。使用你自己的小红书账号，安装浏览器插件全自动采集。报名即得参与编号，立即可用，采集强度有安全线保护。</p>
-
-    <label>你的昵称（展示用）</label>
-    <input id="name" maxlength="20" placeholder="例如：小鹿">
-
-    <label>联系方式（微信 / 邮箱）</label>
-    <input id="contact" maxlength="60" placeholder="用于发放参与编号与结算通知">
-    <p class="hint">仅用于结算与风控，不会公开。提交后立刻获得正式参与编号，立即可开始采集。</p>
-
-    <label>备注（可选）</label>
-    <input id="note" maxlength="200" placeholder="常用设备 / 常驻区域 / 每周可用时间…">
-
-    <button id="submit">提交报名</button>
-    <div id="msg" class="msg"></div>
-  </div>
-
-  <!-- ============ 报名成功卡（在线下载插件） ============ -->
-  <div class="card hidden" id="successCard">
-    <span class="tag">✅ 报名成功 · 立即可用</span>
-    <h1>欢迎加入！</h1>
-    <p class="sub" id="successText"></p>
+  <!-- ============ 下载卡（纯下载页：报名已移至插件内） ============ -->
+  <div class="card">
+    <span class="tag">招募中 · 插件内报名</span>
+    <h1>众包美食家 · 插件下载</h1>
+    <p class="sub">参与「众包美食家」收录与真实口味评分。使用你自己的小红书账号，安装浏览器插件后按安全线自动采集。参与编号在<strong>插件内</strong>点「我要加入」自动获得（编号与本设备绑定，一机一号）。</p>
 
     <div class="dl">
-      <div style="font-size:14px;font-weight:600;">第一步：选择你的设备安装方式</div>
-      <p class="hint" style="text-align:left;">电脑（macOS/Windows）：<a href="install.html" style="color:var(--brand);font-weight:600;">点此打开安装引导</a>（自动检测系统，一键脚本）<br>
-      Android 手机：<a href="install-mobile.html" style="color:var(--brand);font-weight:600;">点此打开手机版教程</a>（需 Kiwi 浏览器）<br>
-      iPhone 暂不支持（苹果系统限制）。</p>
-      <a id="dlLink" href="crowd-extension-v3.2.1.zip" download>⬇️ 下载插件 v3.2.1（zip）</a>
-      <p class="zip-name">文件：crowd-extension-v3.2.1.zip · 全自动采集 · 安全线保护 · 支持电脑/Android</p>
+      <div style="font-size:14px;font-weight:600;">第一步：下载插件</div>
+      <a id="dlLink" class="zip" href="crowd-extension-v3.3.0.zip" download>⬇️ 下载插件 v3.3.0（zip）</a>
+      <p class="zip-name">文件：crowd-extension-v3.3.0.zip · 全自动采集 · 安全线保护 · 支持电脑/Android</p>
     </div>
 
     <div class="steps">
-      <b>接下来</b>
+      <b>第二步：安装插件</b>
+      <p class="hint" style="margin-top:8px;">电脑（macOS/Windows）：<a href="install.html" style="color:var(--brand);font-weight:600;">点此打开安装引导</a>（自动检测系统，一键脚本）<br>
+      Android 手机：<a href="install-mobile.html" style="color:var(--brand);font-weight:600;">点此打开手机版教程</a>（需 Kiwi 浏览器）<br>
+      iPhone 暂不支持（苹果系统限制）。</p>
+    </div>
+
+    <div class="steps">
+      <b>第三步：获得参与编号</b>
       <ol>
-        <li>安装插件后，打开插件选项页（onboarding），阅读协议</li>
-        <li>你的 <b>P-</b> 参与编号立即可用，填入插件即可开始</li>
+        <li>安装后打开插件选项页（onboarding），完整阅读参与协议</li>
+        <li>点击「<b>我要加入</b>」自动获得 <b>P-</b> 参与编号，再点「同意并开始使用」</li>
         <li>插件自动领取任务包、按安全线采集、自动回传</li>
         <li>按有效条数结算（细则见插件内 README）</li>
       </ol>
@@ -83,12 +57,12 @@
   </div>
 
   <!-- ============ 参与流程卡 ============ -->
-  <div class="card steps">
+  <div class="card steps" style="margin-top:0;">
     <b>参与流程</b>
     <ol>
-      <li>提交上方报名 → 立刻获得 <b>P-</b> 参与编号</li>
+      <li>下载插件 → 安装后在插件内点「<b>我要加入</b>」获得编号</li>
       <li>编号立即可用（风控后置，异常行为会被暂停/拉黑）</li>
-      <li>安装 Chrome 插件，在插件选项页（onboarding）输入参与编号并同意协议</li>
+      <li>在插件选项页（onboarding）同意协议后即可开始</li>
       <li>插件自动领取任务包、按安全线采集、自动回传</li>
       <li>按有效条数结算（细则见插件内 README）</li>
     </ol>
@@ -97,83 +71,17 @@
 
 <script>
 (function(){
-  const BASE = "https://bdwrhshgdeghgyzwpxnl.supabase.co/rest/v1";
-  // 构建时替换：报名入口使用 Supabase anon key（sb_pub_ 开头，46字符，最小权限）
-  const ANON_KEY = "REPLACE_WITH_SUPABASE_ANON_KEY";
+  // 插件版本：下载链接由此拼出（与本页同级的 zip，勿加 releases/ 前缀）
+  const EXT_VERSION = '3.4.3';
+  const ZIP_NAME = "crowd-extension-v" + EXT_VERSION + ".zip";
 
-  const submit = document.getElementById("submit");
-  const msg = document.getElementById("msg");
-  const applyCard = document.getElementById("applyCard");
-  const successCard = document.getElementById("successCard");
-  const successText = document.getElementById("successText");
-
-  function show(ok, text){
-    msg.className = "msg " + (ok ? "ok" : "err");
-    msg.textContent = text;
-  }
-
-  function getDeviceSalt() {
-    // 设备指纹：同一浏览器复用同一 salt（一机一号，防同机无限注册）
-    let s = "";
-    try { s = localStorage.getItem("crowd_device_salt") || ""; } catch(e) {}
-    if (!s || s.length < 8) {
-      s = "D" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 8);
-      s = s.slice(0, 40);
-      try { localStorage.setItem("crowd_device_salt", s); } catch(e) {}
-    }
-    return s;
-  }
-
-  submit.addEventListener("click", async () => {
-    const name = document.getElementById("name").value.trim();
-    const contact = document.getElementById("contact").value.trim();
-    const note = document.getElementById("note").value.trim();
-
-    if(!name){ show(false, "请填写昵称"); return; }
-    if(!contact){ show(false, "请填写联系方式"); return; }
-    if(ANON_KEY.startsWith("REPLACE")){ show(false, "报名入口未配置完成，请联系 PM 获取入口链接"); return; }
-
-    submit.disabled = true;
-    submit.textContent = "提交中…";
-    try {
-      // v3.2 迁移02：身份绑定后 anon 直写已被禁，报名改走 security definer RPC
-      //（RPC 内生成 P-[A-Z0-9]{8} 编号并写库；客户端不再自行构造编号/status/source）
-      const resp = await fetch(BASE + "/rpc/crowd_register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": ANON_KEY,
-          "Authorization": "Bearer " + ANON_KEY
-        },
-        body: JSON.stringify({
-          p_display_name: name,
-          p_contact: contact,
-          p_note: note || "",
-          p_device_salt: getDeviceSalt()
-        })
-      });
-      const data = await resp.json().catch(() => null);
-      if(resp.ok && data && data.ok){
-        const pid = data.participant_id;
-        // 报名成功 → 切换卡片，展示编号 + 插件下载
-        applyCard.classList.add("hidden");
-        successCard.classList.remove("hidden");
-        successText.textContent = "你的参与编号：" + pid + "\n请保存此编号（找回需要提供昵称+联系方式）。\n现在即可下载插件，安装后填入编号开始采集。";
-        // 回填下载链接（与报名/安装页同级路径，外部审计 #58 统一；构建脚本同步放置 zip）
-        const rel = document.getElementById("dlLink");
-        rel.href = "crowd-extension-v3.2.1.zip";
-        rel.setAttribute("download", "crowd-extension-v3.2.1.zip");
-      } else {
-        const msgTxt = data && data.message ? data.message : (await resp.text().catch(()=>"")).slice(0,120);
-        show(false, "提交失败（" + resp.status + "）：" + msgTxt);
-      }
-    } catch(e) {
-      show(false, "网络错误：" + e.message);
-    } finally {
-      submit.disabled = false;
-      submit.textContent = "提交报名";
-    }
-  });
+  // 页面静态下载链接统一由 EXT_VERSION 重建（同级路径）
+  const dlLink = document.getElementById("dlLink");
+  dlLink.href = ZIP_NAME;
+  dlLink.setAttribute("download", ZIP_NAME);
+  dlLink.textContent = "⬇️ 下载插件 v" + EXT_VERSION + "（zip）";
+  const zipNameEl = document.querySelector(".dl .zip-name");
+  if (zipNameEl) zipNameEl.textContent = "文件：" + ZIP_NAME + " · 全自动采集 · 安全线保护 · 支持电脑/Android";
 })();
 </script>
 </body>

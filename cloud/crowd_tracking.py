@@ -32,7 +32,7 @@ import notifier  # noqa: E402
 DATA = pathlib.Path(core.config("FOOD_DATA_DIR", "/app/data"))
 TRACK_F = DATA / "crowd_tracking.jsonl"
 REPORT_KEY = "crowd_tracking"
-CADENCE = 3600  # 心跳 60 分钟
+CADENCE = 10800  # 播报 3 小时
 
 
 # ────────────────────── 聚合（只读库） ──────────────────────
@@ -135,16 +135,16 @@ def render(a):
     t, f, p = a.get("tasks", {}), a.get("flow", {}), a.get("participants", {})
     open_t, done_t = _n(t.get("open")), _n(t.get("done"))
     lines = [
-        f"📦 任务池 {open_t}个open/共{open_t + done_t} 已收{_cnt(t.get('pack_types'))}类",
-        f"进度 {_n(t.get('open_prog'))}/{_n(t.get('open_kpi'))} 缺口{_n(t.get('open_gap'))}",
-        f"↩️ 回流 {_n(f.get('accepted'))}有效/{_n(f.get('duplicate'))}去重/{_n(f.get('rejected'))}拒 评分{_n(f.get('rating'))}",
-        f"近24h +{_n(f.get('day_accepted'))} 拒收率{round((float(f.get('reject_rate') or 0) * 100), 0):g}%",
+        "🍜 众包美食家播报",
+        f"📦 任务池：{open_t} 个待采 · 已完成 {done_t} 个 · 距全部达标还差 {_n(t.get('open_gap'))} 条",
+        f"↩️ 累计收录 {_n(f.get('accepted'))} 条（去重 {_n(f.get('duplicate'))} · 拒收 {_n(f.get('rejected'))} · 评分 {_n(f.get('rating'))}）",
+        f"📈 最近 24 小时新增 {_n(f.get('day_accepted'))} 条 · 拒收率 {round((float(f.get('reject_rate') or 0) * 100), 0):g}%",
     ]
     if _n(p.get("active")):
-        top = "，".join(f"{x.get('id','?')[:8]} {_n(x.get('acc'))}条" for x in (p.get("top") or [])[:3])
-        lines.append(f"👥 活跃 {_n(p.get('active'))}/{_n(p.get('total'))} 号（{top}）")
+        top = "、".join(f"{x.get('id','?')[:8]}（{_n(x.get('acc'))} 条）" for x in (p.get("top") or [])[:3])
+        lines.append(f"👥 活跃参与者 {_n(p.get('active'))}/{_n(p.get('total'))}：{top}")
     else:
-        lines.append(f"👥 活跃 0/{_n(p.get('total'))} 号（尚无有效回传）")
+        lines.append(f"👥 暂无人回传（共 {_n(p.get('total'))} 位参与者）")
     return "\n".join(lines)
 
 

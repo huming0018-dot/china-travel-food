@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>众包美食家 · 手机版(Android)安装</title>
+<title>众包美食家 · 手机版（Android）</title>
 <style>
-  :root{--brand:#b45309;--bg:#faf7f2;--card:#fff;--sub:#6b7280;--ok:#059669;--warn:#b45309}
+  :root{--brand:#b45309;--bg:#faf7f2;--card:#fff;--sub:#6b7280;--ok:#059669}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;color:#1a1a2e;min-height:100vh;display:flex;justify-content:center;padding:20px 14px}
   .wrap{max-width:520px;width:100%}
@@ -21,52 +21,44 @@
   .note{font-size:12px;color:var(--sub);margin-top:10px;line-height:1.6}
   .ok-note{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.7;margin-top:8px}
   .warn-note{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.7;margin-top:8px}
-  .qr-box{text-align:center;padding:14px}
-  .qr-box img{width:170px;height:170px;border-radius:10px;border:1px solid #e5e7eb}
-  .qr-hint{font-size:12px;color:var(--sub);margin-top:8px}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>📱 众包美食家 · 手机版采集（Android）</h1>
-  <p class="sub">手机也能采集：用 Kiwi 浏览器加载插件，与电脑版同一任务池、同一安全线。无需电脑，全自动。</p>
+  <h1>📱 众包美食家 · 手机版（Android）</h1>
+  <p class="sub">两种参与方式：<b>全自动采集</b>（装一次插件，之后自己跑）或<b>免安装网页提交</b>（手动但零门槛）。</p>
 
-  <!-- ============ 前置说明 ============ -->
+  <!-- ============ 全自动：狐猴浏览器 + 插件 ============ -->
+  <!-- ============ Firefox 通道（一键安装） ============ -->
   <div class="card">
-    <h2>⚠️ 先确认</h2>
-    <div class="warn-note">
-      手机版仅支持 <b>Android</b>（需安装 Kiwi 浏览器）。<br>
-      <b>iPhone（iOS）暂不支持</b>——苹果系统限制第三方扩展加载，这是平台硬限制，无法绕过。
-    </div>
-    <div class="ok-note" style="margin-top:8px;">
-      你仍需要先 <b>报名获取参与编号（P-XXXXXX）</b>。<br>
-      已报名：直接按下面步骤安装。<br>
-      未报名：<a href="apply.html" style="color:var(--brand);font-weight:600;">先点此报名（立即可用）</a>
+    <h2>🦊 Firefox 安卓版（推荐 · 一键安装）</h2>
+    <div class="step"><b>1</b><div>应用商店装 <b>Firefox</b>，<b>用 Firefox 打开本页</b>（或把 Firefox 设为默认浏览器后扫码进来）</div></div>
+    <div class="step"><b>2</b><div>点下方按钮 → 弹出「添加扩展」→ 点<b>添加</b>，装完自动打开协议页 → 「我要加入」→ 小红书登录一次 → 全自动</div></div>
+    <a class="btn" href="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.8-firefox-signed.xpi">➕ 一键安装众包美食家（v3.4.8）</a>
+    <p class="note">没弹出安装提示？走手动路径：设置 → 关于 Firefox → 连点 5 下图标 → 设置里「从文件安装扩展」→ 选下载的 .xpi。装好自动升级。</p>
+  </div>
+
+  <div class="card">
+    <h2>🤖 狐猴浏览器（全自动采集 · 装好就不用管）</h2>
+    <div class="step"><b>1</b><div>应用商店搜索安装 <b>狐猴浏览器（Lemur Browser）</b>——仍在维护、支持 Chrome 扩展的安卓浏览器</div></div>
+    <div class="step"><b>2</b><div>点下方按钮下载插件 zip（不用解压）</div></div>
+    <div class="step"><b>3</b><div>狐猴浏览器：右下角菜单 → <b>扩展商店/扩展管理</b> → 选择「从本地安装/加载 zip」→ 选中刚下载的 <code>crowd-extension-v3.4.8.zip</code></div></div>
+    <div class="step"><b>4</b><div>首次安装会自动打开「参与协议」页：点 <b>「我要加入」</b>自动获得编号 → 同意并开始</div></div>
+    <div class="step"><b>5</b><div>打开 <code>www.xiaohongshu.com</code> 登录你的账号，浏览器菜单里开启「<b>桌面版网站</b>」开关（让小红书按电脑版显示，插件才能正确识别页面）</div></div>
+    <div class="ok-note">✅ 之后全自动：插件自己领任务 → 搜索 → 采集 → 回传 → 领下一个任务。插件有新版本也会自动更新。</div>
+    <a class="btn" href="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.8.zip" download="crowd-extension-v3.4.8.zip">⬇️ 下载插件 v3.4.8（zip）</a>
+    <div class="warn-note" style="margin-top:10px;">
+      说明：旧方案用的 Kiwi 浏览器已于 2025 年初停止维护，不再推荐。若你已装 Kiwi 且一切正常，也可继续用它加载同一个 zip（步骤相同）。
     </div>
   </div>
 
-  <!-- ============ 步骤 ============ -->
+  <!-- ============ 免安装：网页提交 ============ -->
   <div class="card">
-    <h2>📲 Android 安装步骤（约 3 分钟）</h2>
-    <div class="step"><b>1</b><div>打开 <b>Google Play</b>，搜索 <b>Kiwi Browser</b>（橙色图标），点击安装</div></div>
-    <div class="step"><b>2</b><div>下载插件压缩包（见下方按钮），下载完成后点通知栏提示 → 用 <b>Kiwi</b> 打开（或先在文件管理器解压到 <code>Download/crowd-extension-v3.2.1</code>）</div></div>
-    <div class="step"><b>3</b><div>在 Kiwi 地址栏输入 <code>chrome://extensions</code> 回车</div></div>
-    <div class="step"><b>4</b><div>打开右上角「开发者模式」开关</div></div>
-    <div class="step"><b>5</b><div>点 <b>「+ 从 .zip/.crx/.user.js 加载」</b> → 选择刚才下载的 <code>crowd-extension-v3.2.1.zip</code>（Kiwi 会自动解压安装）</div></div>
-    <div class="step"><b>6</b><div>回到小红书 App/网页登录你的账号，打开 <code>m.xiaohongshu.com</code>（或任意小红书页面），插件会自动开始工作</div></div>
-    <div class="dl-row">
-      <a class="btn" href="crowd-extension-v3.2.1.zip" download="crowd-extension-v3.2.1.zip">⬇️ 下载插件 zip（手机）</a>
-    </div>
-    <p class="note">提示：若 Kiwi 找不到 zip 文件，先把压缩包下载后用文件管理器（如 Files by Google）解压，再在扩展页选「加载已解压的扩展程序」选解压出的文件夹。</p>
-    <div class="warn-note">⚠️ <b>重要提示</b>：Kiwi 官方已于 2025-01 停止维护（kiwibrowser/src.next 声明）。手机版为<b>辅助入口</b>，主力推荐电脑端 Chrome/Edge。若 Kiwi 加载或运行异常，请联系 PM 登记设备与浏览器版本，将跟进受维护的替代浏览器方案。</div>
-  </div>
-
-  <!-- ============ 完成后 ============ -->
-  <div class="card">
-    <h2>✅ 安装完成后（一步开启）</h2>
-    <div class="step"><b>1</b><div>点 Kiwi 右上角 <b>⋮</b> → 扩展程序 → 找到插件 → 「选项」→ 填写参与编号并同意协议</div></div>
-    <div class="step"><b>2</b><div>打开小红书任意页面，保持页面打开即可，插件每 3 分钟自动：领任务 → 搜索 → 回传 → 领下一个</div></div>
-    <div class="ok-note">✅ 手机版与电脑版完全同步：同一个任务池、同一套安全线（每日配额、间隔、冷却一致），可随时换设备继续。</div>
+    <h2>⚡ 免安装 · 网页提交（任何手机都能用）</h2>
+    <div class="step"><b>1</b><div>打开「手机提交」网页 → 点「我要加入」自动获得编号</div></div>
+    <div class="step"><b>2</b><div>中枢自动分配门店 → 去小红书搜该店 → 复制笔记网址（或 App 分享链接）→ 粘贴提交</div></div>
+    <a class="btn alt" href="submit.html">🚀 打开手机提交页</a>
+    <p class="note">iPhone 请用此方式（苹果系统不允许任何浏览器插件，这是平台硬限制）：用 Safari 打开后点底部「分享」按钮 →「添加到主屏幕」，之后从桌面图标直达提交页。</p>
   </div>
 </div>
 </body>

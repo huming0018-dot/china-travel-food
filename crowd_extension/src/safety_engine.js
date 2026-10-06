@@ -1,32 +1,69 @@
 /**
- * safety_engine.js — 众包美食家安全线引擎 v3（服务端拟合下发 + 本地只降不升 + 回流检测）
+ * safety_engine.js — 众包美食家限速配置 / 安全线引擎 v3
+ * （服务端下发收紧 + 本地基线兜底 + 回流检测）
+ *
+ * 措辞约定：本模块参数一律称「限速配置 / 安全线」。它们的作用只是
+ * 降低触发平台风控的概率，不构成、也不得对外表述为「不会封号」
+ * 「保证安全」等任何承诺性说法。
  *
  * 铁律：
- * 1. 本地默认阈值 = 硬编码 SAFETY_LIMITS（保守基线，永不放大）。
- * 2. 服务端按拟合模型下发 remote_limits（quota_day/gap/session/cooldown），
- *    插件 applyRemoteLimits() 应用时【只降不升】——任何远程值都不能超过本地基线。
- * 3. 日搜索、会话时长、动作间隔、冷却时间均在本地持久化，重启不重置。
- * 4. 触发"访问频繁"→ 强制冷却；冷却期任何采集动作都被拒绝。
- * 5. 一机一号：device_salt 在首次运行时生成并永久绑定，不随账号变化。
+ * 1. 本地默认阈值 = 硬编码 SAFETY_LIMITS（保守基线，任何来源都不得放宽）。
+ * 2. 服务端可下发 remote_limits 收紧配置，合并方向按字段类型决定，
+ *    永远采用更严格的一侧（远程值在任何路径上都不能放宽本地基线）：
+ *    - 次数类 / 配额类上限（quota_day、session_min）：Math.min(本地, 远程)；
+ *    - 间隔类 / 冷却类下限（gap_min、gap_max、cooldown_min、view_stay_min_s）：
+ *      Math.max(本地, 远程)。
+ * 3. remote_limits 应用后持久化到 chrome.storage.local（键 remote_limits_applied）；
+ *    重启后由 init() 恢复，恢复时重新按本地基线合成一遍，
+ *    不信任存储中的合成结果，防止篡改存储绕过基线。
+ * 4. 触发"访问频繁" → 强制冷却；冷却期任何采集动作都被拒绝。
+ * 5. 一机一号：device_salt 在首次运行时生成并持久化，不随账号变化。
  * 6. 回流检测（v3）：每次 RPC 回传后记录服务端返回 new_progress/accepted，
  *    连续 N 次零有效回传 → 判定"回流失效"（防虚假通过）。
  *
+ * ── background 调用契约（供对接同事使用）──
+ *   const safety = new SafetyEngine();   // 默认使用 chrome.storage.local
+ *   await safety.init();                 // ★ SW 启动时必须调用：恢复持久化的 remote_limits
+ *   每次采集动作流程：
+ *     const gate = await safety.canSearch();
+ *     if (!gate.ok) → 终止或排队本次动作；
+ *     else 必须实际等待 gate.waitMs 毫秒后，再向 content 发 CROWD_SEARCH
+ *     （不得忽略 waitMs，审计问题 11）。
+ *   提取详情页正文前（按笔记逐篇调用）：
+ *     const v = await safety.canViewNote(note_id);
+ *     if (!v.ok) → 本次跳过该笔记正文，等待 v.waitMs 后可重试；
+ *     if (v.first) → 这是首次打开该笔记，已开始计时。
+ *   收到服务端 safety_limits 时：await safety.applyRemoteLimits(r.safety_limits)。
+ *   回传完成后：await safety.recordFlow(rpcResp)。
+ *
  * 契约版本：CROWD-CONTRACT-003 (sync_version=1)
+ *
+ * ── 安全线 v2 · 类人调度模型（设计稿《安全线v2-类人调度设计稿.md》）──
+ * 1. 动作间隔 waitMs 改为截断 lognormal 逆变换采样（µ=ln(90s), σ=0.9, [30s,1800s]），
+ *    再乘设备层抖动系数（device_salt 确定性派生，µ ±12% / σ ±10%）。
+ * 2. 每日配额 = min(现有 quota 逻辑, warmup 当日上限, 硬上限 200)；风控「频次异常」次日减半。
+ * 3. 新增 canStartSession() / markSessionAction()：会话动作数逆高斯 µ≈3.7/λ≈2.7 截断 [1,25]，
+ *    会话间冷却 lognormal µ=ln(30min) σ=1.2 [5min,6h]，会话中每 20–30 分钟插 2–10 分钟休息。
+ * 4. 新增 isCircadianAllowed()：von Mises 混合 24h 时段画像权重 <0.05 拒绝。
+ * 5. onRateLimited() 扩展为风控状态机（§4）：访问频繁/验证码 → 当日停止 + 冷却 24–72h（采样），
+ *    频次异常类次日配额减半；连续 3 次空结果 → 暂停会话 + 长冷却。
+ * 所有 v2 新参数同样服从「远程只紧不松」：间隔/冷却类下限远程只能抬高，配额/上限类只能压低。
  */
 const SAFETY_VERSION = 3;
 
 const SAFETY_LIMITS = Object.freeze({
-  // 日搜索上限（本地保守基线；服务端拟合值只降不升）
+  // 日搜索上限（次数类：取更严格的最小值）
   DAILY_SEARCH_MAX: 30,
-  // 动作间隔（秒）：硬下限 60s，随机化到 60-120s（对应 ≤1 次/分）
+  // 动作间隔（秒）（间隔类：取更严格的最大值）
   SEARCH_GAP_MIN: 60,
   SEARCH_GAP_MAX: 120,
-  // 单次会话时长（分钟）与强制冷却（分钟）
+  // 单次会话时长上限（分钟）（配额类：取更严格的最小值）
   SESSION_MAX_MIN: 15,
+  // 会话超时后的强制冷却（分钟）（冷却类：取更严格的最大值）
   SESSION_COOLDOWN_MIN: 30,
-  // 每篇浏览最小停留（秒）
+  // 每篇浏览最小停留（秒）（间隔类：取更严格的最大值）
   VIEW_STAY_MIN_S: 30,
-  // 触发"访问频繁"后冷却（分钟）
+  // 触发"访问频繁"后冷却（分钟）（冷却类，本地固定值）
   RATE_LIMIT_COOLDOWN_MIN: 15,
   // 单任务包最低 KPI（未达标不计酬）
   KPI_MIN_DEFAULT: 5,
@@ -36,37 +73,124 @@ const SAFETY_LIMITS = Object.freeze({
   FLOW_STALL_THRESHOLD: 3,
 });
 
+/**
+ * 安全线 v2 采样基线（设计稿 §2.3 参数总表 / §4 风控信号；µ/σ 均为 ln 尺度）。
+ * 截断区间 = v2 硬边界；远程只紧不松：下限类远程只能抬高，上限类远程只能压低。
+ */
+const V2 = Object.freeze({
+  // 搜索间隔：截断 lognormal µ=ln(90s), σ=0.9, [30s, 1800s]
+  SEARCH_MU: Math.log(90),
+  SEARCH_SIGMA: 0.9,
+  SEARCH_MIN_S: 30,
+  SEARCH_MAX_S: 1800,
+  // 单次会话动作数：逆高斯 µ≈3.7, λ≈2.7，截断 [1,25]（60%+ 为 1–5 动作短会话）
+  SESSION_MU: 3.7,
+  SESSION_LAMBDA: 2.7,
+  SESSION_MIN: 1,
+  SESSION_MAX: 25,
+  // 会话间冷却：截断 lognormal µ=ln(30min), σ=1.2, [5min, 6h]
+  COOLDOWN_MU: Math.log(30 * 60),
+  COOLDOWN_SIGMA: 1.2,
+  COOLDOWN_MIN_S: 5 * 60,
+  COOLDOWN_MAX_S: 6 * 3600,
+  // 会话中休息：每 20–30 分钟插入 2–10 分钟（lognormal µ=ln(4min), σ=0.7）
+  BREAK_EVERY_MIN_MIN: 20,
+  BREAK_EVERY_MIN_MAX: 30,
+  BREAK_MU: Math.log(4 * 60),
+  BREAK_SIGMA: 0.7,
+  BREAK_MIN_S: 2 * 60,
+  BREAK_MAX_S: 10 * 60,
+  // 每日硬上限 200 条/号/日（社区实测 300 触发验证码）
+  HARD_CAP_DAY: 200,
+  // 时段画像拒绝阈值：权重 <0.05 视为深夜，不调度
+  CIRCADIAN_REJECT_W: 0.05,
+  // 风控信号冷却：24–72h lognormal 采样（设计稿 §4 给定分布族与截断区间）
+  RISK_MU: Math.log(36 * 3600),
+  RISK_SIGMA: 0.35,
+  RISK_MIN_S: 24 * 3600,
+  RISK_MAX_S: 72 * 3600,
+  // 连续空结果阈值与长冷却采样（§4：暂停本轮会话，进入长冷却；
+  // 分布沿用会话冷却族，截断区间上抬至 [30min, 12h] 以体现「长」）
+  EMPTY_STREAK_MAX: 3,
+  LONG_MU: Math.log(2 * 3600),
+  LONG_SIGMA: 0.8,
+  LONG_MIN_S: 30 * 60,
+  LONG_MAX_S: 12 * 3600,
+});
+
+/** 访问 v2 采样器 / 设备画像（importScripts 挂载在 self；node 测试挂在 globalThis） */
+function _mods() {
+  const g = typeof self !== "undefined" ? self : typeof globalThis !== "undefined" ? globalThis : {};
+  return { sampler: g.CROWD_SAMPLER || null, devprof: g.CROWD_DEVICE_PROFILE || null };
+}
+
+/** 次数/配额类合并：更严格者 = 更小值（远程只能压低上限，不能抬高） */
+function _tightenCap(remoteVal, base) {
+  return typeof remoteVal === "number" && remoteVal > 0 ? Math.min(remoteVal, base) : base;
+}
+
+/** 间隔/冷却类合并：更严格者 = 更大值（远程只能抬高下限，不能压低） */
+function _tightenFloor(remoteVal, base) {
+  return typeof remoteVal === "number" && remoteVal > 0 ? Math.max(remoteVal, base) : base;
+}
+
+/**
+ * 把一份远程配置按"更严格者胜"与本地基线合成有效值。
+ * 对任意输入幂等：对已合成结果再次合成不会改变结果。
+ */
+function _effectiveLimits(remote) {
+  const r = remote && typeof remote === "object" ? remote : {};
+  const eff = {
+    quota_day: _tightenCap(r.quota_day, SAFETY_LIMITS.DAILY_SEARCH_MAX),
+    gap_min: _tightenFloor(r.gap_min, SAFETY_LIMITS.SEARCH_GAP_MIN),
+    gap_max: _tightenFloor(r.gap_max, SAFETY_LIMITS.SEARCH_GAP_MAX),
+    session_min: _tightenCap(r.session_min, SAFETY_LIMITS.SESSION_MAX_MIN),
+    cooldown_min: _tightenFloor(r.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN),
+    view_stay_min_s: _tightenFloor(r.view_stay_min_s, SAFETY_LIMITS.VIEW_STAY_MIN_S),
+    // ── v2 新参数（同样只紧不松）──
+    hard_cap_day: _tightenCap(r.hard_cap_day, V2.HARD_CAP_DAY), // 配额类：只能压低
+    session_cooldown_min_s: _tightenFloor(r.session_cooldown_min_s, V2.COOLDOWN_MIN_S), // 冷却类：只能抬高
+    session_cooldown_max_s: _tightenFloor(r.session_cooldown_max_s, V2.COOLDOWN_MAX_S),
+    risk_cooldown_min_h: _tightenFloor(r.risk_cooldown_min_h, V2.RISK_MIN_S / 3600), // 风控冷却类：只能抬高
+    risk_cooldown_max_h: _tightenFloor(r.risk_cooldown_max_h, V2.RISK_MAX_S / 3600),
+  };
+  if (eff.gap_max < eff.gap_min) eff.gap_max = eff.gap_min;
+  return eff;
+}
+
+/** 纯本地基线合成结果（无任何远程配置时的有效值） */
+const LOCAL_EFFECTIVE = Object.freeze(_effectiveLimits(null));
+
 class SafetyEngine {
   constructor(storage) {
     this.s = storage || chrome.storage.local;
-    this.remote = null; // 服务端拟合参数（仅存储应用后的有效值）
+    this.remote = null; // 已按基线合成后的有效远程配置（只会更严，不会更松）
   }
 
-  /** 应用服务端拟合参数（只降不升：任何远程值不能放宽本地基线） */
+  /**
+   * SW 启动恢复入口：从 chrome.storage.local 读取已持久化的 remote_limits。
+   * 恢复时重新按本地基线合成一遍，不信任存储中的合成结果。
+   * background 必须在构造后立即调用：await safety.init();
+   */
+  async init() {
+    const saved = await this._get("remote_limits_applied", null);
+    if (saved && typeof saved === "object") {
+      this.remote = _effectiveLimits(saved);
+    }
+    return this.remote;
+  }
+
+  /** 应用服务端下发的限速配置（只紧不松：任何远程值都不能放宽本地基线） */
   async applyRemoteLimits(remote) {
     if (!remote || typeof remote !== "object") return;
-    // 收紧方向：次数/会话上限取 min（越少越严）；间隔/冷却下限取 max（越长越严）
-    const clampUpper = (val, base) => (typeof val === "number" && val > 0 ? Math.min(val, base) : null);
-    const clampLower = (val, base) => (typeof val === "number" && val > 0 ? Math.max(val, base) : null);
-    this.remote = {
-      quota_day: clampUpper(remote.quota_day, SAFETY_LIMITS.DAILY_SEARCH_MAX),
-      gap_min: clampLower(remote.gap_min, SAFETY_LIMITS.SEARCH_GAP_MIN),   // 下限不低于本地 60s
-      gap_max: clampUpper(remote.gap_max, SAFETY_LIMITS.SEARCH_GAP_MAX),   // 上限不高于本地 120s
-      session_min: clampUpper(remote.session_min, SAFETY_LIMITS.SESSION_MAX_MIN),
-      cooldown_min: clampLower(remote.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN), // 冷却不短于本地 30min
-    };
+    this.remote = _effectiveLimits(remote);
+    // 持久化合成后的有效值，重启经 init() 恢复（恢复时会再合成一次）
     await this._set({ remote_limits_applied: this.remote, remote_limits_at: Date.now() });
   }
 
-  /** 重启后从 storage 恢复已应用的服务端配置（外部审计 #11：原实现重启丢 remote） */
-  async restoreRemote() {
-    try {
-      const saved = await this._get("remote_limits_applied", null);
-      if (saved && typeof saved === "object" && saved.cooldown_min !== undefined) {
-        this.remote = saved;
-      }
-    } catch (e) { /* storage 异常时保持 null，走本地基线 */ }
-    return this.remote;
+  /** 当前有效配置（远程合成值或纯本地基线） */
+  _eff() {
+    return this.remote || LOCAL_EFFECTIVE;
   }
 
   async _get(key, fallback) {
@@ -78,11 +202,37 @@ class SafetyEngine {
     await this.s.set(obj);
   }
 
-  /** 首次运行生成并持久化设备指纹盐（一机一号） */
+  /** v2 设备画像（device_salt 确定性派生，实例内缓存；模块缺失时返回 null 走退化兜底） */
+  async _profile() {
+    if (this._profCache !== undefined) return this._profCache;
+    const dp = _mods().devprof;
+    if (!dp) {
+      this._profCache = null;
+      return null;
+    }
+    const salt = await this.getDeviceSalt();
+    this._profCache = await dp.getProfile(this.s, salt);
+    return this._profCache;
+  }
+
+  /** v2 warmup 状态（模块缺失时退化 fraction=1，不阻断采集） */
+  async _warmup() {
+    const dp = _mods().devprof;
+    if (!dp) return { day: null, fraction: 1 };
+    return dp.getWarmup(this.s);
+  }
+
+  /**
+   * 首次运行生成并持久化设备指纹盐（一机一号）。
+   * v3.2.3 对齐：crypto.getRandomValues 生成，格式 "Dsalt" + 16 位小写 hex（无下划线）；
+   * 已持久化的 salt 原样复用，持久化逻辑不变。
+   */
   async getDeviceSalt() {
     let salt = await this._get("device_salt", null);
     if (!salt) {
-      salt = "dev-" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+      const buf = new Uint8Array(8);
+      crypto.getRandomValues(buf);
+      salt = "Dsalt" + Array.from(buf, (b) => b.toString(16).padStart(2, "0")).join("");
       await this._set({ device_salt: salt });
     }
     return salt;
@@ -100,13 +250,11 @@ class SafetyEngine {
     return st;
   }
 
-  /** 当前任务包配额（只降不升：任务包 quota_day → 远程拟合 → 本地基线，取最严） */
+  /** 当前任务包配额（次数类：任务包 quota_day、远程配置、本地基线取最严） */
   async _currentQuota() {
     const task = await this._get("active_task", null);
     const taskQ = task && task.quota_day ? task.quota_day : null;
-    const remoteQ = this.remote && this.remote.quota_day ? this.remote.quota_day : null;
-    let q = SAFETY_LIMITS.DAILY_SEARCH_MAX;
-    if (remoteQ) q = Math.min(q, remoteQ);
+    let q = this._eff().quota_day;
     if (taskQ) q = Math.min(q, taskQ);
     return q;
   }
@@ -120,16 +268,13 @@ class SafetyEngine {
     return { active: false };
   }
 
-  /** 检查会话：超过会话上限则进入强制冷却（远程拟合只降不升） */
+  /** 检查会话：超过会话上限则进入强制冷却（冷却时长为冷却类下限，远程只能加长） */
   async _sessionGuard() {
     const st = await this._dayState();
     const now = Date.now();
-    const sessionMax = this.remote && this.remote.session_min
-      ? Math.min(this.remote.session_min, SAFETY_LIMITS.SESSION_MAX_MIN)
-      : SAFETY_LIMITS.SESSION_MAX_MIN;
-    const cooldownMin = this.remote && this.remote.cooldown_min
-      ? Math.max(this.remote.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN)
-      : SAFETY_LIMITS.SESSION_COOLDOWN_MIN;
+    const eff = this._eff();
+    const sessionMax = eff.session_min; // 配额类：已按 min 合成
+    const cooldownMin = eff.cooldown_min; // 冷却类：已按 max 合成（修复审计问题 11 的 Math.min 方向错误）
     if (!st.sessionStart) {
       st.sessionStart = now;
       await this._set({ day_state: st });
@@ -146,22 +291,18 @@ class SafetyEngine {
     return { ok: true };
   }
 
-  /** 当前生效的安全参数（供 popup 展示/审计） */
+  /** 当前生效的限速配置（供 popup 展示/审计） */
   async currentLimits() {
     const q = await this._currentQuota();
-    const gapMin = this.remote && this.remote.gap_min
-      ? Math.max(SAFETY_LIMITS.SEARCH_GAP_MIN, Math.min(this.remote.gap_min, SAFETY_LIMITS.SEARCH_GAP_MAX))
-      : SAFETY_LIMITS.SEARCH_GAP_MIN;
-    const gapMax = this.remote && this.remote.gap_max
-      ? Math.min(this.remote.gap_max, SAFETY_LIMITS.SEARCH_GAP_MAX)
-      : SAFETY_LIMITS.SEARCH_GAP_MAX;
+    const eff = this._eff();
     return {
       quotaDay: q,
-      gapMin,
-      gapMax,
-      sessionMin: this.remote && this.remote.session_min ? Math.min(this.remote.session_min, SAFETY_LIMITS.SESSION_MAX_MIN) : SAFETY_LIMITS.SESSION_MAX_MIN,
-      cooldownMin: this.remote && this.remote.cooldown_min ? Math.max(this.remote.cooldown_min, SAFETY_LIMITS.SESSION_COOLDOWN_MIN) : SAFETY_LIMITS.SESSION_COOLDOWN_MIN,
-      source: this.remote ? "remote_fitted" : "local_base",
+      gapMin: eff.gap_min,
+      gapMax: eff.gap_max,
+      sessionMin: eff.session_min,
+      cooldownMin: eff.cooldown_min,
+      viewStayMinS: eff.view_stay_min_s,
+      source: this.remote ? "remote_tightened" : "local_base",
     };
   }
 
@@ -171,31 +312,55 @@ class SafetyEngine {
     const cd = await this.inCooldown();
     if (cd.active) return { ok: false, reason: `冷却中，剩余 ${cd.leftMin}min` };
 
-    // 2. 会话时长
+    // 2. 风控状态机（v2 §4）：触发过风控信号当日停止一切采集
+    const st = await this._dayState();
+    const risk = await this._get("risk_state", null);
+    if (risk && risk.stop_date === st.date) {
+      return { ok: false, reason: "风控信号：当日停止采集" };
+    }
+
+    // 3. 会话时长（v3 兼容闸门，保留）
     const sg = await this._sessionGuard();
     if (!sg.ok) return sg;
 
-    // 3. 日配额
-    const st = await this._dayState();
-    const quota = await this._currentQuota();
+    // 4. 日配额 = min(现有 quota 逻辑, warmup 当日上限, 硬上限 200)；「频次异常」次日减半（v2 §2.3/§4）
+    const warm = await this._warmup();
+    const eff = this._eff();
+    let quota = await this._currentQuota();
+    quota = Math.min(quota, Math.max(1, Math.round(quota * warm.fraction)), eff.hard_cap_day);
+    if (risk && risk.quota_scale_date === st.date) quota = Math.max(1, Math.floor(quota / 2));
     if (st.searches >= quota) {
       return { ok: false, reason: `已达日配额 ${quota} 次` };
     }
 
-    // 4. 动作间隔（随机 gapMin-gapMax，基于上次搜索时间；远程拟合只降不升）
+    // 5. 动作间隔（v2 §2.1）：截断 lognormal 逆变换采样 µ=ln(90s) σ=0.9 [30s,1800s]，
+    //    乘设备层 µ/σ 抖动系数（§2.2）；截断区间下限与 eff.gap_min/gap_max 合成（远程只紧不松）。
+    //    采样器缺失时退化到旧均匀分布兜底。
     const last = await this._get("last_search_at", 0);
-    const gapMin = this.remote && this.remote.gap_min
-      ? Math.max(SAFETY_LIMITS.SEARCH_GAP_MIN, Math.min(this.remote.gap_min, SAFETY_LIMITS.SEARCH_GAP_MAX))
-      : SAFETY_LIMITS.SEARCH_GAP_MIN;
-    const gapMax = this.remote && this.remote.gap_max
-      ? Math.max(gapMin, Math.min(this.remote.gap_max, SAFETY_LIMITS.SEARCH_GAP_MAX))
-      : SAFETY_LIMITS.SEARCH_GAP_MAX;
-    const gap = gapMin + Math.floor(Math.random() * (gapMax - gapMin + 1));
+    const S = _mods().sampler;
+    let gap;
+    if (S) {
+      const prof = await this._profile();
+      const loS = Math.max(V2.SEARCH_MIN_S, eff.gap_min);
+      const hiS = Math.max(loS + 1, V2.SEARCH_MAX_S, eff.gap_max);
+      gap = Math.round(
+        S.sampleTruncLognormal(
+          V2.SEARCH_MU * (prof ? prof.gapMuJit : 1),
+          V2.SEARCH_SIGMA * (prof ? prof.gapSigmaJit : 1),
+          loS,
+          hiS
+        )
+      );
+    } else {
+      const gapMax = Math.max(eff.gap_min, eff.gap_max);
+      gap = eff.gap_min + Math.floor(Math.random() * (gapMax - eff.gap_min + 1));
+    }
     const wait = Math.max(0, last + gap * 1000 - Date.now());
+    // 调用方必须实际等待 waitMs 后再发起动作（见文件头调用契约）
     return { ok: true, waitMs: wait, quotaLeft: quota - st.searches, gap };
   }
 
-  /** 记录一次搜索（必须在 canSearch ok 后调用） */
+  /** 记录一次搜索（必须在 canSearch ok 且实际等待 waitMs 之后调用） */
   async markSearch() {
     const st = await this._dayState();
     st.searches += 1;
@@ -203,23 +368,257 @@ class SafetyEngine {
     return st.searches;
   }
 
-  /** 触发"访问频繁"：强制冷却 RATE_LIMIT_COOLDOWN_MIN */
-  async onRateLimited() {
-    const until = Date.now() + SAFETY_LIMITS.RATE_LIMIT_COOLDOWN_MIN * 60000;
-    await this._set({ cooldown_until: until });
+  /**
+   * 风控信号状态机（v2 §4）。signal：
+   *  - "rate_limited"（默认）：页面出现「访问频繁/验证」→ 当日立即停止 + 冷却 24–72h（lognormal 采样）
+   *  - "freq_abnormal"：频次异常提示（300013 类）→ 同上，且次日配额减半
+   * 结束当前会话；冷却期内 canSearch/canStartSession 全部拒绝。
+   * 返回值仍为冷却截止时间戳 until（向后兼容 v3 调用方）。
+   * 不做任何自动过验证码能力（§4 合规红线）。
+   */
+  async onRateLimited(signal) {
+    const kind = signal || "rate_limited";
+    const S = _mods().sampler;
+    const eff = this._eff();
+    const now = Date.now();
+    let coolMs = SAFETY_LIMITS.RATE_LIMIT_COOLDOWN_MIN * 60000; // 采样器缺失时的退化兜底
+    if (S) {
+      const loS = Math.max(V2.RISK_MIN_S, (eff.risk_cooldown_min_h || 0) * 3600);
+      const hiS = Math.max(loS + 1, V2.RISK_MAX_S, (eff.risk_cooldown_max_h || 0) * 3600);
+      coolMs = Math.round(S.sampleTruncLognormal(V2.RISK_MU, V2.RISK_SIGMA, loS, hiS) * 1000);
+    }
+    const until = now + coolMs;
+    const today = new Date().toISOString().slice(0, 10);
+    const tomorrow = new Date(now + 86400000).toISOString().slice(0, 10);
+    const prev = await this._get("risk_state", null);
+    const risk = {
+      kind,
+      at: now,
+      stop_date: today, // 当日停止
+      cooldown_until: until, // 冷却 24–72h
+      quota_scale_date: kind === "freq_abnormal" ? tomorrow : (prev && prev.quota_scale_date) || null,
+    };
+    // 结束当前会话，会话冷却对齐风控冷却
+    const ss = await this._get("session_v2", null);
+    if (ss) {
+      ss.active = false;
+      ss.actionsLeft = 0;
+      ss.cooldownUntil = Math.max(ss.cooldownUntil || 0, until);
+      await this._set({ session_v2: ss });
+    }
+    await this._set({ risk_state: risk, cooldown_until: until });
     return until;
   }
 
-  /** 浏览停留守卫：采集前保证阅读时长 */
-  async ensureViewStay(noteId) {
+  /**
+   * 搜索结果计数接风控状态机（v2 §4）：itemCount>0 清空计数；
+   * 连续 3 次空结果/异常响应 → 暂停本轮会话，进入长冷却采样（lognormal [30min,12h]）。
+   */
+  async onSearchOutcome(itemCount) {
+    if (itemCount > 0) {
+      await this._set({ empty_streak: 0 });
+      return { cooled: false, streak: 0 };
+    }
+    return this.onEmptyResult();
+  }
+
+  async onEmptyResult() {
+    const S = _mods().sampler;
+    const streak = (await this._get("empty_streak", 0)) + 1;
+    await this._set({ empty_streak: streak });
+    if (streak < V2.EMPTY_STREAK_MAX) return { cooled: false, streak };
+    const now = Date.now();
+    let coolMs = V2.LONG_MIN_S * 1000; // 退化兜底：30min
+    if (S) {
+      coolMs = Math.round(S.sampleTruncLognormal(V2.LONG_MU, V2.LONG_SIGMA, V2.LONG_MIN_S, V2.LONG_MAX_S) * 1000);
+    }
+    const until = now + coolMs;
+    const ss = await this._get("session_v2", null);
+    if (ss) {
+      ss.active = false;
+      ss.actionsLeft = 0;
+      ss.cooldownUntil = Math.max(ss.cooldownUntil || 0, until);
+      await this._set({ session_v2: ss });
+    }
+    await this._set({ cooldown_until: until, empty_streak: 0 });
+    return { cooled: true, until, streak };
+  }
+
+  /**
+   * 会话准入（v2 §2.3「单次会话动作数」「会话间冷却」「会话中休息」）。
+   * 返回 {ok:true, actionsLeft} 或 {ok:false, reason, waitMs}。
+   * 新会话动作数按逆高斯 µ≈3.7/λ≈2.7 截断 [1,25] 采样（60%+ 为 1–5 动作短会话）；
+   * 会话中每 20–30 分钟插 2–10 分钟休息（lognormal µ=ln(4min), σ=0.7），休息期返回 ok:false。
+   */
+  async canStartSession() {
+    // 全局冷却 / 风控当日停止同样阻断会话
+    const cd = await this.inCooldown();
+    if (cd.active) return { ok: false, reason: `冷却中，剩余 ${cd.leftMin}min`, waitMs: cd.until - Date.now() };
+    const today = new Date().toISOString().slice(0, 10);
+    const risk = await this._get("risk_state", null);
+    if (risk && risk.stop_date === today) return { ok: false, reason: "风控信号：当日停止采集" };
+
+    const S = _mods().sampler;
+    const now = Date.now();
+    const ss = await this._get("session_v2", null);
+
+    // 进行中的会话：先查休息窗，再放行
+    if (ss && ss.active && ss.actionsLeft > 0) {
+      if (ss.breakUntil && now < ss.breakUntil) {
+        return { ok: false, reason: "会话休息中", waitMs: ss.breakUntil - now };
+      }
+      if (S && ss.nextBreakAt && now >= ss.nextBreakAt) {
+        const breakS = S.sampleTruncLognormal(V2.BREAK_MU, V2.BREAK_SIGMA, V2.BREAK_MIN_S, V2.BREAK_MAX_S);
+        ss.breakUntil = now + Math.round(breakS * 1000);
+        ss.nextBreakAt =
+          now + (V2.BREAK_EVERY_MIN_MIN + Math.random() * (V2.BREAK_EVERY_MIN_MAX - V2.BREAK_EVERY_MIN_MIN)) * 60000;
+        await this._set({ session_v2: ss });
+        return { ok: false, reason: "会话休息中", waitMs: ss.breakUntil - now };
+      }
+      return { ok: true, actionsLeft: ss.actionsLeft, startedAt: ss.startedAt };
+    }
+
+    // 会话间冷却未结束
+    if (ss && ss.cooldownUntil && now < ss.cooldownUntil) {
+      return { ok: false, reason: "会话间冷却中", waitMs: ss.cooldownUntil - now };
+    }
+
+    // 开启新会话
+    let n = 3; // 采样器缺失时的退化兜底（短会话）
+    if (S) {
+      const prof = await this._profile();
+      n = Math.round(
+        S.sampleInvGaussian(
+          V2.SESSION_MU * (prof ? prof.sessionMuJit : 1),
+          V2.SESSION_LAMBDA * (prof ? prof.sessionLambdaJit : 1),
+          V2.SESSION_MIN,
+          V2.SESSION_MAX
+        )
+      );
+      n = Math.min(V2.SESSION_MAX, Math.max(V2.SESSION_MIN, n));
+    }
+    const ns = {
+      active: true,
+      actionsLeft: n,
+      budget: n,
+      startedAt: now,
+      nextBreakAt:
+        now + (V2.BREAK_EVERY_MIN_MIN + Math.random() * (V2.BREAK_EVERY_MIN_MAX - V2.BREAK_EVERY_MIN_MIN)) * 60000,
+      breakUntil: 0,
+      cooldownUntil: 0,
+    };
+    await this._set({ session_v2: ns });
+    return { ok: true, started: true, actionsLeft: n };
+  }
+
+  /**
+   * 记录一次会话动作（搜索成功后调用）。动作数耗尽 → 结束会话，
+   * 会话间冷却按 lognormal µ=ln(30min) σ=1.2 [5min,6h] 采样（×设备抖动，远程只紧不松）。
+   */
+  async markSessionAction() {
+    const S = _mods().sampler;
+    const now = Date.now();
+    const ss = await this._get("session_v2", null);
+    if (!ss || !ss.active) return { active: false };
+    ss.actionsLeft = (ss.actionsLeft || 0) - 1;
+    if (ss.actionsLeft > 0) {
+      await this._set({ session_v2: ss });
+      return { active: true, actionsLeft: ss.actionsLeft };
+    }
+    const eff = this._eff();
+    let coolMs = eff.cooldown_min * 60000; // 采样器缺失时退化沿用 v3 冷却
+    if (S) {
+      const prof = await this._profile();
+      const loS = Math.max(V2.COOLDOWN_MIN_S, eff.session_cooldown_min_s || 0);
+      const hiS = Math.max(loS + 1, V2.COOLDOWN_MAX_S, eff.session_cooldown_max_s || 0);
+      coolMs = Math.round(
+        S.sampleTruncLognormal(
+          V2.COOLDOWN_MU * (prof ? prof.cooldownMuJit : 1),
+          V2.COOLDOWN_SIGMA * (prof ? prof.cooldownSigmaJit : 1),
+          loS,
+          hiS
+        ) * 1000
+      );
+    }
+    ss.active = false;
+    ss.actionsLeft = 0;
+    ss.cooldownUntil = now + coolMs;
+    await this._set({ session_v2: ss });
+    return { active: false, ended: true, cooldownMs: coolMs };
+  }
+
+  /**
+   * 时段画像闸（v2 §2.3「时段画像」）：von Mises 混合 24h 曲线权重 <0.05 拒绝
+   * （0–7 点 ≈0，天然命中）。date 参数仅供测试注入，生产用当前时刻。
+   */
+  async isCircadianAllowed(date) {
+    const dp = _mods().devprof;
+    if (!dp) return { ok: true, weight: 1, degraded: true };
+    const salt = await this.getDeviceSalt();
+    const prof = await this._profile();
+    const w = dp.circadianWeight(prof, salt, date || new Date());
+    return { ok: w >= V2.CIRCADIAN_REJECT_W, weight: w };
+  }
+
+  /** v2 状态快照（供 popup CROWD_STATUS.safety_v2 展示） */
+  async safetyV2Snapshot() {
+    const circ = await this.isCircadianAllowed();
+    const warm = await this._warmup();
+    const ss = await this._get("session_v2", null);
+    return {
+      circadian: circ.ok,
+      circadianWeight: Math.round(circ.weight * 1000) / 1000,
+      warmupDay: warm.day,
+      warmupFraction: warm.fraction,
+      sessionLeft: ss && ss.active ? ss.actionsLeft || 0 : 0,
+    };
+  }
+
+  /**
+   * 浏览停留计时：首次调用开始计时，再次调用返回累计停留。
+   * 由 canViewNote() 调用（阅读停留校验的唯一入口），不单独对外使用。
+   */
+  async ensureViewStay(noteId, minStayS) {
+    const min = typeof minStayS === "number" && minStayS > 0 ? minStayS : this._eff().view_stay_min_s;
     const key = "view_" + noteId;
     const t = await this._get(key, 0);
     if (!t) {
       await this._set({ [key]: Date.now() });
-      return { first: true };
+      return { first: true, elapsed: 0, ok: false, minStayS: min };
     }
     const elapsed = (Date.now() - t) / 1000;
-    return { first: false, elapsed, ok: elapsed >= SAFETY_LIMITS.VIEW_STAY_MIN_S };
+    return { first: false, elapsed, ok: elapsed >= min, minStayS: min };
+  }
+
+  /**
+   * 阅读停留守卫（采集某篇笔记正文前的准入检查）。
+   * 冷却期直接拒绝；停留不足 VIEW_STAY_MIN_S（或远程收紧后的值）拒绝并给出 waitMs。
+   * background 应在每次提取详情页正文前调用（见文件头调用契约）。
+   */
+  async canViewNote(noteId) {
+    if (!noteId) return { ok: false, reason: "missing_note_id" };
+    const cd = await this.inCooldown();
+    if (cd.active) return { ok: false, reason: `冷却中，剩余 ${cd.leftMin}min` };
+    const eff = this._eff();
+    const stay = await this.ensureViewStay(noteId, eff.view_stay_min_s);
+    if (stay.first) {
+      return {
+        ok: false,
+        first: true,
+        reason: `首次打开该笔记，需停留 ≥${eff.view_stay_min_s}s 后再采集`,
+        waitMs: eff.view_stay_min_s * 1000,
+      };
+    }
+    if (!stay.ok) {
+      const leftMs = Math.ceil(eff.view_stay_min_s * 1000 - stay.elapsed * 1000);
+      return {
+        ok: false,
+        reason: `阅读停留不足（${Math.floor(stay.elapsed)}s/${eff.view_stay_min_s}s）`,
+        waitMs: Math.max(leftMs, 0),
+        elapsed: stay.elapsed,
+      };
+    }
+    return { ok: true, elapsed: stay.elapsed };
   }
 
   /** 本地队列水位检查 */

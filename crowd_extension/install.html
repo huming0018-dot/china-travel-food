@@ -41,32 +41,30 @@
 
   <!-- ============ 方案A：macOS 一键脚本 ============ -->
   <div class="card hidden" id="card-mac">
-    <h2>🖥 你的系统：macOS <span class="badge ok">推荐 · 双击即装</span></h2>
-    <div class="step"><b>1</b><div>点击下方下载 <b>安装.command</b>（这是你电脑的安装器，不是插件本体）</div></div>
-    <div class="step"><b>2</b><div>在「访达」里找到下载的文件，<b>双击</b>它</div></div>
-    <div class="step"><b>3</b><div>若系统提示「无法打开」：右键 → 打开 → 仍要打开（仅首次）</div></div>
-    <div class="step"><b>4</b><div>脚本会自动：解压插件 → 打开 Chrome 扩展页 → 复制插件文件夹路径到剪贴板</div></div>
-    <div class="step"><b>5</b><div>在扩展页右上角开启「开发者模式」→ 点「加载已解压的扩展程序」→ 按 <code>⌘V</code> 粘贴路径 → 回车</div></div>
+    <h2>🖥 你的系统：macOS <span class="badge ok">推荐 · 双击即装 · 自动升级</span></h2>
+    <div class="step"><b>1</b><div>点击下方下载 <b>安装.command</b>（这是安装器，不是插件本体）</div></div>
+    <div class="step"><b>2</b><div>在「访达」里找到下载的文件，<b>双击</b>它（若提示「无法打开」：右键 → 打开 → 仍要打开，仅首次）</div></div>
+    <div class="step"><b>3</b><div>按提示输入一次<b>开机密码</b>（用于登记 Chrome 策略），脚本会自动重启 Chrome</div></div>
+    <div class="step"><b>4</b><div>完成！Chrome 会<b>自己下载并安装</b>插件（约 1 分钟），并自动打开「参与协议」页</div></div>
     <div class="dl-row">
-      <a class="btn" href="crowd-install-mac.command" download="安装.command">⬇️ 下载 macOS 安装器</a>
-      <a class="btn alt" href="crowd-extension-v3.2.1.zip" download>直接下载插件 zip</a>
+      <a class="btn" href="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-install-mac.command" download="安装.command">⬇️ 下载 macOS 安装器</a>
+      <a class="btn alt" href="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.3.0.zip" download>备用：插件 zip（手动模式）</a>
     </div>
-    <p class="note">安装器是纯脚本（约 20 秒），会自动探测 Chrome / Edge / Brave，谁在就用谁打开。无需任何开发环境。</p>
+    <p class="note">✨ <b>以后插件升级全自动</b>：每次发布新版本，Chrome 会在后台自动更新，不需要再运行任何脚本、不需要重装。</p>
   </div>
 
   <!-- ============ 方案B：Windows 一键脚本 ============ -->
   <div class="card hidden" id="card-win">
-    <h2>🖥 你的系统：Windows <span class="badge ok">推荐 · 双击即装</span></h2>
-    <div class="step"><b>1</b><div>点击下方下载 <b>安装.bat</b>（这是你电脑的安装器，不是插件本体）</div></div>
-    <div class="step"><b>2</b><div>在「下载」文件夹找到它，<b>双击</b>运行</div></div>
-    <div class="step"><b>3</b><div>若出现蓝色「更多信息」提示 → 点击「仍要运行」（仅首次，脚本仅解压+打开浏览器）</div></div>
-    <div class="step"><b>4</b><div>脚本会自动：解压插件 → 打开 Chrome 扩展页 → 复制插件文件夹路径到剪贴板</div></div>
-    <div class="step"><b>5</b><div>在扩展页右上角开启「开发者模式」→ 点「加载已解压的扩展程序」→ 按 <code>Ctrl+V</code> 粘贴路径 → 回车</div></div>
+    <h2>🖥 你的系统：Windows <span class="badge ok">推荐 · 双击即装 · 自动升级</span></h2>
+    <div class="step"><b>1</b><div>点击下方下载 <b>安装.bat</b>（这是安装器，不是插件本体）</div></div>
+    <div class="step"><b>2</b><div>在「下载」文件夹找到它，<b>双击</b>运行（若出现蓝色 SmartScreen 提示 → 「更多信息」→「仍要运行」，仅首次）</div></div>
+    <div class="step"><b>3</b><div>弹出权限请求（UAC）点「是」——用于登记 Chrome 策略，脚本会自动重启 Chrome</div></div>
+    <div class="step"><b>4</b><div>完成！Chrome 会<b>自己下载并安装</b>插件（约 1 分钟），并自动打开「参与协议」页</div></div>
     <div class="dl-row">
-      <a class="btn" href="crowd-install-win.bat" download="安装.bat">⬇️ 下载 Windows 安装器</a>
-      <a class="btn alt" href="crowd-extension-v3.2.1.zip" download>直接下载插件 zip</a>
+      <a class="btn" href="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-install-win.bat" download="安装.bat">⬇️ 下载 Windows 安装器</a>
+      <a class="btn alt" href="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.3.0.zip" download>备用：插件 zip（手动模式）</a>
     </div>
-    <p class="note">安装器是纯批处理脚本，自动探测 Chrome / Edge / Brave，谁在就用谁打开。无需任何开发环境。</p>
+    <p class="note">✨ <b>以后插件升级全自动</b>：每次发布新版本，Chrome 会在后台自动更新，不需要再运行任何脚本、不需要重装。</p>
   </div>
 
   <!-- ============ 方案C：Linux / 其他（手动引导） ============ -->
@@ -77,7 +75,7 @@
     <div class="step"><b>3</b><div>右上角开启「开发者模式」</div></div>
     <div class="step"><b>4</b><div>点「加载已解压的扩展程序」→ 选择刚才解压出的文件夹</div></div>
     <div class="dl-row">
-      <a class="btn" href="crowd-extension-v3.2.1.zip" download>⬇️ 下载插件 zip</a>
+      <a class="btn" href="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.3.0.zip" download>⬇️ 下载插件 zip</a>
     </div>
   </div>
 
@@ -89,11 +87,10 @@
     <div class="step"><b>3</b><div>Kiwi 地址栏输入 <code>chrome://extensions</code> → 开「开发者模式」→ 「+ 从 .zip/.crx 加载」→ 选 zip</div></div>
     <div class="step"><b>4</b><div>填写参与编号 → 打开小红书页面 → 自动采集</div></div>
     <div class="dl-row">
-      <a class="btn" href="crowd-extension-v3.2.1.zip" download="crowd-extension-v3.2.1.zip">⬇️ 下载插件 zip</a>
+      <a class="btn" href="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.3.0.zip" download="crowd-extension-v3.3.0.zip">⬇️ 下载插件 zip</a>
       <a class="btn alt" href="install-mobile.html">📄 手机版详细教程</a>
     </div>
     <p class="note">iPhone 暂不支持（苹果系统限制第三方扩展加载）。手机与电脑同一任务池，可换设备续采。</p>
-    <div class="warn-note">⚠️ <b>注意</b>：Kiwi 官方已于 2025-01 停止维护（来源：kiwibrowser/src.next 仓库声明）。手机版仅作辅助入口，<b>建议优先使用电脑端 Chrome/Edge</b>；手机端如遇加载异常请反馈 PM，将跟进受维护的替代浏览器。</div>
   </div>
 
   <!-- ============ 手机版入口（所有系统可见） ============ -->
@@ -101,23 +98,29 @@
     <h2>📱 想在手机上采集？</h2>
     <div class="step"><b>1</b><div>Android 手机：安装 <b>Kiwi Browser</b>，加载同一插件 zip —— 与电脑完全同步</div></div>
     <div class="step"><b>2</b><div>iPhone：暂不支持（苹果系统限制），建议用电脑或 Android 手机</div></div>
-    <div class="warn-note" style="margin-top:4px;">⚠️ Kiwi 官方 2025-01 起停止维护；手机版为辅助入口，主力推荐电脑端 Chrome/Edge。</div>
     <a class="btn alt" href="install-mobile.html" style="margin-top:10px;">📲 查看手机版安装教程</a>
   </div>
 
   <!-- ============ 安装后统一指引 ============ -->
   <div class="card">
-    <h2>✅ 安装完成后（三步开始采集）</h2>
-    <div class="step"><b>1</b><div>点浏览器右上角拼图图标 🧩 → 找到「众包美食家」→ 点「选项」</div></div>
-    <div class="step"><b>2</b><div>填写你的<b>参与编号</b>（报名时自动生成，形如 P-XXXXXX），阅读并同意《参与协议》</div></div>
-    <div class="step"><b>3</b><div>回到小红书页面（需已登录你的账号），点插件图标 → 「▶ 启动采集」</div></div>
-    <div class="ok-note">✅ 之后全部自动：自动领任务 → 自动搜索 → 自动回传 → 自动领下一个任务。无需任何手动操作。</div>
-    <div class="warn-note">⚠️ 尚未报名？先回 <a href="apply.html" style="color:var(--brand);font-weight:600;">报名页</a> 获取参与编号（立即可用，无需审核）。</div>
+    <h2>✅ 安装完成后（两步开始采集）</h2>
+    <div class="step"><b>1</b><div>首次安装会<b>自动打开「参与协议」页</b>（没打开就点右上角拼图图标 🧩 → 「众包美食家」→「选项」）：点 <b>「我要加入」</b>自动获得参与编号</div></div>
+    <div class="step"><b>2</b><div>阅读并同意《参与协议》→ 回到小红书页面（需已登录你的账号）→ 点插件图标 → 「▶ 启动采集」</div></div>
+    <div class="ok-note">✅ 之后全部自动：自动领任务 → 自动搜索 → 自动回传 → 自动领下一个任务。插件本身也会自动升级到最新版，无需任何手动操作。</div>
   </div>
 </div>
 
 <script>
 (function () {
+  // 插件版本：zip 下载链接统一由此拼出（与本页同级路径）
+  const EXT_VERSION = '3.4.3';
+  const BUCKET = 'https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd';
+  const ZIP_NAME = "crowd-extension-v" + EXT_VERSION + ".zip";
+  document.querySelectorAll('a[href$=".zip"]').forEach((a) => {
+    a.href = BUCKET + '/' + ZIP_NAME;
+    a.setAttribute("download", ZIP_NAME);
+  });
+
   // 自动检测：平台 + 浏览器
   const ua = navigator.userAgent;
   const detect = document.getElementById("detect-text");

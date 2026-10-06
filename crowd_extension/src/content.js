@@ -1,127 +1,204 @@
 /**
- * content.js — 注入小红书页面，执行采集，返回结构化 proof 数据
+ * content.js — 注入小红书页面的辅助采集脚本（知情自愿众包）
  *
- * v3.2 修复（外部审计 #3）：keyword 真实接线——搜索页校验当前查询与任务关键词匹配，
- * 详情页校验 note_id 与正文关联；每张卡片独立提取，不再把全局详情复制给每张卡片。
+ * 采集语义（审计问题 3 修复）：
+ * - 本脚本不主动搜索、不发起新导航；只对参与者当前亲手打开的页面做只读提取，
+ *   辅助参与者把"正在看的内容"结构化，而不是替参与者决定看什么。
+ * - background 通过 { type:"CROWD_SEARCH", keyword, task_id?, target? } 触发：
+ *   · keyword 必填，缺失返回 { ok:false, error:"MISSING_KEYWORD" }；
+ *   · task_id / target 为可选任务上下文（也可打包在 msg.task 对象里），
+ *     本脚本在响应中原样回显，供 background 核对任务归属。
+ * - 采集前校验当前页面与任务关键词一致（页面与任务不匹配时一条都不采）：
+ *   · 搜索结果页 /search_result?keyword=... ：取 URL 的 keyword 参数
+ *     （URLSearchParams 自动完成 URL 解码）；
+ *   · 其他页面：读取页面搜索框当前值；
+ *   · 与传入 keyword 不一致、或页面上无法确定搜索词时，返回
+ *     { ok:false, error:"PAGE_MISMATCH", page_keyword:<实际页面词或 null>, items:[] }。
+ * - 列表页：每张卡片独立提取自己的 title/note_url/note_id/author；
+ *   任何字段缺失一律留 null，严禁跨卡片复制任何字段；列表页不提取正文
+ *   （excerpt 恒为 null，正文只在详情页提取）。
+ * - 详情页：只提取当前这一篇笔记自己的标题/正文/作者/发布时间；
+ *   同样禁止回退到任何其他笔记的数据。
+ * - note_id 只从笔记链接 URL 提取（/explore/<id> 或 /discovery/item/<id>）；
+ *   拿不到为 null，并以 note_id_missing:true 显式标注。
  *
- * 与 CROWD-CONTRACT-003 §3 字段对齐。只读公开页面内容，不采集私信/设置/账号信息。
+ * 只读公开页面内容，不采集私信/设置/账号信息；作者昵称在 service worker 层做最小化。
+ * 契约版本：CROWD-CONTRACT-001 §3（响应新增字段均向后兼容）。
  */
 (() => {
   const XHS_DOMAIN = "www.xiaohongshu.com";
   const NOTE_CARD_SELECTOR = "section.note-item, div.note-item";
-  const DETAIL_RE = /\/explore\/([0-9a-fA-F]{24})/;
+  const NOTE_LINK_SELECTOR = "a[href*='/explore/'], a[href*='/discovery/item/']";
+  const NOTE_ID_RE = /\/(?:explore|discovery\/item)\/([0-9a-zA-Z]+)/;
 
-  /** 从当前页面读取搜索结果的笔记卡片（只读 DOM，每卡片独立字段） */
+  const _text = (el) => (el && typeof el.textContent === "string" ? el.textContent.trim() : "") || null;
+
+  /** 归一化搜索词用于比对：Unicode 规范化 + 压缩空白 + 小写 */
+  function normKw(s) {
+    return (typeof s === "string" ? s : "")
+      .normalize("NFC")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+  }
+
+  /**
+   * 读取当前页面的实际搜索词。
+   * 优先取搜索页 URL 的 keyword 参数（自动 URL 解码）；
+   * 否则读页面搜索框当前值；都无法确定时返回 null。
+   */
+  function getPageKeyword() {
+    try {
+      const u = new URL(location.href);
+      if (u.pathname.startsWith("/search_result")) {
+        const kw = u.searchParams.get("keyword");
+        if (kw && kw.trim()) return kw.trim();
+      }
+    } catch (e) {
+      /* location 解析失败时继续尝试搜索框 */
+    }
+    const input = document.querySelector(
+      "input#search-input, input[name='search'], .search-box input, input[placeholder*='搜索']"
+    );
+    const v = input && typeof input.value === "string" ? input.value.trim() : "";
+    return v || null;
+  }
+
+  /** 列表页：逐卡片独立提取。字段缺失留 null，禁止跨卡片复制。 */
   function extractNoteCards() {
     const cards = document.querySelectorAll(NOTE_CARD_SELECTOR);
     const out = [];
     cards.forEach((c) => {
-      const a = c.querySelector("a[href*='/explore/']");
-      if (!a) return;
-      const href = a.href || "";
-      const m = href.match(/\/explore\/([0-9a-zA-Z]+)/);
-      if (!m) return;
-      const titleEl = c.querySelector(".title, a[href*='/explore/'] span, .note-item .title");
-      const title = (titleEl && titleEl.textContent.trim()) || "";
-      // 卡片独立摘要（搜索结果卡片通常无正文，有则提取，无则留空）
-      const descEl = c.querySelector(".desc, [class*='desc']");
-      const excerpt = (descEl && descEl.textContent.trim()) || "";
+      // 该卡片自己的笔记链接（唯一允许提取 note_id 的来源）
+      const a = c.querySelector(NOTE_LINK_SELECTOR);
+      let note_url = null;
+      let note_id = null;
+      if (a && a.href) {
+        const m = a.href.match(NOTE_ID_RE);
+        note_id = m ? m[1] : null;
+        note_url = a.href.split("?")[0] + "?xsec_source=pc_crowd";
+      }
+      // 该卡片自己的标题与作者（只在这张卡片的子树内查找）
+      const title = _text(c.querySelector(".title")) || _text(a);
+      const author = _text(c.querySelector(".author .name, .name, [class*='author'] [class*='name']"));
+
+      // 链接、标题、作者全空 → 不是有效笔记卡片，跳过
+      if (!note_url && !title && !author) return;
+
       out.push({
-        note_id: m[1],
-        note_url: href.split("?")[0] + "?xsec_source=pc_crowd",
-        title,
-        author: "", // 搜索结果卡片页通常不显示作者；详情页模式单独提取
-        excerpt: excerpt.slice(0, 200),
         kind: "note",
+        note_id, // 拿不到为 null，并显式标注
+        note_id_missing: note_id === null,
+        note_url,
+        title,
+        author,
+        excerpt: null, // 列表页不取正文；正文只在对应详情页独立提取
       });
     });
     return out;
   }
 
-  /** 从当前打开的单篇笔记页读取正文与作者（独立提取，不共享） */
+  /** 详情页：只提取当前这篇笔记自己的内容，不回退到任何其他笔记的数据。 */
   function extractNoteDetail() {
-    const title = (document.querySelector("h1, .title") || {}).textContent || "";
-    const descEl = document.querySelector(".desc, .note-content, [class*='desc']");
-    const desc = (descEl && descEl.textContent.trim()) || "";
-    const authorEl = document.querySelector(".author .name, .user-name, [class*='author'] [class*='name']");
-    const author = (authorEl && authorEl.textContent.trim()) || "";
-    return { title: title.trim(), excerpt: desc.slice(0, 200), author };
+    const title = _text(document.querySelector("#detail-title, h1, .note-content .title, .title"));
+    const desc = _text(document.querySelector("#detail-desc, .desc, .note-content, [class*='desc']"));
+    const author = _text(
+      document.querySelector(".author .name, .user-name, [class*='author'] [class*='name']")
+    );
+    const published_at = _text(
+      document.querySelector(".bottom-container .date, .date, [class*='date']")
+    );
+    const m = location.pathname.match(NOTE_ID_RE);
+    const note_id = m ? m[1] : null;
+    return {
+      kind: "note",
+      note_id,
+      note_id_missing: note_id === null,
+      note_url: location.href.split("?")[0] + "?xsec_source=pc_crowd",
+      title,
+      excerpt: desc ? desc.slice(0, 200) : null,
+      author,
+      published_at,
+    };
   }
 
-  /** 搜索页是否与任务关键词匹配（URL 编码/搜索框值/页面关键词元素） */
-  function pageMatchesKeyword(keyword) {
-    if (!keyword) return true; // 无关键词的任务不校验
-    const kw = String(keyword).toLowerCase();
-    const url = location.href.toLowerCase();
-    try { if (url.includes(encodeURIComponent(keyword).toLowerCase())) return true; } catch (e) {}
-    if (url.includes(kw)) return true;
-    const qEl = document.querySelector("input[type='search'], [class*='search'] input, .search-input input");
-    const q = (qEl && qEl.value) || "";
-    if (q.toLowerCase().includes(kw)) return true;
-    const tEl = document.querySelector("[class*='search-word'], .search-word, [class*='keyword'], [class*='query']");
-    const t = (tEl && tEl.textContent) || "";
-    if (t.toLowerCase().includes(kw)) return true;
-    return false;
-  }
-
-  /** 详情页正文/标题是否与任务关键词任一 token 关联（宽松：≥1 命中） */
-  function detailMatchesKeyword(keyword, detail) {
-    if (!keyword) return true;
-    const tokens = String(keyword).split(/[\s,，、]+/).filter(Boolean);
-    if (!tokens.length) return true;
-    const hay = ((detail.title || "") + " " + (detail.excerpt || "")).toLowerCase();
-    return tokens.some((t) => hay.includes(t.toLowerCase()));
+  // F5 修复：风控检测独立成函数并透传到所有返回路径（含 ok:false 分支）。
+  // 原来只在成功分支带 rateLimited，页面触发风控又没解析出卡片时信号丢失，SW 会顶着风控继续采。
+  function detectRateLimited() {
+    try {
+      return /访问频繁|频繁/.test((document.body && document.body.innerText ? document.body.innerText : "").slice(0, 500));
+    } catch (_) {
+      return false;
+    }
   }
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    if (msg.type !== "CROWD_SEARCH") return;
+    if (!msg || msg.type !== "CROWD_SEARCH") return;
+
     if (!location.hostname.includes(XHS_DOMAIN)) {
-      sendResponse({ ok: false, reason: "not_on_xhs" });
+      sendResponse({ ok: false, error: "NOT_ON_XHS", reason: "not_on_xhs", items: [], rateLimited: detectRateLimited() });
+      return;
+    }
+
+    // 任务上下文：keyword 必填；task_id/target 可选（支持 msg.task 打包传入）
+    const keyword = typeof msg.keyword === "string" ? msg.keyword.trim() : "";
+    const taskCtx = (msg.task && typeof msg.task === "object" ? msg.task : {}) || {};
+    const task_id = msg.task_id || taskCtx.task_id || null;
+    const target = msg.target || taskCtx.target || null;
+
+    if (!keyword) {
+      sendResponse({ ok: false, error: "MISSING_KEYWORD", reason: "missing_keyword", items: [], rateLimited: detectRateLimited() });
+      return;
+    }
+
+    // 采集前校验：当前页面搜索词必须与任务关键词一致，不一致一条都不采
+    const page_keyword = getPageKeyword();
+    if (page_keyword === null || normKw(page_keyword) !== normKw(keyword)) {
+      sendResponse({
+        ok: false,
+        error: "PAGE_MISMATCH",
+        reason: "page_mismatch",
+        keyword,
+        page_keyword,
+        task_id,
+        target,
+        items: [],
+        rateLimited: detectRateLimited(),
+      });
       return;
     }
 
     try {
-      const keyword = (msg.keyword || "").trim();
-      const detailM = location.pathname.match(DETAIL_RE);
-      const isDetail = !!detailM && document.querySelector(".note-content, .desc, [class*='desc']");
-      let items;
-
-      if (isDetail) {
-        // 单篇详情页：用户明确打开的笔记 → 独立提取 + 宽松关键词关联校验
-        const detail = extractNoteDetail();
-        if (!detailMatchesKeyword(keyword, detail)) {
-          sendResponse({ ok: false, reason: "当前笔记与任务关键词不相关（请打开任务词对应笔记）" });
-          return;
-        }
-        items = [{
-          kind: "note",
-          note_id: detailM[1],
-          note_url: location.href.split("?")[0] + "?xsec_source=pc_crowd",
-          title: detail.title,
-          excerpt: detail.excerpt,
-          author: detail.author,
-        }];
-      } else {
-        // 搜索页：先校验页面查询与任务关键词匹配（防错配：领甲店任务停在乙店页面）
-        if (!pageMatchesKeyword(keyword)) {
-          sendResponse({ ok: false, reason: "当前页面与任务关键词不匹配（请切到任务词搜索结果页）" });
-          return;
-        }
-        items = extractNoteCards();
-        if (!items.length) {
-          sendResponse({ ok: false, reason: "当前页面未发现笔记卡片（请确认已展示搜索结果）" });
-          return;
-        }
+      const isNotePage = NOTE_ID_RE.test(location.pathname);
+      const cards = extractNoteCards();
+      const page_type = cards.length ? "search" : isNotePage ? "note" : "unknown";
+      const rateLimited = detectRateLimited();
+      if (page_type === "unknown") {
+        sendResponse({
+          ok: false,
+          error: "UNSUPPORTED_PAGE",
+          reason: "unsupported_page",
+          keyword,
+          page_keyword,
+          items: [],
+          rateLimited,
+        });
+        return;
       }
-
+      // 列表页逐卡片独立数据；详情页仅当前笔记自身数据
+      const items = cards.length ? cards : [extractNoteDetail()];
       sendResponse({
         ok: true,
+        keyword,
+        page_keyword,
+        page_type,
+        task_id,
+        target,
         items,
-        mode: isDetail ? "detail" : "search",
-        rateLimited: /访问频繁|频繁/.test(document.body.innerText.slice(0, 500)),
+        rateLimited,
       });
     } catch (e) {
-      sendResponse({ ok: false, reason: e.message });
+      sendResponse({ ok: false, error: "EXTRACT_FAILED", reason: e.message, items: [], rateLimited: detectRateLimited() });
     }
   });
 })();

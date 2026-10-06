@@ -1,0 +1,1718 @@
+{
+  "at": "2026-10-06T05:12:59.605Z",
+  "base": "https://huming0018-dot.github.io/crowd-pages",
+  "zipHead": {
+    "status": 0,
+    "err": "Error: Command failed: curl -sS -o /dev/null -w \"%{http_code}\" --max-time 20 -I \"https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip\"\ncurl: (35) LibreSSL"
+  },
+  "downloads": [],
+  "results": [
+    {
+      "platform": "android",
+      "scenario": "A",
+      "step": "设备识别",
+      "actual": "检测到：安卓手机",
+      "expected": "检测到：安卓手机",
+      "pass": true,
+      "evidence": {
+        "shot": "A-index.png"
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "A",
+      "step": "主 CTA 为免安装网页版",
+      "actual": "含 submit.html 主按钮",
+      "expected": "含 submit.html 主按钮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "A",
+      "step": "不自动触发安装器下载",
+      "actual": "无下载请求",
+      "expected": "无 .command/.bat 请求",
+      "pass": true,
+      "evidence": {
+        "dlReqs": []
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "A",
+      "step": "零泄漏/零页面异常",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": [],
+        "errors": []
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "A",
+      "step": "设备识别",
+      "actual": "检测到：安卓手机",
+      "expected": "检测到：安卓手机",
+      "pass": true,
+      "evidence": {
+        "shot": "A-index.png"
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "A",
+      "step": "主 CTA 为免安装网页版",
+      "actual": "含 submit.html 主按钮",
+      "expected": "含 submit.html 主按钮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "A",
+      "step": "不自动触发安装器下载",
+      "actual": "无下载请求",
+      "expected": "无 .command/.bat 请求",
+      "pass": true,
+      "evidence": {
+        "dlReqs": []
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "A",
+      "step": "零泄漏/零页面异常",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": [],
+        "errors": []
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "A",
+      "step": "设备识别（UA 无 android 关键证据）",
+      "actual": "未识别的设备",
+      "expected": "未识别的设备",
+      "pass": true,
+      "evidence": {
+        "shot": "A-index.png"
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "A",
+      "step": "兜底分支给出网页版入口",
+      "actual": "网页版+全部安装方式",
+      "expected": "网页版+全部安装方式",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "A",
+      "step": "不自动触发安装器下载",
+      "actual": "无",
+      "expected": "无",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "A",
+      "step": "零泄漏/零页面异常",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": [],
+        "errors": []
+      }
+    },
+    {
+      "platform": "macos",
+      "scenario": "A",
+      "step": "设备识别",
+      "actual": "检测到：Mac 电脑",
+      "expected": "检测到：Mac 电脑",
+      "pass": true,
+      "evidence": {
+        "shot": "A-index.png"
+      }
+    },
+    {
+      "platform": "macos",
+      "scenario": "A",
+      "step": "600ms 后自动触发对应安装器下载（该设备的预期行为）",
+      "actual": "自动下载 crowd-install-mac.command",
+      "expected": "自动下载 crowd-install-mac.command",
+      "pass": true,
+      "evidence": {
+        "dlReqs": [
+          "https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-install-mac.command"
+        ]
+      }
+    },
+    {
+      "platform": "macos",
+      "scenario": "A",
+      "step": "零泄漏/零页面异常",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": [],
+        "errors": []
+      }
+    },
+    {
+      "platform": "windows",
+      "scenario": "A",
+      "step": "设备识别",
+      "actual": "检测到：Windows 电脑",
+      "expected": "检测到：Windows 电脑",
+      "pass": true,
+      "evidence": {
+        "shot": "A-index.png"
+      }
+    },
+    {
+      "platform": "windows",
+      "scenario": "A",
+      "step": "600ms 后自动触发对应安装器下载（该设备的预期行为）",
+      "actual": "自动下载 crowd-install-win.bat",
+      "expected": "自动下载 crowd-install-win.bat",
+      "pass": true,
+      "evidence": {
+        "dlReqs": [
+          "https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-install-win.bat"
+        ]
+      }
+    },
+    {
+      "platform": "windows",
+      "scenario": "A",
+      "step": "零泄漏/零页面异常",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": [],
+        "errors": []
+      }
+    },
+    {
+      "platform": "linux",
+      "scenario": "A",
+      "step": "Linux 路由落点",
+      "actual": "未识别的设备",
+      "expected": "未识别的设备",
+      "pass": true,
+      "evidence": {
+        "shot": "A-index.png"
+      }
+    },
+    {
+      "platform": "linux",
+      "scenario": "A",
+      "step": "Linux 兜底：网页版入口可用、不自动下载",
+      "actual": "网页版入口+无自动下载",
+      "expected": "网页版入口+无自动下载",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "A",
+      "step": "零泄漏/零页面异常",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": [],
+        "errors": []
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "编号写入 localStorage",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "B",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "编号写入 localStorage",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "编号写入 localStorage",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "编号写入 localStorage",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "macos",
+      "scenario": "B",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "编号写入 localStorage",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "windows",
+      "scenario": "B",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "编号写入 localStorage",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "linux",
+      "scenario": "B",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "编号写入 localStorage",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "C1 无 crypto.randomUUID → 兜底 UUID 格式合法",
+      "actual": "acb43123-e2f9-452f-aef3-369098f14f11",
+      "expected": "UUID v4 格式",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noUUID",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "C2 存储提示 banner 出现",
+      "actual": "出现",
+      "expected": "出现",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "C2 localStorage 抛错时编号走内存兜底（注册不崩）",
+      "actual": "localStorage 抛错、流程未崩",
+      "expected": "流程走完",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "C2 刷新后编号确实丢失（内存兜底仅限当次会话）",
+      "actual": "编号表单重新出现",
+      "expected": "表单重新出现",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "B-noStorage",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "编号写入 localStorage",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "C1 无 crypto.randomUUID → 兜底 UUID 格式合法",
+      "actual": "b8ec4291-9016-4427-8925-1e2be0ef8bf0",
+      "expected": "UUID v4 格式",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noUUID",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "C2 存储提示 banner 出现",
+      "actual": "出现",
+      "expected": "出现",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "C2 localStorage 抛错时编号走内存兜底（注册不崩）",
+      "actual": "localStorage 抛错、流程未崩",
+      "expected": "流程走完",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "C2 刷新后编号确实丢失（内存兜底仅限当次会话）",
+      "actual": "编号表单重新出现",
+      "expected": "表单重新出现",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "B-noStorage",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "编号写入 localStorage",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "C1 无 crypto.randomUUID → 兜底 UUID 格式合法",
+      "actual": "3789c91e-fb39-4e26-9870-71fd67cee413",
+      "expected": "UUID v4 格式",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noUUID",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "连通性 banner 不亮（mock 200）",
+      "actual": "未亮",
+      "expected": "未亮",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "C2 存储提示 banner 出现",
+      "actual": "出现",
+      "expected": "出现",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "注册→编号出现",
+      "actual": "P-PLT001",
+      "expected": "P-PLT001",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "C2 localStorage 抛错时编号走内存兜底（注册不崩）",
+      "actual": "localStorage 抛错、流程未崩",
+      "expected": "流程走完",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "领任务→目标门店展示",
+      "actual": "测试门店 已展示",
+      "expected": "测试门店 已展示",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "链接识别",
+      "actual": "已识别 67e3e11a000000000603fb08",
+      "expected": "已识别 67e3e11a000000000603fb08",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "提交 accepted → 绿色已收录",
+      "actual": "ok-note | ✅ 已收录！测试门店 1/5",
+      "expected": "ok-note 含 已收录",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "提交 duplicate → 绿色已收录过(不重复计酬)",
+      "actual": "ok-note | 🔁 这条已收录过（去重），不重复计酬。测试门店 1/5",
+      "expected": "ok-note 含 已收录过",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "提交 rejected(item_url_invalid) → 红色中文原因",
+      "actual": "err-note | ❌ 链接格式不对（请复制小红书笔记的完整网址）可修正后重试，不会重复计酬。",
+      "expected": "err-note 含 链接格式不对",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "quota_exceeded → 红色配额提示",
+      "actual": "err-note | ❌ 未入库：今日配额已满，明天再试（HTTP 200）可稍后重试，不会重复计酬。",
+      "expected": "err-note 含 今日配额已满",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "C2 刷新后编号确实丢失（内存兜底仅限当次会话）",
+      "actual": "编号表单重新出现",
+      "expected": "表单重新出现",
+      "pass": true,
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "页面 JS 零异常",
+      "actual": "0",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "B-noStorage",
+      "step": "零泄漏",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "xhs": []
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "D",
+      "step": "Firefox 卡片为「升级中」占位且卡内无死链",
+      "actual": "🦊 Firefox 安卓版（升级中，暂不可用） | hasLink=false",
+      "expected": "含升级中 + 无链接",
+      "pass": true,
+      "evidence": {
+        "ffCard": {
+          "title": "🦊 Firefox 安卓版（升级中，暂不可用）",
+          "hasLink": false,
+          "text": "\n    🦊 Firefox 安卓版（升级中，暂不可用）\n    1应用商店装 Firefox，用 Firefox 打开本页（或把 Firefox 设为默认浏览器后扫码进来）\n    2点下方按钮 → 弹出「添加扩展」→ 点添加，装完自动"
+        }
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "D",
+      "step": "zip 链接指向 v3.4.6",
+      "actual": "https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip",
+      "expected": "crowd-extension-v3.4.6.zip",
+      "pass": true,
+      "evidence": {
+        "zipHref": "https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip"
+      }
+    },
+    {
+      "platform": "android",
+      "scenario": "D",
+      "step": "zip HEAD 200（bucket 存在该文件）",
+      "actual": "本机网络受限无法直连 supabase.co: Error: Command failed: curl -sS -o /dev/null -w \"%{http_code}\" --max-time 20 -I \"https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip\"\ncurl: (35) LibreSSL",
+      "expected": "200",
+      "pass": "unverified",
+      "evidence": {}
+    },
+    {
+      "platform": "android",
+      "scenario": "D",
+      "step": "零泄漏/零页面异常",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "errors": []
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "D",
+      "step": "Firefox 卡片为「升级中」占位且卡内无死链",
+      "actual": "🦊 Firefox 安卓版（升级中，暂不可用） | hasLink=false",
+      "expected": "含升级中 + 无链接",
+      "pass": true,
+      "evidence": {
+        "ffCard": {
+          "title": "🦊 Firefox 安卓版（升级中，暂不可用）",
+          "hasLink": false,
+          "text": "\n    🦊 Firefox 安卓版（升级中，暂不可用）\n    1应用商店装 Firefox，用 Firefox 打开本页（或把 Firefox 设为默认浏览器后扫码进来）\n    2点下方按钮 → 弹出「添加扩展」→ 点添加，装完自动"
+        }
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "D",
+      "step": "zip 链接指向 v3.4.6",
+      "actual": "https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip",
+      "expected": "crowd-extension-v3.4.6.zip",
+      "pass": true,
+      "evidence": {
+        "zipHref": "https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip"
+      }
+    },
+    {
+      "platform": "hm4",
+      "scenario": "D",
+      "step": "zip HEAD 200（bucket 存在该文件）",
+      "actual": "本机网络受限无法直连 supabase.co: Error: Command failed: curl -sS -o /dev/null -w \"%{http_code}\" --max-time 20 -I \"https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip\"\ncurl: (35) LibreSSL",
+      "expected": "200",
+      "pass": "unverified",
+      "evidence": {}
+    },
+    {
+      "platform": "hm4",
+      "scenario": "D",
+      "step": "零泄漏/零页面异常",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "errors": []
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "D",
+      "step": "Firefox 卡片为「升级中」占位且卡内无死链",
+      "actual": "🦊 Firefox 安卓版（升级中，暂不可用） | hasLink=false",
+      "expected": "含升级中 + 无链接",
+      "pass": true,
+      "evidence": {
+        "ffCard": {
+          "title": "🦊 Firefox 安卓版（升级中，暂不可用）",
+          "hasLink": false,
+          "text": "\n    🦊 Firefox 安卓版（升级中，暂不可用）\n    1应用商店装 Firefox，用 Firefox 打开本页（或把 Firefox 设为默认浏览器后扫码进来）\n    2点下方按钮 → 弹出「添加扩展」→ 点添加，装完自动"
+        }
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "D",
+      "step": "zip 链接指向 v3.4.6",
+      "actual": "https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip",
+      "expected": "crowd-extension-v3.4.6.zip",
+      "pass": true,
+      "evidence": {
+        "zipHref": "https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip"
+      }
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "D",
+      "step": "zip HEAD 200（bucket 存在该文件）",
+      "actual": "本机网络受限无法直连 supabase.co: Error: Command failed: curl -sS -o /dev/null -w \"%{http_code}\" --max-time 20 -I \"https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.6.zip\"\ncurl: (35) LibreSSL",
+      "expected": "200",
+      "pass": "unverified",
+      "evidence": {}
+    },
+    {
+      "platform": "hmnext",
+      "scenario": "D",
+      "step": "零泄漏/零页面异常",
+      "actual": "干净",
+      "expected": "0",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "errors": []
+      }
+    }
+  ]
+}
