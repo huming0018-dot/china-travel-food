@@ -6,8 +6,10 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   cacheOnFrontEndNav: true,
   reloadOnOnline: true,
   disable: process.env.NODE_ENV === 'development',
+  extendDefaultRuntimeCaching: true,
   workboxOptions: {
     disableDevLogs: true,
+    runtimeCaching: [{urlPattern: ({url}) => url.pathname.startsWith('/api/crowd/') || url.pathname.startsWith('/crowd/releases/'), handler: 'NetworkOnly', options: {cacheName: 'crowd-network-only'}}],
   },
 });
 

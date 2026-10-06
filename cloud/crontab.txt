@@ -128,3 +128,6 @@ HAE_GRID_SLICE=20
 #     只采集，产出 findings(chain/price)->gate_apply 与 claims(chain/platform_rating)->fact_verify；
 #     --driver 自动过两个既有写门、保证联动；每20分钟一批12家，优先无证据店，按rid断点。
 8,28,48 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/dpenrich.lock /usr/local/bin/python dianping_enrich.py --max 12 --priority-empty --driver >> /app/data/dianping_enrich.log 2>&1
+
+# 30) v4 need_ugc -> lease pool -> verified evidence -> build_bridge. Off until migration/acceptance.
+11,41 * * * * cd /app/cloud && . /app/cloud/env.sh && [ "${CROWD_V4_ENABLED:-0}" = "1" ] && flock -n /tmp/crowd-v4.lock /usr/local/bin/python crowd_v4.py cycle --apply >> /app/data/crowd_v4.log 2>&1

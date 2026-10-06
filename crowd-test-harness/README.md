@@ -1,5 +1,9 @@
 # 众包美食家扩展 E2E 测试 harness
 
+当前版本为 v4。先在 `app/` 执行 `npm ci`，再在本目录执行 `npm test`，运行 `crowd_extension/tests/` 的当前验证。设置 `CROWD_TEST_TOOLS`（含 pg/Playwright）可增加真实浏览器测试；`CROWD_TEST_DATABASE_URL` 只能指向全新可丢弃数据库，`CROWD_PORTAL_TEST_ORIGIN` 用于已启动的本地网站。数据库/浏览器未运行时会明确跳过，不算通过；实机验收另行进行。
+
+**下文及旧 run-*.js 为 v3 历史资料，依赖已退役的运行时，不能作为 v4 验收。**
+
 对 MV3 插件做真实运行测试：chrome-for-testing 加载未打包扩展，CDP Fetch 域拦截 SW 的全部 Supabase RPC，页面层拦截小红书请求并回伪搜索页。**绝不触碰用户 Chrome profile，绝不真实请求生产 Supabase / 小红书**。
 
 ## 环境前提

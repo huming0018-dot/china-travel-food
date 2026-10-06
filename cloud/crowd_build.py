@@ -1,174 +1,120 @@
 #!/usr/bin/env python3
-"""
-crowd_build.py — 众包插件构建脚本（PM 窗口）
-
-用途：
-  1. 校验插件源码完整性（文件齐全、JS 语法、安全线配置）
-  2. 从 app/.env.local 读取真实 Supabase URL + anon key（sb_pub_）
-  3. 把 key 注入 background.js / apply.html（构建时替换）
-  4. 打成 zip → crowd_extension/releases/crowd-extension-v2.0.0.zip（供在线报名页下载）
-
-用法：
-  python3 cloud/crowd_build.py            # 打正式包
-  python3 cloud/crowd_build.py --dry      # 只校验不打包
-
-安全：
-  - anon key 是公开可分发的最小权限 key（仅 RPC 调用 + 报名 insert pending），可随包分发
-  - service_role key 绝不进入插件包
-"""
+"""Build desktop extension + native source projects; no secret or retired v3 scripts."""
+import argparse
+import base64
+import hashlib
 import json
 import os
-import re
+from pathlib import Path
 import shutil
 import subprocess
-import sys
 import tempfile
+import urllib.parse
 import zipfile
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-EXT = os.path.join(ROOT, "crowd_extension")
-VERSION = "3.2.1"  # 众包美食家 v3.2（审阅修复版）
-OUT_DIR = os.path.join(EXT, "releases")
-OUT_ZIP = os.path.join(OUT_DIR, f"crowd-extension-v{VERSION}.zip")
-ENV_LOCAL = os.path.join(ROOT, "app", ".env.local")
-
-NEEDED = [
-    "manifest.json",
-    "src/background.js",
-    "src/content.js",
-    "src/safety_engine.js",
-    "src/popup.html",
-    "src/popup.js",
-    "src/onboarding.html",
-    "src/onboarding.js",
-    "icons/icon128.png",
-]
+ROOT = Path(__file__).resolve().parent.parent
+EXT = ROOT / 'crowd_extension'
+VERSION = '4.0.0'
+DEFAULT_PORTAL = 'https://app-lyart-eta-22.vercel.app'  # Existing project production origin recorded in HANDOFF.
+FILES = ['manifest.json','icons/icon128.png'] + ['src/'+x for x in ['background.js','core.js','api.js','agent.js','content.js','config.js','controller.html','controller.css','controller.js','native-runtime.js','join.js']]
 
 
-def load_env(path):
-    env = {}
-    if os.path.exists(path):
-        for line in open(path):
-            line = line.strip()
-            if line and not line.startswith("#") and "=" in line:
-                k, v = line.split("=", 1)
-                env[k.strip()] = v.strip()
-    return env
+def values():
+    values = {}
+    path = ROOT / 'app/.env.local'
+    if path.exists():
+        for line in path.read_text().splitlines():
+            if '=' in line and not line.lstrip().startswith('#'):
+                key, value = line.split('=',1); values[key.strip()] = value.strip().strip('\"\'')
+    values.update({key:value for key,value in os.environ.items() if key.startswith('NEXT_PUBLIC_SUPABASE_')})
+    return values
 
 
-def check_js_syntax(path):
-    # 用 node --check 校验（macOS 有 node 时）
-    try:
-        r = subprocess.run(["node", "--check", path], capture_output=True, text=True, timeout=30)
-        if r.returncode != 0:
-            print(f"  ⚠ JS 语法: {path} → {r.stderr.strip()[:200]}")
-            return False
-        return True
-    except FileNotFoundError:
-        # 无 node：退化为 python 括号粗查（仅提示）
-        print("  ℹ 未装 node，跳过 JS 语法机检（建议安装后重跑）")
-        return True
+def config():
+    supplied = values()
+    url = supplied.get('NEXT_PUBLIC_SUPABASE_URL','').rstrip('/'); key = supplied.get('NEXT_PUBLIC_SUPABASE_ANON_KEY','')
+    parsed = urllib.parse.urlsplit(url)
+    if parsed.scheme != 'https' or not (parsed.hostname or '').endswith('.supabase.co') or parsed.username or parsed.path or parsed.query or parsed.fragment: raise ValueError('Valid HTTPS Supabase URL required')
+    if key.startswith('eyJ'):
+        payload = key.split('.')[1]; role = json.loads(base64.urlsafe_b64decode(payload + '='*(-len(payload)%4))).get('role')
+        if role != 'anon': raise ValueError('Only an anon JWT can be distributed')
+    elif not key.startswith('sb_publishable_'): raise ValueError('A publishable key or anon JWT is required')
+    conf = {'url': url, 'key': key}
+    portal = os.environ.get('CROWD_PUBLIC_ORIGIN') or supplied.get('CROWD_PUBLIC_ORIGIN') or DEFAULT_PORTAL
+    if portal:
+        parsed = urllib.parse.urlsplit(portal)
+        if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.path not in ('','/') or parsed.query or parsed.fragment: raise ValueError('CROWD_PUBLIC_ORIGIN must be a bare HTTPS origin')
+        conf['portal'] = portal.rstrip('/')
+    return conf
 
 
-def main():
-    dry = "--dry" in sys.argv
-    print(f"=== 众包插件构建 v{VERSION} ===")
-
-    # 1) 文件完整性
-    missing = [f for f in NEEDED if not os.path.exists(os.path.join(EXT, f))]
-    if missing:
-        print(f"✗ 缺失文件: {missing}")
-        sys.exit(1)
-    print(f"✓ 文件齐全 ({len(NEEDED)} 个)")
-
-    # 2) JS 语法
-    bad = False
-    for js in ["src/background.js", "src/content.js", "src/safety_engine.js"]:
-        if not check_js_syntax(os.path.join(EXT, js)):
-            bad = True
-    if bad:
-        print("✗ JS 语法检查未通过")
-        sys.exit(1)
-    print("✓ JS 语法 OK")
-
-    # 3) 读取 env（正式打包才需要）
-    env = load_env(ENV_LOCAL)
-    anon = env.get("NEXT_PUBLIC_SUPABASE_ANON_KEY", "")
-    url = env.get("NEXT_PUBLIC_SUPABASE_URL", "")
-
-    if dry:
-        print(f"✓ dry-run：anon key {'已配置(' + str(len(anon)) + '字符)' if anon else '缺失！'}")
-
-    if anon.startswith("eyJ"):
-        print("✗ anon key 仍是旧版 legacy 格式（eyJ 开头），已禁用！请用 sb_pub_ 新版 key")
-        sys.exit(1)
-    if not anon.startswith("sb_pub"):
-        print(f"✗ anon key 格式异常: {anon[:8]}...，应为 sb_pub_ 开头")
-        sys.exit(1)
-    if len(anon) < 40:
-        print("✗ anon key 长度异常")
-        sys.exit(1)
-    print(f"✓ anon key 校验通过 (sb_pub_，{len(anon)}字符)")
-
-    if dry:
-        return
-
-    # 4) 临时目录注入 + 打包
-    os.makedirs(OUT_DIR, exist_ok=True)
-    tmp = tempfile.mkdtemp(prefix="crowd_ext_")
-    try:
-        # 复制全部文件到临时目录
-        for f in os.listdir(EXT):
-            if f.startswith(".") or f == "releases":
-                continue
-            src = os.path.join(EXT, f)
-            dst = os.path.join(tmp, f)
-            if os.path.isdir(src):
-                shutil.copytree(src, dst)
-            else:
-                shutil.copy2(src, dst)
-
-        # 注入 background.js：CROWD_API_BASE / CROWD_API_KEY
-        bg = os.path.join(tmp, "src", "background.js")
-        c = open(bg).read()
-        c = c.replace('self.CROWD_API_BASE || "https://bdwrhshgdeghgyzwpxnl.supabase.co"',
-                      '"' + url.rstrip("/") + '"')
-        c = re.sub(r'API_KEY: self\.CROWD_API_KEY \|\| ""', 'API_KEY: "' + anon + '"', c)
-        open(bg, "w").write(c)
-        print("✓ background.js 已注入 key")
-
-        # 注入 apply.html（放到 releases 旁，方便报名页同目录下载；正式包内不含报名页 key 注入文件）
-        ap = os.path.join(tmp, "apply.html")
-        if os.path.exists(ap):
-            a = open(ap).read()
-            a = a.replace('"REPLACE_WITH_SUPABASE_ANON_KEY"', '"' + anon + '"')
-            open(ap, "w").write(a)
-            print("✓ apply.html 已注入 anon key")
-
-        # 5) 打 zip
-        with zipfile.ZipFile(OUT_ZIP, "w", zipfile.ZIP_DEFLATED) as zf:
-            for root, dirs, files in os.walk(tmp):
-                for f in files:
-                    full = os.path.join(root, f)
-                    rel = os.path.relpath(full, tmp)
-                    zf.write(full, rel)
-        print(f"✓ 已打包: {OUT_ZIP} ({os.path.getsize(OUT_ZIP)//1024} KB)")
-
-        # 6) 校验包内容
-        with zipfile.ZipFile(OUT_ZIP) as zf:
-            names = zf.namelist()
-            for need in ["manifest.json", "src/background.js"]:
-                if need not in names:
-                    print(f"✗ 包内缺失 {need}")
-                    sys.exit(1)
-        print("✓ 包内容校验 OK")
-    finally:
-        shutil.rmtree(tmp, ignore_errors=True)
-
-    print("\n=== 完成：可分发文件 ===")
-    print(f"  {OUT_ZIP}")
-    print("  报名页: apply.html（同目录 releases/ 下放置 zip 即可在线下载）")
+def zipdir(source, destination):
+    with zipfile.ZipFile(destination,'w',zipfile.ZIP_DEFLATED) as archive:
+        for file in sorted(source.rglob('*')):
+            if file.is_file():
+                info=zipfile.ZipInfo(file.relative_to(source).as_posix(),(2026,10,5,0,0,0)); info.compress_type=zipfile.ZIP_DEFLATED
+                info.external_attr=(0o100644 << 16); archive.writestr(info,file.read_bytes())
 
 
-if __name__ == "__main__":
-    main()
+def source_integrity(platform):
+    """Fingerprint native host inputs too, not just the shared agent scripts."""
+    directory = EXT/'desktop' if platform == 'desktop' else EXT/'mobile'/platform
+    ignored = {'assets','build','.gradle','node_modules','dist','.DS_Store'}
+    return {file.relative_to(EXT).as_posix(): hashlib.sha256(file.read_bytes()).hexdigest()
+            for file in sorted(directory.rglob('*'))
+            if file.is_file() and not ignored.intersection(file.relative_to(directory).parts)}
+
+
+def controller_html(conf):
+    return (EXT/'src/controller.html').read_text().replace(
+        'connect-src https://*.supabase.co;', 'connect-src '+conf['url']+' '+conf['portal']+';')
+
+
+def main(argv=None):
+    ap=argparse.ArgumentParser(description=__doc__); ap.add_argument('--dry',action='store_true'); args=ap.parse_args(argv)
+    conf=config()
+    for file in FILES:
+        if not (EXT/file).is_file(): raise ValueError('Missing '+file)
+        if file.endswith('.js'): subprocess.run(['node','--check',str(EXT/file)],check=True,capture_output=True)
+    if args.dry: print('v4 source/config validation passed (no credentials printed)'); return
+    out=EXT/'releases'; out.mkdir(exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='crowd-v4-') as tmp:
+        desktop=Path(tmp)/'desktop'; desktop.mkdir()
+        for file in FILES:
+            destination=desktop/file; destination.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(EXT/file,destination)
+        (desktop/'src/config.js').write_text('globalThis.CROWD_CONFIG = '+json.dumps(conf)+';\n')
+        if conf.get('portal'):
+            controller = desktop/'src/controller.html'
+            controller.write_text(controller_html(conf))
+        manifest=json.loads((desktop/'manifest.json').read_text()); manifest['host_permissions']=['https://www.xiaohongshu.com/*','https://m.xiaohongshu.com/*',conf['url']+'/*']; (desktop/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+        if conf.get('portal'):
+            manifest['host_permissions'].append(conf['portal']+'/*')
+            manifest['externally_connectable']={'matches':[conf['portal']+'/*']}
+            (desktop/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+        zipdir(desktop,out/f'crowd-extension-v{VERSION}.zip')
+        mobile=Path(tmp)/'mobile'; shutil.copytree(EXT/'mobile',mobile,ignore=shutil.ignore_patterns('build','.gradle','.DS_Store','*.apk','*.ipa','*.hap'))
+        for dest in ['android/app/src/main/assets','ios/assets','harmony/entry/src/main/resources/rawfile/assets']:
+            assets=mobile/dest; assets.mkdir(parents=True,exist_ok=True)
+            for source in (desktop/'src').iterdir():
+                if source.name != 'background.js': shutil.copyfile(source,assets/source.name)
+            platform = 'android' if dest.startswith('android') else 'ios' if dest.startswith('ios') else 'harmony'
+            (assets/'config.js').write_text('globalThis.CROWD_CONFIG = '+json.dumps({**conf,'platform':platform})+';\n')
+            (assets/'source-integrity.json').write_text(json.dumps(source_integrity(platform),sort_keys=True))
+        shutil.copyfile(EXT/'README.md',mobile/'README.md')
+        zipdir(mobile,out/f'crowd-mobile-sources-v{VERSION}.zip')
+        desktop_native=Path(tmp)/'desktop-native'; shutil.copytree(EXT/'desktop',desktop_native,ignore=shutil.ignore_patterns('node_modules','build','dist','.DS_Store'))
+        assets=desktop_native/'assets'; assets.mkdir()
+        for source in (desktop/'src').iterdir():
+            if source.name!='background.js': shutil.copyfile(source,assets/source.name)
+        shutil.copyfile(EXT/'icons/icon128.png',assets/'icon128.png')
+        (assets/'source-integrity.json').write_text(json.dumps(source_integrity('desktop'),sort_keys=True))
+        zipdir(desktop_native,out/f'crowd-desktop-sources-v{VERSION}.zip')
+    for file in ['crowd-install-win.bat','crowd-install-mac.command']: shutil.copyfile(EXT/file,out/file)
+    portal_assets = ROOT/'app/public/crowd'; portal_assets.mkdir(parents=True,exist_ok=True)
+    shutil.copyfile(EXT/'src/join.js',portal_assets/'join.js')
+    packages=[out/f'crowd-extension-v{VERSION}.zip',out/f'crowd-mobile-sources-v{VERSION}.zip',out/f'crowd-desktop-sources-v{VERSION}.zip']
+    (out/'SHA256SUMS-v4.txt').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in packages))
+    print('Built desktop and native source packages v'+VERSION)
+
+
+if __name__=='__main__': main()

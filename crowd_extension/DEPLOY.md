@@ -1,3 +1,19 @@
+# 众包 v4 分发与部署（2026-10-06）
+
+本次修复基线为 `1b4006b` + `cd10128`。默认入口复用既有网站 `/crowd`，发布者在 `/crowd/admin` 生成邀请链接和二维码；参与者安装、同意和首次登录后自动领取、搜索、采集与回传。权威实现和验收说明见 [README.md](README.md) 与 [CROWD_CONTRACT.md](CROWD_CONTRACT.md)。
+
+`publish.sh` 默认只构建。`--check` 检查部署条件，`--apply` 才执行已连接项目的迁移/发布/邀请生成。没有签名与实机验收的渠道不能标记 `verified`。公开下载包、服务端密钥、账户会话和签名私钥分开处理；源码仓库不含私人配置。旧扩展固定公钥和 Gecko ID 保留，但不发布指向未签名包的更新清单。
+
+当前交付为可复现源码与内部测试包，尚未部署现网。Android SDK 编译可以在此环境完成；Windows/macOS 独立客户端、iPhone/iPad 与原生鸿蒙仍需各自安装/签名和实机验收。用户已决定保留苹果完整目标并后续补齐发布账号。网页不能代替原生苹果后台自动采集，也不把旧手动提交页当作全自动渠道。
+
+v4 使用独立的 `crowd_v4` 数据、邀请和奖励账本；旧 v3 RPC/历史数据不自动删除或重算。匿名 v3 写接口仍属于旧通道，应在迁移参与者后另行关闭；它们不能写入新 v4 私有数据。部署脚本只应用 `cloud/supabase/migrations/` 的新增迁移，不重新执行下列历史 v3 重算脚本。
+
+源码构建：`python3 cloud/crowd_build.py`。Android 构建：`python3 cloud/crowd_android_build.py --sdk <SDK目录>`。桌面构建：`python3 cloud/crowd_desktop_build.py --platform win32|darwin --arch x64|arm64`（Mac 签名步骤需 Mac）。发布检查：`python3 cloud/crowd_launch.py`。完整测试命令见 README。
+
+---
+
+# 以下为 v3 历史部署记录（不用于 v4 发版）
+
 # 众包美食家 v3.4 · 完整部署手册
 
 > 版本：v3.4.6（队列竞态/死信词表/幂等重裁修复）· 2026-10-06

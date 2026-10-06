@@ -28,6 +28,7 @@ sys.path.insert(0, "/app/pipeline")
 
 import common_core as CC          # noqa: E402
 import deep_coverage as D         # noqa: E402
+from crowd_v4 import verified_pages
 
 COVDIR = pathlib.Path("/app/data/coverage")
 STATEP = COVDIR / "build_bridge_state.json"
@@ -82,8 +83,11 @@ def gather_pages(rec):
             if h.get("url") and h["url"] not in u \
                     and D.norm(name) in D.norm(h.get("title", "") + " " + h.get("snippet", "")):
                 u.add(h["url"]); urls.append(h["url"])
-    pages, used, total = [], [], 0
+    pages, used = verified_pages(name, os.environ.get('CROWD_V4_EVIDENCE_FILE', str(COVDIR / 'crowd_v4_verified.jsonl')))
+    total = sum(map(len, pages))
     for url in urls[:6]:
+        if url in used:
+            continue
         ft = D.fetch_fulltext(url)
         if ft and D.norm(name) in D.norm(ft):
             pages.append(f"【来源{len(pages)+1} {url}】\n{ft}")
