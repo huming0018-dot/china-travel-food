@@ -69,3 +69,10 @@ Android 产物为内部 debug 签名。Apple/Harmony 编译、发布签名和正
 运行 `python3 cloud/crowd_build.py --dry` 检查公开配置，实际生成包用 `python3 cloud/crowd_build.py`。SDK/runtime/产物、私钥与本机会话不提交到源码仓库。
 
 部署步骤和各端边界见 DISTRIBUTION.md / DEPLOY.md / README.md。先完成试点验收并提供可信网站部署环境，再用发布者脚本处理未执行迁移/发布；参与者只收到链接或二维码。回滚停止 v4 客户端与调度，保留证据和已付账本。
+# Mac 内部验收准备 · 2026-10-07
+
+用户选择 Mac，当前执行环境仍是 Linux。已生成双架构 Mac 离线内测包（约 252 MiB），两个官方 Electron 运行时通过 SHA256；ZIP 内脚本可执行权限、运行时及共享源码摘要、发布密钥不进入材料检查通过。脚本改用独立客户端，自动识别 CPU，在 Mac 本机临时签名并验证后安装；没有关闭 Gatekeeper 或写全局浏览器策略。不能据这些检查宣称 Mac 安装/签名已通过。
+
+真实中台创建一份 max_people=1 / quota_day=2 / 48 小时报名期限的试点邀请。`crowd-access` v2 ACTIVE，部署摘要 `e1cd40c4dab74b4c030b8807e34a9821483df2ae952da8daa2ba064326421aa0`；只对配置中的邀请摘要允许 Mac 内测接入，数据库仍校验名额、撤销和安装身份。真实 HTTP：试点邀请 valid=true/full=false；Windows 使用同一邀请返回 release_not_ready，Mac 未同意返回 consent_required；正式 manifest ready=false，正式邀请仍被拒绝。数据库参与者、开户预留和回传均为 0，未做虚假开户/上传。
+
+当前全部核心测试通过，新增试点过期/错 token/错平台/数据库过期及正式渠道不被打开的检查；Mac 包测试验证损坏 runtime 被拒绝和 shell 语法。还需要 Mac 上真实签名、首次启动/协议关联/登录/领取/上传/关窗后台/停止/恢复；只有这些完成才可以开放对应渠道。报名期限不会自动暂停已报名身份，试点结束需撤销邀请并暂停试点身份。

@@ -23,6 +23,17 @@ assert.equal((await request('operations',{action:'admin',name:'unrelated_rpc'}, 
 const exported=await (await request('operations',{action:'export',payload:{after_id:0}},{Authorization:'Bearer '+owner})).json();
 assert.deepEqual(exported.data,[proof]);assert.equal(JSON.stringify(exported).includes(owner),false);
 assert.equal((await request('enroll',{invite,install_secret:secret,consent:'wrong',platform:'android'})).status,400);
+const trialPayload={invite,install_secret:secret,consent:'crowd-public-v4',platform:'macos'};
+configuration.macTrial={token_hash:await digest(invite),expires_at:new Date(Date.now()+60000).toISOString()};
+assert.equal((await (await request('manifest')).json()).ready,false,'internal trial never opens the formal manifest');
+assert.equal((await request('enroll',{...trialPayload,invite:'9'.repeat(64)})).status,400);
+assert.equal((await request('enroll',{...trialPayload,platform:'windows'})).status,400);
+expired=true;assert.equal((await request('enroll',trialPayload)).status,400,'trial still checks the database invitation');expired=false;
+assert.equal((await request('enroll',trialPayload)).status,200);
+configuration.macTrial.expires_at=new Date(Date.now()-1000).toISOString();
+assert.equal((await request('enroll',trialPayload)).status,400);
+assert.equal((await request('invite',{}, {Authorization:'Bearer '+owner})).status,400,'trial never permits formal invitation minting');
+delete configuration.macTrial;
 configuration.releases.android={channel:'apk',version:'4.0.0',verified:true,url:origin+'/crowd/releases/crowd-android-v4.0.0-debug.apk',sha256:'a'.repeat(64)};
 configuration.releases.ios={channel:'apk',version:'4.0.0',verified:true,url:origin+'/crowd/releases/fake.ipa',sha256:'a'.repeat(64)};
 assert.deepEqual(Object.keys((await (await request('manifest')).json()).releases),['android'],'unsupported channels remain closed');

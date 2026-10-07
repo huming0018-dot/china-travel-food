@@ -1,81 +1,50 @@
 #!/bin/bash
-# ============================================================
-# 美食图鉴·众包采集插件 — macOS 一键安装器
-# 无需 Python / 无任何开发环境。双击即可。
-# 自动完成：解压插件 → 打开扩展页 → 复制插件路径到剪贴板
-# ============================================================
-set -e
-
-echo "=============================================="
-echo "  美食图鉴 · 众包采集插件 一键安装 (macOS)"
-echo "=============================================="
-echo ""
-
-# 0) 脚本所在目录（下载文件通常在 ~/Downloads 或当前目录）
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-WORK_DIR="${HOME}/.food-crowd"
-EXT_DIR="${WORK_DIR}/crowd-extension-v4.0.0"
-
-# 1) 找 zip：优先脚本同目录，其次 Downloads
-ZIP_SRC=""
-for cand in "${SCRIPT_DIR}/crowd-extension-v4.0.0.zip" "${HOME}/Downloads/crowd-extension-v4.0.0.zip"; do
-  if [ -f "$cand" ]; then ZIP_SRC="$cand"; break; fi
+# Internal Mac acceptance only. The bundle supplies both verified architectures.
+set -euo pipefail
+umask 077
+finish() {
+  result=$?
+  [ -z "${staging:-}" ] || rm -rf "$staging"
+  if [ "$result" -ne 0 ]; then echo '安装未完成。请保留这段提示，交给 Codex 检查。'; fi
+  echo '按回车关闭此窗口。'
+  read -r _ || true
+}
+trap finish EXIT
+cd "$(dirname "$0")"
+echo '正在准备 Mac 内测客户端。无需管理员权限。'
+[ "$(uname -s)" = Darwin ] || { echo '请在 Mac 上双击运行。'; exit 1; }
+case "$(uname -m)" in
+  arm64) arch=arm64 ;;
+  x86_64) arch=x64 ;;
+  *) echo '此 Mac 的处理器暂不支持。'; exit 1 ;;
+esac
+major=$(sw_vers -productVersion | cut -d. -f1)
+[ "$major" -ge 13 ] || { echo '需要 macOS 13 或更新系统。'; exit 1; }
+for tool in unzip shasum plutil codesign open; do
+  command -v "$tool" >/dev/null || { echo "缺少系统工具：$tool"; exit 1; }
 done
-
-if [ -z "$ZIP_SRC" ]; then
-  echo "❌ 没找到 crowd-extension-v4.0.0.zip"
-  echo "   请先回到报名/安装页下载插件 zip（与安装器放同一文件夹即可）。"
-  echo ""
-  read -p "按回车退出…" _
-  exit 1
-fi
-echo "✓ 找到插件包: ${ZIP_SRC}"
-
-# 2) 解压到固定目录
-mkdir -p "$WORK_DIR"
-rm -rf "$EXT_DIR"
-echo "✓ 解压中…"
-cd "$WORK_DIR"
-unzip -oq "$ZIP_SRC" -d "$EXT_DIR"
-echo "✓ 插件已解压到: ${EXT_DIR}"
-
-# 3) 自动探测 Chrome 系浏览器
-BROWSER_APP=""
-for app in "/Applications/Google Chrome.app" "/Applications/Microsoft Edge.app" "/Applications/Brave Browser.app" "/Applications/Chromium.app" "/Applications/Arc.app"; do
-  if [ -d "$app" ]; then BROWSER_APP="$app"; break; fi
-done
-
-if [ -z "$BROWSER_APP" ]; then
-  echo "❌ 未检测到 Chrome / Edge / Brave。请先安装任一 Chrome 系浏览器后重试。"
-  read -p "按回车退出…" _
-  exit 1
-fi
-echo "✓ 检测到浏览器: $(basename "$BROWSER_APP" | sed 's/\.app//')"
-
-# 4) 复制插件路径到剪贴板
-echo -n "$EXT_DIR" | pbcopy
-echo "✓ 插件文件夹路径已复制到剪贴板"
-
-# 5) 打开扩展管理页
-if [[ "$BROWSER_APP" == *"Google Chrome"* ]]; then
-  EXT_URL="chrome://extensions"
-elif [[ "$BROWSER_APP" == *"Microsoft Edge"* ]]; then
-  EXT_URL="edge://extensions"
-else
-  EXT_URL="chrome://extensions"
-fi
-open -a "$BROWSER_APP" "$EXT_URL"
-echo "✓ 已打开扩展管理页（${EXT_URL}）"
-
-echo ""
-echo "=============================================="
-echo "  最后一步（30 秒完成）："
-echo "  1. 在扩展页右上角 开启「开发者模式」"
-echo "  2. 点「加载已解压的扩展程序」"
-echo "  3. 在弹窗里按 ⌘V 粘贴路径 → 回车"
-echo "=============================================="
-echo ""
-echo "安装完成后：点浏览器右上角 🧩 → 插件「选项」→"
-echo "登录中台邮箱账户 → 确认自愿参与 → 经审核批准后登录小红书并启动。"
-echo ""
-read -p "按回车关闭…" _
+echo '正在校验安装文件……'
+shasum -a 256 -c SHA256SUMS.txt
+destination="$HOME/Applications/众包采集内测.app"
+[ ! -e "$destination" ] || { echo '内测客户端已安装，正在打开。'; open "$destination"; exit 0; }
+mkdir -p "$HOME/Applications"
+staging=$(mktemp -d "$HOME/Applications/.crowd-install.XXXXXX")
+unzip -q "electron-v44.5.1-darwin-$arch.zip" -d "$staging"
+app="$staging/众包采集内测.app"
+mv "$staging/Electron.app" "$app"
+plist="$app/Contents/Info.plist"
+plutil -replace CFBundleName -string '众包采集内测' "$plist"
+plutil -replace CFBundleDisplayName -string '众包采集内测' "$plist"
+plutil -replace CFBundleIdentifier -string org.foodresearch.crowd "$plist"
+plutil -replace CFBundleShortVersionString -string 4.0.0 "$plist"
+plutil -replace CFBundleVersion -string 40000 "$plist"
+plutil -insert CFBundleURLTypes -json '[{"CFBundleURLSchemes":["foodcrowd"],"CFBundleURLName":"org.foodresearch.crowd.join"}]' "$plist"
+mkdir -p "$app/Contents/Resources/app"
+unzip -q crowd-desktop-sources-v4.0.0.zip -d "$app/Contents/Resources/app"
+echo '正在生成本机内测签名……'
+codesign --force --deep --preserve-metadata=entitlements,requirements,flags --sign - "$app"
+codesign --verify --deep --strict "$app"
+mv "$app" "$destination"
+echo '客户端已安装到你的「应用程序」文件夹，正在打开。'
+open "$destination"
+echo '等待客户端打开后，再打开同目录的「开始Mac内测.html」。'

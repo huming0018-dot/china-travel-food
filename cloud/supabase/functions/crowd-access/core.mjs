@@ -87,8 +87,13 @@ export async function handleAccess(request, backend, configuration, operatorHash
         const {invite,install_secret,consent,platform}=input;
         if(!hex(invite)||!hex(install_secret)||!['android','ios','harmony','windows','macos'].includes(platform))throw new Error('invalid_request');
         if(consent!=='crowd-public-v4')throw new Error('consent_required');
-        if(!available(configuration)[platform])throw new Error('release_not_ready');
-        const reservation={token_hash:await digest(invite),device_hash:await digest(install_secret),platform};
+        const token_hash=await digest(invite);
+        // One expiring Mac acceptance invitation, independent of formal releases.
+        // Database reservation still enforces its one-installation / daily quota.
+        const trial=configuration.macTrial;
+        const internalMac=platform==='macos' && hex(trial?.token_hash) && token_hash===trial.token_hash && Date.parse(trial.expires_at)>Date.now();
+        if(!available(configuration)[platform] && !internalMac)throw new Error('release_not_ready');
+        const reservation={token_hash,device_hash:await digest(install_secret),platform};
         const allocation=await rpc(backend,'reserve',reservation);
         let account=await installationUser(backend,{action:'auth_read',id:allocation.user_id,reservation});
         let result=await account.json();

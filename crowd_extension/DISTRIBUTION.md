@@ -22,6 +22,10 @@ Windows 现在有 NSIS 普通安装程序，限内部试点：每用户安装，
 
 Mac 仍需在 Mac 打包、签名和验收；苹果/原生鸿蒙仍需对应 SDK、发布身份及正式分发渠道。没有验收的渠道不会开放。苹果和原生鸿蒙后台搜索仍受系统限制，不能保证锁屏后持续采集。
 
+Mac 内测可用 `python3 cloud/crowd_mac_trial.py --invite` 准备离线包，包含经过官方 SHA256 校验的 Apple 芯片和 Intel 运行时。macOS 13+ 解压后双击 `双击安装.command`，脚本自动识别架构，安装到当前用户的 Applications，生成并验证本机临时签名，然后打开客户端；不需要 Python、Node、Xcode 或管理员权限。再打开同目录 `开始Mac内测.html`，确认自愿参与并登录小红书。Mac 的系统安装确认仍需本人处理。
+
+该邀请只允许一台 Mac 在 48 小时内报名，每日最多 2 条。接入函数只接受私有状态记录中的这一个邀请摘要，仍由数据库校验过期、撤销、名额和安装身份，不开放正式清单或邀请创建。报名过期不等于已报名身份自动停用，验收结束应撤销邀请并暂停试点身份。内测包包含单设备邀请，不能公开上传或转发；发布密钥不进入包。需要重新部署 `crowd-access` 才能接入试点。完成真实安装、登录、领取、回传、关窗后台运行、停止及恢复后再考虑正式渠道；本机临时签名不等同于 Developer ID 签名和公证。
+
 ## 给部署负责人
 
 源码与原生资源：`python3 cloud/crowd_build.py`。Windows runtime：`python3 cloud/crowd_desktop_build.py --platform win32 --arch x64`。普通安装程序：`python3 cloud/crowd_windows_installer.py --arch x64`（NSIS 3，可用 `CROWD_MAKENSIS` 指定编译器）。

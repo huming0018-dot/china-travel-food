@@ -1,3 +1,5 @@
+> **2026-10-07 Mac 内测准备**：用户已选 Mac，当前仍连接云 Linux。双架构离线内测包和一个单 Mac、48 小时报名、每日 2 条的真实内部邀请已准备；crowd-access v2 上线，正式渠道仍关闭。尚未在 Mac 签名/安装/登录或真实回传，参与者和证据仍为 0；不得当作正式可分发。详情见 crowd_extension/DISTRIBUTION.md 与 REPAIR_VERIFICATION.md。
+
 > **2026-10-07 正式网页已发布**：PR #1 已合并，Vercel 正式部署 `3bBqSP5GeS7sWM88HSjzdnnw1oSF` / 提交 `adce116` 为 Ready。正式域名 `https://app-lyart-eta-22.vercel.app` 的管理页和 manifest 实际返回 200；匿名回收 403、发布身份查看/导出 200。当前安装渠道为空，邀请返回 release_not_ready，尚不能声明可开工分发。三条真实试点任务 open，参与者/回传为 0；设备问题等待用户回复，Docker 入库流水线未启用。以下历史快照不能代替这一状态。
 
 > **2026-10-07 参与接入和数据回收**：`crowd-access` v1 已部署，网页无需 Supabase 管理员密钥即可接入；受发布身份保护的数据查看/导出已通过实际浏览器→网站→线上中台测试。三条真实餐厅任务已发布，每家目标两条；参与者、回传记录及付款仍为 0，安装渠道未验收、未发可开工邀请。数据位于 Supabase `crowd_v4.proofs.record`，保留标准/非标/原文；核验后才导出到 `crowd_v4_verified.jsonl` 供质量门入库。生产 Docker 定时导出未启用。详情见 `crowd_extension/DATA_RECOVERY.md`。

@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import secrets
+from datetime import datetime, timezone
 from crowd_build import ROOT, config, values
 
 
@@ -32,6 +33,15 @@ def prepare():
         missing=[item for item in report['missing'] if item not in unrelated]
         if missing:raise ValueError('Installation channel rejected: '+', '.join(missing))
     configuration={'origin':conf['portal'],'previewOrigins':['https://app-git-fix-crowd-distribution-v348-haha-hunter.vercel.app'],'releases':releases}
+    trial=state/'mac-trial.json'
+    if trial.exists():
+        pilot=json.loads(trial.read_text())
+        token=pilot.get('invite','')
+        if len(token)!=64 or any(c not in '0123456789abcdef' for c in token) or pilot.get('max_people')!=1 or pilot.get('quota_day')!=2:
+            raise ValueError('Invalid private Mac trial')
+        expiry=datetime.fromisoformat(pilot['expires_at'])
+        if expiry>datetime.now(timezone.utc):
+            configuration['macTrial']={'token_hash':hashlib.sha256(token.encode()).hexdigest(),'expires_at':pilot['expires_at']}
     source=ROOT/'cloud/supabase/functions/crowd-access'
     index=(source/'index.ts').read_text().replace('__CROWD_ACCESS_CONFIGURATION__',json.dumps(configuration,separators=(',',':'))).replace('__CROWD_OPERATOR_SHA256__',hashlib.sha256(key.encode()).hexdigest())
     payload={'project_id':conf['url'].split('//',1)[1].split('.',1)[0],'name':'crowd-access','entrypoint_path':'index.ts','verify_jwt':False,
