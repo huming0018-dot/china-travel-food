@@ -80,6 +80,20 @@ except (KeyError,ValueError,OSError): sys.exit(1)
     assert updated.returncode==0,updated.stderr
     assert Path(str(events)+'.clipboard').read_text()==str(original)
     assert prefs.read_bytes()==old_preferences and '本机参与身份未删除' in updated.stdout
+    assert '--profile-directory=Default' in events.read_text()
+    # A deleted source folder is recoverable from the matching cached public key.
+    import shutil
+    shutil.rmtree(original)
+    prefs.write_text(json.dumps({'extensions':{'settings':{extension_id():{'path':str(original),'manifest':{'key':json.loads((kit/'插件/manifest.json').read_text())['key']}}}}}))
+    recovered=subprocess.run(['bash',str(helper)],env=env,capture_output=True,text=True)
+    assert recovered.returncode==0,recovered.stderr
+    assert (original/'src/config.js').exists() and '--profile-directory=Default' in events.read_text()
+    # Two profiles sharing a source directory still represent different identities.
+    profile=home/'Library/Application Support/Google/Chrome/Profile 1/Preferences';profile.parent.mkdir(parents=True)
+    profile.write_bytes(prefs.read_bytes())
+    before=events.read_bytes();ambiguous=subprocess.run(['bash',str(helper)],env=env,capture_output=True,text=True)
+    assert ambiguous.returncode!=0 and events.read_bytes()==before
+    profile.unlink()
     config_path=kit/'插件/src/config.js';config_path.write_text('corrupted')
     old_events=events.read_bytes();old_config=(original/'src/config.js').read_bytes()
     bad=subprocess.run(['bash',str(helper)],env=env,capture_output=True,text=True)
@@ -89,6 +103,7 @@ except (KeyError,ValueError,OSError): sys.exit(1)
         try: write_kit(source,bad,output)
         except ValueError: pass
         else: raise AssertionError('Unsafe/expired trial must be rejected')
+    assert write_kit(source,{**pilot,'max_people':2,'replacement_active_limit':1},output)['channel']=='unpacked_extension'
 subprocess.run(['bash','-n',str(EXT/'crowd-install-native-mac.command')],check=True)
 subprocess.run(['bash','-n',str(EXT/'crowd-extension-mac.command')],check=True)
 print('PASS Mac kits: runtime integrity, MV3-only pack, bounded invitation, executable setup helper, prepare/update/checksum failure; native Mac/browser confirmation remains unverified')

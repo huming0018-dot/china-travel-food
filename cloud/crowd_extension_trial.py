@@ -13,7 +13,8 @@ from crowd_mac_trial import invitation
 
 
 def write_kit(source, pilot, output):
-    if not re.fullmatch('[a-f0-9]{64}',pilot.get('invite','')) or pilot.get('max_people')!=1 or pilot.get('quota_day')!=2:
+    bounded=pilot.get('max_people')==1 or (pilot.get('max_people')==2 and pilot.get('replacement_active_limit')==1)
+    if not re.fullmatch('[a-f0-9]{64}',pilot.get('invite','')) or not bounded or pilot.get('quota_day')!=2:
         raise ValueError('Only a bounded private Mac invitation can enter this kit')
     if datetime.fromisoformat(pilot['expires_at'])<=datetime.now(timezone.utc): raise ValueError('Mac trial expired')
     with zipfile.ZipFile(source) as archive:
@@ -38,7 +39,7 @@ def write_kit(source, pilot, output):
 <p>如果未显示邀请，在<strong>插件参与页面</strong>展开「重新打开邀请」，复制下面的邀请链接，粘贴到插件的邀请输入框，再点击「接续邀请」。请不要把它当作浏览器安装网页打开：正式网页的 Mac 安装渠道仍未开放，这个私有包通过插件直接接入内测。无需中台邮箱或密码。</p>'''
     link=conf['portal']+'/crowd#invite='+pilot['invite']
     guide+='<textarea id="invite" readonly rows="3" style="width:100%">'+html.escape(link)+'</textarea><button onclick="const v=document.getElementById(\'invite\');v.select();document.execCommand(\'copy\');this.textContent=\'已复制邀请\'">复制邀请</button>'
-    guide+='<p>仅一台 Mac，48 小时内报名，每日最多 2 条。报名截止：'+html.escape(pilot['expires_at'])+'。不要转发这个私有内测包。</p>'
+    guide+='<p>仅一台有效参与的 Mac，48 小时内报名，每日最多 2 条；换机须先暂停旧身份。报名截止：'+html.escape(pilot['expires_at'])+'。不要转发这个私有内测包。</p>'
     guide+='''<p>已同意并启动后，插件自动在后台领取、搜索、停留/滚动、采集及回传；可关闭参与页面、最小化浏览器窗口。浏览器进程须保持运行；没有普通窗口时插件会创建最小化的工作窗口，不主动抢焦点。</p>
 <p>Mac 可以正常睡眠；睡眠中暂停，唤醒后按浏览器调度自动续做任务。浏览器退出期间不能执行，重新启动后恢复尚未停止的任务；工作页被回收会重新打开。重启或长时间挂起后重新打开页面并计时，冷却、配额和待回传证据继续保留。浏览器可能延后后台调度，不能保证固定秒数内恢复。</p>
 <p>手动停止、退出参与身份、遇到登录失效、验证码或限流后保持暂停，处理后需本人点击「继续采集」，不会通过唤醒自动绕过。</p>

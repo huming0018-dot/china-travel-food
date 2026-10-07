@@ -60,7 +60,7 @@ try {
   globalThis.commands=[];let enabled=false,session=true;
   globalThis.chrome={runtime:{sendMessage:async message=>{
    commands.push(message);
-   if(message.type==='state')return {ok:true,data:{session,agent:{enabled:false,phase:'idle',outbox:[],rejected:[],last_error:'page_timeout'},status:{participant:{status:'approved'}},diagnostics:{enabled,sent_at:enabled?Date.now():null}}};
+   if(message.type==='state')return {ok:true,data:{session,invited:true,agent:{enabled:false,phase:'idle',outbox:[],rejected:[],last_error:'page_timeout'},status:{participant:{status:'approved'}},diagnostics:{enabled,sent_at:enabled?Date.now():null}}};
    if(message.type==='diagnostics'){await new Promise(r=>setTimeout(r,50));enabled=message.enabled;}
    if(message.type==='logout')session=false;
    return {ok:true,data:{}};
@@ -76,10 +76,15 @@ try {
  await controller.waitForFunction(()=>commands.some(c=>c.type==='inspect_work_page')&&!document.getElementById('diagnostics').disabled);
  await controller.locator('#diagnostics').uncheck();
  await controller.waitForFunction(()=>document.getElementById('diagnostics_status').textContent==='诊断未开启。');
+ assert.equal(await controller.evaluate(()=>commands.some(c=>c.type==='start')),false,'diagnostics controls never start collection');
+ await controller.waitForFunction(()=>!document.getElementById('consent').disabled);
+ assert.equal(await controller.locator('#consent').textContent(),'同意并继续');
+ await controller.locator('#agree').check();await controller.locator('#consent').click();
+ await controller.waitForFunction(()=>commands.some(c=>c.type==='start'));
+ assert.equal(await controller.evaluate(()=>commands.some(c=>c.type==='join')),false,'an existing session resumes without allocating a new installation');
  await controller.locator('details:has(#logout) > summary').click();await controller.locator('#logout').click();
  await controller.waitForFunction(()=>document.getElementById('diagnostics').disabled);
- assert.equal(await controller.evaluate(()=>commands.some(c=>c.type==='start')),false,'diagnostics controls never start collection');
- console.log('PASS extension controller DOM: diagnostics default off, opt-in/out status, explicit inspect command, signed-out control disabled, no collection start');
+ console.log('PASS extension controller DOM: diagnostics default off, opt-in/out status, explicit inspect command, signed-out control disabled, no silent start, existing session resumes without reenrollment');
  console.log('PASS Chromium: real DOM, automatic search/navigation/dwell/extraction/upload, reconstructed agent, standard/extra/null fields, gate detection');
  console.log('LIMIT: fixtures, not live Xiaohongshu or Windows/macOS/iOS/Harmony hardware acceptance');
 }finally{await browser.close();}

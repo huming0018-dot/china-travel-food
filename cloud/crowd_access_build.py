@@ -37,7 +37,8 @@ def prepare():
     if trial.exists():
         pilot=json.loads(trial.read_text())
         token=pilot.get('invite','')
-        if len(token)!=64 or any(c not in '0123456789abcdef' for c in token) or pilot.get('max_people')!=1 or pilot.get('quota_day')!=2:
+        bounded=pilot.get('max_people')==1 or (pilot.get('max_people')==2 and pilot.get('replacement_active_limit')==1)
+        if len(token)!=64 or any(c not in '0123456789abcdef' for c in token) or not bounded or pilot.get('quota_day')!=2:
             raise ValueError('Invalid private Mac trial')
         expiry=datetime.fromisoformat(pilot['expires_at'])
         if expiry>datetime.now(timezone.utc):

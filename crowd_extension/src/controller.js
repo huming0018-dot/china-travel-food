@@ -11,14 +11,15 @@ async function send(type, extra = {}) {
 }
 errors.page_timeout = '页面准备超时。可点击「查看采集页面」检查加载、登录或验证情况，并开启运行诊断。';
 errors.work_page_missing = '采集页面尚未打开，请先开始或继续任务。';
+errors.invite_full = '此邀请的名额已占用。已参加过请回到原浏览器和个人资料继续，更新无需重新报名；不要卸载插件。';
 async function refresh() {
   const ticket = ++viewTicket;
   const data = await send('state'), s = data.agent, p = data.status;
   if (ticket !== viewTicket) return;
   current = data;
-  $('welcome').textContent = s.enabled ? '正在自动采集，你可以随时停止。' : errors[s.last_error] || (data.invited ? '邀请已接续。确认参与即可自动开工。' : data.session ? '参与身份已就绪，点击继续即可开工。' : '请从邀请链接打开，无需注册中台账号。');
+  $('welcome').textContent = s.enabled ? '正在自动采集，你可以随时停止。' : errors[s.last_error] || (data.session ? '参与身份已就绪，点击继续即可开工；无需再次报名。' : data.invited ? '邀请已接续。确认参与即可自动开工。' : '请从邀请链接打开，无需注册中台账号。');
   $('start').hidden = !data.session;
-  $('consent').textContent = data.session && !data.invited ? '同意并继续' : '同意并开始';
+  $('consent').textContent = data.session ? '同意并继续' : '同意并开始';
   const fields = {'中台账户': data.session ? '已登录' : '未登录', '参与状态': p.participant?.status || p.error || '尚未报名', '自动采集': s.enabled ? '运行中' : '已停止', '当前阶段': labels[s.phase] || s.phase,
     '任务': s.task?.query || '暂无', '服务端接收': p.received ?? '—', '核验有效': p.verified ?? '—', '已记奖励': p.reward_fen == null ? '—' : '¥' + (p.reward_fen / 100).toFixed(2), '累计余数': p.remainder ?? '—', '待回传 / 待处理': s.outbox.length + ' / ' + s.rejected.length, '最近提示': errors[s.last_error] || s.last_error || '无'};
   $('status').replaceChildren();
@@ -31,7 +32,7 @@ async function refresh() {
 async function action(fn) { ++actions; ++viewTicket; $('diagnostics').disabled = true; const buttons = [...document.querySelectorAll('button')]; buttons.forEach(b => b.disabled = b.id !== 'stop'); try { $('message').textContent = ''; await fn(); await refresh(); } catch (e) { $('message').textContent = e.message === 'cancelled' ? '已取消启动' : errors[e.message] || e.message; } finally { --actions; buttons.forEach(b => b.disabled = actions > 0 && b.id !== 'stop'); $('diagnostics').disabled = actions > 0 || !current?.session; } }
 $('login').addEventListener('submit', e => { e.preventDefault(); action(() => send('login', {email: $('email').value, password: $('password').value}).then(() => { $('password').value = ''; })); });
 $('signup').onclick = () => action(async () => { const r = await send('login', {email: $('email').value, password: $('password').value, signup: true}); $('password').value = ''; if (r.confirmation_required) $('message').textContent = '请到邮箱确认账户，再回来登录。'; });
-$('consent').onclick = () => action(async () => { if (!$('agree').checked) throw new Error('consent_required'); if (current?.invited) await send('join', {consent: CrowdCore.CONSENT}); else { await send('consent'); await send('start'); } });
+$('consent').onclick = () => action(async () => { if (!$('agree').checked) throw new Error('consent_required'); if (current?.invited && !current.session) await send('join', {consent: CrowdCore.CONSENT}); else { await send('consent'); await send('start'); } });
 $('invite_form').onsubmit = e => { e.preventDefault(); action(async () => { await send('receive_invite', {invite: $('invite_value').value}); $('invite_value').value = ''; $('invitation').open = false; }); };
 for (const type of ['start', 'stop', 'logout', 'open_login']) $(type).onclick = () => action(() => send(type));
 $('export').onclick = () => action(async () => { const data = await send('export'), text = JSON.stringify(data, null, 2); if (globalThis.CrowdNative) { await CrowdNative.download(text); return; } const blob = new Blob([text], {type: 'application/json'}); const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = 'crowd-pending-evidence.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); });
