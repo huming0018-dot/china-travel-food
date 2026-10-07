@@ -11,7 +11,11 @@ const backend = {
   rpc: async (name, args) => { calls.push({ name, args }); return expired ? { data: null, error: { message: 'invite_expired' } } : { data: args.p_action === 'reserve' ? { user_id: id } : [], error: null }; },
   auth: { admin: {
     getUserById: async () => ({ data: { user: account }, error: null }),
-    createUser: async user => { ++created; account = { ...user }; return { data: { user: account }, error: null }; }
+    createUser: async user => {
+      // Existing production handle_new_user trigger inserts this into varchar(50).
+      if ((user.user_metadata?.username ?? user.email).length > 50) return {data: {user: null}, error: {message: 'value too long for type character varying(50)'}};
+      ++created; account = { ...user }; return { data: { user: account }, error: null };
+    }
   } }
 };
 async function request(input, headers = {}, body) {

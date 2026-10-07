@@ -68,6 +68,13 @@ def source_integrity(platform):
             if file.is_file() and not ignored.intersection(file.relative_to(directory).parts)}
 
 
+def extension_id():
+    key=json.loads((EXT/'manifest.json').read_text())['key']
+    # Chrome maps the first 128 bits of the DER public-key digest to a..p.
+    digest=hashlib.sha256(base64.b64decode(key,validate=True)).hexdigest()[:32]
+    return ''.join(chr(ord('a')+int(n,16)) for n in digest)
+
+
 def controller_html(conf):
     return (EXT/'src/controller.html').read_text().replace(
         'connect-src https://*.supabase.co;', 'connect-src '+conf['url']+' '+conf['portal']+';')
@@ -112,7 +119,9 @@ def main(argv=None):
         shutil.copyfile(EXT/'icons/icon128.png',assets/'icon128.png')
         (assets/'source-integrity.json').write_text(json.dumps(source_integrity('desktop'),sort_keys=True))
         zipdir(desktop_native,out/f'crowd-desktop-sources-v{VERSION}.zip')
-    for file in ['crowd-install-win.bat','crowd-install-mac.command']: shutil.copyfile(EXT/file,out/file)
+    # Keep v4 native bundles separate from the main branch's v3 updater installer.
+    for source,target in [('crowd-install-win.bat','crowd-install-win.bat'),('crowd-install-native-mac.command','crowd-install-mac.command')]:
+        shutil.copyfile(EXT/source,out/target)
     portal_assets = ROOT/'app/public/crowd'; portal_assets.mkdir(parents=True,exist_ok=True)
     shutil.copyfile(EXT/'src/join.js',portal_assets/'join.js')
     packages=[out/f'crowd-extension-v{VERSION}.zip',out/f'crowd-mobile-sources-v{VERSION}.zip',out/f'crowd-desktop-sources-v{VERSION}.zip']

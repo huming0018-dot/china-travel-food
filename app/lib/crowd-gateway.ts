@@ -27,7 +27,7 @@ export function gatewayClient(projectURL: string, publicKey: string, key: string
         const result = await call({ action: 'auth_read', id, reservation });
         return { data: { user: result.data?.user || null }, error: result.error };
       },
-      createUser: async (user: { id?: string; password?: string; email?: string; email_confirm?: boolean; app_metadata?: object }) => {
+      createUser: async (user: { id?: string; password?: string; email?: string; email_confirm?: boolean; user_metadata?: object; app_metadata?: object }) => {
         const result = await call({ action: 'auth_create', id: user.id, password: user.password, reservation });
         return { data: { user: result.data?.user || null }, error: result.error };
       }

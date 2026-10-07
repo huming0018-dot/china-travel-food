@@ -5,6 +5,8 @@
   const visible = el => !!el && !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length) && getComputedStyle(el).visibility !== 'hidden';
   const first = selectors => [...document.querySelectorAll(selectors)].find(visible);
   const text = el => el?.innerText?.trim() || '';
+  const noteBody = () => first('#detail-desc, .note-detail .note-text, .note-container .note-text, .note-scroller .desc, .note-content .desc');
+  const noteLinks = () => [...document.querySelectorAll('a[href*="/explore/"], a[href*="/discovery/item/"]')].filter(visible);
   function gate() {
     if (first('[class*="captcha"], [id*="captcha"], iframe[src*="captcha"], [class*="verify-slider"]')) return 'captcha';
     const modal = first('[role="dialog"], .error-page, .error-container, .login-container, .login-modal');
@@ -22,7 +24,7 @@
   function note() {
     let identity;
     try { identity = C.noteURL(location.href); } catch (_) { return {ready: false}; }
-    const body = first('#detail-desc, .note-detail .note-text, .note-container .note-text, .note-scroller .desc, .note-content .desc');
+    const body = noteBody();
     const original = text(body); if (original.length < 8) return {ready: false};
     const title = text(first('#detail-title, .note-detail .title, .note-container .title')).slice(0, 300);
     const raw = original.slice(0, 24000);
@@ -42,6 +44,13 @@
         parser_version: C.VERSION, source: 'rendered_public_dom'}}};
   }
   function probe(action) {
+    // Opt-in diagnostics use categories/counts, never page text or navigation tokens.
+    if (action === 'diagnostics') return {ready: true, page: {
+      kind: /^\/search_result\/?$/.test(location.pathname) ? 'search' : /^\/(explore|discovery\/item)\//.test(location.pathname) ? 'note' : 'other',
+      document: document.readyState, gate: gate(), links: Math.min(noteLinks().length, 500),
+      body_chars: Math.min(text(noteBody()).length, 24000), visible: !document.hidden,
+      search_note_links: Math.min([...document.querySelectorAll('a[href*="/search_result/"]')].filter(visible).length, 500)
+    }};
     const blocked = gate(); if (blocked) return {ready: false, gate: blocked};
     if (action === 'scroll') {
       const box = first('.note-scroller, .note-detail .scroll-container');
@@ -49,7 +58,7 @@
       return {ready: true};
     }
     if (action === 'search') {
-      const links = [...document.querySelectorAll('a[href*="/explore/"], a[href*="/discovery/item/"]')].filter(visible).map(a => a.href);
+      const links = noteLinks().map(a => a.href);
       return {ready: links.length > 0 || !!first('.search-empty, .empty-page, .no-result'), links};
     }
     return note();

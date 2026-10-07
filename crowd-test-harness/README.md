@@ -1,6 +1,6 @@
 # 众包美食家扩展 E2E 测试 harness
 
-当前版本为 v4。先在 `app/` 执行 `npm ci`，再在本目录执行 `npm test`，运行 `crowd_extension/tests/` 的当前验证。设置 `CROWD_TEST_TOOLS`（含 pg/Playwright）可增加真实浏览器测试；`CROWD_TEST_DATABASE_URL` 只能指向全新可丢弃数据库，`CROWD_PORTAL_TEST_ORIGIN` 用于已启动的本地网站。数据库/浏览器未运行时会明确跳过，不算通过；实机验收另行进行。
+当前版本为 v4。先在 `app/` 执行 `npm ci`，再在本目录执行 `npm test`，运行 `crowd_extension/tests/` 的当前验证。设置 `CROWD_TEST_TOOLS`（含 Playwright/@electric-sql/pglite）可增加真实浏览器 DOM 和隔离 PostgreSQL 诊断迁移检查；`CROWD_TEST_DATABASE_URL` 只能指向全新可丢弃数据库，`CROWD_PORTAL_TEST_ORIGIN` 用于已启动的本地网站。数据库/浏览器未运行时会明确跳过，不算通过；实机验收另行进行。
 
 Puppeteer：本目录 `npm ci --ignore-scripts` 安装锁定的 puppeteer-core，再启动本地生产网站，执行 `CROWD_CHROMIUM=/完整/Chromium CROWD_PORTAL_TEST_ORIGIN=http://127.0.0.1:44127 npm run test:puppeteer`。使用独立临时浏览器 profile，点击真实入口和共享客户端界面；API、小红书网页及原生系统桥均为固定响应/模拟实现，调度时钟加速，不连接真实平台或写生产库。报告和截图默认在 `results/puppeteer-v4/`。可用 `CROWD_PUPPETEER_TOOLS` 指向独立工具目录、`CROWD_PUPPETEER_OUTPUT` 指定报告目录。
 

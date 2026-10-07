@@ -63,7 +63,10 @@ export async function installationUser(backend, input) {
       if (typeof input.password !== 'string' || !/^Cr4![a-f0-9]{64}$/.test(input.password) || await digest(input.password.slice(4)) !== reservation.device_hash) return reply(fail('invalid_request'), 400);
       const prior = await backend.auth.admin.getUserById(input.id);
       if (prior.data?.user) return reply(fail('account_exists'), 409); // Never reset an account password.
-      const created = await backend.auth.admin.createUser({ id: input.id, email, password: input.password, email_confirm: true, app_metadata: { crowd_installation: true } });
+      // The existing Auth trigger copies username (or email) to varchar(50).
+      // Keep the full installation email/identity; provide a bounded profile name.
+      const created = await backend.auth.admin.createUser({ id: input.id, email, password: input.password, email_confirm: true,
+        user_metadata: { username: 'crowd-' + input.id }, app_metadata: { crowd_installation: true } });
       if (created.error) return reply(fail('backend_unavailable'));
     }
     const result = await backend.auth.admin.getUserById(input.id), user = result.data?.user;

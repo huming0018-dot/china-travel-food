@@ -19,7 +19,7 @@
   }
   const between = (min, max, random = Math.random) => Math.floor(min + random() * (max - min + 1));
   const initial = () => ({version: 4, enabled: false, consent: null, phase: 'idle', task: null,
-    candidates: [], seen: [], history: [], day: null, visits: 0, outbox: [], rejected: [], next_at: 0, received: 0, last_error: null, notes_in_session: 0});
+    candidates: [], seen: [], history: [], day: null, visits: 0, outbox: [], rejected: [], next_at: 0, received: 0, last_error: null, last_tick: null, notes_in_session: 0});
   function validate(record) {
     if (!record || record.schema_version !== 4) throw new Error('schema_version');
     const s = record.standard, e = record.evidence;
