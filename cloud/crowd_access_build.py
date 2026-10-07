@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import secrets
 from datetime import datetime, timezone
-from crowd_build import ROOT, config, values
+from crowd_build import ROOT, config, values, extension_id
 
 
 def prepare():
@@ -42,6 +42,8 @@ def prepare():
         expiry=datetime.fromisoformat(pilot['expires_at'])
         if expiry>datetime.now(timezone.utc):
             configuration['macTrial']={'token_hash':hashlib.sha256(token.encode()).hexdigest(),'expires_at':pilot['expires_at']}
+            if pilot.get('channel')=='extension':
+                configuration['macTrial'].update(channel='extension',extension_id=extension_id())
     source=ROOT/'cloud/supabase/functions/crowd-access'
     index=(source/'index.ts').read_text().replace('__CROWD_ACCESS_CONFIGURATION__',json.dumps(configuration,separators=(',',':'))).replace('__CROWD_OPERATOR_SHA256__',hashlib.sha256(key.encode()).hexdigest())
     payload={'project_id':conf['url'].split('//',1)[1].split('.',1)[0],'name':'crowd-access','entrypoint_path':'index.ts','verify_jwt':False,

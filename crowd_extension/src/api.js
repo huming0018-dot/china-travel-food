@@ -36,8 +36,14 @@
       if (portal.protocol !== 'https:' || portal.username || portal.password || portal.pathname !== '/' || portal.search || portal.hash) throw new Error('portal_not_configured');
       const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 20000);
       try {
-        const response = await this.fetcher(portal.origin + '/api/crowd/enroll', {method: 'POST', credentials: 'omit', signal: controller.signal,
-          headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)});
+        const runtime = root.chrome?.runtime;
+        const extension = /^[a-p]{32}$/.test(runtime?.id || '') && runtime.getURL?.('') === 'chrome-extension://' + runtime.id + '/';
+        // Installed extensions call the same invitation service directly;
+        // their origin must also be accepted by its server-side configuration.
+        const endpoint = extension ? this.config.url + '/functions/v1/crowd-access/enroll' : portal.origin + '/api/crowd/enroll';
+        const response = await this.fetcher(endpoint, {method: 'POST', credentials: 'omit', signal: controller.signal,
+          headers: {'Content-Type': 'application/json', ...(extension ? {apikey: this.config.key} : {})},
+          body: JSON.stringify(extension ? {...payload, client: 'extension', extension_id: runtime.id} : payload)});
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || 'backend_unavailable');
         return data;

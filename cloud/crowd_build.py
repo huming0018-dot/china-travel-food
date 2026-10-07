@@ -68,6 +68,13 @@ def source_integrity(platform):
             if file.is_file() and not ignored.intersection(file.relative_to(directory).parts)}
 
 
+def extension_id():
+    key=json.loads((EXT/'manifest.json').read_text())['key']
+    # Chrome maps the first 128 bits of the DER public-key digest to a..p.
+    digest=hashlib.sha256(base64.b64decode(key,validate=True)).hexdigest()[:32]
+    return ''.join(chr(ord('a')+int(n,16)) for n in digest)
+
+
 def controller_html(conf):
     return (EXT/'src/controller.html').read_text().replace(
         'connect-src https://*.supabase.co;', 'connect-src '+conf['url']+' '+conf['portal']+';')

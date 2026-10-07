@@ -46,6 +46,11 @@ function available(configuration) {
 export async function handleAccess(request, backend, configuration, operatorHash) {
   const suppliedOrigin=request.headers.get('Origin');
   const allowed=[configuration.origin, ...(configuration.previewOrigins || []), 'https://crowd.local','null'];
+  for(const release of Object.values(available(configuration)))
+    if(release.channel==='extension')allowed.push('chrome-extension://'+release.extension_id);
+  const trial=configuration.macTrial;
+  if(trial?.channel==='extension' && /^[a-p]{32}$/.test(trial.extension_id || '') && Date.parse(trial.expires_at)>Date.now())
+    allowed.push('chrome-extension://'+trial.extension_id);
   if(suppliedOrigin && !allowed.includes(suppliedOrigin))return json({error:'origin_denied'},403);
   let response;
   try {
@@ -90,8 +95,8 @@ export async function handleAccess(request, backend, configuration, operatorHash
         const token_hash=await digest(invite);
         // One expiring Mac acceptance invitation, independent of formal releases.
         // Database reservation still enforces its one-installation / daily quota.
-        const trial=configuration.macTrial;
-        const internalMac=platform==='macos' && hex(trial?.token_hash) && token_hash===trial.token_hash && Date.parse(trial.expires_at)>Date.now();
+        const correctClient=trial?.channel!=='extension' || (input.client==='extension' && input.extension_id===trial.extension_id);
+        const internalMac=platform==='macos' && correctClient && hex(trial?.token_hash) && token_hash===trial.token_hash && Date.parse(trial.expires_at)>Date.now();
         if(!available(configuration)[platform] && !internalMac)throw new Error('release_not_ready');
         const reservation={token_hash,device_hash:await digest(install_secret),platform};
         const allocation=await rpc(backend,'reserve',reservation);

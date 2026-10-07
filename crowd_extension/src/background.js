@@ -74,7 +74,17 @@ chrome.runtime.onMessageExternal?.addListener((message, sender, reply) => {
 });
 chrome.alarms.onAlarm.addListener(alarm => { if (alarm.name === 'crowd_tick') agent.tick().catch(console.error); });
 chrome.runtime.onStartup.addListener(() => agent.tick().catch(console.error));
-chrome.runtime.onInstalled.addListener(() => agent.tick().catch(console.error));
+chrome.runtime.onInstalled.addListener((details = {reason: 'install'}) => {
+  (async () => {
+    if (details.reason === 'install') {
+      // A private trial kit supplies an invitation, never consent or a session.
+      if (/^[a-f0-9]{64}$/.test(CROWD_CONFIG.trialInvite || '') && !await storage.get('pending_invite') && !await storage.get('session'))
+        await storage.set('pending_invite', CROWD_CONFIG.trialInvite);
+      await chrome.runtime.openOptionsPage?.();
+    }
+    await agent.tick();
+  })().catch(console.error);
+});
 chrome.tabs.onRemoved.addListener(id => {
   storage.get('work_tab').then(owned => { if (owned === id) return storage.set('work_tab', null); }).catch(console.error);
 });

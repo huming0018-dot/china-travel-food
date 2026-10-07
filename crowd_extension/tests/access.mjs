@@ -25,14 +25,38 @@ assert.deepEqual(exported.data,[proof]);assert.equal(JSON.stringify(exported).in
 assert.equal((await request('enroll',{invite,install_secret:secret,consent:'wrong',platform:'android'})).status,400);
 const trialPayload={invite,install_secret:secret,consent:'crowd-public-v4',platform:'macos'};
 configuration.macTrial={token_hash:await digest(invite),expires_at:new Date(Date.now()+60000).toISOString()};
+const extensionId='a'.repeat(32),extensionOrigin='chrome-extension://'+extensionId;
+assert.equal((await request('enroll',trialPayload,{Origin:extensionOrigin})).status,403,'unconfigured extensions cannot enroll');
+configuration.macTrial.channel='extension';configuration.macTrial.extension_id=extensionId;
+trialPayload.client='extension';trialPayload.extension_id=extensionId;
+const preflight=await handleAccess(new Request('https://test.supabase.co/functions/v1/crowd-access/enroll',{method:'OPTIONS',headers:{Origin:extensionOrigin}}),backend,configuration,expected);
+assert.equal(preflight.status,204);assert.equal(preflight.headers.get('Access-Control-Allow-Origin'),extensionOrigin);
+assert.equal((await request('enroll',{...trialPayload,client:'desktop'})).status,400,'old desktop kit cannot consume the extension trial');
+assert.equal((await request('enroll',{...trialPayload,extension_id:'b'.repeat(32)})).status,400);
+assert.equal((await request('enroll',trialPayload,{Origin:'chrome-extension://'+'b'.repeat(32)})).status,403);
 assert.equal((await (await request('manifest')).json()).ready,false,'internal trial never opens the formal manifest');
 assert.equal((await request('enroll',{...trialPayload,invite:'9'.repeat(64)})).status,400);
 assert.equal((await request('enroll',{...trialPayload,platform:'windows'})).status,400);
 expired=true;assert.equal((await request('enroll',trialPayload)).status,400,'trial still checks the database invitation');expired=false;
-assert.equal((await request('enroll',trialPayload)).status,200);
+assert.equal((await request('enroll',trialPayload,{Origin:extensionOrigin})).status,200);
 configuration.macTrial.expires_at=new Date(Date.now()-1000).toISOString();
 assert.equal((await request('enroll',trialPayload)).status,400);
+assert.equal((await request('enroll',trialPayload,{Origin:extensionOrigin})).status,403,'expired trial no longer grants its extension origin');
 assert.equal((await request('invite',{}, {Authorization:'Bearer '+owner})).status,400,'trial never permits formal invitation minting');
+delete configuration.macTrial;
+
+// Use the shipped browser API, not a hand-crafted enrollment request.
+configuration.macTrial={channel:'extension',extension_id:extensionId,token_hash:await digest(invite),expires_at:new Date(Date.now()+60000).toISOString()};
+const browser=vm.createContext({URL,AbortController,setTimeout,clearTimeout,chrome:{runtime:{id:extensionId,getURL:name=>extensionOrigin+'/'+name}},fetch:async(url,options)=>{
+  assert.equal(url,'https://test.supabase.co/functions/v1/crowd-access/enroll');
+  assert.equal(options.headers.apikey,'sb_publishable_TEST_ONLY');
+  assert.equal(options.credentials,'omit');
+  assert.equal(options.headers.Authorization,undefined);
+  return handleAccess(new Request(url,{...options,headers:{...options.headers,Origin:extensionOrigin}}),backend,configuration,expected);
+}});
+vm.runInContext(fs.readFileSync(new URL('../src/api.js',import.meta.url),'utf8'),browser);
+const actualAPI=new browser.CrowdAPI({url:'https://test.supabase.co',key:'sb_publishable_TEST_ONLY',portal:origin},{get:async()=>null,set:async()=>{}});
+assert.equal((await actualAPI.enroll({invite,install_secret:secret,consent:'crowd-public-v4',platform:'macos'})).joined,true);
 delete configuration.macTrial;
 configuration.releases.android={channel:'apk',version:'4.0.0',verified:true,url:origin+'/crowd/releases/crowd-android-v4.0.0-debug.apk',sha256:'a'.repeat(64)};
 configuration.releases.ios={channel:'apk',version:'4.0.0',verified:true,url:origin+'/crowd/releases/fake.ipa',sha256:'a'.repeat(64)};

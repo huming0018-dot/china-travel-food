@@ -1,7 +1,8 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
-const src=path.resolve(__dirname,'../src'); let listener, installed, accesses=[],fetches=[];const data={};
+const src=path.resolve(__dirname,'../src'); let listener, installed, accesses=[],fetches=[],optionsOpened=0;const data={};
 const chrome={runtime:{id:'test-extension',getURL:x=>'chrome-extension://test-extension/'+x,
+ openOptionsPage:async()=>{optionsOpened++;},
  onMessage:{addListener:fn=>listener=fn},onStartup:{addListener:()=>{}},onInstalled:{addListener:fn=>installed=fn}},
  storage:{local:{get:async key=>({[key]:structuredClone(data[key])}),set:async value=>Object.assign(data,structuredClone(value)),setAccessLevel:async value=>accesses.push(value.accessLevel)}},
  alarms:{create:async()=>{},clear:async()=>{},onAlarm:{addListener:()=>{}}},
@@ -12,6 +13,11 @@ context.importScripts=(...names)=>{for(const name of names){if(name==='config.js
 vm.runInContext(fs.readFileSync(path.join(src,'background.js'),'utf8'),context);
 (async()=>{
  installed();await new Promise(r=>setImmediate(r));assert.equal(fetches.length,0,'installation must not start collection');assert.deepEqual(accesses,['TRUSTED_CONTEXTS']);
+ assert.equal(optionsOpened,1);
+ context.CROWD_CONFIG.trialInvite='a'.repeat(64);installed();await new Promise(r=>setImmediate(r));
+ assert.equal(data.pending_invite,'a'.repeat(64));assert.equal(fetches.length,0,'trial handoff does not consent or register');
+ data.pending_invite='b'.repeat(64);installed({reason:'update'});await new Promise(r=>setImmediate(r));
+ assert.equal(data.pending_invite,'b'.repeat(64),'update must never overwrite an existing invitation');assert.equal(optionsOpened,2);
  let leaked=false;const result=listener({type:'state'},{id:chrome.runtime.id,url:'https://www.xiaohongshu.com/explore/abcdef0123456789abcdef01',tab:{id:77,url:'https://www.xiaohongshu.com/'}},()=>leaked=true);assert.equal(result,undefined);assert.equal(leaked,false);
  const state=await new Promise(resolve=>listener({type:'state'},{id:chrome.runtime.id,url:chrome.runtime.getURL('src/controller.html')},resolve));assert.equal(state.ok,true);assert.equal(state.data.session,false);assert.equal(state.data.agent.enabled,false);
  // The returned UI status never contains session tokens.
