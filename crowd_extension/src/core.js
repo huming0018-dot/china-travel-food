@@ -1,7 +1,7 @@
 /* One contract for desktop and native containers. No page receives credentials. */
 (function (root) {
   'use strict';
-  const VERSION = '4.0.3', CONSENT = 'crowd-public-v4';
+  const VERSION = '4.0.4', CONSENT = 'crowd-public-v4';
   const HOST = 'https://www.xiaohongshu.com';
   const publicOrigin = u => u.protocol === 'https:' && ['www.xiaohongshu.com', 'm.xiaohongshu.com'].includes(u.hostname) && !u.username && !u.password && !u.port;
   function noteURL(value) {
@@ -31,7 +31,7 @@
     for (const key of ['published_at', 'author_display', 'like_count', 'collect_count', 'comment_count']) {
       if (!(key in s)) throw new Error('missing_standard_field');
     }
-    for (const key of ['like_count', 'collect_count', 'comment_count']) {
+    for (const key of ['like_count', 'collect_count', 'comment_count', ...('view_count' in s ? ['view_count'] : [])]) {
       if (s[key] !== null && (!Number.isSafeInteger(s[key]) || s[key] < 0 || s[key] > 2147483647)) throw new Error('invalid_count');
     }
     if (s.author_display !== null && (typeof s.author_display !== 'string' || s.author_display.length > 100)) throw new Error('invalid_author');
@@ -39,6 +39,17 @@
     if (!Number.isSafeInteger(e.original_length) || e.original_length < e.text.length || typeof e.truncated !== 'boolean' || e.source !== 'rendered_public_dom' || !/^4\.\d+\.\d+$/.test(e.parser_version)) throw new Error('invalid_evidence');
     if (typeof record.extra !== 'object' || record.extra === null || Array.isArray(record.extra)) throw new Error('invalid_extra');
     if (!Array.isArray(record.extra.author_opinion_quotes) || record.extra.author_opinion_quotes.some(q => typeof q !== 'string' || !e.text.includes(q))) throw new Error('invalid_quotes');
+    const comments = record.extra.comments;
+    if (comments !== undefined) {
+      if (!comments || !Array.isArray(comments.items) || comments.items.length > 50 || comments.coverage !== 'visible_loaded_only' || comments.complete !== false || comments.captured_count !== comments.items.length || typeof comments.truncated !== 'boolean') throw new Error('invalid_comments');
+      const keys = new Set();
+      for (const item of comments.items) {
+        if (!/^comment-[1-9][0-9]*$/.test(item.key) || keys.has(item.key) || (item.parent_key !== null && !keys.has(item.parent_key)) ||
+          typeof item.text !== 'string' || !item.text.length || item.text.length > 2000 || !Number.isSafeInteger(item.original_length) || item.original_length < item.text.length || item.truncated !== (item.original_length > item.text.length) ||
+          (item.like_count !== null && (!Number.isSafeInteger(item.like_count) || item.like_count < 0 || item.like_count > 2147483647))) throw new Error('invalid_comments');
+        keys.add(item.key);
+      }
+    }
     if (JSON.stringify(record).length > 60000) throw new Error('record_too_large');
     return record;
   }

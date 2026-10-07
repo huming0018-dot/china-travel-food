@@ -120,14 +120,14 @@
         } else if (s.phase === 'search_done') {
           const url = s.candidates.shift(); const id = C.noteURL(url).id;
           // Mark before navigation: crashes cannot create infinite note loops.
-          s.seen.push(id); s.visits++; s.note_id = id; s.note_url = url; s.phase = 'note'; s.loaded_at = null; s.scrolls = 0;
+          s.seen.push(id); s.visits++; s.note_id = id; s.note_url = url; s.phase = 'note'; s.loaded_at = null; s.scrolls = 0; s.comment_rounds = 0;
           s.dwell_ms = C.between(45000, 90000, this.r.random); s.page_deadline = now + 180000;
           s.next_at = now + 30000; await this.save(s);
           await this.r.open(url); alive();
         } else if (s.phase === 'reopen_note') {
           if (!s.note_url) { s.phase = 'idle'; s.next_at = now + 30000; }
           else {
-            await this.r.open(s.note_url); alive(); s.phase = 'note'; s.loaded_at = null; s.scrolls = 0;
+            await this.r.open(s.note_url); alive(); s.phase = 'note'; s.loaded_at = null; s.scrolls = 0; s.comment_rounds = 0;
             s.page_deadline = now + 180000; s.next_at = now + 30000;
           }
         } else if (s.phase === 'note') {
@@ -137,6 +137,11 @@
             if (s.loaded_at === null) s.loaded_at = now;
             if (now - s.loaded_at < s.dwell_ms || s.scrolls < 2) {
               await this.r.probe('scroll'); alive(); s.scrolls++; s.next_at = now + C.between(30000, 45000, this.r.random);
+            } else if (page.record.extra.comments && !page.record.extra.comments.truncated && (s.comment_rounds || 0) < 4) {
+              // A bounded public-page expansion; never click like, compose, or post controls.
+              const progress = await this.r.probe('comments'); alive(); this.checkPage(progress, s, now);
+              s.comment_rounds = (s.comment_rounds || 0) + 1;
+              s.next_at = now + 30000;
             } else {
               C.validate(page.record);
               s.outbox.push({request: this.r.uuid(), task: s.task.id, lease: s.task.lease_token, record: page.record});

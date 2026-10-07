@@ -11,7 +11,17 @@ const {PGlite}=createRequire(import.meta.url)(path.join(tools,'node_modules/@ele
 const db=new PGlite();
 const src=path.resolve('crowd_extension/src');
 const id='abcdef0123456789abcdef01';
-const note=`<!doctype html><html><body><section class="note-container"><h1 id="detail-title">测试餐厅清蒸鱼</h1><div id="detail-desc">测试餐厅的清蒸鱼真的好吃，价格合理。\n#清蒸鱼 #上海美食\n排队有些长，但服务很好。</div><span class="date">2026-10-05</span></section><div class="interact-container"><span class="like-wrapper"><span class="count">1.2万</span></span></div></body></html>`;
+let note=`<!doctype html><html><body><section class="note-container"><h1 id="detail-title">测试餐厅清蒸鱼</h1><div id="detail-desc">测试餐厅的清蒸鱼真的好吃，价格合理。\n#清蒸鱼 #上海美食\n排队有些长，但服务很好。</div><span class="date">2026-10-05</span></section><div class="interact-container"><span class="like-wrapper"><span class="count">1.2万</span></span></div></body></html>`;
+const discussion=`<div class="comments-container"><div class="parent-comment">
+<div class="comment-item" data-comment-id="root-1"><span class="author-wrapper"><span class="name">甲</span></span><div class="content">鱼很好吃</div><span class="like"><span class="count">7</span></span><span class="date">昨天</span>
+<div class="comment-item comment-item-sub" data-comment-id="reply-1"><span class="author-wrapper"><span class="name">乙</span></span><div class="content">我也觉得不错</div><span class="like"><span class="count">点赞</span></span></div></div>
+<button class="show-more" onclick="this.insertAdjacentHTML('beforebegin','<div class=&quot;comment-item comment-item-sub&quot; data-comment-id=&quot;reply-2&quot;><div class=&quot;content&quot;>刚刚展开的回复正文</div></div>');this.remove()">展开1条回复</button>
+</div><div class="parent-comment"><div class="comment-item" data-comment-id="root-2"><div class="content">服务很好</div><span class="like"><span class="count">0</span></span></div></div>
+<button onclick="globalThis.forbiddenClick=true">回复</button><button onclick="globalThis.forbiddenClick=true">点赞</button>
+<div class="comment-item" style="display:none"><div class="content">不可见评论不采集</div></div></div>`;
+
+note=note.replace('</section>',discussion+'</section>').replace('</body>','<div class="interact-container"><span class="view-wrapper"><span class="count">1.3万次浏览</span></span><span class="chat-wrapper"><span class="count">共5条评论</span></span></div></body>');
+
 try {
  const page=await browser.newPage();
  // Reproduce a rendered page whose image request never completes: readyState
@@ -47,6 +57,41 @@ try {
  await page.goto(search.links[0]);await inject();let result=await page.evaluate(()=>CrowdPage.probe('note'));
  assert.equal(result.ready,true);assert.equal(result.record.standard.note_id,id);assert.equal(result.record.standard.url.includes('xsec_token'),false);
  assert.equal(result.record.standard.like_count,12000);assert.equal(result.record.standard.collect_count,null);assert.equal(result.record.extra.hashtags[0],'清蒸鱼');assert.ok(result.record.extra.author_opinion_quotes.every(q=>result.record.evidence.text.includes(q)));
+
+ assert.equal(result.record.standard.view_count,13000);assert.equal(result.record.standard.comment_count,5);
+ assert.equal(result.record.extra.metric_labels.view_count,'1.3万次浏览');
+ let cm=result.record.extra.comments;assert.equal(cm.captured_count,3);assert.equal(cm.complete,false);
+ assert.equal(cm.items[0].text,'鱼很好吃');assert.equal(cm.items[0].like_count,7);
+ assert.equal(cm.items[1].parent_key,cm.items[0].key);assert.equal(cm.items[1].like_count,null);
+ assert.equal(cm.items[2].parent_key,null);assert.equal(cm.items[2].like_count,0);assert.equal(cm.items[2].author_display,null);
+ await page.evaluate(()=>CrowdPage.probe('comments'));
+ const expanded=await page.evaluate(()=>CrowdPage.probe('note'));
+ assert.equal(expanded.record.extra.comments.captured_count,4);assert.equal(expanded.record.extra.comments.items[2].text,'刚刚展开的回复正文');
+ assert.equal(expanded.record.extra.comments.items[2].parent_key,'comment-1');
+ assert.equal(await page.evaluate(()=>globalThis.forbiddenClick),undefined,'never click like or compose reply');
+ assert.equal(await page.evaluate(()=>!!CrowdCore.validate(CrowdPage.probe('note').record)),true);
+ const limits=await browser.newPage();await limits.route('**/*',route=>route.fulfill({status:200,contentType:'text/html; charset=utf-8',body:note}));await limits.goto('https://www.xiaohongshu.com/explore/'+id);
+ for(const name of ['core','content'])await limits.addScriptTag({content:fs.readFileSync(path.join(src,name+'.js'),'utf8')});
+ await limits.locator('.comments-container').evaluate(el=>{el.innerHTML=Array.from({length:70},(_,i)=>`<div class="comment-item"><div class="content">评论${i}</div></div>`).join('');});
+ let limited=await limits.evaluate(()=>CrowdPage.probe('note').record);assert.equal(limited.extra.comments.items.length,50);assert.equal(limited.extra.comments.omitted_count,20);assert.equal(limited.extra.comments.truncated,true);
+ await limits.locator('.comments-container').evaluate(el=>{el.style.cssText='height:120px;overflow-y:auto';el.scrollBy=function(options){this.scrollTop+=options.top;};el.scrollIntoView({block:'start'});});
+ await limits.evaluate(()=>CrowdPage.probe('comments'));const scroll1=await limits.locator('.comments-container').evaluate(el=>el.scrollTop);
+ await limits.evaluate(()=>CrowdPage.probe('comments'));assert.ok(await limits.locator('.comments-container').evaluate(el=>el.scrollTop)>scroll1,'successive rounds advance the comment scroller');
+ await limits.locator('.comments-container').evaluate(el=>el.style.cssText='');
+ await limits.locator('.comments-container').evaluate(el=>{el.innerHTML='<div class="comment-item"><div class="content">'+ '长'.repeat(3000)+'</div></div>';});
+ limited=await limits.evaluate(()=>CrowdPage.probe('note').record);assert.equal(limited.extra.comments.items[0].text.length,2000);assert.equal(limited.extra.comments.items[0].truncated,true);
+ await limits.locator('.view-wrapper').evaluate(el=>el.remove());
+ await limits.locator('.note-container > .date').evaluate(el=>el.remove());
+ limited=await limits.evaluate(()=>CrowdPage.probe('note').record);assert.equal(limited.standard.view_count,null);assert.equal(limited.standard.published_at,null);
+ await limits.locator('#detail-desc').evaluate(el=>el.innerText='推荐'+ '字'.repeat(23998));
+ await limits.locator('.comments-container').evaluate(el=>{el.innerHTML=Array.from({length:70},()=>'<div class="comment-item"><div class="content">'+ '长'.repeat(2000)+'</div></div>').join('');});
+ limited=await limits.evaluate(()=>CrowdPage.probe('note').record);assert.ok(JSON.stringify(limited).length<60000);assert.equal(await limits.evaluate(()=>!!CrowdCore.validate(CrowdPage.probe('note').record)),true);
+ await limits.locator('#detail-desc').evaluate(el=>el.remove());
+ await limits.locator('.comments-container .content').first().evaluate(el=>el.classList.add('note-text'));
+ assert.equal((await limits.evaluate(()=>CrowdPage.probe('note'))).ready,false,'comment text cannot replace missing note evidence');
+ await limits.locator('body').evaluate(el=>el.insertAdjacentHTML('beforeend','<div class="captcha">验证</div>'));
+ assert.equal((await limits.evaluate(()=>CrowdPage.probe('comments'))).gate,'captcha');await limits.close();
+ console.log('PASS engagement: public view count, own comment fields, parent/reply links, read-only expansion, hidden/missing values, truncation and envelope budget');
  const noteDiag=await page.evaluate(()=>CrowdPage.probe('diagnostics'));
  assert.equal(noteDiag.page.kind,'note');assert.ok(noteDiag.page.body_chars>=8);assert.equal(JSON.stringify(noteDiag).includes('测试餐厅'),false);
  // Ordinary note discussion about "频繁" must not accidentally trigger rate-limit detection.
@@ -78,6 +123,7 @@ try {
   create function auth.role() returns text language sql as $$select current_setting('request.jwt.claim.role',true)$$;
   grant usage on schema auth to authenticated;grant execute on function auth.uid(),auth.role() to authenticated;`);
  await db.exec(fs.readFileSync('cloud/supabase/migrations/20261006145016_crowd_v4.sql','utf8'));
+ await db.exec(fs.readFileSync('cloud/supabase/migrations/20261007120848_crowd_v4_view_count.sql','utf8'));
  await db.query('insert into auth.users values($1)',[user]);
  await db.query("insert into crowd_v4.participants(user_id,status,consent,quota_day) values($1,'approved','crowd-public-v4',2)",[user]);
  await db.exec(`insert into crowd_v4.tasks(source_key,query,store_name,anchor_terms,target) values('fixture','测试餐厅','测试餐厅','["测试餐厅"]',1)`);
@@ -88,12 +134,19 @@ try {
    claim:['select public.crowd_v4_claim($1) as result',[p.p_task??null]],
    submit:['select public.crowd_v4_submit($1,$2,$3,$4::jsonb) as result',[p.p_request,p.p_task,p.p_lease,JSON.stringify(p.p_record)]],
    finish:['select public.crowd_v4_finish($1,$2) as result',[p.p_task,p.p_lease]]};
+  if(name==='submit' && lostAck) {
+   const bad=structuredClone(p.p_record);bad.standard.view_count=-1;
+   assert.equal((await db.query('select public.crowd_v4_submit($1,$2,$3,$4::jsonb) as result',[crypto.randomUUID(),p.p_task,p.p_lease,JSON.stringify(bad)])).rows[0].result.error,'invalid_record');
+   assert.throws(()=>context.CrowdCore.validate(bad),/invalid_count/);
+   const wrongParent=structuredClone(p.p_record);wrongParent.extra.comments.items[1].parent_key='comment-999';
+   assert.throws(()=>context.CrowdCore.validate(wrongParent),/invalid_comments/);
+  }
   const result=(await db.query(...statements[name])).rows[0].result;
   if(name==='submit'){uploads.push(p);if(lostAck){lostAck=false;throw new Error('fixture_lost_ack');}}
   return result;
  }};
  state.agent={...context.CrowdCore.initial(),consent:context.CrowdCore.CONSENT};let agent=new context.CrowdAgent(runtime,api);await agent.start();
- for(let i=0;i<16;i++){await agent.tick();clock+=45000;if(i===5)agent=new context.CrowdAgent(runtime,api);}
+ for(let i=0;i<22;i++){await agent.tick();clock+=45000;if(i===5)agent=new context.CrowdAgent(runtime,api);}
  assert.equal(uploads.length,2);assert.equal(uploads[0].p_request,uploads[1].p_request);
  assert.equal(uploads[0].p_record.extra.hashtags.length,2);assert.equal(state.agent.received,1);
  await db.exec('reset role');
@@ -102,6 +155,7 @@ try {
  assert.equal(stored[0].record.standard.url,'https://www.xiaohongshu.com/explore/'+id);
  assert.equal(stored[0].record.evidence.text,result.record.evidence.text);
  assert.deepEqual(stored[0].record.extra.hashtags,['清蒸鱼','上海美食']);
+ assert.equal(stored[0].record.standard.view_count,13000);assert.equal(stored[0].record.extra.comments.items.length,4);assert.equal(stored[0].record.extra.comments.items[2].parent_key,'comment-1');
  console.log('PASS Chromium + PostgreSQL: search_result detail route, real SQL claim/submit/finish, standard/extra/evidence stored once after lost acknowledgement');
  // Actual extension controller DOM with a fixed Chrome command fixture.
  const controller=await browser.newPage();

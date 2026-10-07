@@ -5,7 +5,9 @@
 | 数据 | 持久位置 | 内容与用途 |
 | --- | --- | --- |
 | 原始回传 | `crowd_v4.proofs.record`，PostgreSQL JSONB | `standard` 标准字段、`extra` 非标字段、`evidence` 原文及解析来源完整保留 |
-| 标准字段 | `record.standard` | 平台、笔记 ID、原帖 URL、标题、发布时间、采集时间、公开作者昵称、赞/收藏/评论数；未知值保留 null |
+| 标准字段 | `record.standard` | 平台、笔记 ID、原帖 URL、标题、发布时间、采集时间、公开作者昵称、公开阅读/浏览量（view_count）、赞/收藏/评论数；未知值保留 null |
+| 评论与回复 | `record.extra.comments` | 本次已加载的评论/回复文本、父子关系、公开昵称、点赞数、时间标签、范围与截断标记 |
+| 指标原显示值 | `record.extra.metric_labels` | 如“1.3万次浏览”；保留页面显示精度，不能把近似数当精确后台统计 |
 | 非标字段 | `record.extra` | 标签、逐字意见等解析内容及扩展字段；不转成虚构评分 |
 | 原文证据 | `record.evidence` | 可见正文、原文长度、截断标记、解析版本、`rendered_public_dom` 来源 |
 | 去重和收件回执 | `crowd_v4.proofs.note_id` / `crowd_v4.receipts` | 笔记全局去重；断网重传沿用相同请求 UUID，返回相同回执 |
@@ -30,3 +32,16 @@ flowchart LR
 本工作区已实际运行导出，文件在私有 `.crowd-launch/recovery/crowd_v4_verified.jsonl`；实际为 0 条，未塞入模拟笔记。数据库已发布三条真实店铺试点任务，每家目标两条；参与者和回传记录仍为 0。设备验收、原帖核验和生产流水线启用后才可宣称完整采集入库闭环运行。
 
 回收接口由 `crowd-access` 的 `operations` 支持限定的 publish/review/list/export；不接受任意 RPC、付款或账号管理。参与接入通过有效邀请与预留安装身份验证。安装清单只从经现有产物/源码/设备验收的私有发布清单读取，不把构建通过当作实机通过。
+
+
+## v4.0.4 评论字段与限制
+
+`extra.comments.items` 是扁平数组；每条有快照内唯一 `key`、可读到时的 `comment_id`、`parent_key`、`is_reply`、`author_display`、`text`、`original_length`、`truncated`、`like_count`、`like_label`、`published_label`。`parent_key` 只指向同一快照中已保存的父评论，未知时为null；不根据文字猜测父子关系。父评论文本独立提取，不拼入嵌套回复。昵称/时间标签是页面公开信息，不访问用户主页、私信或账号设置。
+
+每篇详情先按既有停留/滚动规则读取正文，再最多4轮（每轮间隔至少30秒）展开明确的“展开回复/查看更多评论”控件或继续滚动；绝不点击点赞、发评论/回复输入按钮。连续滚动从当前位置前进。验证码、登录失效或限流依旧暂停。最多保存50条评论/回复，每条2000字符；评论JSON还受20000字符上限及正文/意见引用占用后的剩余包预算限制，可能提前截断。
+
+`coverage='visible_loaded_only'`、`complete=false` 保守地说明仅保存本次页面已加载并可读取的部分；`loaded_count`、`captured_count`、`omitted_count`、`truncated`、`panel_found`、`more_available` 用于解释数量与缺失。总评论数可能含未加载/折叠/删除内容，与items长度不同属正常，不能填造评论凑数。DOM虚拟化可能让先前离开页面的评论不在最终快照中；本版本不承诺全量抓取。读取不到的阅读量、点赞、作者、发布时间为null，明确显示0时才写0。
+
+迁移 `20261007120848_crowd_v4_view_count` 只把可选view_count加入原submit数量校验，旧客户端不带该字段仍可回传。评论作为已有extra JSONB保存，导出保留完整record。原任务、租约、幂等回执、RLS和核验/奖励规则不变，评论条数不另计奖励。生产权限回验：anon不可调用submit、authenticated可调用但不能直读proofs、RLS开启。安全advisor对原有 [authenticated SECURITY DEFINER](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable) 本人RPC仍有提示；本人、租约及固定search_path边界保留。
+
+本地验证通过：真实Chromium固定页面中提取阅读量、独立父评论与嵌套/延迟展开回复，保存到隔离PostgreSQL实际submit函数；丢回执重试仍只有一条完整记录，非法阅读量被拒。数量/长度截断、总包预算、未知值与明确0、隐藏评论、非互动展开、滚动推进、正文缺失时拒绝用评论替代等边界通过。此前完整业务数据库独立套件因未配置而SKIP，未将其算作通过。Mac真实安装和小红书DOM适配尚未验证。
