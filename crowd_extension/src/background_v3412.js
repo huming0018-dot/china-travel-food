@@ -225,6 +225,7 @@ async function fetchActiveTask() {
     kpi_min: r.kpi_min || 5,
     quota_day: r.quota_day || 20,
     progress: 0,
+    known_note_ids: r.known_note_ids || [], // v3.4.12 服务端已见库（本包关键词已收录）
   };
   // 应用服务端拟合安全参数（只降不升：远程值永不放宽本地基线）
   // F11 勘误（2026-10-06 独立核验）：per-task safety_limits 在生产服务端从未下发
@@ -395,9 +396,14 @@ async function _collectOnceInner() {
     // 服务端必拒（item_content_empty 且 counts_for_reject=true），客户端直接丢弃不送上去，
     // 避免 selector 脆弱时全量拒收把 reject_rate 打爆触发自动 suspended
     const stripPunct = (s) => String(s || "").replace(/[\p{P}\p{S}\s]/gu, "");
-    const preItems = (search.items || []).slice(0, 6);
+    // v3.4.12 信封榨取率提升：① 服务端已见库预过滤（跳过已收录，不占槽位）② 槽位 6→12
+    // ——同一页 SERP（同样 25 次浏览）多榨 2-3 倍有效条目，浏览量零增加
+    const knownSet = new Set((task.known_note_ids || []).map(String));
+    const preItems = (search.items || [])
+      .filter((it) => it && it.note_id && !knownSet.has(String(it.note_id)))
+      .slice(0, 12);
     const usable = preItems.filter((it) => stripPunct(it.title).length >= 2 || String(it.excerpt || "").trim().length >= 10);
-    const droppedBad = preItems.length - usable.length;
+    const droppedBad = (search.items || []).length - usable.length;
     if (droppedBad) console.warn("[crowd] F14 预检丢弃必拒条目 x" + droppedBad);
 
     const items = usable.map((it) => ({
