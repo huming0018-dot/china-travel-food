@@ -84,6 +84,14 @@ async function agentChecks() {
  assert.equal(brokenState.agent.last_error,'page_timeout');
  const brokenOpens=opened.length;await broken.tick(true);assert.equal(opened.length,brokenOpens);
  await broken.start();assert.equal(brokenState.agent.page_failures,0,'explicit resume resets the failure budget');
+ for(const reason of ['page_loading','content_unavailable','probe_timeout']) {
+  brokenRuntime.probe=async()=>({ready:false,reason});await broken.start();
+  for(let attempt=0;attempt<3;attempt++){brokenState.agent.next_at=0;await broken.tick();brokenState.agent.next_at=0;brokenState.agent.page_deadline=now-1;await broken.tick();}
+  assert.equal(brokenState.agent.enabled,false);assert.equal(brokenState.agent.last_error,reason);
+ }
+ brokenRuntime.probe=async()=>({ready:true,links:[C.HOST+'/explore/'+id],keyword:'其他餐厅'});
+ await broken.start();brokenState.agent.next_at=0;await broken.tick();brokenState.agent.next_at=0;await broken.tick();
+ assert.equal(brokenState.agent.enabled,false);assert.equal(brokenState.agent.last_error,'page_mismatch');assert.equal(brokenState.agent.outbox.length,0);
  console.log('PASS lifecycle failure paths: quota retains evidence; repeated page failures pause until explicit resume');
  // Authentication failures in refresh cannot leak an anon bearer into RPCs.
  const fetches=[];const st={get:async()=>({refresh_token:'refresh',expires_at:0}),set:async()=>{}};

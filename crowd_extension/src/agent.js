@@ -105,7 +105,10 @@
           await this.r.open(C.HOST + '/search_result?keyword=' + encodeURIComponent(s.task.query) + '&source=web_search_result_notes'); alive();
           s.phase = 'search'; s.page_deadline = now + 120000; s.next_at = now + 30000;
         } else if (s.phase === 'search') {
-          const page = await this.r.probe('search'); alive(); this.checkPage(page, s, now);
+          const page = await this.r.probe('search'); alive();
+          const normalize = value => String(value || '').normalize('NFC').replace(/\s+/g, ' ').trim().toLowerCase();
+          if ('keyword' in page && normalize(page.keyword) !== normalize(s.task.query)) throw new Error('page_mismatch');
+          this.checkPage(page, s, now);
           if (page.ready) {
             const found = new Map(s.candidates.map(url => [C.noteURL(url).id, url]));
             for (const url of page.links) { try { const note = C.noteURL(url); if (!s.seen.includes(note.id) && !s.history.includes(note.id)) found.set(note.id, note.navigation); } catch (_) {} }
@@ -147,16 +150,17 @@
       } catch (err) {
         if (err.message === 'cancelled' || signal.aborted) return;
         alive(); s.last_error = err.message;
-        if (err.message === 'page_timeout') {
+        const pageFailure = ['page_timeout', 'page_loading', 'content_unavailable', 'probe_timeout'].includes(err.message);
+        if (pageFailure) {
           s.page_failures = (s.page_failures || 0) + 1;
           if (s.page_failures >= 3) {
             s.enabled = false; await this.save(s); await this.r.cancel(); return;
           }
         }
-        if (['captcha', 'rate_limit', 'login_required', 'approval_required', 'consent_required', 'review_local_rejections'].includes(err.message) || err.status === 401 || err.status === 403) {
+        if (['captcha', 'rate_limit', 'login_required', 'page_mismatch', 'approval_required', 'consent_required', 'review_local_rejections'].includes(err.message) || err.status === 401 || err.status === 403) {
           s.enabled = false; await this.save(s); await this.r.cancel(); return;
         }
-        if (err.message === 'page_timeout' || err.message === 'wrong_note') {
+        if (pageFailure || err.message === 'wrong_note') {
           s.phase = 'idle'; s.candidates = []; s.task = null;
         }
         s.next_at = now + 60000;
@@ -168,7 +172,7 @@
       if (page.gate) throw new Error(page.gate);
       if (page.ready) s.last_error = null;
       if (page.reopen) { s.phase = s.phase === 'note' ? 'reopen_note' : 'idle'; s.search_round = 0; s.next_at = now + 30000; return; }
-      if (!page.ready) { if (now > s.page_deadline) throw new Error('page_timeout'); s.next_at = now + 30000; }
+      if (!page.ready) { if (now > s.page_deadline) throw new Error(['page_loading','content_unavailable','probe_timeout'].includes(page.reason) ? page.reason : 'page_timeout'); s.next_at = now + 30000; }
     }
   }
   root.CrowdAgent = CrowdAgent;

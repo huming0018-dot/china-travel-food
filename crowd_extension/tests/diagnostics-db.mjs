@@ -14,6 +14,7 @@ insert into crowd_v4.participants values('${user}','approved','crowd-public-v4')
 const migrations=path.resolve(new URL('../../cloud/supabase/migrations',import.meta.url).pathname);
 const migration=fs.readdirSync(migrations).find(n=>n.endsWith('_crowd_v4_diagnostics.sql'));
 await db.exec(fs.readFileSync(path.join(migrations,migration),'utf8'));
+await db.exec(fs.readFileSync(path.join(migrations,fs.readdirSync(migrations).find(n=>n.endsWith('_crowd_v4_navigation_diagnostics.sql'))),'utf8'));
 async function call(uid,action,revision,state=null) {
   await db.query("select set_config('request.jwt.claim.sub',$1,false)",[uid||'']);
   return (await db.query('select public.crowd_v4_diagnostics($1,$2,$3::jsonb) as result',[action,revision,state===null?null:JSON.stringify(state)])).rows[0].result;
@@ -23,6 +24,13 @@ await assert.rejects(call(null,'enable',1),/login_required/);
 await assert.rejects(call(user,'report',1,snapshot),/stale_diagnostics/);
 await call(user,'enable',1);await call(user,'report',1,snapshot);
 await call(user,'report',1,{...snapshot,links:1});
+const navigation={...snapshot,version:'4.0.3',error:'page_loading',nav_stage:'failed',nav_error:'ERR_NAME_NOT_RESOLVED',nav_age_s:4,probe_status:'no_receiver'};
+await call(user,'report',1,navigation);
+assert.deepEqual((await db.query('select state from crowd_v4.diagnostics')).rows[0].state,navigation);
+for(const invalid of [{nav_error:'https://secret.test/token'}, {nav_stage:null}, {probe_status:'raw exception'}, {nav_age_s:86401}, {nav_age_s:-1}, {nav_age_s:'1'}, {nav_url:'private'}]) await assert.rejects(call(user,'report',1,{...navigation,...invalid}),/invalid_diagnostics/);
+await call(user,'report',1,{...navigation,nav_error:null,nav_age_s:null,nav_stage:'unknown'});
+await call(user,'report',1,snapshot); // Already-installed 4.0.1 remains compatible.
+
 assert.equal((await db.query('select count(*)::int as n from crowd_v4.diagnostics')).rows[0].n,1,'only the latest snapshot is kept');
 await assert.rejects(call(user,'report',1,{...snapshot,cookie:'secret'}),/invalid_diagnostics/);
 await assert.rejects(call(user,'report',1,{...snapshot,error:'PRIVATE_VALUE'}),/invalid_diagnostics/);

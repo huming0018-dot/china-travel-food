@@ -1,13 +1,13 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
-const src=path.resolve(__dirname,'../src'); let listener, installed, startup, alarmListener, accesses=[],fetches=[],optionsOpened=0, alarm=null,diagnosticAlarm=null, windows=[{id:1}],tabInfo={status:'complete'},createdTabs=[],createdWindows=[],probeReply={ready:false},diagnosticsOffline=false;const data={};
-const chrome={runtime:{id:'test-extension',getURL:x=>'chrome-extension://test-extension/'+x,
+const src=path.resolve(__dirname,'../src'); let listener, installed, startup, alarmListener, accesses=[],fetches=[],optionsOpened=0, alarm=null,diagnosticAlarm=null, windows=[{id:1}],tabInfo={status:'complete'},createdTabs=[],createdWindows=[],probeReply={ready:false},diagnosticsOffline=false;const data={}; const navListeners={};
+const chrome={webNavigation:Object.fromEntries(['onBeforeNavigate','onCommitted','onDOMContentLoaded','onCompleted','onErrorOccurred'].map(name=>[name,{addListener:fn=>navListeners[name]=fn}])),runtime:{id:'test-extension',getURL:x=>'chrome-extension://test-extension/'+x,
  openOptionsPage:async()=>{optionsOpened++;},
  onMessage:{addListener:fn=>listener=fn},onStartup:{addListener:fn=>startup=fn},onInstalled:{addListener:fn=>installed=fn}},
  storage:{local:{get:async key=>({[key]:structuredClone(data[key])}),set:async value=>Object.assign(data,structuredClone(value)),setAccessLevel:async value=>accesses.push(value.accessLevel)}},
  alarms:{get:async name=>name==='crowd_diagnostics'?diagnosticAlarm:alarm,create:async(name,info)=>{if(name==='crowd_diagnostics')diagnosticAlarm={name,...info};else alarm={name,...info};},clear:async name=>{if(name==='crowd_diagnostics')diagnosticAlarm=null;else alarm=null;},onAlarm:{addListener:fn=>alarmListener=fn}},
  windows:{getAll:async()=>windows,update:async(id,info)=>{createdWindows.push({id,...info});},create:async info=>{createdWindows.push(info);return {tabs:[{id:77}]};}},
- tabs:{onRemoved:{addListener:()=>{}},get:async()=>tabInfo,create:async info=>{createdTabs.push(info);return {id:77};},update:async(id,info)=>{createdTabs.push({id,...info});return {windowId:1};},sendMessage:async()=>{if(probeReply instanceof Error)throw probeReply;return probeReply;},remove:async()=>{}}};
+ tabs:{onRemoved:{addListener:()=>{}},get:async()=>tabInfo,create:async info=>{createdTabs.push(info);return {id:77};},update:async(id,info)=>{createdTabs.push({id,...info});return {windowId:1};},sendMessage:async()=>{if(probeReply instanceof Error)throw probeReply;return await (typeof probeReply === 'function' ? probeReply() : probeReply);},remove:async()=>{}}};
 const context=vm.createContext({chrome,console,URL,Date,Math,AbortController,crypto:require('node:crypto').webcrypto,setTimeout,clearTimeout,
  fetch:async(url,options)=>{fetches.push({url,options});if(url.endsWith('crowd_v4_diagnostics')){if(diagnosticsOffline)throw new Error('offline');return {ok:true,json:async()=>({saved_at:new Date().toISOString()})};}return {ok:true,json:async()=>({participant:{status:'approved'}})};}});
 context.importScripts=(...names)=>{for(const name of names){if(name==='config.js')context.CROWD_CONFIG={url:'https://test.supabase.co',key:'sb_publishable_test'};else vm.runInContext(fs.readFileSync(path.join(src,name),'utf8'),context);}};
@@ -54,6 +54,12 @@ vm.runInContext(fs.readFileSync(path.join(src,'background.js'),'utf8'),context);
   const before=fetches.length;await startup();assert.equal(fetches.length,before);assert.equal(alarm,null);assert.equal(data['agent:one'].last_error,reason);
  }
  const command=message=>new Promise(resolve=>listener(message,{id:chrome.runtime.id,url:chrome.runtime.getURL('src/controller.html')},resolve));
+ const navEvent={tabId:77,frameId:0,url:url+'?xsec_token=PRIVATE_URL_TOKEN',timeStamp:Date.now()};
+ const nav=async(name,extra={})=>{navListeners[name]({...navEvent,...extra});await vm.runInContext('navigationQueue',context);};
+ await nav('onErrorOccurred',{error:'net::ERR_NAME_NOT_RESOLVED'});
+ assert.equal(data['diagnostics:one:navigation'] ?? null,null,'no navigation telemetry before opt-in');
+ probeReply=()=>new Promise(()=>{});
+ assert.equal((await vm.runInContext('runtime.probe("search")',context)).reason,'probe_timeout','hung message must release the agent lock');
  assert.equal(fetches.filter(f=>f.url.endsWith('crowd_v4_diagnostics')).length,0,'no diagnostics before explicit opt-in');
  tabInfo={status:'complete',url:url+'?xsec_token=PRIVATE_URL_TOKEN'};
  probeReply={ready:true,page:{kind:'note',document:'complete',gate:null,links:2,search_note_links:3,body_chars:200,visible:false,text:'PRIVATE_NOTE',url:'PRIVATE_URL_TOKEN',cookie:'PRIVATE_COOKIE'}};
@@ -65,6 +71,27 @@ vm.runInContext(fs.readFileSync(path.join(src,'background.js'),'utf8'),context);
  assert.equal(reports[1].p_state.error,'logged_out');assert.equal(reports[1].p_state.body_chars,200);
  assert.equal(JSON.stringify(reports).includes('PRIVATE_'),false,'page secrets/text/URLs must not be reported');
  assert.equal(JSON.stringify(reports).includes('USER_ACCESS'),false);
+ await nav('onErrorOccurred',{error:'net::ERR_NAME_NOT_RESOLVED'});
+ assert.equal(data['diagnostics:one:navigation'].error,'ERR_NAME_NOT_RESOLVED');
+ const saved=JSON.stringify(data['diagnostics:one:navigation']);
+ for(const extra of [{tabId:99},{frameId:1},{url:'https://example.test/private'},{timeStamp:navEvent.timeStamp-1}]) await nav('onCompleted',extra);
+ assert.equal(JSON.stringify(data['diagnostics:one:navigation']),saved,'other tabs, frames, origins and stale events ignored');
+ await vm.runInContext('reportDiagnostics()',context);
+ let navReport=JSON.parse(fetches.at(-1).options.body).p_state;
+ assert.equal(navReport.nav_error,'ERR_NAME_NOT_RESOLVED');assert.equal(navReport.nav_stage,'failed');assert.equal(navReport.probe_status,'ok');
+ assert.equal(JSON.stringify(navReport).includes('PRIVATE_'),false);
+ await nav('onErrorOccurred',{error:'PRIVATE_URL_TOKEN raw arbitrary error'});
+ assert.equal(data['diagnostics:one:navigation'].error,'OTHER');
+ await nav('onCompleted',{timeStamp:navEvent.timeStamp+1});
+ assert.equal(data['diagnostics:one:navigation'].error,null,'successful navigation clears previous error');
+ probeReply=new Error('Receiving end does not exist');tabInfo={status:'loading'};
+ assert.equal((await vm.runInContext('runtime.probe("search")',context)).reason,'page_loading');
+ tabInfo={status:'complete'};
+ assert.equal((await vm.runInContext('runtime.probe("search")',context)).reason,'content_unavailable');
+ await vm.runInContext('reportDiagnostics()',context);
+ assert.equal(JSON.parse(fetches.at(-1).options.body).p_state.probe_status,'no_receiver');
+ probeReply={ready:true,page:{kind:'note',document:'complete',body_chars:200}};
+
  tabInfo={status:'loading'};await vm.runInContext('reportDiagnostics()',context);
  const loadingReport=JSON.parse(fetches.at(-1).options.body).p_state;
  assert.equal(loadingReport.tab_status,'loading');assert.equal(loadingReport.body_chars,200,'diagnostics probe DOM even while loading');
@@ -72,6 +99,8 @@ vm.runInContext(fs.readFileSync(path.join(src,'background.js'),'utf8'),context);
  assert.equal((await command({type:'diagnostics',enabled:false})).ok,true);assert.equal(diagnosticAlarm,null);
  assert.equal(JSON.parse(fetches.at(-1).options.body).p_action,'disable');
  assert.equal(JSON.parse(fetches.at(-1).options.body).p_state,null);
+ assert.equal(data['diagnostics:one:navigation'],null,'opt-out clears local navigation snapshot');
+ await nav('onErrorOccurred',{error:'net::ERR_CONNECTION_RESET'});assert.equal(data['diagnostics:one:navigation'],null);
  diagnosticsOffline=true;await command({type:'diagnostics',enabled:true});
  assert.equal(data['agent:one'].enabled,false,'telemetry failure never changes collector state');
  const diagState=await command({type:'state'});assert.equal(diagState.data.diagnostics.error,'unavailable');

@@ -10,6 +10,10 @@ async function send(type, extra = {}) {
   if (!reply.ok) throw new Error(reply.error); return reply.data;
 }
 errors.page_timeout = '采集页面准备超时。连续失败三次会暂停，请查看采集页面并保持运行诊断开启。';
+errors.page_loading = '小红书页面一直未完成加载。连续失败三次会暂停，请查看采集页面的网络提示。';
+errors.content_unavailable = '页面已结束加载，但采集脚本未响应。请检查浏览器是否允许此插件访问小红书。';
+errors.probe_timeout = '采集页面没有及时响应，可能卡住；连续失败三次会暂停。';
+errors.page_mismatch = '当前页面搜索词与任务不一致，已暂停。点击继续会重新打开任务页面。';
 errors.daily_quota = '今日配额已满，已有证据保留，稍后自动重试。';
 errors.work_page_missing = '采集页面尚未打开，请先开始或继续任务。';
 errors.invite_full = '此邀请的名额已占用。已参加过请回到原浏览器和个人资料继续，更新无需重新报名；不要卸载插件。';
@@ -21,7 +25,7 @@ async function refresh() {
   $('welcome').textContent = errors[s.last_error] || (s.enabled ? (s.phase === 'idle' ? '自动任务已开启，正在等待下一步。' : '自动任务执行中，你可以随时停止。') : data.session ? '参与身份已就绪，可点击继续；无需再次报名。' : data.invited ? '邀请已接续，请确认是否参与。' : '请从邀请链接打开，无需注册中台账号。');
   $('start').hidden = !data.session;
   $('consent').textContent = data.session ? '同意并继续' : '同意并开始';
-  const fields = {'中台账户': data.session ? '已登录' : '未登录', '参与状态': p.participant?.status || p.error || '尚未报名', '自动执行': s.enabled ? '已开启' : '已停止', '当前阶段': s.phase === 'idle' && s.task ? '准备执行任务' : labels[s.phase] || s.phase,
+  const fields = {'插件版本': CrowdCore.VERSION, '中台账户': data.session ? '已登录' : '未登录', '参与状态': p.participant?.status || p.error || '尚未报名', '自动执行': s.enabled ? '已开启' : '已停止', '当前阶段': s.phase === 'idle' && s.task ? '准备执行任务' : labels[s.phase] || s.phase,
     '任务': s.task?.query || '暂无', '服务端接收': p.received ?? '—', '核验有效': p.verified ?? '—', '已记奖励': p.reward_fen == null ? '—' : '¥' + (p.reward_fen / 100).toFixed(2), '累计余数': p.remainder ?? '—', '待回传 / 待处理': s.outbox.length + ' / ' + s.rejected.length, '最近提示': errors[s.last_error] || s.last_error || '无'};
   $('status').replaceChildren();
   for (const [name, value] of Object.entries(fields)) { const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = name; dd.textContent = String(value); $('status').append(dt, dd); }

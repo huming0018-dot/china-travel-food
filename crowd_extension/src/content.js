@@ -6,10 +6,16 @@
   const first = selectors => [...document.querySelectorAll(selectors)].find(visible);
   const text = el => el?.innerText?.trim() || '';
   const noteBody = () => first('#detail-desc, .note-detail .note-text, .note-container .note-text, .note-scroller .desc, .note-content .desc');
-  const noteLinks = () => [...document.querySelectorAll('a[href*="/explore/"], a[href*="/discovery/item/"], a[href*="/search_result/"]')].filter(a => {
+  const noteLinks = () => {
+    // Prefer each result card's own links (crawler-extension v1.0.0 pattern).
+    const cards = [...document.querySelectorAll('section.note-item, div.note-item')];
+    const selectors = 'a[href*="/explore/"], a[href*="/discovery/item/"], a[href*="/search_result/"]';
+    const links = cards.length ? cards.flatMap(card => [...card.querySelectorAll(selectors)]) : [...document.querySelectorAll(selectors)];
+    return links.filter(a => {
     if (!visible(a)) return false;
     try { C.noteURL(a.href); return true; } catch (_) { return false; }
-  });
+    });
+  };
   function gate() {
     if (first('[class*="captcha"], [id*="captcha"], iframe[src*="captcha"], [class*="verify-slider"]')) return 'captcha';
     const modal = first('[role="dialog"], .error-page, .error-container, .login-container, .login-modal');
@@ -62,7 +68,8 @@
     }
     if (action === 'search') {
       const links = noteLinks().map(a => a.href);
-      return {ready: links.length > 0 || !!first('.search-empty, .empty-page, .no-result'), links};
+      const keyword = /^\/search_result\/?$/.test(location.pathname) ? new URL(location.href).searchParams.get('keyword') : null;
+      return {ready: links.length > 0 || !!first('.search-empty, .empty-page, .no-result'), links, keyword};
     }
     return note();
   }

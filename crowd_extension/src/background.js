@@ -5,6 +5,17 @@ const storage = CrowdCore.accountStorage({
   async set(key, value) { await chrome.storage.local.set({[key]: value}); }
 });
 if (chrome.storage.local.setAccessLevel) chrome.storage.local.setAccessLevel({accessLevel: 'TRUSTED_CONTEXTS'}).catch(console.error);
+async function probeTab(id, action) {
+  let timer;
+  try {
+    const response = await Promise.race([
+      chrome.tabs.sendMessage(id, {type: 'crowd_probe', action}),
+      new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('probe_timeout')), 2000); })
+    ]);
+    return {response, status: response ? 'ok' : 'no_receiver'};
+  } catch (e) { return {response: null, status: e.message === 'probe_timeout' ? 'timed_out' : 'no_receiver'}; }
+  finally { clearTimeout(timer); }
+}
 const runtime = {
   storage, now: Date.now, random: Math.random, uuid: () => crypto.randomUUID(),
   // Durable phase deadlines live in agent.next_at; one repeating alarm repairs
@@ -16,6 +27,7 @@ const runtime = {
   cancel: () => chrome.alarms.clear('crowd_tick'),
   async open(url) {
     CrowdCore.navigationURL(url);
+    await clearNavigation();
     const id = await storage.get('work_tab');
     if (id) { try {
       const tab = await chrome.tabs.get(id);
@@ -35,8 +47,8 @@ const runtime = {
       const tab = await chrome.tabs.get(id);
       if (tab.discarded) return {ready: false, reopen: true};
       // Rendered DOM can be ready while images/iframes keep the tab loading.
-      try { return await chrome.tabs.sendMessage(id, {type: 'crowd_probe', action}); }
-      catch (_) { return {ready: false}; }
+      const probe = await probeTab(id, action);
+      return probe.response || {ready: false, reason: probe.status === 'timed_out' ? 'probe_timeout' : tab.status === 'loading' ? 'page_loading' : 'content_unavailable'};
     } catch (_) { return {ready: false, reopen: true}; }
   },
   async close() {
@@ -47,7 +59,32 @@ const runtime = {
 const api = new CrowdAPI(CROWD_CONFIG, storage), agent = new CrowdAgent(runtime, api);
 let diagnosticReport;
 const diagnosticKey = (id, suffix) => 'diagnostics:' + id + ':' + suffix;
-const diagnosticErrors = ['page_timeout','wrong_note','login_required','captcha','rate_limit','approval_required','consent_required','user_stopped','logged_out','system_suspended','lease_lost','daily_quota','review_local_rejections','backend_unavailable'];
+const diagnosticErrors = ['page_timeout','page_loading','content_unavailable','probe_timeout','page_mismatch','wrong_note','login_required','captcha','rate_limit','approval_required','consent_required','user_stopped','logged_out','system_suspended','lease_lost','daily_quota','review_local_rejections','backend_unavailable'];
+const navigationErrors = ['ERR_NAME_NOT_RESOLVED','ERR_INTERNET_DISCONNECTED','ERR_CONNECTION_TIMED_OUT','ERR_TIMED_OUT','ERR_CONNECTION_RESET','ERR_CONNECTION_REFUSED','ERR_CONNECTION_CLOSED','ERR_ADDRESS_UNREACHABLE','ERR_NETWORK_CHANGED','ERR_TUNNEL_CONNECTION_FAILED','ERR_PROXY_CONNECTION_FAILED','ERR_CERT_AUTHORITY_INVALID','ERR_CERT_DATE_INVALID','ERR_SSL_PROTOCOL_ERROR','ERR_BLOCKED_BY_CLIENT','ERR_BLOCKED_BY_ADMINISTRATOR','ERR_ABORTED'];
+let navigationQueue = Promise.resolve();
+async function clearNavigation() {
+  await navigationQueue;
+  const settings = await diagnosticSettings();
+  if (settings.id) await storage.set(diagnosticKey(settings.id, 'navigation'), null);
+}
+// Only the collector's main frame, only during opt-in; no URL is persisted.
+for (const [event, stage] of Object.entries({onBeforeNavigate:'started',onCommitted:'committed',onDOMContentLoaded:'dom_ready',onCompleted:'complete',onErrorOccurred:'failed'})) {
+  chrome.webNavigation?.[event]?.addListener(details => {
+    if (details.frameId !== 0) return;
+    navigationQueue = navigationQueue.then(async () => {
+      const settings = await diagnosticSettings();
+      if (!settings.enabled || details.tabId !== await storage.get('work_tab')) return;
+      try { const u = new URL(details.url); if (u.protocol !== 'https:' || !['www.xiaohongshu.com','m.xiaohongshu.com'].includes(u.hostname)) return; } catch (_) { return; }
+      const code = String(details.error || '').replace(/^net::/, '');
+      const key = diagnosticKey(settings.id, 'navigation'), previous = await storage.get(key);
+      if (!Number.isFinite(details.timeStamp) || (previous?.at > details.timeStamp)) return;
+      const current = await diagnosticSettings();
+      if (!current.enabled || current.id !== settings.id || current.revision !== settings.revision) return;
+      await storage.set(key, {stage, error: stage === 'failed' ? (navigationErrors.includes(code) ? code : 'OTHER') : null,
+        at: details.timeStamp, revision: settings.revision, tab: details.tabId});
+    }).catch(console.error);
+  }, {url: [{schemes:['https'],hostEquals:'www.xiaohongshu.com'}, {schemes:['https'],hostEquals:'m.xiaohongshu.com'}]});
+}
 async function diagnosticSettings() {
   const session = await storage.get('session');
   if (!session?.user?.id) return {enabled: false};
@@ -79,22 +116,28 @@ async function reportDiagnostics() {
         let snapshot = null;
         if (settings.enabled) {
           const s = await agent.read(), id = await storage.get('work_tab');
-          let tab = null, page = null, tabStatus = 'missing';
+          let tab = null, page = null, tabStatus = 'missing', probeStatus = 'unknown';
           try {
             if (id) {
               tab = await chrome.tabs.get(id);
               tabStatus = tab.discarded ? 'discarded' : tab.status === 'loading' ? 'loading' : 'complete';
               if (tabStatus !== 'discarded') {
                 // A disconnected content script is recorded, never fixed by bypassing policy.
-                const result = await chrome.tabs.sendMessage(id, {type: 'crowd_probe', action: 'diagnostics'});
-                page = result?.page || null;
+                const result = await probeTab(id, 'diagnostics');
+                probeStatus = result.status;
+                page = result.response?.page || null;
                 if (!page && tabStatus === 'complete') tabStatus = 'no_content';
               }
             }
           } catch (_) { tabStatus = tab ? (tab.status === 'loading' ? 'loading' : 'no_content') : 'missing'; }
           const number = (value, max) => Number.isSafeInteger(value) && value >= 0 ? Math.min(value, max) : 0;
           const oneOf = (value, options, fallback) => options.includes(value) ? value : fallback;
+          const savedNavigation = await storage.get(diagnosticKey(settings.id, 'navigation'));
+          const navigation = savedNavigation?.revision === settings.revision && savedNavigation?.tab === id ? savedNavigation : null;
           snapshot = {version: CrowdCore.VERSION, enabled: s.enabled === true,
+            nav_stage: navigation?.stage || 'unknown', nav_error: navigation?.error || null,
+            nav_age_s: navigation ? Math.min(86400, Math.max(0, Math.floor((Date.now() - navigation.at) / 1000))) : null,
+            probe_status: probeStatus,
             phase: oneOf(s.phase, ['idle','search','search_done','note','reopen_note'], 'idle'),
             error: s.last_error ? oneOf(s.last_error, diagnosticErrors, 'unexpected_error') : null,
             task_id: Number.isSafeInteger(s.task?.id) ? s.task.id : null,
@@ -123,6 +166,7 @@ async function setDiagnostics(enabled) {
   // Server revisions reject delayed reports/control requests after opt-out.
   await storage.set(diagnosticKey(settings.id, 'revision'), Math.max(Date.now(), settings.revision + 1));
   await storage.set(diagnosticKey(settings.id, 'enabled'), enabled);
+  await clearNavigation();
   await storage.set(diagnosticKey(settings.id, 'enable'), enabled);
   await storage.set(diagnosticKey(settings.id, 'clear'), !enabled);
   await repairDiagnostics(); await reportDiagnostics();

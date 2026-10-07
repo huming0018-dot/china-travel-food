@@ -40,6 +40,10 @@ try {
  await inject();let search=await page.evaluate(()=>CrowdPage.probe('search'));assert.equal(search.ready,true);assert.equal(search.links.length,1);
  const searchDiag=await page.evaluate(()=>CrowdPage.probe('diagnostics'));
  assert.equal(searchDiag.page.kind,'search');assert.equal(searchDiag.page.links,1);assert.equal(JSON.stringify(searchDiag).includes('navigation-only'),false);
+ assert.equal(search.keyword,'测试餐厅');
+ await page.locator('body').evaluate((el,id)=>el.innerHTML=`<section class="note-item"><a href="/search_result/${id}?xsec_token=local">当前卡片</a><a href="/search_result/${id}?xsec_token=local">重复封面</a></section><a href="/explore/111111111111111111111111">卡片外推荐</a>`,id);
+ const scoped=await page.evaluate(()=>CrowdPage.probe('search'));
+ assert.equal(scoped.links.length,2);assert.ok(scoped.links.every(x=>x.includes(id)),'recommendations outside cards must not enter this task');
  await page.goto(search.links[0]);await inject();let result=await page.evaluate(()=>CrowdPage.probe('note'));
  assert.equal(result.ready,true);assert.equal(result.record.standard.note_id,id);assert.equal(result.record.standard.url.includes('xsec_token'),false);
  assert.equal(result.record.standard.like_count,12000);assert.equal(result.record.standard.collect_count,null);assert.equal(result.record.extra.hashtags[0],'清蒸鱼');assert.ok(result.record.extra.author_opinion_quotes.every(q=>result.record.evidence.text.includes(q)));
