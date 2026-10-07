@@ -65,8 +65,9 @@ write_entry() {
   local cur
   cur=$(sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" 2>/dev/null)
   if [ $? -ne 0 ] || ! echo "$cur" | grep -q .; then
-    sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist array" "$PLIST.plist" 2>/dev/null
-    sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist:0 string $ENTRY" "$PLIST.plist" 2>/dev/null
+    E1=$(sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist array" "$PLIST.plist" 2>&1)
+    E2=$(sudo /usr/libexec/PlistBuddy -c "Add :ExtensionInstallForcelist:0 string $ENTRY" "$PLIST.plist" 2>&1)
+    [ -n "$E1$E2" ] && report "policy_add_err" "$E1 | $E2"
     return
   fi
   echo "$cur" | grep -q "$ENTRY" && return 0
@@ -86,6 +87,11 @@ write_entry() {
 }
 
 if [ "$ADMIN_OK" = "1" ]; then
+  # 全新系统的 /Library/Managed Preferences 目录可能不存在——PlistBuddy 无法在不存在的目录建文件
+  sudo mkdir -p "$(dirname "$PLIST")" 2>/dev/null
+  if [ "$PLIST" = "/Library/Managed Preferences/com.google.Chrome" ]; then
+    sudo chown root:wheel "/Library/Managed Preferences" 2>/dev/null || true
+  fi
   write_entry
   sudo killall cfprefsd 2>/dev/null || true
   if sudo /usr/libexec/PlistBuddy -c "Print :ExtensionInstallForcelist" "$PLIST.plist" 2>/dev/null | grep -q "$ENTRY"; then
