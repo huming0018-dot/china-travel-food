@@ -43,6 +43,25 @@ async function agentChecks() {
  await a.stop();state.agent.enabled=true;state.agent.phase='idle';state.agent.task=null;state.agent.day=new Date(now+8*3600000).toISOString().slice(0,10);state.agent.visits=60;state.agent.next_at=0;
  const previousOpens=opened.length;await a.tick();assert.equal(opened.length,previousOpens,'daily browsing budget stops navigation');
  state.agent.consent=null;await a.tick();assert.equal(state.agent.enabled,false);assert.equal(state.agent.last_error,'consent_required');
+ // A delayed alarm after sleep must reload the page instead of counting sleep as dwell.
+ const wakeOpens=opened.length,wakeUploads=uploads.length;
+ state.agent={...C.initial(),enabled:true,consent:C.CONSENT,task:{...task,lease_until:new Date(now+1200000).toISOString()},phase:'note',note_url:C.HOST+'/explore/'+id,note_id:id,loaded_at:now-3600000,scrolls:2,dwell_ms:45000,page_deadline:now-1000,last_tick:now-3600000};
+ runtime.probe=async action=>action==='note'?{ready:true,record:record()}:{ready:true};
+ await a.tick();assert.equal(state.agent.phase,'note');assert.equal(state.agent.loaded_at,null);assert.equal(state.agent.scrolls,0);assert.equal(opened.length,wakeOpens+1);assert.equal(uploads.length,wakeUploads);
+ now+=30000;await a.tick();assert.equal(state.agent.loaded_at,now);assert.equal(state.agent.outbox.length,0,'sleep never supplies the required note dwell');
+ // Recovery does not discard evidence, change its receipt or retry before backoff.
+ const receipt=randomUUID(),retry=now+300000;
+ state.agent.outbox=[{request:receipt,task:task.id,lease:task.lease_token,record:record(),retry_at:retry}];state.agent.next_at=retry;
+ await a.tick(true);assert.equal(state.agent.outbox[0].request,receipt);assert.equal(state.agent.outbox[0].retry_at,retry);assert.equal(state.agent.next_at,retry);assert.equal(uploads.length,wakeUploads);
+ state.agent.outbox=[];state.agent.phase='search';state.agent.next_at=retry;
+ const beforeCooldown=opened.length;await a.tick(true);assert.equal(opened.length,beforeCooldown);assert.equal(state.agent.next_at,retry,'browser startup never bypasses a cooldown');
+ state.agent.phase='note';state.agent.next_at=0;state.agent.last_tick=now;state.agent.page_deadline=now+60000;
+ runtime.probe=async()=>({ready:false,reopen:true});await a.tick();assert.equal(state.agent.phase,'reopen_note','discarded or missing work tab is reopened');
+ for(const reason of ['user_stopped','captcha','rate_limit','logged_out']) {
+  state.agent.enabled=false;state.agent.last_error=reason;
+  const before=opened.length;await a.tick(true);assert.equal(state.agent.enabled,false);assert.equal(state.agent.last_error,reason);assert.equal(opened.length,before);
+ }
+ console.log('PASS agent recovery: awake reload resets dwell, receipt/backoff retained, cooldown retained, discarded page restored, stopped/blocked states never auto-enable');
  // Authentication failures in refresh cannot leak an anon bearer into RPCs.
  const fetches=[];const st={get:async()=>({refresh_token:'refresh',expires_at:0}),set:async()=>{}};
  const client=new CrowdAPI({url:'https://test.supabase.co',key:'sb_publishable_test'},st,async(url,options)=>{fetches.push({url,options});return {ok:false,status:401,json:async()=>({message:'expired'})};});

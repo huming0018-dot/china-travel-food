@@ -7,19 +7,31 @@ const storage = CrowdCore.accountStorage({
 if (chrome.storage.local.setAccessLevel) chrome.storage.local.setAccessLevel({accessLevel: 'TRUSTED_CONTEXTS'}).catch(console.error);
 const runtime = {
   storage, now: Date.now, random: Math.random, uuid: () => crypto.randomUUID(),
-  schedule: when => chrome.alarms.create('crowd_tick', {when: Math.max(when, Date.now() + 30000)}),
+  // Durable phase deadlines live in agent.next_at; one repeating alarm repairs
+  // missed ticks after sleep without bypassing cooldowns or daily quotas.
+  async schedule() {
+    const alarm = await chrome.alarms.get('crowd_tick');
+    if (alarm?.periodInMinutes !== .5) await chrome.alarms.create('crowd_tick', {periodInMinutes: .5});
+  },
   cancel: () => chrome.alarms.clear('crowd_tick'),
   async open(url) {
     CrowdCore.navigationURL(url);
     const id = await storage.get('work_tab');
     if (id) { try { await chrome.tabs.update(id, {url, active: false}); return; } catch (_) {} }
-    const tab = await chrome.tabs.create({url, active: false}); await storage.set('work_tab', tab.id);
+    const [window] = await chrome.windows.getAll({windowTypes: ['normal']});
+    const tab = window ? await chrome.tabs.create({url, windowId: window.id, active: false}) :
+      (await chrome.windows.create({url, type: 'normal', state: 'minimized', focused: false})).tabs[0];
+    await storage.set('work_tab', tab.id);
   },
   async probe(action) {
     const id = await storage.get('work_tab');
-    if (!id) return {ready: false};
-    try { return await chrome.tabs.sendMessage(id, {type: 'crowd_probe', action}); }
-    catch (_) { return {ready: false}; }
+    if (!id) return {ready: false, reopen: true};
+    try {
+      const tab = await chrome.tabs.get(id);
+      if (tab.discarded) return {ready: false, reopen: true};
+      if (tab.status === 'loading') return {ready: false};
+      return await chrome.tabs.sendMessage(id, {type: 'crowd_probe', action});
+    } catch (_) { return {ready: false, reopen: true}; }
   },
   async close() {
     const id = await storage.get('work_tab');
@@ -73,7 +85,7 @@ chrome.runtime.onMessageExternal?.addListener((message, sender, reply) => {
   } catch (_) { return; }
 });
 chrome.alarms.onAlarm.addListener(alarm => { if (alarm.name === 'crowd_tick') agent.tick().catch(console.error); });
-chrome.runtime.onStartup.addListener(() => agent.tick().catch(console.error));
+chrome.runtime.onStartup.addListener(() => agent.tick(true).catch(console.error));
 chrome.runtime.onInstalled.addListener((details = {reason: 'install'}) => {
   (async () => {
     // Also hand off a trial when replacing an unjoined development copy.
@@ -81,9 +93,12 @@ chrome.runtime.onInstalled.addListener((details = {reason: 'install'}) => {
     const handoff = /^[a-f0-9]{64}$/.test(CROWD_CONFIG.trialInvite || '') && !await storage.get('pending_invite') && !await storage.get('session');
     if (handoff) await storage.set('pending_invite', CROWD_CONFIG.trialInvite);
     if (details.reason === 'install' || handoff) await chrome.runtime.openOptionsPage?.();
-    await agent.tick();
+    await agent.tick(true);
   })().catch(console.error);
 });
 chrome.tabs.onRemoved.addListener(id => {
   storage.get('work_tab').then(owned => { if (owned === id) return storage.set('work_tab', null); }).catch(console.error);
 });
+// Service-worker restarts can lose alarms on older browsers. Check the durable
+// running state on every load; initial installation and user stops remain idle.
+agent.tick().catch(console.error);

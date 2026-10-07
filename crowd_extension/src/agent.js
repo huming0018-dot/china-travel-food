@@ -3,7 +3,7 @@
   'use strict';
   const C = root.CrowdCore;
   class CrowdAgent {
-    constructor(runtime, api) { this.r = runtime; this.api = api; this.active = null; this.generation = 0; }
+    constructor(runtime, api) { this.r = runtime; this.api = api; this.active = null; this.generation = 0; this.recover = false; }
     async read() { return {...C.initial(), ...await this.r.storage.get('agent')}; }
     async save(s) { await this.r.storage.set('agent', s); }
     async start() {
@@ -16,7 +16,7 @@
       if (status.participant?.status !== 'approved') throw new Error('approval_required');
       if (s.phase === 'note') s.phase = 'reopen_note';
       if (s.phase === 'search') { s.phase = 'idle'; s.search_round = 0; }
-      s.enabled = true; s.last_error = null; s.next_at = 0;
+      s.enabled = true; s.last_error = null; s.next_at = 0; s.last_tick = this.r.now();
       await this.save(s); await this.r.schedule(this.r.now() + 1000);
     }
     async stop(reason = 'user_stopped') {
@@ -26,7 +26,8 @@
       const s = await this.read(); s.enabled = false; s.last_error = reason;
       await this.save(s); await this.r.cancel(); await this.r.close();
     }
-    async tick() {
+    async tick(recover = false) {
+      this.recover ||= recover;
       if (this.active) return this.active;
       this.controller = new AbortController();
       const gen = this.generation;
@@ -35,13 +36,24 @@
       return this.active;
     }
     async step(alive, signal) {
-      let s = await this.read(); if (!s.enabled) return;
+      let s = await this.read(); const recover = this.recover; this.recover = false;
+      if (!s.enabled) return;
       if (s.consent !== C.CONSENT) { s.enabled = false; s.last_error = 'consent_required'; await this.save(s); await this.r.cancel(); return; }
       const now = this.r.now();
       const day = new Date(now + 8 * 3600000).toISOString().slice(0, 10);
       if (s.day !== day) { s.day = day; s.visits = 0; }
       try {
         alive();
+        // Restore active work, never a stopped/blocked participant. A long
+        // suspension must restart dwell; wake detection is an alarm-gap heuristic.
+        if (recover || (s.last_tick != null && now - s.last_tick > 120000)) {
+          if (s.phase === 'note') { s.phase = 'reopen_note'; s.loaded_at = null; s.scrolls = 0; }
+          else if (s.phase === 'search') { s.phase = 'idle'; s.search_round = 0; }
+          // Keep persisted cooldowns, quota waits and evidence retry deadlines.
+        }
+        s.last_tick = now; await this.save(s); alive();
+        // Repair a cleared alarm before network IO can suspend this worker.
+        await this.r.schedule(Math.max(s.next_at, now + 30000)); alive();
         // Delivery runs even during collection cooldown. One stable UUID per record.
         if (s.outbox.length) {
           const item = s.outbox[0];
@@ -142,6 +154,7 @@
     }
     checkPage(page, s, now) {
       if (page.gate) throw new Error(page.gate);
+      if (page.reopen) { s.phase = s.phase === 'note' ? 'reopen_note' : 'idle'; s.search_round = 0; s.next_at = now + 30000; return; }
       if (!page.ready) { if (now > s.page_deadline) throw new Error('page_timeout'); s.next_at = now + 30000; }
     }
   }
