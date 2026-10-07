@@ -8,6 +8,8 @@
 
 ## 本次运行诊断验证 · 2026-10-07
 
+同步主分支安装器 v5 的同名冲突时保留其 `crowd-install-mac.command`、更新器和 plist；v4 原生备用内测安装器移至 `crowd-install-native-mac.command`，构建器/试点生成器只引用这一独立入口。当前轻量内测始终使用 `crowd-extension-mac.command`，不执行或分发主分支的 v3 自动更新安装器。本次 36 KB 私有包内容及摘要不受入口重命名影响。
+
 - 当前核心套件、Chrome/Firefox 后台模拟、真实 Chromium DOM 与插件控制页开关检查通过；12 项 Puppeteer 入口/共享原生控制器固定响应场景通过。新增隔离 PGlite PostgreSQL 检查执行真实迁移，验证本人状态隔离、未同意/匿名拒绝、字段类型白名单、只保留最新状态、关闭清除、旧报告/旧开启请求被拒绝、暂停身份允许清除。完整业务数据库套件本次未重跑；PGlite 不替代线上 PostgREST 的 JWT 验证。
 - 线上迁移由 Supabase MCP 执行，本地迁移文件名同步远端记录 `20261007051154`。只读回验 RLS=true、anon/authenticated 直接权限=false、anon RPC=false、authenticated RPC=true；匿名实际 RPC HTTP 401/code 42501。未插入生产测试快照/证据，不获取 Mac 登录凭据。
 - 诊断上报独立于采集，3 秒超时，1 分钟浏览器闹钟；断网不启停采集。关闭后只重试清除，不发送快照；退出先尝试清除，再丢弃会话和诊断闹钟。云端清除保留 enabled=false/修订号/更新时间标记，state=NULL，防止迟到请求复活；离线退出的旧快照可能保留到同一身份下次登录联网清除。

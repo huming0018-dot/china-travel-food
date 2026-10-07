@@ -89,6 +89,6 @@ except (KeyError,ValueError,OSError): sys.exit(1)
         try: write_kit(source,bad,output)
         except ValueError: pass
         else: raise AssertionError('Unsafe/expired trial must be rejected')
-subprocess.run(['bash','-n',str(Path(__file__).resolve().parents[1]/'crowd-install-mac.command')],check=True)
+subprocess.run(['bash','-n',str(EXT/'crowd-install-native-mac.command')],check=True)
 subprocess.run(['bash','-n',str(EXT/'crowd-extension-mac.command')],check=True)
 print('PASS Mac kits: runtime integrity, MV3-only pack, bounded invitation, executable setup helper, prepare/update/checksum failure; native Mac/browser confirmation remains unverified')

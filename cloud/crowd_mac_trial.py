@@ -71,7 +71,7 @@ def main():
     args.output.parent.mkdir(parents=True,exist_ok=True)
     with zipfile.ZipFile(args.output,'w',zipfile.ZIP_STORED) as archive:
         for path,_ in files: archive.write(path,'Mac内测/'+path.name)
-        for name,data,mode in [('双击安装.command',(EXT/'crowd-install-mac.command').read_bytes(),0o100755),('SHA256SUMS.txt',''.join(digest+'  '+path.name+'\n' for path,digest in files).encode(),0o100644),('开始Mac内测.html',page.encode(),0o100644)]:
+        for name,data,mode in [('双击安装.command',(EXT/'crowd-install-native-mac.command').read_bytes(),0o100755),('SHA256SUMS.txt',''.join(digest+'  '+path.name+'\n' for path,digest in files).encode(),0o100644),('开始Mac内测.html',page.encode(),0o100644)]:
             entry=zipfile.ZipInfo('Mac内测/'+name);entry.create_system=3;entry.external_attr=mode<<16;archive.writestr(entry,data)
     with args.output.open('rb') as stream: digest=hashlib.file_digest(stream,'sha256').hexdigest()
     args.output.with_suffix('.zip.sha256').write_text(digest+'  '+args.output.name+'\n')
