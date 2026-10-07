@@ -18,6 +18,8 @@ vm.runInContext(fs.readFileSync(path.join(src,'background.js'),'utf8'),context);
  assert.equal(data.pending_invite,'a'.repeat(64));assert.equal(fetches.length,0,'trial handoff does not consent or register');
  data.pending_invite='b'.repeat(64);installed({reason:'update'});await new Promise(r=>setImmediate(r));
  assert.equal(data.pending_invite,'b'.repeat(64),'update must never overwrite an existing invitation');assert.equal(optionsOpened,2);
+ delete data.pending_invite;installed({reason:'update'});await new Promise(r=>setImmediate(r));
+ assert.equal(data.pending_invite,'a'.repeat(64),'unjoined development copy also receives the trial invitation');assert.equal(optionsOpened,3);assert.equal(fetches.length,0);
  let leaked=false;const result=listener({type:'state'},{id:chrome.runtime.id,url:'https://www.xiaohongshu.com/explore/abcdef0123456789abcdef01',tab:{id:77,url:'https://www.xiaohongshu.com/'}},()=>leaked=true);assert.equal(result,undefined);assert.equal(leaked,false);
  const state=await new Promise(resolve=>listener({type:'state'},{id:chrome.runtime.id,url:chrome.runtime.getURL('src/controller.html')},resolve));assert.equal(state.ok,true);assert.equal(state.data.session,false);assert.equal(state.data.agent.enabled,false);
  // The returned UI status never contains session tokens.

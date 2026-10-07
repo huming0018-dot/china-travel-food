@@ -76,12 +76,11 @@ chrome.alarms.onAlarm.addListener(alarm => { if (alarm.name === 'crowd_tick') ag
 chrome.runtime.onStartup.addListener(() => agent.tick().catch(console.error));
 chrome.runtime.onInstalled.addListener((details = {reason: 'install'}) => {
   (async () => {
-    if (details.reason === 'install') {
-      // A private trial kit supplies an invitation, never consent or a session.
-      if (/^[a-f0-9]{64}$/.test(CROWD_CONFIG.trialInvite || '') && !await storage.get('pending_invite') && !await storage.get('session'))
-        await storage.set('pending_invite', CROWD_CONFIG.trialInvite);
-      await chrome.runtime.openOptionsPage?.();
-    }
+    // Also hand off a trial when replacing an unjoined development copy.
+    // Never overwrite an existing invitation, consent or participant identity.
+    const handoff = /^[a-f0-9]{64}$/.test(CROWD_CONFIG.trialInvite || '') && !await storage.get('pending_invite') && !await storage.get('session');
+    if (handoff) await storage.set('pending_invite', CROWD_CONFIG.trialInvite);
+    if (details.reason === 'install' || handoff) await chrome.runtime.openOptionsPage?.();
     await agent.tick();
   })().catch(console.error);
 });
