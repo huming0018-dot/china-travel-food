@@ -2,7 +2,7 @@
 # 众包美食家 · Mac 一键安装（v4 零管理员版，2026-10-07）
 #
 # 不需要密码、不需要管理员。原理：
-#   1) 下载插件包到 ~/crowd-ext（手动挂载形态，Chrome 以 --load-extension 加载）
+#   1) 下载插件包到 ~/crowd-ext；2) 装自更新器（自动升级）；3) 引导一次手动挂载（Chrome 154+ 已拒绝 --load-extension 命令行）
 #   2) 装一个用户级自更新器（LaunchAgent，每 6 小时自动检查并应用新版本）
 #   3) 启动 Chrome 并加载插件
 # 以后升级全自动：自更新器下载新版 → 换上 → 重启 Chrome。
@@ -181,25 +181,46 @@ else
     || { echo "⚠️  自更新器注册失败（插件本体已装好，只是以后升级要重跑本脚本）"; report updater_fail ""; }
 fi
 
-# ---------- 第 5 步：启动 Chrome 并加载插件 ----------
-step "第 5 步：启动 Chrome 加载插件"
-if [ "${CROWD_NO_RESTART:-0}" = "1" ]; then
-  echo "（按约定不重启 Chrome；下次启动时自己加载）"
-  report no_restart ""
+# ---------- 第 5 步：预置开发者模式 + 引导手动挂载 ----------
+# Chrome 154+ 拒绝 --load-extension 命令行（官方日志："not allowed in Google Chrome"），
+# 且 Chrome 对 Secure Preferences 有 MAC 完整性校验，无法脚本注入注册——
+# 唯一活路：chrome://extensions 手动「加载未打包的扩展程序」。本步把准备工作全做完，
+# 用户只需点 4 下。
+step "第 5 步：预置开发者模式并打开挂载页"
+osascript -e 'tell application "Google Chrome" to quit' 2>/dev/null || true
+sleep 3
+pkill -x "Google Chrome" 2>/dev/null; sleep 2
+# 预置开发者模式（普通 Preferences 无 MAC 校验，可脚本写入；必须 Chrome 关闭时改）
+PREFS="$HOME/Library/Application Support/Google/Chrome/Default/Preferences"
+if [ -f "$PREFS" ]; then
+  python3 - "$PREFS" <<'PYEOF'
+import json, sys
+p = sys.argv[1]
+try:
+    d = json.load(open(p))
+except Exception:
+    d = {}
+d.setdefault("extensions", {}).setdefault("ui", {})["developer_mode"] = True
+json.dump(d, open(p, "w"))
+PYEOF
+  report devmode_preset ""
 else
-  osascript -e 'tell application "Google Chrome" to quit' 2>/dev/null || true
-  sleep 3
-  pkill -x "Google Chrome" 2>/dev/null; sleep 2
-  open -a "Google Chrome" --args --load-extension="$EXT_DIR"
-  report chrome_started ""
+  echo "（Chrome 还没跑过，开发者模式需手动打开一次）"
 fi
+open -a "Google Chrome" "chrome://extensions/"
+report extpage_opened ""
 
 echo
 echo "================================================"
-echo "  ✅ 安装完成！"
-echo "  Chrome 会自动弹出「参与协议」页："
-echo "  点【我要加入】自动领编号 → 点【同意并开始使用】"
-echo "  之后采集全自动；插件升级也全自动（自更新器盯着）。"
-echo "  提示：扩展页显示『开发者模式』属正常，不影响功能。"
+echo "  ✅ 还剩最后 4 下（只此一次）："
+echo "  在刚打开的 chrome://extensions 页面里——"
+echo "  1. 右上角确认「开发者模式」已开（我已帮你预置）"
+echo "  2. 点左上角「加载未打包的扩展程序」"
+echo "  3. 文件框里按 Cmd+Shift+G，粘贴：$EXT_DIR"
+echo "  4. 回车 → 点「选择」"
+echo
+echo "  「众包美食家」出现后，协议页自动打开："
+echo "  点【我要加入】领编号 → 点【同意并开始使用】，完成！"
+echo "  之后采集和升级全部自动，不用再碰。"
 echo "================================================"
-report install_done "v$VER"
+report install_done "v$VER manual-load"
