@@ -4,6 +4,8 @@
 >
 > 当前工作区已按 Vercel bot 的权威元数据准备 `app/.vercel/project.json`，CLI 在 `/tmp/crowd-vercel-tools/node_modules/.bin/vercel`。检查时指定 `VERCEL_CLI` 和现有 `VERCEL_GLOBAL_CONFIG`，仍缺账号授权及至少一个设备验收渠道；没有执行网站发布。中台不替代这些验收条件。
 
+> 用户从部署 `Cngmb7BM1Rs2YHQQeB2GK4siWcgn` 提供实际日志：`_app.js` 在构建时抛出 `supabaseUrl is required`。无本地环境文件的干净源码复现后，已接入公开默认配置，完全相同的无 `.env` 构建通过；代码推送触发新的 Git 预览部署。不是凭空设置虚假 Supabase URL，也未把网关/管理员密钥写入版本库。最新自动部署结果需通过 GitHub 的 Vercel 状态确认。
+
 # 部署续接记录 · 2026-10-06
 
 用户已明确要求执行部署并开始短信/二维码分发；无需再询问是否部署。当前尚未部署成功，没有正式可开工邀请。用户选择继续云工作区；续接后由 Codex 执行操作，只把账号登录确认留给本人。

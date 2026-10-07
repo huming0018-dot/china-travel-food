@@ -20,7 +20,10 @@ FILES = ['manifest.json','icons/icon128.png'] + ['src/'+x for x in ['background.
 
 
 def values():
-    values = {}
+    # Share the website's public defaults; never put server credentials here.
+    public = json.loads((ROOT / 'app/supabase.public.json').read_text())
+    values = {'NEXT_PUBLIC_SUPABASE_URL': public['url'],
+              'NEXT_PUBLIC_SUPABASE_ANON_KEY': public['key']}
     path = ROOT / 'app/.env.local'
     if path.exists():
         for line in path.read_text().splitlines():

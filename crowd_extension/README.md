@@ -46,7 +46,7 @@ Ponytail 技能已安装在项目 `.agents/skills/ponytail`。v4 自动领取任
 ## 安装与启动
 
 1. 现有中台已在 2026-10-06 部署以下两项（远端迁移历史与文件名一致）；新环境通过 Supabase CLI 按顺序执行 `cloud/supabase/migrations/` 的两项迁移：`20261006145016_crowd_v4.sql`、`20261006145030_crowd_v4_invites.sql`。它们创建独立 schema、v4 RPC 及短信邀请机制，不改旧账。先在独立项目验证；重复安装交给迁移版本管理。
-2. 发布者设置 `NEXT_PUBLIC_SUPABASE_URL`、`NEXT_PUBLIC_SUPABASE_ANON_KEY`（也可读取现有 `app/.env.local`），运行 `python cloud/crowd_build.py`。构建仅分发 publishable/anon key，拒绝 service_role/secret key。源码中的 config 不包含凭据。
+2. 现有项目的公开连接配置保存在 `app/supabase.public.json`，网站与 `python cloud/crowd_build.py` 共用；干净的 Vercel 构建无需本地 `.env`。改接其他中台时，可设置 `NEXT_PUBLIC_SUPABASE_URL`、`NEXT_PUBLIC_SUPABASE_ANON_KEY`（也可读取 `app/.env.local`）覆盖默认值。构建仅分发 publishable/anon key，拒绝 service_role/secret key；公开配置文件不含管理员密钥或用户会话。
 3. Windows 10/11、macOS：下载 `releases/crowd-extension-v4.0.0.zip`，解压。在 Chrome/Edge 120+ 的扩展管理页开启开发者模式，加载解压目录。辅助安装脚本和 ZIP 放同目录。Chrome 页面 `chrome://extensions`，Edge 页面 `edge://extensions`。旧版与新版不能同时启动采集。
 4. 打开插件，登录/注册中台邮箱账户，确认参与。运营者审核批准后，在本机登录小红书，再点“启动自动采集”。中台账号和小红书账号是两套账户；小红书 cookie 不上传。
 5. 关闭浏览器会暂停；重启保留任务和待回传证据。用户停止、平台限流/验证、认证失败都会停止。处理验证时打开工作标签页；处理后重新启动。页面不兼容时保留错误并等待，不假报采集成功。
