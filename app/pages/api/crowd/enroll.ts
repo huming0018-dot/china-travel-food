@@ -18,7 +18,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // A stable reserved UUID makes interrupted Auth creation retryable; never reset a password.
     let existing = await client.auth.admin.getUserById(allocation.user_id);
     if (!existing.data.user) {
-      await client.auth.admin.createUser({ id: allocation.user_id, email, password: 'Cr4!' + install_secret, email_confirm: true, app_metadata: { crowd_installation: true } });
+      await client.auth.admin.createUser({ id: allocation.user_id, email, password: 'Cr4!' + install_secret, email_confirm: true,
+        user_metadata: { username: 'crowd-' + allocation.user_id }, app_metadata: { crowd_installation: true } });
       existing = await client.auth.admin.getUserById(allocation.user_id);
     }
     if (!existing.data.user || existing.data.user.email !== email) throw new Error('backend_unavailable');

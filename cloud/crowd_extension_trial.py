@@ -34,7 +34,7 @@ def write_kit(source, pilot, output):
 <p>助手无法打开？不要关闭系统保护。可手动在 Chrome 输入 <code>chrome://extensions</code>（Edge 输入 <code>edge://extensions</code>），按上面的方式加载解压包里的「插件」文件夹；手动加载后保留该文件夹。若扩展管理页没有自动打开，也可手动输入上述地址。</p>
 <p>目前插件未上架，不能静默安装。完成浏览器确认、同意参与和首次登录后，任务自动执行。没有 Chrome/Edge 时先安装其中一个；浏览器管理策略拦截时不修改策略。</p>
 <p>没有自动打开参与页面？点击浏览器右上角拼图图标，打开「众包公开笔记采集」。右键扩展图标选择「选项」可打开完整页面。</p>
-<p>如果未显示邀请，展开「重新打开邀请」，复制下面的邀请链接、粘贴并点击「接续邀请」。无需中台邮箱或密码。</p>'''
+<p>如果未显示邀请，在<strong>插件参与页面</strong>展开「重新打开邀请」，复制下面的邀请链接，粘贴到插件的邀请输入框，再点击「接续邀请」。请不要把它当作浏览器安装网页打开：正式网页的 Mac 安装渠道仍未开放，这个私有包通过插件直接接入内测。无需中台邮箱或密码。</p>'''
     link=conf['portal']+'/crowd#invite='+pilot['invite']
     guide+='<textarea id="invite" readonly rows="3" style="width:100%">'+html.escape(link)+'</textarea><button onclick="const v=document.getElementById(\'invite\');v.select();document.execCommand(\'copy\');this.textContent=\'已复制邀请\'">复制邀请</button>'
     guide+='<p>仅一台 Mac，48 小时内报名，每日最多 2 条。报名截止：'+html.escape(pilot['expires_at'])+'。不要转发这个私有内测包。</p>'
