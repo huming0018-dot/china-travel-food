@@ -125,7 +125,7 @@ def main():
     key_file=state/'operator-key'; operator=env.get('CROWD_OPERATOR_KEY') or (key_file.read_text() if key_file.exists() else secrets.token_hex(32))
     if len(operator)<32: raise ValueError('CROWD_OPERATOR_KEY must contain at least 32 characters')
     key_file.write_text(operator); key_file.chmod(0o600)
-    env.update(CROWD_OPERATOR_KEY=operator,CROWD_RELEASES_JSON=json.dumps(releases,separators=(',',':')),CROWD_PUBLIC_ORIGIN=conf['portal'])
+    env.update(CROWD_OPERATOR_KEY=operator,CROWD_RELEASES_JSON=json.dumps(releases,separators=(',',':')),CROWD_PUBLIC_ORIGIN=conf['portal'],CROWD_DIRECT_BACKEND='1')
     # CLI migration history makes repeated rollouts safe; do not recreate existing v4 tables.
     if env.get('CROWD_GATEWAY_TOKEN'):
         # The gateway uses the project's built-in server identity. Verify that
@@ -146,9 +146,8 @@ def main():
     print('Building and publishing the connected website…')
     run([sys.executable,str(ROOT/'cloud/crowd_build.py')],env,ROOT)
     command=[vercel,'deploy','--prod','--yes']
-    if env.get('VERCEL_TOKEN'): command.extend(['--token',env['VERCEL_TOKEN']])
-    elif env.get('VERCEL_GLOBAL_CONFIG'): command.extend(['--global-config',env['VERCEL_GLOBAL_CONFIG']])
-    for name in ['NEXT_PUBLIC_SUPABASE_URL','NEXT_PUBLIC_SUPABASE_ANON_KEY','SUPABASE_SERVICE_ROLE_KEY','CROWD_GATEWAY_TOKEN','CROWD_PUBLIC_ORIGIN','CROWD_OPERATOR_KEY','CROWD_RELEASES_JSON']:
+    if not env.get('VERCEL_TOKEN') and env.get('VERCEL_GLOBAL_CONFIG'): command.extend(['--global-config',env['VERCEL_GLOBAL_CONFIG']])
+    for name in ['NEXT_PUBLIC_SUPABASE_URL','NEXT_PUBLIC_SUPABASE_ANON_KEY','SUPABASE_SERVICE_ROLE_KEY','CROWD_GATEWAY_TOKEN','CROWD_PUBLIC_ORIGIN','CROWD_OPERATOR_KEY','CROWD_RELEASES_JSON','CROWD_DIRECT_BACKEND']:
         if name not in env: continue
         command.extend(['--env',name+'='+env[name]])
     for name in ['NEXT_PUBLIC_SUPABASE_URL','NEXT_PUBLIC_SUPABASE_ANON_KEY']: command.extend(['--build-env',name+'='+env[name]])

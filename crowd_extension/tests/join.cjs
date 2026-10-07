@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const root=path.resolve(__dirname,'../..'),ts=require(path.join(root,'app/node_modules/typescript'));
 const portal='https://crowd.example.test',invite='a'.repeat(64),password='b'.repeat(64),user='00000000-0000-4000-8000-000000000001';
 const release={channel:'apk',url:portal+'/crowd/releases/crowd-android-v4.0.0-debug.apk',version:'4.0.0',sha256:'c'.repeat(64),verified:true};
-const env={NEXT_PUBLIC_SUPABASE_URL:'https://test.supabase.co',SUPABASE_SERVICE_ROLE_KEY:'SERVER_TEST_ONLY',CROWD_PUBLIC_ORIGIN:portal,CROWD_OPERATOR_KEY:'d'.repeat(64),CROWD_RELEASES_JSON:JSON.stringify({android:release})};
+const env={CROWD_DIRECT_BACKEND:'1',NEXT_PUBLIC_SUPABASE_URL:'https://test.supabase.co',SUPABASE_SERVICE_ROLE_KEY:'SERVER_TEST_ONLY',CROWD_PUBLIC_ORIGIN:portal,CROWD_OPERATOR_KEY:'d'.repeat(64),CROWD_RELEASES_JSON:JSON.stringify({android:release})};
 let account=null,failCreate=true,creates=0,calls=[];
 const client={rpc:async(name,p)=>{calls.push({name,p});return {data:p.p_action==='reserve'?{user_id:user}:p.p_action==='list'?[]:{joined:true},error:null};},auth:{admin:{getUserById:async()=>({data:{user:account}}),createUser:async p=>{creates++;if(!failCreate)account=p;return {data:{user:account}};}}}};
 function load(file,imports={}) {

@@ -1,5 +1,7 @@
 export function privateBackendConfigured() {
-  return !!(process.env.CROWD_GATEWAY_TOKEN || process.env.SUPABASE_SERVICE_ROLE_KEY);
+  // Existing website credentials may belong to other APIs. The old crowd
+  // backend is opt-in; production defaults to the deployed invitation service.
+  return process.env.CROWD_DIRECT_BACKEND === '1' && !!(process.env.CROWD_GATEWAY_TOKEN || process.env.SUPABASE_SERVICE_ROLE_KEY);
 }
 
 export async function accessRequest(route: 'manifest' | 'invite' | 'enroll' | 'operations', body?: object, authorization?: string) {
