@@ -525,8 +525,9 @@ async function syncKeywordProgress(body, d) {
       if (i < 0) continue;
       const acc = kp.accepted || 0;
       const prev = st["" + i] || {};
-      // last_sid 跨权威写保留：服务端分支整行覆盖时不得丢去重标记
-      st["" + i] = { accepted: acc, done: acc >= kpiMin, last_sid: prev.last_sid || null };
+      // last_sid / anchor_note_ids 跨权威写保留：服务端分支整行覆盖时不得丢去重标记与评分锚点
+      st["" + i] = { accepted: acc, done: acc >= kpiMin, last_sid: prev.last_sid || null,
+                     anchor_note_ids: prev.anchor_note_ids || [] };
       synced = true;
     }
   }
@@ -539,11 +540,113 @@ async function syncKeywordProgress(body, d) {
       st["" + body.kw_index] = cur;
     }
   }
+  // M1 评分锚点（口味评分体系 §8/R6）：rating 必须锚定"同 platform+note_id 已收录笔记"。
+  // 本信封 verdict 为 accepted/duplicate 的 note_id 在服务端必已是 accepted（duplicate 的
+  // 去重口径即 platform+note_id 全局唯一 accepted 行），全部记为该关键词的可锚定笔记。
+  if (body.kw_index != null && Array.isArray(d.results)) {
+    const anchorable = d.results
+      .filter((r) => r && r.note_id &&
+        ["accepted", "duplicate", "duplicate_skipped"].indexOf(String((r && (r.verdict || r.gate)) || "").toLowerCase()) >= 0)
+      .map((r) => String(r.note_id));
+    if (anchorable.length) {
+      const cur = st["" + body.kw_index] || { accepted: 0, done: false };
+      const have = new Set(cur.anchor_note_ids || []);
+      let added = false;
+      for (const id of anchorable) { if (!have.has(id)) { have.add(id); added = true; } }
+      if (added) {
+        cur.anchor_note_ids = Array.from(have).slice(-50); // 封顶 50：只取其一做锚，防存储膨胀
+        st["" + body.kw_index] = cur;
+      }
+    }
+  }
   await safety._set({ [key]: st });
 }
 
 // 防重入（同 doCollectOnce 的 _running）：兜底 alarm 与采集后即时回传可能并发触发
 let _uploading = false;
+
+// ---------------------------------------------------------------- M1 参与者评分（口味评分体系 v1 §8）
+// rating 条目走与 note 完全相同的 proof_queue / uploadProofs 通道（submission_id 幂等、
+// 退避、死信全部复用），服务端 R6 门校验：rating∈[1,5]、理由去空白/ASCII标点后 ≥8 字、
+// 锚定同 platform+note_id 已收录笔记；去重口径 platform:note_id:rating:participant_id。
+// 服务端理由长度口径（crowd_fix_v345 R6）：regexp_replace(s, '[\s[:punct:]]','','g')
+// —— POSIX [[:punct:]] 仅 ASCII 标点（!-/ :-@ [-` {-~），中文标点计入长度，此处严格镜像。
+function ratingReasonLen(s) {
+  return String(s || "").replace(/[\s\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]/g, "").length;
+}
+
+// popup → CROWD_SUBMIT_RATING {kw_index, rating, reason, anchor_note_id?}
+// 返回 {ok, reason?, queued?}；成功入队即视为"已评"（服务端去重兜底，重复提交判 duplicate）
+async function submitRating(msg) {
+  const participant = await safety._get("participant_id", null);
+  if (!participant) return { ok: false, reason: "no_participant" };
+  const task = await safety._get("active_task", null);
+  if (!task || !Array.isArray(task.pack)) return { ok: false, reason: "no_active_task" };
+  const idx = msg.kw_index == null ? -1 : (msg.kw_index | 0);
+  if (idx < 0 || idx >= task.pack.length) return { ok: false, reason: "bad_kw_index" };
+  const kw = String(task.pack[idx]);
+
+  // 已评置灰（本地即时口径；服务端 dedupe 是权威兜底）
+  const ratedKey = "rating_state_" + task.task_id;
+  const ratedMap = (await safety._get(ratedKey, {})) || {};
+  if (ratedMap["" + idx] && ratedMap["" + idx].rated) return { ok: false, reason: "already_rated" };
+
+  // 镜像服务端 R6 预检（不通过就不入队，避免必拒信封烧配额/拒收率）
+  const rating = Number(msg.rating);
+  if (!Number.isFinite(rating) || rating < 1 || rating > 5) return { ok: false, reason: "rating_out_of_range" };
+  const reason = String(msg.reason || "").trim();
+  if (ratingReasonLen(reason) < 8) return { ok: false, reason: "reason_too_short" };
+
+  // 锚点：popup 指定或取该词已收录笔记的第一条（syncKeywordProgress 维护）
+  const kwSt = (await safety._get("kw_state_" + task.task_id, {})) || {};
+  const anchors = (kwSt["" + idx] && kwSt["" + idx].anchor_note_ids) || [];
+  const anchor = String(msg.anchor_note_id || anchors[0] || "");
+  if (!anchor) return { ok: false, reason: "no_anchor" };
+
+  // proof_seq 复用采集同一计数器（四元组 participant+task+seq+note_id 幂等不撞采集信封）
+  const seqKey = "proof_seq_" + task.task_id + "_" + idx;
+  const seqBase = await safety._get(seqKey, 0);
+  const envelope = {
+    submission_id: uuidv4(), // 契约#1：入队生成一次，重试复用
+    participant_id: participant,
+    task_id: task.task_id,
+    kw_index: idx,
+    kpi_min: task.kpi_min || 5,
+    proof_seq: seqBase,
+    captured_at: new Date().toISOString(),
+    sync_version: CONFIG.SYNC_VERSION,
+    retry_count: 0,
+    next_retry_at: 0,
+    items: [{
+      kind: "rating",
+      note_id: anchor,           // R6 锚定：同 platform+note_id 已收录笔记
+      note_url: "",
+      title: "",
+      excerpt: "",
+      author: "",
+      rating: rating,
+      rating_reason: reason.slice(0, 200), // 服务端 left(...,200) 同口径
+      matched_store: kw,         // store_pack 模式下关键词即门店
+      anchor_score: 0,
+      raw_query: kw,             // 进度归属该关键词（与采集信封一致）
+    }],
+  };
+  const q = await safety._get("proof_queue", []);
+  q.push(envelope);
+  const update = { proof_queue: q };
+  update[seqKey] = seqBase + 1;
+  ratedMap["" + idx] = { rated: true, rating: rating, at: Date.now() };
+  update[ratedKey] = ratedMap;
+  await safety._set(update);
+  // 与采集后一致：入队即尝试回传；失败留队列走退避/兜底 alarm
+  try {
+    await uploadProofs();
+  } catch (e) {
+    await logError("upload_after_rating", e);
+  }
+  return { ok: true, queued: true };
+}
+
 
 async function uploadProofs() {
   if (_uploading) return { status: "busy" };
@@ -827,9 +930,18 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       let kwProgress = null;
       if (task) {
         const st = (await safety._get("kw_state_" + task.task_id, {})) || {};
+        const ratedMap = (await safety._get("rating_state_" + task.task_id, {})) || {};
         kwProgress = task.pack.map((kw, i) => {
           const k = st["" + i];
-          return { kw, accepted: k ? (k.accepted || 0) : 0, done: !!(k && (k.done || (k.accepted || 0) >= (task.kpi_min || 5))) };
+          const anchors = (k && k.anchor_note_ids) || [];
+          const rt = ratedMap["" + i];
+          return { kw,
+                   accepted: k ? (k.accepted || 0) : 0,
+                   done: !!(k && (k.done || (k.accepted || 0) >= (task.kpi_min || 5))),
+                   // M1 评分区：accepted>=1 且有可锚定笔记时 popup 开放打分；rated 置灰
+                   anchor: anchors.length ? anchors[0] : null,
+                   rated: !!(rt && rt.rated),
+                   ratedValue: rt && rt.rated ? (rt.rating || null) : null };
         });
       }
       // 安全线 v2 状态（向后兼容：纯新增字段，旧字段不动）
@@ -853,6 +965,16 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       sendResponse({ error: String(e && e.message ? e.message : e) });
     });
     return true;
+  }
+  if (msg.type === "CROWD_SUBMIT_RATING") {
+    // M1 评分入口：构造 kind=rating 信封进 proof_queue（复用幂等/退避/死信链路）
+    submitRating(msg)
+      .then((r) => sendResponse(r))
+      .catch((e) => {
+        logError("submit_rating", e);
+        sendResponse({ ok: false, reason: String(e && e.message ? e.message : e) });
+      });
+    return true; // 异步 sendResponse
   }
   if (msg.type === "CROWD_START") {
     chrome.alarms.create("collect_heartbeat", { periodInMinutes: CONFIG.HEARTBEAT_MIN });

@@ -48,6 +48,7 @@ function render(status) {
   const gate = status.gateBlockReason || "";
   $("s_gate").textContent = gate || "正常";
   $("s_gate").className = gate ? "val status-bad" : "val status-ok";
+  renderRateBox(status); // M1：accepted>=1 的关键词开放打分
 }
 chrome.runtime.sendMessage({ type: "CROWD_STATUS" }, (resp) => {
   if (resp) render(resp);
@@ -59,3 +60,136 @@ $("start").onclick = () => chrome.runtime.sendMessage({ type: "CROWD_START" }, (
 $("stop").onclick = () => chrome.runtime.sendMessage({ type: "CROWD_STOP" }, () => {
   $("s_state").textContent = "已停止"; $("s_state").className = "val status-warn";
 });
+
+// ---------------------------------------------------------------- M1 评分区（口味评分体系 §8）
+// 展示条件：active_task 存在且该关键词 accepted>=1；每参与者每店只评一次（rated 置灰），
+// 提交构造 kind=rating 信封走 proof_queue（服务端 R6：1-5 分 / 理由≥8 字 / 锚定已收录笔记）。
+function ratingReasonLen(s) {
+  // 严格镜像服务端 regexp_replace(s,'[\s[:punct:]]','','g')：仅去空白+ASCII标点，中文标点计长
+  return String(s || "").replace(/[\s\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]/g, "").length;
+}
+const RATE_FAIL_TEXT = {
+  no_participant: "未注册参与编号",
+  no_active_task: "任务已结束，无法评分",
+  already_rated: "这家店你已评过",
+  rating_out_of_range: "请先点选 1-5 星",
+  reason_too_short: "理由至少 8 个字（不含空格与标点）",
+  no_anchor: "暂无可锚定的已收录笔记",
+  bad_kw_index: "门店信息异常",
+};
+function renderRateBox(status) {
+  const box = $("rate_box");
+  const list = $("rate_list");
+  list.innerHTML = "";
+  const t = status.activeTask;
+  if (!t || !Array.isArray(t.kwProgress) || !status.participantId) {
+    box.style.display = "none";
+    return;
+  }
+  const eligible = t.kwProgress
+    .map((p, i) => ({ p, i }))
+    .filter((x) => x.p && (x.p.accepted || 0) >= 1);
+  if (!eligible.length) {
+    box.style.display = "none";
+    return;
+  }
+  box.style.display = "block";
+  eligible.forEach(({ p, i }) => {
+    const card = document.createElement("div");
+    card.className = "rate-card";
+    const store = document.createElement("div");
+    store.className = "store";
+    store.textContent = p.kw; // textContent 防注入
+    card.appendChild(store);
+
+    if (p.rated) {
+      const done = document.createElement("div");
+      done.className = "rate-done";
+      done.textContent = "已评 " + "★".repeat(p.ratedValue || 0) + "，感谢反馈";
+      card.appendChild(done);
+      list.appendChild(card);
+      return;
+    }
+    if (!p.anchor) {
+      const hint = document.createElement("div");
+      hint.className = "rate-msg";
+      hint.style.color = "#9ca3af";
+      hint.textContent = "暂无可锚定笔记，再采集一会儿即可评分";
+      card.appendChild(hint);
+      list.appendChild(card);
+      return;
+    }
+
+    let rating = 0;
+    const stars = document.createElement("div");
+    stars.className = "stars";
+    const starBtns = [];
+    for (let s = 1; s <= 5; s++) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "star";
+      b.textContent = "★";
+      b.dataset.v = s;
+      b.onclick = () => {
+        rating = s;
+        starBtns.forEach((x) => x.classList.toggle("on", Number(x.dataset.v) <= rating));
+        refreshBtn();
+      };
+      starBtns.push(b);
+      stars.appendChild(b);
+    }
+    card.appendChild(stars);
+
+    const ta = document.createElement("textarea");
+    ta.maxLength = 200; // 服务端 left(...,200) 同口径
+    ta.placeholder = "一句话理由：口味/菜品怎么样？（≥8 字，不含标点）";
+    card.appendChild(ta);
+
+    const meta = document.createElement("div");
+    meta.className = "rate-meta";
+    const cnt = document.createElement("span");
+    cnt.className = "cnt";
+    cnt.textContent = "0/8";
+    const btn = document.createElement("button");
+    btn.className = "rate-btn";
+    btn.textContent = "提交评分";
+    btn.disabled = true;
+    meta.appendChild(cnt);
+    meta.appendChild(btn);
+    card.appendChild(meta);
+
+    const msg = document.createElement("div");
+    msg.className = "rate-msg";
+    card.appendChild(msg);
+
+    function refreshBtn() {
+      const n = ratingReasonLen(ta.value);
+      cnt.textContent = Math.min(n, 8) + "/8";
+      cnt.style.color = n >= 8 ? "#059669" : "#9ca3af";
+      btn.disabled = !(rating >= 1 && n >= 8);
+    }
+    ta.addEventListener("input", refreshBtn);
+
+    btn.onclick = () => {
+      btn.disabled = true;
+      msg.style.color = "#6b7280";
+      msg.textContent = "提交中…";
+      chrome.runtime.sendMessage(
+        { type: "CROWD_SUBMIT_RATING", kw_index: i, rating: rating, reason: ta.value, anchor_note_id: p.anchor },
+        (resp) => {
+          if (resp && resp.ok) {
+            msg.style.color = "#059669";
+            msg.textContent = "✓ 已提交（回传队列自动确认）";
+            chrome.runtime.sendMessage({ type: "CROWD_STATUS" }, (st) => { if (st) render(st); });
+          } else {
+            const r = resp && resp.reason;
+            msg.style.color = "#dc2626";
+            msg.textContent = "提交失败：" + (RATE_FAIL_TEXT[r] || "请稍后重试");
+            refreshBtn();
+          }
+        }
+      );
+    };
+    list.appendChild(card);
+  });
+}
