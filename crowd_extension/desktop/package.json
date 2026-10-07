@@ -1,8 +1,0 @@
-{
-  "name": "crowd-collector",
-  "version": "4.0.0",
-  "private": true,
-  "main": "main.cjs",
-  "scripts": { "start": "electron ." },
-  "devDependencies": { "electron": "44.5.1" }
-}

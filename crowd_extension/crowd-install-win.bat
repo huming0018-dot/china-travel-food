@@ -1,94 +1,71 @@
 @echo off
-chcp 65001 >nul 2>&1
-rem ============================================================
-rem  美食图鉴·众包采集插件 — Windows 一键安装器
-rem  无需 Python / 无任何开发环境。双击即可。
-rem  自动完成：解压插件 → 打开扩展页 → 复制插件路径到剪贴板
-rem ============================================================
-setlocal enabledelayedexpansion
+rem 众包美食家 · Windows 一键安装（双击运行，无需 Python/任何开发环境）
+rem
+rem 原理：写入 Chrome 企业策略 ExtensionInstallForcelist —— Chrome 自己从项目更新服务器
+rem 下载、安装插件，以后每次发布新版本自动升级，无需再装。
+rem 需要：管理员权限一次（脚本会自动弹 UAC 请求）；本机装有 Chrome。
+chcp 65001 >nul
+setlocal
+set EXT_ID=licijehcpohikchlnkbpjdjdfkcocndg
+set UPDATE_URL=https://huming0018-dot.github.io/crowd-pages/updates.xml
+set ENTRY=%EXT_ID%;%UPDATE_URL%
 
-echo ==============================================
-echo   美食图鉴 · 众包采集插件 一键安装 (Windows)
-echo ==============================================
+title 众包美食家 · 一键安装（Windows）
+echo ===============================================
+echo   众包美食家 · 一键安装（Windows）
+echo ===============================================
+echo.
+echo 这一步会把插件登记进 Chrome 的企业策略，之后 Chrome
+echo 自动完成安装，以后每次升级都会自动更新，无需重装。
 echo.
 
-rem 0) 脚本所在目录
-set "SCRIPT_DIR=%~dp0"
-set "WORK_DIR=%USERPROFILE%\.food-crowd"
-set "EXT_DIR=%WORK_DIR%\crowd-extension-v4.0.0"
+rem 1. 自检管理员权限，没有则通过 UAC 自提权重启自己
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+  echo 需要管理员权限，正在请求 UAC 授权...
+  powershell -Command "Start-Process '%~f0' -Verb RunAs"
+  exit /b
+)
 
-rem 1) 找 zip
-set "ZIP_SRC="
-if exist "%SCRIPT_DIR%crowd-extension-v4.0.0.zip" set "ZIP_SRC=%SCRIPT_DIR%crowd-extension-v4.0.0.zip"
-if not defined ZIP_SRC if exist "%USERPROFILE%\Downloads\crowd-extension-v4.0.0.zip" set "ZIP_SRC=%USERPROFILE%\Downloads\crowd-extension-v4.0.0.zip"
-
-if not defined ZIP_SRC (
-  echo [X] 没找到 crowd-extension-v4.0.0.zip
-  echo     请先回到报名/安装页下载插件 zip（与安装器放同一文件夹即可）。
-  echo.
+rem 2. 检测 Chrome
+set CHROME_EXE=
+if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" set CHROME_EXE=%ProgramFiles%\Google\Chrome\Application\chrome.exe
+if exist "%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe" set CHROME_EXE=%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe
+if exist "%LocalAppData%\Google\Chrome\Application\chrome.exe" set CHROME_EXE=%LocalAppData%\Google\Chrome\Application\chrome.exe
+if not defined CHROME_EXE (
+  echo ❌ 未检测到 Chrome，请先安装 Chrome 浏览器后再运行本脚本。
   pause
   exit /b 1
 )
-echo [OK] 找到插件包: %ZIP_SRC%
 
-rem 2) 解压到固定目录（用系统自带 tar，Windows 10 1803+ 均有）
-rem    修复（外部审计 #57）：zip 根目录即插件本体（无外层文件夹），必须解压到 EXT_DIR，
-rem    与 mac 安装器保持一致，避免加载路径指向不存在的目录。
-if not exist "%WORK_DIR%" mkdir "%WORK_DIR%"
-if exist "%EXT_DIR%" rmdir /s /q "%EXT_DIR%"
-mkdir "%EXT_DIR%"
-echo [OK] 解压中…
-tar -xf "%ZIP_SRC%" -C "%EXT_DIR%"
-if errorlevel 1 (
-  echo [X] 解压失败，请确认 zip 文件完整后重试。
+rem 3. 写入策略（已存在则覆盖为同一值，幂等）
+reg add "HKLM\SOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist" /v "1001" /t REG_SZ /d "%ENTRY%" /f >nul
+if %errorlevel% equ 0 (
+  echo ✅ 已登记到 Chrome 策略。
+) else (
+  echo ❌ 写入策略失败，请右键本脚本 → 以管理员身份运行。
   pause
   exit /b 1
 )
-echo [OK] 插件已解压到: %EXT_DIR%
 
-rem 3) 自动探测 Chrome 系浏览器
-set "BROWSER_EXE="
-for %%A in (
-  "chrome" "msedge" "brave" "chromium"
-) do (
-  where %%A >nul 2>&1
-  if not errorlevel 1 set "BROWSER_EXE=%%~A"
-)
-
-if not defined BROWSER_EXE (
-  rem 回退：常见安装路径
-  if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" set "BROWSER_EXE=%ProgramFiles%\Google\Chrome\Application\chrome.exe"
-  if not defined BROWSER_EXE if exist "%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe" set "BROWSER_EXE=%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe"
-)
-
-if not defined BROWSER_EXE (
-  echo [X] 未检测到 Chrome / Edge / Brave。请先安装任一 Chrome 系浏览器后重试。
-  pause
-  exit /b 1
-)
-echo [OK] 检测到浏览器: %BROWSER_EXE%
-
-rem 4) 复制插件路径到剪贴板（powershell 单行）
-echo %EXT_DIR%| powershell -command "$x=$input; Set-Clipboard -Value $x" >nul 2>&1
-echo [OK] 插件文件夹路径已复制到剪贴板
-
-rem 5) 打开扩展管理页
-for %%B in ("%BROWSER_EXE%") do set "BROWSER_NAME=%%~nxB"
-set "EXT_URL=chrome://extensions"
-if /i "%BROWSER_NAME%"=="msedge" set "EXT_URL=edge://extensions"
-if /i "%BROWSER_NAME%"=="msedge.exe" set "EXT_URL=edge://extensions"
-start "" "%BROWSER_EXE%" "%EXT_URL%"
-echo [OK] 已打开扩展管理页
+rem 4. 重启 Chrome 让策略生效
+echo.
+echo 即将重启 Chrome 让插件自动安装（请先保存浏览器里未提交的页面）。
+pause
+taskkill /im chrome.exe /f >nul 2>&1
+timeout /t 2 >nul
+start "" "%CHROME_EXE%"
 
 echo.
-echo ==============================================
-echo   最后一步（30 秒完成）：
-echo   1. 在扩展页右上角 开启「开发者模式」
-echo   2. 点「加载已解压的扩展程序」
-echo   3. 在弹窗里按 Ctrl+V 粘贴路径 → 回车
-echo ==============================================
+echo ===============================================
+echo   完成！接下来：
+echo   1. Chrome 重启后会自动装好「众包美食家」插件
+echo      （约 1 分钟内；插件图标出现在右上角拼图里）
+echo   2. 首次安装会自动打开「参与协议」页：
+echo      点【我要加入】自动获得参与编号 → 点【同意并开始使用】
+echo   3. 如果之前手动装过旧版本（开发者模式装的），
+echo      请到 chrome://extensions 把旧的移除，避免重复
 echo.
-echo 安装完成后：点浏览器右上角 拼图图标 → 插件「选项」→
-echo 登录中台邮箱账户 → 确认自愿参与 → 经审核批准后登录小红书并启动。
-echo.
+echo   以后插件升级全自动，不需要再运行本脚本。
+echo ===============================================
 pause
