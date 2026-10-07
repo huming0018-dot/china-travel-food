@@ -2,10 +2,33 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 export default function CrowdPublisher() {
   const [key, setKey] = useState(''), [result, setResult] = useState<{ link: string; qr: string; expires_at: string }>(), [message, setMessage] = useState(''), [busy, setBusy] = useState(false), [ready, setReady] = useState(false), [devices, setDevices] = useState<string[]>([]);
+  const [received, setReceived] = useState<any[]>([]), [loaded, setLoaded] = useState(false);
   const names: Record<string, string> = { android: '安卓 / 兼容安卓的华为', windows: 'Windows', macos: 'Mac', ios: 'iPhone / iPad', harmony: '原生鸿蒙' };
   useEffect(() => { fetch('/api/crowd/manifest', { cache: 'no-store' }).then(r => r.json()).then(data => { setReady(data.ready === true); setDevices(Object.keys(data.releases || {}).map(os => names[os]).filter(Boolean)); }).catch(() => {}); }, []);
   const sms = result ? '邀请你自愿参加公开笔记研究。点链接安装并打开客户端，同意参与、首次登录小红书后自动执行，可随时停止：\n' + result.link : '';
   async function copySMS() { try { await navigator.clipboard.writeText(sms); setMessage('整条短信已复制，粘贴发给朋友即可。'); } catch { const field = document.querySelector<HTMLTextAreaElement>('textarea[aria-label="分发短信"]'); field?.focus(); field?.select(); setMessage('短信已选中，请按复制，再粘贴发给朋友。'); } }
+  async function recovery(action: 'list' | 'export') {
+    setBusy(true); setMessage('');
+    try {
+      const records: any[] = []; let after_id = 0;
+      for (let page = 0; page < 100; page++) {
+        const response = await fetch('/api/crowd/data', { method: 'POST', cache: 'no-store', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + key }, body: JSON.stringify({ action, after_id }) });
+        const body = await response.json(); if (!response.ok || !Array.isArray(body.data)) throw new Error(body.error || 'backend_unavailable');
+        if (action === 'list') { setReceived(body.data); setLoaded(true); setMessage('已读取待核验记录，最多显示前 100 条。'); return; }
+        if (!body.data.length) {
+          if (!records.length) { setMessage('目前没有已核验证据；新回传记录会先进入待核验区。'); return; }
+          const file = new Blob([records.map(record => JSON.stringify(record)).join('\n') + '\n'], { type: 'application/x-ndjson;charset=utf-8' });
+          const url = URL.createObjectURL(file), link = document.createElement('a'); link.href = url; link.download = 'crowd_v4_verified.jsonl'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+          setMessage('已下载 ' + records.length + ' 条已核验证据，包含标准字段、非标字段和原文。'); return;
+        }
+        const next = Math.max(...body.data.map((record: any) => record.proof_id));
+        if (!Number.isSafeInteger(next) || next <= after_id) throw new Error('backend_unavailable');
+        records.push(...body.data); after_id = next;
+      }
+      throw new Error('export_limit');
+    } catch (error) { setMessage(error instanceof Error && error.message === 'operator_required' ? '发布身份验证失败。' : '数据服务暂不可用；没有下载不完整的数据文件。'); }
+    finally { setBusy(false); }
+  }
   async function submit(action: string) {
     setBusy(true); setMessage('');
     try {
@@ -30,6 +53,13 @@ export default function CrowdPublisher() {
       <p className="my-3">到期：{new Date(result.expires_at).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}</p>
       <button disabled={busy} onClick={() => submit('revoke')} className="text-red-700 underline">停用这个邀请</button>
     </section>}
+    <section className="my-6 rounded-xl border p-4"><h2 className="text-xl font-bold">数据回收</h2>
+      <p className="my-3">回传记录保存在研究中台，包含标准字段、非标字段和原文证据。新记录先待核验；核验通过后才供资料入库使用。</p>
+      <button disabled={busy || !key} onClick={() => recovery('list')} className="rounded border p-3 disabled:opacity-50">查看待核验记录</button>
+      <button disabled={busy || !key} onClick={() => recovery('export')} className="my-3 rounded border p-3 disabled:opacity-50">下载已核验证据</button>
+      {loaded && !received.length && <p>目前没有待核验记录。</p>}
+      {received.map(record => <details key={record.id} className="my-3 border-t pt-3"><summary>{record.record?.standard?.title || '公开笔记'} · 待核验</summary><pre className="overflow-auto whitespace-pre-wrap break-all text-sm">{JSON.stringify(record.record, null, 2)}</pre></details>)}
+    </section>
     <p role="status" aria-live="polite" className="my-4">{message}</p>
   </main>;
 }

@@ -1,10 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { adminClient, failure, hash, headers, inviteRPC, operator, origin, releases, token } from '@/lib/crowd-server';
+import { accessRequest, privateBackendConfigured } from '@/lib/crowd-access';
 const QRCode = require('qrcode');
 export const config = { api: { bodyParser: { sizeLimit: '2kb' } } };
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   headers(res); if (req.method !== 'POST') return res.status(405).end();
   try {
+    if (!privateBackendConfigured()) {
+      const result = await accessRequest('invite', req.body || {}, req.headers.authorization);
+      if (result.link) result.qr = await QRCode.toDataURL(result.link, { width: 320, margin: 2, errorCorrectionLevel: 'M' });
+      return res.json(result);
+    }
     operator(req); const available = releases(); if (!Object.keys(available).length) throw new Error('release_not_ready');
     const { action = 'create', max_people = 100, quota_day = 20, days = 7, invite } = req.body || {};
     const client = adminClient();

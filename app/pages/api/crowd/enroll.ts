@@ -1,11 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { adminClient, cors, failure, hash, inviteRPC, platforms, releases } from '@/lib/crowd-server';
+import { accessRequest, privateBackendConfigured } from '@/lib/crowd-access';
 export const config = { api: { bodyParser: { sizeLimit: '2kb' } } };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     cors(req, res); if (req.method === 'OPTIONS') return res.status(204).end();
     if (req.method !== 'POST') return res.status(405).end();
+    if (!privateBackendConfigured()) return res.json(await accessRequest('enroll', req.body || {}));
     const { invite, install_secret, consent, platform } = req.body || {};
     if (typeof invite !== 'string' || typeof install_secret !== 'string' || !/^[a-f0-9]{64}$/.test(invite) || !/^[a-f0-9]{64}$/.test(install_secret) || !platforms.includes(platform)) throw new Error('invalid_request');
     if (consent !== 'crowd-public-v4') throw new Error('consent_required');

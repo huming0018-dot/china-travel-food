@@ -13,9 +13,11 @@ function load(file,imports={}) {
  return module.exports;
 }
 const server=load('app/lib/crowd-server.ts',{'@supabase/supabase-js':{createClient:()=>client},'./crowd-gateway':load('app/lib/crowd-gateway.ts')});
-const enroll=load('app/pages/api/crowd/enroll.ts',{'@/lib/crowd-server':server}).default;
-const publish=load('app/pages/api/crowd/invite.ts',{'@/lib/crowd-server':server}).default;
-const manifest=load('app/pages/api/crowd/manifest.ts',{'@/lib/crowd-server':server}).default;
+const access=load('app/lib/crowd-access.ts');
+const imports={'@/lib/crowd-server':server,'@/lib/crowd-access':access};
+const enroll=load('app/pages/api/crowd/enroll.ts',imports).default;
+const publish=load('app/pages/api/crowd/invite.ts',imports).default;
+const manifest=load('app/pages/api/crowd/manifest.ts',imports).default;
 async function request(handler,body={},headers={origin:'null'},method='POST') {
  const response={code:200,headers:{},status(code){this.code=code;return this;},json(body){this.body=body;return this;},end(){return this;},setHeader(name,value){this.headers[name]=value;}};
  await handler({body,headers,method},response);return response;

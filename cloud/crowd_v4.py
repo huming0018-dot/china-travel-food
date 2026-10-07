@@ -6,9 +6,24 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import urllib.request
+import urllib.error
 
 
 def rpc(action, payload):
+    # The deployed narrow service removes the need for an administrator key on
+    # the publisher's machine. Existing server deployments keep their SDK path.
+    key_file=Path(__file__).resolve().parent.parent/'.crowd-launch/operator-key'
+    owner=os.environ.get('CROWD_OPERATOR_KEY') or (key_file.read_text().strip() if key_file.exists() else '')
+    if owner:
+        from crowd_build import config
+        conf=config()
+        request=urllib.request.Request(conf['url']+'/functions/v1/crowd-access/operations',data=json.dumps({'action':action,'payload':payload}).encode(),headers={'Content-Type':'application/json','apikey':conf['key'],'Authorization':'Bearer '+owner},method='POST')
+        try:
+            with urllib.request.urlopen(request,timeout=30) as response: result=json.load(response)
+        except (OSError,ValueError):raise RuntimeError(f'Backend connection failed: {action}') from None
+        if 'data' not in result:raise RuntimeError(f'Backend rejected {action}')
+        return result['data']
     import common_core as core  # Existing cloud dependency; dry-run/export helpers remain stdlib-only.
     url = core.config('NEXT_PUBLIC_SUPABASE_URL', '').rstrip('/')
     key = core.config('SUPABASE_SERVICE_ROLE_KEY', '')

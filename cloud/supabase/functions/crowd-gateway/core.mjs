@@ -44,6 +44,12 @@ export async function handle(request, backend, expectedHash) {
       const result = await backend.rpc(input.name, { p_action: args.p_action, p_payload: args.p_payload });
       return reply({ data: result.data, error: safeError(result.error) });
     }
+    return await installationUser(backend, input);
+  } catch { return reply(fail('invalid_request'), 400); }
+}
+
+// Shared reserved-installation Auth flow; callers establish their own access boundary.
+export async function installationUser(backend, input) {
     if (!['auth_read','auth_create'].includes(input.action)) return reply(fail('invalid_request'), 400);
     const reservation = input.reservation;
     if (!uuid(input.id) || !reservation || !hex(reservation.token_hash) || !hex(reservation.device_hash) || !['android','ios','harmony','windows','macos'].includes(reservation.platform)) return reply(fail('invalid_request'), 400);
@@ -64,5 +70,4 @@ export async function handle(request, backend, expectedHash) {
     if (!user) return reply({ data: { user: null }, error: { message: 'account_not_ready' } });
     if (user.email !== email || user.app_metadata?.crowd_installation !== true) return reply(fail('installation_identity_mismatch'));
     return reply({ data: { user: { id: user.id, email: user.email } }, error: null });
-  } catch { return reply(fail('invalid_request'), 400); }
 }
