@@ -14,7 +14,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
 EXT = ROOT / 'crowd_extension'
-VERSION = '4.0.0'
+VERSION = json.loads((EXT / 'manifest.json').read_text())['version']
 DEFAULT_PORTAL = 'https://app-lyart-eta-22.vercel.app'  # Existing project production origin recorded in HANDOFF.
 FILES = ['manifest.json','icons/icon128.png'] + ['src/'+x for x in ['background.js','core.js','api.js','agent.js','content.js','config.js','controller.html','controller.css','controller.js','native-runtime.js','join.js']]
 

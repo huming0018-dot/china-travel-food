@@ -7,7 +7,7 @@ const chrome={runtime:{id:'test-extension',getURL:x=>'chrome-extension://test-ex
  storage:{local:{get:async key=>({[key]:structuredClone(data[key])}),set:async value=>Object.assign(data,structuredClone(value)),setAccessLevel:async value=>accesses.push(value.accessLevel)}},
  alarms:{get:async name=>name==='crowd_diagnostics'?diagnosticAlarm:alarm,create:async(name,info)=>{if(name==='crowd_diagnostics')diagnosticAlarm={name,...info};else alarm={name,...info};},clear:async name=>{if(name==='crowd_diagnostics')diagnosticAlarm=null;else alarm=null;},onAlarm:{addListener:fn=>alarmListener=fn}},
  windows:{getAll:async()=>windows,update:async(id,info)=>{createdWindows.push({id,...info});},create:async info=>{createdWindows.push(info);return {tabs:[{id:77}]};}},
- tabs:{onRemoved:{addListener:()=>{}},get:async()=>tabInfo,create:async info=>{createdTabs.push(info);return {id:77};},update:async(id,info)=>{createdTabs.push({id,...info});return {windowId:1};},sendMessage:async()=>probeReply,remove:async()=>{}}};
+ tabs:{onRemoved:{addListener:()=>{}},get:async()=>tabInfo,create:async info=>{createdTabs.push(info);return {id:77};},update:async(id,info)=>{createdTabs.push({id,...info});return {windowId:1};},sendMessage:async()=>{if(probeReply instanceof Error)throw probeReply;return probeReply;},remove:async()=>{}}};
 const context=vm.createContext({chrome,console,URL,Date,Math,AbortController,crypto:require('node:crypto').webcrypto,setTimeout,clearTimeout,
  fetch:async(url,options)=>{fetches.push({url,options});if(url.endsWith('crowd_v4_diagnostics')){if(diagnosticsOffline)throw new Error('offline');return {ok:true,json:async()=>({saved_at:new Date().toISOString()})};}return {ok:true,json:async()=>({participant:{status:'approved'}})};}});
 context.importScripts=(...names)=>{for(const name of names){if(name==='config.js')context.CROWD_CONFIG={url:'https://test.supabase.co',key:'sb_publishable_test'};else vm.runInContext(fs.readFileSync(path.join(src,name),'utf8'),context);}};
@@ -38,6 +38,10 @@ vm.runInContext(fs.readFileSync(path.join(src,'background.js'),'utf8'),context);
  windows=[];delete data.work_tab;await vm.runInContext('runtime.open('+JSON.stringify(url)+')',context);
  assert.equal(createdWindows.at(-1).state,'minimized');assert.equal(createdWindows.at(-1).focused,false);
  tabInfo={discarded:true};assert.equal((await vm.runInContext('runtime.probe("note")',context)).reopen,true);
+ tabInfo={status:'loading'};probeReply={ready:true,links:[url]};
+ assert.equal((await vm.runInContext('runtime.probe("search")',context)).ready,true,'loading subresources must not block rendered DOM');
+ probeReply=new Error('Receiving end does not exist');
+ assert.equal((await vm.runInContext('runtime.probe("search")',context)).reopen,false,'wait for initial script injection without restarting navigation');
  for(const reason of ['user_stopped','captcha','rate_limit','logged_out']) {
   data['agent:one']={...context.CrowdCore.initial(),consent:context.CrowdCore.CONSENT,enabled:false,last_error:reason};alarm=null;
   const before=fetches.length;await startup();assert.equal(fetches.length,before);assert.equal(alarm,null);assert.equal(data['agent:one'].last_error,reason);
@@ -54,6 +58,10 @@ vm.runInContext(fs.readFileSync(path.join(src,'background.js'),'utf8'),context);
  assert.equal(reports[1].p_state.error,'logged_out');assert.equal(reports[1].p_state.body_chars,200);
  assert.equal(JSON.stringify(reports).includes('PRIVATE_'),false,'page secrets/text/URLs must not be reported');
  assert.equal(JSON.stringify(reports).includes('USER_ACCESS'),false);
+ tabInfo={status:'loading'};await vm.runInContext('reportDiagnostics()',context);
+ const loadingReport=JSON.parse(fetches.at(-1).options.body).p_state;
+ assert.equal(loadingReport.tab_status,'loading');assert.equal(loadingReport.body_chars,200,'diagnostics probe DOM even while loading');
+ tabInfo={status:'complete'};
  assert.equal((await command({type:'diagnostics',enabled:false})).ok,true);assert.equal(diagnosticAlarm,null);
  assert.equal(JSON.parse(fetches.at(-1).options.body).p_action,'disable');
  assert.equal(JSON.parse(fetches.at(-1).options.body).p_state,null);
@@ -74,6 +82,7 @@ vm.runInContext(fs.readFileSync(path.join(src,'background.js'),'utf8'),context);
  delete data.session;const beforeNoSession=fetches.length;await vm.runInContext('reportDiagnostics()',context);assert.equal(fetches.length,beforeNoSession,'signed-out identities send nothing');
  // Firefox event pages load background.scripts and have neither importScripts nor setAccessLevel.
  const manifest=JSON.parse(fs.readFileSync(path.join(src,'../manifest.json')));
+ assert.equal(manifest.content_scripts[0].run_at,'document_end','page probe must be installed before subresource load completion');
  const firefox={...chrome,runtime:{...chrome.runtime,getURL:x=>'moz-extension://test-extension/'+x},storage:{local:{get:async()=>({}),set:async()=>{}}}};
  const page=vm.createContext({chrome:firefox,console,URL,Date,Math,AbortController,crypto:require('node:crypto').webcrypto,setTimeout,clearTimeout,fetch:()=>{throw new Error('Unexpected anonymous request');}});
  for(const file of manifest.background.scripts) {

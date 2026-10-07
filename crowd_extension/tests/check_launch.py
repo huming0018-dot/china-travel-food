@@ -14,7 +14,7 @@ with tempfile.TemporaryDirectory() as temporary:
     root=Path(temporary); ext=root/'ext'; (ext/'releases').mkdir(parents=True); (ext/'src').mkdir()
     (root/'app/.vercel').mkdir(parents=True); (root/'app/.vercel/project.json').write_text('{}')
     conf={'url':'https://test.supabase.co','key':'sb_publishable_test','portal':'https://crowd.example.test'}
-    package=ext/'releases/crowd-android-v4.0.0-debug.apk'
+    package=ext/f'releases/crowd-android-v{launch.VERSION}-debug.apk'
     files=['core.js','agent.js','api.js','join.js','native-runtime.js','controller.js','controller.css','content.js']
     native={'mobile/android/CollectorService.java':'fixture-current-native-digest'}
     with zipfile.ZipFile(package,'w') as z:
@@ -23,7 +23,7 @@ with tempfile.TemporaryDirectory() as temporary:
             content=(actual/'src'/file).read_bytes(); (ext/'src'/file).write_bytes(content); z.writestr('assets/'+file,content)
         z.writestr('assets/controller.html',launch.controller_html(conf))
         z.writestr('assets/source-integrity.json',json.dumps(native))
-    release={'channel':'apk','url':conf['portal']+'/crowd/releases/'+package.name,'version':'4.0.0','verified':True,'sha256':hashlib.sha256(package.read_bytes()).hexdigest()}
+    release={'channel':'apk','url':conf['portal']+'/crowd/releases/'+package.name,'version':launch.VERSION,'verified':True,'sha256':hashlib.sha256(package.read_bytes()).hexdigest()}
     env={'SUPABASE_SERVICE_ROLE_KEY':'sb_secret_TEST_ONLY','SUPABASE_DB_URL':'postgresql://postgres:test-only@db.test.supabase.co/postgres','VERCEL_TOKEN':'TEST_ONLY','SUPABASE_CLI':'fake-supabase','VERCEL_CLI':'fake-vercel','CROWD_RELEASES_JSON':json.dumps({'android':release})}
     with patch.object(launch,'ROOT',root),patch.object(launch,'EXT',ext),patch.object(launch,'config',return_value=conf),patch.object(launch,'source_integrity',side_effect=lambda platform:native):
         assert launch.check(env)[0]['ready']
@@ -50,10 +50,10 @@ with tempfile.TemporaryDirectory() as temporary:
         (ext/'src/agent.js').write_text('new implementation')
         report=launch.check(env)[0];assert not report['ready'];assert any('stale' in item for item in report['missing'])
         (ext/'src/agent.js').write_bytes((actual/'src/agent.js').read_bytes())
-        installer=ext/'releases/crowd-windows-x64-v4.0.0-setup.exe';installer.write_bytes(b'MZfixture-not-an-installable-program')
+        installer=ext/f'releases/crowd-windows-x64-v{launch.VERSION}-setup.exe';installer.write_bytes(b'MZfixture-not-an-installable-program')
         shared={file:hashlib.sha256((actual/'src'/file).read_bytes()).hexdigest() for file in files}
         shared['controller.html']=hashlib.sha256(launch.controller_html(conf).encode()).hexdigest()
-        record={'platform':'windows','version':'4.0.0','arch':'x64','sha256':hashlib.sha256(installer.read_bytes()).hexdigest(),'config':conf,'shared_sources':shared,'native_sources':native}
+        record={'platform':'windows','version':launch.VERSION,'arch':'x64','sha256':hashlib.sha256(installer.read_bytes()).hexdigest(),'config':conf,'shared_sources':shared,'native_sources':native}
         buildfile=installer.with_suffix('.exe.build.json');buildfile.write_text(json.dumps(record))
         windows={**release,'channel':'desktop','url':conf['portal']+'/crowd/releases/'+installer.name,'sha256':record['sha256']}
         winenv={**env,'CROWD_RELEASES_JSON':json.dumps({'windows':windows})}

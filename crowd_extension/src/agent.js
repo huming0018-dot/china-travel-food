@@ -154,6 +154,7 @@
     }
     checkPage(page, s, now) {
       if (page.gate) throw new Error(page.gate);
+      if (page.ready) s.last_error = null;
       if (page.reopen) { s.phase = s.phase === 'note' ? 'reopen_note' : 'idle'; s.search_round = 0; s.next_at = now + 30000; return; }
       if (!page.ready) { if (now > s.page_deadline) throw new Error('page_timeout'); s.next_at = now + 30000; }
     }

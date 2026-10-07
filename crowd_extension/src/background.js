@@ -29,8 +29,9 @@ const runtime = {
     try {
       const tab = await chrome.tabs.get(id);
       if (tab.discarded) return {ready: false, reopen: true};
-      if (tab.status === 'loading') return {ready: false};
-      return await chrome.tabs.sendMessage(id, {type: 'crowd_probe', action});
+      // Rendered DOM can be ready while images/iframes keep the tab loading.
+      try { return await chrome.tabs.sendMessage(id, {type: 'crowd_probe', action}); }
+      catch (_) { return {ready: false, reopen: tab.status !== 'loading'}; }
     } catch (_) { return {ready: false, reopen: true}; }
   },
   async close() {
@@ -78,14 +79,14 @@ async function reportDiagnostics() {
             if (id) {
               tab = await chrome.tabs.get(id);
               tabStatus = tab.discarded ? 'discarded' : tab.status === 'loading' ? 'loading' : 'complete';
-              if (tabStatus === 'complete') {
+              if (tabStatus !== 'discarded') {
                 // A disconnected content script is recorded, never fixed by bypassing policy.
                 const result = await chrome.tabs.sendMessage(id, {type: 'crowd_probe', action: 'diagnostics'});
                 page = result?.page || null;
-                if (!page) tabStatus = 'no_content';
+                if (!page && tabStatus === 'complete') tabStatus = 'no_content';
               }
             }
-          } catch (_) { tabStatus = tab ? 'no_content' : 'missing'; }
+          } catch (_) { tabStatus = tab ? (tab.status === 'loading' ? 'loading' : 'no_content') : 'missing'; }
           const number = (value, max) => Number.isSafeInteger(value) && value >= 0 ? Math.min(value, max) : 0;
           const oneOf = (value, options, fallback) => options.includes(value) ? value : fallback;
           snapshot = {version: CrowdCore.VERSION, enabled: s.enabled === true,

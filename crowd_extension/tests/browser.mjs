@@ -11,6 +11,26 @@ const id='abcdef0123456789abcdef01';
 const note=`<!doctype html><html><body><section class="note-container"><h1 id="detail-title">测试餐厅清蒸鱼</h1><div id="detail-desc">测试餐厅的清蒸鱼真的好吃，价格合理。\n#清蒸鱼 #上海美食\n排队有些长，但服务很好。</div><span class="date">2026-10-05</span></section><div class="interact-container"><span class="like-wrapper"><span class="count">1.2万</span></span></div></body></html>`;
 try {
  const page=await browser.newPage();
+ // Reproduce a rendered page whose image request never completes: readyState
+ // stays interactive, but search, diagnostics and CAPTCHA detection must work.
+ const loading=await browser.newPage();let releaseImage;
+ const heldImage=new Promise(resolve=>releaseImage=resolve);
+ await loading.route('https://resources.example.test/slow.png',async route=>{
+  await heldImage;await route.fulfill({status:200,contentType:'image/png',body:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jWZkAAAAASUVORK5CYII=','base64')});
+ });
+ await loading.route('https://www.xiaohongshu.com/**',route=>route.fulfill({status:200,contentType:'text/html; charset=utf-8',body:`<img src="https://resources.example.test/slow.png"><a href="/explore/${id}">公开笔记</a>`}));
+ try {
+  await loading.goto('https://www.xiaohongshu.com/search_result?keyword=测试餐厅',{waitUntil:'domcontentloaded'});
+  for(const name of ['core','content'])await loading.addScriptTag({content:fs.readFileSync(path.join(src,name+'.js'),'utf8')});
+  assert.equal(await loading.evaluate(()=>document.readyState),'interactive');
+  assert.equal((await loading.evaluate(()=>CrowdPage.probe('search'))).ready,true);
+  const diagnostic=await loading.evaluate(()=>CrowdPage.probe('diagnostics'));
+  assert.equal(diagnostic.page.document,'interactive');assert.equal(diagnostic.page.links,1);
+  await loading.locator('body').evaluate(el=>el.insertAdjacentHTML('beforeend','<div class="captcha">验证码</div>'));
+  assert.equal((await loading.evaluate(()=>CrowdPage.probe('search'))).gate,'captcha');
+ } finally {releaseImage();}
+ await loading.waitForLoadState('load');await loading.close();
+ console.log('PASS Chromium loading regression: hung image does not block rendered search/diagnostics or CAPTCHA pause');
  await page.route('https://*.xiaohongshu.com/**',route=>route.fulfill({status:200,contentType:'text/html; charset=utf-8',body:route.request().url().includes('search_result')?`<a href="/explore/${id}?xsec_token=navigation-only">测试餐厅清蒸鱼</a>`:note}));
  await page.goto('https://www.xiaohongshu.com/search_result?keyword=测试餐厅');
  async function inject(){for(const name of ['core','content'])await page.addScriptTag({content:fs.readFileSync(path.join(src,name+'.js'),'utf8')});}
