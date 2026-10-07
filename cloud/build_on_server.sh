@@ -12,14 +12,10 @@ SCP(){ scp -i "$KEY" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15 "$
 echo "==> [1/6] 配置 Docker Hub 腾讯云内网 mirror"
 SSH "echo '{\"registry-mirrors\":[\"https://mirror.ccs.tencentyun.com\"]}' | sudo tee /etc/docker/daemon.json >/dev/null && sudo systemctl restart docker && echo MIRROR_OK"
 
-echo "==> [2/6] 打包构建上下文（不含大镜像/分片）"
+echo "==> [2/6] 打包构建上下文（通配符包含所有 .py，避免硬编码遗漏新文件）"
 tar czf server-context.tgz \
-  Dockerfile requirements.txt fix_paths.py cloud_bu.py xhs_cookie_pool.py cloud_ready.py health.py run_batch.py \
-  crontab.txt entrypoint.sh map_helpers.py cloud_phone_fill.py cloud_coord_fill.py cloud_hours_fill.py cloud_review_fill.py \
-  cloud_amap_fill.py candidate_apply.py cloud_discover.py cloud_bili_collect.py unmatched_bridge.py watchdog.py \
-  gap_runner.py gap_pool.py account_repair.py notifier.py warning_handler.py map_quota.py xhs_api.py \
-  cloud_patrol.py cloud_michelin_collect.py cloud_blackpearl_collect.py cloud_dianping_phone.py category_resolver.py \
-  bili_enrich.py _diag_tree.py _inspect_pool.py _stop_pool.py vendor
+  Dockerfile requirements.txt *.py \
+  crontab.txt entrypoint.sh vendor
 ls -lh server-context.tgz | awk '{print "context 大小:",$5}'
 
 echo "==> [3/6] 上传上下文与运行配置"

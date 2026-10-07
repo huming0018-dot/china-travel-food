@@ -1,170 +1,170 @@
 restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patches
-1	晴川sushi（午市）	main_newly_set	medium	[]	[寿司]	店名业态词佐证	寿司->True
-2	鮨水月（午市）	main_newly_set	medium	[]	[寿司]	店名业态词佐证	寿司->True
-3	岩田割烹鮨	main_newly_set	medium	[]	[寿司]	店名业态词佐证	寿司->True
-4	御千代（王雷师傅）	main_newly_set	low	[]	[寿司]		寿司->True
-5	Sushi Oyama 鮨大山	main_newly_set	medium	[]	[寿司]	店名业态词佐证	寿司->True
-6	吉兆 KITCHO	main_newly_set	low	[]	[怀石]		怀石->True
-7	披头士烧鸟居酒屋	main_newly_set	medium	[]	[烧鸟]	店名业态词佐证	烧鸟->True
-8	酉町·烧鸟专门店	main_newly_set	medium	[]	[烧鸟]	店名业态词佐证	烧鸟->True
-9	宫鸠（华山路）	main_newly_set	low	[]	[烧鸟]		烧鸟->True
-10	小景门（仇师傅）	main_newly_set	low	[]	[烧鸟]		烧鸟->True
-11	海宫	main_newly_set	high	[]	[炉端烧]	唯一菜系叶=炉端烧	炉端烧->True
-12	炉端一番	main_newly_set	high	[]	[炉端烧]	唯一菜系叶=炉端烧	炉端烧->True
-13	龍響炉端烧(嘉善老市店)	main_newly_set	low	[]	[烧鸟]		烧鸟->True
-14	金宗咖喱	main_newly_set	low	[]	[咖喱]		咖喱->True
-15	伽喱博士 Dr.CURRY	main_newly_set	high	[]	[咖喱]	唯一菜系叶=咖喱	咖喱->True
-16	晚餐馆咖喱饭	main_newly_set	low	[]	[咖喱]		咖喱->True
-18	环七·土佐子	main_newly_set	high	[]	[拉面]	唯一菜系叶=拉面	拉面->True
-19	一风堂	main_newly_set	high	[]	[拉面]	唯一菜系叶=拉面	拉面->True
-20	Ramen满吉(广元西路店)	main_newly_set	high	[]	[拉面]	唯一菜系叶=拉面	拉面->True
-23	鳗重	main_newly_set	high	[]	[鳗鱼饭]	唯一菜系叶=鳗鱼饭	鳗鱼饭->True
-24	哲平鳗满	main_newly_set	high	[]	[鳗鱼饭]	唯一菜系叶=鳗鱼饭	鳗鱼饭->True
-25	竿屋	main_newly_set	low	[]	[寿司]		寿司->True
-26	咕咕	main_newly_set	low	[]	[寿司]		寿司->True
-28	牛New寿喜烧（自助）	main_newly_set	high	[]	[寿喜烧]	唯一菜系叶=寿喜烧	寿喜烧->True
-29	日和寿喜烧	main_newly_set	high	[]	[寿喜烧]	唯一菜系叶=寿喜烧	寿喜烧->True
-30	大牛寿喜烧（自助顶配）	main_newly_set	high	[]	[寿喜烧]	唯一菜系叶=寿喜烧	寿喜烧->True
-31	炎珀EMBER	main_newly_set	low	[]	[烧肉]		烧肉->True
-32	motoya寿喜烧	main_newly_set	high	[]	[寿喜烧]	唯一菜系叶=寿喜烧	寿喜烧->True
-33	有喜屋居酒屋(延安西路店)	main_newly_set	medium	[]	[居酒屋]	店名业态词佐证	居酒屋->True
-34	黑门乐酒天	main_newly_set	low	[]	[烧鸟]		烧鸟->True
-35	平成屋(四川北路店)	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋; 仅店名地名弱信号(1)	居酒屋->True
-36	天天天妇罗	main_newly_set	medium	[]	[天妇罗]	唯一菜系叶=天妇罗; 店名业态词佐证	天妇罗->True
-37	天嘉(天妇罗专门店)	main_newly_set	medium	[]	[天妇罗]	店名业态词佐证	天妇罗->True
-38	天吉·天遊峰	main_newly_set	low	[]	[天妇罗]		天妇罗->True
-39	尚膳天焱	main_newly_set	low	[]	[铁板烧]		铁板烧->True
-40	桃山日本料理铁板烧	main_newly_set	high	[]	[铁板烧]	唯一菜系叶=铁板烧; 仅店名地名弱信号(1)	铁板烧->True
-41	山茶花铁板烧	main_newly_set	high	[]	[铁板烧]	唯一菜系叶=铁板烧	铁板烧->True
-42	丸龟制面	main_newly_set	low	[]	[乌冬]		乌冬->True
-43	荞麦道	main_newly_set	medium	[]	[荞麦]	店名业态词佐证	荞麦->True
-44	纹兵卫（午市套餐）	main_newly_set	low	[]	[荞麦]		荞麦->True
-45	とんかつ一滨·炸猪排(世博天地首店)	main_newly_set	high	[]	[日式洋食]	唯一菜系叶=日式洋食	日式洋食->True
-46	静冈胜政	main_newly_set	high	[]	[日式洋食]	唯一菜系叶=日式洋食	日式洋食->True
-48	大志/king大志	main_newly_set	low	[]	[烧肉]		烧肉->True
-49	虎丸烧肉	main_newly_set	high	[]	[烧肉]	唯一菜系叶=烧肉	烧肉->True
-50	三川烧肉Mikawa	main_newly_set	high	[]	[烧肉]	唯一菜系叶=烧肉	烧肉->True
-51	AJIYA味屋	main_newly_set	high	[]	[烧肉]	唯一菜系叶=烧肉	烧肉->True
-52	铁屋（古北）	main_newly_set	high	[]	[烧肉]	唯一菜系叶=烧肉	烧肉->True
-53	烧肉·至心	main_newly_set	high	[]	[烧肉]	唯一菜系叶=烧肉	烧肉->True
-453	鲁丰居(灵石路店)	main_newly_set	high	[]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词	胶东菜->True
-454	融智坊鲁菜(北蔡休闲广场店)	main_newly_set	high	[]	[鲁菜]	仅有菜系根，无更细叶	鲁菜->True
-455	新嘉中心胶东烟火小馆	main_newly_set	high	[]	[胶东菜]	地域子流派(胶东菜)优先于产品/形式叶(['胶东海饺/面点']); 招牌菜命中3词; 食客证据命中3词	胶东菜->True
-456	鲁菜根(上海嘉定店)	main_newly_set	high	[]	[鲁菜]	仅有菜系根，无更细叶	鲁菜->True
-457	鲁菜馆(融信绿地店)	main_newly_set	high	[]	[鲁菜]	仅有菜系根，无更细叶	鲁菜->True
-458	东莱海上(长宁来福士店)	main_newly_set	high	[]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词; 食客证据命中3词	胶东菜->True
-459	老山东·鲁菜馆(陆家嘴店)	main_newly_set	high	[]	[济南菜]	唯一菜系叶=济南菜; 招牌菜命中2词; 食客证据命中2词	济南菜->True
-460	老山东·御膳坊(徐汇绿地缤纷城店)	main_newly_set	high	[]	[鲁菜]	仅有菜系根，无更细叶	鲁菜->True
-461	传熹·胶东菜(CP静安店)	main_newly_set	high	[]	[胶东菜]	地域子流派(胶东菜)优先于产品/形式叶(['胶东海饺/面点']); 招牌菜命中1词; 食客证据命中3词	胶东菜->True
-462	鲁东胶州菜(世纪汇店)	main_newly_set	high	[]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词; 食客证据命中1词	胶东菜->True
-463	鲁采LU STYLE(环宇荟店)	main_newly_set	high	[]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词; 食客证据命中2词	胶东菜->True
-464	鲁采·兴(苏河湾店)	main_newly_set	high	[]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中1词	胶东菜->True
-465	季悦海鲜(锦江店)	main_newly_set	high	[]	[鲁菜]	仅有菜系根，无更细叶	鲁菜->True
-466	山海鲁·紫荆阁(浦东假日酒店店)	main_newly_set	high	[]	[鲁菜]	仅有菜系根，无更细叶	鲁菜->True
+1	晴川sushi（午市）	no_change	medium	[寿司]	[寿司]	店名业态词佐证	
+2	鮨水月（午市）	no_change	medium	[寿司]	[寿司]	店名业态词佐证	
+3	岩田割烹鮨	no_change	medium	[寿司]	[寿司]	店名业态词佐证	
+4	御千代（王雷师傅）	no_change	low	[寿司]	[寿司]		
+5	Sushi Oyama 鮨大山	no_change	medium	[寿司]	[寿司]	店名业态词佐证	
+6	吉兆 KITCHO	no_change	low	[怀石]	[怀石]		
+7	披头士烧鸟居酒屋	no_change	medium	[烧鸟]	[烧鸟]	店名业态词佐证	
+8	酉町·烧鸟专门店	no_change	medium	[烧鸟]	[烧鸟]	店名业态词佐证	
+9	宫鸠（华山路）	no_change	low	[烧鸟]	[烧鸟]		
+10	小景门（仇师傅）	no_change	low	[烧鸟]	[烧鸟]		
+11	海宫	no_change	high	[炉端烧]	[炉端烧]	唯一菜系叶=炉端烧	
+12	炉端一番	no_change	high	[炉端烧]	[炉端烧]	唯一菜系叶=炉端烧	
+13	龍響炉端烧(嘉善老市店)	no_change	low	[烧鸟]	[烧鸟]		
+14	金宗咖喱	no_change	low	[咖喱]	[咖喱]		
+15	伽喱博士 Dr.CURRY	no_change	high	[咖喱]	[咖喱]	唯一菜系叶=咖喱	
+16	晚餐馆咖喱饭	no_change	low	[咖喱]	[咖喱]		
+18	环七·土佐子	no_change	preserved	[拉面]	[拉面]	地域子流派(拉面·博多豚骨)优先于产品/形式叶(['拉面'])	
+19	一风堂	no_change	high	[拉面]	[拉面]	唯一菜系叶=拉面	
+20	Ramen满吉(广元西路店)	no_change	preserved	[拉面]	[拉面]	地域子流派(拉面·蘸面)优先于产品/形式叶(['拉面'])	
+23	鳗重	no_change	high	[鳗鱼饭]	[鳗鱼饭]	唯一菜系叶=鳗鱼饭	
+24	哲平鳗满	no_change	high	[鳗鱼饭]	[鳗鱼饭]	唯一菜系叶=鳗鱼饭	
+25	竿屋	no_change	low	[寿司]	[寿司]		
+26	咕咕	no_change	low	[寿司]	[寿司]		
+28	牛New寿喜烧（自助）	no_change	high	[寿喜烧]	[寿喜烧]	唯一菜系叶=寿喜烧	
+29	日和寿喜烧	no_change	high	[寿喜烧]	[寿喜烧]	唯一菜系叶=寿喜烧	
+30	大牛寿喜烧（自助顶配）	no_change	high	[寿喜烧]	[寿喜烧]	唯一菜系叶=寿喜烧	
+31	炎珀EMBER	no_change	low	[烧肉]	[烧肉]		
+32	motoya寿喜烧	no_change	high	[寿喜烧]	[寿喜烧]	唯一菜系叶=寿喜烧	
+33	有喜屋居酒屋(延安西路店)	no_change	medium	[居酒屋]	[居酒屋]	店名业态词佐证	
+34	黑门乐酒天	no_change	low	[烧鸟]	[烧鸟]		
+35	平成屋(四川北路店)	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 仅店名地名弱信号(1)	
+36	天天天妇罗	no_change	medium	[天妇罗]	[天妇罗]	唯一菜系叶=天妇罗; 店名业态词佐证	
+37	天嘉(天妇罗专门店)	no_change	medium	[天妇罗]	[天妇罗]	店名业态词佐证	
+38	天吉·天遊峰	no_change	low	[天妇罗]	[天妇罗]		
+39	尚膳天焱	no_change	low	[铁板烧]	[铁板烧]		
+40	桃山日本料理铁板烧	no_change	high	[铁板烧]	[铁板烧]	唯一菜系叶=铁板烧; 仅店名地名弱信号(1)	
+41	山茶花铁板烧	no_change	high	[铁板烧]	[铁板烧]	唯一菜系叶=铁板烧	
+42	丸龟制面	no_change	preserved	[乌冬]	[乌冬]	地域子流派(乌冬·赞岐)优先于产品/形式叶(['乌冬', '天妇罗'])	
+43	荞麦道	no_change	medium	[荞麦]	[荞麦]	店名业态词佐证	
+44	纹兵卫（午市套餐）	no_change	low	[荞麦]	[荞麦]		
+45	とんかつ一滨·炸猪排(世博天地首店)	no_change	high	[日式洋食]	[日式洋食]	唯一菜系叶=日式洋食	
+46	静冈胜政	no_change	high	[日式洋食]	[日式洋食]	唯一菜系叶=日式洋食	
+48	大志/king大志	no_change	low	[烧肉]	[烧肉]		
+49	虎丸烧肉	no_change	high	[烧肉]	[烧肉]	唯一菜系叶=烧肉	
+50	三川烧肉Mikawa	no_change	high	[烧肉]	[烧肉]	唯一菜系叶=烧肉	
+51	AJIYA味屋	no_change	high	[烧肉]	[烧肉]	唯一菜系叶=烧肉	
+52	铁屋（古北）	no_change	high	[烧肉]	[烧肉]	唯一菜系叶=烧肉	
+53	烧肉·至心	no_change	high	[烧肉]	[烧肉]	唯一菜系叶=烧肉	
+453	鲁丰居(灵石路店)	no_change	high	[胶东菜]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词	
+454	融智坊鲁菜(北蔡休闲广场店)	no_change	high	[鲁菜]	[鲁菜]	仅有菜系根，无更细叶	
+455	新嘉中心胶东烟火小馆	no_change	high	[胶东菜]	[胶东菜]	地域子流派(胶东菜)优先于产品/形式叶(['胶东海饺/面点']); 招牌菜命中3词; 食客证据命中3词	
+456	鲁菜根(上海嘉定店)	no_change	high	[鲁菜]	[鲁菜]	仅有菜系根，无更细叶	
+457	鲁菜馆(融信绿地店)	no_change	high	[鲁菜]	[鲁菜]	仅有菜系根，无更细叶	
+458	东莱海上(长宁来福士店)	no_change	high	[胶东菜]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词; 食客证据命中3词	
+459	老山东·鲁菜馆(陆家嘴店)	no_change	high	[济南菜]	[济南菜]	唯一菜系叶=济南菜; 招牌菜命中2词; 食客证据命中2词	
+460	老山东·御膳坊(徐汇绿地缤纷城店)	no_change	high	[鲁菜]	[鲁菜]	仅有菜系根，无更细叶	
+461	传熹·胶东菜(CP静安店)	no_change	high	[胶东菜]	[胶东菜]	地域子流派(胶东菜)优先于产品/形式叶(['胶东海饺/面点']); 招牌菜命中1词; 食客证据命中3词	
+462	鲁东胶州菜(世纪汇店)	no_change	high	[胶东菜]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词; 食客证据命中1词	
+463	鲁采LU STYLE(环宇荟店)	no_change	high	[胶东菜]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词; 食客证据命中2词	
+464	鲁采·兴(苏河湾店)	no_change	high	[胶东菜]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中1词	
+465	季悦海鲜(锦江店)	no_change	high	[鲁菜]	[鲁菜]	仅有菜系根，无更细叶	
+466	山海鲁·紫荆阁(浦东假日酒店店)	no_change	high	[鲁菜]	[鲁菜]	仅有菜系根，无更细叶	
 468	川飨小馆(天山路店)	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中2词	
 469	兴华川菜馆(交通路店)	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中1词	
-470	惠中川香蛙(嘉善路店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
+470	惠中川香蛙(嘉善路店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
 471	先启半步颠小酒馆(定西路店)	no_change	high	[江湖菜]	[江湖菜]	唯一菜系叶=江湖菜; 招牌菜命中2词; 食客证据命中2词	
 472	川芙蓉市井老川菜(静安店)	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中1词	
 473	映水芙蓉(华润时代广场店)	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中2词	
-474	龙门阵茶屋川菜馆(武康路店)	main_newly_set	medium	[]	[海派改良川菜]	唯一菜系叶=海派改良川菜; 食客证据命中2词	海派改良川菜->True
+474	龙门阵茶屋川菜馆(武康路店)	no_change	medium	[海派改良川菜]	[海派改良川菜]	唯一菜系叶=海派改良川菜; 食客证据命中2词	
 475	渝信川菜(华盛店)	no_change	high	[渝菜]	[渝菜]	唯一菜系叶=渝菜	
 476	瓦屋川菜(西岸梦中心店)	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜	
-477	辛香汇·锦里(静安大悦城店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
+477	辛香汇·锦里(静安大悦城店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
 478	南兴园	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中3词	
-479	柴门荟(前滩太古里店)	main_changed	high	[官府菜/蓉派川菜]	[新派川菜]	招牌菜命中2词; 食客证据命中2词	官府菜/蓉派川菜->False; 新派川菜->True
+479	柴门荟(前滩太古里店)	no_change	high	[新派川菜]	[新派川菜]	招牌菜命中2词; 食客证据命中2词	
 480	柴门荟(BFC外滩金融中心店)	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中2词	
 481	邓记食园	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中3词; 食客证据命中1词	
-482	食川非川·现代川味(静安嘉里中心店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-483	宝粤楼广式点心茶楼(成山路店)	main_newly_set	high	[]	[广式早茶点心]	唯一菜系叶=广式早茶点心	广式早茶点心->True
-484	八合里潮汕鲜牛肉火锅(世茂广场店)	main_newly_set	medium	[]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 食客证据命中1词	潮汕菜->True
-485	点都德(合生汇店)	main_newly_set	high	[]	[广式早茶点心]	唯一菜系叶=广式早茶点心	广式早茶点心->True
-486	潮界(晶耀前滩店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-487	粤来记(徐家汇路店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-488	三清潭烧鹅(兴业太古汇店)	main_newly_set	high	[]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中2词; 食客证据命中1词	广府菜(广州)->True
-489	惠食佳·朱雀(东方商厦店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-490	细记港九大牌档(新天地店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-491	博多新记(复兴店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-492	富临轩·臻品(前滩店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-493	利苑酒家(国金中心店)	main_newly_set	high	[]	[广府菜(广州)]	唯一菜系叶=广府菜(广州)	广府菜(广州)->True
-494	菁禧荟(BFC外滩店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中2词; 食客证据命中1词	潮汕菜->True
-495	御宝轩(益丰·外滩源店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-496	唐阁(新天地朗廷酒店)	main_newly_set	medium	[]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 食客证据命中1词	广府菜(广州)->True
-497	明阁(虹桥康得思酒店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-498	老半斋(福州路店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中1词; 食客证据命中1词	淮扬菜->True
-499	苏小柳点心(徐家汇分院)	main_newly_set	high	[]	[淮扬茶社/细点]	唯一菜系叶=淮扬茶社/细点	淮扬茶社/细点->True
-500	绿杨邨酒家(江宁路店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
-501	沧浪亭(山西南路店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
-502	四如春(真如店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
-503	扬州饭店(福建中路店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中2词; 食客证据命中3词	淮扬菜->True
-504	食庐(虹桥南丰城店)	main_newly_set	medium	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 食客证据命中3词	淮扬菜->True
-505	江南晓宴(世博文化公园店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
-506	时知味·淮扬菜(虹桥南丰城店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
-507	福兴荟(人民广场店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
+482	食川非川·现代川味(静安嘉里中心店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+483	宝粤楼广式点心茶楼(成山路店)	no_change	high	[广式早茶点心]	[广式早茶点心]	唯一菜系叶=广式早茶点心	
+484	八合里潮汕鲜牛肉火锅(世茂广场店)	no_change	medium	[潮汕菜]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 食客证据命中1词	
+485	点都德(合生汇店)	no_change	high	[广式早茶点心]	[广式早茶点心]	唯一菜系叶=广式早茶点心	
+486	潮界(晶耀前滩店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+487	粤来记(徐家汇路店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+488	三清潭烧鹅(兴业太古汇店)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中2词; 食客证据命中1词	
+489	惠食佳·朱雀(东方商厦店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+490	细记港九大牌档(新天地店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+491	博多新记(复兴店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+492	富临轩·臻品(前滩店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+493	利苑酒家(国金中心店)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州)	
+494	菁禧荟(BFC外滩店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中2词; 食客证据命中1词	
+495	御宝轩(益丰·外滩源店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+496	唐阁(新天地朗廷酒店)	no_change	medium	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 食客证据命中1词	
+497	明阁(虹桥康得思酒店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+498	老半斋(福州路店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中1词; 食客证据命中1词	
+499	苏小柳点心(徐家汇分院)	no_change	high	[淮扬茶社/细点]	[淮扬茶社/细点]	唯一菜系叶=淮扬茶社/细点	
+500	绿杨邨酒家(江宁路店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
+501	沧浪亭(山西南路店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
+502	四如春(真如店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
+503	扬州饭店(福建中路店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中2词; 食客证据命中3词	
+504	食庐(虹桥南丰城店)	no_change	medium	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 食客证据命中3词	
+505	江南晓宴(世博文化公园店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
+506	时知味·淮扬菜(虹桥南丰城店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
+507	福兴荟(人民广场店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
 508	逸道(益丰·外滩源店)	no_change	medium	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 食客证据命中1词	
-509	龙吟山房(苏河湾万象天地店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
-510	食庐NOBLE(港汇恒隆店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
-511	三月醉淮扬(越洋广场店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
-512	天水雅居(滨江大道店)	main_newly_set	high	[]	[苏菜]	仅有菜系根，无更细叶	苏菜->True
+509	龙吟山房(苏河湾万象天地店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
+510	食庐NOBLE(港汇恒隆店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
+511	三月醉淮扬(越洋广场店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
+512	天水雅居(滨江大道店)	no_change	high	[苏菜]	[苏菜]	仅有菜系根，无更细叶	
 513	淳百味·沙县小吃研究所	no_change	high	[福州菜]	[福州菜]	招牌菜命中2词	
 514	闽燕记·臻味府(中海环宇荟店)	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中3词	
-515	闽燕记八闽特色美食(国际传媒港店)	main_changed	high	[福州菜]	[闽南菜]	招牌菜命中2词	闽南菜->True; 福州菜->False
+515	闽燕记八闽特色美食(国际传媒港店)	no_change	high	[闽南菜]	[闽南菜]	招牌菜命中2词	
 516	荣先森·闽南菜	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中4词	
-517	莆田餐厅PUTIEN(世博源店)	main_dedup	high	[莆仙菜,闽南菜]	[莆仙菜]	招牌菜命中1词; 食客证据命中1词	闽南菜->False
+517	莆田餐厅PUTIEN(世博源店)	no_change	high	[莆仙菜]	[莆仙菜]	招牌菜命中1词; 食客证据命中1词	
 518	莆田餐厅PUTIEN(BFC外滩金融中心店)	no_change	high	[莆仙菜]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中1词; 食客证据命中1词	
 519	阿忠食坊·厦门菜(上海首店)	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中3词	
 520	临家闽南宴(正大广场店)	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中5词	
 521	闽和南·欢席(苏河湾万象天地店)	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中3词	
 522	闽润·福建会馆	no_change	high	[福州菜]	[福州菜]	地域子流派(福州菜)优先于产品/形式叶(['闽菜Fine Dining']); 招牌菜命中1词	
-523	遇外滩(新天地店)	main_newly_set	high	[]	[闽菜Fine Dining]	唯一菜系叶=闽菜Fine Dining	闽菜Fine Dining->True
-524	遇外滩(BFC外滩金融中心店)	main_newly_set	high	[]	[福州菜]	地域子流派(福州菜)优先于产品/形式叶(['闽菜Fine Dining']); 招牌菜命中1词; 食客证据命中1词	福州菜->True
+523	遇外滩(新天地店)	no_change	high	[闽菜Fine Dining]	[闽菜Fine Dining]	唯一菜系叶=闽菜Fine Dining	
+524	遇外滩(BFC外滩金融中心店)	no_change	high	[福州菜]	[福州菜]	地域子流派(福州菜)优先于产品/形式叶(['闽菜Fine Dining']); 招牌菜命中1词; 食客证据命中1词	
 525	席作·福建会馆	no_change	high	[福州菜]	[福州菜]	地域子流派(福州菜)优先于产品/形式叶(['闽菜Fine Dining']); 招牌菜命中2词	
 526	聚春园(上海店)	no_change	high	[福州菜]	[福州菜]	唯一菜系叶=福州菜	
 527	府(Fucheng)·外滩华尔道夫	no_change	high	[福州菜]	[福州菜]	地域子流派(福州菜)优先于产品/形式叶(['闽菜Fine Dining']); 招牌菜命中1词	
-528	新白鹿餐厅(第一百货店)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-529	旧村·老宁波海鲜小馆	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-530	涌小仙·江浙小鲜	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-531	甬府小包	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-532	桂满陇·杭州小馆(人民广场店)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-533	孔乙己酒家(文庙店)	main_newly_set	high	[]	[绍兴菜]	唯一菜系叶=绍兴菜; 招牌菜命中2词; 食客证据命中3词	绍兴菜->True
-534	张生记(正大广场店)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
+528	新白鹿餐厅(第一百货店)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+529	旧村·老宁波海鲜小馆	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+530	涌小仙·江浙小鲜	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+531	甬府小包	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+532	桂满陇·杭州小馆(人民广场店)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+533	孔乙己酒家(文庙店)	no_change	high	[绍兴菜]	[绍兴菜]	唯一菜系叶=绍兴菜; 招牌菜命中2词; 食客证据命中3词	
+534	张生记(正大广场店)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
 535	季家菜·温州饭摊(浦城路店)	no_change	medium	[温州菜]	[温州菜]	唯一菜系叶=温州菜; 食客证据命中1词	
-536	甬府小鲜(陆家嘴中心店)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-537	小孃孃(思南公馆店)	main_newly_set	medium	[]	[宁波菜]	唯一菜系叶=宁波菜; 食客证据命中1词	宁波菜->True
-538	甬府(黄浦店)	main_newly_set	high	[]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中3词; 食客证据命中2词	宁波菜->True
-539	雍颐庭	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中2词	淮扬菜->True
-540	鹿园MOOSE(长宁店)	main_newly_set	high	[]	[海派融合]	唯一菜系叶=海派融合	海派融合->True
-541	南麓·浙里(外滩店)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-542	甬府·北外滩	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
+536	甬府小鲜(陆家嘴中心店)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+537	小孃孃(思南公馆店)	no_change	medium	[宁波菜]	[宁波菜]	唯一菜系叶=宁波菜; 食客证据命中1词	
+538	甬府(黄浦店)	no_change	high	[宁波菜]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中3词; 食客证据命中2词	
+539	雍颐庭	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中2词	
+540	鹿园MOOSE(长宁店)	no_change	high	[海派融合]	[海派融合]	唯一菜系叶=海派融合	
+541	南麓·浙里(外滩店)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+542	甬府·北外滩	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
 543	小黑湘菜馆(武宁店)	no_change	medium	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 食客证据命中1词	
 544	芥菜园·粮仓饭湘(四川北路店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中3词	
 545	费大厨辣椒炒肉(环球港店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中2词; 食客证据命中1词	
 546	湘粹(愚园东路店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中3词	
 547	温暖你的猪(前滩汇店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜	
-548	御鲤湘(北京西路店)	main_newly_set	high	[]	[洞庭湖区菜]	唯一菜系叶=洞庭湖区菜; 招牌菜命中1词	洞庭湖区菜->True
+548	御鲤湘(北京西路店)	no_change	high	[洞庭湖区菜]	[洞庭湖区菜]	唯一菜系叶=洞庭湖区菜; 招牌菜命中1词	
 549	金湘隆·清派湘菜(金沙江路店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中1词	
 550	古意湘味浓(久光店)	no_change	high	[洞庭湖区菜]	[洞庭湖区菜]	招牌菜命中1词	
-551	园有桃·现代湘菜	main_newly_set	high	[]	[湘菜]	仅有菜系根，无更细叶	湘菜->True
+551	园有桃·现代湘菜	no_change	high	[湘菜]	[湘菜]	仅有菜系根，无更细叶	
 552	谭姐湘菜馆(浦东大道店)	no_change	high	[长沙菜]	[长沙菜]	招牌菜命中1词; 食客证据命中1词	
-553	湘翁(北外滩来福士店)	main_newly_set	high	[]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中1词; 食客证据命中1词	长沙菜->True
-554	六月半湖南湘鲜馆(嘉里中心店)	main_newly_set	high	[]	[湘西菜]	唯一菜系叶=湘西菜; 招牌菜命中2词	湘西菜->True
-555	湘粤王府宴(浦东长河国际店)	main_newly_set	high	[]	[湘菜]	仅有菜系根，无更细叶	湘菜->True
-556	沁园春望·湘食四季(九六广场店)	main_newly_set	high	[]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中2词	长沙菜->True
+553	湘翁(北外滩来福士店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中1词; 食客证据命中1词	
+554	六月半湖南湘鲜馆(嘉里中心店)	no_change	high	[湘西菜]	[湘西菜]	唯一菜系叶=湘西菜; 招牌菜命中2词	
+555	湘粤王府宴(浦东长河国际店)	no_change	high	[湘菜]	[湘菜]	仅有菜系根，无更细叶	
+556	沁园春望·湘食四季(九六广场店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中2词	
 557	凤凰湘语(三湘大厦店)	no_change	high	[湘西菜]	[湘西菜]	唯一菜系叶=湘西菜; 招牌菜命中1词	
 558	徽珍源(潍坊路店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中5词; 食客证据命中1词	
 559	小菜园新徽菜(百联世纪店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中2词; 食客证据命中2词	
 561	徽膳坊(梅花路店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中2词; 食客证据命中2词	
 562	安徽省驻沪办招待所餐厅	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中3词	
 563	山里亲戚(九六广场店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中4词	
-564	徽商故里(虹桥店)	main_newly_set	high	[]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中4词; 食客证据命中5词	徽州菜->True
-565	璞徽(长泰广场店)	main_newly_set	high	[]	[徽菜]	仅有菜系根，无更细叶	徽菜->True
-566	徽廷宴·徽菜(宝山店)	main_newly_set	high	[]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中3词; 食客证据命中1词	徽州菜->True
+564	徽商故里(虹桥店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中4词; 食客证据命中5词	
+565	璞徽(长泰广场店)	no_change	high	[徽菜]	[徽菜]	仅有菜系根，无更细叶	
+566	徽廷宴·徽菜(宝山店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中3词; 食客证据命中1词	
 567	徽膳坊·徽菜(九亭店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中2词; 食客证据命中2词	
-568	皖宴(龙柏饭店店)	main_newly_set	high	[]	[徽州菜]	招牌菜命中1词; 食客证据命中1词	徽州菜->True
-569	皖宴(苏河湾店)	main_changed	high	[皖北菜]	[徽州菜]	招牌菜命中5词; 食客证据命中4词	皖北菜->False; 徽州菜->True
-570	徽廷宴·徽菜(新天地东台里店)	main_newly_set	high	[]	[徽菜]	仅有菜系根，无更细叶	徽菜->True
-571	徽廷宴·徽菜(创智天地店)	main_newly_set	high	[]	[徽菜]	仅有菜系根，无更细叶	徽菜->True
-572	徽商故里(陆家嘴店)	main_newly_set	high	[]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中4词; 食客证据命中4词	徽州菜->True
+568	皖宴(龙柏饭店店)	no_change	high	[徽州菜]	[徽州菜]	招牌菜命中1词; 食客证据命中1词	
+569	皖宴(苏河湾店)	no_change	high	[徽州菜]	[徽州菜]	招牌菜命中5词; 食客证据命中4词	
+570	徽廷宴·徽菜(新天地东台里店)	no_change	high	[徽菜]	[徽菜]	仅有菜系根，无更细叶	
+571	徽廷宴·徽菜(创智天地店)	no_change	high	[徽菜]	[徽菜]	仅有菜系根，无更细叶	
+572	徽商故里(陆家嘴店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中4词; 食客证据命中4词	
 573	蜀谭记·盐帮川菜(胶州路店)	no_change	high	[自贡盐帮菜]	[自贡盐帮菜]	唯一菜系叶=自贡盐帮菜; 招牌菜命中4词	
 574	邻里川菜馆	no_change	high	[自贡盐帮菜]	[自贡盐帮菜]	唯一菜系叶=自贡盐帮菜; 招牌菜命中1词; 食客证据命中1词	
 575	自贡盐帮菜馆(七莘路店)	no_change	high	[自贡盐帮菜]	[自贡盐帮菜]	唯一菜系叶=自贡盐帮菜; 招牌菜命中4词; 食客证据命中1词	
@@ -193,7 +193,7 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 598	四吉饭店	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜	
 599	兴蜀府·臻味(正大广场店)	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中2词	
 600	巴国布衣(世博店)	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中1词	
-601	张记川味苑(定西路店)	main_newly_set	high	[]	[川南·宜宾菜]	地域子流派(川南·宜宾菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	川南·宜宾菜->True
+601	张记川味苑(定西路店)	no_change	high	[川南·宜宾菜]	[川南·宜宾菜]	地域子流派(川南·宜宾菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	
 602	三木川菜(真如古镇店)	no_change	high	[官府菜/蓉派川菜]	[官府菜/蓉派川菜]	唯一菜系叶=官府菜/蓉派川菜; 招牌菜命中1词; 食客证据命中1词	
 603	有根葱不改良老火锅(徐汇全国首店)	no_change	medium	[渝菜]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['重庆火锅']); 食客证据命中1词	
 604	渝利火锅(96广场店)	no_change	high	[渝菜]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['重庆火锅']); 招牌菜命中3词; 食客证据命中3词	
@@ -219,22 +219,22 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 627	友谊川味馆(苍梧路店)	no_change	high	[成都家常菜/苍蝇馆子]	[成都家常菜/苍蝇馆子]	唯一菜系叶=成都家常菜/苍蝇馆子	
 628	三木川菜	no_change	high	[成都家常菜/苍蝇馆子]	[成都家常菜/苍蝇馆子]	唯一菜系叶=成都家常菜/苍蝇馆子	
 629	民间川菜(尚大国际店)	no_change	medium	[成都家常菜/苍蝇馆子]	[成都家常菜/苍蝇馆子]	唯一菜系叶=成都家常菜/苍蝇馆子; 食客证据命中1词	
-630	Pepper Tree花椒树	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-631	井庭xNEW ARC·锅(BFC外滩金融中心店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-632	蜀宴赋·上海(华东首店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-635	金孔雀(国金中心店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-636	翠蝶川菜(BFC外滩金融中心店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-637	映水芙蓉·叙川(大丸百货店)	main_newly_set	high	[]	[新派川菜]	唯一菜系叶=新派川菜	新派川菜->True
-638	孔雀川菜(港汇恒隆广场店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-639	翠蝶川菜(北外滩来福士店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-640	翠蝶川菜(One ITC店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-641	映水芙蓉(白玉兰广场店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-642	蜀当家·盐帮川菜(上海首店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-643	柴门饭儿(陆家嘴中心店)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
+630	Pepper Tree花椒树	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+631	井庭xNEW ARC·锅(BFC外滩金融中心店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+632	蜀宴赋·上海(华东首店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+635	金孔雀(国金中心店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+636	翠蝶川菜(BFC外滩金融中心店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+637	映水芙蓉·叙川(大丸百货店)	no_change	high	[新派川菜]	[新派川菜]	唯一菜系叶=新派川菜	
+638	孔雀川菜(港汇恒隆广场店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+639	翠蝶川菜(北外滩来福士店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+640	翠蝶川菜(One ITC店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+641	映水芙蓉(白玉兰广场店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+642	蜀当家·盐帮川菜(上海首店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+643	柴门饭儿(陆家嘴中心店)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
 644	陆小苑(打浦桥日月光店)	no_change	medium	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 食客证据命中1词	
 645	东蹄旺(龙茗路店)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中1词; 食客证据命中1词	
 646	小旺阁·老字号粤菜(江桥老街店)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中3词; 食客证据命中1词	
-648	肥姚仔大排档(金汇路店)	main_changed	high	[广府菜(广州)]	[潮汕菜]	招牌菜命中2词; 食客证据命中1词	广府菜(广州)->False; 潮汕菜->True
+648	肥姚仔大排档(金汇路店)	no_change	high	[潮汕菜]	[潮汕菜]	招牌菜命中2词; 食客证据命中1词	
 649	陶陶居酒家(新天地店)	no_change	medium	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 食客证据命中1词	
 650	蘩楼(淮海百盛店)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州)	
 651	龙筵轩·广府宴(长宁虹桥店)	no_change	medium	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 食客证据命中1词	
@@ -295,16 +295,16 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 710	港季茶餐厅(南京西路店)	no_change	high	[港式茶餐厅/冰室]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中4词; 食客证据命中1词	
 711	香港翠庭(传奇广场店)	no_change	high	[港式茶餐厅/冰室]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中2词; 食客证据命中2词	
 712	九龙冰室(徐汇日月光店)	no_change	high	[港式茶餐厅/冰室]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中2词; 食客证据命中3词	
-713	喜粤8号(汝南街总店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-714	皇朝尊会(龙之梦大酒店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-715	皇朝会(外滩店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-716	逸龙阁	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-717	吉品轩(伯衡55店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-718	壹零贰小馆	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-719	头灶(上海商城店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-721	荣申府(四安里古建店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-722	景煊 SOLE	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-723	正斗粥面专家(前滩太古里店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
+713	喜粤8号(汝南街总店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+714	皇朝尊会(龙之梦大酒店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+715	皇朝会(外滩店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+716	逸龙阁	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+717	吉品轩(伯衡55店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+718	壹零贰小馆	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+719	头灶(上海商城店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+721	荣申府(四安里古建店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+722	景煊 SOLE	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+723	正斗粥面专家(前滩太古里店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
 725	锦春茶社(保德路店)	no_change	high	[淮扬菜]	[淮扬菜]	地域子流派(淮扬菜)优先于产品/形式叶(['淮扬茶社/细点']); 招牌菜命中2词; 食客证据命中2词	
 726	扬春茶社(乐虹坊店)	no_change	high	[淮扬菜]	[淮扬菜]	地域子流派(淮扬菜)优先于产品/形式叶(['淮扬茶社/细点']); 招牌菜命中2词; 食客证据命中2词	
 727	淮悦茶社(天钥桥路店)	no_change	high	[淮扬菜]	[淮扬菜]	地域子流派(淮扬菜)优先于产品/形式叶(['淮扬茶社/细点']); 招牌菜命中1词; 食客证据命中3词	
@@ -390,13 +390,13 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 815	白茸 Bai Rong	no_change	high	[孔府菜]	[孔府菜]	唯一菜系叶=孔府菜; 招牌菜命中2词; 食客证据命中2词	
 816	金美华轩(齐鲁万怡店)	no_change	high	[孔府菜]	[孔府菜]	唯一菜系叶=孔府菜; 招牌菜命中2词; 食客证据命中2词	
 817	老山东饺子馆(宝龙城店)	no_change	high	[孔府菜]	[孔府菜]	唯一菜系叶=孔府菜	
-818	小大董(LUONE凯德店)	main_newly_set	high	[]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中1词	北京烤鸭->True
-819	山东菜馆(莲园路店)	main_newly_set	high	[]	[鲁菜]	仅有菜系根，无更细叶	鲁菜->True
-820	俺家味道山东饭店(三铭广场店)	main_newly_set	high	[]	[鲁菜]	仅有菜系根，无更细叶	鲁菜->True
-821	海伯Bohai(全国首店)	main_newly_set	high	[]	[鲁菜]	仅有菜系根，无更细叶	鲁菜->True
-822	东DōNG胶东小馆(万象城店)	main_newly_set	high	[]	[胶东海饺/面点]	唯一菜系叶=胶东海饺/面点; 仅店名地名弱信号(1)	胶东海饺/面点->True
+818	小大董(LUONE凯德店)	no_change	high	[北京烤鸭]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中1词	
+819	山东菜馆(莲园路店)	no_change	high	[鲁菜]	[鲁菜]	仅有菜系根，无更细叶	
+820	俺家味道山东饭店(三铭广场店)	no_change	high	[鲁菜]	[鲁菜]	仅有菜系根，无更细叶	
+821	海伯Bohai(全国首店)	no_change	high	[鲁菜]	[鲁菜]	仅有菜系根，无更细叶	
+822	东DōNG胶东小馆(万象城店)	no_change	high	[胶东海饺/面点]	[胶东海饺/面点]	唯一菜系叶=胶东海饺/面点; 仅店名地名弱信号(1)	
 823	大董海参店(越洋广场店)	no_change	high	[北京烤鸭]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词	
-824	紫荆阁·鲁菜本帮菜(东方路店)	main_newly_set	high	[]	[济南菜]	唯一菜系叶=济南菜; 招牌菜命中1词; 食客证据命中1词	济南菜->True
+824	紫荆阁·鲁菜本帮菜(东方路店)	no_change	high	[济南菜]	[济南菜]	唯一菜系叶=济南菜; 招牌菜命中1词; 食客证据命中1词	
 825	外婆家(静安大悦城店)	no_change	medium	[杭帮菜]	[杭帮菜]	唯一菜系叶=杭帮菜; 食客证据命中1词	
 826	新发现(绿地缤纷城店)	no_change	high	[杭帮菜]	[杭帮菜]	唯一菜系叶=杭帮菜; 招牌菜命中1词; 食客证据命中3词	
 827	钱塘秋荷·新江浙菜(真华路店)	no_change	high	[杭帮菜]	[杭帮菜]	唯一菜系叶=杭帮菜; 招牌菜命中3词	
@@ -441,14 +441,14 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 869	双井头饭店(上海首店)	no_change	medium	[温州菜]	[温州菜]	唯一菜系叶=温州菜; 食客证据命中2词	
 870	浙时渔季·温州小馆(虹桥南丰城店)	no_change	high	[温州菜]	[温州菜]	唯一菜系叶=温州菜; 招牌菜命中1词; 食客证据命中1词	
 871	新荣记(南京西路店)	no_change	high	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词	
-876	苏浙总会	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中4词; 食客证据命中1词	淮扬菜->True
-878	南麓·荟馆	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-879	叶马荟馆	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-880	兰亭月·江南宴(上生新所店)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
+876	苏浙总会	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中4词; 食客证据命中1词	
+878	南麓·荟馆	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+879	叶马荟馆	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+880	兰亭月·江南宴(上生新所店)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
 881	福味福州名小吃	no_change	high	[福州菜]	[福州菜]	唯一菜系叶=福州菜; 招牌菜命中1词; 食客证据命中1词	
 882	榕汇来海鲜面	no_change	high	[福州菜]	[福州菜]	唯一菜系叶=福州菜; 招牌菜命中1词; 食客证据命中1词	
 883	甲东南(东方路店)	no_change	high	[福州菜]	[福州菜]	唯一菜系叶=福州菜; 招牌菜命中2词; 食客证据命中2词	
-884	荣先森福建小馆(美罗城店)	main_changed	high	[福州菜]	[闽南菜]	招牌菜命中5词; 食客证据命中3词	福州菜->False; 闽南菜->True
+884	荣先森福建小馆(美罗城店)	no_change	high	[闽南菜]	[闽南菜]	招牌菜命中5词; 食客证据命中3词	
 886	席上·福建料理Hokkien Cuisine	no_change	high	[福州菜]	[福州菜]	地域子流派(福州菜)优先于产品/形式叶(['闽菜Fine Dining']); 招牌菜命中2词; 食客证据命中2词	
 887	府/Fucheng(前滩华尔道夫)	no_change	high	[福州菜]	[福州菜]	地域子流派(福州菜)优先于产品/形式叶(['闽菜Fine Dining']); 招牌菜命中3词; 食客证据命中3词	
 888	屿园沙茶面(长春路店)	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中1词; 食客证据命中2词	
@@ -464,10 +464,10 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 900	阿不先生福建小馆(鲁能中心店)	no_change	high	[莆仙菜]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中2词; 食客证据命中2词	
 901	莆味小馆(宝山万渡汇店)	no_change	high	[莆仙菜]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中2词; 食客证据命中2词	
 902	莆田卤面馆(汇融天地店)	no_change	high	[莆仙菜]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中2词; 食客证据命中2词	
-903	遇外滩SKYLINE(北外滩来福士店)	main_newly_set	high	[]	[福州菜]	地域子流派(福州菜)优先于产品/形式叶(['闽菜Fine Dining']); 招牌菜命中2词; 食客证据命中1词	福州菜->True
-904	福承(前滩华尔道夫店)	main_newly_set	high	[]	[闽菜]	仅有菜系根，无更细叶	闽菜->True
-907	福序(徐汇滨江店)	main_newly_set	high	[]	[闽菜]	仅有菜系根，无更细叶	闽菜->True
-908	海湾荟·闽采(世贸大厦40楼)	main_newly_set	high	[]	[闽菜]	仅有菜系根，无更细叶	闽菜->True
+903	遇外滩SKYLINE(北外滩来福士店)	no_change	high	[福州菜]	[福州菜]	地域子流派(福州菜)优先于产品/形式叶(['闽菜Fine Dining']); 招牌菜命中2词; 食客证据命中1词	
+904	福承(前滩华尔道夫店)	no_change	high	[闽菜]	[闽菜]	仅有菜系根，无更细叶	
+907	福序(徐汇滨江店)	no_change	high	[闽菜]	[闽菜]	仅有菜系根，无更细叶	
+908	海湾荟·闽采(世贸大厦40楼)	no_change	high	[闽菜]	[闽菜]	仅有菜系根，无更细叶	
 909	康丰路长沙米粉店	no_change	high	[长沙菜]	[长沙菜]	地域子流派(长沙菜)优先于产品/形式叶(['湖南米粉']); 招牌菜命中1词; 食客证据命中1词	
 910	呷佬长沙手工米粉(金沙江路店)	no_change	high	[长沙菜]	[长沙菜]	地域子流派(长沙菜)优先于产品/形式叶(['湖南米粉']); 招牌菜命中1词; 食客证据命中1词	
 911	亲亲长沙米粉(新闸路店)	no_change	high	[长沙菜]	[长沙菜]	地域子流派(长沙菜)优先于产品/形式叶(['湖南米粉']); 招牌菜命中1词; 食客证据命中2词	
@@ -495,9 +495,9 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 933	西湘姑娘·湖南菜(沪太路店)	no_change	high	[湘西菜]	[湘西菜]	唯一菜系叶=湘西菜; 招牌菜命中2词; 食客证据命中2词	
 934	湘约屋坎上·土家菜(松江鹿都店)	no_change	high	[湘西菜]	[湘西菜]	唯一菜系叶=湘西菜; 招牌菜命中2词; 食客证据命中2词	
 935	湘西酒楼(虬江路店)	no_change	high	[湘西菜]	[湘西菜]	唯一菜系叶=湘西菜; 招牌菜命中2词; 食客证据命中1词	
-936	甬府·世博轩(世博中心店)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-937	湘上粤(老码头Wharf三号库店)	main_newly_set	high	[]	[湘菜]	仅有菜系根，无更细叶	湘菜->True
-938	十里湘荟(前滩太古里店)	main_newly_set	high	[]	[湘菜]	仅有菜系根，无更细叶	湘菜->True
+936	甬府·世博轩(世博中心店)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+937	湘上粤(老码头Wharf三号库店)	no_change	high	[湘菜]	[湘菜]	仅有菜系根，无更细叶	
+938	十里湘荟(前滩太古里店)	no_change	high	[湘菜]	[湘菜]	仅有菜系根，无更细叶	
 939	留柱小馆(梅陇店)	no_change	medium	[徽州菜]	[徽州菜]	食客证据命中2词	
 940	徽味轩(中山北路店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中3词; 食客证据命中2词	
 941	庆杰徽菜馆(曹路总店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中1词; 食客证据命中1词	
@@ -522,8 +522,8 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 963	地锅公社(罗锦路店)	no_change	medium	[皖北菜]	[皖北菜]	唯一菜系叶=皖北菜; 食客证据命中1词	
 964	辉嫂老铁地锅(中华新路店)	no_change	high	[皖北菜]	[皖北菜]	唯一菜系叶=皖北菜	
 965	皖北羊肉馆(华新店)	no_change	medium	[皖北菜]	[皖北菜]	唯一菜系叶=皖北菜; 食客证据命中1词	
-967	丹凤楼雅宴·大富贵(斜土店)	main_newly_set	high	[]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中1词; 食客证据命中1词	徽州菜->True
-968	品粹生态餐饮(绿地海外滩店)	main_newly_set	high	[]	[徽菜]	仅有菜系根，无更细叶	徽菜->True
+967	丹凤楼雅宴·大富贵(斜土店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中1词; 食客证据命中1词	
+968	品粹生态餐饮(绿地海外滩店)	no_change	high	[徽菜]	[徽菜]	仅有菜系根，无更细叶	
 970	憶长安·西安宴·陕派官府菜	no_change	high	[西安菜(正餐/泡馍/葫芦鸡)]	[西安菜(正餐/泡馍/葫芦鸡)]	唯一菜系叶=西安菜(正餐/泡馍/葫芦鸡); 招牌菜命中1词; 食客证据命中1词	
 971	懒猴子泡馍(打浦桥店)	no_change	high	[西安菜(正餐/泡馍/葫芦鸡)]	[西安菜(正餐/泡馍/葫芦鸡)]	唯一菜系叶=西安菜(正餐/泡馍/葫芦鸡); 招牌菜命中1词; 食客证据命中1词	
 972	秦潮食集(花木时光店)	no_change	high	[西安菜(正餐/泡馍/葫芦鸡)]	[西安菜(正餐/泡馍/葫芦鸡)]	唯一菜系叶=西安菜(正餐/泡馍/葫芦鸡); 招牌菜命中2词; 食客证据命中1词	
@@ -553,12 +553,12 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 996	上关雪东北菜(宝地广场店)	no_change	medium	[东北菜高端]	[东北菜高端]	唯一菜系叶=东北菜高端; 食客证据命中1词	
 998	兰心餐厅(进贤路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
 999	茂隆餐厅(进贤路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
-1000	德兴馆(广东路总店)	main_changed	high	[本帮菜]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 招牌菜命中2词; 食客证据命中3词	本帮菜->False; 本帮浓油赤酱老字号->True
+1000	德兴馆(广东路总店)	no_change	high	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 招牌菜命中2词; 食客证据命中3词	
 1002	老吉士酒家(天平路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
-1003	上海老饭店(豫园店)	main_changed	high	[本帮菜]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 招牌菜命中2词; 食客证据命中3词	本帮菜->False; 本帮浓油赤酱老字号->True
+1003	上海老饭店(豫园店)	no_change	high	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 招牌菜命中2词; 食客证据命中3词	
 1005	圆苑(兴国路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
-1006	绿波廊(豫园店)	main_changed	medium	[本帮菜]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 食客证据命中1词	本帮菜->False; 本帮浓油赤酱老字号->True
-1007	福1015(愚园路店)	main_changed	high	[本帮菜]	[海派融合]	唯一菜系叶=海派融合; 招牌菜命中2词; 食客证据命中1词	本帮菜->False; 海派融合->True
+1006	绿波廊(豫园店)	no_change	medium	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 食客证据命中1词	
+1007	福1015(愚园路店)	no_change	high	[海派融合]	[海派融合]	唯一菜系叶=海派融合; 招牌菜命中2词; 食客证据命中1词	
 1008	雍福会(永福路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
 1009	王宝和酒家(福州路总店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
 1010	滇味园传统云南过桥米线(宁波路店)	no_change	high	[云南菜]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中2词; 食客证据命中2词	
@@ -588,7 +588,7 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 1035	阿卡哥哥·喀什葛尔手抓饭(静安店)	no_change	high	[新疆手抓饭/面馆]	[新疆手抓饭/面馆]	唯一菜系叶=新疆手抓饭/面馆; 招牌菜命中1词; 食客证据命中2词	
 1036	黑丰抓饭(国济路店)	no_change	high	[新疆手抓饭/面馆]	[新疆手抓饭/面馆]	唯一菜系叶=新疆手抓饭/面馆; 招牌菜命中1词; 食客证据命中1词	
 1037	捡角台湾食堂(古北店)	no_change	high	[台湾牛肉面·小吃]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 仅店名地名弱信号(1)	
-1038	芳邻食堂(古北店)	main_changed	high	[台湾牛肉面·小吃]	[台湾家常菜]	招牌菜命中5词; 食客证据命中5词	台湾牛肉面·小吃->False; 台湾家常菜->True
+1038	芳邻食堂(古北店)	no_change	high	[台湾家常菜]	[台湾家常菜]	招牌菜命中5词; 食客证据命中5词	
 1039	吉亨面馆(古北1699店)	no_change	high	[台湾牛肉面·小吃]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 招牌菜命中2词; 食客证据命中1词	
 1040	台北七条通牛肉面(漕宝路店)	no_change	high	[台湾牛肉面·小吃]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 招牌菜命中2词; 食客证据命中1词	
 1041	鹅庄·台湾美食(金汇庭院店)	no_change	high	[台湾牛肉面·小吃]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 仅店名地名弱信号(1)	
@@ -607,867 +607,867 @@ restaurant_id	name	outcome	confidence	before_primary	after_primary	reason	patche
 1054	老门框爆肚涮肉(四川北路店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中1词; 食客证据命中1词	
 1055	南门涮肉(世博大道总店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中3词; 食客证据命中3词	
 1056	佟爷老北京炙子烤肉(定西路店)	no_change	high	[京味炙子烤肉·京味小菜]	[京味炙子烤肉·京味小菜]	唯一菜系叶=京味炙子烤肉·京味小菜; 招牌菜命中2词; 食客证据命中2词	
-1057	小吊梨汤·北京菜·烤鸭(豫园店)	main_changed	high	[京味炙子烤肉·京味小菜]	[京味家常]	招牌菜命中2词	京味炙子烤肉·京味小菜->False; 京味家常->True
+1057	小吊梨汤·北京菜·烤鸭(豫园店)	no_change	high	[京味家常]	[京味家常]	招牌菜命中2词	
 1058	谢记武汉热干面(七浦路店)	no_change	high	[武汉过早·热干面小吃]	[武汉过早·热干面小吃]	唯一菜系叶=武汉过早·热干面小吃; 招牌菜命中2词; 食客证据命中1词	
 1059	蔡记炸酱热干面(昌里路店)	no_change	high	[武汉过早·热干面小吃]	[武汉过早·热干面小吃]	唯一菜系叶=武汉过早·热干面小吃; 招牌菜命中3词; 食客证据命中4词	
 1060	九宫殿热干面(来福士广场店)	no_change	high	[武汉过早·热干面小吃]	[武汉过早·热干面小吃]	唯一菜系叶=武汉过早·热干面小吃; 招牌菜命中1词; 食客证据命中1词	
 1061	楚褚热干面(宝山万达店)	no_change	high	[武汉过早·热干面小吃]	[武汉过早·热干面小吃]	唯一菜系叶=武汉过早·热干面小吃; 招牌菜命中1词; 食客证据命中1词	
 1062	楚韵酒馆·湖北卤味·潜江小龙虾(徐泾店)	no_change	high	[潜江小龙虾·湖北夜宵]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵; 仅店名地名弱信号(1)	
-1064	老荆味武汉美食	main_changed	high	[湖北家常菜馆·藕汤]	[武汉过早·热干面小吃]	招牌菜命中3词; 食客证据命中2词	湖北家常菜馆·藕汤->False; 武汉过早·热干面小吃->True
-1065	莲餐厅·湖北菜(中山公园店)	main_changed	high	[湖北菜高端·宴请]	[湖北家常菜馆·藕汤]	招牌菜命中3词; 食客证据命中3词	湖北菜高端·宴请->False; 湖北家常菜馆·藕汤->True
+1064	老荆味武汉美食	no_change	high	[武汉过早·热干面小吃]	[武汉过早·热干面小吃]	招牌菜命中3词; 食客证据命中2词	
+1065	莲餐厅·湖北菜(中山公园店)	no_change	high	[湖北家常菜馆·藕汤]	[湖北家常菜馆·藕汤]	招牌菜命中3词; 食客证据命中3词	
 1066	监利早酒·湖北菜(国定路店)	no_change	medium	[湖北菜高端·宴请]	[湖北菜高端·宴请]	唯一菜系叶=湖北菜高端·宴请; 食客证据命中1词	
-1067	椰子不语椰子鸡火锅(淮海店)	main_newly_set	low	[]	[椰子鸡]		椰子鸡->True
-1068	冷三先生(虹莘路店)	main_newly_set	high	[]	[韩式烤肉]	唯一菜系叶=韩式烤肉	韩式烤肉->True
-1069	嗲嗲的椰子鸡·太琼糟粕醋(百联又一城店)	main_newly_set	low	[]	[椰子鸡]		椰子鸡->True
-1070	牛信亭炭火烤肉·韩式料理(虹泉路店)	main_newly_set	high	[]	[韩式烤肉]	唯一菜系叶=韩式烤肉	韩式烤肉->True
-1071	扎西达娲藏文化演艺餐厅(徐汇绿地缤纷城店)	main_newly_set	high	[]	[藏餐]	唯一菜系叶=藏餐	藏餐->True
-1072	多杰拉姆藏餐吧(朱家角店)	main_newly_set	high	[]	[藏餐]	唯一菜系叶=藏餐	藏餐->True
-1073	喜来稀肉(虹泉路店)	main_newly_set	high	[]	[韩式烤肉]	唯一菜系叶=韩式烤肉	韩式烤肉->True
-1074	陆丝芬·柳州原汤螺蛳粉(淮海中路店)	main_newly_set	high	[]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	柳州螺蛳粉->True
-1075	青春贝壳韩国烤肉(旗舰店)	main_newly_set	high	[]	[韩式烤肉]	唯一菜系叶=韩式烤肉; 仅店名地名弱信号(1)	韩式烤肉->True
-1076	文家粉楼(静安大悦城店)	main_newly_set	low	[]	[瓦罐汤]		瓦罐汤->True
-1077	正三熙小木屋烤肉(虹泉路一号店)	main_newly_set	high	[]	[韩式烤肉]	唯一菜系叶=韩式烤肉	韩式烤肉->True
-1078	赣南粉局·江西锅气炒粉(久光中心店)	main_newly_set	high	[]	[江西炒粉/拌粉]	唯一菜系叶=江西炒粉/拌粉	江西炒粉/拌粉->True
-1080	掌柜的店·河南菜(日月光店)	main_newly_set	low	[]	[豫菜·烩面]	仅店名地名弱信号(1)	豫菜·烩面->True
-1081	草家真味酱蟹(天乐广场店)	main_newly_set	high	[]	[酱蟹]	唯一菜系叶=酱蟹	酱蟹->True
-1082	荣豫·河南菜(ONE上海张园店)	main_newly_set	low	[]	[豫菜·胡辣汤]	仅店名地名弱信号(1)	豫菜·胡辣汤->True
-1083	韩味岛酱蟹(天乐广场店)	main_newly_set	high	[]	[酱蟹]	唯一菜系叶=酱蟹	酱蟹->True
-1084	熹餐厅	main_newly_set	low	[]	[豫菜·烩面]		豫菜·烩面->True
-1085	富乐满韩国正宗炸鸡(虹泉路店)	main_newly_set	medium	[]	[韩式炸鸡]	店名业态词佐证; 仅店名地名弱信号(1)	韩式炸鸡->True
-1086	大翰宫·蒙古包烤全羊·融合菜(七宝店)	main_newly_set	low	[]	[烤全羊]	仅店名地名弱信号(1)	烤全羊->True
-1087	bb.q Chicken比比客(虹泉路店)	main_newly_set	high	[]	[韩式炸鸡]	唯一菜系叶=韩式炸鸡	韩式炸鸡->True
-1088	家在塔啦·烤全羊·蒙古包餐厅(天钥桥路店)	main_newly_set	low	[]	[烤全羊]	仅店名地名弱信号(1)	烤全羊->True
-1089	多乐房土豆汤(虹泉路店)	main_newly_set	high	[]	[汤饭/冷面]	唯一菜系叶=汤饭/冷面	汤饭/冷面->True
-1090	额尔敦传统涮(延安中路店)	main_newly_set	low	[]	[涮羊肉]		涮羊肉->True
-1091	万寿亭参鸡汤(虹泉路店)	main_newly_set	high	[]	[汤饭/冷面]	唯一菜系叶=汤饭/冷面	汤饭/冷面->True
-1092	济州食堂by钟路商会(虹泉路店)	main_newly_set	high	[]	[汤饭/冷面]	唯一菜系叶=汤饭/冷面	汤饭/冷面->True
-1093	巴屋巴屋正宗韩国料理	main_newly_set	high	[]	[韩定食]	唯一菜系叶=韩定食; 仅店名地名弱信号(1)	韩定食->True
-1094	青鹤谷烤肉(虹泉路店)	main_newly_set	high	[]	[韩式烤肉]	唯一菜系叶=韩式烤肉	韩式烤肉->True
-1095	姜虎东白丁(上海店)	main_newly_set	high	[]	[韩式烤肉]	唯一菜系叶=韩式烤肉	韩式烤肉->True
-1096	四面泰(环贸iapm店)	main_newly_set	high	[]	[冬阴功]	唯一菜系叶=冬阴功	冬阴功->True
-1097	Home Thai(K11店)	main_newly_set	high	[]	[冬阴功]	唯一菜系叶=冬阴功	冬阴功->True
-1098	富贵椰 Thai Bistro & Eatery(丰盛里店)	main_newly_set	high	[]	[冬阴功]	唯一菜系叶=冬阴功	冬阴功->True
-1099	POETS泰狮(徐家汇店)	main_newly_set	high	[]	[冬阴功]	唯一菜系叶=冬阴功	冬阴功->True
-1100	Mi Thai(安福路店)	main_newly_set	high	[]	[冬阴功]	唯一菜系叶=冬阴功	冬阴功->True
-1101	Hidden Thai Bistro	main_newly_set	high	[]	[船面]	唯一菜系叶=船面	船面->True
-1102	Akanee Thai Izakaya(愚园路)	main_newly_set	high	[]	[泰北菜]	唯一菜系叶=泰北菜	泰北菜->True
-1103	Zaafran(素凯泰酒店)	main_newly_set	high	[]	[冬阴功]	唯一菜系叶=冬阴功	冬阴功->True
-1104	泰北清迈小馆(虹桥路店)	main_newly_set	high	[]	[泰北菜]	唯一菜系叶=泰北菜	泰北菜->True
-1105	清迈排挡(北外滩来福士店)	main_newly_set	high	[]	[泰东北Isan菜]	唯一菜系叶=泰东北Isan菜	泰东北Isan菜->True
-1106	船面专门店(美罗城店)	main_newly_set	high	[]	[船面]	唯一菜系叶=船面	船面->True
-1107	大学路泰餐(大学路店)	main_newly_set	high	[]	[冬阴功]	唯一菜系叶=冬阴功	冬阴功->True
-1109	清迈瓦罐火锅	main_newly_set	high	[]	[泰北菜]	唯一菜系叶=泰北菜	泰北菜->True
-1110	Rasa Rasa越南料理&串烧(新天地店)	main_newly_set	high	[]	[越南春卷/小吃]	唯一菜系叶=越南春卷/小吃; 仅店名地名弱信号(1)	越南春卷/小吃->True
-1111	FAT PHO大發越南粉(丰盛里店)	main_newly_set	high	[]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	越南河粉->True
-1112	FAT PHO大發越南粉(新天地店)	main_newly_set	high	[]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	越南河粉->True
-1113	西贡妈妈Saigon Mama(上海商城店)	main_newly_set	high	[]	[越南河粉]	唯一菜系叶=越南河粉	越南河粉->True
-1114	西贡妈妈Saigon Mama(港汇恒隆店)	main_newly_set	high	[]	[越南河粉]	唯一菜系叶=越南河粉	越南河粉->True
-1115	PhoToShop福秀·越南餐厅	main_newly_set	low	[]	[越南河粉]	仅店名地名弱信号(1)	越南河粉->True
-1116	越厨西贡Saigon Bistrot(陆家嘴中心店)	main_newly_set	high	[]	[越南河粉]	唯一菜系叶=越南河粉	越南河粉->True
-1117	阮千金·法式越南菜	main_newly_set	high	[]	[顺化菜]	唯一菜系叶=顺化菜; 仅店名地名弱信号(1)	顺化菜->True
-1118	爱在河内越南餐厅	main_newly_set	high	[]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	越南河粉->True
-1119	印象芽庄越式餐厅(新华路店)	main_newly_set	high	[]	[顺化菜]	唯一菜系叶=顺化菜	顺化菜->True
-1120	普榄越南餐厅(啦啦宝都店)	main_newly_set	high	[]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	越南河粉->True
-1121	越南美食安宫AoBaBa	main_newly_set	high	[]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	越南河粉->True
-1122	越洋越南菜	main_newly_set	high	[]	[越南春卷/小吃]	唯一菜系叶=越南春卷/小吃; 仅店名地名弱信号(1)	越南春卷/小吃->True
-1123	PHO LA越南粉	main_newly_set	high	[]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	越南河粉->True
-1124	西贡Saigon越南菜(中环广场店)	main_newly_set	high	[]	[越南法包]	唯一菜系叶=越南法包; 仅店名地名弱信号(1)	越南法包->True
-1125	星洲小馆·新加坡菜(太阳宫店)	main_newly_set	high	[]	[新加坡菜]	唯一菜系叶=新加坡菜	新加坡菜->True
-1126	星洲小馆·新加坡料理(田子坊店)	main_newly_set	high	[]	[新加坡菜]	唯一菜系叶=新加坡菜	新加坡菜->True
-1127	芽笼芽笼新加坡餐厅(浦东嘉里城店)	main_newly_set	high	[]	[新加坡菜]	唯一菜系叶=新加坡菜	新加坡菜->True
-1128	芽笼芽笼新加坡餐厅(来福士广场店)	main_newly_set	high	[]	[新加坡菜]	唯一菜系叶=新加坡菜	新加坡菜->True
-1129	钨节路新加坡餐厅	main_newly_set	high	[]	[新加坡菜]	唯一菜系叶=新加坡菜	新加坡菜->True
-1130	Secret Flavor(马来清真)	main_newly_set	high	[]	[马来西亚菜]	唯一菜系叶=马来西亚菜	马来西亚菜->True
-1131	兴兴东南亚饮食阁	main_newly_set	high	[]	[马来西亚菜]	唯一菜系叶=马来西亚菜	马来西亚菜->True
-1132	金椰壳(印力中心店)	main_newly_set	high	[]	[新加坡菜]	唯一菜系叶=新加坡菜	新加坡菜->True
-1133	南洋南香·东南亚美食(16铺店)	main_newly_set	high	[]	[马来西亚菜]	唯一菜系叶=马来西亚菜	马来西亚菜->True
-1134	Docks河畔餐厅(静安英迪格)	main_newly_set	low	[]	[印尼菜]		印尼菜->True
-1135	Garuda巴东印尼餐厅	main_newly_set	high	[]	[印尼菜]	唯一菜系叶=印尼菜	印尼菜->True
-1136	娘惹情	main_newly_set	low	[]	[新加坡菜]		新加坡菜->True
-1137	Jean Georges 上海	main_newly_set	high	[]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	法餐Fine Dining->True
-1138	Masala Art Indian Cuisine(大沽路店)	main_newly_set	high	[]	[北印咖喱]	唯一菜系叶=北印咖喱	北印咖喱->True
-1140	RANGOLI蓝果丽印度餐厅(古北SOHO店)	main_newly_set	high	[]	[北印咖喱]	唯一菜系叶=北印咖喱; 仅店名地名弱信号(1)	北印咖喱->True
-1141	Maison Lameloise 莱美露滋	main_newly_set	high	[]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	法餐Fine Dining->True
-1142	KLAY Modern Indian Restaurant(北京西路店)	main_newly_set	high	[]	[唐杜里/烤饼]	唯一菜系叶=唐杜里/烤饼; 仅店名地名弱信号(1)	唐杜里/烤饼->True
-1143	Le Comptoir de Pierre Gagnaire	main_newly_set	high	[]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	法餐Fine Dining->True
-1144	虹盐RED SALT新派印巴餐厅(禧瑞广场店)	main_newly_set	high	[]	[北印咖喱]	唯一菜系叶=北印咖喱	北印咖喱->True
-1145	Phénix 斐霓丝餐厅酒吧	main_newly_set	high	[]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	法餐Fine Dining->True
-1146	Kaveen's Kitchen印度餐厅(虹桥店)	main_newly_set	low	[]	[唐杜里/烤饼]	仅店名地名弱信号(1)	唐杜里/烤饼->True
-1147	1929 by Guillaume Galliot	main_newly_set	high	[]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	法餐Fine Dining->True
-1148	Indian Kitchen(南印)	main_newly_set	high	[]	[南印Dosa]	唯一菜系叶=南印Dosa	南印Dosa->True
-1149	Dakshin南印餐厅	main_newly_set	high	[]	[南印Dosa]	唯一菜系叶=南印Dosa	南印Dosa->True
-1150	POPOT 博朴(徐汇店)	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1151	Dev Bhoomi Curry House	main_newly_set	high	[]	[北印咖喱]	唯一菜系叶=北印咖喱	北印咖喱->True
-1153	Bombay Bistro	main_newly_set	high	[]	[北印咖喱]	唯一菜系叶=北印咖喱	北印咖喱->True
-1154	SHADOWS(安福路店)	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1155	Indian Curry Hut	main_newly_set	high	[]	[印度Biryani]	唯一菜系叶=印度Biryani	印度Biryani->True
-1156	LE VERRE à vin by MIG	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1157	Vedas Indian Restaurant	main_newly_set	high	[]	[北印咖喱]	唯一菜系叶=北印咖喱	北印咖喱->True
-1159	Delhi Darbar	main_newly_set	high	[]	[北印咖喱]	唯一菜系叶=北印咖喱	北印咖喱->True
-1160	Mignon 9	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1161	Punjabi Bistro旁遮普	main_newly_set	high	[]	[唐杜里/烤饼]	唯一菜系叶=唐杜里/烤饼	唐杜里/烤饼->True
-1162	Luneurs(洛克·外滩源店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1163	安比斯印度餐厅	main_newly_set	high	[]	[印度Biryani]	唯一菜系叶=印度Biryani; 仅店名地名弱信号(1)	印度Biryani->True
-1164	Pain Chaud(建国西路店)	main_newly_set	high	[]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	可颂/起酥专门->True
-1165	Otantik黎凡特美食(吴江路店)	main_newly_set	high	[]	[黎巴嫩菜]	唯一菜系叶=黎巴嫩菜	黎巴嫩菜->True
-1166	La Boulangerie by Pierre Gagnaire	main_newly_set	high	[]	[面包]	仅有菜系根，无更细叶	面包->True
-1167	Otantik黎凡特美食(西藏中路店)	main_newly_set	high	[]	[黎巴嫩菜]	唯一菜系叶=黎巴嫩菜	黎巴嫩菜->True
-1168	Land of Butterful & Creamorous	main_newly_set	high	[]	[可颂甜品]	唯一菜系叶=可颂甜品	可颂甜品->True
-1169	MAKAN阿拉伯餐厅	main_newly_set	high	[]	[阿拉伯烧烤]	唯一菜系叶=阿拉伯烧烤	阿拉伯烧烤->True
-1170	VERIE BAKEHOUSE(马当路店)	main_newly_set	high	[]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	可颂/起酥专门->True
-1171	Eli Falafel(人民广场店)	main_newly_set	high	[]	[黎巴嫩菜]	唯一菜系叶=黎巴嫩菜	黎巴嫩菜->True
-1172	Brothers Kebab(奉贤路店)	main_newly_set	high	[]	[中东/阿拉伯菜]	仅有菜系根，无更细叶	中东/阿拉伯菜->True
-1173	Da Vittorio Shanghai	main_newly_set	low	[]	[意面]		意面->True
-1174	Brothers Kebab(长寿路店)	main_newly_set	high	[]	[中东/阿拉伯菜]	仅有菜系根，无更细叶	中东/阿拉伯菜->True
-1175	8½ Otto e Mezzo Bombana	main_newly_set	low	[]	[意面]		意面->True
-1177	Mercato by Jean-Georges	main_newly_set	low	[]	[佛罗伦萨牛排]		佛罗伦萨牛排->True
-1178	Habibi中东餐厅	main_newly_set	high	[]	[阿拉伯烧烤]	唯一菜系叶=阿拉伯烧烤	阿拉伯烧烤->True
-1179	BOTTEGA 意库	main_newly_set	high	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	那不勒斯披萨->True
-1180	Shiraz波斯餐厅	main_newly_set	high	[]	[波斯菜]	唯一菜系叶=波斯菜	波斯菜->True
-1181	Mammamia 玛米亚	main_newly_set	high	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	那不勒斯披萨->True
-1182	Barbarossa	main_newly_set	high	[]	[阿拉伯烧烤]	唯一菜系叶=阿拉伯烧烤	阿拉伯烧烤->True
-1183	TOPO EXPRESS	main_newly_set	high	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	那不勒斯披萨->True
-1184	Hoxa Bistro沙美大楼	main_newly_set	high	[]	[新疆菜]	仅有菜系根，无更细叶	新疆菜->True
-1185	PIZZENELLA	main_newly_set	high	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	那不勒斯披萨->True
-1186	罗宋娃娃正宗俄罗斯菜	main_newly_set	high	[]	[俄餐]	仅有菜系根，无更细叶	俄餐->True
-1187	Mozzarella e Vino	main_newly_set	high	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	那不勒斯披萨->True
-1188	Khachapuri格鲁吉亚美食	main_newly_set	high	[]	[格鲁吉亚菜]	唯一菜系叶=格鲁吉亚菜	格鲁吉亚菜->True
-1189	ALLORA 意大利西餐厅(外滩店)	main_newly_set	low	[]	[意面]		意面->True
-1190	撒马尔罕乌兹别克餐厅	main_newly_set	high	[]	[乌兹别克菜]	唯一菜系叶=乌兹别克菜	乌兹别克菜->True
-1191	Osteria Garden 生蚝花园餐厅	main_newly_set	low	[]	[意面]		意面->True
-1192	丝路驿站中亚餐厅	main_newly_set	high	[]	[烤包子/馕坑肉]	唯一菜系叶=烤包子/馕坑肉	烤包子/馕坑肉->True
-1193	Grappa's 意大利餐厅	main_newly_set	high	[]	[意面]	唯一菜系叶=意面	意面->True
-1194	Vesta 意式餐厅	main_newly_set	low	[]	[意面]		意面->True
-1195	何东故居披萨(襄阳店)	main_newly_set	medium	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨; 店名业态词佐证	那不勒斯披萨->True
-1196	Mercado 505 Gourmet Restaurant	main_newly_set	high	[]	[海鲜饭]	唯一菜系叶=海鲜饭	海鲜饭->True
-1197	el Willy(中山东二路店)	main_newly_set	low	[]	[Tapas]		Tapas->True
-1198	CRAZYONES 克芮旺斯(前滩店)	main_newly_set	high	[]	[Tapas]	唯一菜系叶=Tapas	Tapas->True
-1199	CRAZYONES 克芮旺斯(合生汇店)	main_newly_set	high	[]	[Tapas]	唯一菜系叶=Tapas	Tapas->True
-1200	EL Bodegon	main_newly_set	high	[]	[Tapas]	唯一菜系叶=Tapas	Tapas->True
-1201	Brownstone Tapas & Lounge	main_newly_set	high	[]	[Tapas]	唯一菜系叶=Tapas	Tapas->True
-1202	Tomatito	main_newly_set	high	[]	[海鲜饭]	唯一菜系叶=海鲜饭	海鲜饭->True
-1203	宝莱纳餐厅(北外滩店)	main_newly_set	high	[]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	猪肘香肠啤酒->True
-1204	德国瀚克硕啤酒花园餐厅 Hacker-Pschorr	main_newly_set	high	[]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	猪肘香肠啤酒->True
-1205	宝莱纳餐厅(长宁来福士店)	main_newly_set	high	[]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	猪肘香肠啤酒->True
-1206	宝莱纳餐厅(西岸梦中心店)	main_newly_set	high	[]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	猪肘香肠啤酒->True
-1207	宝莱纳餐厅(新天地店)	main_newly_set	high	[]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	猪肘香肠啤酒->True
-1208	德国啤酒屋(安亭路老洋房)	main_newly_set	high	[]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	猪肘香肠啤酒->True
-1209	飞象西餐厅	main_newly_set	high	[]	[俄式西餐]	唯一菜系叶=俄式西餐	俄式西餐->True
-1210	KIRILLITSA 西里尔俄罗斯餐厅	main_newly_set	high	[]	[红菜汤]	唯一菜系叶=红菜汤	红菜汤->True
-1211	俄士厨房(环球港店)	main_newly_set	high	[]	[大列巴]	唯一菜系叶=大列巴	大列巴->True
-1212	HELLO KIEV 乌克兰主题餐厅(世博源店)	main_newly_set	high	[]	[红菜汤]	唯一菜系叶=红菜汤	红菜汤->True
-1213	哈尔滨餐厅(海派俄式)	main_newly_set	high	[]	[红菜汤]	唯一菜系叶=红菜汤	红菜汤->True
-1214	Wolfgang's Steakhouse 沃夫冈牛排馆	main_newly_set	medium	[]	[美式牛排]	唯一菜系叶=美式牛排; 店名业态词佐证	美式牛排->True
-1215	Cantina Agave(富民路店)	main_newly_set	high	[]	[墨西哥菜]	仅有菜系根，无更细叶	墨西哥菜->True
-1216	El Santo Tacos&Tequila(158坊店)	main_newly_set	high	[]	[墨西哥菜]	仅有菜系根，无更细叶	墨西哥菜->True
-1217	Morton's The Steakhouse 莫尔顿牛排坊	main_newly_set	medium	[]	[美式牛排]	唯一菜系叶=美式牛排; 店名业态词佐证	美式牛排->True
-1218	LOS PACOS帕库墨西哥餐厅(上生新所店)	main_newly_set	high	[]	[墨西哥菜]	仅有菜系根，无更细叶	墨西哥菜->True
-1219	Texas Roadhouse 德州公路牛排馆(世纪汇店)	main_newly_set	medium	[]	[美式牛排]	唯一菜系叶=美式牛排; 店名业态词佐证	美式牛排->True
-1220	Maya	main_newly_set	high	[]	[墨西哥菜]	仅有菜系根，无更细叶	墨西哥菜->True
-1221	Mayita	main_newly_set	high	[]	[墨西哥菜]	仅有菜系根，无更细叶	墨西哥菜->True
-1222	Blue Frog 蓝蛙	main_newly_set	low	[]	[汉堡]		汉堡->True
-1223	El Luchador	main_newly_set	high	[]	[墨西哥菜]	仅有菜系根，无更细叶	墨西哥菜->True
-1224	Laya Burger 拉亚汉堡(宜山路店)	main_newly_set	medium	[]	[汉堡]	店名业态词佐证	汉堡->True
-1225	CHIHUAHUA墨西哥餐厅	main_newly_set	high	[]	[墨西哥菜]	仅有菜系根，无更细叶	墨西哥菜->True
-1226	Tequilaz Mexican Bar	main_newly_set	high	[]	[墨西哥菜]	仅有菜系根，无更细叶	墨西哥菜->True
-1227	Bourbon Cookhouse 玻本美式餐厅酒吧	main_newly_set	low	[]	[美式牛排]		美式牛排->True
-1228	Tajine Moroccan 塔金摩洛哥中东餐厅	main_newly_set	low	[]	[摩洛哥塔吉锅正餐]	仅店名地名弱信号(1)	摩洛哥塔吉锅正餐->True
-1229	Chili's 奇利斯(陆家嘴滨江店)	main_newly_set	low	[]	[汉堡]		汉堡->True
-1230	Brut Eatery悦璞食堂(肇嘉浜路店)	main_newly_set	high	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	那不勒斯披萨->True
-1232	Crafted 蔻阁梧桐露台西餐厅	main_newly_set	low	[]	[炸鸡]		炸鸡->True
-1233	铁手咖啡制造局Metal Hands(永嘉路店)	main_newly_set	medium	[]	[社区精品咖啡]	店名业态词佐证	社区精品咖啡->True
-1234	尚牛社会 Beef & Liberty	main_newly_set	low	[]	[汉堡]		汉堡->True
-1236	gluglu面包店(思南路店)	main_newly_set	high	[]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	可颂/起酥专门->True
-1237	Shake Shack 奶昔小屋	main_newly_set	low	[]	[汉堡]		汉堡->True
-1238	SMAKA咖啡烘焙	main_newly_set	high	[]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	社区烘焙坊->True
-1239	Element Fresh 新元素	main_newly_set	low	[]	[汉堡]		汉堡->True
-1240	LUNEURS月乐诗冰淇淋咖啡(北外滩来福士店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1241	Speak Low彼楼	main_newly_set	high	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	鸡尾酒吧->True
-1242	The Nest(外滩)	main_newly_set	low	[]	[北欧海鲜]		北欧海鲜->True
-1243	鲜得来排骨年糕(雁荡店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1244	Greek Taverna Milos 希腊餐厅(老外街店)	main_newly_set	high	[]	[希腊菜]	唯一菜系叶=希腊菜	希腊菜->True
-1245	柴爿馄饨	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1246	黄启云私房牛肉面工坊	main_newly_set	high	[]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 招牌菜命中2词; 食客证据命中1词	台湾牛肉面·小吃->True
-1247	The Fat Olive 欧立威	main_newly_set	high	[]	[希腊菜]	唯一菜系叶=希腊菜	希腊菜->True
-1248	Efes Turkish & Mediterranean 爱妃丝土耳其餐厅	main_newly_set	high	[]	[土耳其菜]	唯一菜系叶=土耳其菜; 仅店名地名弱信号(1)	土耳其菜->True
-1249	So Mezze by Pasha	main_newly_set	high	[]	[土耳其菜]	唯一菜系叶=土耳其菜	土耳其菜->True
-1250	ELI FALAFEL 黎巴嫩餐厅(富城路店)	main_newly_set	high	[]	[黎巴嫩地中海菜]	唯一菜系叶=黎巴嫩地中海菜	黎巴嫩地中海菜->True
-1251	LEYAS 蕾娅中东美食	main_newly_set	high	[]	[黎巴嫩地中海菜]	唯一菜系叶=黎巴嫩地中海菜	黎巴嫩地中海菜->True
-1252	Otantik	main_newly_set	high	[]	[黎巴嫩地中海菜]	唯一菜系叶=黎巴嫩地中海菜	黎巴嫩地中海菜->True
-1253	KAPYA土耳其餐厅	main_newly_set	high	[]	[中东/阿拉伯菜]	仅有菜系根，无更细叶	中东/阿拉伯菜->True
-1254	Shanghai Tavern(上海艾迪逊酒店)	main_newly_set	high	[]	[英式早餐]	唯一菜系叶=英式早餐	英式早餐->True
-1255	Guinness Social by Butler & White's	main_newly_set	high	[]	[Fish&Chips]	唯一菜系叶=Fish&Chips	Fish&Chips->True
-1256	The Park Tavern	main_newly_set	high	[]	[Fish&Chips]	唯一菜系叶=Fish&Chips	Fish&Chips->True
-1257	Camden's Fish and Chips	main_newly_set	high	[]	[Fish&Chips]	唯一菜系叶=Fish&Chips	Fish&Chips->True
-1258	派社 Pie Society	main_newly_set	high	[]	[英式早餐]	唯一菜系叶=英式早餐	英式早餐->True
-1260	BOR Eatery	main_newly_set	high	[]	[新北欧料理]	唯一菜系叶=新北欧料理	新北欧料理->True
-1261	东湖宾馆北欧料理(瑞典主厨)	main_newly_set	high	[]	[新北欧料理]	唯一菜系叶=新北欧料理	新北欧料理->True
-1263	北欧森林(安福路)	main_newly_set	high	[]	[北欧海鲜]	唯一菜系叶=北欧海鲜	北欧海鲜->True
-1264	申德勒加油站西餐厅 Schindlers Tankstelle(外滩店)	main_newly_set	high	[]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	猪肘香肠啤酒->True
-1265	Papas Bierstube 德国乡村餐厅	main_newly_set	high	[]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	猪肘香肠啤酒->True
-1266	1886 German Restaurant & Bar(Bund 16)	main_newly_set	high	[]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	猪肘香肠啤酒->True
-1267	TAVOLA 意大利餐厅(陆家嘴滨江)	main_newly_set	low	[]	[意面]		意面->True
-1268	Giovanni's 意大利餐厅(虹桥喜来登)	main_newly_set	high	[]	[意面]	唯一菜系叶=意面	意面->True
-1269	el Efante	main_newly_set	high	[]	[Tapas]	唯一菜系叶=Tapas	Tapas->True
-1270	Liquid Laundry	main_newly_set	low	[]	[汉堡]		汉堡->True
-1271	Smokin' Hog 美式烟熏BBQ	main_newly_set	low	[]	[美式牛排]		美式牛排->True
-1272	Hard Rock Cafe 硬石餐厅(上海)	main_newly_set	low	[]	[汉堡]		汉堡->True
-1273	OHA EATERY	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1274	RAC	main_newly_set	high	[]	[Bar]	仅有菜系根，无更细叶	Bar->True
-1275	法国舅舅家小酒馆CHEZ JOJO(永嘉路店)	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1276	Kartel Wine Bar	main_newly_set	medium	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	葡萄酒/自然酒吧->True
-1277	HEALER Bar	main_newly_set	medium	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧; 店名业态词佐证	鸡尾酒吧->True
-1278	SunFlour阳光粮品(安福路店)	main_newly_set	high	[]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	社区烘焙坊->True
-1279	老麦咖啡馆TheCottageBar(武康大楼店)	main_newly_set	medium	[]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	社区精品咖啡->True
-1281	MEL BOURNE Brunch&Bistro猫尔本(静安店)	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1282	马里昂巴Marienbad(武康路店)	main_newly_set	high	[]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡	社区精品咖啡->True
-1283	LENOTRE雷诺特法式西点(前滩太古里店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1284	Le Gateau戛朵法式蛋糕(世博源店)	main_newly_set	medium	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	蛋糕/法式甜品->True
-1285	PAUL LAFAYET法式甜品(港汇广场店)	main_newly_set	medium	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	蛋糕/法式甜品->True
-1286	Justgrapes萄醉(安福路店)	main_newly_set	high	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	葡萄酒/自然酒吧->True
-1287	SHIMMER(巨鹿路店)	main_newly_set	high	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	鸡尾酒吧->True
-1288	JZ CLUB	main_newly_set	high	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	鸡尾酒吧->True
-1289	Sip bistro&bar	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1290	沪西老弄堂面馆(定西路店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1291	马新文拉面店(广西北路店)	main_newly_set	high	[]	[西北菜]	仅有菜系根，无更细叶	西北菜->True
-1292	大拇指面馆(高平路店)	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1293	La Burg勒博格南非餐吧	main_newly_set	low	[]	[南非正餐/烤肉]		南非正餐/烤肉->True
-1294	ATELIER NO.3	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1295	Yugo fusion izakaya	main_newly_set	high	[]	[寿司]	唯一菜系叶=寿司	寿司->True
-1296	Verdant浮叶	main_newly_set	medium	[]	[高端台菜·台菜Bistro]	唯一菜系叶=高端台菜·台菜Bistro; 食客证据命中1词	高端台菜·台菜Bistro->True
-1297	Kora by Circle	main_newly_set	high	[]	[非洲菜]	仅有菜系根，无更细叶	非洲菜->True
-1298	Trattoria del Bistecca·1565	main_newly_set	low	[]	[意面]		意面->True
-1299	司芳糯米(久光店)	main_newly_set	high	[]	[泰国甜品]	唯一菜系叶=泰国甜品	泰国甜品->True
-1300	Albaluz	main_newly_set	high	[]	[伊比利亚火腿]	唯一菜系叶=伊比利亚火腿	伊比利亚火腿->True
-1301	Kyochon1991校村炸鸡(漕宝路店)	main_newly_set	medium	[]	[韩式炸鸡]	唯一菜系叶=韩式炸鸡; 店名业态词佐证	韩式炸鸡->True
-1302	KOSMOS斯拉夫酒馆	main_newly_set	high	[]	[俄式西餐]	唯一菜系叶=俄式西餐	俄式西餐->True
-1303	是隆路船面(东湖路店)	main_newly_set	high	[]	[船面]	唯一菜系叶=船面	船面->True
-1304	WING REPUBLIC来翅够	main_newly_set	low	[]	[炸鸡]		炸鸡->True
-1305	VN Banh Mi&Cafe越法时光(1788广场店)	main_newly_set	high	[]	[越南法包]	唯一菜系叶=越南法包	越南法包->True
-1306	THE PAWON·8碗(古北SOHO店)	main_newly_set	high	[]	[印尼菜]	唯一菜系叶=印尼菜	印尼菜->True
-1307	YA BENJIA by元爱本家(金虹桥店)	main_newly_set	high	[]	[韩定食]	唯一菜系叶=韩定食	韩定食->True
-1308	Nick&Nicky's Family妮琪泰式家庭料理(静安大悦城店)	main_newly_set	high	[]	[泰东北Isan菜]	唯一菜系叶=泰东北Isan菜	泰东北Isan菜->True
-1309	印度小厨(巨鹿路店)	main_newly_set	high	[]	[南印Dosa]	唯一菜系叶=南印Dosa; 仅店名地名弱信号(1)	南印Dosa->True
-1310	莎德曼·秘烤美食殿(大拇指广场店)	main_newly_set	high	[]	[乌兹别克菜]	唯一菜系叶=乌兹别克菜	乌兹别克菜->True
-1311	辻利TSUJIRI(日月光店)	main_newly_set	high	[]	[日式甜品]	唯一菜系叶=日式甜品	日式甜品->True
-1312	Kaki Mania日式刨冰	main_newly_set	high	[]	[日式甜品]	唯一菜系叶=日式甜品	日式甜品->True
-1313	九十葉·抹茶专门店(新天地店)	main_newly_set	high	[]	[茶饮]	仅有菜系根，无更细叶	茶饮->True
-1314	鲨鱼冰屋Kooriya Shark(常熟路店)	main_newly_set	high	[]	[日式甜品]	唯一菜系叶=日式甜品	日式甜品->True
-1315	Sobre日式刨冰	main_newly_set	high	[]	[日式甜品]	唯一菜系叶=日式甜品	日式甜品->True
-1316	空蝉怀石料理(益丰·外滩源店)	main_newly_set	medium	[]	[怀石]	唯一菜系叶=怀石; 店名业态词佐证	怀石->True
-1317	小钵 Kobachi on Fifty Six(金茂56楼)	main_newly_set	low	[]	[怀石]		怀石->True
-1318	麺屋庄野研究所	main_newly_set	high	[]	[拉面]	唯一菜系叶=拉面	拉面->True
-1319	七豚拉面(瑞金一路店)	main_newly_set	high	[]	[拉面]	唯一菜系叶=拉面	拉面->True
-1320	麺処益二郎	main_newly_set	high	[]	[拉面]	唯一菜系叶=拉面	拉面->True
-1321	鲤久面屋·横滨家系拉面(金桥啦啦宝都店)	main_newly_set	high	[]	[拉面]	唯一菜系叶=拉面	拉面->True
-1322	鸟山鸣·薪火烧鸟	main_newly_set	medium	[]	[烧鸟]	店名业态词佐证	烧鸟->True
-1323	银蔵Ginzō·Yakitori烧鸟(新华路店)	main_newly_set	medium	[]	[烧鸟]	唯一菜系叶=烧鸟; 店名业态词佐证	烧鸟->True
-1324	玄白·炭烤活鳗(高岛屋首店)	main_newly_set	high	[]	[鳗鱼饭]	唯一菜系叶=鳗鱼饭	鳗鱼饭->True
-1325	鳗葉(世博天地店)	main_newly_set	high	[]	[鳗鱼饭]	唯一菜系叶=鳗鱼饭	鳗鱼饭->True
-1326	KAI FINE开饭·汉堡排(静安寺店)	main_newly_set	high	[]	[日式洋食]	唯一菜系叶=日式洋食	日式洋食->True
-1327	Rumor传闻·洋食(新乐路店)	main_newly_set	high	[]	[日式洋食]	唯一菜系叶=日式洋食	日式洋食->True
-1328	韦二姐传统螺蛳粉	main_newly_set	high	[]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	柳州螺蛳粉->True
-1329	阳奶佬螺蛳粉(丽园路店)	main_newly_set	high	[]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	柳州螺蛳粉->True
-1330	家味螺蛳粉&烤鱼(安远路店)	main_newly_set	high	[]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	柳州螺蛳粉->True
-1331	山间堂民间瓦缸煨汤馆(淮海店)	main_newly_set	high	[]	[瓦罐汤]	唯一菜系叶=瓦罐汤	瓦罐汤->True
-1332	赣江秋瓦罐煨汤	main_newly_set	high	[]	[瓦罐汤]	唯一菜系叶=瓦罐汤	瓦罐汤->True
-1333	老门框爆肚涮肉(古美路店)	main_newly_set	high	[]	[涮羊肉]	唯一菜系叶=涮羊肉	涮羊肉->True
-1334	严记老北京涮锅(乌鲁木齐路店)	main_newly_set	high	[]	[涮羊肉]	唯一菜系叶=涮羊肉; 仅店名地名弱信号(1)	涮羊肉->True
-1337	润园椰礼海南椰子鸡火锅(曹杨路店)	main_newly_set	high	[]	[椰子鸡]	唯一菜系叶=椰子鸡; 仅店名地名弱信号(1)	椰子鸡->True
-1338	辞琼·老海南糟粕醋火锅(月亮湾店)	main_newly_set	high	[]	[糟粕醋]	唯一菜系叶=糟粕醋; 仅店名地名弱信号(1)	糟粕醋->True
-1339	柒月粉(江苏路店)	main_newly_set	high	[]	[江西炒粉/拌粉]	唯一菜系叶=江西炒粉/拌粉; 仅店名地名弱信号(1)	江西炒粉/拌粉->True
-1340	谷堆复古烩面	main_newly_set	high	[]	[豫菜·烩面]	唯一菜系叶=豫菜·烩面	豫菜·烩面->True
-1341	一碗兰纯汤牛肉面1号店	main_newly_set	high	[]	[兰州牛肉面]	唯一菜系叶=兰州牛肉面; 招牌菜命中1词; 食客证据命中2词	兰州牛肉面->True
-1342	伊祥·敦煌楼(中山北路店)	main_newly_set	low	[]	[兰州牛肉面]		兰州牛肉面->True
-1344	洪峣爷北京炙子烤肉	main_newly_set	high	[]	[京味炙子烤肉·京味小菜]	唯一菜系叶=京味炙子烤肉·京味小菜; 招牌菜命中1词; 食客证据命中2词	京味炙子烤肉·京味小菜->True
-1346	莲餐厅·湖北菜(愚园路店)	main_newly_set	high	[]	[湖北菜高端·宴请]	唯一菜系叶=湖北菜高端·宴请; 招牌菜命中2词	湖北菜高端·宴请->True
+1067	椰子不语椰子鸡火锅(淮海店)	no_change	preserved	[椰子鸡]	[椰子鸡]		
+1068	冷三先生(虹莘路店)	no_change	high	[韩式烤肉]	[韩式烤肉]	唯一菜系叶=韩式烤肉	
+1069	嗲嗲的椰子鸡·太琼糟粕醋(百联又一城店)	no_change	preserved	[椰子鸡]	[椰子鸡]		
+1070	牛信亭炭火烤肉·韩式料理(虹泉路店)	no_change	high	[韩式烤肉]	[韩式烤肉]	唯一菜系叶=韩式烤肉	
+1071	扎西达娲藏文化演艺餐厅(徐汇绿地缤纷城店)	no_change	high	[藏餐]	[藏餐]	唯一菜系叶=藏餐	
+1072	多杰拉姆藏餐吧(朱家角店)	no_change	high	[藏餐]	[藏餐]	唯一菜系叶=藏餐	
+1073	喜来稀肉(虹泉路店)	no_change	high	[韩式烤肉]	[韩式烤肉]	唯一菜系叶=韩式烤肉	
+1074	陆丝芬·柳州原汤螺蛳粉(淮海中路店)	no_change	high	[柳州螺蛳粉]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	
+1075	青春贝壳韩国烤肉(旗舰店)	no_change	high	[韩式烤肉]	[韩式烤肉]	唯一菜系叶=韩式烤肉; 仅店名地名弱信号(1)	
+1076	文家粉楼(静安大悦城店)	no_change	low	[瓦罐汤]	[瓦罐汤]		
+1077	正三熙小木屋烤肉(虹泉路一号店)	no_change	high	[韩式烤肉]	[韩式烤肉]	唯一菜系叶=韩式烤肉	
+1078	赣南粉局·江西锅气炒粉(久光中心店)	no_change	high	[江西炒粉/拌粉]	[江西炒粉/拌粉]	唯一菜系叶=江西炒粉/拌粉	
+1080	掌柜的店·河南菜(日月光店)	no_change	low	[豫菜·烩面]	[豫菜·烩面]	仅店名地名弱信号(1)	
+1081	草家真味酱蟹(天乐广场店)	no_change	high	[酱蟹]	[酱蟹]	唯一菜系叶=酱蟹	
+1082	荣豫·河南菜(ONE上海张园店)	no_change	low	[豫菜·胡辣汤]	[豫菜·胡辣汤]	仅店名地名弱信号(1)	
+1083	韩味岛酱蟹(天乐广场店)	no_change	high	[酱蟹]	[酱蟹]	唯一菜系叶=酱蟹	
+1084	熹餐厅	no_change	low	[豫菜·烩面]	[豫菜·烩面]		
+1085	富乐满韩国正宗炸鸡(虹泉路店)	no_change	medium	[韩式炸鸡]	[韩式炸鸡]	店名业态词佐证; 仅店名地名弱信号(1)	
+1086	大翰宫·蒙古包烤全羊·融合菜(七宝店)	no_change	low	[烤全羊]	[烤全羊]	仅店名地名弱信号(1)	
+1087	bb.q Chicken比比客(虹泉路店)	no_change	high	[韩式炸鸡]	[韩式炸鸡]	唯一菜系叶=韩式炸鸡	
+1088	家在塔啦·烤全羊·蒙古包餐厅(天钥桥路店)	no_change	low	[烤全羊]	[烤全羊]	仅店名地名弱信号(1)	
+1089	多乐房土豆汤(虹泉路店)	no_change	high	[汤饭/冷面]	[汤饭/冷面]	唯一菜系叶=汤饭/冷面	
+1090	额尔敦传统涮(延安中路店)	no_change	low	[涮羊肉]	[涮羊肉]		
+1091	万寿亭参鸡汤(虹泉路店)	no_change	high	[汤饭/冷面]	[汤饭/冷面]	唯一菜系叶=汤饭/冷面	
+1092	济州食堂by钟路商会(虹泉路店)	no_change	high	[汤饭/冷面]	[汤饭/冷面]	唯一菜系叶=汤饭/冷面	
+1093	巴屋巴屋正宗韩国料理	no_change	high	[韩定食]	[韩定食]	唯一菜系叶=韩定食; 仅店名地名弱信号(1)	
+1094	青鹤谷烤肉(虹泉路店)	no_change	high	[韩式烤肉]	[韩式烤肉]	唯一菜系叶=韩式烤肉	
+1095	姜虎东白丁(上海店)	no_change	high	[韩式烤肉]	[韩式烤肉]	唯一菜系叶=韩式烤肉	
+1096	四面泰(环贸iapm店)	no_change	high	[冬阴功]	[冬阴功]	唯一菜系叶=冬阴功	
+1097	Home Thai(K11店)	no_change	high	[冬阴功]	[冬阴功]	唯一菜系叶=冬阴功	
+1098	富贵椰 Thai Bistro & Eatery(丰盛里店)	no_change	high	[冬阴功]	[冬阴功]	唯一菜系叶=冬阴功	
+1099	POETS泰狮(徐家汇店)	no_change	high	[冬阴功]	[冬阴功]	唯一菜系叶=冬阴功	
+1100	Mi Thai(安福路店)	no_change	high	[冬阴功]	[冬阴功]	唯一菜系叶=冬阴功	
+1101	Hidden Thai Bistro	no_change	high	[船面]	[船面]	唯一菜系叶=船面	
+1102	Akanee Thai Izakaya(愚园路)	no_change	high	[泰北菜]	[泰北菜]	唯一菜系叶=泰北菜	
+1103	Zaafran(素凯泰酒店)	no_change	high	[冬阴功]	[冬阴功]	唯一菜系叶=冬阴功	
+1104	泰北清迈小馆(虹桥路店)	no_change	high	[泰北菜]	[泰北菜]	唯一菜系叶=泰北菜	
+1105	清迈排挡(北外滩来福士店)	no_change	high	[泰东北Isan菜]	[泰东北Isan菜]	唯一菜系叶=泰东北Isan菜	
+1106	船面专门店(美罗城店)	no_change	high	[船面]	[船面]	唯一菜系叶=船面	
+1107	大学路泰餐(大学路店)	no_change	high	[冬阴功]	[冬阴功]	唯一菜系叶=冬阴功	
+1109	清迈瓦罐火锅	no_change	high	[泰北菜]	[泰北菜]	唯一菜系叶=泰北菜	
+1110	Rasa Rasa越南料理&串烧(新天地店)	no_change	high	[越南春卷/小吃]	[越南春卷/小吃]	唯一菜系叶=越南春卷/小吃; 仅店名地名弱信号(1)	
+1111	FAT PHO大發越南粉(丰盛里店)	no_change	high	[越南河粉]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	
+1112	FAT PHO大發越南粉(新天地店)	no_change	high	[越南河粉]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	
+1113	西贡妈妈Saigon Mama(上海商城店)	no_change	high	[越南河粉]	[越南河粉]	唯一菜系叶=越南河粉	
+1114	西贡妈妈Saigon Mama(港汇恒隆店)	no_change	high	[越南河粉]	[越南河粉]	唯一菜系叶=越南河粉	
+1115	PhoToShop福秀·越南餐厅	no_change	low	[越南河粉]	[越南河粉]	仅店名地名弱信号(1)	
+1116	越厨西贡Saigon Bistrot(陆家嘴中心店)	no_change	high	[越南河粉]	[越南河粉]	唯一菜系叶=越南河粉	
+1117	阮千金·法式越南菜	no_change	high	[顺化菜]	[顺化菜]	唯一菜系叶=顺化菜; 仅店名地名弱信号(1)	
+1118	爱在河内越南餐厅	no_change	high	[越南河粉]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	
+1119	印象芽庄越式餐厅(新华路店)	no_change	high	[顺化菜]	[顺化菜]	唯一菜系叶=顺化菜	
+1120	普榄越南餐厅(啦啦宝都店)	no_change	high	[越南河粉]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	
+1121	越南美食安宫AoBaBa	no_change	high	[越南河粉]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	
+1122	越洋越南菜	no_change	high	[越南春卷/小吃]	[越南春卷/小吃]	唯一菜系叶=越南春卷/小吃; 仅店名地名弱信号(1)	
+1123	PHO LA越南粉	no_change	high	[越南河粉]	[越南河粉]	唯一菜系叶=越南河粉; 仅店名地名弱信号(1)	
+1124	西贡Saigon越南菜(中环广场店)	no_change	high	[越南法包]	[越南法包]	唯一菜系叶=越南法包; 仅店名地名弱信号(1)	
+1125	星洲小馆·新加坡菜(太阳宫店)	no_change	high	[新加坡菜]	[新加坡菜]	唯一菜系叶=新加坡菜	
+1126	星洲小馆·新加坡料理(田子坊店)	no_change	high	[新加坡菜]	[新加坡菜]	唯一菜系叶=新加坡菜	
+1127	芽笼芽笼新加坡餐厅(浦东嘉里城店)	no_change	high	[新加坡菜]	[新加坡菜]	唯一菜系叶=新加坡菜	
+1128	芽笼芽笼新加坡餐厅(来福士广场店)	no_change	high	[新加坡菜]	[新加坡菜]	唯一菜系叶=新加坡菜	
+1129	钨节路新加坡餐厅	no_change	high	[新加坡菜]	[新加坡菜]	唯一菜系叶=新加坡菜	
+1130	Secret Flavor(马来清真)	no_change	high	[马来西亚菜]	[马来西亚菜]	唯一菜系叶=马来西亚菜	
+1131	兴兴东南亚饮食阁	no_change	high	[马来西亚菜]	[马来西亚菜]	唯一菜系叶=马来西亚菜	
+1132	金椰壳(印力中心店)	no_change	high	[新加坡菜]	[新加坡菜]	唯一菜系叶=新加坡菜	
+1133	南洋南香·东南亚美食(16铺店)	no_change	high	[马来西亚菜]	[马来西亚菜]	唯一菜系叶=马来西亚菜	
+1134	Docks河畔餐厅(静安英迪格)	no_change	low	[印尼菜]	[印尼菜]		
+1135	Garuda巴东印尼餐厅	no_change	high	[印尼菜]	[印尼菜]	唯一菜系叶=印尼菜	
+1136	娘惹情	no_change	low	[新加坡菜]	[新加坡菜]		
+1137	Jean Georges 上海	no_change	high	[法餐Fine Dining]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	
+1138	Masala Art Indian Cuisine(大沽路店)	no_change	high	[北印咖喱]	[北印咖喱]	唯一菜系叶=北印咖喱	
+1140	RANGOLI蓝果丽印度餐厅(古北SOHO店)	no_change	high	[北印咖喱]	[北印咖喱]	唯一菜系叶=北印咖喱; 仅店名地名弱信号(1)	
+1141	Maison Lameloise 莱美露滋	no_change	high	[法餐Fine Dining]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	
+1142	KLAY Modern Indian Restaurant(北京西路店)	no_change	high	[唐杜里/烤饼]	[唐杜里/烤饼]	唯一菜系叶=唐杜里/烤饼; 仅店名地名弱信号(1)	
+1143	Le Comptoir de Pierre Gagnaire	no_change	high	[法餐Fine Dining]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	
+1144	虹盐RED SALT新派印巴餐厅(禧瑞广场店)	no_change	high	[北印咖喱]	[北印咖喱]	唯一菜系叶=北印咖喱	
+1145	Phénix 斐霓丝餐厅酒吧	no_change	high	[法餐Fine Dining]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	
+1146	Kaveen's Kitchen印度餐厅(虹桥店)	no_change	low	[唐杜里/烤饼]	[唐杜里/烤饼]	仅店名地名弱信号(1)	
+1147	1929 by Guillaume Galliot	no_change	high	[法餐Fine Dining]	[法餐Fine Dining]	唯一菜系叶=法餐Fine Dining	
+1148	Indian Kitchen(南印)	no_change	high	[南印Dosa]	[南印Dosa]	唯一菜系叶=南印Dosa	
+1149	Dakshin南印餐厅	no_change	high	[南印Dosa]	[南印Dosa]	唯一菜系叶=南印Dosa	
+1150	POPOT 博朴(徐汇店)	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1151	Dev Bhoomi Curry House	no_change	high	[北印咖喱]	[北印咖喱]	唯一菜系叶=北印咖喱	
+1153	Bombay Bistro	no_change	high	[北印咖喱]	[北印咖喱]	唯一菜系叶=北印咖喱	
+1154	SHADOWS(安福路店)	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1155	Indian Curry Hut	no_change	high	[印度Biryani]	[印度Biryani]	唯一菜系叶=印度Biryani	
+1156	LE VERRE à vin by MIG	main_changed	high	[法餐]	[法式Bistro]	唯一菜系叶=法式Bistro	法餐->False; 法式Bistro->True
+1157	Vedas Indian Restaurant	no_change	high	[北印咖喱]	[北印咖喱]	唯一菜系叶=北印咖喱	
+1159	Delhi Darbar	no_change	high	[北印咖喱]	[北印咖喱]	唯一菜系叶=北印咖喱	
+1160	Mignon 9	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1161	Punjabi Bistro旁遮普	no_change	high	[唐杜里/烤饼]	[唐杜里/烤饼]	唯一菜系叶=唐杜里/烤饼	
+1162	Luneurs(洛克·外滩源店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1163	安比斯印度餐厅	no_change	high	[印度Biryani]	[印度Biryani]	唯一菜系叶=印度Biryani; 仅店名地名弱信号(1)	
+1164	Pain Chaud(建国西路店)	no_change	high	[可颂/起酥专门]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	
+1165	Otantik黎凡特美食(吴江路店)	no_change	high	[黎巴嫩菜]	[黎巴嫩菜]	唯一菜系叶=黎巴嫩菜	
+1166	La Boulangerie by Pierre Gagnaire	no_change	high	[面包]	[面包]	仅有菜系根，无更细叶	
+1167	Otantik黎凡特美食(西藏中路店)	no_change	high	[黎巴嫩菜]	[黎巴嫩菜]	唯一菜系叶=黎巴嫩菜	
+1168	Land of Butterful & Creamorous	no_change	high	[可颂甜品]	[可颂甜品]	唯一菜系叶=可颂甜品	
+1169	MAKAN阿拉伯餐厅	no_change	high	[阿拉伯烧烤]	[阿拉伯烧烤]	唯一菜系叶=阿拉伯烧烤	
+1170	VERIE BAKEHOUSE(马当路店)	no_change	high	[可颂/起酥专门]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	
+1171	Eli Falafel(人民广场店)	no_change	high	[黎巴嫩菜]	[黎巴嫩菜]	唯一菜系叶=黎巴嫩菜	
+1172	Brothers Kebab(奉贤路店)	no_change	high	[中东/阿拉伯菜]	[中东/阿拉伯菜]	仅有菜系根，无更细叶	
+1173	Da Vittorio Shanghai	no_change	low	[意面]	[意面]		
+1174	Brothers Kebab(长寿路店)	no_change	high	[中东/阿拉伯菜]	[中东/阿拉伯菜]	仅有菜系根，无更细叶	
+1175	8½ Otto e Mezzo Bombana	no_change	low	[意面]	[意面]		
+1177	Mercato by Jean-Georges	no_change	low	[佛罗伦萨牛排]	[佛罗伦萨牛排]		
+1178	Habibi中东餐厅	no_change	high	[阿拉伯烧烤]	[阿拉伯烧烤]	唯一菜系叶=阿拉伯烧烤	
+1179	BOTTEGA 意库	no_change	high	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	
+1180	Shiraz波斯餐厅	no_change	high	[波斯菜]	[波斯菜]	唯一菜系叶=波斯菜	
+1181	Mammamia 玛米亚	no_change	high	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	
+1182	Barbarossa	no_change	high	[阿拉伯烧烤]	[阿拉伯烧烤]	唯一菜系叶=阿拉伯烧烤	
+1183	TOPO EXPRESS	no_change	high	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	
+1184	Hoxa Bistro沙美大楼	no_change	high	[新疆菜]	[新疆菜]	仅有菜系根，无更细叶	
+1185	PIZZENELLA	no_change	high	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	
+1186	罗宋娃娃正宗俄罗斯菜	no_change	high	[俄餐]	[俄餐]	仅有菜系根，无更细叶	
+1187	Mozzarella e Vino	no_change	high	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	
+1188	Khachapuri格鲁吉亚美食	no_change	high	[格鲁吉亚菜]	[格鲁吉亚菜]	唯一菜系叶=格鲁吉亚菜	
+1189	ALLORA 意大利西餐厅(外滩店)	no_change	low	[意面]	[意面]		
+1190	撒马尔罕乌兹别克餐厅	no_change	high	[乌兹别克菜]	[乌兹别克菜]	唯一菜系叶=乌兹别克菜	
+1191	Osteria Garden 生蚝花园餐厅	no_change	low	[意面]	[意面]		
+1192	丝路驿站中亚餐厅	no_change	high	[烤包子/馕坑肉]	[烤包子/馕坑肉]	唯一菜系叶=烤包子/馕坑肉	
+1193	Grappa's 意大利餐厅	no_change	high	[意面]	[意面]	唯一菜系叶=意面	
+1194	Vesta 意式餐厅	no_change	low	[意面]	[意面]		
+1195	何东故居披萨(襄阳店)	no_change	medium	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨; 店名业态词佐证	
+1196	Mercado 505 Gourmet Restaurant	no_change	high	[海鲜饭]	[海鲜饭]	唯一菜系叶=海鲜饭	
+1197	el Willy(中山东二路店)	no_change	low	[Tapas]	[Tapas]		
+1198	CRAZYONES 克芮旺斯(前滩店)	no_change	high	[Tapas]	[Tapas]	唯一菜系叶=Tapas	
+1199	CRAZYONES 克芮旺斯(合生汇店)	no_change	high	[Tapas]	[Tapas]	唯一菜系叶=Tapas	
+1200	EL Bodegon	no_change	high	[Tapas]	[Tapas]	唯一菜系叶=Tapas	
+1201	Brownstone Tapas & Lounge	no_change	high	[Tapas]	[Tapas]	唯一菜系叶=Tapas	
+1202	Tomatito	no_change	high	[海鲜饭]	[海鲜饭]	唯一菜系叶=海鲜饭	
+1203	宝莱纳餐厅(北外滩店)	no_change	high	[猪肘香肠啤酒]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	
+1204	德国瀚克硕啤酒花园餐厅 Hacker-Pschorr	no_change	high	[猪肘香肠啤酒]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	
+1205	宝莱纳餐厅(长宁来福士店)	no_change	high	[猪肘香肠啤酒]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	
+1206	宝莱纳餐厅(西岸梦中心店)	no_change	high	[猪肘香肠啤酒]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	
+1207	宝莱纳餐厅(新天地店)	no_change	high	[猪肘香肠啤酒]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	
+1208	德国啤酒屋(安亭路老洋房)	no_change	high	[猪肘香肠啤酒]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	
+1209	飞象西餐厅	no_change	high	[俄式西餐]	[俄式西餐]	唯一菜系叶=俄式西餐	
+1210	KIRILLITSA 西里尔俄罗斯餐厅	no_change	high	[红菜汤]	[红菜汤]	唯一菜系叶=红菜汤	
+1211	俄士厨房(环球港店)	no_change	high	[大列巴]	[大列巴]	唯一菜系叶=大列巴	
+1212	HELLO KIEV 乌克兰主题餐厅(世博源店)	no_change	high	[红菜汤]	[红菜汤]	唯一菜系叶=红菜汤	
+1213	哈尔滨餐厅(海派俄式)	no_change	high	[红菜汤]	[红菜汤]	唯一菜系叶=红菜汤	
+1214	Wolfgang's Steakhouse 沃夫冈牛排馆	no_change	medium	[美式牛排]	[美式牛排]	唯一菜系叶=美式牛排; 店名业态词佐证	
+1215	Cantina Agave(富民路店)	no_change	high	[墨西哥菜]	[墨西哥菜]	仅有菜系根，无更细叶	
+1216	El Santo Tacos&Tequila(158坊店)	no_change	high	[墨西哥菜]	[墨西哥菜]	仅有菜系根，无更细叶	
+1217	Morton's The Steakhouse 莫尔顿牛排坊	no_change	medium	[美式牛排]	[美式牛排]	唯一菜系叶=美式牛排; 店名业态词佐证	
+1218	LOS PACOS帕库墨西哥餐厅(上生新所店)	no_change	high	[墨西哥菜]	[墨西哥菜]	仅有菜系根，无更细叶	
+1219	Texas Roadhouse 德州公路牛排馆(世纪汇店)	no_change	medium	[美式牛排]	[美式牛排]	唯一菜系叶=美式牛排; 店名业态词佐证	
+1220	Maya	no_change	high	[墨西哥菜]	[墨西哥菜]	仅有菜系根，无更细叶	
+1221	Mayita	no_change	high	[墨西哥菜]	[墨西哥菜]	仅有菜系根，无更细叶	
+1222	Blue Frog 蓝蛙	no_change	low	[汉堡]	[汉堡]		
+1223	El Luchador	no_change	high	[墨西哥菜]	[墨西哥菜]	仅有菜系根，无更细叶	
+1224	Laya Burger 拉亚汉堡(宜山路店)	no_change	medium	[汉堡]	[汉堡]	店名业态词佐证	
+1225	CHIHUAHUA墨西哥餐厅	no_change	high	[墨西哥菜]	[墨西哥菜]	仅有菜系根，无更细叶	
+1226	Tequilaz Mexican Bar	no_change	high	[墨西哥菜]	[墨西哥菜]	仅有菜系根，无更细叶	
+1227	Bourbon Cookhouse 玻本美式餐厅酒吧	no_change	low	[美式牛排]	[美式牛排]		
+1228	Tajine Moroccan 塔金摩洛哥中东餐厅	no_change	low	[摩洛哥塔吉锅正餐]	[摩洛哥塔吉锅正餐]	仅店名地名弱信号(1)	
+1229	Chili's 奇利斯(陆家嘴滨江店)	no_change	low	[汉堡]	[汉堡]		
+1230	Brut Eatery悦璞食堂(肇嘉浜路店)	no_change	high	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	
+1232	Crafted 蔻阁梧桐露台西餐厅	no_change	low	[炸鸡]	[炸鸡]		
+1233	铁手咖啡制造局Metal Hands(永嘉路店)	no_change	medium	[社区精品咖啡]	[社区精品咖啡]	店名业态词佐证	
+1234	尚牛社会 Beef & Liberty	no_change	low	[汉堡]	[汉堡]		
+1236	gluglu面包店(思南路店)	no_change	high	[可颂/起酥专门]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	
+1237	Shake Shack 奶昔小屋	no_change	low	[汉堡]	[汉堡]		
+1238	SMAKA咖啡烘焙	no_change	high	[社区烘焙坊]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	
+1239	Element Fresh 新元素	no_change	low	[汉堡]	[汉堡]		
+1240	LUNEURS月乐诗冰淇淋咖啡(北外滩来福士店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1241	Speak Low彼楼	no_change	high	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	
+1242	The Nest(外滩)	no_change	low	[北欧海鲜]	[北欧海鲜]		
+1243	鲜得来排骨年糕(雁荡店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1244	Greek Taverna Milos 希腊餐厅(老外街店)	no_change	high	[希腊菜]	[希腊菜]	唯一菜系叶=希腊菜	
+1245	柴爿馄饨	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1246	黄启云私房牛肉面工坊	no_change	high	[台湾牛肉面·小吃]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 招牌菜命中2词; 食客证据命中1词	
+1247	The Fat Olive 欧立威	no_change	high	[希腊菜]	[希腊菜]	唯一菜系叶=希腊菜	
+1248	Efes Turkish & Mediterranean 爱妃丝土耳其餐厅	no_change	high	[土耳其菜]	[土耳其菜]	唯一菜系叶=土耳其菜; 仅店名地名弱信号(1)	
+1249	So Mezze by Pasha	no_change	high	[土耳其菜]	[土耳其菜]	唯一菜系叶=土耳其菜	
+1250	ELI FALAFEL 黎巴嫩餐厅(富城路店)	no_change	high	[黎巴嫩地中海菜]	[黎巴嫩地中海菜]	唯一菜系叶=黎巴嫩地中海菜	
+1251	LEYAS 蕾娅中东美食	no_change	high	[黎巴嫩地中海菜]	[黎巴嫩地中海菜]	唯一菜系叶=黎巴嫩地中海菜	
+1252	Otantik	no_change	high	[黎巴嫩地中海菜]	[黎巴嫩地中海菜]	唯一菜系叶=黎巴嫩地中海菜	
+1253	KAPYA土耳其餐厅	no_change	high	[中东/阿拉伯菜]	[中东/阿拉伯菜]	仅有菜系根，无更细叶	
+1254	Shanghai Tavern(上海艾迪逊酒店)	no_change	high	[英式早餐]	[英式早餐]	唯一菜系叶=英式早餐	
+1255	Guinness Social by Butler & White's	no_change	high	[Fish&Chips]	[Fish&Chips]	唯一菜系叶=Fish&Chips	
+1256	The Park Tavern	no_change	high	[Fish&Chips]	[Fish&Chips]	唯一菜系叶=Fish&Chips	
+1257	Camden's Fish and Chips	no_change	high	[Fish&Chips]	[Fish&Chips]	唯一菜系叶=Fish&Chips	
+1258	派社 Pie Society	no_change	high	[英式早餐]	[英式早餐]	唯一菜系叶=英式早餐	
+1260	BOR Eatery	no_change	high	[新北欧料理]	[新北欧料理]	唯一菜系叶=新北欧料理	
+1261	东湖宾馆北欧料理(瑞典主厨)	no_change	high	[新北欧料理]	[新北欧料理]	唯一菜系叶=新北欧料理	
+1263	北欧森林(安福路)	no_change	high	[北欧海鲜]	[北欧海鲜]	唯一菜系叶=北欧海鲜	
+1264	申德勒加油站西餐厅 Schindlers Tankstelle(外滩店)	no_change	high	[猪肘香肠啤酒]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	
+1265	Papas Bierstube 德国乡村餐厅	no_change	high	[猪肘香肠啤酒]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	
+1266	1886 German Restaurant & Bar(Bund 16)	no_change	high	[猪肘香肠啤酒]	[猪肘香肠啤酒]	唯一菜系叶=猪肘香肠啤酒	
+1267	TAVOLA 意大利餐厅(陆家嘴滨江)	no_change	low	[意面]	[意面]		
+1268	Giovanni's 意大利餐厅(虹桥喜来登)	no_change	high	[意面]	[意面]	唯一菜系叶=意面	
+1269	el Efante	no_change	high	[Tapas]	[Tapas]	唯一菜系叶=Tapas	
+1270	Liquid Laundry	no_change	low	[汉堡]	[汉堡]		
+1271	Smokin' Hog 美式烟熏BBQ	no_change	low	[美式牛排]	[美式牛排]		
+1272	Hard Rock Cafe 硬石餐厅(上海)	no_change	low	[汉堡]	[汉堡]		
+1273	OHA EATERY	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1274	RAC	no_change	high	[Bar]	[Bar]	仅有菜系根，无更细叶	
+1275	法国舅舅家小酒馆CHEZ JOJO(永嘉路店)	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1276	Kartel Wine Bar	no_change	medium	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	
+1277	HEALER Bar	no_change	medium	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧; 店名业态词佐证	
+1278	SunFlour阳光粮品(安福路店)	no_change	high	[社区烘焙坊]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	
+1279	老麦咖啡馆TheCottageBar(武康大楼店)	no_change	medium	[社区精品咖啡]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	
+1281	MEL BOURNE Brunch&Bistro猫尔本(静安店)	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1282	马里昂巴Marienbad(武康路店)	no_change	high	[社区精品咖啡]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡	
+1283	LENOTRE雷诺特法式西点(前滩太古里店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1284	Le Gateau戛朵法式蛋糕(世博源店)	no_change	medium	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	
+1285	PAUL LAFAYET法式甜品(港汇广场店)	no_change	medium	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	
+1286	Justgrapes萄醉(安福路店)	no_change	high	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	
+1287	SHIMMER(巨鹿路店)	no_change	high	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	
+1288	JZ CLUB	no_change	high	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	
+1289	Sip bistro&bar	main_changed	high	[法餐]	[法式Bistro]	唯一菜系叶=法式Bistro	法餐->False; 法式Bistro->True
+1290	沪西老弄堂面馆(定西路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1291	马新文拉面店(广西北路店)	no_change	high	[西北菜]	[西北菜]	仅有菜系根，无更细叶	
+1292	大拇指面馆(高平路店)	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1293	La Burg勒博格南非餐吧	no_change	low	[南非正餐/烤肉]	[南非正餐/烤肉]		
+1294	ATELIER NO.3	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1295	Yugo fusion izakaya	no_change	high	[寿司]	[寿司]	唯一菜系叶=寿司	
+1296	Verdant浮叶	no_change	medium	[高端台菜·台菜Bistro]	[高端台菜·台菜Bistro]	唯一菜系叶=高端台菜·台菜Bistro; 食客证据命中1词	
+1297	Kora by Circle	no_change	high	[非洲菜]	[非洲菜]	仅有菜系根，无更细叶	
+1298	Trattoria del Bistecca·1565	no_change	low	[意面]	[意面]		
+1299	司芳糯米(久光店)	no_change	high	[泰国甜品]	[泰国甜品]	唯一菜系叶=泰国甜品	
+1300	Albaluz	no_change	high	[伊比利亚火腿]	[伊比利亚火腿]	唯一菜系叶=伊比利亚火腿	
+1301	Kyochon1991校村炸鸡(漕宝路店)	no_change	medium	[韩式炸鸡]	[韩式炸鸡]	唯一菜系叶=韩式炸鸡; 店名业态词佐证	
+1302	KOSMOS斯拉夫酒馆	no_change	high	[俄式西餐]	[俄式西餐]	唯一菜系叶=俄式西餐	
+1303	是隆路船面(东湖路店)	no_change	high	[船面]	[船面]	唯一菜系叶=船面	
+1304	WING REPUBLIC来翅够	no_change	low	[炸鸡]	[炸鸡]		
+1305	VN Banh Mi&Cafe越法时光(1788广场店)	no_change	high	[越南法包]	[越南法包]	唯一菜系叶=越南法包	
+1306	THE PAWON·8碗(古北SOHO店)	no_change	high	[印尼菜]	[印尼菜]	唯一菜系叶=印尼菜	
+1307	YA BENJIA by元爱本家(金虹桥店)	no_change	high	[韩定食]	[韩定食]	唯一菜系叶=韩定食	
+1308	Nick&Nicky's Family妮琪泰式家庭料理(静安大悦城店)	no_change	high	[泰东北Isan菜]	[泰东北Isan菜]	唯一菜系叶=泰东北Isan菜	
+1309	印度小厨(巨鹿路店)	no_change	high	[南印Dosa]	[南印Dosa]	唯一菜系叶=南印Dosa; 仅店名地名弱信号(1)	
+1310	莎德曼·秘烤美食殿(大拇指广场店)	no_change	high	[乌兹别克菜]	[乌兹别克菜]	唯一菜系叶=乌兹别克菜	
+1311	辻利TSUJIRI(日月光店)	no_change	high	[日式甜品]	[日式甜品]	唯一菜系叶=日式甜品	
+1312	Kaki Mania日式刨冰	no_change	high	[日式甜品]	[日式甜品]	唯一菜系叶=日式甜品	
+1313	九十葉·抹茶专门店(新天地店)	no_change	high	[茶饮]	[茶饮]	仅有菜系根，无更细叶	
+1314	鲨鱼冰屋Kooriya Shark(常熟路店)	no_change	high	[日式甜品]	[日式甜品]	唯一菜系叶=日式甜品	
+1315	Sobre日式刨冰	no_change	high	[日式甜品]	[日式甜品]	唯一菜系叶=日式甜品	
+1316	空蝉怀石料理(益丰·外滩源店)	no_change	medium	[怀石]	[怀石]	唯一菜系叶=怀石; 店名业态词佐证	
+1317	小钵 Kobachi on Fifty Six(金茂56楼)	no_change	low	[怀石]	[怀石]		
+1318	麺屋庄野研究所	no_change	preserved	[拉面]	[拉面]	地域子流派(拉面·柚子盐鸡白汤)优先于产品/形式叶(['拉面'])	
+1319	七豚拉面(瑞金一路店)	no_change	high	[拉面]	[拉面]	唯一菜系叶=拉面	
+1320	麺処益二郎	no_change	preserved	[拉面]	[拉面]	地域子流派(拉面·二郎系)优先于产品/形式叶(['拉面'])	
+1321	鲤久面屋·横滨家系拉面(金桥啦啦宝都店)	no_change	preserved	[拉面]	[拉面]	地域子流派(拉面·横滨家系)优先于产品/形式叶(['拉面'])	
+1322	鸟山鸣·薪火烧鸟	no_change	medium	[烧鸟]	[烧鸟]	店名业态词佐证	
+1323	银蔵Ginzō·Yakitori烧鸟(新华路店)	no_change	medium	[烧鸟]	[烧鸟]	唯一菜系叶=烧鸟; 店名业态词佐证	
+1324	玄白·炭烤活鳗(高岛屋首店)	no_change	high	[鳗鱼饭]	[鳗鱼饭]	唯一菜系叶=鳗鱼饭	
+1325	鳗葉(世博天地店)	no_change	high	[鳗鱼饭]	[鳗鱼饭]	唯一菜系叶=鳗鱼饭	
+1326	KAI FINE开饭·汉堡排(静安寺店)	no_change	high	[日式洋食]	[日式洋食]	唯一菜系叶=日式洋食	
+1327	Rumor传闻·洋食(新乐路店)	no_change	high	[日式洋食]	[日式洋食]	唯一菜系叶=日式洋食	
+1328	韦二姐传统螺蛳粉	no_change	high	[柳州螺蛳粉]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	
+1329	阳奶佬螺蛳粉(丽园路店)	no_change	high	[柳州螺蛳粉]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	
+1330	家味螺蛳粉&烤鱼(安远路店)	no_change	high	[柳州螺蛳粉]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	
+1331	山间堂民间瓦缸煨汤馆(淮海店)	no_change	high	[瓦罐汤]	[瓦罐汤]	唯一菜系叶=瓦罐汤	
+1332	赣江秋瓦罐煨汤	no_change	high	[瓦罐汤]	[瓦罐汤]	唯一菜系叶=瓦罐汤	
+1333	老门框爆肚涮肉(古美路店)	no_change	high	[涮羊肉]	[涮羊肉]	唯一菜系叶=涮羊肉	
+1334	严记老北京涮锅(乌鲁木齐路店)	no_change	high	[涮羊肉]	[涮羊肉]	唯一菜系叶=涮羊肉; 仅店名地名弱信号(1)	
+1337	润园椰礼海南椰子鸡火锅(曹杨路店)	no_change	high	[椰子鸡]	[椰子鸡]	唯一菜系叶=椰子鸡; 仅店名地名弱信号(1)	
+1338	辞琼·老海南糟粕醋火锅(月亮湾店)	no_change	high	[糟粕醋]	[糟粕醋]	唯一菜系叶=糟粕醋; 仅店名地名弱信号(1)	
+1339	柒月粉(江苏路店)	no_change	high	[江西炒粉/拌粉]	[江西炒粉/拌粉]	唯一菜系叶=江西炒粉/拌粉; 仅店名地名弱信号(1)	
+1340	谷堆复古烩面	no_change	high	[豫菜·烩面]	[豫菜·烩面]	唯一菜系叶=豫菜·烩面	
+1341	一碗兰纯汤牛肉面1号店	no_change	high	[兰州牛肉面]	[兰州牛肉面]	唯一菜系叶=兰州牛肉面; 招牌菜命中1词; 食客证据命中2词	
+1342	伊祥·敦煌楼(中山北路店)	no_change	low	[兰州牛肉面]	[兰州牛肉面]		
+1344	洪峣爷北京炙子烤肉	no_change	high	[京味炙子烤肉·京味小菜]	[京味炙子烤肉·京味小菜]	唯一菜系叶=京味炙子烤肉·京味小菜; 招牌菜命中1词; 食客证据命中2词	
+1346	莲餐厅·湖北菜(愚园路店)	no_change	high	[湖北菜高端·宴请]	[湖北菜高端·宴请]	唯一菜系叶=湖北菜高端·宴请; 招牌菜命中2词	
 1347	nabi	no_change	high	[韩餐]	[韩餐]	仅有菜系根，无更细叶	
-1349	Yaya's Pasta Bar	main_changed	medium	[意餐]	[意面]	唯一菜系叶=意面; 店名业态词佐证	意餐->False; 意面->True
-1351	Jellooo	main_changed	high	[北欧菜]	[新北欧料理]	唯一菜系叶=新北欧料理	北欧菜->False; 新北欧料理->True
-1353	AL'S DINER	main_newly_set	high	[]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼	松饼/薄饼->True
-1354	MONA	main_newly_set	high	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	那不勒斯披萨->True
-1355	Dugout Brunch & Bistro	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1356	WARO ROWA	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1357	Madison	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1358	Table a Deli	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1360	SOiF	main_newly_set	high	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	葡萄酒/自然酒吧->True
-1361	Mavis966	main_newly_set	high	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	葡萄酒/自然酒吧->True
-1362	Nora's Wine Shop & Bar	main_newly_set	medium	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	葡萄酒/自然酒吧->True
-1363	DTE down to earth	main_newly_set	high	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	葡萄酒/自然酒吧->True
-1365	龍满·云贵川bistro小酒馆	main_newly_set	low	[]	[云南菜]		云南菜->True
-1366	米仓POP	main_newly_set	high	[]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼	松饼/薄饼->True
-1367	Forage Eatery & Wine Bar	main_newly_set	high	[]	[Bar]	仅有菜系根，无更细叶	Bar->True
-1368	La Tavernetta Bar à Vin	main_newly_set	medium	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	葡萄酒/自然酒吧->True
-1369	Pecher Wine Bar	main_newly_set	medium	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	葡萄酒/自然酒吧->True
+1349	Yaya's Pasta Bar	no_change	medium	[意面]	[意面]	唯一菜系叶=意面; 店名业态词佐证	
+1351	Jellooo	no_change	high	[新北欧料理]	[新北欧料理]	唯一菜系叶=新北欧料理	
+1353	AL'S DINER	no_change	high	[松饼/薄饼]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼	
+1354	MONA	no_change	high	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	
+1355	Dugout Brunch & Bistro	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1356	WARO ROWA	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1357	Madison	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1358	Table a Deli	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1360	SOiF	no_change	high	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	
+1361	Mavis966	no_change	high	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	
+1362	Nora's Wine Shop & Bar	no_change	medium	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	
+1363	DTE down to earth	no_change	high	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	
+1365	龍满·云贵川bistro小酒馆	no_change	preserved	[云南菜]	[云南菜]		
+1366	米仓POP	no_change	high	[松饼/薄饼]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼	
+1367	Forage Eatery & Wine Bar	no_change	high	[Bar]	[Bar]	仅有菜系根，无更细叶	
+1368	La Tavernetta Bar à Vin	no_change	medium	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	
+1369	Pecher Wine Bar	no_change	medium	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	
 1370	新荣记(BFC外滩金融中心店)	no_change	high	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中1词	
-1371	1/10 Coffee Roaster(长乐路店)	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1373	Radar雷达咖啡(思南路店)	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
+1371	1/10 Coffee Roaster(长乐路店)	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1373	Radar雷达咖啡(思南路店)	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
 1376	新荣记(前滩太古里店)	no_change	high	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中2词	
 1377	新荣记(虹桥店)	no_change	high	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中1词	
-1378	制冰铺MakingGelato·时桉(陕西南路店)	main_newly_set	high	[]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato; 仅店名地名弱信号(1)	冰淇淋Gelato->True
-1379	La Creperie(桃江路店)	main_newly_set	high	[]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼	松饼/薄饼->True
+1378	制冰铺MakingGelato·时桉(陕西南路店)	secondary_only	high	[冰淇淋Gelato]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato; 仅店名地名弱信号(1)	甜品/点心->False
+1379	La Creperie(桃江路店)	secondary_only	high	[松饼/薄饼]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼	甜品/点心->False
 1380	新荣记(滨江店)	no_change	high	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中1词	
-1381	泰安门 Taian Table	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1382	宝丽轩	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1383	福和慧	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1384	三号黄浦会 Canton Table	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1385	成隆行蟹王府(九江路店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1386	Fabula	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1387	福1039	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1388	福1088	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1389	il Ristorante - Niko Romito	main_newly_set	high	[]	[意餐]	仅有菜系根，无更细叶	意餐->True
-1390	金轩(浦东丽思卡尔顿店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1391	凌珑 Ling Long	main_newly_set	high	[]	[创新菜]	仅有菜系根，无更细叶	创新菜->True
-1392	Obscura by 唐香	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1393	O.P.S. CAFE(太原路店)	main_newly_set	high	[]	[创意特调咖啡]	唯一菜系叶=创意特调咖啡	创意特调咖啡->True
-1394	Café del Volcán火山咖啡(永康路店)	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1395	堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1396	Captain George风味博物馆(太原路店)	main_newly_set	low	[]	[创意特调咖啡]		创意特调咖啡->True
-1397	Blacksheep Espresso(茂名南路店)	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1398	赤瑕咖啡Akadama Coffee(武定西路店)	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1399	翠贝果(乌鲁木齐南路店)	main_newly_set	high	[]	[贝果专门]	唯一菜系叶=贝果专门	贝果专门->True
-1400	Big Bagel(永康路店)	main_newly_set	high	[]	[贝果专门]	唯一菜系叶=贝果专门	贝果专门->True
-1401	Sumerian(陕西北路店)	main_newly_set	high	[]	[咖啡]	仅有菜系根，无更细叶	咖啡->True
-1402	FASCINO BAKERY(新天地店)	main_newly_set	high	[]	[贝果专门]	唯一菜系叶=贝果专门	贝果专门->True
-1403	Madre(番禺路店)	main_newly_set	high	[]	[意餐]	仅有菜系根，无更细叶	意餐->True
-1404	BAsdBAN巴适得板(愚园路店)	main_newly_set	high	[]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	可颂/起酥专门->True
-1406	麻布屋Azabuya(兴业太古汇店)	main_newly_set	high	[]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	冰淇淋Gelato->True
-1407	BONUS Gelato(乌鲁木齐中路店)	main_newly_set	high	[]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	冰淇淋Gelato->True
-1408	BLAZ	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1409	BASTARD小酒馆	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1410	茹·pure vegan(博华广场店)	main_newly_set	high	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	那不勒斯披萨->True
-1411	庆春朴门(新天地东台里店)	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1412	KIINA	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1429	蜀谭记·盐帮川菜(四川北路店)	main_newly_set	high	[]	[自贡盐帮菜]	唯一菜系叶=自贡盐帮菜; 招牌菜命中2词; 食客证据命中2词	自贡盐帮菜->True
-1430	冯三孃川菜馆(嘉善路店)	main_newly_set	high	[]	[江湖菜]	招牌菜命中1词; 食客证据命中1词	江湖菜->True
-1431	归蜀第成都串串料理(梅花路店)	main_newly_set	medium	[]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['串串香/冷锅串']); 食客证据命中1词	渝菜->True
-1432	华华川菜馆(吴江路)	main_newly_set	medium	[]	[成都家常菜/苍蝇馆子]	唯一菜系叶=成都家常菜/苍蝇馆子; 食客证据命中1词	成都家常菜/苍蝇馆子->True
-1434	鸟鸟炒菜店(南昌路)	main_newly_set	low	[]	[江湖菜]		江湖菜->True
-1436	鸿姐老火锅·传统炒料(上海旗舰店)	main_newly_set	high	[]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['重庆火锅']); 招牌菜命中1词; 食客证据命中3词	渝菜->True
-1437	金姐老火锅(陆家嘴店)	main_newly_set	high	[]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['重庆火锅']); 招牌菜命中2词; 食客证据命中2词	渝菜->True
-1438	宴山城火锅(外滩江景店)	main_newly_set	high	[]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['重庆火锅']); 招牌菜命中1词; 食客证据命中3词	渝菜->True
-1439	红料理·串串有瘾(万航渡路店)	main_newly_set	high	[]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['串串香/冷锅串'])	渝菜->True
-1440	孔岳冒菜(五角场店)	main_newly_set	high	[]	[成都家常菜/苍蝇馆子]	地域子流派(成都家常菜/苍蝇馆子)优先于产品/形式叶(['冒菜/麻辣烫'])	成都家常菜/苍蝇馆子->True
-1441	成都你六姐·牛肉冒菜(七巧国店)	main_newly_set	high	[]	[成都家常菜/苍蝇馆子]	地域子流派(成都家常菜/苍蝇馆子)优先于产品/形式叶(['冒菜/麻辣烫'])	成都家常菜/苍蝇馆子->True
-1442	龙玥川菜·豆花饭(丽园路总店)	main_newly_set	high	[]	[成都家常菜/苍蝇馆子]	唯一菜系叶=成都家常菜/苍蝇馆子	成都家常菜/苍蝇馆子->True
-1443	烤匠麻辣烤鱼(上海首店·五角场合生汇店)	main_newly_set	high	[]	[江湖菜]	地域子流派(江湖菜)优先于产品/形式叶(['烤鱼/酸菜鱼专门'])	江湖菜->True
-1444	溪雨观酸菜鱼(七宝宝龙城店)	main_newly_set	high	[]	[江湖菜]	地域子流派(江湖菜)优先于产品/形式叶(['烤鱼/酸菜鱼专门'])	江湖菜->True
-1445	百岁我家酸菜鱼(古美店)	main_newly_set	high	[]	[江湖菜]	地域子流派(江湖菜)优先于产品/形式叶(['烤鱼/酸菜鱼专门'])	江湖菜->True
-1446	釜溪盐韵·私宴(上海首店)	main_newly_set	high	[]	[自贡盐帮菜]	唯一菜系叶=自贡盐帮菜; 招牌菜命中1词	自贡盐帮菜->True
-1448	孔雀厅 The Peacock Room	main_newly_set	medium	[]	[新派川菜]	唯一菜系叶=新派川菜; 食客证据命中1词	新派川菜->True
-1449	洁而精川菜馆(雁荡路店)	main_newly_set	medium	[]	[海派改良川菜]	唯一菜系叶=海派改良川菜; 食客证据命中1词	海派改良川菜->True
-1450	千平平重庆面庄(延平路总店)	main_newly_set	medium	[]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['川味面馆']); 食客证据命中2词	渝菜->True
-1451	桂釜山城重庆小面(南京西路店)	main_newly_set	high	[]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	渝菜->True
-1452	炊小川内江牛肉面	main_newly_set	high	[]	[川南·内江菜]	地域子流派(川南·内江菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中1词; 食客证据命中1词	川南·内江菜->True
-1453	川味面荘·泸州牛肉面(南翔老街店)	main_newly_set	high	[]	[川南·泸州菜]	地域子流派(川南·泸州菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中1词; 食客证据命中1词	川南·泸州菜->True
-1454	寛的窄的面馆(打浦路店)	main_newly_set	high	[]	[川南·宜宾菜]	地域子流派(川南·宜宾菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	川南·宜宾菜->True
-1455	九品川味·四川绵阳米粉	main_newly_set	high	[]	[川北·绵阳菜]	地域子流派(川北·绵阳菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	川北·绵阳菜->True
-1457	东莱·海上	main_newly_set	high	[]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中1词; 食客证据命中3词	胶东菜->True
-1458	鲁至申(静安大融城店)	main_newly_set	medium	[]	[济南菜]	招牌菜命中1词; 食客证据命中1词	济南菜->True
-1459	船歌鱼水饺(新天地店)	main_newly_set	high	[]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词; 食客证据命中4词	胶东菜->True
-1460	沈春芳手工饺子(花木时光里店)	main_newly_set	medium	[]	[济南菜]	唯一菜系叶=济南菜; 食客证据命中1词	济南菜->True
-1461	上海国际饭店·丰泽楼	main_newly_set	high	[]	[济南菜]	唯一菜系叶=济南菜; 招牌菜命中1词; 食客证据命中1词	济南菜->True
-1462	馥添饭店·浓汤广府菜(世纪汇店)	main_newly_set	high	[]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中1词; 食客证据命中1词	广府菜(广州)->True
-1463	粤来记·烧味·生蚝鸡煲(打浦路店)	main_newly_set	high	[]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中1词; 食客证据命中1词	广府菜(广州)->True
-1464	三伯公·客家菜(徐汇日月光店)	main_newly_set	high	[]	[客家菜]	唯一菜系叶=客家菜; 招牌菜命中4词; 食客证据命中3词	客家菜->True
-1465	元朗冰室(马当路店)	main_newly_set	high	[]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中1词; 食客证据命中4词	港式茶餐厅/冰室->True
-1466	细记港九宵夜大牌档(东湖路总店)	main_newly_set	high	[]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室	港式茶餐厅/冰室->True
-1467	鲜斩烧味(宁波路店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
+1381	泰安门 Taian Table	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1382	宝丽轩	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1383	福和慧	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1384	三号黄浦会 Canton Table	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1385	成隆行蟹王府(九江路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1386	Fabula	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1387	福1039	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1388	福1088	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1389	il Ristorante - Niko Romito	no_change	high	[意餐]	[意餐]	仅有菜系根，无更细叶	
+1390	金轩(浦东丽思卡尔顿店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1391	凌珑 Ling Long	no_change	high	[创新菜]	[创新菜]	仅有菜系根，无更细叶	
+1392	Obscura by 唐香	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1393	O.P.S. CAFE(太原路店)	no_change	high	[创意特调咖啡]	[创意特调咖啡]	唯一菜系叶=创意特调咖啡	
+1394	Café del Volcán火山咖啡(永康路店)	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1395	堀口咖啡HORIGUCHI COFFEE(洛克·外滩源店)	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1396	Captain George风味博物馆(太原路店)	no_change	low	[创意特调咖啡]	[创意特调咖啡]		
+1397	Blacksheep Espresso(茂名南路店)	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1398	赤瑕咖啡Akadama Coffee(武定西路店)	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1399	翠贝果(乌鲁木齐南路店)	secondary_only	high	[贝果专门]	[贝果专门]	唯一菜系叶=贝果专门	面包/烘焙->False
+1400	Big Bagel(永康路店)	secondary_only	high	[贝果专门]	[贝果专门]	唯一菜系叶=贝果专门	面包/烘焙->False
+1401	Sumerian(陕西北路店)	secondary_only	high	[咖啡]	[咖啡]	仅有菜系根，无更细叶	面包/烘焙->False
+1402	FASCINO BAKERY(新天地店)	secondary_only	high	[贝果专门]	[贝果专门]	唯一菜系叶=贝果专门	面包/烘焙->False
+1403	Madre(番禺路店)	secondary_only	high	[意餐]	[意餐]	仅有菜系根，无更细叶	面包/烘焙->False
+1404	BAsdBAN巴适得板(愚园路店)	secondary_only	high	[可颂/起酥专门]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	面包/烘焙->False
+1406	麻布屋Azabuya(兴业太古汇店)	secondary_only	high	[冰淇淋Gelato]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	甜品/点心->False
+1407	BONUS Gelato(乌鲁木齐中路店)	secondary_only	high	[冰淇淋Gelato]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	甜品/点心->False
+1408	BLAZ	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1409	BASTARD小酒馆	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1410	茹·pure vegan(博华广场店)	no_change	high	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	
+1411	庆春朴门(新天地东台里店)	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1412	KIINA	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1429	蜀谭记·盐帮川菜(四川北路店)	no_change	high	[自贡盐帮菜]	[自贡盐帮菜]	唯一菜系叶=自贡盐帮菜; 招牌菜命中2词; 食客证据命中2词	
+1430	冯三孃川菜馆(嘉善路店)	no_change	high	[江湖菜]	[江湖菜]	招牌菜命中1词; 食客证据命中1词	
+1431	归蜀第成都串串料理(梅花路店)	no_change	medium	[渝菜]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['串串香/冷锅串']); 食客证据命中1词	
+1432	华华川菜馆(吴江路)	no_change	medium	[成都家常菜/苍蝇馆子]	[成都家常菜/苍蝇馆子]	唯一菜系叶=成都家常菜/苍蝇馆子; 食客证据命中1词	
+1434	鸟鸟炒菜店(南昌路)	no_change	low	[江湖菜]	[江湖菜]		
+1436	鸿姐老火锅·传统炒料(上海旗舰店)	no_change	high	[渝菜]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['重庆火锅']); 招牌菜命中1词; 食客证据命中3词	
+1437	金姐老火锅(陆家嘴店)	no_change	high	[渝菜]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['重庆火锅']); 招牌菜命中2词; 食客证据命中2词	
+1438	宴山城火锅(外滩江景店)	no_change	high	[渝菜]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['重庆火锅']); 招牌菜命中1词; 食客证据命中3词	
+1439	红料理·串串有瘾(万航渡路店)	no_change	high	[渝菜]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['串串香/冷锅串'])	
+1440	孔岳冒菜(五角场店)	no_change	high	[成都家常菜/苍蝇馆子]	[成都家常菜/苍蝇馆子]	地域子流派(成都家常菜/苍蝇馆子)优先于产品/形式叶(['冒菜/麻辣烫'])	
+1441	成都你六姐·牛肉冒菜(七巧国店)	no_change	high	[成都家常菜/苍蝇馆子]	[成都家常菜/苍蝇馆子]	地域子流派(成都家常菜/苍蝇馆子)优先于产品/形式叶(['冒菜/麻辣烫'])	
+1442	龙玥川菜·豆花饭(丽园路总店)	no_change	high	[成都家常菜/苍蝇馆子]	[成都家常菜/苍蝇馆子]	唯一菜系叶=成都家常菜/苍蝇馆子	
+1443	烤匠麻辣烤鱼(上海首店·五角场合生汇店)	no_change	high	[江湖菜]	[江湖菜]	地域子流派(江湖菜)优先于产品/形式叶(['烤鱼/酸菜鱼专门'])	
+1444	溪雨观酸菜鱼(七宝宝龙城店)	no_change	high	[江湖菜]	[江湖菜]	地域子流派(江湖菜)优先于产品/形式叶(['烤鱼/酸菜鱼专门'])	
+1445	百岁我家酸菜鱼(古美店)	no_change	high	[江湖菜]	[江湖菜]	地域子流派(江湖菜)优先于产品/形式叶(['烤鱼/酸菜鱼专门'])	
+1446	釜溪盐韵·私宴(上海首店)	no_change	high	[自贡盐帮菜]	[自贡盐帮菜]	唯一菜系叶=自贡盐帮菜; 招牌菜命中1词	
+1448	孔雀厅 The Peacock Room	no_change	medium	[新派川菜]	[新派川菜]	唯一菜系叶=新派川菜; 食客证据命中1词	
+1449	洁而精川菜馆(雁荡路店)	no_change	medium	[海派改良川菜]	[海派改良川菜]	唯一菜系叶=海派改良川菜; 食客证据命中1词	
+1450	千平平重庆面庄(延平路总店)	no_change	medium	[渝菜]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['川味面馆']); 食客证据命中2词	
+1451	桂釜山城重庆小面(南京西路店)	no_change	high	[渝菜]	[渝菜]	地域子流派(渝菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	
+1452	炊小川内江牛肉面	no_change	high	[川南·内江菜]	[川南·内江菜]	地域子流派(川南·内江菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中1词; 食客证据命中1词	
+1453	川味面荘·泸州牛肉面(南翔老街店)	no_change	high	[川南·泸州菜]	[川南·泸州菜]	地域子流派(川南·泸州菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中1词; 食客证据命中1词	
+1454	寛的窄的面馆(打浦路店)	no_change	high	[川南·宜宾菜]	[川南·宜宾菜]	地域子流派(川南·宜宾菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	
+1455	九品川味·四川绵阳米粉	no_change	high	[川北·绵阳菜]	[川北·绵阳菜]	地域子流派(川北·绵阳菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	
+1457	东莱·海上	no_change	high	[胶东菜]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中1词; 食客证据命中3词	
+1458	鲁至申(静安大融城店)	no_change	preserved	[济南菜]	[济南菜]	招牌菜命中1词; 食客证据命中1词	
+1459	船歌鱼水饺(新天地店)	no_change	high	[胶东菜]	[胶东菜]	唯一菜系叶=胶东菜; 招牌菜命中2词; 食客证据命中4词	
+1460	沈春芳手工饺子(花木时光里店)	no_change	medium	[济南菜]	[济南菜]	唯一菜系叶=济南菜; 食客证据命中1词	
+1461	上海国际饭店·丰泽楼	no_change	high	[济南菜]	[济南菜]	唯一菜系叶=济南菜; 招牌菜命中1词; 食客证据命中1词	
+1462	馥添饭店·浓汤广府菜(世纪汇店)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中1词; 食客证据命中1词	
+1463	粤来记·烧味·生蚝鸡煲(打浦路店)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中1词; 食客证据命中1词	
+1464	三伯公·客家菜(徐汇日月光店)	no_change	high	[客家菜]	[客家菜]	唯一菜系叶=客家菜; 招牌菜命中4词; 食客证据命中3词	
+1465	元朗冰室(马当路店)	no_change	high	[港式茶餐厅/冰室]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中1词; 食客证据命中4词	
+1466	细记港九宵夜大牌档(东湖路总店)	no_change	high	[港式茶餐厅/冰室]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室	
+1467	鲜斩烧味(宁波路店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
 1468	家全七福酒家(静安嘉里中心店)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州)	
-1469	唐宫·粤菜海鲜(华润时代店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1470	嘉宴·精致客家菜(虹口店)	main_newly_set	high	[]	[客家菜]	唯一菜系叶=客家菜; 招牌菜命中4词; 食客证据命中2词	客家菜->True
-1472	菁禧荟SELECTION BY DU(北外滩来福士店)	main_newly_set	medium	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	潮汕菜->True
-1473	头家夜粥(广东路店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中3词; 食客证据命中1词	潮汕菜->True
-1474	家府潮汕菜(中山公园龙之梦店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中1词; 食客证据命中3词	潮汕菜->True
-1475	潮禧·潮汕菜(万航渡路店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中1词; 食客证据命中2词	潮汕菜->True
-1476	潮界(丁香国际店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中5词; 食客证据命中3词	潮汕菜->True
-1477	姚益记潮汕菜(安亭店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中2词; 食客证据命中3词	潮汕菜->True
-1478	今日牛事(瑞金店)	main_newly_set	medium	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	潮汕菜->True
-1479	下山虎潮汕鲜牛肉火锅(巨鹿路店)	main_newly_set	high	[]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 招牌菜命中1词; 食客证据命中2词	潮汕菜->True
-1481	潮牛嗨潮汕鲜牛肉火锅(龙茗路店)	main_newly_set	medium	[]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 食客证据命中1词	潮汕菜->True
-1482	潮汕草根鲜牛肉海鲜火锅排档(七宝店)	main_newly_set	high	[]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 招牌菜命中2词; 食客证据命中2词	潮汕菜->True
-1483	任兴记(定西路店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中1词; 食客证据命中2词	潮汕菜->True
-1484	留住阁潮汕砂锅粥馆(长宁店)	main_newly_set	high	[]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['砂锅粥/粿条']); 招牌菜命中2词; 食客证据命中1词	潮汕菜->True
-1485	潮人姐妹轩(海宁路店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中1词; 食客证据命中3词	潮汕菜->True
-1486	汕鹤潮式甜汤(人广来福士店)	main_newly_set	high	[]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	糖水/甜汤->True
-1488	游宴一品淮扬(万达瑞华店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中3词; 食客证据命中3词	淮扬菜->True
-1489	福兴荟(King88广场店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中2词; 食客证据命中1词	淮扬菜->True
-1490	狮王府淮扬菜(万象城店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中1词; 食客证据命中2词	淮扬菜->True
-1491	沧浪亭(重庆路店)	main_newly_set	medium	[]	[苏帮菜]	唯一菜系叶=苏帮菜; 食客证据命中2词	苏帮菜->True
-1492	苏三姑	main_newly_set	high	[]	[苏帮菜]	唯一菜系叶=苏帮菜; 招牌菜命中2词; 食客证据命中4词	苏帮菜->True
-1493	南京大牌档(世茂商都店)	main_newly_set	high	[]	[金陵菜]	唯一菜系叶=金陵菜; 招牌菜命中2词; 食客证据命中3词	金陵菜->True
-1494	胜春楼·淮扬菜·早茶(宝华商业广场店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中1词; 食客证据命中4词	淮扬菜->True
-1495	徐州味道(镇坪路店)	main_newly_set	high	[]	[徐海菜]	唯一菜系叶=徐海菜; 招牌菜命中2词; 食客证据命中3词	徐海菜->True
-1496	松鹤楼面馆(豫园店)	main_newly_set	high	[]	[苏帮菜]	地域子流派(苏帮菜)优先于产品/形式叶(['苏式汤面']); 招牌菜命中1词; 食客证据命中1词	苏帮菜->True
-1497	绿杨邨酒家(天钥桥路店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中3词; 食客证据命中4词	淮扬菜->True
-1498	东淓·苏宴(南京东路店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中3词; 食客证据命中3词	淮扬菜->True
-1499	上扬府·淮扬小品	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中4词; 食客证据命中1词	淮扬菜->True
-1500	盛·淮扬(长风大悦城店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中3词; 食客证据命中4词	淮扬菜->True
-1501	黄浦轩臻品·淮扬(上海大厦店)	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中4词; 食客证据命中6词	淮扬菜->True
-1502	荣小馆(安达仕店)	main_newly_set	high	[]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中3词	台州菜->True
-1503	荣家黄鱼面(南京西路店)	main_newly_set	high	[]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中1词	台州菜->True
-1504	甬府尊鲜(前滩太古里店)	main_newly_set	high	[]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中2词	宁波菜->True
-1505	桂满陇·杭州小馆(中山公园店)	main_newly_set	high	[]	[杭帮菜]	唯一菜系叶=杭帮菜; 招牌菜命中1词; 食客证据命中1词	杭帮菜->True
-1506	柒园·竹境(西岸国际会展中心店)	main_newly_set	medium	[]	[杭帮菜]	唯一菜系叶=杭帮菜; 食客证据命中1词	杭帮菜->True
-1507	柒园·竹荟(蟠龙天地店)	main_newly_set	medium	[]	[杭帮菜]	唯一菜系叶=杭帮菜; 食客证据命中1词	杭帮菜->True
-1508	越稽·绍兴小馆(万象城店)	main_newly_set	high	[]	[绍兴菜]	唯一菜系叶=绍兴菜; 招牌菜命中2词; 食客证据命中2词	绍兴菜->True
-1509	福見仁FúDining·福州火灶(K11店)	main_newly_set	high	[]	[福州菜]	唯一菜系叶=福州菜; 招牌菜命中1词; 食客证据命中1词	福州菜->True
-1510	甲东南闽菜馆(北蔡休闲广场店)	main_newly_set	high	[]	[福州菜]	唯一菜系叶=福州菜; 招牌菜命中1词; 食客证据命中2词	福州菜->True
-1511	屿热闽南小馆(水城南路店)	main_newly_set	high	[]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中2词; 食客证据命中3词	闽南菜->True
-1512	也红花泉州风味(前湾印象城店)	main_newly_set	high	[]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中3词; 食客证据命中3词	闽南菜->True
-1513	老吴的食光·闽南小灶(虹桥南丰城店)	main_newly_set	high	[]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中4词; 食客证据命中4词	闽南菜->True
-1514	屿园沙茶面(长寿路店)	main_newly_set	high	[]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中2词; 食客证据命中2词	闽南菜->True
-1515	莆田餐厅PUTIEN(环贸iapm店)	main_newly_set	high	[]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中2词; 食客证据命中2词	莆仙菜->True
-1516	莆味观·莆田菜(合川路店)	main_newly_set	high	[]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中2词; 食客证据命中2词	莆仙菜->True
-1517	乾七道文化会馆(曲阳路复城国际店)	main_newly_set	high	[]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中2词; 食客证据命中2词	莆仙菜->True
-1518	鲜顺欧闽北私房菜(沪太支路店)	main_newly_set	high	[]	[闽北菜]	唯一菜系叶=闽北菜; 招牌菜命中2词; 食客证据命中3词	闽北菜->True
-1519	鱼湘汇·湖南土菜(中山北路店)	main_newly_set	high	[]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中1词; 食客证据命中1词	长沙菜->True
-1520	盖饭邦·长沙菜馆(新天地店)	main_newly_set	high	[]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中2词; 食客证据命中2词	长沙菜->True
-1521	望湘园湖南菜(静安大悦城店)	main_newly_set	high	[]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中1词; 食客证据命中1词	长沙菜->True
-1522	钵湘湘·常德钵子菜(梅川路店)	main_newly_set	high	[]	[洞庭湖区菜]	唯一菜系叶=洞庭湖区菜; 招牌菜命中1词; 食客证据命中2词	洞庭湖区菜->True
-1524	璞徽(瑞虹天地太阳宫店)	main_newly_set	high	[]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中2词; 食客证据命中2词	徽州菜->True
-1525	小菜园新徽菜(虹桥天街店)	main_newly_set	high	[]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中3词; 食客证据命中3词	徽州菜->True
-1526	大富贵酒楼(中华路总店)	main_newly_set	high	[]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中1词; 食客证据命中2词	徽州菜->True
-1527	徽悦食府(佘山新天地店)	main_newly_set	high	[]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中4词; 食客证据命中3词	徽州菜->True
-1529	龙筵轩(古北店)	main_newly_set	high	[]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中1词; 食客证据命中2词	广府菜(广州)->True
-1530	顺峰顺水顺德菜(龙华店)	main_newly_set	high	[]	[顺德菜]	唯一菜系叶=顺德菜; 招牌菜命中3词; 食客证据命中3词	顺德菜->True
-1531	新旺茶餐厅(打浦店)	main_newly_set	high	[]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中2词; 食客证据命中4词	港式茶餐厅/冰室->True
-1532	东发道茶冰厅(新业坊店)	main_newly_set	high	[]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中1词; 食客证据命中2词	港式茶餐厅/冰室->True
-1533	上金雀华人餐厅(乌中店)	main_newly_set	high	[]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中1词; 食客证据命中3词	港式茶餐厅/冰室->True
-1534	点都德(南翔印象城店)	main_newly_set	high	[]	[广式早茶点心]	唯一菜系叶=广式早茶点心	广式早茶点心->True
-1535	宝粤楼	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1536	香港池仔记肠粉王(襄阳南路店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1537	银记肠粉店(华山店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1538	啫苑广州啫啫煲(虹口龙之梦店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1539	啫火·啫啫煲(虹桥天地店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1540	好好彩啫啫煲(黄浦来福士店)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1541	瑞狮楼潮汕会馆(新天地店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中2词; 食客证据命中2词	潮汕菜->True
-1542	左庭右院鲜牛肉火锅(五角场万达店)	main_newly_set	medium	[]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 食客证据命中1词	潮汕菜->True
-1543	宽马记大排档·鲜牛肉海鲜火锅(普陀店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜	潮汕菜->True
-1544	神更仔·潮汕魂大排档(汉口路店)	main_newly_set	high	[]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕打冷/生腌排档']); 招牌菜命中3词; 食客证据命中4词	潮汕菜->True
-1545	潮府夜档(嘉定马陆店)	main_newly_set	high	[]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕打冷/生腌排档']); 招牌菜命中4词; 食客证据命中6词	潮汕菜->True
-1546	潮顺潮汕牛肉粿条(上海总店)	main_newly_set	high	[]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅', '砂锅粥/粿条']); 招牌菜命中2词; 食客证据命中2词	潮汕菜->True
-1547	夜阑静·潮汕海鲜粥城(秀沿路总店)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中3词; 食客证据命中1词	潮汕菜->True
-1548	汕心·潮汕甜汤(人广来福士店)	main_newly_set	medium	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	潮汕菜->True
-1549	甬江里宁波小鲜	main_newly_set	high	[]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中2词	宁波菜->True
-1550	源清制面(新天地店)	main_newly_set	high	[]	[温州菜]	唯一菜系叶=温州菜; 招牌菜命中1词	温州菜->True
-1551	瓯宴·陆悦新温州菜(张江店)	main_newly_set	high	[]	[温州菜]	唯一菜系叶=温州菜; 招牌菜命中2词; 食客证据命中2词	温州菜->True
-1552	衢叔家·衢州山里菜(延安西路店)	main_newly_set	high	[]	[金华/衢州菜]	唯一菜系叶=金华/衢州菜	金华/衢州菜->True
-1553	土灶头·金华菜(桃浦店)	main_newly_set	high	[]	[金华/衢州菜]	唯一菜系叶=金华/衢州菜; 仅店名地名弱信号(1)	金华/衢州菜->True
-1555	吃饭皇帝大(上海湘西土家菜)	main_newly_set	high	[]	[湘西菜]	唯一菜系叶=湘西菜; 招牌菜命中1词; 食客证据命中2词	湘西菜->True
-1556	世博轩(世博园店)	main_newly_set	high	[]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中1词; 食客证据命中1词	长沙菜->True
-1557	柒熙里(愚园路店)	main_newly_set	high	[]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中3词; 食客证据命中1词	宁波菜->True
-1558	东北风(松江万达店)	main_newly_set	high	[]	[东北家常菜]	唯一菜系叶=东北家常菜; 招牌菜命中2词; 食客证据命中2词	东北家常菜->True
-1559	李大喜·吉林原味烧烤	main_newly_set	high	[]	[东北菜]	仅有菜系根，无更细叶	东北菜->True
-1560	辣些年东北烧烤(五角场店)	main_newly_set	high	[]	[东北菜]	仅有菜系根，无更细叶	东北菜->True
-1561	大董(国金中心IFC店)	main_newly_set	high	[]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中1词	北京烤鸭->True
-1562	大董(环贸iapm店)	main_newly_set	high	[]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中1词	北京烤鸭->True
-1563	便宜坊(世纪大道华贸广场店)	main_newly_set	high	[]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中2词	北京烤鸭->True
-1564	东来顺(外滩南京东路店)	main_newly_set	high	[]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中3词; 食客证据命中3词	老北京铜锅涮肉->True
-1565	京悦南门涮肉(人民广场店)	main_newly_set	high	[]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中2词; 食客证据命中2词	老北京铜锅涮肉->True
-1566	小吊梨汤·北京菜·烤鸭(龙华会店)	main_newly_set	high	[]	[北京烤鸭]	招牌菜命中1词; 食客证据命中1词	北京烤鸭->True
-1567	街角和晚风台式小厨	main_newly_set	high	[]	[台湾家常菜]	唯一菜系叶=台湾家常菜; 招牌菜命中3词; 食客证据命中3词	台湾家常菜->True
-1569	老张牛肉面(江宁路店)	main_newly_set	high	[]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 招牌菜命中1词; 食客证据命中1词	台湾牛肉面·小吃->True
-1570	台麻里台湾小馆	main_newly_set	medium	[]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 食客证据命中1词	台湾牛肉面·小吃->True
-1571	度小月(美罗城店)	main_newly_set	high	[]	[台湾菜]	仅有菜系根，无更细叶	台湾菜->True
-1572	鼎泰丰(新天地店)	main_newly_set	high	[]	[台湾菜]	仅有菜系根，无更细叶	台湾菜->True
-1573	米屿邦·台式小馆	main_newly_set	high	[]	[台湾菜]	仅有菜系根，无更细叶	台湾菜->True
-1574	FIFTYLAN(CP静安店)	main_newly_set	high	[]	[奶茶专门店]	唯一菜系叶=奶茶专门店	奶茶专门店->True
-1575	鲜芋仙(日月光店)	main_newly_set	high	[]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	糖水/甜汤->True
-1576	桂芭蕉GUI BISTRO(静安嘉里中心店)	main_newly_set	high	[]	[广西菜]	仅有菜系根，无更细叶	广西菜->True
-1577	漓江码头桂林农家菜(金汇·华光城店)	main_newly_set	high	[]	[广西菜]	仅有菜系根，无更细叶	广西菜->True
-1578	柳州肥姨妈大骨螺蛳粉(紫藤路店)	main_newly_set	high	[]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	柳州螺蛳粉->True
-1579	塔哈尔·新疆盛宴(中山龙之梦店)	main_newly_set	high	[]	[新疆菜]	仅有菜系根，无更细叶	新疆菜->True
-1580	胖胖君的新疆抓饭(黄浦店)	main_newly_set	high	[]	[新疆手抓饭/面馆]	唯一菜系叶=新疆手抓饭/面馆; 招牌菜命中1词; 食客证据命中1词	新疆手抓饭/面馆->True
-1581	大壶春(四川中路店)	main_newly_set	medium	[]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 食客证据命中2词	本帮浓油赤酱老字号->True
-1582	萝春阁·生煎大王(浙江中路店)	main_newly_set	high	[]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号	本帮浓油赤酱老字号->True
-1583	晓燕生煎(定西路店)	main_newly_set	medium	[]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	上海家常->True
-1584	南翔馒头店(豫园店)	main_newly_set	high	[]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号	本帮浓油赤酱老字号->True
-1585	万寿斋(山阴路店)	main_newly_set	medium	[]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	上海家常->True
-1586	莱莱小笼(天津路店)	main_newly_set	high	[]	[上海家常]	唯一菜系叶=上海家常	上海家常->True
-1587	佳家汤包(黄河路店)	main_newly_set	medium	[]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	上海家常->True
-1588	四如春食府(石泉路店)	main_newly_set	high	[]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号	本帮浓油赤酱老字号->True
-1589	鲜得来排骨年糕(云南南路总店)	main_newly_set	high	[]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 仅店名地名弱信号(1)	本帮浓油赤酱老字号->True
-1590	小绍兴(云南南路店)	main_newly_set	high	[]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 仅店名地名弱信号(2)	本帮浓油赤酱老字号->True
-1591	振鼎鸡(福州路店)	main_newly_set	medium	[]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 食客证据命中1词	本帮浓油赤酱老字号->True
-1592	老正兴(福州路店)	main_newly_set	high	[]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 招牌菜命中1词; 食客证据命中3词	本帮浓油赤酱老字号->True
-1594	人和馆(肇嘉浜路店)	main_newly_set	high	[]	[海派融合]	唯一菜系叶=海派融合	海派融合->True
-1595	海金滋(进贤路店)	main_newly_set	medium	[]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	上海家常->True
-1596	瓦屋老宅江西土菜(世博源店)	main_newly_set	high	[]	[江西菜]	仅有菜系根，无更细叶	江西菜->True
-1597	小匠喜江西菜(黄浦世贸广场店)	main_newly_set	high	[]	[江西菜]	仅有菜系根，无更细叶	江西菜->True
-1598	周真真南昌拌粉·瓦罐汤(大宁店)	main_newly_set	high	[]	[江西炒粉/拌粉]	唯一菜系叶=江西炒粉/拌粉	江西炒粉/拌粉->True
-1599	雪三娘江西炒粉拌粉(九亭中心店)	main_newly_set	high	[]	[江西炒粉/拌粉]	唯一菜系叶=江西炒粉/拌粉	江西炒粉/拌粉->True
-1600	胡恰·景德江西菜(新天地店)	main_newly_set	high	[]	[江西菜]	仅有菜系根，无更细叶	江西菜->True
-1602	王凯阳河南水煎包	main_newly_set	high	[]	[河南菜]	仅有菜系根，无更细叶	河南菜->True
-1603	南星汇新加坡海南鸡饭(静安店)	main_newly_set	low	[]	[新加坡菜]	仅店名地名弱信号(1)	新加坡菜->True
-1605	椰子不语椰子鸡火锅(凯德晶萃店)	main_newly_set	high	[]	[椰子鸡]	唯一菜系叶=椰子鸡	椰子鸡->True
-1606	来菜·湖北藕汤(月星环球港店)	main_newly_set	high	[]	[湖北家常菜馆·藕汤]	唯一菜系叶=湖北家常菜馆·藕汤; 招牌菜命中2词; 食客证据命中2词	湖北家常菜馆·藕汤->True
-1607	靓靓蒸虾(定西路上海首店)	main_newly_set	high	[]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	潜江小龙虾·湖北夜宵->True
-1608	一棠龙虾·王牌虾球(苏河湾万象天地店)	main_newly_set	high	[]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	潜江小龙虾·湖北夜宵->True
-1609	蔡林记·湖北小馆(真如环宇城MAX店)	main_newly_set	high	[]	[武汉过早·热干面小吃]	唯一菜系叶=武汉过早·热干面小吃; 招牌菜命中3词; 食客证据命中2词	武汉过早·热干面小吃->True
-1610	糖豆(新嘉中心店)	main_newly_set	high	[]	[湖北菜]	仅有菜系根，无更细叶	湖北菜->True
-1611	楚缘·经典鄂菜(宝山闿和阳光广场店)	main_newly_set	high	[]	[湖北菜]	仅有菜系根，无更细叶	湖北菜->True
-1612	长安宴(陕西大厦·陕西驻沪办店)	main_newly_set	high	[]	[西安菜(正餐/泡馍/葫芦鸡)]	唯一菜系叶=西安菜(正餐/泡馍/葫芦鸡); 招牌菜命中2词; 食客证据命中2词	西安菜(正餐/泡馍/葫芦鸡)->True
-1613	宁夏印象·盐池滩羊肉体验店(江宁路店)	main_newly_set	high	[]	[宁夏·西北清真手抓羊肉]	唯一菜系叶=宁夏·西北清真手抓羊肉	宁夏·西北清真手抓羊肉->True
-1614	大师宣羊·鲜肉烧烤·小酒馆(上海影城店)	main_newly_set	high	[]	[西北菜]	仅有菜系根，无更细叶	西北菜->True
-1615	泓0871臻选云南菜·寻鲜宴(上海北外滩店)	main_newly_set	high	[]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中1词; 食客证据命中3词	云南菜->True
-1616	云海肴(上海闸北大悦城店)	main_newly_set	high	[]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中1词; 食客证据命中2词	云南菜->True
-1617	滇百年云南小锅米线(静安大悦城店)	main_newly_set	high	[]	[西南菜]	仅有菜系根，无更细叶	西南菜->True
-1618	良米山·云南野生菌过桥米线(中山公园龙之梦店)	main_newly_set	high	[]	[西南菜]	仅有菜系根，无更细叶	西南菜->True
-1619	芸山季云南野生菌火锅(上海来福士广场店)	main_newly_set	medium	[]	[云南菜]	唯一菜系叶=云南菜; 食客证据命中2词	云南菜->True
-1620	九色云野生菌火锅(长泰广场店)	main_newly_set	high	[]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中1词	云南菜->True
-1621	黔香阁·味(花木店)	main_newly_set	high	[]	[贵州菜]	唯一菜系叶=贵州菜; 招牌菜命中1词; 食客证据命中1词	贵州菜->True
-1622	秦香岚·贵州菜·凯里酸汤鱼(博荟广场店)	main_newly_set	medium	[]	[贵州菜]	唯一菜系叶=贵州菜; 食客证据命中2词	贵州菜->True
-1623	青藏餐厅·牦牛·藏羊(爱琴海店)	main_newly_set	high	[]	[藏餐]	唯一菜系叶=藏餐	藏餐->True
-1624	扎西达娲(徐汇绿地缤纷城店)	main_newly_set	high	[]	[藏餐]	唯一菜系叶=藏餐	藏餐->True
-1625	京云华(张江汇智店)	main_newly_set	high	[]	[京味家常]	招牌菜命中3词	京味家常->True
-1626	老门框爆肚涮肉(杨浦中原店)	main_newly_set	high	[]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中1词; 食客证据命中2词	老北京铜锅涮肉->True
-1627	京城南门涮肉(杨浦大连路店)	main_newly_set	high	[]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中2词; 食客证据命中2词	老北京铜锅涮肉->True
-1628	京悦南门涮肉(仙霞路店)	main_newly_set	high	[]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中3词; 食客证据命中3词	老北京铜锅涮肉->True
-1629	南门天下·蒙羊世家烀羊专家(公兴路店)	main_newly_set	medium	[]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 食客证据命中1词	老北京铜锅涮肉->True
-1630	多来转爆肚店(七宝老街店)	main_newly_set	high	[]	[京菜]	仅有菜系根，无更细叶	京菜->True
-1631	丰碗居(长宁来福士店)	main_newly_set	high	[]	[京菜]	仅有菜系根，无更细叶	京菜->True
-1632	老北京炸酱面(包头南路店)	main_newly_set	high	[]	[京菜]	仅有菜系根，无更细叶	京菜->True
-1633	宫宴Gongyan(北京西路店)	main_newly_set	high	[]	[宫廷官府菜]	唯一菜系叶=宫廷官府菜; 招牌菜命中2词; 食客证据命中1词	宫廷官府菜->True
-1634	礼部·新京菜(CP静安店)	main_newly_set	high	[]	[北京烤鸭]	招牌菜命中1词; 食客证据命中1词	北京烤鸭->True
-1635	和季新京菜(数通链谷店)	main_newly_set	high	[]	[北京烤鸭]	招牌菜命中1词; 食客证据命中1词	北京烤鸭->True
-1636	东来顺(虹桥天地店)	main_newly_set	high	[]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中3词; 食客证据命中2词	老北京铜锅涮肉->True
-1637	京悦南门涮肉(虹桥丽宝广场店)	main_newly_set	high	[]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中3词; 食客证据命中3词	老北京铜锅涮肉->True
-1638	云庄里云南铜锅米线(浦江镇欢乐颂店)	main_newly_set	high	[]	[西南菜]	仅有菜系根，无更细叶	西南菜->True
-1639	胡麻过桥米线	main_newly_set	high	[]	[西南菜]	仅有菜系根，无更细叶	西南菜->True
-1640	滇味园云南过桥米线(南京东路店)	main_newly_set	high	[]	[西南菜]	仅有菜系根，无更细叶	西南菜->True
-1641	上黔庄·一品贵州菜(吴中路店)	main_newly_set	high	[]	[贵州菜]	唯一菜系叶=贵州菜; 招牌菜命中1词; 食客证据命中2词	贵州菜->True
-1642	潘小烧·云南烧烤(外滩总店)	main_newly_set	high	[]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中1词; 食客证据命中2词	云南菜->True
-1643	耶里夏丽·新疆菜(南京东路世茂店)	main_newly_set	high	[]	[新疆菜]	仅有菜系根，无更细叶	新疆菜->True
-1644	那时新疆·乌孙(虹桥南丰城店)	main_newly_set	high	[]	[新疆菜]	仅有菜系根，无更细叶	新疆菜->True
-1645	卡德尔大叔新疆主题餐厅(东方路店)	main_newly_set	high	[]	[新疆菜]	仅有菜系根，无更细叶	新疆菜->True
-1646	羊伙计烤全羊(宝山店)	main_newly_set	high	[]	[烤全羊]	唯一菜系叶=烤全羊	烤全羊->True
-1647	爱上草原内蒙餐厅(老沪闵路店)	main_newly_set	high	[]	[烤全羊]	唯一菜系叶=烤全羊; 仅店名地名弱信号(1)	烤全羊->True
-1648	小小羔·内蒙涮肉&烧烤(徐家汇店)	main_newly_set	high	[]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中1词; 食客证据命中1词	老北京铜锅涮肉->True
-1649	东北人家(弘基广场店)	main_newly_set	high	[]	[东北家常菜]	唯一菜系叶=东北家常菜; 招牌菜命中3词; 食客证据命中3词	东北家常菜->True
-1650	张黄锦记螺蛳粉桂林米粉(阳光天地店)	main_newly_set	high	[]	[桂林米粉]	唯一菜系叶=桂林米粉	桂林米粉->True
-1651	方中山胡辣汤(静安康定路店)	main_newly_set	high	[]	[豫菜·胡辣汤]	唯一菜系叶=豫菜·胡辣汤	豫菜·胡辣汤->True
-1652	五星海南鸡饭(新乐路店)	main_newly_set	low	[]	[新加坡菜]	仅店名地名弱信号(1)	新加坡菜->True
-1653	串姐焦烤鸡架(五角场店)	main_newly_set	high	[]	[东北菜]	仅有菜系根，无更细叶	东北菜->True
-1654	东北四季饺子王(茅台路店)	main_newly_set	high	[]	[东北饺子馆]	唯一菜系叶=东北饺子馆; 仅店名地名弱信号(1)	东北饺子馆->True
-1655	王老六铁锅炖鱼(桂林路店)	main_newly_set	high	[]	[东北铁锅炖]	唯一菜系叶=东北铁锅炖; 招牌菜命中1词; 食客证据命中1词	东北铁锅炖->True
-1656	鹤北北·东北黏糊麻辣烫(人民广场店)	main_newly_set	high	[]	[东北菜]	仅有菜系根，无更细叶	东北菜->True
-1657	久月东北砂锅麻辣烫	main_newly_set	high	[]	[东北菜]	仅有菜系根，无更细叶	东北菜->True
-1658	家里没煮	main_newly_set	high	[]	[台湾家常菜]	唯一菜系叶=台湾家常菜; 招牌菜命中1词; 食客证据命中3词	台湾家常菜->True
-1659	桂山禾·桂林卤菜粉	main_newly_set	high	[]	[桂林米粉]	唯一菜系叶=桂林米粉	桂林米粉->True
-1662	有容乃大 LuckyDraw	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1663	月球咖啡 Retro	main_newly_set	medium	[]	[社区精品咖啡]	店名业态词佐证	社区精品咖啡->True
-1664	鲁马滋 Rumors Coffee Roastery	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1667	Brew Island 煮屿	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1668	白鲸咖啡 White Whale	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1669	aftertaste 回味	main_newly_set	low	[]	[社区精品咖啡]		社区精品咖啡->True
-1670	小半咖啡	main_newly_set	medium	[]	[社区精品咖啡]	店名业态词佐证	社区精品咖啡->True
-1671	pocket pocket 口袋咖啡	main_newly_set	medium	[]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	社区精品咖啡->True
-1672	HUGO HUSKY HOUSE 雨果咖啡	main_newly_set	medium	[]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	社区精品咖啡->True
-1673	DayDreaming by Monos 白日梦	main_newly_set	low	[]	[社区精品咖啡]		社区精品咖啡->True
-1674	IKIGAI	main_newly_set	high	[]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡	社区精品咖啡->True
-1675	城是 CITYBORING	main_newly_set	low	[]	[社区精品咖啡]		社区精品咖啡->True
-1676	LANERS老虎灶喫咖啡	main_newly_set	medium	[]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	社区精品咖啡->True
-1677	BIG SUR COFFEE	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1679	VOYAGE COFFEE	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1681	DEARYOU 咖啡豆研究所	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1682	MONO	main_newly_set	high	[]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡	社区精品咖啡->True
-1683	Manner Coffee	main_newly_set	medium	[]	[连锁咖啡]	唯一菜系叶=连锁咖啡; 店名业态词佐证	连锁咖啡->True
-1685	星巴克臻选上海烘焙工坊	main_newly_set	high	[]	[连锁咖啡]	唯一菜系叶=连锁咖啡	连锁咖啡->True
-1686	New Lane Coffee 纽巷	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1687	Rain Mountain 雨山咖啡	main_newly_set	medium	[]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	社区精品咖啡->True
-1689	且乐 cheer	main_newly_set	low	[]	[社区精品咖啡]		社区精品咖啡->True
-1690	Gregorius航迹(愚园路店)	main_newly_set	high	[]	[创意特调咖啡]	唯一菜系叶=创意特调咖啡	创意特调咖啡->True
-1691	3又二分之一	main_newly_set	low	[]	[创意特调咖啡]		创意特调咖啡->True
-1692	0566咖啡製作所	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1694	TonTon(永康路店)	main_newly_set	high	[]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	可颂/起酥专门->True
-1695	Bebaked(愚园路店)	main_newly_set	high	[]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	可颂/起酥专门->True
-1696	O'Mills Sourdough Bakery & Bistro(永嘉路店)	main_newly_set	medium	[]	[酸种面包专门]	唯一菜系叶=酸种面包专门; 店名业态词佐证	酸种面包专门->True
-1697	Gluglu(愚园路店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1698	Sloppy Gin(延平路店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1699	Luneurs月乐诗(南京西路店)	main_newly_set	high	[]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	冰淇淋Gelato->True
-1700	柴田西点Chez Shibata(紫云西路店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1701	辛一铜锣烧(静安大悦城店)	main_newly_set	high	[]	[日式甜品]	唯一菜系叶=日式甜品	日式甜品->True
-1702	香港华心糖水铺(南西总店)	main_newly_set	high	[]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	糖水/甜汤->True
-1703	双喜老铺(静安寺店)	main_newly_set	high	[]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	糖水/甜汤->True
-1704	小团圆糖水铺(思南路店)	main_newly_set	high	[]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	糖水/甜汤->True
-1705	yesOcake巴斯克专门店	main_newly_set	medium	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	蛋糕/法式甜品->True
-1707	gula bistro	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1708	Yeats Bistro	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1709	Wine Universe	main_newly_set	medium	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	葡萄酒/自然酒吧->True
-1710	Fiamo Bistro by Senso	main_newly_set	high	[]	[意面]	唯一菜系叶=意面	意面->True
-1711	Bella Vita Bistro	main_newly_set	high	[]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	那不勒斯披萨->True
-1712	Le Verre à vin	main_newly_set	high	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	葡萄酒/自然酒吧->True
-1713	大酉 The Merchants	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1714	壳里西餐厅 Coquille Seafood Bistro	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1715	Alimentari Grande	main_newly_set	high	[]	[意餐]	仅有菜系根，无更细叶	意餐->True
-1716	Juke	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1717	SOSA	main_newly_set	high	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	鸡尾酒吧->True
-1718	游牧Bistro by耶里夏丽	main_newly_set	high	[]	[新疆菜]	仅有菜系根，无更细叶	新疆菜->True
-1719	有喜屋·鲜鸡烧鸟·居酒屋(安龙路店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1720	烤匠麻辣烤鱼(中山公园龙之梦店)	main_newly_set	high	[]	[烤鱼/酸菜鱼专门]	唯一菜系叶=烤鱼/酸菜鱼专门	烤鱼/酸菜鱼专门->True
-1721	武宫酒吧	main_newly_set	medium	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧; 店名业态词佐证	鸡尾酒吧->True
-1722	三山野·云南傣家菜	main_newly_set	high	[]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中2词; 食客证据命中2词	云南菜->True
-1723	煤球 Charcoal	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1724	壮壮酒馆 Terroir Strong	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1727	Alimentari（安福路店）	main_newly_set	high	[]	[意面]	唯一菜系叶=意面	意面->True
-1728	Money Shops（愚园路店）	main_newly_set	high	[]	[美式牛排]	唯一菜系叶=美式牛排	美式牛排->True
-1729	岚山早餐公司 Breakfast Company（武定路店）	main_newly_set	high	[]	[美餐]	仅有菜系根，无更细叶	美餐->True
-1730	Baker & Spice（安福路店）	main_newly_set	high	[]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	社区烘焙坊->True
-1731	Lokal	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1732	FUNK&KALE（兴业太古汇店）	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1733	新天地朗廷酒店大堂吧	main_newly_set	high	[]	[Bar]	仅有菜系根，无更细叶	Bar->True
-1734	海仑宾馆505Bar	main_newly_set	high	[]	[Bar]	仅有菜系根，无更细叶	Bar->True
-1735	外滩华尔道夫酒店羿庭	main_newly_set	high	[]	[甜品]	仅有菜系根，无更细叶	甜品->True
-1736	和平饭店华懋阁	main_newly_set	high	[]	[甜品]	仅有菜系根，无更细叶	甜品->True
-1737	Matcha Love 抹艾茶	main_newly_set	high	[]	[茶饮]	仅有菜系根，无更细叶	茶饮->True
-1738	点都德（瑞虹太阳宫店）	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1739	裕莲茶楼（金虹桥国际中心店）	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1740	西园抹茶专卖店（大悦城店）	main_newly_set	high	[]	[茶饮]	仅有菜系根，无更细叶	茶饮->True
-1741	翠富楼·粤式点心·啫啫煲	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1742	Bar Leone	main_newly_set	medium	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧; 店名业态词佐证	鸡尾酒吧->True
-1743	明日酿造/明日酒馆	main_newly_set	high	[]	[精酿啤酒吧]	唯一菜系叶=精酿啤酒吧	精酿啤酒吧->True
-1744	半醉山岚	main_newly_set	high	[]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中2词	宁波菜->True
-1745	Flipper's 奇迹舒芙蕾（金桥EKA天物店）	main_newly_set	high	[]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼	松饼/薄饼->True
-1747	When Pigs Fly当猪飞(愚园路店)	main_newly_set	low	[]	[社区烘焙坊]		社区烘焙坊->True
-1748	Spiceman辣男Gelato(思南路店)	main_newly_set	high	[]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	冰淇淋Gelato->True
-1749	Gregorius SHADE(安福路店)	main_newly_set	high	[]	[创意特调咖啡]	唯一菜系叶=创意特调咖啡	创意特调咖啡->True
-1750	有喜屋	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋	居酒屋->True
-1751	有喜屋·鲜鸡烧鸟·居酒屋(嘉定新城店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1752	有喜屋·鲜鸡板前烧鸟	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋	居酒屋->True
-1753	有喜屋·鲜鸡烧鸟·居酒屋(真如环宇城店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1754	有喜屋·日料·居酒屋(长寿路店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1755	有喜屋·鲜鸡板前烧鸟(宝杨宝龙店)	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋	居酒屋->True
-1756	有喜屋·鲜鸡烧鸟·居酒屋(海梦一方店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1757	有喜屋·鲜鸡板前烧鸟(徐汇绿地缤纷店)	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋	居酒屋->True
-1759	有喜屋·板前烧鸟(金地·方邻店)	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋	居酒屋->True
-1760	有喜屋·日料·居酒屋(嘉里不夜城企业中心店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1761	有喜屋·日料·居酒屋(天物空间店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1762	有喜屋·日料·居酒屋(文定路店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1763	有喜屋·日料·居酒屋(中集美兰湖金地广场店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1764	有喜屋·日料·居酒屋(旭辉广场店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1765	有喜屋·日料·居酒屋(国华广场店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1766	有喜屋·日料·居酒屋(鑫耀·光环Live店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1767	有喜屋·日料·居酒屋(南桥百联店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1768	有喜屋·板前烧鸟(浦江欢乐颂店)	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋	居酒屋->True
-1769	有喜屋·板前烧鸟(盛邻Mall店)	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋	居酒屋->True
-1770	有喜屋·鲜鸡烧鸟·居酒屋(宝山万达店)	main_newly_set	medium	[]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	居酒屋->True
-1771	有喜屋九亭金地店	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋	居酒屋->True
-1773	L'eclair de Genie闪电巴黎(芮欧百货店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1774	乔尔卢布松美食坊Boulangerie(外滩18号)	main_newly_set	high	[]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	可颂/起酥专门->True
-1775	法田鹿蛋糕	main_newly_set	medium	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	蛋糕/法式甜品->True
-1776	Lady M(上海恒隆广场店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1777	聚福shanghailander(乌鲁木齐南路店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1778	贵州冰浆(陕西北路店)	main_newly_set	high	[]	[刨冰]	唯一菜系叶=刨冰; 仅店名地名弱信号(2)	刨冰->True
-1780	麻布屋AZABUYA(永康路店)	main_newly_set	low	[]	[蛋糕/法式甜品]		蛋糕/法式甜品->True
-1781	HUFFY coffee&gelato(威海路店)	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 仅店名地名弱信号(1)	蛋糕/法式甜品->True
-1782	MIMILATO(长乐路店)	main_newly_set	low	[]	[蛋糕/法式甜品]		蛋糕/法式甜品->True
-1783	Sit Gelato(南昌路店)	main_newly_set	low	[]	[蛋糕/法式甜品]		蛋糕/法式甜品->True
-1784	国际饭店帆声饼屋(黄河路店)	main_newly_set	high	[]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	社区烘焙坊->True
-1785	PAIN CHAUD百丘(番禺路店)	main_newly_set	high	[]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	可颂/起酥专门->True
-1786	drunk baker醉师傅(陕康里店)	main_newly_set	low	[]	[社区烘焙坊]		社区烘焙坊->True
-1787	达可芮Gelato Dal Cuore(陕西北路店)	main_newly_set	high	[]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato; 仅店名地名弱信号(1)	冰淇淋Gelato->True
-1788	纽约贝果博物馆(新天地店)	main_newly_set	high	[]	[贝果专门]	唯一菜系叶=贝果专门	贝果专门->True
-1789	FASCINO BAKERY(丰盛里店)	main_newly_set	low	[]	[社区烘焙坊]		社区烘焙坊->True
-1790	EVERNAKED裸蛋糕(巨鹿路店)	main_newly_set	medium	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	蛋糕/法式甜品->True
-1791	yeetlemon柠檬蛋糕(同乐坊店)	main_newly_set	medium	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	蛋糕/法式甜品->True
-1792	Bake No Title(番禺路店)	main_newly_set	low	[]	[社区烘焙坊]		社区烘焙坊->True
-1793	堂屋糖水铺(愚园路店)	main_newly_set	high	[]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	糖水/甜汤->True
-1796	一木家 Café Chez W	main_newly_set	high	[]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡	社区精品咖啡->True
-1797	蜂蜜草 Honey N' Clover（吴兴路店）	main_newly_set	high	[]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	社区烘焙坊->True
-1798	湖心亭茶楼	main_newly_set	high	[]	[茶饮]	仅有菜系根，无更细叶	茶饮->True
-1799	星神早餐（康定路店）	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1801	上海半岛酒店 The Lobby 大堂茶座	main_newly_set	high	[]	[甜品]	仅有菜系根，无更细叶	甜品->True
-1802	上海浦东丽思卡尔顿酒店 AURA酒廊	main_newly_set	high	[]	[甜品]	仅有菜系根，无更细叶	甜品->True
-1803	上海柏悦酒店 大堂客厅	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1804	上海璞丽酒店 LONG BAR长吧	main_newly_set	high	[]	[Bar]	仅有菜系根，无更细叶	Bar->True
-1806	SOMETHING DINING BAR（武康路店）	main_newly_set	high	[]	[美式牛排]	唯一菜系叶=美式牛排	美式牛排->True
-1807	Brut Eatery 悦璞食堂（愚园路店）	main_newly_set	high	[]	[炸鸡]	唯一菜系叶=炸鸡	炸鸡->True
-1808	CASALUNA Brunch&Bistro	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1809	Nono's Ristorante	main_newly_set	low	[]	[意面]		意面->True
-1810	Polux by Paul Pairet	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1811	Le Saleya	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1813	Vinism	main_newly_set	high	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	葡萄酒/自然酒吧->True
-1814	纯阳六两	main_newly_set	high	[]	[江湖菜]	唯一菜系叶=江湖菜	江湖菜->True
-1815	段氏龙虾	main_newly_set	high	[]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	潜江小龙虾·湖北夜宵->True
-1816	Sober Company	main_newly_set	high	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	鸡尾酒吧->True
-1817	Pony Up	main_newly_set	high	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	鸡尾酒吧->True
-1818	COA Shanghai	main_newly_set	high	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	鸡尾酒吧->True
-1819	ABA WHISKEY BAR 糟糕艺术家	main_newly_set	high	[]	[威士忌吧]	唯一菜系叶=威士忌吧	威士忌吧->True
-1820	食六区·罗氏虾龙虾烧烤夜宵(虹桥店)	main_newly_set	high	[]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	潜江小龙虾·湖北夜宵->True
-1821	顶特勒粥面馆	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1822	肥仔文澳门猪骨煲	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1823	香巴岛小龙虾(寿宁路)	main_newly_set	high	[]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	潜江小龙虾·湖北夜宵->True
-1824	弄口里烧烤(胶州路店)	main_newly_set	high	[]	[阿拉伯烧烤]	唯一菜系叶=阿拉伯烧烤	阿拉伯烧烤->True
-1825	西塔老太太泥炉烤肉(静安大悦城店)	main_newly_set	high	[]	[京味炙子烤肉·京味小菜]	唯一菜系叶=京味炙子烤肉·京味小菜; 招牌菜命中1词	京味炙子烤肉·京味小菜->True
-1826	Tourbillon 特彼龙 Whisky Lounge	main_newly_set	medium	[]	[鸡尾酒吧]	店名业态词佐证	鸡尾酒吧->True
-1827	Project W威士忌·鸡尾酒	main_newly_set	medium	[]	[鸡尾酒吧]	店名业态词佐证	鸡尾酒吧->True
-1828	Goose Island Taproom 鹅岛精酿啤酒屋(巨鹿路店)	main_newly_set	medium	[]	[精酿啤酒吧]	唯一菜系叶=精酿啤酒吧; 店名业态词佐证	精酿啤酒吧->True
-1829	飲适精酿 Ease Taproom(南京东路店)	main_newly_set	medium	[]	[精酿啤酒吧]	唯一菜系叶=精酿啤酒吧; 店名业态词佐证	精酿啤酒吧->True
-1830	ONE WAY STREET精酿啤酒(大沽路店)	main_newly_set	medium	[]	[精酿啤酒吧]	唯一菜系叶=精酿啤酒吧; 店名业态词佐证	精酿啤酒吧->True
-1831	哥哥の深夜食堂(静安大悦城店)	main_newly_set	high	[]	[居酒屋]	唯一菜系叶=居酒屋	居酒屋->True
-1832	PuR'aisin Wine Bar皮酉海让葡萄酒酒吧(定西路店)	main_newly_set	medium	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	葡萄酒/自然酒吧->True
-1833	葡道Wine Shop & Bar(武康店)	main_newly_set	medium	[]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	葡萄酒/自然酒吧->True
-1834	Lab whisky&cocktail(武定路店)	main_newly_set	high	[]	[威士忌吧]	唯一菜系叶=威士忌吧	威士忌吧->True
-1835	PLAN B(襄阳北路店)	main_newly_set	low	[]	[鸡尾酒吧]		鸡尾酒吧->True
-1836	FINE pancake&canteen(陕西南路店)	main_newly_set	high	[]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼; 仅店名地名弱信号(1)	松饼/薄饼->True
-1837	Le Pain Sense(建国东路店)	main_newly_set	low	[]	[社区烘焙坊]		社区烘焙坊->True
-1838	WULI	main_newly_set	high	[]	[韩餐]	仅有菜系根，无更细叶	韩餐->True
-1839	芳邻食堂(静安漫选店)	main_newly_set	medium	[]	[台湾家常菜]	唯一菜系叶=台湾家常菜; 食客证据命中1词	台湾家常菜->True
-1840	醉东 Oriental House(静安嘉里店)	main_newly_set	high	[]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中2词	台州菜->True
-1841	VIVANT by Johnny Pham	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1842	Cheeva Thai	main_newly_set	high	[]	[泰餐]	仅有菜系根，无更细叶	泰餐->True
-1843	聪菜馆	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1844	豪生酒家	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1845	黄公子	main_newly_set	high	[]	[海派融合]	唯一菜系叶=海派融合	海派融合->True
-1846	AmoyA	main_newly_set	high	[]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中1词; 食客证据命中2词	闽南菜->True
-1847	来去Laichill	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1848	作故私房菜	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1849	叶叶菩提(太原别墅店)	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1850	田咖啡	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1851	ONIRICO CAFÉ	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1852	DOU COFFEE ROASTERS(嘉善路店)	main_newly_set	high	[]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	手冲/自烘豆专门->True
-1853	苹果花园(南泉路店)	main_newly_set	high	[]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	社区烘焙坊->True
-1854	ISAN BAKERY & CAFE	main_newly_set	medium	[]	[日式面包]	店名业态词佐证	日式面包->True
-1855	银座仁志川(兴业太古汇店)	main_newly_set	high	[]	[日式面包]	唯一菜系叶=日式面包	日式面包->True
-1856	泽田本家·铜锣烧(美罗城店)	main_newly_set	high	[]	[铜锣烧/和果子]	唯一菜系叶=铜锣烧/和果子	铜锣烧/和果子->True
-1857	野人先生Gelato(徐汇旗舰店)	main_newly_set	high	[]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	冰淇淋Gelato->True
-1858	和果子本铺四葉	main_newly_set	high	[]	[铜锣烧/和果子]	唯一菜系叶=铜锣烧/和果子	铜锣烧/和果子->True
-1859	The Odd Couple	main_newly_set	high	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	鸡尾酒吧->True
-1860	ZION	main_newly_set	high	[]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	鸡尾酒吧->True
-1862	COLCA 秘鲁西班牙餐厅(衡山路店)	main_newly_set	low	[]	[秘鲁-西班牙融合菜]		秘鲁-西班牙融合菜->True
-1863	拉蒂娜·巴西牛排馆 Latina(陆家嘴旗舰店)	main_newly_set	low	[]	[巴西烤牛舌/烤菠萝]		巴西烤牛舌/烤菠萝->True
-1864	El Bodegon 阿根廷餐厅(常熟路店)	main_newly_set	low	[]	[阿根廷Asado炭烤牛排]		阿根廷Asado炭烤牛排->True
-1865	Tacolicious(同乐坊店)	main_newly_set	low	[]	[Tex-Mex]		Tex-Mex->True
-1866	Flambe Bistro 奥地利餐厅(湖滨道店)	main_newly_set	low	[]	[维也纳炸猪排]		维也纳炸猪排->True
-1868	Delight Food 比利时啤酒餐厅(老外街店)	main_newly_set	low	[]	[比利时啤酒/华夫饼]		比利时啤酒/华夫饼->True
-1869	麺屋KING	main_newly_set	low	[]	[拉面·虾白汤]	地域子流派(拉面·虾白汤)优先于产品/形式叶(['拉面'])	拉面·虾白汤->True
-1870	纹兵卫手打荞麦面日料(天山店)	main_newly_set	medium	[]	[荞麦·天妇罗盛荞麦]	地域子流派(荞麦·天妇罗盛荞麦)优先于产品/形式叶(['荞麦', '天妇罗']); 店名业态词佐证	荞麦·天妇罗盛荞麦->True
-1871	1515牛排馆·酒吧	main_newly_set	medium	[]	[美式牛排]	唯一菜系叶=美式牛排; 店名业态词佐证	美式牛排->True
-1872	夏宫	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1873	Stone Sal 言盐西餐厅(东湖路店)	main_newly_set	high	[]	[美式牛排]	唯一菜系叶=美式牛排	美式牛排->True
-1874	云 LES NUAGES	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1875	The MEAT·扒	main_newly_set	high	[]	[美式牛排]	唯一菜系叶=美式牛排	美式牛排->True
-1876	屋有鲜	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1877	晟永兴(外滩店)	main_newly_set	high	[]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中1词	北京烤鸭->True
-1878	Mr & Mrs Bund	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1879	随堂里	main_newly_set	medium	[]	[海派融合]	唯一菜系叶=海派融合; 食客证据命中1词	海派融合->True
-1880	临江宴	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-1881	粤海棠·wineapp	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1882	The Pine 松涧	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1883	永·江臻	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-1884	徽季	main_newly_set	high	[]	[徽菜]	仅有菜系根，无更细叶	徽菜->True
-1885	福廬 FULL HOUSE	main_newly_set	high	[]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中1词; 食客证据命中2词	淮扬菜->True
-1886	老兴鲜(黄浦店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1887	nagi 凪	main_newly_set	high	[]	[Omakase 板前]	唯一菜系叶=Omakase 板前	Omakase 板前->True
-1888	鮨·天照 Omakase(南京西路店)	main_newly_set	high	[]	[Omakase 板前]	唯一菜系叶=Omakase 板前	Omakase 板前->True
-1889	TEN HASU 天妇罗专门	main_newly_set	medium	[]	[天妇罗]	唯一菜系叶=天妇罗; 店名业态词佐证	天妇罗->True
-1890	隅木食物所·台湾红烧牛肉面·台式小火锅(上生新所店)	main_newly_set	high	[]	[台湾菜]	仅有菜系根，无更细叶	台湾菜->True
-1891	欢桃餐酒馆 Eatery & Bistro	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1892	帅帅精致家常味(长乐路店)	main_newly_set	medium	[]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	上海家常->True
-1893	光头生煎(山阴路店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1894	来来来·泰国街边排档(长乐路店)	main_newly_set	high	[]	[泰北菜]	唯一菜系叶=泰北菜; 仅店名地名弱信号(1)	泰北菜->True
-1895	RONG融	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1896	翡翠36	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1897	Aster by Joshua Paris	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1898	之舞	main_newly_set	high	[]	[创新菜]	仅有菜系根，无更细叶	创新菜->True
-1899	古铜法式餐厅	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1900	Shaughnessy	main_newly_set	high	[]	[美式牛排]	唯一菜系叶=美式牛排	美式牛排->True
-1901	Arva	main_newly_set	high	[]	[意餐]	仅有菜系根，无更细叶	意餐->True
-1902	Ortensia Shanghai	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1903	Endo	main_newly_set	high	[]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	蛋糕/法式甜品->True
-1904	Hide the Smoked Room	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1905	EIGHT UNDER	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1906	艾利爵士餐厅	main_newly_set	high	[]	[意面]	唯一菜系叶=意面	意面->True
-1907	Tuttu	main_newly_set	high	[]	[意餐]	仅有菜系根，无更细叶	意餐->True
-1908	夜上海	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1909	上海餐厅	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1910	利苑(徐汇)	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1911	台城镂月	main_newly_set	medium	[]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 食客证据命中1词	广府菜(广州)->True
-1912	瑰禧	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中2词; 食客证据命中4词	潮汕菜->True
-1913	海味观(静安)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1914	上海总会	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-1915	馨源楼	main_newly_set	high	[]	[粤菜]	仅有菜系根，无更细叶	粤菜->True
-1916	川粤海棠(长宁)	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-1917	外滩·林家一	main_newly_set	medium	[]	[台州菜]	唯一菜系叶=台州菜; 食客证据命中1词	台州菜->True
-1918	周舍(闵行)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1919	菁禧荟(长宁)	main_newly_set	high	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中3词; 食客证据命中4词	潮汕菜->True
-1920	东方景宴	main_newly_set	medium	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	潮汕菜->True
-1921	鹿园MOOSE(浦东店)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-1922	悦轩(上海柏悦酒店)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-1923	鮨琉璃	main_newly_set	medium	[]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	寿司->True
-1924	三佰杯	main_newly_set	medium	[]	[宁波菜]	唯一菜系叶=宁波菜; 食客证据命中1词	宁波菜->True
-1925	MIYARAKU宫楽	main_newly_set	low	[]	[怀石]		怀石->True
-1926	OnCue	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1928	奈良本寿司	main_newly_set	medium	[]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	寿司->True
-1929	吾观·私宴	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1930	思南海派私房菜	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1931	La Jade	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1932	洋房333	main_newly_set	medium	[]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	潮汕菜->True
-1933	huma 1095	main_newly_set	high	[]	[甜品]	仅有菜系根，无更细叶	甜品->True
-1934	季福楼	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1935	九福里	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1936	乾璟荟	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1937	上式楼	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1938	瑞香苑一号	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1939	北外滩隐世融合私宴	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1940	兰亭集私房菜	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1941	赉安·海派中式板前料理	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1942	繁花滨江私宴	main_newly_set	high	[]	[融合菜/Fusion]	仅有菜系根，无更细叶	融合菜/Fusion->True
-1943	林家一·山海宴	main_newly_set	medium	[]	[台州菜]	唯一菜系叶=台州菜; 食客证据命中1词	台州菜->True
-1944	永兴餐厅	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1945	春餐厅	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1946	功德林(南京西路店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1947	云和面馆(黄浦)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1949	菰城宴	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-1950	老地方面馆	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1951	小陶面馆	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1952	临湖素食	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1953	157食坊	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1954	逸采(静安)	main_newly_set	high	[]	[浙菜]	仅有菜系根，无更细叶	浙菜->True
-1955	渔都老味面	main_newly_set	high	[]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中1词	宁波菜->True
-1956	渔哥·湛江(静安)	main_newly_set	high	[]	[广府菜(广州)]	唯一菜系叶=广府菜(广州)	广府菜(广州)->True
-1957	宏玉方	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1958	滇道(静安)	main_newly_set	medium	[]	[云南菜]	唯一菜系叶=云南菜; 食客证据命中1词	云南菜->True
-1959	徐记海鲜(徐汇)	main_newly_set	high	[]	[湘菜]	仅有菜系根，无更细叶	湘菜->True
-1960	永丰面馆(黄浦)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1961	和膳面家	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1962	宁海食府	main_newly_set	high	[]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中2词	宁波菜->True
-1963	阿勇面馆(东书房路)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1964	坛·四川料理	main_newly_set	high	[]	[川菜]	仅有菜系根，无更细叶	川菜->True
-1965	味香斋(雁荡路店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1966	福和面馆(昆山花园路总店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1968	迷上 Mi Shang	main_newly_set	high	[]	[意面]	唯一菜系叶=意面	意面->True
-1969	食光	main_newly_set	high	[]	[意餐]	仅有菜系根，无更细叶	意餐->True
-1970	Torikaze	main_newly_set	high	[]	[烧鸟]	唯一菜系叶=烧鸟	烧鸟->True
-1971	Cellar to Table	main_newly_set	high	[]	[意面]	唯一菜系叶=意面	意面->True
-1972	Trine	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1973	Scilla	main_newly_set	high	[]	[意面]	唯一菜系叶=意面	意面->True
-1974	沼田双	main_newly_set	high	[]	[天妇罗]	唯一菜系叶=天妇罗	天妇罗->True
-1975	Hulu Sushi 葫芦寿司	main_newly_set	high	[]	[Omakase 板前]	唯一菜系叶=Omakase 板前	Omakase 板前->True
-1976	Narisawa Shanghai	main_newly_set	high	[]	[怀石]	唯一菜系叶=怀石	怀石->True
-1977	老乾杯(外滩店)	main_newly_set	high	[]	[烧肉]	唯一菜系叶=烧肉	烧肉->True
-1978	Nuits(恒隆三期Pavilion店)	main_newly_set	high	[]	[法餐]	仅有菜系根，无更细叶	法餐->True
-1982	望庐·精细江西菜(外滩店)	main_newly_set	high	[]	[江西菜]	仅有菜系根，无更细叶	江西菜->True
-1983	望庐·江西荟馆(前滩店)	main_newly_set	high	[]	[江西菜]	仅有菜系根，无更细叶	江西菜->True
-1984	POP露台餐厅(外滩三号)	main_newly_set	high	[]	[欧陆菜/欧洲当代]	仅有菜系根，无更细叶	欧陆菜/欧洲当代->True
-1985	Ginza Onodera 鮨(外滩十八号店)	main_newly_set	medium	[]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	寿司->True
-1986	鮨升(泰安路店)	main_newly_set	medium	[]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	寿司->True
-1987	鮨升(陆家嘴店)	main_newly_set	medium	[]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	寿司->True
-1988	鮨莲·日本料理(新闸路店)	main_newly_set	medium	[]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证; 仅店名地名弱信号(1)	寿司->True
-1989	时相遇·1913百年茶馆	main_newly_set	high	[]	[茶饮]	仅有菜系根，无更细叶	茶饮->True
-1990	少山集(创邑SPACE店)	main_newly_set	high	[]	[茶饮]	仅有菜系根，无更细叶	茶饮->True
-1991	隐溪茶馆(大田路店)	main_newly_set	high	[]	[茶饮]	仅有菜系根，无更细叶	茶饮->True
-1992	黄庭茶馆(新天地店)	main_newly_set	high	[]	[茶饮]	仅有菜系根，无更细叶	茶饮->True
-1993	广记鱼生(龙茗路店)	main_newly_set	high	[]	[广西菜]	仅有菜系根，无更细叶	广西菜->True
-1994	渔八公·横县鱼生(浦东店)	main_newly_set	high	[]	[广西菜]	仅有菜系根，无更细叶	广西菜->True
-1995	鱼城主·广式鱼生(宜川店)	main_newly_set	high	[]	[广西菜]	仅有菜系根，无更细叶	广西菜->True
-1996	粤桂發横县鱼生(江桥店)	main_newly_set	high	[]	[广西菜]	仅有菜系根，无更细叶	广西菜->True
-1997	酥鱼坊(蒙西小区店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1998	阿模灵鸡粥(蒙西菜市场店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-1999	妃灵蛋糕(蒙西菜场店)	main_newly_set	high	[]	[甜品]	仅有菜系根，无更细叶	甜品->True
-2000	潘记老面羌饼(嘉陵菜场店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-2001	胡老头鱼丸(鞍山菜市场店)	main_newly_set	high	[]	[本帮菜]	仅有菜系根，无更细叶	本帮菜->True
-2002	Ministry of Crab(人民公园店)	main_newly_set	high	[]	[斯里兰卡菜]	仅有菜系根，无更细叶	斯里兰卡菜->True
-2003	蜀南面馆(莘沥路店)	main_newly_set	high	[]	[川南·宜宾菜]	地域子流派(川南·宜宾菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	川南·宜宾菜->True
-2004	觉味燃面(商城路店)	main_newly_set	high	[]	[川南·宜宾菜]	地域子流派(川南·宜宾菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中1词; 食客证据命中2词	川南·宜宾菜->True
+1469	唐宫·粤菜海鲜(华润时代店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1470	嘉宴·精致客家菜(虹口店)	no_change	high	[客家菜]	[客家菜]	唯一菜系叶=客家菜; 招牌菜命中4词; 食客证据命中2词	
+1472	菁禧荟SELECTION BY DU(北外滩来福士店)	no_change	medium	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	
+1473	头家夜粥(广东路店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中3词; 食客证据命中1词	
+1474	家府潮汕菜(中山公园龙之梦店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中1词; 食客证据命中3词	
+1475	潮禧·潮汕菜(万航渡路店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中1词; 食客证据命中2词	
+1476	潮界(丁香国际店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中5词; 食客证据命中3词	
+1477	姚益记潮汕菜(安亭店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中2词; 食客证据命中3词	
+1478	今日牛事(瑞金店)	no_change	medium	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	
+1479	下山虎潮汕鲜牛肉火锅(巨鹿路店)	no_change	high	[潮汕菜]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 招牌菜命中1词; 食客证据命中2词	
+1481	潮牛嗨潮汕鲜牛肉火锅(龙茗路店)	no_change	medium	[潮汕菜]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 食客证据命中1词	
+1482	潮汕草根鲜牛肉海鲜火锅排档(七宝店)	no_change	high	[潮汕菜]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 招牌菜命中2词; 食客证据命中2词	
+1483	任兴记(定西路店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中1词; 食客证据命中2词	
+1484	留住阁潮汕砂锅粥馆(长宁店)	no_change	high	[潮汕菜]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['砂锅粥/粿条']); 招牌菜命中2词; 食客证据命中1词	
+1485	潮人姐妹轩(海宁路店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中1词; 食客证据命中3词	
+1486	汕鹤潮式甜汤(人广来福士店)	no_change	high	[糖水/甜汤]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	
+1488	游宴一品淮扬(万达瑞华店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中3词; 食客证据命中3词	
+1489	福兴荟(King88广场店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中2词; 食客证据命中1词	
+1490	狮王府淮扬菜(万象城店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中1词; 食客证据命中2词	
+1491	沧浪亭(重庆路店)	no_change	medium	[苏帮菜]	[苏帮菜]	唯一菜系叶=苏帮菜; 食客证据命中2词	
+1492	苏三姑	no_change	high	[苏帮菜]	[苏帮菜]	唯一菜系叶=苏帮菜; 招牌菜命中2词; 食客证据命中4词	
+1493	南京大牌档(世茂商都店)	no_change	high	[金陵菜]	[金陵菜]	唯一菜系叶=金陵菜; 招牌菜命中2词; 食客证据命中3词	
+1494	胜春楼·淮扬菜·早茶(宝华商业广场店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中1词; 食客证据命中4词	
+1495	徐州味道(镇坪路店)	no_change	high	[徐海菜]	[徐海菜]	唯一菜系叶=徐海菜; 招牌菜命中2词; 食客证据命中3词	
+1496	松鹤楼面馆(豫园店)	no_change	high	[苏帮菜]	[苏帮菜]	地域子流派(苏帮菜)优先于产品/形式叶(['苏式汤面']); 招牌菜命中1词; 食客证据命中1词	
+1497	绿杨邨酒家(天钥桥路店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中3词; 食客证据命中4词	
+1498	东淓·苏宴(南京东路店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中3词; 食客证据命中3词	
+1499	上扬府·淮扬小品	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中4词; 食客证据命中1词	
+1500	盛·淮扬(长风大悦城店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中3词; 食客证据命中4词	
+1501	黄浦轩臻品·淮扬(上海大厦店)	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中4词; 食客证据命中6词	
+1502	荣小馆(安达仕店)	no_change	high	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中3词	
+1503	荣家黄鱼面(南京西路店)	no_change	high	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中1词	
+1504	甬府尊鲜(前滩太古里店)	no_change	high	[宁波菜]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中2词	
+1505	桂满陇·杭州小馆(中山公园店)	no_change	high	[杭帮菜]	[杭帮菜]	唯一菜系叶=杭帮菜; 招牌菜命中1词; 食客证据命中1词	
+1506	柒园·竹境(西岸国际会展中心店)	no_change	medium	[杭帮菜]	[杭帮菜]	唯一菜系叶=杭帮菜; 食客证据命中1词	
+1507	柒园·竹荟(蟠龙天地店)	no_change	medium	[杭帮菜]	[杭帮菜]	唯一菜系叶=杭帮菜; 食客证据命中1词	
+1508	越稽·绍兴小馆(万象城店)	no_change	high	[绍兴菜]	[绍兴菜]	唯一菜系叶=绍兴菜; 招牌菜命中2词; 食客证据命中2词	
+1509	福見仁FúDining·福州火灶(K11店)	no_change	high	[福州菜]	[福州菜]	唯一菜系叶=福州菜; 招牌菜命中1词; 食客证据命中1词	
+1510	甲东南闽菜馆(北蔡休闲广场店)	no_change	high	[福州菜]	[福州菜]	唯一菜系叶=福州菜; 招牌菜命中1词; 食客证据命中2词	
+1511	屿热闽南小馆(水城南路店)	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中2词; 食客证据命中3词	
+1512	也红花泉州风味(前湾印象城店)	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中3词; 食客证据命中3词	
+1513	老吴的食光·闽南小灶(虹桥南丰城店)	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中4词; 食客证据命中4词	
+1514	屿园沙茶面(长寿路店)	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中2词; 食客证据命中2词	
+1515	莆田餐厅PUTIEN(环贸iapm店)	no_change	high	[莆仙菜]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中2词; 食客证据命中2词	
+1516	莆味观·莆田菜(合川路店)	no_change	high	[莆仙菜]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中2词; 食客证据命中2词	
+1517	乾七道文化会馆(曲阳路复城国际店)	no_change	high	[莆仙菜]	[莆仙菜]	唯一菜系叶=莆仙菜; 招牌菜命中2词; 食客证据命中2词	
+1518	鲜顺欧闽北私房菜(沪太支路店)	no_change	high	[闽北菜]	[闽北菜]	唯一菜系叶=闽北菜; 招牌菜命中2词; 食客证据命中3词	
+1519	鱼湘汇·湖南土菜(中山北路店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中1词; 食客证据命中1词	
+1520	盖饭邦·长沙菜馆(新天地店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中2词; 食客证据命中2词	
+1521	望湘园湖南菜(静安大悦城店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中1词; 食客证据命中1词	
+1522	钵湘湘·常德钵子菜(梅川路店)	no_change	high	[洞庭湖区菜]	[洞庭湖区菜]	唯一菜系叶=洞庭湖区菜; 招牌菜命中1词; 食客证据命中2词	
+1524	璞徽(瑞虹天地太阳宫店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中2词; 食客证据命中2词	
+1525	小菜园新徽菜(虹桥天街店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中3词; 食客证据命中3词	
+1526	大富贵酒楼(中华路总店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中1词; 食客证据命中2词	
+1527	徽悦食府(佘山新天地店)	no_change	high	[徽州菜]	[徽州菜]	唯一菜系叶=徽州菜; 招牌菜命中4词; 食客证据命中3词	
+1529	龙筵轩(古北店)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 招牌菜命中1词; 食客证据命中2词	
+1530	顺峰顺水顺德菜(龙华店)	no_change	high	[顺德菜]	[顺德菜]	唯一菜系叶=顺德菜; 招牌菜命中3词; 食客证据命中3词	
+1531	新旺茶餐厅(打浦店)	no_change	high	[港式茶餐厅/冰室]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中2词; 食客证据命中4词	
+1532	东发道茶冰厅(新业坊店)	no_change	high	[港式茶餐厅/冰室]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中1词; 食客证据命中2词	
+1533	上金雀华人餐厅(乌中店)	no_change	high	[港式茶餐厅/冰室]	[港式茶餐厅/冰室]	唯一菜系叶=港式茶餐厅/冰室; 招牌菜命中1词; 食客证据命中3词	
+1534	点都德(南翔印象城店)	no_change	high	[广式早茶点心]	[广式早茶点心]	唯一菜系叶=广式早茶点心	
+1535	宝粤楼	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1536	香港池仔记肠粉王(襄阳南路店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1537	银记肠粉店(华山店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1538	啫苑广州啫啫煲(虹口龙之梦店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1539	啫火·啫啫煲(虹桥天地店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1540	好好彩啫啫煲(黄浦来福士店)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1541	瑞狮楼潮汕会馆(新天地店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中2词; 食客证据命中2词	
+1542	左庭右院鲜牛肉火锅(五角场万达店)	no_change	medium	[潮汕菜]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅']); 食客证据命中1词	
+1543	宽马记大排档·鲜牛肉海鲜火锅(普陀店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜	
+1544	神更仔·潮汕魂大排档(汉口路店)	no_change	high	[潮汕菜]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕打冷/生腌排档']); 招牌菜命中3词; 食客证据命中4词	
+1545	潮府夜档(嘉定马陆店)	no_change	high	[潮汕菜]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕打冷/生腌排档']); 招牌菜命中4词; 食客证据命中6词	
+1546	潮顺潮汕牛肉粿条(上海总店)	no_change	high	[潮汕菜]	[潮汕菜]	地域子流派(潮汕菜)优先于产品/形式叶(['潮汕牛肉火锅', '砂锅粥/粿条']); 招牌菜命中2词; 食客证据命中2词	
+1547	夜阑静·潮汕海鲜粥城(秀沿路总店)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中3词; 食客证据命中1词	
+1548	汕心·潮汕甜汤(人广来福士店)	no_change	medium	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	
+1549	甬江里宁波小鲜	no_change	high	[宁波菜]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中2词	
+1550	源清制面(新天地店)	no_change	high	[温州菜]	[温州菜]	唯一菜系叶=温州菜; 招牌菜命中1词	
+1551	瓯宴·陆悦新温州菜(张江店)	no_change	high	[温州菜]	[温州菜]	唯一菜系叶=温州菜; 招牌菜命中2词; 食客证据命中2词	
+1552	衢叔家·衢州山里菜(延安西路店)	no_change	high	[金华/衢州菜]	[金华/衢州菜]	唯一菜系叶=金华/衢州菜	
+1553	土灶头·金华菜(桃浦店)	no_change	high	[金华/衢州菜]	[金华/衢州菜]	唯一菜系叶=金华/衢州菜; 仅店名地名弱信号(1)	
+1555	吃饭皇帝大(上海湘西土家菜)	no_change	high	[湘西菜]	[湘西菜]	唯一菜系叶=湘西菜; 招牌菜命中1词; 食客证据命中2词	
+1556	世博轩(世博园店)	no_change	high	[长沙菜]	[长沙菜]	唯一菜系叶=长沙菜; 招牌菜命中1词; 食客证据命中1词	
+1557	柒熙里(愚园路店)	no_change	high	[宁波菜]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中3词; 食客证据命中1词	
+1558	东北风(松江万达店)	no_change	high	[东北家常菜]	[东北家常菜]	唯一菜系叶=东北家常菜; 招牌菜命中2词; 食客证据命中2词	
+1559	李大喜·吉林原味烧烤	no_change	high	[东北菜]	[东北菜]	仅有菜系根，无更细叶	
+1560	辣些年东北烧烤(五角场店)	no_change	high	[东北菜]	[东北菜]	仅有菜系根，无更细叶	
+1561	大董(国金中心IFC店)	no_change	high	[北京烤鸭]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中1词	
+1562	大董(环贸iapm店)	no_change	high	[北京烤鸭]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中1词	
+1563	便宜坊(世纪大道华贸广场店)	no_change	high	[北京烤鸭]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中2词	
+1564	东来顺(外滩南京东路店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中3词; 食客证据命中3词	
+1565	京悦南门涮肉(人民广场店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中2词; 食客证据命中2词	
+1566	小吊梨汤·北京菜·烤鸭(龙华会店)	no_change	high	[北京烤鸭]	[北京烤鸭]	招牌菜命中1词; 食客证据命中1词	
+1567	街角和晚风台式小厨	no_change	high	[台湾家常菜]	[台湾家常菜]	唯一菜系叶=台湾家常菜; 招牌菜命中3词; 食客证据命中3词	
+1569	老张牛肉面(江宁路店)	no_change	high	[台湾牛肉面·小吃]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 招牌菜命中1词; 食客证据命中1词	
+1570	台麻里台湾小馆	no_change	medium	[台湾牛肉面·小吃]	[台湾牛肉面·小吃]	唯一菜系叶=台湾牛肉面·小吃; 食客证据命中1词	
+1571	度小月(美罗城店)	no_change	high	[台湾菜]	[台湾菜]	仅有菜系根，无更细叶	
+1572	鼎泰丰(新天地店)	no_change	high	[台湾菜]	[台湾菜]	仅有菜系根，无更细叶	
+1573	米屿邦·台式小馆	no_change	high	[台湾菜]	[台湾菜]	仅有菜系根，无更细叶	
+1574	FIFTYLAN(CP静安店)	no_change	high	[奶茶专门店]	[奶茶专门店]	唯一菜系叶=奶茶专门店	
+1575	鲜芋仙(日月光店)	no_change	high	[糖水/甜汤]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	
+1576	桂芭蕉GUI BISTRO(静安嘉里中心店)	no_change	high	[广西菜]	[广西菜]	仅有菜系根，无更细叶	
+1577	漓江码头桂林农家菜(金汇·华光城店)	no_change	high	[广西菜]	[广西菜]	仅有菜系根，无更细叶	
+1578	柳州肥姨妈大骨螺蛳粉(紫藤路店)	no_change	high	[柳州螺蛳粉]	[柳州螺蛳粉]	唯一菜系叶=柳州螺蛳粉	
+1579	塔哈尔·新疆盛宴(中山龙之梦店)	no_change	high	[新疆菜]	[新疆菜]	仅有菜系根，无更细叶	
+1580	胖胖君的新疆抓饭(黄浦店)	no_change	high	[新疆手抓饭/面馆]	[新疆手抓饭/面馆]	唯一菜系叶=新疆手抓饭/面馆; 招牌菜命中1词; 食客证据命中1词	
+1581	大壶春(四川中路店)	no_change	medium	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 食客证据命中2词	
+1582	萝春阁·生煎大王(浙江中路店)	no_change	high	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号	
+1583	晓燕生煎(定西路店)	no_change	medium	[上海家常]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	
+1584	南翔馒头店(豫园店)	no_change	high	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号	
+1585	万寿斋(山阴路店)	no_change	medium	[上海家常]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	
+1586	莱莱小笼(天津路店)	no_change	high	[上海家常]	[上海家常]	唯一菜系叶=上海家常	
+1587	佳家汤包(黄河路店)	no_change	medium	[上海家常]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	
+1588	四如春食府(石泉路店)	no_change	high	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号	
+1589	鲜得来排骨年糕(云南南路总店)	no_change	high	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 仅店名地名弱信号(1)	
+1590	小绍兴(云南南路店)	no_change	high	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 仅店名地名弱信号(2)	
+1591	振鼎鸡(福州路店)	no_change	medium	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 食客证据命中1词	
+1592	老正兴(福州路店)	no_change	high	[本帮浓油赤酱老字号]	[本帮浓油赤酱老字号]	唯一菜系叶=本帮浓油赤酱老字号; 招牌菜命中1词; 食客证据命中3词	
+1594	人和馆(肇嘉浜路店)	no_change	high	[海派融合]	[海派融合]	唯一菜系叶=海派融合	
+1595	海金滋(进贤路店)	no_change	medium	[上海家常]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	
+1596	瓦屋老宅江西土菜(世博源店)	no_change	high	[江西菜]	[江西菜]	仅有菜系根，无更细叶	
+1597	小匠喜江西菜(黄浦世贸广场店)	no_change	high	[江西菜]	[江西菜]	仅有菜系根，无更细叶	
+1598	周真真南昌拌粉·瓦罐汤(大宁店)	no_change	high	[江西炒粉/拌粉]	[江西炒粉/拌粉]	唯一菜系叶=江西炒粉/拌粉	
+1599	雪三娘江西炒粉拌粉(九亭中心店)	no_change	high	[江西炒粉/拌粉]	[江西炒粉/拌粉]	唯一菜系叶=江西炒粉/拌粉	
+1600	胡恰·景德江西菜(新天地店)	no_change	high	[江西菜]	[江西菜]	仅有菜系根，无更细叶	
+1602	王凯阳河南水煎包	no_change	high	[河南菜]	[河南菜]	仅有菜系根，无更细叶	
+1603	南星汇新加坡海南鸡饭(静安店)	no_change	low	[新加坡菜]	[新加坡菜]	仅店名地名弱信号(1)	
+1605	椰子不语椰子鸡火锅(凯德晶萃店)	no_change	high	[椰子鸡]	[椰子鸡]	唯一菜系叶=椰子鸡	
+1606	来菜·湖北藕汤(月星环球港店)	no_change	high	[湖北家常菜馆·藕汤]	[湖北家常菜馆·藕汤]	唯一菜系叶=湖北家常菜馆·藕汤; 招牌菜命中2词; 食客证据命中2词	
+1607	靓靓蒸虾(定西路上海首店)	no_change	high	[潜江小龙虾·湖北夜宵]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	
+1608	一棠龙虾·王牌虾球(苏河湾万象天地店)	no_change	high	[潜江小龙虾·湖北夜宵]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	
+1609	蔡林记·湖北小馆(真如环宇城MAX店)	no_change	high	[武汉过早·热干面小吃]	[武汉过早·热干面小吃]	唯一菜系叶=武汉过早·热干面小吃; 招牌菜命中3词; 食客证据命中2词	
+1610	糖豆(新嘉中心店)	no_change	high	[湖北菜]	[湖北菜]	仅有菜系根，无更细叶	
+1611	楚缘·经典鄂菜(宝山闿和阳光广场店)	no_change	high	[湖北菜]	[湖北菜]	仅有菜系根，无更细叶	
+1612	长安宴(陕西大厦·陕西驻沪办店)	no_change	high	[西安菜(正餐/泡馍/葫芦鸡)]	[西安菜(正餐/泡馍/葫芦鸡)]	唯一菜系叶=西安菜(正餐/泡馍/葫芦鸡); 招牌菜命中2词; 食客证据命中2词	
+1613	宁夏印象·盐池滩羊肉体验店(江宁路店)	no_change	high	[宁夏·西北清真手抓羊肉]	[宁夏·西北清真手抓羊肉]	唯一菜系叶=宁夏·西北清真手抓羊肉	
+1614	大师宣羊·鲜肉烧烤·小酒馆(上海影城店)	no_change	high	[西北菜]	[西北菜]	仅有菜系根，无更细叶	
+1615	泓0871臻选云南菜·寻鲜宴(上海北外滩店)	no_change	high	[云南菜]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中1词; 食客证据命中3词	
+1616	云海肴(上海闸北大悦城店)	no_change	high	[云南菜]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中1词; 食客证据命中2词	
+1617	滇百年云南小锅米线(静安大悦城店)	no_change	high	[西南菜]	[西南菜]	仅有菜系根，无更细叶	
+1618	良米山·云南野生菌过桥米线(中山公园龙之梦店)	no_change	high	[西南菜]	[西南菜]	仅有菜系根，无更细叶	
+1619	芸山季云南野生菌火锅(上海来福士广场店)	no_change	medium	[云南菜]	[云南菜]	唯一菜系叶=云南菜; 食客证据命中2词	
+1620	九色云野生菌火锅(长泰广场店)	no_change	high	[云南菜]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中1词	
+1621	黔香阁·味(花木店)	no_change	high	[贵州菜]	[贵州菜]	唯一菜系叶=贵州菜; 招牌菜命中1词; 食客证据命中1词	
+1622	秦香岚·贵州菜·凯里酸汤鱼(博荟广场店)	no_change	medium	[贵州菜]	[贵州菜]	唯一菜系叶=贵州菜; 食客证据命中2词	
+1623	青藏餐厅·牦牛·藏羊(爱琴海店)	no_change	high	[藏餐]	[藏餐]	唯一菜系叶=藏餐	
+1624	扎西达娲(徐汇绿地缤纷城店)	no_change	high	[藏餐]	[藏餐]	唯一菜系叶=藏餐	
+1625	京云华(张江汇智店)	no_change	high	[京味家常]	[京味家常]	招牌菜命中3词	
+1626	老门框爆肚涮肉(杨浦中原店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中1词; 食客证据命中2词	
+1627	京城南门涮肉(杨浦大连路店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中2词; 食客证据命中2词	
+1628	京悦南门涮肉(仙霞路店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中3词; 食客证据命中3词	
+1629	南门天下·蒙羊世家烀羊专家(公兴路店)	no_change	medium	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 食客证据命中1词	
+1630	多来转爆肚店(七宝老街店)	no_change	high	[京菜]	[京菜]	仅有菜系根，无更细叶	
+1631	丰碗居(长宁来福士店)	no_change	high	[京菜]	[京菜]	仅有菜系根，无更细叶	
+1632	老北京炸酱面(包头南路店)	no_change	high	[京菜]	[京菜]	仅有菜系根，无更细叶	
+1633	宫宴Gongyan(北京西路店)	no_change	high	[宫廷官府菜]	[宫廷官府菜]	唯一菜系叶=宫廷官府菜; 招牌菜命中2词; 食客证据命中1词	
+1634	礼部·新京菜(CP静安店)	no_change	high	[北京烤鸭]	[北京烤鸭]	招牌菜命中1词; 食客证据命中1词	
+1635	和季新京菜(数通链谷店)	no_change	high	[北京烤鸭]	[北京烤鸭]	招牌菜命中1词; 食客证据命中1词	
+1636	东来顺(虹桥天地店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中3词; 食客证据命中2词	
+1637	京悦南门涮肉(虹桥丽宝广场店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中3词; 食客证据命中3词	
+1638	云庄里云南铜锅米线(浦江镇欢乐颂店)	no_change	high	[西南菜]	[西南菜]	仅有菜系根，无更细叶	
+1639	胡麻过桥米线	no_change	high	[西南菜]	[西南菜]	仅有菜系根，无更细叶	
+1640	滇味园云南过桥米线(南京东路店)	no_change	high	[西南菜]	[西南菜]	仅有菜系根，无更细叶	
+1641	上黔庄·一品贵州菜(吴中路店)	no_change	high	[贵州菜]	[贵州菜]	唯一菜系叶=贵州菜; 招牌菜命中1词; 食客证据命中2词	
+1642	潘小烧·云南烧烤(外滩总店)	no_change	high	[云南菜]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中1词; 食客证据命中2词	
+1643	耶里夏丽·新疆菜(南京东路世茂店)	no_change	high	[新疆菜]	[新疆菜]	仅有菜系根，无更细叶	
+1644	那时新疆·乌孙(虹桥南丰城店)	no_change	high	[新疆菜]	[新疆菜]	仅有菜系根，无更细叶	
+1645	卡德尔大叔新疆主题餐厅(东方路店)	no_change	high	[新疆菜]	[新疆菜]	仅有菜系根，无更细叶	
+1646	羊伙计烤全羊(宝山店)	no_change	high	[烤全羊]	[烤全羊]	唯一菜系叶=烤全羊	
+1647	爱上草原内蒙餐厅(老沪闵路店)	no_change	high	[烤全羊]	[烤全羊]	唯一菜系叶=烤全羊; 仅店名地名弱信号(1)	
+1648	小小羔·内蒙涮肉&烧烤(徐家汇店)	no_change	high	[老北京铜锅涮肉]	[老北京铜锅涮肉]	唯一菜系叶=老北京铜锅涮肉; 招牌菜命中1词; 食客证据命中1词	
+1649	东北人家(弘基广场店)	no_change	high	[东北家常菜]	[东北家常菜]	唯一菜系叶=东北家常菜; 招牌菜命中3词; 食客证据命中3词	
+1650	张黄锦记螺蛳粉桂林米粉(阳光天地店)	no_change	high	[桂林米粉]	[桂林米粉]	唯一菜系叶=桂林米粉	
+1651	方中山胡辣汤(静安康定路店)	no_change	high	[豫菜·胡辣汤]	[豫菜·胡辣汤]	唯一菜系叶=豫菜·胡辣汤	
+1652	五星海南鸡饭(新乐路店)	no_change	low	[新加坡菜]	[新加坡菜]	仅店名地名弱信号(1)	
+1653	串姐焦烤鸡架(五角场店)	no_change	high	[东北菜]	[东北菜]	仅有菜系根，无更细叶	
+1654	东北四季饺子王(茅台路店)	no_change	high	[东北饺子馆]	[东北饺子馆]	唯一菜系叶=东北饺子馆; 仅店名地名弱信号(1)	
+1655	王老六铁锅炖鱼(桂林路店)	no_change	high	[东北铁锅炖]	[东北铁锅炖]	唯一菜系叶=东北铁锅炖; 招牌菜命中1词; 食客证据命中1词	
+1656	鹤北北·东北黏糊麻辣烫(人民广场店)	no_change	high	[东北菜]	[东北菜]	仅有菜系根，无更细叶	
+1657	久月东北砂锅麻辣烫	no_change	high	[东北菜]	[东北菜]	仅有菜系根，无更细叶	
+1658	家里没煮	no_change	high	[台湾家常菜]	[台湾家常菜]	唯一菜系叶=台湾家常菜; 招牌菜命中1词; 食客证据命中3词	
+1659	桂山禾·桂林卤菜粉	no_change	high	[桂林米粉]	[桂林米粉]	唯一菜系叶=桂林米粉	
+1662	有容乃大 LuckyDraw	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1663	月球咖啡 Retro	no_change	medium	[社区精品咖啡]	[社区精品咖啡]	店名业态词佐证	
+1664	鲁马滋 Rumors Coffee Roastery	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1667	Brew Island 煮屿	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1668	白鲸咖啡 White Whale	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1669	aftertaste 回味	no_change	low	[社区精品咖啡]	[社区精品咖啡]		
+1670	小半咖啡	no_change	medium	[社区精品咖啡]	[社区精品咖啡]	店名业态词佐证	
+1671	pocket pocket 口袋咖啡	no_change	medium	[社区精品咖啡]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	
+1672	HUGO HUSKY HOUSE 雨果咖啡	no_change	medium	[社区精品咖啡]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	
+1673	DayDreaming by Monos 白日梦	no_change	low	[社区精品咖啡]	[社区精品咖啡]		
+1674	IKIGAI	no_change	high	[社区精品咖啡]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡	
+1675	城是 CITYBORING	no_change	low	[社区精品咖啡]	[社区精品咖啡]		
+1676	LANERS老虎灶喫咖啡	no_change	medium	[社区精品咖啡]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	
+1677	BIG SUR COFFEE	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1679	VOYAGE COFFEE	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1681	DEARYOU 咖啡豆研究所	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1682	MONO	no_change	high	[社区精品咖啡]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡	
+1683	Manner Coffee	no_change	medium	[连锁咖啡]	[连锁咖啡]	唯一菜系叶=连锁咖啡; 店名业态词佐证	
+1685	星巴克臻选上海烘焙工坊	no_change	high	[连锁咖啡]	[连锁咖啡]	唯一菜系叶=连锁咖啡	
+1686	New Lane Coffee 纽巷	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1687	Rain Mountain 雨山咖啡	no_change	medium	[社区精品咖啡]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡; 店名业态词佐证	
+1689	且乐 cheer	no_change	low	[社区精品咖啡]	[社区精品咖啡]		
+1690	Gregorius航迹(愚园路店)	no_change	high	[创意特调咖啡]	[创意特调咖啡]	唯一菜系叶=创意特调咖啡	
+1691	3又二分之一	no_change	low	[创意特调咖啡]	[创意特调咖啡]		
+1692	0566咖啡製作所	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1694	TonTon(永康路店)	no_change	high	[可颂/起酥专门]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	
+1695	Bebaked(愚园路店)	no_change	high	[可颂/起酥专门]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	
+1696	O'Mills Sourdough Bakery & Bistro(永嘉路店)	no_change	medium	[酸种面包专门]	[酸种面包专门]	唯一菜系叶=酸种面包专门; 店名业态词佐证	
+1697	Gluglu(愚园路店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1698	Sloppy Gin(延平路店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1699	Luneurs月乐诗(南京西路店)	no_change	high	[冰淇淋Gelato]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	
+1700	柴田西点Chez Shibata(紫云西路店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1701	辛一铜锣烧(静安大悦城店)	no_change	high	[日式甜品]	[日式甜品]	唯一菜系叶=日式甜品	
+1702	香港华心糖水铺(南西总店)	no_change	high	[糖水/甜汤]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	
+1703	双喜老铺(静安寺店)	no_change	high	[糖水/甜汤]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	
+1704	小团圆糖水铺(思南路店)	no_change	high	[糖水/甜汤]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	
+1705	yesOcake巴斯克专门店	no_change	medium	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	
+1707	gula bistro	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1708	Yeats Bistro	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1709	Wine Universe	no_change	medium	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	
+1710	Fiamo Bistro by Senso	no_change	high	[意面]	[意面]	唯一菜系叶=意面	
+1711	Bella Vita Bistro	no_change	high	[那不勒斯披萨]	[那不勒斯披萨]	唯一菜系叶=那不勒斯披萨	
+1712	Le Verre à vin	no_change	high	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	
+1713	大酉 The Merchants	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1714	壳里西餐厅 Coquille Seafood Bistro	main_changed	high	[法餐]	[法式Bistro]	唯一菜系叶=法式Bistro	法餐->False; 法式Bistro->True
+1715	Alimentari Grande	no_change	high	[意餐]	[意餐]	仅有菜系根，无更细叶	
+1716	Juke	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1717	SOSA	no_change	high	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	
+1718	游牧Bistro by耶里夏丽	no_change	high	[新疆菜]	[新疆菜]	仅有菜系根，无更细叶	
+1719	有喜屋·鲜鸡烧鸟·居酒屋(安龙路店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1720	烤匠麻辣烤鱼(中山公园龙之梦店)	no_change	high	[烤鱼/酸菜鱼专门]	[烤鱼/酸菜鱼专门]	唯一菜系叶=烤鱼/酸菜鱼专门	
+1721	武宫酒吧	no_change	medium	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧; 店名业态词佐证	
+1722	三山野·云南傣家菜	no_change	high	[云南菜]	[云南菜]	唯一菜系叶=云南菜; 招牌菜命中2词; 食客证据命中2词	
+1723	煤球 Charcoal	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1724	壮壮酒馆 Terroir Strong	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1727	Alimentari（安福路店）	no_change	high	[意面]	[意面]	唯一菜系叶=意面	
+1728	Money Shops（愚园路店）	no_change	high	[美式牛排]	[美式牛排]	唯一菜系叶=美式牛排	
+1729	岚山早餐公司 Breakfast Company（武定路店）	no_change	high	[美餐]	[美餐]	仅有菜系根，无更细叶	
+1730	Baker & Spice（安福路店）	no_change	high	[社区烘焙坊]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	
+1731	Lokal	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1732	FUNK&KALE（兴业太古汇店）	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1733	新天地朗廷酒店大堂吧	no_change	high	[Bar]	[Bar]	仅有菜系根，无更细叶	
+1734	海仑宾馆505Bar	no_change	high	[Bar]	[Bar]	仅有菜系根，无更细叶	
+1735	外滩华尔道夫酒店羿庭	no_change	high	[甜品]	[甜品]	仅有菜系根，无更细叶	
+1736	和平饭店华懋阁	no_change	high	[甜品]	[甜品]	仅有菜系根，无更细叶	
+1737	Matcha Love 抹艾茶	no_change	high	[茶饮]	[茶饮]	仅有菜系根，无更细叶	
+1738	点都德（瑞虹太阳宫店）	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1739	裕莲茶楼（金虹桥国际中心店）	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1740	西园抹茶专卖店（大悦城店）	no_change	high	[茶饮]	[茶饮]	仅有菜系根，无更细叶	
+1741	翠富楼·粤式点心·啫啫煲	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1742	Bar Leone	no_change	medium	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧; 店名业态词佐证	
+1743	明日酿造/明日酒馆	no_change	high	[精酿啤酒吧]	[精酿啤酒吧]	唯一菜系叶=精酿啤酒吧	
+1744	半醉山岚	no_change	high	[宁波菜]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中2词	
+1745	Flipper's 奇迹舒芙蕾（金桥EKA天物店）	no_change	high	[松饼/薄饼]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼	
+1747	When Pigs Fly当猪飞(愚园路店)	no_change	low	[社区烘焙坊]	[社区烘焙坊]		
+1748	Spiceman辣男Gelato(思南路店)	no_change	high	[冰淇淋Gelato]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	
+1749	Gregorius SHADE(安福路店)	no_change	high	[创意特调咖啡]	[创意特调咖啡]	唯一菜系叶=创意特调咖啡	
+1750	有喜屋	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋	
+1751	有喜屋·鲜鸡烧鸟·居酒屋(嘉定新城店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1752	有喜屋·鲜鸡板前烧鸟	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋	
+1753	有喜屋·鲜鸡烧鸟·居酒屋(真如环宇城店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1754	有喜屋·日料·居酒屋(长寿路店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1755	有喜屋·鲜鸡板前烧鸟(宝杨宝龙店)	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋	
+1756	有喜屋·鲜鸡烧鸟·居酒屋(海梦一方店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1757	有喜屋·鲜鸡板前烧鸟(徐汇绿地缤纷店)	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋	
+1759	有喜屋·板前烧鸟(金地·方邻店)	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋	
+1760	有喜屋·日料·居酒屋(嘉里不夜城企业中心店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1761	有喜屋·日料·居酒屋(天物空间店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1762	有喜屋·日料·居酒屋(文定路店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1763	有喜屋·日料·居酒屋(中集美兰湖金地广场店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1764	有喜屋·日料·居酒屋(旭辉广场店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1765	有喜屋·日料·居酒屋(国华广场店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1766	有喜屋·日料·居酒屋(鑫耀·光环Live店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1767	有喜屋·日料·居酒屋(南桥百联店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1768	有喜屋·板前烧鸟(浦江欢乐颂店)	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋	
+1769	有喜屋·板前烧鸟(盛邻Mall店)	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋	
+1770	有喜屋·鲜鸡烧鸟·居酒屋(宝山万达店)	no_change	medium	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋; 店名业态词佐证	
+1771	有喜屋九亭金地店	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋	
+1773	L'eclair de Genie闪电巴黎(芮欧百货店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1774	乔尔卢布松美食坊Boulangerie(外滩18号)	no_change	high	[可颂/起酥专门]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	
+1775	法田鹿蛋糕	no_change	medium	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	
+1776	Lady M(上海恒隆广场店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1777	聚福shanghailander(乌鲁木齐南路店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1778	贵州冰浆(陕西北路店)	no_change	high	[刨冰]	[刨冰]	唯一菜系叶=刨冰; 仅店名地名弱信号(2)	
+1780	麻布屋AZABUYA(永康路店)	no_change	low	[蛋糕/法式甜品]	[蛋糕/法式甜品]		
+1781	HUFFY coffee&gelato(威海路店)	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 仅店名地名弱信号(1)	
+1782	MIMILATO(长乐路店)	no_change	low	[蛋糕/法式甜品]	[蛋糕/法式甜品]		
+1783	Sit Gelato(南昌路店)	no_change	low	[蛋糕/法式甜品]	[蛋糕/法式甜品]		
+1784	国际饭店帆声饼屋(黄河路店)	no_change	high	[社区烘焙坊]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	
+1785	PAIN CHAUD百丘(番禺路店)	no_change	high	[可颂/起酥专门]	[可颂/起酥专门]	唯一菜系叶=可颂/起酥专门	
+1786	drunk baker醉师傅(陕康里店)	no_change	low	[社区烘焙坊]	[社区烘焙坊]		
+1787	达可芮Gelato Dal Cuore(陕西北路店)	no_change	high	[冰淇淋Gelato]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato; 仅店名地名弱信号(1)	
+1788	纽约贝果博物馆(新天地店)	no_change	high	[贝果专门]	[贝果专门]	唯一菜系叶=贝果专门	
+1789	FASCINO BAKERY(丰盛里店)	no_change	low	[社区烘焙坊]	[社区烘焙坊]		
+1790	EVERNAKED裸蛋糕(巨鹿路店)	no_change	medium	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	
+1791	yeetlemon柠檬蛋糕(同乐坊店)	no_change	medium	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品; 店名业态词佐证	
+1792	Bake No Title(番禺路店)	no_change	low	[社区烘焙坊]	[社区烘焙坊]		
+1793	堂屋糖水铺(愚园路店)	no_change	high	[糖水/甜汤]	[糖水/甜汤]	唯一菜系叶=糖水/甜汤	
+1796	一木家 Café Chez W	no_change	high	[社区精品咖啡]	[社区精品咖啡]	唯一菜系叶=社区精品咖啡	
+1797	蜂蜜草 Honey N' Clover（吴兴路店）	no_change	high	[社区烘焙坊]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	
+1798	湖心亭茶楼	main_changed	high	[茶饮]	[新中式茶饮]	唯一菜系叶=新中式茶饮	茶饮->False; 新中式茶饮->True
+1799	星神早餐（康定路店）	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1801	上海半岛酒店 The Lobby 大堂茶座	no_change	high	[甜品]	[甜品]	仅有菜系根，无更细叶	
+1802	上海浦东丽思卡尔顿酒店 AURA酒廊	no_change	high	[甜品]	[甜品]	仅有菜系根，无更细叶	
+1803	上海柏悦酒店 大堂客厅	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1804	上海璞丽酒店 LONG BAR长吧	no_change	high	[Bar]	[Bar]	仅有菜系根，无更细叶	
+1806	SOMETHING DINING BAR（武康路店）	no_change	high	[美式牛排]	[美式牛排]	唯一菜系叶=美式牛排	
+1807	Brut Eatery 悦璞食堂（愚园路店）	no_change	high	[炸鸡]	[炸鸡]	唯一菜系叶=炸鸡	
+1808	CASALUNA Brunch&Bistro	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1809	Nono's Ristorante	no_change	low	[意面]	[意面]		
+1810	Polux by Paul Pairet	main_changed	high	[法餐]	[法式Bistro]	唯一菜系叶=法式Bistro	法餐->False; 法式Bistro->True
+1811	Le Saleya	main_changed	high	[法餐]	[法式Bistro]	唯一菜系叶=法式Bistro	法餐->False; 法式Bistro->True
+1813	Vinism	no_change	high	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧	
+1814	纯阳六两	no_change	high	[江湖菜]	[江湖菜]	唯一菜系叶=江湖菜	
+1815	段氏龙虾	no_change	high	[潜江小龙虾·湖北夜宵]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	
+1816	Sober Company	no_change	high	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	
+1817	Pony Up	no_change	high	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	
+1818	COA Shanghai	no_change	high	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	
+1819	ABA WHISKEY BAR 糟糕艺术家	no_change	high	[威士忌吧]	[威士忌吧]	唯一菜系叶=威士忌吧	
+1820	食六区·罗氏虾龙虾烧烤夜宵(虹桥店)	no_change	high	[潜江小龙虾·湖北夜宵]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	
+1821	顶特勒粥面馆	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1822	肥仔文澳门猪骨煲	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1823	香巴岛小龙虾(寿宁路)	no_change	high	[潜江小龙虾·湖北夜宵]	[潜江小龙虾·湖北夜宵]	唯一菜系叶=潜江小龙虾·湖北夜宵	
+1824	弄口里烧烤(胶州路店)	no_change	high	[阿拉伯烧烤]	[阿拉伯烧烤]	唯一菜系叶=阿拉伯烧烤	
+1825	西塔老太太泥炉烤肉(静安大悦城店)	no_change	high	[京味炙子烤肉·京味小菜]	[京味炙子烤肉·京味小菜]	唯一菜系叶=京味炙子烤肉·京味小菜; 招牌菜命中1词	
+1826	Tourbillon 特彼龙 Whisky Lounge	no_change	medium	[鸡尾酒吧]	[鸡尾酒吧]	店名业态词佐证	
+1827	Project W威士忌·鸡尾酒	no_change	medium	[鸡尾酒吧]	[鸡尾酒吧]	店名业态词佐证	
+1828	Goose Island Taproom 鹅岛精酿啤酒屋(巨鹿路店)	no_change	medium	[精酿啤酒吧]	[精酿啤酒吧]	唯一菜系叶=精酿啤酒吧; 店名业态词佐证	
+1829	飲适精酿 Ease Taproom(南京东路店)	no_change	medium	[精酿啤酒吧]	[精酿啤酒吧]	唯一菜系叶=精酿啤酒吧; 店名业态词佐证	
+1830	ONE WAY STREET精酿啤酒(大沽路店)	no_change	medium	[精酿啤酒吧]	[精酿啤酒吧]	唯一菜系叶=精酿啤酒吧; 店名业态词佐证	
+1831	哥哥の深夜食堂(静安大悦城店)	no_change	high	[居酒屋]	[居酒屋]	唯一菜系叶=居酒屋	
+1832	PuR'aisin Wine Bar皮酉海让葡萄酒酒吧(定西路店)	no_change	medium	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	
+1833	葡道Wine Shop & Bar(武康店)	no_change	medium	[葡萄酒/自然酒吧]	[葡萄酒/自然酒吧]	唯一菜系叶=葡萄酒/自然酒吧; 店名业态词佐证	
+1834	Lab whisky&cocktail(武定路店)	no_change	high	[威士忌吧]	[威士忌吧]	唯一菜系叶=威士忌吧	
+1835	PLAN B(襄阳北路店)	no_change	low	[鸡尾酒吧]	[鸡尾酒吧]		
+1836	FINE pancake&canteen(陕西南路店)	no_change	high	[松饼/薄饼]	[松饼/薄饼]	唯一菜系叶=松饼/薄饼; 仅店名地名弱信号(1)	
+1837	Le Pain Sense(建国东路店)	no_change	low	[社区烘焙坊]	[社区烘焙坊]		
+1838	WULI	no_change	high	[韩餐]	[韩餐]	仅有菜系根，无更细叶	
+1839	芳邻食堂(静安漫选店)	no_change	medium	[台湾家常菜]	[台湾家常菜]	唯一菜系叶=台湾家常菜; 食客证据命中1词	
+1840	醉东 Oriental House(静安嘉里店)	no_change	high	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 招牌菜命中1词; 食客证据命中2词	
+1841	VIVANT by Johnny Pham	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1842	Cheeva Thai	no_change	high	[泰餐]	[泰餐]	仅有菜系根，无更细叶	
+1843	聪菜馆	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1844	豪生酒家	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1845	黄公子	no_change	high	[海派融合]	[海派融合]	唯一菜系叶=海派融合	
+1846	AmoyA	no_change	high	[闽南菜]	[闽南菜]	唯一菜系叶=闽南菜; 招牌菜命中1词; 食客证据命中2词	
+1847	来去Laichill	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1848	作故私房菜	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1849	叶叶菩提(太原别墅店)	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1850	田咖啡	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1851	ONIRICO CAFÉ	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1852	DOU COFFEE ROASTERS(嘉善路店)	no_change	high	[手冲/自烘豆专门]	[手冲/自烘豆专门]	唯一菜系叶=手冲/自烘豆专门	
+1853	苹果花园(南泉路店)	no_change	high	[社区烘焙坊]	[社区烘焙坊]	唯一菜系叶=社区烘焙坊	
+1854	ISAN BAKERY & CAFE	no_change	medium	[日式面包]	[日式面包]	店名业态词佐证	
+1855	银座仁志川(兴业太古汇店)	no_change	high	[日式面包]	[日式面包]	唯一菜系叶=日式面包	
+1856	泽田本家·铜锣烧(美罗城店)	no_change	high	[铜锣烧/和果子]	[铜锣烧/和果子]	唯一菜系叶=铜锣烧/和果子	
+1857	野人先生Gelato(徐汇旗舰店)	no_change	high	[冰淇淋Gelato]	[冰淇淋Gelato]	唯一菜系叶=冰淇淋Gelato	
+1858	和果子本铺四葉	no_change	high	[铜锣烧/和果子]	[铜锣烧/和果子]	唯一菜系叶=铜锣烧/和果子	
+1859	The Odd Couple	no_change	high	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	
+1860	ZION	no_change	high	[鸡尾酒吧]	[鸡尾酒吧]	唯一菜系叶=鸡尾酒吧	
+1862	COLCA 秘鲁西班牙餐厅(衡山路店)	no_change	low	[秘鲁-西班牙融合菜]	[秘鲁-西班牙融合菜]		
+1863	拉蒂娜·巴西牛排馆 Latina(陆家嘴旗舰店)	no_change	low	[巴西烤牛舌/烤菠萝]	[巴西烤牛舌/烤菠萝]		
+1864	El Bodegon 阿根廷餐厅(常熟路店)	no_change	low	[阿根廷Asado炭烤牛排]	[阿根廷Asado炭烤牛排]		
+1865	Tacolicious(同乐坊店)	no_change	low	[Tex-Mex]	[Tex-Mex]		
+1866	Flambe Bistro 奥地利餐厅(湖滨道店)	no_change	low	[维也纳炸猪排]	[维也纳炸猪排]		
+1868	Delight Food 比利时啤酒餐厅(老外街店)	no_change	low	[比利时啤酒/华夫饼]	[比利时啤酒/华夫饼]		
+1869	麺屋KING	no_change	low	[拉面·虾白汤]	[拉面·虾白汤]	地域子流派(拉面·虾白汤)优先于产品/形式叶(['拉面'])	
+1870	纹兵卫手打荞麦面日料(天山店)	no_change	medium	[荞麦·天妇罗盛荞麦]	[荞麦·天妇罗盛荞麦]	地域子流派(荞麦·天妇罗盛荞麦)优先于产品/形式叶(['荞麦', '天妇罗']); 店名业态词佐证	
+1871	1515牛排馆·酒吧	no_change	medium	[美式牛排]	[美式牛排]	唯一菜系叶=美式牛排; 店名业态词佐证	
+1872	夏宫	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1873	Stone Sal 言盐西餐厅(东湖路店)	no_change	high	[美式牛排]	[美式牛排]	唯一菜系叶=美式牛排	
+1874	云 LES NUAGES	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1875	The MEAT·扒	no_change	high	[美式牛排]	[美式牛排]	唯一菜系叶=美式牛排	
+1876	屋有鲜	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1877	晟永兴(外滩店)	no_change	high	[北京烤鸭]	[北京烤鸭]	唯一菜系叶=北京烤鸭; 招牌菜命中1词; 食客证据命中1词	
+1878	Mr & Mrs Bund	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1879	随堂里	no_change	medium	[海派融合]	[海派融合]	唯一菜系叶=海派融合; 食客证据命中1词	
+1880	临江宴	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+1881	粤海棠·wineapp	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1882	The Pine 松涧	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1883	永·江臻	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+1884	徽季	no_change	high	[徽菜]	[徽菜]	仅有菜系根，无更细叶	
+1885	福廬 FULL HOUSE	no_change	high	[淮扬菜]	[淮扬菜]	唯一菜系叶=淮扬菜; 招牌菜命中1词; 食客证据命中2词	
+1886	老兴鲜(黄浦店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1887	nagi 凪	no_change	high	[Omakase 板前]	[Omakase 板前]	唯一菜系叶=Omakase 板前	
+1888	鮨·天照 Omakase(南京西路店)	no_change	high	[Omakase 板前]	[Omakase 板前]	唯一菜系叶=Omakase 板前	
+1889	TEN HASU 天妇罗专门	no_change	medium	[天妇罗]	[天妇罗]	唯一菜系叶=天妇罗; 店名业态词佐证	
+1890	隅木食物所·台湾红烧牛肉面·台式小火锅(上生新所店)	no_change	high	[台湾菜]	[台湾菜]	仅有菜系根，无更细叶	
+1891	欢桃餐酒馆 Eatery & Bistro	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1892	帅帅精致家常味(长乐路店)	no_change	medium	[上海家常]	[上海家常]	唯一菜系叶=上海家常; 食客证据命中1词	
+1893	光头生煎(山阴路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1894	来来来·泰国街边排档(长乐路店)	no_change	high	[泰北菜]	[泰北菜]	唯一菜系叶=泰北菜; 仅店名地名弱信号(1)	
+1895	RONG融	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1896	翡翠36	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1897	Aster by Joshua Paris	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1898	之舞	no_change	high	[创新菜]	[创新菜]	仅有菜系根，无更细叶	
+1899	古铜法式餐厅	main_changed	high	[法餐]	[法式Bistro]	唯一菜系叶=法式Bistro	法餐->False; 法式Bistro->True
+1900	Shaughnessy	no_change	high	[美式牛排]	[美式牛排]	唯一菜系叶=美式牛排	
+1901	Arva	no_change	high	[意餐]	[意餐]	仅有菜系根，无更细叶	
+1902	Ortensia Shanghai	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1903	Endo	no_change	high	[蛋糕/法式甜品]	[蛋糕/法式甜品]	唯一菜系叶=蛋糕/法式甜品	
+1904	Hide the Smoked Room	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1905	EIGHT UNDER	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1906	艾利爵士餐厅	no_change	high	[意面]	[意面]	唯一菜系叶=意面	
+1907	Tuttu	no_change	high	[意餐]	[意餐]	仅有菜系根，无更细叶	
+1908	夜上海	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1909	上海餐厅	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1910	利苑(徐汇)	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1911	台城镂月	no_change	medium	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州); 食客证据命中1词	
+1912	瑰禧	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中2词; 食客证据命中4词	
+1913	海味观(静安)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1914	上海总会	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+1915	馨源楼	no_change	high	[粤菜]	[粤菜]	仅有菜系根，无更细叶	
+1916	川粤海棠(长宁)	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+1917	外滩·林家一	no_change	medium	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 食客证据命中1词	
+1918	周舍(闵行)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1919	菁禧荟(长宁)	no_change	high	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 招牌菜命中3词; 食客证据命中4词	
+1920	东方景宴	no_change	medium	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	
+1921	鹿园MOOSE(浦东店)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+1922	悦轩(上海柏悦酒店)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+1923	鮨琉璃	no_change	medium	[寿司]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	
+1924	三佰杯	no_change	medium	[宁波菜]	[宁波菜]	唯一菜系叶=宁波菜; 食客证据命中1词	
+1925	MIYARAKU宫楽	no_change	low	[怀石]	[怀石]		
+1926	OnCue	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1928	奈良本寿司	no_change	medium	[寿司]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	
+1929	吾观·私宴	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1930	思南海派私房菜	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1931	La Jade	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1932	洋房333	no_change	medium	[潮汕菜]	[潮汕菜]	唯一菜系叶=潮汕菜; 食客证据命中1词	
+1933	huma 1095	no_change	high	[甜品]	[甜品]	仅有菜系根，无更细叶	
+1934	季福楼	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1935	九福里	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1936	乾璟荟	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1937	上式楼	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1938	瑞香苑一号	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1939	北外滩隐世融合私宴	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1940	兰亭集私房菜	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1941	赉安·海派中式板前料理	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1942	繁花滨江私宴	no_change	high	[融合菜/Fusion]	[融合菜/Fusion]	仅有菜系根，无更细叶	
+1943	林家一·山海宴	no_change	medium	[台州菜]	[台州菜]	唯一菜系叶=台州菜; 食客证据命中1词	
+1944	永兴餐厅	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1945	春餐厅	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1946	功德林(南京西路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1947	云和面馆(黄浦)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1949	菰城宴	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+1950	老地方面馆	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1951	小陶面馆	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1952	临湖素食	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1953	157食坊	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1954	逸采(静安)	no_change	high	[浙菜]	[浙菜]	仅有菜系根，无更细叶	
+1955	渔都老味面	no_change	high	[宁波菜]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中1词	
+1956	渔哥·湛江(静安)	no_change	high	[广府菜(广州)]	[广府菜(广州)]	唯一菜系叶=广府菜(广州)	
+1957	宏玉方	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1958	滇道(静安)	no_change	medium	[云南菜]	[云南菜]	唯一菜系叶=云南菜; 食客证据命中1词	
+1959	徐记海鲜(徐汇)	no_change	high	[湘菜]	[湘菜]	仅有菜系根，无更细叶	
+1960	永丰面馆(黄浦)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1961	和膳面家	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1962	宁海食府	no_change	high	[宁波菜]	[宁波菜]	唯一菜系叶=宁波菜; 招牌菜命中1词; 食客证据命中2词	
+1963	阿勇面馆(东书房路)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1964	坛·四川料理	no_change	high	[川菜]	[川菜]	仅有菜系根，无更细叶	
+1965	味香斋(雁荡路店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1966	福和面馆(昆山花园路总店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1968	迷上 Mi Shang	no_change	high	[意面]	[意面]	唯一菜系叶=意面	
+1969	食光	no_change	high	[意餐]	[意餐]	仅有菜系根，无更细叶	
+1970	Torikaze	no_change	high	[烧鸟]	[烧鸟]	唯一菜系叶=烧鸟	
+1971	Cellar to Table	no_change	high	[意面]	[意面]	唯一菜系叶=意面	
+1972	Trine	no_change	high	[法餐]	[法餐]	仅有菜系根，无更细叶	
+1973	Scilla	no_change	high	[意面]	[意面]	唯一菜系叶=意面	
+1974	沼田双	no_change	high	[天妇罗]	[天妇罗]	唯一菜系叶=天妇罗	
+1975	Hulu Sushi 葫芦寿司	no_change	high	[Omakase 板前]	[Omakase 板前]	唯一菜系叶=Omakase 板前	
+1976	Narisawa Shanghai	no_change	high	[怀石]	[怀石]	唯一菜系叶=怀石	
+1977	老乾杯(外滩店)	no_change	high	[烧肉]	[烧肉]	唯一菜系叶=烧肉	
+1978	Nuits(恒隆三期Pavilion店)	main_changed	high	[法餐]	[法式Bistro]	唯一菜系叶=法式Bistro	法餐->False; 法式Bistro->True
+1982	望庐·精细江西菜(外滩店)	no_change	high	[江西菜]	[江西菜]	仅有菜系根，无更细叶	
+1983	望庐·江西荟馆(前滩店)	no_change	high	[江西菜]	[江西菜]	仅有菜系根，无更细叶	
+1984	POP露台餐厅(外滩三号)	no_change	high	[欧陆菜/欧洲当代]	[欧陆菜/欧洲当代]	仅有菜系根，无更细叶	
+1985	Ginza Onodera 鮨(外滩十八号店)	no_change	medium	[寿司]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	
+1986	鮨升(泰安路店)	no_change	medium	[寿司]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	
+1987	鮨升(陆家嘴店)	no_change	medium	[寿司]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证	
+1988	鮨莲·日本料理(新闸路店)	no_change	medium	[寿司]	[寿司]	唯一菜系叶=寿司; 店名业态词佐证; 仅店名地名弱信号(1)	
+1989	时相遇·1913百年茶馆	main_changed	high	[茶饮]	[新中式茶饮]	唯一菜系叶=新中式茶饮	茶饮->False; 新中式茶饮->True
+1990	少山集(创邑SPACE店)	main_changed	high	[茶饮]	[新中式茶饮]	唯一菜系叶=新中式茶饮	茶饮->False; 新中式茶饮->True
+1991	隐溪茶馆(大田路店)	main_changed	high	[茶饮]	[新中式茶饮]	唯一菜系叶=新中式茶饮	茶饮->False; 新中式茶饮->True
+1992	黄庭茶馆(新天地店)	main_changed	high	[茶饮]	[新中式茶饮]	唯一菜系叶=新中式茶饮	茶饮->False; 新中式茶饮->True
+1993	广记鱼生(龙茗路店)	no_change	high	[广西菜]	[广西菜]	仅有菜系根，无更细叶	
+1994	渔八公·横县鱼生(浦东店)	no_change	high	[广西菜]	[广西菜]	仅有菜系根，无更细叶	
+1995	鱼城主·广式鱼生(宜川店)	no_change	high	[广西菜]	[广西菜]	仅有菜系根，无更细叶	
+1996	粤桂發横县鱼生(江桥店)	no_change	high	[广西菜]	[广西菜]	仅有菜系根，无更细叶	
+1997	酥鱼坊(蒙西小区店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1998	阿模灵鸡粥(蒙西菜市场店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+1999	妃灵蛋糕(蒙西菜场店)	no_change	high	[甜品]	[甜品]	仅有菜系根，无更细叶	
+2000	潘记老面羌饼(嘉陵菜场店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+2001	胡老头鱼丸(鞍山菜市场店)	no_change	high	[本帮菜]	[本帮菜]	仅有菜系根，无更细叶	
+2002	Ministry of Crab(人民公园店)	no_change	high	[斯里兰卡菜]	[斯里兰卡菜]	仅有菜系根，无更细叶	
+2003	蜀南面馆(莘沥路店)	no_change	high	[川南·宜宾菜]	[川南·宜宾菜]	地域子流派(川南·宜宾菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中2词; 食客证据命中2词	
+2004	觉味燃面(商城路店)	no_change	high	[川南·宜宾菜]	[川南·宜宾菜]	地域子流派(川南·宜宾菜)优先于产品/形式叶(['川味面馆']); 招牌菜命中1词; 食客证据命中2词	
