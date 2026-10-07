@@ -26,10 +26,13 @@ def write_kit(source, pilot, output):
     files['src/config.js']=('globalThis.CROWD_CONFIG = '+json.dumps(conf)+';\n').encode()
     guide='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Mac 轻量内测：从这里开始</title>
 <style>body{font:18px system-ui;max-width:740px;margin:36px auto;padding:20px;line-height:1.8}code{background:#eee;padding:4px}button{padding:8px;font:inherit}</style>
-<h1>Mac 轻量内测</h1><p>只使用 Chrome 或 Edge，插件约 26 KB。不需要下载浏览器运行包、运行命令或安装桌面客户端。</p>
-<ol><li>解压整个包，把「Mac轻量内测」文件夹移到一个长期保留的位置。之后不要删除或移动里面的「插件」文件夹。</li>
-<li>在 Chrome 地址栏输入 <code>chrome://extensions</code>；Edge 使用 <code>edge://extensions</code>。开启「开发者模式」，点击「加载已解压的扩展程序」，选择本包里的「插件」文件夹。</li>
+<h1>Mac 轻量内测</h1><p>使用已安装的 Chrome 或 Edge，不下载浏览器运行包，不需要输入终端命令。</p>
+<ol><li>解压后双击「双击开始安装.command」。系统要求确认时按提示操作。助手会校验文件、保存到固定目录、打开安装页并复制插件路径；已识别的旧安装会更新原目录。文件准备好不等于浏览器已安装。</li>
+<li>在扩展页开启「开发者模式」，点击「加载已解压的扩展程序」。在选择文件夹窗口按 <strong>Command+Shift+G</strong>，再按 <strong>Command+V</strong>、回车，点击「选择」。浏览器要求的安装确认仍需本人完成。</li>
 <li>加载后会自动打开参与页面并接续邀请。勾选自愿参与，点击「同意并开始」。首次按提示登录小红书；处理登录或验证码后点「继续采集」。</li></ol>
+<p>已经安装：助手若提示已更新原目录，只需点扩展管理页的刷新图标，不要重复加载或卸载。若未识别旧安装，请用包里的插件文件覆盖原安装目录再刷新，不要另加载新目录。</p>
+<p>助手无法打开？不要关闭系统保护。可手动在 Chrome 输入 <code>chrome://extensions</code>（Edge 输入 <code>edge://extensions</code>），按上面的方式加载解压包里的「插件」文件夹；手动加载后保留该文件夹。若扩展管理页没有自动打开，也可手动输入上述地址。</p>
+<p>目前插件未上架，不能静默安装。完成浏览器确认、同意参与和首次登录后，任务自动执行。没有 Chrome/Edge 时先安装其中一个；浏览器管理策略拦截时不修改策略。</p>
 <p>没有自动打开参与页面？点击浏览器右上角拼图图标，打开「众包公开笔记采集」。右键扩展图标选择「选项」可打开完整页面。</p>
 <p>如果未显示邀请，展开「重新打开邀请」，复制下面的邀请链接、粘贴并点击「接续邀请」。无需中台邮箱或密码。</p>'''
     link=conf['portal']+'/crowd#invite='+pilot['invite']
@@ -43,12 +46,15 @@ def write_kit(source, pilot, output):
 <p>验收：确认收到任务和至少一条真实回传；关闭参与页/最小化窗口后仍执行；让 Mac 睡眠再唤醒、退出再打开浏览器，检查任务自动继续、证据未丢失；点击停止后重复唤醒/重启，确认仍保持停止。完成后告诉 Codex「已启动」，由中台核对真实记录及标准/非标字段。</p>
 <p>这是未上架、未经 Mac 实机验收的内部插件。若浏览器管理策略禁止加载，请保留提示，不修改系统或浏览器管理策略；联系 Codex。</p></html>'''
     output.parent.mkdir(parents=True,exist_ok=True)
+    launcher=(EXT/'crowd-extension-mac.command').read_bytes()
     with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED) as archive:
         for name,data in files.items():
             item=zipfile.ZipInfo('Mac轻量内测/插件/'+name);item.create_system=3;item.external_attr=0o100644<<16;item.compress_type=zipfile.ZIP_DEFLATED
             archive.writestr(item,data)
         archive.writestr('Mac轻量内测/先打开安装说明.html',guide)
-        archive.writestr('Mac轻量内测/SHA256SUMS.txt',''.join(hashlib.sha256(data).hexdigest()+'  插件/'+name+'\n' for name,data in sorted(files.items())))
+        item=zipfile.ZipInfo('Mac轻量内测/双击开始安装.command');item.create_system=3;item.external_attr=0o100755<<16;item.compress_type=zipfile.ZIP_DEFLATED
+        archive.writestr(item,launcher)
+        archive.writestr('Mac轻量内测/SHA256SUMS.txt',''.join(hashlib.sha256(data).hexdigest()+'  插件/'+name+'\n' for name,data in sorted(files.items()))+hashlib.sha256(launcher).hexdigest()+'  双击开始安装.command\n')
     digest=hashlib.sha256(output.read_bytes()).hexdigest()
     output.with_suffix('.zip.sha256').write_text(digest+'  '+output.name+'\n')
     return {'bytes':output.stat().st_size,'sha256':digest,'extension_id':extension_id(),'channel':'unpacked_extension','device_acceptance':False}
