@@ -63,7 +63,9 @@ if [ "$RESTART_CHROME" = "1" ] && pgrep -x "Google Chrome" >/dev/null 2>&1; then
   osascript -e 'tell application "Google Chrome" to quit' 2>/dev/null || true
   sleep 4
   pkill -x "Google Chrome" 2>/dev/null; sleep 2
-  open -a "Google Chrome" --args --load-extension="$EXT_DIR"
+  # 不带参数重启：扩展已在 profile 里注册（dev 挂载），Chrome 每次启动自动重读 unpacked 目录；
+  # --load-extension 在 Chrome 154+ 已被官方拒绝（extension_service.cc:423），带了也被忽略
+  open -a "Google Chrome"
   report upd_chrome_restarted "$NEW_VER"
 fi
 log "== updater 结束"
