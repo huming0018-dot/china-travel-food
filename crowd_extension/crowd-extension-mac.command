@@ -29,12 +29,16 @@ for browser in 'Google Chrome' 'Microsoft Edge'; do
       [ ! -L "$path" ] || continue
       if [ -f "$path/manifest.json" ]; then
         key=$(plutil -extract key raw -o - "$path/manifest.json" 2>/dev/null) || continue
+        version=$(plutil -extract version raw -o - "$path/manifest.json" 2>/dev/null) || continue
       else
         # Restore a removed source folder only when the browser remembers our key.
         case "$path" in "$HOME"/*) ;; *) continue ;; esac
         key=$(plutil -extract "extensions.settings.$extension_id.manifest.key" raw -o - "$preferences" 2>/dev/null) || continue
+        version=$(plutil -extract "extensions.settings.$extension_id.manifest.version" raw -o - "$preferences" 2>/dev/null) || continue
       fi
       [ "$key" = "$expected_key" ] || continue
+      # Legacy v3 uses the same public key; it is a separate runtime.
+      case "$version" in 4.*) ;; *) continue ;; esac
       if [ -n "$installed_path" ] && { [ "$installed_path" != "$path" ] || [ "$browser_app" != "$candidate_app" ] || [ "$installed_profile" != "${profile##*/}" ]; }; then
         echo '检测到多个浏览器或个人资料中的安装。请在之前成功接入的个人资料窗口更新并刷新，不要卸载或重新报名。'; exit 1
       fi
@@ -48,6 +52,8 @@ destination=${installed_path:-"$HOME/Library/Application Support/众包采集轻
 if [ -e "$destination" ]; then
   key=$(plutil -extract key raw -o - "$destination/manifest.json" 2>/dev/null) || { echo '安装目录异常，未覆盖。'; exit 1; }
   [ "$key" = "$expected_key" ] || { echo '安装目录不是本插件，未覆盖。'; exit 1; }
+  version=$(plutil -extract version raw -o - "$destination/manifest.json" 2>/dev/null) || { echo '无法核对原版本，未覆盖。'; exit 1; }
+  case "$version" in 4.*) ;; *) echo '目标目录是旧版采集器，未覆盖。请在现有 v4 参与身份的浏览器中更新。'; exit 1 ;; esac
   [ -z "$(find "$destination" -type l -print -quit)" ] || { echo '插件目录含链接，未覆盖。'; exit 1; }
 fi
 mkdir -p "$destination"

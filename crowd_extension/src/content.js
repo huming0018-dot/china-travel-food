@@ -6,7 +6,10 @@
   const first = selectors => [...document.querySelectorAll(selectors)].find(visible);
   const text = el => el?.innerText?.trim() || '';
   const noteBody = () => first('#detail-desc, .note-detail .note-text, .note-container .note-text, .note-scroller .desc, .note-content .desc');
-  const noteLinks = () => [...document.querySelectorAll('a[href*="/explore/"], a[href*="/discovery/item/"]')].filter(visible);
+  const noteLinks = () => [...document.querySelectorAll('a[href*="/explore/"], a[href*="/discovery/item/"], a[href*="/search_result/"]')].filter(a => {
+    if (!visible(a)) return false;
+    try { C.noteURL(a.href); return true; } catch (_) { return false; }
+  });
   function gate() {
     if (first('[class*="captcha"], [id*="captcha"], iframe[src*="captcha"], [class*="verify-slider"]')) return 'captcha';
     const modal = first('[role="dialog"], .error-page, .error-container, .login-container, .login-modal');
@@ -46,7 +49,7 @@
   function probe(action) {
     // Opt-in diagnostics use categories/counts, never page text or navigation tokens.
     if (action === 'diagnostics') return {ready: true, page: {
-      kind: /^\/search_result\/?$/.test(location.pathname) ? 'search' : /^\/(explore|discovery\/item)\//.test(location.pathname) ? 'note' : 'other',
+      kind: /^\/search_result\/?$/.test(location.pathname) ? 'search' : /^\/(explore|discovery\/item|search_result)\/[a-f0-9]{24}\/?$/i.test(location.pathname) ? 'note' : 'other',
       document: document.readyState, gate: gate(), links: Math.min(noteLinks().length, 500),
       body_chars: Math.min(text(noteBody()).length, 24000), visible: !document.hidden,
       search_note_links: Math.min([...document.querySelectorAll('a[href*="/search_result/"]')].filter(visible).length, 500)

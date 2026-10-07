@@ -16,7 +16,7 @@
       if (status.participant?.status !== 'approved') throw new Error('approval_required');
       if (s.phase === 'note') s.phase = 'reopen_note';
       if (s.phase === 'search') { s.phase = 'idle'; s.search_round = 0; }
-      s.enabled = true; s.last_error = null; s.next_at = 0; s.last_tick = this.r.now();
+      s.enabled = true; s.last_error = null; s.page_failures = 0; s.next_at = 0; s.last_tick = this.r.now();
       await this.save(s); await this.r.schedule(this.r.now() + 1000);
     }
     async stop(reason = 'user_stopped') {
@@ -65,6 +65,11 @@
             item.retry_at = now + 3600000; await this.save(s); await this.r.schedule(item.retry_at); return;
           } else if (receipt.error === 'lease_expired') {
             const renewed = await this.api.rpc('claim', {p_task: item.task}, signal); alive();
+            if (renewed.error === 'daily_quota') {
+              item.retry_at = now + 3600000; s.last_error = 'daily_quota';
+              await this.save(s); await this.r.schedule(item.retry_at); return;
+            }
+            if (renewed.error) throw new Error(renewed.error);
             if (renewed.task?.id === item.task) { item.lease = renewed.task.lease_token; s.task = renewed.task; }
             else { s.rejected.push({...item, reason: 'lease_lost'}); s.outbox.shift(); s.task = null; s.phase = 'idle'; }
           } else {
@@ -132,6 +137,7 @@
             } else {
               C.validate(page.record);
               s.outbox.push({request: this.r.uuid(), task: s.task.id, lease: s.task.lease_token, record: page.record});
+              s.page_failures = 0;
               s.phase = 'search_done'; s.notes_in_session++; s.note_url = null; s.note_id = null; s.loaded_at = null;
               s.next_at = now + (s.notes_in_session % 8 === 0 ? C.between(300000, 600000, this.r.random) : C.between(30000, 60000, this.r.random));
             }
@@ -141,6 +147,12 @@
       } catch (err) {
         if (err.message === 'cancelled' || signal.aborted) return;
         alive(); s.last_error = err.message;
+        if (err.message === 'page_timeout') {
+          s.page_failures = (s.page_failures || 0) + 1;
+          if (s.page_failures >= 3) {
+            s.enabled = false; await this.save(s); await this.r.cancel(); return;
+          }
+        }
         if (['captcha', 'rate_limit', 'login_required', 'approval_required', 'consent_required', 'review_local_rejections'].includes(err.message) || err.status === 401 || err.status === 403) {
           s.enabled = false; await this.save(s); await this.r.cancel(); return;
         }

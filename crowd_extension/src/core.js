@@ -1,25 +1,25 @@
 /* One contract for desktop and native containers. No page receives credentials. */
 (function (root) {
   'use strict';
-  const VERSION = '4.0.1', CONSENT = 'crowd-public-v4';
+  const VERSION = '4.0.2', CONSENT = 'crowd-public-v4';
   const HOST = 'https://www.xiaohongshu.com';
   const publicOrigin = u => u.protocol === 'https:' && ['www.xiaohongshu.com', 'm.xiaohongshu.com'].includes(u.hostname) && !u.username && !u.password && !u.port;
   function noteURL(value) {
     const u = new URL(value, HOST);
     if (!publicOrigin(u)) throw new Error('unsupported_origin');
-    const match = u.pathname.match(/^\/(?:explore|discovery\/item)\/([a-f0-9]{24})\/?$/i);
+    const match = u.pathname.match(/^\/(?:explore|discovery\/item|search_result)\/([a-f0-9]{24})\/?$/i);
     if (!match) throw new Error('invalid_note_url');
     return {id: match[1].toLowerCase(), url: HOST + '/explore/' + match[1].toLowerCase(), navigation: u.href};
   }
   function navigationURL(value) {
     const u = new URL(value);
-    if (!publicOrigin(u) || !(/^\/search_result\/?$/.test(u.pathname) || /^\/(explore|discovery\/item)\/[a-f0-9]{24}\/?$/i.test(u.pathname)))
+    if (!publicOrigin(u) || !(/^\/search_result\/?$/.test(u.pathname) || /^\/(explore|discovery\/item|search_result)\/[a-f0-9]{24}\/?$/i.test(u.pathname)))
       throw new Error('unsupported_navigation');
     return u.href;
   }
   const between = (min, max, random = Math.random) => Math.floor(min + random() * (max - min + 1));
   const initial = () => ({version: 4, enabled: false, consent: null, phase: 'idle', task: null,
-    candidates: [], seen: [], history: [], day: null, visits: 0, outbox: [], rejected: [], next_at: 0, received: 0, last_error: null, last_tick: null, notes_in_session: 0});
+    candidates: [], seen: [], history: [], day: null, visits: 0, outbox: [], rejected: [], next_at: 0, received: 0, last_error: null, last_tick: null, notes_in_session: 0, page_failures: 0});
   function validate(record) {
     if (!record || record.schema_version !== 4) throw new Error('schema_version');
     const s = record.standard, e = record.evidence;

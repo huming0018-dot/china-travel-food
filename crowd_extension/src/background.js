@@ -17,7 +17,12 @@ const runtime = {
   async open(url) {
     CrowdCore.navigationURL(url);
     const id = await storage.get('work_tab');
-    if (id) { try { await chrome.tabs.update(id, {url, active: false}); return; } catch (_) {} }
+    if (id) { try {
+      const tab = await chrome.tabs.get(id);
+      // Persisted IDs can point at another tab after a browser restart.
+      CrowdCore.navigationURL(tab.pendingUrl || tab.url);
+      await chrome.tabs.update(id, {url, active: false}); return;
+    } catch (_) {} }
     const [window] = await chrome.windows.getAll({windowTypes: ['normal']});
     const tab = window ? await chrome.tabs.create({url, windowId: window.id, active: false}) :
       (await chrome.windows.create({url, type: 'normal', state: 'minimized', focused: false})).tabs[0];
@@ -31,7 +36,7 @@ const runtime = {
       if (tab.discarded) return {ready: false, reopen: true};
       // Rendered DOM can be ready while images/iframes keep the tab loading.
       try { return await chrome.tabs.sendMessage(id, {type: 'crowd_probe', action}); }
-      catch (_) { return {ready: false, reopen: tab.status !== 'loading'}; }
+      catch (_) { return {ready: false}; }
     } catch (_) { return {ready: false, reopen: true}; }
   },
   async close() {

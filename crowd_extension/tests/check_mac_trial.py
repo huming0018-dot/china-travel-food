@@ -84,10 +84,21 @@ except (KeyError,ValueError,OSError): sys.exit(1)
     # A deleted source folder is recoverable from the matching cached public key.
     import shutil
     shutil.rmtree(original)
-    prefs.write_text(json.dumps({'extensions':{'settings':{extension_id():{'path':str(original),'manifest':{'key':json.loads((kit/'插件/manifest.json').read_text())['key']}}}}}))
+    prefs.write_text(json.dumps({'extensions':{'settings':{extension_id():{'path':str(original),'manifest':{'key':json.loads((kit/'插件/manifest.json').read_text())['key'],'version':'4.0.0'}}}}}))
     recovered=subprocess.run(['bash',str(helper)],env=env,capture_output=True,text=True)
     assert recovered.returncode==0,recovered.stderr
     assert (original/'src/config.js').exists() and '--profile-directory=Default' in events.read_text()
+    # The same extension public key on legacy v3 must not select/overwrite it.
+    legacy=home/'legacy v3';legacy.mkdir()
+    legacy_manifest=json.loads((kit/'插件/manifest.json').read_text());legacy_manifest['version']='3.4.12'
+    (legacy/'manifest.json').write_text(json.dumps(legacy_manifest));(legacy/'background.js').write_text('legacy code')
+    legacy_profile=home/'Library/Application Support/Google/Chrome/Profile 9/Preferences';legacy_profile.parent.mkdir(parents=True)
+    legacy_profile.write_text(json.dumps({'extensions':{'settings':{extension_id():{'path':str(legacy)}}}}))
+    checked=subprocess.run(['bash',str(helper)],env=env,capture_output=True,text=True)
+    assert checked.returncode==0,checked.stderr
+    assert json.loads((legacy/'manifest.json').read_text())['version']=='3.4.12'
+    assert (legacy/'background.js').read_text()=='legacy code'
+    legacy_profile.unlink()
     # Two profiles sharing a source directory still represent different identities.
     profile=home/'Library/Application Support/Google/Chrome/Profile 1/Preferences';profile.parent.mkdir(parents=True)
     profile.write_bytes(prefs.read_bytes())

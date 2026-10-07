@@ -63,7 +63,28 @@ async function agentChecks() {
   state.agent.enabled=false;state.agent.last_error=reason;
   const before=opened.length;await a.tick(true);assert.equal(state.agent.enabled,false);assert.equal(state.agent.last_error,reason);assert.equal(opened.length,before);
  }
- console.log('PASS agent recovery: awake reload resets dwell, receipt/backoff retained, cooldown retained, discarded page restored, stopped/blocked states never auto-enable');
+  console.log('PASS agent recovery: awake reload resets dwell, receipt/backoff retained, cooldown retained, discarded page restored, stopped/blocked states never auto-enable');
+ // An expired lease plus a temporary quota block must retain the same proof.
+ let quotaState={agent:{...C.initial(),enabled:true,consent:C.CONSENT,outbox:[{request:receipt,task:task.id,lease:task.lease_token,record:record()}]}};
+ const quotaRuntime={...runtime,storage:{get:async k=>structuredClone(quotaState[k]),set:async(k,v)=>quotaState[k]=structuredClone(v)}};
+ const quotaAgent=new CrowdAgent(quotaRuntime,{rpc:async name=>name==='submit'?{error:'lease_expired'}:{error:'daily_quota'}});
+ await quotaAgent.tick();
+ assert.equal(quotaState.agent.outbox.length,1,'quota during renewal must not reject recoverable evidence');
+ assert.equal(quotaState.agent.outbox[0].request,receipt);assert.equal(quotaState.agent.rejected.length,0);
+ assert.ok(quotaState.agent.outbox[0].retry_at>now);
+ // Repeated unavailable pages must eventually pause instead of retrying forever.
+ let brokenState={agent:{...C.initial(),enabled:true,consent:C.CONSENT}};
+ const brokenRuntime={...runtime,storage:{get:async k=>structuredClone(brokenState[k]),set:async(k,v)=>brokenState[k]=structuredClone(v)},probe:async()=>({ready:false})};
+ const broken=new CrowdAgent(brokenRuntime,api);
+ for(let attempt=0;attempt<3;attempt++){
+  brokenState.agent.next_at=0;await broken.tick(); // Opens a fresh search.
+  brokenState.agent.next_at=0;brokenState.agent.page_deadline=now-1;await broken.tick();
+ }
+ assert.equal(brokenState.agent.enabled,false,'three page failures pause automatic navigation');
+ assert.equal(brokenState.agent.last_error,'page_timeout');
+ const brokenOpens=opened.length;await broken.tick(true);assert.equal(opened.length,brokenOpens);
+ await broken.start();assert.equal(brokenState.agent.page_failures,0,'explicit resume resets the failure budget');
+ console.log('PASS lifecycle failure paths: quota retains evidence; repeated page failures pause until explicit resume');
  // Authentication failures in refresh cannot leak an anon bearer into RPCs.
  const fetches=[];const st={get:async()=>({refresh_token:'refresh',expires_at:0}),set:async()=>{}};
  const client=new CrowdAPI({url:'https://test.supabase.co',key:'sb_publishable_test'},st,async(url,options)=>{fetches.push({url,options});return {ok:false,status:401,json:async()=>({message:'expired'})};});
@@ -71,6 +92,9 @@ async function agentChecks() {
  const scoped=C.accountStorage(storage); state.session={user:{id:'a'}};await scoped.set('agent',{secret:'a'});state.session={user:{id:'b'}};assert.equal(await scoped.get('agent'),undefined);state.session={user:{id:'a'}};assert.equal((await scoped.get('agent')).secret,'a');
   assert.throws(()=>C.noteURL('https://www.xiaohongshu.com.evil.test/explore/'+id));
   assert.equal(C.noteURL('https://m.xiaohongshu.com/discovery/item/'+id+'?xsec_token=local-only').url,C.HOST+'/explore/'+id);
+  assert.equal(C.noteURL('/search_result/'+id+'?xsec_token=local-only').url,C.HOST+'/explore/'+id);
+  assert.equal(C.navigationURL(C.HOST+'/search_result/'+id+'?xsec_token=local-only'),C.HOST+'/search_result/'+id+'?xsec_token=local-only');
+  for (const value of ['/search_result/?keyword=其他词','/search_result/not-a-note','/search_result/'+id+'/private']) assert.throws(()=>C.noteURL(value));
   assert.equal(C.navigationURL('https://m.xiaohongshu.com/explore/'+id),'https://m.xiaohongshu.com/explore/'+id);
   for (const url of ['https://m.xiaohongshu.com.evil.test/explore/','https://user@m.xiaohongshu.com/explore/','http://m.xiaohongshu.com/explore/','https://m.xiaohongshu.com:8443/explore/']) assert.throws(()=>C.noteURL(url+id));
  console.log('PASS agent: automatic cycle, first dwell, worker restart, cooldown upload, rate stop, cancellation, auth refresh, account isolation');
