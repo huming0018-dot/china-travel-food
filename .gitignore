@@ -1,6 +1,7 @@
 # dependencies
 node_modules/
 **/node_modules/
+app/node_modules
 /.pnp
 .pnp.js
 
@@ -119,3 +120,13 @@ batch8_work/
 research/post_record/
 .data/
 cloud/.data/pm_dispatch_ledger.json.bak
+.crowd-launch/
+app/public/crowd/releases/
+
+# v4 SDK/runtime artifacts and isolated test tools
+crowd_extension/releases/
+crowd_extension/dist-release/
+crowd_extension/mobile/**/build/
+crowd_extension/mobile/**/.gradle/
+crowd-test-harness/results/
+cloud/supabase/.temp/

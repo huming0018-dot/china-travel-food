@@ -1,0 +1,70 @@
+"""Deployment rejects mismatched targets, stale clients and unverified channels; no network."""
+import hashlib
+import json
+from pathlib import Path
+import sys
+import tempfile
+from unittest.mock import patch
+import zipfile
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'cloud'))
+import crowd_launch as launch
+
+actual=launch.EXT
+with tempfile.TemporaryDirectory() as temporary:
+    root=Path(temporary); ext=root/'ext'; (ext/'releases').mkdir(parents=True); (ext/'src').mkdir()
+    (root/'app/.vercel').mkdir(parents=True); (root/'app/.vercel/project.json').write_text('{}')
+    conf={'url':'https://test.supabase.co','key':'sb_publishable_test','portal':'https://crowd.example.test'}
+    package=ext/'releases/crowd-android-v4.0.0-debug.apk'
+    files=['core.js','agent.js','api.js','join.js','native-runtime.js','controller.js','controller.css','content.js']
+    native={'mobile/android/CollectorService.java':'fixture-current-native-digest'}
+    with zipfile.ZipFile(package,'w') as z:
+        z.writestr('assets/config.js','globalThis.CROWD_CONFIG = '+json.dumps(conf)+';')
+        for file in files:
+            content=(actual/'src'/file).read_bytes(); (ext/'src'/file).write_bytes(content); z.writestr('assets/'+file,content)
+        z.writestr('assets/controller.html',launch.controller_html(conf))
+        z.writestr('assets/source-integrity.json',json.dumps(native))
+    release={'channel':'apk','url':conf['portal']+'/crowd/releases/'+package.name,'version':'4.0.0','verified':True,'sha256':hashlib.sha256(package.read_bytes()).hexdigest()}
+    env={'SUPABASE_SERVICE_ROLE_KEY':'sb_secret_TEST_ONLY','SUPABASE_DB_URL':'postgresql://postgres:test-only@db.test.supabase.co/postgres','VERCEL_TOKEN':'TEST_ONLY','SUPABASE_CLI':'fake-supabase','VERCEL_CLI':'fake-vercel','CROWD_RELEASES_JSON':json.dumps({'android':release})}
+    with patch.object(launch,'ROOT',root),patch.object(launch,'EXT',ext),patch.object(launch,'config',return_value=conf),patch.object(launch,'source_integrity',side_effect=lambda platform:native):
+        assert launch.check(env)[0]['ready']
+        gateway_env={**env,'CROWD_GATEWAY_TOKEN':'a'*64}
+        for field in ['SUPABASE_SERVICE_ROLE_KEY','SUPABASE_DB_URL','SUPABASE_CLI']: gateway_env.pop(field,None)
+        gateway_conf={**conf,'key':'eyJ.TEST_PUBLIC_ONLY'}
+        # No release is allowed to bypass artifact checks. With no channels,
+        # isolate the backend credential requirements instead of faking a package.
+        with patch.object(launch,'config',return_value=gateway_conf),patch.object(launch.shutil,'which',return_value=None):
+            report=launch.check({**gateway_env,'CROWD_RELEASES_JSON':'{}'})[0]
+            assert not any(k in report['missing'] for k in ['SUPABASE_SERVICE_ROLE_KEY','SUPABASE_DB_URL','Supabase CLI'])
+            assert any('channel' in k for k in report['missing'])
+            assert not launch.check({**gateway_env,'CROWD_GATEWAY_TOKEN':'short','CROWD_RELEASES_JSON':'{}'})[0]['ready']
+        assert not launch.check({**env,'SUPABASE_DB_URL':'postgresql://postgres:test-only@db.other.supabase.co/postgres'})[0]['ready']
+        assert not launch.check({**env,'CROWD_RELEASES_JSON':json.dumps({'android':{**release,'verified':False}})})[0]['ready']
+        assert not launch.check({**env,'CROWD_RELEASES_JSON':json.dumps({'android':{**release,'sha256':'0'*64}})})[0]['ready']
+        for file in ['content.js','agent.js']:
+            original=(ext/'src'/file).read_bytes(); (ext/'src'/file).write_text('changed implementation')
+            report=launch.check(env)[0];assert not report['ready'];assert any('stale' in item for item in report['missing'])
+            (ext/'src'/file).write_bytes(original)
+        native['mobile/android/CollectorService.java']='changed-native-digest'
+        assert not launch.check(env)[0]['ready'],'changed native host must invalidate the old installation package'
+        native['mobile/android/CollectorService.java']='fixture-current-native-digest'
+        (ext/'src/agent.js').write_text('new implementation')
+        report=launch.check(env)[0];assert not report['ready'];assert any('stale' in item for item in report['missing'])
+        (ext/'src/agent.js').write_bytes((actual/'src/agent.js').read_bytes())
+        installer=ext/'releases/crowd-windows-x64-v4.0.0-setup.exe';installer.write_bytes(b'MZfixture-not-an-installable-program')
+        shared={file:hashlib.sha256((actual/'src'/file).read_bytes()).hexdigest() for file in files}
+        shared['controller.html']=hashlib.sha256(launch.controller_html(conf).encode()).hexdigest()
+        record={'platform':'windows','version':'4.0.0','arch':'x64','sha256':hashlib.sha256(installer.read_bytes()).hexdigest(),'config':conf,'shared_sources':shared,'native_sources':native}
+        buildfile=installer.with_suffix('.exe.build.json');buildfile.write_text(json.dumps(record))
+        windows={**release,'channel':'desktop','url':conf['portal']+'/crowd/releases/'+installer.name,'sha256':record['sha256']}
+        winenv={**env,'CROWD_RELEASES_JSON':json.dumps({'windows':windows})}
+        assert launch.check(winenv)[0]['ready']
+        record['config']={**conf,'portal':'https://other.example.test'};buildfile.write_text(json.dumps(record))
+        assert not launch.check(winenv)[0]['ready'],'installer cannot point participants at a different portal'
+        record['config']=conf;record['shared_sources']={**shared,'join.js':'0'*64};buildfile.write_text(json.dumps(record))
+        assert not launch.check(winenv)[0]['ready'],'old installation helpers must invalidate EXE release'
+        buildfile.unlink();assert not launch.check(winenv)[0]['ready'],'opaque EXE without build provenance is not publishable'
+    assert not (root/'.crowd-launch').exists(),'checks cannot create operator credentials or an invitation'
+    staged=root/'downloads';staged.mkdir(); descriptor=launch.stage_download(package,staged)
+    rebuilt=b''.join((staged/Path(part['url']).name).read_bytes() for part in descriptor['parts'])
+    assert rebuilt==package.read_bytes();assert hashlib.sha256(rebuilt).hexdigest()==descriptor['sha256']
+print('PASS deployment: matching project, verified channel, artifact/config/source integrity, no mutation during checks')

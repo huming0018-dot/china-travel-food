@@ -1,3 +1,7 @@
+> **2026-10-07 参与接入和数据回收**：`crowd-access` v1 已部署，网页无需 Supabase 管理员密钥即可接入；受发布身份保护的数据查看/导出已通过实际浏览器→网站→线上中台测试。三条真实餐厅任务已发布，每家目标两条；参与者、回传记录及付款仍为 0，安装渠道未验收、未发可开工邀请。数据位于 Supabase `crowd_v4.proofs.record`，保留标准/非标/原文；核验后才导出到 `crowd_v4_verified.jsonl` 供质量门入库。生产 Docker 定时导出未启用。详情见 `crowd_extension/DATA_RECOVERY.md`。
+
+> **2026-10-06 众包 v4 整合修复**：基于主仓库 `1b4006b` + `cd10128`，接入此前已验证的统一短信/二维码入口、邀请自动身份、自动采集/断点回传及标准/非标证据。旧 v3 数据和账本保留，`health.py`/`crowd_tracking.py` 新修复保留。权威说明为 `crowd_extension/README.md`、`DEPLOY.md`、`AUDIT_REPORT.md`；v4 SQL 在 `cloud/supabase/migrations/`。2026-10-06 已在现有 Supabase 安装两项 v4 迁移并回验权限；2026-10-07 中台接入网关已部署并经实际网站服务端只读验证；网站未发布、无正式邀请、调度未启用。分发改为整条短信/二维码，安装引导三步，Windows 普通安装程序已编译；详见 `crowd_extension/DISTRIBUTION.md`、`REPAIR_VERIFICATION.md`。苹果完整目标保留，发布账号后补，各端实机验收仍待完成。下面旧上线数字不代表 v4 已上线。
+
 # 当前状态 · STATUS
 
 > 最后更新：2026-10-03 11:50（docker 生产容器治理完成：一键重建固化+删13死肉/3048行+识别13个"建了未接线"模块）

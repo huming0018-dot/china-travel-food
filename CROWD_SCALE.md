@@ -1,3 +1,5 @@
+> **v4 更新（2026-10-05）**：新发布入口 `cloud/crowd_v4.py publish need_ugc.jsonl --apply`，每查询一个认证租约任务，写独立 crowd_v4 schema。crowd_pack.publish 旧调用已转 v4，不再回退 task_queue；crowd_scale 旧覆盖统计不作为 v4 权威。请以 `crowd_extension/README.md` 为当前安装、迁移和验收说明。以下内容留作 v3 历史，旧任务和奖励不自动转换。
+
 # 众包任务包扩容机制 · CROWD_SCALE
 
 > 维护：PM 窗口 · 2026-10-02

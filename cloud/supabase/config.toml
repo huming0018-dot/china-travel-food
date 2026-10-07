@@ -1,0 +1,5 @@
+# CLI project metadata only; db push does not change production Auth configuration.
+project_id = "crowd-v4"
+
+[db]
+major_version = 17
