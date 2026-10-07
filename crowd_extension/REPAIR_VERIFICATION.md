@@ -1,3 +1,5 @@
+> **2026-10-07 正式网页已发布**：PR #1 已合并，Vercel 正式部署 `3bBqSP5GeS7sWM88HSjzdnnw1oSF` / 提交 `adce116` 为 Ready。正式域名 `https://app-lyart-eta-22.vercel.app` 的管理页和 manifest 实际返回 200；匿名回收 403、发布身份查看/导出 200。当前安装渠道为空，邀请返回 release_not_ready，尚不能声明可开工分发。三条真实试点任务 open，参与者/回传为 0；设备问题等待用户回复，Docker 入库流水线未启用。以下历史快照不能代替这一状态。
+
 # v3.4.8 → v4 修复验证 · 2026-10-06
 
 基线：`cd10128`，包含 `1b4006b`。分支：`fix/crowd-distribution-v348`。Ponytail 按项目安装，复用此前验证的 v4 实现；保留现有服务器健康检查、回流监控修复及 v3 数据/账本。
