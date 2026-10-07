@@ -2,11 +2,15 @@
 const $ = id => document.getElementById(id);
 let current, viewTicket = 0, actions = 0;
 const labels = {idle: '等待任务', search: '自动搜索', search_done: '选择下一篇笔记', note: '浏览与采集', reopen_note: '恢复笔记浏览'};
+// Desktop extension diagnostics are explicit and separate from collection consent.
+$('diagnostics_section').hidden = !!globalThis.CrowdNative;
 const errors = {invalid_invite: '邀请无效，请重新打开邀请链接', invite_expired: '邀请已过期，请联系邀请人', invite_full: '本批参与名额已满', installation_already_joined: '本设备已加入另一批邀请，请继续原参与身份', portal_not_configured: '安装包尚未接通参与入口', release_not_ready: '此设备的正式安装渠道尚未开放', backend_unavailable: '暂时连接不上，请稍后重试，已有进度会保留', consent_required: '请先确认自愿参与', approval_required: '账户尚未获得中台审核批准', login_required: '请在下方或工作页面登录小红书后继续', captcha: '遇到验证，请在工作页面处理', rate_limit: '平台已限流，已暂停', user_stopped: '已停止', logged_out: '已退出', system_suspended: '系统暂停或本次批次结束，进度已保存，可重新启动', lease_lost: '任务已由其他设备领取，证据保留待审'};
 async function send(type, extra = {}) {
   const reply = globalThis.CrowdNative ? await CrowdNative.command(type, extra) : await chrome.runtime.sendMessage({type, ...extra});
   if (!reply.ok) throw new Error(reply.error); return reply.data;
 }
+errors.page_timeout = '页面准备超时。可点击「查看采集页面」检查加载、登录或验证情况，并开启运行诊断。';
+errors.work_page_missing = '采集页面尚未打开，请先开始或继续任务。';
 async function refresh() {
   const ticket = ++viewTicket;
   const data = await send('state'), s = data.agent, p = data.status;
@@ -20,8 +24,11 @@ async function refresh() {
   $('status').replaceChildren();
   for (const [name, value] of Object.entries(fields)) { const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = name; dd.textContent = String(value); $('status').append(dt, dd); }
   $('agree').checked = s.consent === CrowdCore.CONSENT;
+  $('diagnostics').checked = data.diagnostics?.enabled === true;
+  $('diagnostics').disabled = !data.session || actions > 0;
+  $('diagnostics_status').textContent = data.diagnostics?.pending_clear ? '诊断已关闭；联网后清除云端旧状态。' : data.diagnostics?.error ? '诊断暂未送达，联网后自动重试，不影响采集。' : data.diagnostics?.sent_at ? '最近诊断送达：' + new Date(data.diagnostics.sent_at).toLocaleTimeString('zh-CN') : data.diagnostics?.enabled ? '诊断已开启，正在准备发送。' : '诊断未开启。';
 }
-async function action(fn) { ++actions; ++viewTicket; const buttons = [...document.querySelectorAll('button')]; buttons.forEach(b => b.disabled = b.id !== 'stop'); try { $('message').textContent = ''; await fn(); await refresh(); } catch (e) { $('message').textContent = e.message === 'cancelled' ? '已取消启动' : errors[e.message] || e.message; } finally { --actions; buttons.forEach(b => b.disabled = actions > 0 && b.id !== 'stop'); } }
+async function action(fn) { ++actions; ++viewTicket; $('diagnostics').disabled = true; const buttons = [...document.querySelectorAll('button')]; buttons.forEach(b => b.disabled = b.id !== 'stop'); try { $('message').textContent = ''; await fn(); await refresh(); } catch (e) { $('message').textContent = e.message === 'cancelled' ? '已取消启动' : errors[e.message] || e.message; } finally { --actions; buttons.forEach(b => b.disabled = actions > 0 && b.id !== 'stop'); $('diagnostics').disabled = actions > 0 || !current?.session; } }
 $('login').addEventListener('submit', e => { e.preventDefault(); action(() => send('login', {email: $('email').value, password: $('password').value}).then(() => { $('password').value = ''; })); });
 $('signup').onclick = () => action(async () => { const r = await send('login', {email: $('email').value, password: $('password').value, signup: true}); $('password').value = ''; if (r.confirmation_required) $('message').textContent = '请到邮箱确认账户，再回来登录。'; });
 $('consent').onclick = () => action(async () => { if (!$('agree').checked) throw new Error('consent_required'); if (current?.invited) await send('join', {consent: CrowdCore.CONSENT}); else { await send('consent'); await send('start'); } });
@@ -29,6 +36,8 @@ $('invite_form').onsubmit = e => { e.preventDefault(); action(async () => { awai
 for (const type of ['start', 'stop', 'logout', 'open_login']) $(type).onclick = () => action(() => send(type));
 $('export').onclick = () => action(async () => { const data = await send('export'), text = JSON.stringify(data, null, 2); if (globalThis.CrowdNative) { await CrowdNative.download(text); return; } const blob = new Blob([text], {type: 'application/json'}); const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = 'crowd-pending-evidence.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); });
 $('refresh').onclick = () => action(refresh);
+$('diagnostics').onchange = () => action(() => send('diagnostics', {enabled: $('diagnostics').checked}));
+$('inspect_work_page').onclick = () => action(() => send('inspect_work_page'));
 action(refresh);
 globalThis.addEventListener('crowd_invite', () => action(refresh));
 setInterval(() => { if (!document.hidden && !actions) refresh().catch(() => {}); }, 10000);

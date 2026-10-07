@@ -16,6 +16,7 @@ const commands=[
   [process.env.PYTHON||'python3','crowd_extension/tests/check_share.py']
 ];
 if(process.env.CROWD_TEST_TOOLS)commands.push([process.execPath,'crowd_extension/tests/browser.mjs']);
+if(process.env.CROWD_TEST_TOOLS)commands.push([process.execPath,'crowd_extension/tests/diagnostics-db.mjs']);
 if(process.env.CROWD_PORTAL_TEST_ORIGIN) {
   if(!process.env.CROWD_TEST_TOOLS)throw new Error('Portal tests require CROWD_TEST_TOOLS with Playwright');
   commands.push([process.execPath,'crowd_extension/tests/portal.mjs']);

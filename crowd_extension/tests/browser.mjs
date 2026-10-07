@@ -15,9 +15,13 @@ try {
  await page.goto('https://www.xiaohongshu.com/search_result?keyword=测试餐厅');
  async function inject(){for(const name of ['core','content'])await page.addScriptTag({content:fs.readFileSync(path.join(src,name+'.js'),'utf8')});}
  await inject();let search=await page.evaluate(()=>CrowdPage.probe('search'));assert.equal(search.ready,true);assert.equal(search.links.length,1);
+ const searchDiag=await page.evaluate(()=>CrowdPage.probe('diagnostics'));
+ assert.equal(searchDiag.page.kind,'search');assert.equal(searchDiag.page.links,1);assert.equal(JSON.stringify(searchDiag).includes('navigation-only'),false);
  await page.goto(search.links[0]);await inject();let result=await page.evaluate(()=>CrowdPage.probe('note'));
  assert.equal(result.ready,true);assert.equal(result.record.standard.note_id,id);assert.equal(result.record.standard.url.includes('xsec_token'),false);
  assert.equal(result.record.standard.like_count,12000);assert.equal(result.record.standard.collect_count,null);assert.equal(result.record.extra.hashtags[0],'清蒸鱼');assert.ok(result.record.extra.author_opinion_quotes.every(q=>result.record.evidence.text.includes(q)));
+ const noteDiag=await page.evaluate(()=>CrowdPage.probe('diagnostics'));
+ assert.equal(noteDiag.page.kind,'note');assert.ok(noteDiag.page.body_chars>=8);assert.equal(JSON.stringify(noteDiag).includes('测试餐厅'),false);
  // Ordinary note discussion about "频繁" must not accidentally trigger rate-limit detection.
  await page.locator('#detail-desc').evaluate(el=>el.innerText+=' 我频繁来吃饭。');assert.equal((await page.evaluate(()=>CrowdPage.probe('note'))).gate,undefined);
  await page.locator('body').evaluate(el=>el.insertAdjacentHTML('beforeend','<div class="error-page">访问频繁，请稍后再试</div>'));
@@ -45,6 +49,37 @@ try {
  state.agent={...context.CrowdCore.initial(),consent:context.CrowdCore.CONSENT};let agent=new context.CrowdAgent(runtime,api);await agent.start();
  for(let i=0;i<10;i++){await agent.tick();clock+=45000;if(i===5)agent=new context.CrowdAgent(runtime,api);}
  assert.equal(uploads.length,1);assert.equal(uploads[0].p_record.extra.hashtags.length,2);assert.equal(state.agent.received,1);
+ // Actual extension controller DOM with a fixed Chrome command fixture.
+ const controller=await browser.newPage();
+ await controller.route('https://controller.example.test/**',route=>{
+  const file=new URL(route.request().url()).pathname.slice(1);
+  if(!['controller.html','controller.css','config.js','core.js','api.js','agent.js','join.js','native-runtime.js','controller.js'].includes(file))return route.abort();
+  return route.fulfill({contentType:file.endsWith('.html')?'text/html':file.endsWith('.css')?'text/css':'text/javascript',body:file==='config.js'?'globalThis.CROWD_CONFIG={};':fs.readFileSync(path.join(src,file),'utf8')});
+ });
+ await controller.addInitScript(()=>{
+  globalThis.commands=[];let enabled=false,session=true;
+  globalThis.chrome={runtime:{sendMessage:async message=>{
+   commands.push(message);
+   if(message.type==='state')return {ok:true,data:{session,agent:{enabled:false,phase:'idle',outbox:[],rejected:[],last_error:'page_timeout'},status:{participant:{status:'approved'}},diagnostics:{enabled,sent_at:enabled?Date.now():null}}};
+   if(message.type==='diagnostics'){await new Promise(r=>setTimeout(r,50));enabled=message.enabled;}
+   if(message.type==='logout')session=false;
+   return {ok:true,data:{}};
+  }}};
+ });
+ await controller.goto('https://controller.example.test/controller.html');
+ await controller.waitForFunction(()=>!document.getElementById('diagnostics').disabled);
+ assert.equal(await controller.locator('#diagnostics').isChecked(),false);
+ await controller.locator('#diagnostics').check();
+ await controller.waitForFunction(()=>document.getElementById('diagnostics_status').textContent.includes('最近诊断送达'));
+ await controller.waitForFunction(()=>!document.getElementById('diagnostics').disabled);
+ await controller.locator('#inspect_work_page').click();
+ await controller.waitForFunction(()=>commands.some(c=>c.type==='inspect_work_page')&&!document.getElementById('diagnostics').disabled);
+ await controller.locator('#diagnostics').uncheck();
+ await controller.waitForFunction(()=>document.getElementById('diagnostics_status').textContent==='诊断未开启。');
+ await controller.locator('details:has(#logout) > summary').click();await controller.locator('#logout').click();
+ await controller.waitForFunction(()=>document.getElementById('diagnostics').disabled);
+ assert.equal(await controller.evaluate(()=>commands.some(c=>c.type==='start')),false,'diagnostics controls never start collection');
+ console.log('PASS extension controller DOM: diagnostics default off, opt-in/out status, explicit inspect command, signed-out control disabled, no collection start');
  console.log('PASS Chromium: real DOM, automatic search/navigation/dwell/extraction/upload, reconstructed agent, standard/extra/null fields, gate detection');
  console.log('LIMIT: fixtures, not live Xiaohongshu or Windows/macOS/iOS/Harmony hardware acceptance');
 }finally{await browser.close();}
