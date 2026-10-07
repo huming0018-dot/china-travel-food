@@ -41,9 +41,11 @@ assert.equal((await request('invite',{padding:'x'.repeat(5000)}, {Authorization:
 // Exercise the actual Next server adapter against the handler. No private
 // deployment environment is configured; only the public project key is used.
 const ts=require('../../app/node_modules/typescript'),module={exports:{}};
+const environment={NEXT_PUBLIC_SUPABASE_URL:'https://test.supabase.co',NEXT_PUBLIC_SUPABASE_ANON_KEY:'sb_publishable_TEST_ONLY',SUPABASE_SERVICE_ROLE_KEY:'UNRELATED_SERVER_CREDENTIAL_TEST_ONLY'};
 const source=ts.transpileModule(fs.readFileSync(new URL('../../app/lib/crowd-access.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
-vm.runInNewContext(source,{module,exports:module.exports,process:{env:{NEXT_PUBLIC_SUPABASE_URL:'https://test.supabase.co',NEXT_PUBLIC_SUPABASE_ANON_KEY:'sb_publishable_TEST_ONLY'}},URL,AbortSignal,fetch:(url,options)=>handleAccess(new Request(url,options),backend,configuration,expected)});
+vm.runInNewContext(source,{module,exports:module.exports,process:{env:environment},URL,AbortSignal,fetch:(url,options)=>handleAccess(new Request(url,options),backend,configuration,expected)});
 assert.equal(module.exports.privateBackendConfigured(),false);
+environment.CROWD_DIRECT_BACKEND='1';assert.equal(module.exports.privateBackendConfigured(),true);delete environment.CROWD_DIRECT_BACKEND;
 assert.equal((await module.exports.accessRequest('manifest')).ready,true);
 await assert.rejects(module.exports.accessRequest('operations',{action:'export'}),/operator_required/);
 assert.deepEqual((await module.exports.accessRequest('operations',{action:'export'},'Bearer '+owner)).data,[proof]);
