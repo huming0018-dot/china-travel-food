@@ -44,6 +44,9 @@ try {
     if (followup && !process.env.CROWD_TEST_DEPLOYED_ONLY) {
       await db.exec(readFileSync(new URL(followup, migrationsDir), 'utf8'));
       await db.exec(readFileSync(new URL(followup, migrationsDir), 'utf8'));
+      const refresh = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_ingest_refresh_old_aggregates.sql'));
+      await db.exec(readFileSync(new URL(refresh, migrationsDir), 'utf8'));
+      await db.exec(readFileSync(new URL(refresh, migrationsDir), 'utf8'));
     }
     // Reapplication must preserve the definition and service-only grants.
     await db.exec(readFileSync(new URL(permissionsMigration, migrationsDir), 'utf8'));
@@ -92,6 +95,11 @@ try {
     update public.restaurants set score_diner=2 where id=1;`);
   assert.equal((await call(false)).updated_restaurants, 0, 'withdrawn evidence must not rewrite scores');
   assert.equal(Number((await db.query('select score_diner from public.restaurants where id=1')).rows[0].score_diner), 2);
+  const withdrawn = (await db.query("select note_count,rating_count,rating_avg,participant_count,sample_note_ids,matched_restaurant_id from public.crowd_store_evidence where store_name='唯一店'")).rows[0];
+  assert.deepEqual({ ...withdrawn, rating_avg: Number(withdrawn.rating_avg) }, {
+    note_count: 0, rating_count: 0, rating_avg: 0, participant_count: 0,
+    sample_note_ids: [], matched_restaurant_id: null
+  }, 'withdrawn aggregate must be invalidated, not merely skipped for scoring');
   // Stale unique match also becomes unsafe when a namesake is added to the master.
   await db.exec(`insert into public.restaurants values (5,'唯一店（新分店）',1);`);
   assert.equal((await call(false)).updated_restaurants, 0);
@@ -108,7 +116,47 @@ try {
     from (values ('零评分',0),('（另一空名称）',5)) a(alias,rating), generate_series(1,3) n;`);
   assert.equal((await call(false)).updated_restaurants, 0);
   assert.deepEqual((await db.query('select score_diner from public.restaurants where id in (7,8) order by id')).rows.map(r => Number(r.score_diner)), [2,2]);
-  console.log('PASS: unique/ambiguous/missing matches, threshold, replay, dry-run, service-only permissions, migration reapplication, withdrawn evidence, stale matches, alias collisions and empty normalized score sources');
+  // Remove a withdrawn open candidate, but preserve human decisions unchanged.
+  await db.exec(`insert into public.crowd_store_candidates(store_name,status,note_count)
+    values ('无匹配店','ignored',7), ('无匹配店','adopted',8);
+    update public.crowd_proofs set gate_status='rejected' where matched_store='无匹配店';`);
+  const beforeDry = (await db.query("select to_jsonb(e) as row from public.crowd_store_evidence e where store_name='无匹配店'")).rows;
+  await call(true);
+  assert.deepEqual((await db.query("select to_jsonb(e) as row from public.crowd_store_evidence e where store_name='无匹配店'")).rows, beforeDry, 'dry-run must not invalidate aggregates');
+  assert.equal((await db.query("select count(*)::int as n from public.crowd_store_candidates where store_name='无匹配店' and status='open'")).rows[0].n, 1);
+  await call(false);
+  assert.deepEqual((await db.query("select status,note_count from public.crowd_store_candidates where store_name='无匹配店' order by status")).rows, [
+    { status: 'adopted', note_count: 8 }, { status: 'ignored', note_count: 7 }
+  ]);
+  assert.equal((await db.query("select note_count from public.crowd_store_evidence where store_name='无匹配店'")).rows[0].note_count, 0);
+  // Partial withdrawal recomputes the surviving count and sample IDs.
+  await db.exec(`insert into public.crowd_proofs(matched_store,kind,participant_id,note_id,gate_status,created_at)
+    values ('部分撤回','note','p1','part1','accepted','2026-01-01'),
+           ('部分撤回','note','p2','part2','accepted','2026-01-02');`);
+  await call(false);
+  await db.exec("update public.crowd_proofs set gate_status='rejected' where note_id='part1'");
+  await call(false);
+  const partial = (await db.query("select note_count,participant_count,sample_note_ids,first_seen::text from public.crowd_store_evidence where store_name='部分撤回'")).rows[0];
+  assert.equal(partial.note_count, 1);
+  assert.equal(partial.participant_count, 1);
+  assert.deepEqual(partial.sample_note_ids, ['part2']);
+  assert.ok(partial.first_seen.startsWith('2026-01-02'));
+  // A previously ambiguous master match must be refreshed to unique and its open candidate removed.
+  await db.exec('delete from public.restaurants where id=3');
+  assert.equal((await call(false)).updated_restaurants, 1);
+  assert.equal((await db.query("select matched_restaurant_id from public.crowd_store_evidence where store_name='重名店'")).rows[0].matched_restaurant_id, 2);
+  assert.equal((await db.query("select count(*)::int as n from public.crowd_store_candidates where store_name='重名店' and status='open'")).rows[0].n, 0);
+  await db.exec("insert into public.restaurants values (3,'重名店(乙)',2)");
+  assert.equal((await call(false)).updated_restaurants, 0);
+  assert.equal((await db.query("select matched_restaurant_id from public.crowd_store_evidence where store_name='重名店'")).rows[0].matched_restaurant_id, null);
+  assert.equal((await db.query("select count(*)::int as n from public.crowd_store_candidates where store_name='重名店' and status='open'")).rows[0].n, 1);
+  // Empty accepted snapshot invalidates every aggregate and clears only open work items.
+  await db.exec("update public.crowd_proofs set gate_status='rejected'");
+  assert.equal((await call(false)).evidence_count, 0);
+  assert.equal((await db.query('select count(*)::int as n from public.crowd_store_evidence where note_count<>0 or rating_count<>0 or participant_count<>0 or rating_avg<>0 or matched_restaurant_id is not null or sample_note_ids<>\'[]\'::jsonb')).rows[0].n, 0);
+  assert.equal((await db.query("select count(*)::int as n from public.crowd_store_candidates where status='open'")).rows[0].n, 0);
+  assert.equal((await call(false)).updated_restaurants, 0);
+  console.log('PASS: unique/ambiguous/missing matches, threshold, replay, dry-run, service-only permissions, migration reapplication, withdrawn evidence, stale matches, alias collisions, old aggregate refresh, open candidate cleanup, human decision retention, partial withdrawal and empty accepted snapshot');
 } finally {
   await db.close();
 }
