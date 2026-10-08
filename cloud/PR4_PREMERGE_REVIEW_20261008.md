@@ -1,6 +1,6 @@
 # PR #4 合并前审查（2026-10-08）
 
-结论：原 head 存在评分保护阻断缺陷。已提供最小后续迁移和回归测试，生产未执行任何迁移或入库 RPC。PR 保持 open；不能宣称 main 与线上迁移历史已一致。
+结论（后续复核）：原 head 的两项评分保护缺陷已由 `c6466dc` 修复；源码合并条件已满足。新安装 SQL、旧 main 升级和最新 main 试合并均通过隔离回归。生产未执行任何迁移或入库 RPC；新增评分保护迁移仍待独立部署，不能宣称生产已使用新增保护。
 
 ## 审查基线
 
@@ -57,4 +57,17 @@ CROWD_TEST_DEPLOYED_ONLY=1 CROWD_TEST_TOOLS=/path/to/tools node cloud/tests/crow
 
 生产迁移历史还存在多项 v4 后续版本，main 当前 migrations 目录仅有两项 20261006 版本；不能将 PR #4 两项迁移核对外推成整个项目迁移历史一致。后续版本归档属于另外的源码同步工作。
 
-下一步门槛：审阅新增评分保护 SQL，按独立部署流程安排这项尚未应用的迁移及只读定义/权限回验，再重新核对最新 PR head/main 并完成合并。此审查没有授权或执行生产重放、数据清理、评分恢复或真实入库。
+## 后续复核与源码合并门槛
+
+- 独立复核 `c6466dc` 的后续 SQL；函数参数、返回 JSON 和后台调用方兼容，无业务 RPC 的自动调用。
+- 对 main `8eac200` 试合并无冲突；两项已部署的 20261007 文件内容未改。
+- 旧 main schema 升级回归通过。增加 `CROWD_TEST_SCHEMA_ONLY=1` 路径，验证更新后的全新安装 SQL 单独运行也通过，而非仅依赖后续迁移覆盖。
+- 增加 catalog 断言，确认两张表的 RLS 已启用及新函数使用空 search_path；在隔离事务临时赋予 anon/authenticated SELECT 后，两张表仍返回零行，证明 RLS 与 ACL 分别有效，事务随后回滚。
+- 仓库未发现 GitHub Actions 工作流；已检查网站构建脚本、cloud/deploy.sh 和 cloud/entrypoint.sh，未发现合并自动执行数据库迁移的步骤。Vercel 网站构建成功不能替代 SQL 测试。
+- 源码归档与生产部署分开进行：可以合并修复和历史迁移文件，新增 `20261008134109` 仍标为待部署。合并不要求重放已部署迁移，也不执行新增迁移、真实入库、数据清理或评分恢复。
+
+```sh
+CROWD_TEST_SCHEMA_ONLY=1 CROWD_TEST_TOOLS=/path/to/tools node cloud/tests/crowd-store-ingest.mjs
+```
+
+上表“源码合并”记录的是首次审查时状态；最终合并结果以 GitHub PR #4 及 HANDOFF.md / STATUS.md 顶部的后续状态记录为准。生产定义/权限沿用首次审查的只读证据，本次后续复核没有重新调用生产数据库。
