@@ -17,6 +17,13 @@ errors.page_mismatch = '当前页面搜索词与任务不一致，已暂停。�
 errors.daily_quota = '今日配额已满，已有证据保留，稍后自动重试。';
 errors.work_page_missing = '采集页面尚未打开，请先开始或继续任务。';
 errors.invite_full = '此邀请的名额已占用。已参加过请回到原浏览器和个人资料继续，更新无需重新报名；不要卸载插件。';
+Object.assign(errors, {
+  control_unavailable: '安全配置暂时无法确认，已暂停新访问；已有证据会保留。',
+  global_pause: '管理者已暂停采集，恢复后会自动继续。',
+  action_budget: '今天的访问次数已用完，明天自动继续。',
+  action_gap: '正在等待下一次访问。', session_rest: '本轮访问结束，正在休息。',
+  known_note: '这篇笔记已经回收，正在选择下一篇。', note_busy: '这篇笔记正由其他参与者采集，正在选择下一篇。'
+});
 async function refresh() {
   const ticket = ++viewTicket;
   const data = await send('state'), s = data.agent, p = data.status;
@@ -26,7 +33,7 @@ async function refresh() {
   $('start').hidden = !data.session;
   $('consent').textContent = data.session ? '同意并继续' : '同意并开始';
   const fields = {'插件版本': CrowdCore.VERSION, '中台账户': data.session ? '已登录' : '未登录', '参与状态': p.participant?.status || p.error || '尚未报名', '自动执行': s.enabled ? '已开启' : '已停止', '当前阶段': s.phase === 'idle' && s.task ? '准备执行任务' : labels[s.phase] || s.phase,
-    '任务': s.task?.query || '暂无', '服务端接收': p.received ?? '—', '核验有效': p.verified ?? '—', '已记奖励': p.reward_fen == null ? '—' : '¥' + (p.reward_fen / 100).toFixed(2), '累计余数': p.remainder ?? '—', '待回传 / 待处理': s.outbox.length + ' / ' + s.rejected.length, '最近提示': errors[s.last_error] || s.last_error || '无'};
+    '任务': s.task?.query || '暂无', '服务端接收': p.received ?? '—', '核验有效': p.verified ?? '—', '已记奖励': p.reward_fen == null ? '—' : '¥' + (p.reward_fen / 100).toFixed(2), '累计余数': p.remainder ?? '—', '待回传 / 待处理': s.outbox.length + ' / ' + s.rejected.length, '最早下一步': s.next_at > Date.now() ? new Date(s.next_at).toLocaleString('zh-CN') : '等待调度', '今日访问': s.control ? Object.entries(s.control.counts).map(([k,v]) => ({search:'搜索',detail:'详情',comment:'评论展开',scroll:'滚动'})[k] + ' ' + v + '/' + s.control.caps[k]).join('，') : '尚未同步', '最近提示': errors[s.last_error] || s.last_error || '无'};
   $('status').replaceChildren();
   for (const [name, value] of Object.entries(fields)) { const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = name; dd.textContent = String(value); $('status').append(dt, dd); }
   $('agree').checked = s.consent === CrowdCore.CONSENT;

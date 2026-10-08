@@ -15,6 +15,7 @@ async function agentChecks() {
  const storage={get:async k=>structuredClone(state[k]),set:async(k,v)=>{state[k]=structuredClone(v);}};
  const task={id:1,query:'测试餐厅',received:0,target:1,lease_token:randomUUID(),lease_until:new Date(now+1200000).toISOString()};
  const api={rpc:async(name,p)=>{
+  if(name==='guard')return {version:1,ttl_ms:600000,paused:false,allowed:true,reason:null,wait_ms:0,gap_ms:30000,caps:{search:30,detail:60,comment:120,scroll:120},counts:{search:0,detail:0,comment:0,scroll:0},session_count:0};
   if(name==='status')return {participant:{status:'approved'}};
   if(name==='claim')return {task:structuredClone(task)};
   if(name==='submit'){uploads.push(p);return {inserted:true,task_received:1};}
@@ -38,10 +39,10 @@ async function agentChecks() {
  state.agent={...C.initial(),enabled:true,consent:C.CONSENT,task:structuredClone(task),phase:'note',page_deadline:now+60000,note_id:id,loaded_at:now-100000,scrolls:2,dwell_ms:45000};
  gate='rate_limit';await a.tick();assert.equal(state.agent.enabled,false);assert.equal(uploads.length,1);
  // A stopped operation must not upload or resurrect enabled=true after an await.
- gate=null;state.agent.enabled=true;state.agent.next_at=0;
+ gate=null;state.agent.enabled=true;state.agent.next_at=0;state.agent.pending_risk=null;
  let release;const waiting=new Promise(resolve=>release=resolve); runtime.probe=async()=>{await waiting;return {ready:true,record:record()};};
  const tick=a.tick();await new Promise(r=>setImmediate(r));const stop=a.stop();release();await Promise.all([tick,stop]);assert.equal(state.agent.enabled,false);assert.equal(state.agent.outbox.length,0);
- state.agent.note_url=C.HOST+'/explore/'+id;await a.start();await a.tick();assert.equal(state.agent.phase,'note');assert.equal(state.agent.loaded_at,null,'restart must reload and restart dwell');assert.equal(opened.at(-1),state.agent.note_url);
+ state.agent.note_url=C.HOST+'/explore/'+id;state.agent.next_at=0;await a.start();await a.tick();assert.equal(state.agent.phase,'note');assert.equal(state.agent.loaded_at,null,'restart must reload and restart dwell');assert.equal(opened.at(-1),state.agent.note_url);
  await a.stop();state.agent.enabled=true;state.agent.phase='idle';state.agent.task=null;state.agent.day=new Date(now+8*3600000).toISOString().slice(0,10);state.agent.visits=60;state.agent.next_at=0;
  const previousOpens=opened.length;await a.tick();assert.equal(opened.length,previousOpens,'daily browsing budget stops navigation');
  state.agent.consent=null;await a.tick();assert.equal(state.agent.enabled,false);assert.equal(state.agent.last_error,'consent_required');
@@ -90,6 +91,7 @@ async function agentChecks() {
   assert.equal(brokenState.agent.enabled,false);assert.equal(brokenState.agent.last_error,reason);
  }
  brokenRuntime.probe=async()=>({ready:true,links:[C.HOST+'/explore/'+id],keyword:'其他餐厅'});
+ brokenState.agent.phase='idle';
  await broken.start();brokenState.agent.next_at=0;await broken.tick();brokenState.agent.next_at=0;await broken.tick();
  assert.equal(brokenState.agent.enabled,false);assert.equal(brokenState.agent.last_error,'page_mismatch');assert.equal(brokenState.agent.outbox.length,0);
  console.log('PASS lifecycle failure paths: quota retains evidence; repeated page failures pause until explicit resume');

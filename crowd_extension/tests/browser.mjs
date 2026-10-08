@@ -124,13 +124,19 @@ try {
   grant usage on schema auth to authenticated;grant execute on function auth.uid(),auth.role() to authenticated;`);
  await db.exec(fs.readFileSync('cloud/supabase/migrations/20261006145016_crowd_v4.sql','utf8'));
  await db.exec(fs.readFileSync('cloud/supabase/migrations/20261007120848_crowd_v4_view_count.sql','utf8'));
+ await db.exec(fs.readFileSync('cloud/supabase/migrations/'+fs.readdirSync('cloud/supabase/migrations').find(n=>n.endsWith('_crowd_v4_safety.sql')),'utf8'));
  await db.query('insert into auth.users values($1)',[user]);
  await db.query("insert into crowd_v4.participants(user_id,status,consent,quota_day) values($1,'approved','crowd-public-v4',2)",[user]);
  await db.exec(`insert into crowd_v4.tasks(source_key,query,store_name,anchor_terms,target) values('fixture','测试餐厅','测试餐厅','["测试餐厅"]',1)`);
  await db.query("select set_config('request.jwt.claim.sub',$1,false),set_config('request.jwt.claim.role','authenticated',false)",[user]);
  await db.exec('set role authenticated');
+ let serverClock=clock;
  const api={rpc:async(name,p={})=>{
-  const statements={status:['select public.crowd_v4_status() as result',[]],
+  // Accelerated test clock: advance only the private fixture's safety timestamps.
+  const elapsed=clock-serverClock;serverClock=clock;
+  if(elapsed){await db.exec('reset role');await db.query("update crowd_v4.safety set next_action=next_action-$1*interval '1 millisecond',session_started=session_started-$1*interval '1 millisecond',cooldown_until=cooldown_until-$1*interval '1 millisecond'",[elapsed]);await db.exec('set role authenticated');}
+
+  const statements={guard:['select public.crowd_v4_guard($1,$2,$3) as result',[p.p_action,p.p_task??null,p.p_note??null]],status:['select public.crowd_v4_status() as result',[]],
    claim:['select public.crowd_v4_claim($1) as result',[p.p_task??null]],
    submit:['select public.crowd_v4_submit($1,$2,$3,$4::jsonb) as result',[p.p_request,p.p_task,p.p_lease,JSON.stringify(p.p_record)]],
    finish:['select public.crowd_v4_finish($1,$2) as result',[p.p_task,p.p_lease]]};

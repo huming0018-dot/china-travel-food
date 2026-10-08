@@ -109,7 +109,7 @@ def main(argv=None):
     sub = ap.add_subparsers(dest='command', required=True)
     publish = sub.add_parser('publish'); publish.add_argument('file'); publish.add_argument('--city', default='上海'); publish.add_argument('--target', type=int, default=5)
     publish.add_argument('--apply', action='store_true')
-    admin = sub.add_parser('admin'); admin.add_argument('action', choices=['approve','suspend','review','pay','list']); admin.add_argument('--payload-file', required=True); admin.add_argument('--apply', action='store_true')
+    admin = sub.add_parser('admin'); admin.add_argument('action', choices=['approve','suspend','review','pay','list','control']); admin.add_argument('--payload-file', required=True); admin.add_argument('--apply', action='store_true')
     out = sub.add_parser('export'); out.add_argument('file')
     cycle = sub.add_parser('cycle'); cycle.add_argument('--directory', type=Path, default=Path(os.environ.get('FOOD_DATA_DIR', '/app/data')) / 'coverage'); cycle.add_argument('--apply', action='store_true')
     args = ap.parse_args(argv)

@@ -72,7 +72,7 @@ export async function handleAccess(request, backend, configuration, operatorHash
       const input=await read(request);
       if(route==='operations') {
         const {action,payload={}}=input;
-        if(!['publish','review','list','export'].includes(action)||!payload||typeof payload!=='object'||Array.isArray(payload))throw new Error('invalid_request');
+        if(!['publish','review','list','export','control'].includes(action)||!payload||typeof payload!=='object'||Array.isArray(payload))throw new Error('invalid_request');
         const data=await rpc(backend,action,payload,'crowd_v4_admin');
         response=json({data});
       } else if(route==='invite') {

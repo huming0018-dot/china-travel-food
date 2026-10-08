@@ -9,6 +9,7 @@ const context=vm.createContext({console,URL,URLSearchParams,Uint8Array,Event,Abo
   let body;if(url.endsWith('/api/crowd/enroll')){enter();if(waiting)await blocked;body={email:'test@crowd.invalid',joined:true};}
   else if(url.includes('grant_type=password'))body={user:{id:'test-user'},refresh_token:'TEST_REFRESH',access_token:'TEST_ACCESS',expires_in:3600};
   else if(url.endsWith('_status'))body={participant:{status:'approved'}};
+  else if(url.endsWith('_guard'))body={version:1,ttl_ms:600000,paused:false,allowed:true,reason:null,wait_ms:0,gap_ms:30000,caps:{search:30,detail:60,comment:120,scroll:120},counts:{search:0,detail:0,comment:0,scroll:0},session_count:0};
   else if(url.endsWith('_claim'))body={task};else body={};
   return {ok:true,json:async()=>body};
  }});

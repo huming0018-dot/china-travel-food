@@ -6,9 +6,48 @@
     constructor(runtime, api) { this.r = runtime; this.api = api; this.active = null; this.generation = 0; this.recover = false; }
     async read() { return {...C.initial(), ...await this.r.storage.get('agent')}; }
     async save(s) { await this.r.storage.set('agent', s); }
+    async control(s, action, alive, signal, note = null) {
+      const before = this.r.now();
+      let value;
+      try { value = await this.api.rpc('guard', {p_action: action, p_task: s.task?.id || null, p_note: note}, signal); }
+      catch (error) { if (error.status === 401 || error.status === 403) throw error; throw new Error('control_unavailable'); }
+      alive();
+      if (value?.error) throw new Error(value.error);
+      // A broken/older backend cannot silently disable limits. No offline page actions.
+      const caps = {search:30, detail:60, comment:120, scroll:120};
+      if (!value || !Number.isSafeInteger(value.version) || value.version < 1 ||
+        !Number.isSafeInteger(value.ttl_ms) || value.ttl_ms < 1 || value.ttl_ms > 600000 ||
+        typeof value.paused !== 'boolean' || typeof value.allowed !== 'boolean' || (value.allowed && (value.paused || value.reason !== null)) ||
+        !Number.isFinite(value.wait_ms) || value.wait_ms < 0 || value.wait_ms > 172800000 ||
+        !Number.isFinite(value.gap_ms) || value.gap_ms < 30000 ||
+        Object.entries(caps).some(([key,max]) => !Number.isInteger(value.caps?.[key]) || value.caps[key] < 1 || value.caps[key] > max || !Number.isInteger(value.counts?.[key]) || value.counts[key] < 0) ||
+        (s.control && value.version < s.control.version) || this.r.now() - before > 30000 || this.r.now() < before)
+        throw new Error('control_unavailable');
+      s.control = value; s.control_checked = this.r.now(); s.control_expires = before + value.ttl_ms;
+      s.control_error = false;
+      if (['captcha','rate_limit'].includes(action)) s.pending_risk = null;
+      return value;
+    }
+    async admit(s, action, alive, signal, note = null) {
+      const value = await this.control(s, action, alive, signal, note);
+      if (!value.allowed || value.paused) {
+        s.last_error = value.reason || 'control_unavailable';
+        s.next_at = this.r.now() + Math.max(30000, value.wait_ms);
+        await this.save(s); await this.r.schedule(s.next_at); return false;
+      }
+      // The server has already charged this attempt, even if open/probe later fails.
+      s.last_error = null; await this.save(s); alive(); return true;
+    }
     async start() {
       const generation = this.generation;
       await this.active?.catch(() => {});
+      if (generation !== this.generation) throw new Error('cancelled');
+      // Hold the same single-writer lock while status IO is pending.
+      if (this.active) return this.start();
+      this.active = this.activate(generation).finally(() => { this.active = null; });
+      return this.active;
+    }
+    async activate(generation) {
       const s = await this.read();
       if (s.consent !== C.CONSENT) throw new Error('consent_required');
       const status = await this.api.rpc('status');
@@ -16,7 +55,8 @@
       if (status.participant?.status !== 'approved') throw new Error('approval_required');
       if (s.phase === 'note') s.phase = 'reopen_note';
       if (s.phase === 'search') { s.phase = 'idle'; s.search_round = 0; }
-      s.enabled = true; s.last_error = null; s.page_failures = 0; s.next_at = 0; s.last_tick = this.r.now();
+      s.enabled = true; s.last_error = null; s.page_failures = 0; s.control_checked = 0; s.last_tick = this.r.now();
+      // Continuing never clears a durable deadline or a pending risk report.
       await this.save(s); await this.r.schedule(this.r.now() + 1000);
     }
     async stop(reason = 'user_stopped') {
@@ -54,6 +94,12 @@
         s.last_tick = now; await this.save(s); alive();
         // Repair a cleared alarm before network IO can suspend this worker.
         await this.r.schedule(Math.max(s.next_at, now + 30000)); alive();
+        // Independent of task caching and collection waits. Explicit user stop still cancels work.
+        if (s.pending_risk || !s.control || now >= (s.control_checked || 0) + 300000 || now < s.control_checked) {
+          try { await this.control(s, s.pending_risk || 'control', alive, signal); }
+          catch (error) { alive(); s.control_error = true; if (error.status === 401 || error.status === 403) throw error; }
+          await this.save(s);
+        }
         // Delivery runs even during collection cooldown. One stable UUID per record.
         if (s.outbox.length) {
           const item = s.outbox[0];
@@ -85,6 +131,12 @@
           if (s.rejected.length >= 20) throw new Error('review_local_rejections');
           await this.save(s); await this.r.schedule(now + 30000); return;
         }
+        if (s.pending_risk || !s.control || this.r.now() >= s.control_expires || this.r.now() < s.control_checked) {
+          s.last_error = 'control_unavailable'; await this.save(s); return;
+        }
+        if (s.control.paused || ['captcha','rate_limit','session_rest'].includes(s.control.reason) && now < s.control_checked + s.control.wait_ms) {
+          s.last_error = s.control.reason || 'global_pause'; await this.save(s); return;
+        }
         if (s.next_at > now) { await this.r.schedule(s.next_at); return; }
         if (s.visits >= 60) { s.next_at = now + 3600000; await this.save(s); await this.r.schedule(s.next_at); return; }
         if (!s.task || Date.parse(s.task.lease_until) < now + 180000) {
@@ -102,6 +154,7 @@
         } else if (s.task.remaining_today === 0) {
           s.next_at = now + 3600000;
         } else if (s.phase === 'idle') {
+          if (!await this.admit(s, 'search', alive, signal)) return;
           await this.r.open(C.HOST + '/search_result?keyword=' + encodeURIComponent(s.task.query) + '&source=web_search_result_notes'); alive();
           s.phase = 'search'; s.page_deadline = now + 120000; s.next_at = now + 30000;
         } else if (s.phase === 'search') {
@@ -114,11 +167,16 @@
             for (const url of page.links) { try { const note = C.noteURL(url); if (!s.seen.includes(note.id) && !s.history.includes(note.id)) found.set(note.id, note.navigation); } catch (_) {} }
             s.candidates = [...found.values()].slice(0, 80);
             s.search_round = (s.search_round || 0) + 1;
-            if (s.search_round < 3) { await this.r.probe('scroll'); alive(); s.next_at = now + C.between(30000, 45000, this.r.random); }
+            if (s.search_round < 3) { if (!await this.admit(s, 'scroll', alive, signal)) { s.search_round--; await this.save(s); return; } await this.r.probe('scroll'); alive(); s.next_at = now + C.between(30000, 45000, this.r.random); }
             else { s.search_round = 0; s.phase = 'search_done'; s.next_at = now + 30000; }
           }
         } else if (s.phase === 'search_done') {
-          const url = s.candidates.shift(); const id = C.noteURL(url).id;
+          const url = s.candidates[0]; const id = C.noteURL(url).id;
+          if (!await this.admit(s, 'detail', alive, signal, id)) {
+            if (['known_note','note_busy'].includes(s.last_error)) { s.candidates.shift(); s.seen.push(id); await this.save(s); }
+            return;
+          }
+          s.candidates.shift();
           // Mark before navigation: crashes cannot create infinite note loops.
           s.seen.push(id); s.visits++; s.note_id = id; s.note_url = url; s.phase = 'note'; s.loaded_at = null; s.scrolls = 0; s.comment_rounds = 0;
           s.dwell_ms = C.between(45000, 90000, this.r.random); s.page_deadline = now + 180000;
@@ -127,6 +185,10 @@
         } else if (s.phase === 'reopen_note') {
           if (!s.note_url) { s.phase = 'idle'; s.next_at = now + 30000; }
           else {
+            if (!await this.admit(s, 'detail', alive, signal, s.note_id)) {
+              if (['known_note','note_busy'].includes(s.last_error)) { s.phase = 'search_done'; s.note_url = null; s.note_id = null; await this.save(s); }
+              return;
+            }
             await this.r.open(s.note_url); alive(); s.phase = 'note'; s.loaded_at = null; s.scrolls = 0; s.comment_rounds = 0;
             s.page_deadline = now + 180000; s.next_at = now + 30000;
           }
@@ -136,9 +198,11 @@
             if (page.record.standard.note_id !== s.note_id) throw new Error('wrong_note');
             if (s.loaded_at === null) s.loaded_at = now;
             if (now - s.loaded_at < s.dwell_ms || s.scrolls < 2) {
+              if (!await this.admit(s, 'scroll', alive, signal)) return;
               await this.r.probe('scroll'); alive(); s.scrolls++; s.next_at = now + C.between(30000, 45000, this.r.random);
             } else if (page.record.extra.comments && !page.record.extra.comments.truncated && (s.comment_rounds || 0) < 4) {
               // A bounded public-page expansion; never click like, compose, or post controls.
+              if (!await this.admit(s, 'comment', alive, signal)) return;
               const progress = await this.r.probe('comments'); alive(); this.checkPage(progress, s, now);
               s.comment_rounds = (s.comment_rounds || 0) + 1;
               s.next_at = now + 30000;
@@ -155,7 +219,18 @@
       } catch (err) {
         if (err.message === 'cancelled' || signal.aborted) return;
         alive(); s.last_error = err.message;
-        const pageFailure = ['page_timeout', 'page_loading', 'content_unavailable', 'probe_timeout'].includes(err.message);
+        if (['captcha','rate_limit'].includes(err.message)) {
+          // Persist before IO. If reporting fails, the next start must report before any action.
+          s.pending_risk = err.message;
+          s.next_at = Math.max(s.next_at, now + (err.message === 'rate_limit' ? 86400000 : 1800000));
+          await this.save(s);
+          try { await this.control(s, err.message, alive, signal); } catch (_) { alive(); }
+        }
+        s.failure_kind = ['captcha','rate_limit'].includes(err.message) ? 'platform_gate' :
+          err.message === 'login_required' ? 'login' :
+          ['page_loading','probe_timeout'].includes(err.message) ? 'page_transport' :
+          ['page_timeout','content_unavailable','wrong_note','invalid_content','invalid_comments','invalid_count','page_mismatch'].includes(err.message) ? 'page_contract' : 'backend';
+        const pageFailure = ['page_timeout', 'page_loading', 'content_unavailable', 'probe_timeout', 'wrong_note', 'invalid_content', 'invalid_comments', 'invalid_count'].includes(err.message);
         if (pageFailure) {
           s.page_failures = (s.page_failures || 0) + 1;
           if (s.page_failures >= 3) {
@@ -168,7 +243,7 @@
         if (pageFailure || err.message === 'wrong_note') {
           s.phase = 'idle'; s.candidates = []; s.task = null;
         }
-        s.next_at = now + 60000;
+        s.next_at = Math.max(s.next_at, now + (pageFailure ? 60000 * 2 ** (s.page_failures - 1) : 60000));
         if (s.outbox.length) { const item = s.outbox[0]; item.retries = (item.retries || 0) + 1; item.retry_at = now + Math.min(900000, 60000 * 2 ** Math.min(item.retries - 1, 4)); s.next_at = item.retry_at; }
         await this.save(s); await this.r.schedule(s.next_at);
       }

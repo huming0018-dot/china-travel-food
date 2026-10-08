@@ -22,6 +22,9 @@ assert.equal((await request('invite',{})).status,403);assert.equal((await reques
 assert.equal((await request('invite',{}, {Authorization:'Bearer '+owner})).status,400,'closed channels cannot issue invitations');
 assert.equal((await request('operations',{action:'pay'}, {Authorization:'Bearer '+owner})).status,400);
 assert.equal((await request('operations',{action:'admin',name:'unrelated_rpc'}, {Authorization:'Bearer '+owner})).status,400);
+assert.equal((await request('operations',{action:'control',payload:{paused:true}})).status,403);
+assert.equal((await request('operations',{action:'control',payload:{paused:true}},{Authorization:'Bearer '+owner})).status,200);
+assert.equal(calls.at(-1).args.p_action,'control');
 const exported=await (await request('operations',{action:'export',payload:{after_id:0}},{Authorization:'Bearer '+owner})).json();
 assert.deepEqual(exported.data,[proof]);assert.equal(JSON.stringify(exported).includes(owner),false);
 assert.equal((await request('enroll',{invite,install_secret:secret,consent:'wrong',platform:'android'})).status,400);
