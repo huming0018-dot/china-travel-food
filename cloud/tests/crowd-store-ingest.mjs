@@ -34,18 +34,24 @@ try {
   const schema = readFileSync(process.env.CROWD_TEST_SCHEMA || new URL('../sql/crowd_migration_v3.2_05_store_ingest.sql', import.meta.url), 'utf8');
   await db.exec(schema);
   const migrationsDir = new URL('../supabase/migrations/', import.meta.url);
-  const migration = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_ingest_unique_store_match.sql'));
-  await db.exec(readFileSync(new URL(migration, migrationsDir), 'utf8'));
-  await db.exec(readFileSync(new URL(migration, migrationsDir), 'utf8'));
-  const permissionsMigration = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_store_tables_service_only.sql'));
-  await db.exec(readFileSync(new URL(permissionsMigration, migrationsDir), 'utf8'));
-  const followup = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_ingest_current_safe_scores.sql'));
-  if (followup && !process.env.CROWD_TEST_DEPLOYED_ONLY) {
-    await db.exec(readFileSync(new URL(followup, migrationsDir), 'utf8'));
-    await db.exec(readFileSync(new URL(followup, migrationsDir), 'utf8'));
+  if (!process.env.CROWD_TEST_SCHEMA_ONLY) {
+    const migration = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_ingest_unique_store_match.sql'));
+    await db.exec(readFileSync(new URL(migration, migrationsDir), 'utf8'));
+    await db.exec(readFileSync(new URL(migration, migrationsDir), 'utf8'));
+    const permissionsMigration = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_store_tables_service_only.sql'));
+    await db.exec(readFileSync(new URL(permissionsMigration, migrationsDir), 'utf8'));
+    const followup = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_ingest_current_safe_scores.sql'));
+    if (followup && !process.env.CROWD_TEST_DEPLOYED_ONLY) {
+      await db.exec(readFileSync(new URL(followup, migrationsDir), 'utf8'));
+      await db.exec(readFileSync(new URL(followup, migrationsDir), 'utf8'));
+    }
+    // Reapplication must preserve the definition and service-only grants.
+    await db.exec(readFileSync(new URL(permissionsMigration, migrationsDir), 'utf8'));
   }
-  // Reapplication must preserve the definition and service-only grants.
-  await db.exec(readFileSync(new URL(permissionsMigration, migrationsDir), 'utf8'));
+  assert.deepEqual((await db.query(`select relrowsecurity from pg_class
+    where oid in ('public.crowd_store_evidence'::regclass, 'public.crowd_store_candidates'::regclass)`)).rows.map(r => r.relrowsecurity), [true, true]);
+  assert.equal((await db.query(`select proconfig from pg_proc
+    where oid = 'public.crowd_ingest_stores(boolean)'::regprocedure`)).rows[0].proconfig[0], 'search_path=""');
   const call = async dry => (await db.query(`select public.crowd_ingest_stores(${dry}) as result`)).rows[0].result;
   assert.equal((await call(true)).evidence.length, 4);
   assert.equal((await db.query('select count(*)::int as n from public.crowd_store_evidence')).rows[0].n, 0);
@@ -67,6 +73,16 @@ try {
     await assert.rejects(db.query("insert into public.crowd_store_candidates(store_name) values ('unauthorized')"), e => e.code === '42501');
     await db.exec('reset role');
   }
+  // Test RLS separately from ACLs: even a temporary SELECT grant exposes no rows.
+  await db.exec('begin; grant select on public.crowd_store_evidence, public.crowd_store_candidates to anon, authenticated;');
+  for (const role of ['anon', 'authenticated']) {
+    await db.exec(`set local role ${role}`);
+    for (const table of ['crowd_store_evidence', 'crowd_store_candidates']) {
+      assert.equal((await db.query(`select count(*)::int as n from public.${table}`)).rows[0].n, 0);
+    }
+    await db.exec('reset role');
+  }
+  await db.exec('rollback');
   await db.exec('set role service_role');
   assert.equal((await call(false)).ok, true);
   assert.equal((await db.query('select count(*)::int as n from public.crowd_store_evidence')).rows[0].n, 4);
