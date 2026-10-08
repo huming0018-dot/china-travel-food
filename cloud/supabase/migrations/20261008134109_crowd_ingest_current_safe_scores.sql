@@ -1,49 +1,6 @@
--- ============================================================
--- 众包美食家 · 入库链路（审阅#13 收尾：证据 → 店铺聚合 → 主库对接）
--- 迁移 v3.2.5：store 证据聚合 + 候选收录 + score_diner 真实评分回写
--- 执行：备份后整体单次提交（Management API / database/query）
--- 链路：crowd_proofs(accepted) ─聚合─> crowd_store_evidence
---        └─ 匹配 restaurants ──> 更新 score_diner（≥3 条评分才动）
---        └─ 无匹配 ──> crowd_store_candidates（待人工收录）
--- ============================================================
-
--- 0) 证据聚合表（按店名聚合 accepted 证据，主库对接锚点）
-create table if not exists public.crowd_store_evidence (
-  store_name           text primary key,
-  note_count           integer not null default 0,
-  rating_count         integer not null default 0,
-  rating_avg           numeric(3,2) not null default 0,
-  participant_count    integer not null default 0,
-  first_seen           timestamptz not null default now(),
-  last_seen            timestamptz not null default now(),
-  sample_note_ids      jsonb not null default '[]'::jsonb,
-  matched_restaurant_id integer,
-  sync_ts              timestamptz not null default now()
-);
-
--- 1) 候选收录表（无主库匹配的新店，人工审核后收录）
-create table if not exists public.crowd_store_candidates (
-  id           bigint generated always as identity primary key,
-  store_name   text not null,
-  note_count   integer not null default 0,
-  rating_count integer not null default 0,
-  rating_avg   numeric(3,2) not null default 0,
-  first_seen   timestamptz not null default now(),
-  last_seen    timestamptz not null default now(),
-  sample_note_ids jsonb not null default '[]'::jsonb,
-  status       text not null default 'open',   -- open / adopted / ignored
-  created_at   timestamptz not null default now()
-);
-create unique index if not exists uq_crowd_store_candidates_name_status
-  on public.crowd_store_candidates (store_name, status);
-
--- 2) 名称归一化（匹配主库用：小写、去空格、去括号及括号内容）
-create or replace function public.norm_store_name(p text)
-returns text language sql immutable as $$
-  select lower(regexp_replace(coalesce(p, ''), '\s+|（.*?）|\(.*?\)', '', 'g'));
-$$;
-
--- 3) 入库 RPC：聚合 accepted 证据 → 证据表 + 主库 score_diner / 候选表
+-- Follow-up only: never replay stale or ambiguous score sources.
+-- The two 20261007 migrations are already deployed and must remain unchanged.
+-- Ambiguous matches stay candidates; ingestion is a service-only operation.
 create or replace function public.crowd_ingest_stores(p_dry_run boolean default false)
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare
@@ -151,13 +108,3 @@ $$;
 revoke execute on function public.crowd_ingest_stores(boolean) from public, anon, authenticated;
 grant  execute on function public.crowd_ingest_stores(boolean) to service_role;
 
--- 聚合及候选由后台管理；浏览器不得直接改写入库结果。
-alter table public.crowd_store_evidence enable row level security;
-alter table public.crowd_store_candidates enable row level security;
-revoke all on public.crowd_store_evidence, public.crowd_store_candidates from public, anon, authenticated;
-grant all on public.crowd_store_evidence, public.crowd_store_candidates to service_role;
-revoke all on sequence public.crowd_store_candidates_id_seq from public, anon, authenticated;
-grant usage, select on sequence public.crowd_store_candidates_id_seq to service_role;
-
--- 验收
-select 'store ingest migration ok' as r;

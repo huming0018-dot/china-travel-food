@@ -4,6 +4,8 @@
 
 > **2026-10-06 众包 v4 整合修复**：基于主仓库 `1b4006b` + `cd10128`，接入此前已验证的统一短信/二维码入口、邀请自动身份、自动采集/断点回传及标准/非标证据。旧 v3 数据和账本保留，`health.py`/`crowd_tracking.py` 新修复保留。权威说明为 `crowd_extension/README.md`、`DEPLOY.md`、`AUDIT_REPORT.md`；v4 SQL 在 `cloud/supabase/migrations/`。2026-10-06 已在现有 Supabase 安装两项 v4 迁移并回验权限；2026-10-07 中台接入网关已部署并经实际网站服务端只读验证；网站未发布、无正式邀请、调度未启用。分发改为整条短信/二维码，安装引导三步，Windows 普通安装程序已编译；详见 `crowd_extension/DISTRIBUTION.md`、`REPAIR_VERIFICATION.md`。苹果完整目标保留，发布账号后补，各端实机验收仍待完成。下面旧上线数字不代表 v4 已上线。
 
+> **2026-10-07 14:55 远程诊断修复**：旧版店铺入库同名匹配导致的 SQLSTATE `21000` / HTTP 500 已在生产修复，真实数据 31 家聚合、26 家待核对、0 家评分改动；后台 RPC 和聚合/候选表收紧为 service_role。换浏览器的 Mac 新身份已完成接入并领取任务；新版笔记和诊断仍为 0，尚不能确认页面采集成功。权威记录及迁移版本见 [cloud/REMOTE_DIAGNOSIS_20261007.md](cloud/REMOTE_DIAGNOSIS_20261007.md)。
+
 # HANDOFF・上海美食图鉴（china-travel-food）交接文档
 
 > 版本：2026-09-26 ｜ 本文档目标：让另一个 AI bot 
