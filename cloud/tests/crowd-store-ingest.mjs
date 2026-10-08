@@ -31,12 +31,20 @@ try {
       ('不足三条','rating',5,'p2',null,'accepted'),
       ('  ','note',null,'p1','blank','accepted');
   `);
-  const schema = readFileSync(new URL('../sql/crowd_migration_v3.2_05_store_ingest.sql', import.meta.url), 'utf8');
+  const schema = readFileSync(process.env.CROWD_TEST_SCHEMA || new URL('../sql/crowd_migration_v3.2_05_store_ingest.sql', import.meta.url), 'utf8');
   await db.exec(schema);
   const migrationsDir = new URL('../supabase/migrations/', import.meta.url);
   const migration = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_ingest_unique_store_match.sql'));
   await db.exec(readFileSync(new URL(migration, migrationsDir), 'utf8'));
+  await db.exec(readFileSync(new URL(migration, migrationsDir), 'utf8'));
   const permissionsMigration = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_store_tables_service_only.sql'));
+  await db.exec(readFileSync(new URL(permissionsMigration, migrationsDir), 'utf8'));
+  const followup = readdirSync(migrationsDir).find(n => n.endsWith('_crowd_ingest_current_safe_scores.sql'));
+  if (followup && !process.env.CROWD_TEST_DEPLOYED_ONLY) {
+    await db.exec(readFileSync(new URL(followup, migrationsDir), 'utf8'));
+    await db.exec(readFileSync(new URL(followup, migrationsDir), 'utf8'));
+  }
+  // Reapplication must preserve the definition and service-only grants.
   await db.exec(readFileSync(new URL(permissionsMigration, migrationsDir), 'utf8'));
   const call = async dry => (await db.query(`select public.crowd_ingest_stores(${dry}) as result`)).rows[0].result;
   assert.equal((await call(true)).evidence.length, 4);
@@ -62,7 +70,29 @@ try {
   await db.exec('set role service_role');
   assert.equal((await call(false)).ok, true);
   assert.equal((await db.query('select count(*)::int as n from public.crowd_store_evidence')).rows[0].n, 4);
-  console.log('PASS: unique/ambiguous/missing matches, rating threshold, replay, dry-run and service-only permissions');
+  await db.exec('reset role');
+  // When every proof is withdrawn, the old aggregate must never write a score again.
+  await db.exec(`update public.crowd_proofs set gate_status='rejected' where matched_store='唯一店';
+    update public.restaurants set score_diner=2 where id=1;`);
+  assert.equal((await call(false)).updated_restaurants, 0, 'withdrawn evidence must not rewrite scores');
+  assert.equal(Number((await db.query('select score_diner from public.restaurants where id=1')).rows[0].score_diner), 2);
+  // Stale unique match also becomes unsafe when a namesake is added to the master.
+  await db.exec(`insert into public.restaurants values (5,'唯一店（新分店）',1);`);
+  assert.equal((await call(false)).updated_restaurants, 0);
+  // Multiple raw aliases map to one restaurant: never pick an arbitrary source average.
+  await db.exec(`insert into public.restaurants values (6,'别名店',2);
+    insert into public.crowd_proofs(matched_store,kind,rating,participant_id,gate_status)
+    select alias,'rating',rating,'p'||n,'accepted'
+    from (values ('别名店',3),('别名店（分店）',5)) a(alias,rating), generate_series(1,3) n;`);
+  assert.equal((await call(false)).updated_restaurants, 0, 'multiple score sources must fail closed');
+  assert.equal(Number((await db.query('select score_diner from public.restaurants where id=6')).rows[0].score_diner), 2);
+  await db.exec(`insert into public.restaurants values (7,'零评分',2), (8,'（空名称）',2);
+    insert into public.crowd_proofs(matched_store,kind,rating,participant_id,gate_status)
+    select alias,'rating',rating,'p'||n,'accepted'
+    from (values ('零评分',0),('（另一空名称）',5)) a(alias,rating), generate_series(1,3) n;`);
+  assert.equal((await call(false)).updated_restaurants, 0);
+  assert.deepEqual((await db.query('select score_diner from public.restaurants where id in (7,8) order by id')).rows.map(r => Number(r.score_diner)), [2,2]);
+  console.log('PASS: unique/ambiguous/missing matches, threshold, replay, dry-run, service-only permissions, migration reapplication, withdrawn evidence, stale matches, alias collisions and empty normalized score sources');
 } finally {
   await db.close();
 }
