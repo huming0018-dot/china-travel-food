@@ -132,4 +132,3 @@ $$;
 -- 4) 权限：service_role 可执行
 revoke execute on function public.crowd_ingest_stores(boolean) from public, anon, authenticated;
 grant  execute on function public.crowd_ingest_stores(boolean) to service_role;
-
