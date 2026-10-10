@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""wd_notify.py — 外部入站看门狗的独立通知（Telegram + 飞书自建应用）。
+"""wd_notify.py — 外部入站看门狗的独立通知（仅 Telegram；飞书通道已彻底移除）。
 
 凭据来自同目录 notify.env（chmod 600，值不入库/不回显）。
-通道实现与仓库 cloud/health.py 等价：TG 走 TELEGRAM_API_BASE 反代、失败降级直连；
-飞书自建应用取 tenant_access_token 后发 im 文本，token 失效自动刷新重试。
+TG 走 TELEGRAM_API_BASE 反代、失败降级直连。
 """
-import json
 import os
 import pathlib
-import sys
-import time
 
 import requests
 
@@ -49,61 +45,11 @@ def _telegram(title, message):
     return False
 
 
-_TOK = {"t": None, "exp": 0}
-
-
-def _fs_token(base, force=False):
-    now = time.time()
-    if not force and _TOK["t"] and now < _TOK["exp"]:
-        return _TOK["t"]
-    app_id = os.environ.get("FEISHU_APP_ID", "").strip()
-    app_secret = os.environ.get("FEISHU_APP_SECRET", "").strip()
-    if not app_id or not app_secret:
-        return None
-    try:
-        r = _post(base + "/auth/v3/tenant_access_token/internal",
-                  json={"app_id": app_id, "app_secret": app_secret})
-        j = r.json()
-        if j.get("tenant_access_token"):
-            _TOK["t"] = j["tenant_access_token"]
-            _TOK["exp"] = now + int(j.get("expire", 7200)) - 300
-            return _TOK["t"]
-    except Exception as e:
-        print("FS token fail", repr(e)[:100])
-    return None
-
-
-def _feishu(title, message):
-    chat = os.environ.get("FEISHU_CHAT_ID", "").strip()
-    if not chat:
-        return False
-    base = (os.environ.get("FEISHU_API_BASE")
-            or "https://open.feishu.cn/open-apis").rstrip("/")
-    content = json.dumps({"text": f"{title}\n{message}"}, ensure_ascii=False)
-    for attempt in range(2):
-        tok = _fs_token(base, force=(attempt == 1))
-        if not tok:
-            time.sleep(2)
-            continue
-        try:
-            r = _post(base + "/im/v1/messages?receive_id_type=chat_id",
-                      headers={"Authorization": "Bearer " + tok,
-                               "Content-Type": "application/json; charset=utf-8"},
-                      json={"receive_id": chat, "msg_type": "text", "content": content})
-            if r.json().get("code") == 0:
-                return True
-        except Exception as e:
-            print("FS send fail", repr(e)[:100])
-        time.sleep(2)
-    return False
-
-
 def send(title, message):
     load_env()
     t = _telegram(title, message)
-    f = _feishu(title, message)
-    print(f"notify tg={t} fs={f}")
-    return t or f
+    print(f"notify tg={t}")
+    return t
 
 
 if __name__ == "__main__":

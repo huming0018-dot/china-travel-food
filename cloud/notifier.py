@@ -18,7 +18,7 @@
   - 不推送原始 traceback / 登录遮罩图 / 过期二维码；内容做长度与脱敏。
   - 同一 key 内容哈希不变且在冷却内 → 不重复推。
 
-通道复用 health 原语（TG / 飞书自建应用 / 飞书 webhook），不重复实现鉴权。
+通道唯一：health._telegram（飞书自建应用 / webhook 已彻底移除），不重复实现鉴权。
 
 信号 → 模块目录（每条外发都必须能在此登记；无登记/无触发条件不得推送）：
   key                生产模块               触发条件（确定性）                 级别              节流
@@ -115,20 +115,15 @@ def format(level, body, action=None, footer=None):
 
 # ────────────────────── 发送（双通道） ──────────────────────
 def _deliver(header, full):
-    results = {}
-    for fn, name in ((health._telegram, "telegram"),
-                     (health._feishu_app, "feishu_app"),
-                     (health._feishu, "feishu")):
-        try:
-            r = fn(full, header)
-            if r is not None:
-                results[name] = bool(r)
-        except Exception as e:
-            print("[notifier] channel fail", name, repr(e)[:60])
-    ok = any(results.values())
-    if not results:
-        print("[notifier] 未配置任何推送通道")
-    return ok
+    # 唯一通道 Telegram；飞书（自建应用 / webhook）已彻底移除。
+    try:
+        r = health._telegram(full, header)
+    except Exception as e:
+        print("[notifier] telegram fail", repr(e)[:60])
+        r = None
+    if r is None:
+        print("[notifier] Telegram 未配置或未送达")
+    return bool(r)
 
 
 def _record(L, key, level, full, **extra):
@@ -219,4 +214,4 @@ def resolve(body, key, footer=None):
 
 if __name__ == "__main__":
     print("channels:", {k: ("set" if os.environ.get(k) else "missing")
-                        for k in ("TELEGRAM_BOT_TOKEN", "FEISHU_APP_ID", "FEISHU_WEBHOOK")})
+                        for k in ("TELEGRAM_BOT_TOKEN",)})

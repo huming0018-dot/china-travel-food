@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""health.py — 小红书登录态失效检测 + 多通道告警（Telegram / 飞书 / Bark / Server酱）。
+"""health.py — 小红书登录态失效检测 + Telegram 告警（飞书通道已彻底移除）。
 
 云端无法自己扫码，cookie 过期必须让人知道。每次采集前探测 explore，
 被重定向登录 / 出现遮罩 / 拉不到笔记流即判失效：
   1. 写标记 /app/data/COOKIE_INVALID；
-  2. 多通道推送（按环境变量启用：Telegram + 飞书，可再叠加 Bark/Server酱）；
+  2. 经 Telegram 推送；
   3. 编排据此跳过本轮，不硬刷。
 
 防刷屏：每类告警带冷却（ALERT_COOLDOWN_SEC，默认 21600=6 小时），
@@ -14,16 +14,10 @@
 环境变量：
   TELEGRAM_BOT_TOKEN、TELEGRAM_CHAT_ID
   TELEGRAM_API_BASE（可选，国内服务器用反代；默认 https://api.telegram.org）
-  FEISHU_WEBHOOK、FEISHU_SECRET（可选，自定义机器人 webhook + 签名校验）
-  FEISHU_APP_ID、FEISHU_APP_SECRET、FEISHU_CHAT_ID（可选，开放平台应用机器人）
-  FEISHU_API_BASE（可选，默认 https://open.feishu.cn/open-apis）
   ALERT_WEBHOOK（可选，Bark / Server酱 / 通用）
   HTTPS_PROXY / HTTP_PROXY（可选，容器出口代理，requests 自动识别）
   ALERT_COOLDOWN_SEC（默认 21600）
 """
-import base64
-import hashlib
-import hmac
 import json
 import os
 import pathlib
@@ -155,14 +149,12 @@ def note_sent(key):
 
 # ------------------------------------------------ 通道开关（可独立暂停）
 CHANNELS_FILE = pathlib.Path(DATA_DIR) / "notify_channels.json"
-_CHANNEL_ENV = {"telegram": "NOTIFY_TELEGRAM", "feishu_app": "NOTIFY_FEISHU_APP",
-                "feishu": "NOTIFY_FEISHU"}
+_CHANNEL_ENV = {"telegram": "NOTIFY_TELEGRAM"}
 
 
 def channel_enabled(name):
     """通道总开关，默认全开。判定顺序：NOTIFY_* 环境变量 → notify_channels.json → 开。
-    name: telegram / feishu_app / feishu。所有通道原语与 health.alert 都先过此闸，
-    暂停某通道（如飞书）即可一处覆盖看门狗/播报/各补齐脚本的全部外发。"""
+    name: telegram。所有通道原语与 health.alert 都先过此闸。"""
     env = _CHANNEL_ENV.get(name)
     if env:
         v = os.environ.get(env)
@@ -227,95 +219,6 @@ def _telegram(message, title):
     return False
 
 
-# 飞书 tenant_access_token 进程内缓存（提前 5 分钟刷新；失效码强制重取）
-_FS_TOKEN = {"tok": None, "exp": 0}
-_FS_TOKEN_INVALID = {99991663, 99991664, 99991668, 99991661}
-
-
-def _fs_tenant_token(base, force=False):
-    now = time.time()
-    if not force and _FS_TOKEN["tok"] and now < _FS_TOKEN["exp"]:
-        return _FS_TOKEN["tok"]
-    app_id = os.environ.get("FEISHU_APP_ID", "").strip()
-    app_secret = os.environ.get("FEISHU_APP_SECRET", "").strip()
-    if not app_id or not app_secret:
-        return None
-    try:
-        tr = _post_with_retry(base + "/auth/v3/tenant_access_token/internal",
-                              json={"app_id": app_id, "app_secret": app_secret})
-        j = tr.json()
-        tok = j.get("tenant_access_token")
-        if tok:
-            _FS_TOKEN["tok"] = tok
-            _FS_TOKEN["exp"] = now + int(j.get("expire", 7200)) - 300
-        else:
-            print("飞书应用: 取 token 失败", j.get("code"), j.get("msg"))
-        return tok
-    except Exception as e:
-        print("飞书应用: 取 token 异常", repr(e)[:120])
-        return None
-
-
-def _feishu(message, title):
-    """飞书自定义 webhook（带签名）；退避重试。"""
-    if not channel_enabled("feishu"):
-        return None
-    url = os.environ.get("FEISHU_WEBHOOK", "").strip()
-    if not url:
-        return None
-    body = {"msg_type": "text", "content": {"text": f"{title}\n{message}"}}
-    secret = os.environ.get("FEISHU_SECRET", "").strip()
-    if secret:
-        ts = str(int(time.time()))
-        sig = hmac.new(f"{ts}\n{secret}".encode("utf-8"),
-                       digestmod=hashlib.sha256).digest()
-        body["timestamp"] = ts
-        body["sign"] = base64.b64encode(sig).decode("utf-8")
-    try:
-        r = _post_with_retry(url, json=body)
-        data = r.json()
-        return data.get("StatusCode", data.get("code", -1)) == 0
-    except Exception as e:
-        print("飞书 webhook 失败", repr(e)[:120])
-        return False
-
-
-def _feishu_app(message, title):
-    """飞书自建应用：token 缓存+失效自动刷新；失败退避重试；与其它通道独立判定。"""
-    if not channel_enabled("feishu_app"):
-        return None
-    app_id = os.environ.get("FEISHU_APP_ID", "").strip()
-    chat_id = os.environ.get("FEISHU_CHAT_ID", "").strip()
-    if not app_id or not os.environ.get("FEISHU_APP_SECRET", "").strip() or not chat_id:
-        return None
-    base = (os.environ.get("FEISHU_API_BASE")
-            or "https://open.feishu.cn/open-apis").rstrip("/")
-    content = json.dumps({"text": f"{title}\n{message}"}, ensure_ascii=False)
-    for attempt in range(2):
-        tok = _fs_tenant_token(base, force=(attempt == 1))
-        if not tok:
-            time.sleep(2)
-            continue
-        try:
-            r = _post_with_retry(
-                base + "/im/v1/messages?receive_id_type=chat_id",
-                headers={"Authorization": "Bearer " + tok,
-                         "Content-Type": "application/json; charset=utf-8"},
-                json={"receive_id": chat_id, "msg_type": "text", "content": content})
-            j = r.json()
-            if j.get("code") == 0:
-                return True
-            print("飞书应用:", j.get("code"), j.get("msg"))
-            if j.get("code") in _FS_TOKEN_INVALID:   # token 失效→强制刷新重试一次
-                _FS_TOKEN["tok"] = None
-                continue
-            return False
-        except Exception as e:
-            print("飞书应用发送异常", repr(e)[:120])
-            time.sleep(min(2 ** attempt, 4))
-    return False
-
-
 # ------------------------------------------------ 统一入口
 def alert(message, title="上海美食图鉴·采集告警", key="default", once=False, cooldown=None):
     if not should_send(key, cooldown=cooldown, once=once):
@@ -325,12 +228,6 @@ def alert(message, title="上海美食图鉴·采集告警", key="default", once
     tg = _telegram(message, title)
     if tg is not None:
         results["telegram"] = tg
-    fs = _feishu(message, title)
-    if fs is not None:
-        results["feishu"] = fs
-    fsa = _feishu_app(message, title)
-    if fsa is not None:
-        results["feishu_app"] = fsa
     if not results:
         print("【告警】（未配置任何通道）", title, message)
         return
@@ -343,6 +240,4 @@ if __name__ == "__main__":
     # 手动自检：python3 health.py
     print("DATA_DIR", DATA_DIR)
     print("Telegram:", "已配置" if os.environ.get("TELEGRAM_BOT_TOKEN") else "未配置")
-    print("飞书webhook:", "已配置" if os.environ.get("FEISHU_WEBHOOK") else "未配置")
-    print("飞书应用:", "已配置" if (os.environ.get("FEISHU_APP_ID") and os.environ.get("FEISHU_CHAT_ID")) else "未配置")
     print("ALERT_WEBHOOK:", "已配置" if os.environ.get("ALERT_WEBHOOK") else "未配置")

@@ -9,7 +9,6 @@ for v in FOOD_PIPELINE_DIR FOOD_DATA_DIR \
          NEXT_PUBLIC_SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY NEXT_PUBLIC_SUPABASE_ANON_KEY \
          XHS_COOKIE XHS_COOKIE_FILE ALERT_WEBHOOK BATCH TZ \
          TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID TELEGRAM_API_BASE \
-         FEISHU_WEBHOOK FEISHU_SECRET FEISHU_APP_ID FEISHU_APP_SECRET FEISHU_CHAT_ID FEISHU_API_BASE \
          TENCENT_MAP_KEY TENCENT_MAP_SK AMAP_KEY AMAP_SK \
          PHONE_FILL_BATCH HOURS_FILL_BATCH COORD_FILL_ENABLED HOURS_FILL_ENABLED \
          ARK_BASE_URL ARK_API_KEY HAE_MODELS_ARK \
@@ -26,12 +25,11 @@ for v in FOOD_PIPELINE_DIR FOOD_DATA_DIR \
   fi
 done
 
-# 通道开关：仅当 /app/data/notify_channels.json 缺失时写入已知良好默认值（TG+飞书自建 on）。
-# 绝不覆盖命名卷里已存在的显式设置——用户/运维显式关闭的通道保持关闭。
-# 这样全新空卷起来即双通道默认 on，而重建/重建卷不复位用户配置。
+# 通道开关：仅当 /app/data/notify_channels.json 缺失时写入默认值（仅 Telegram；飞书已彻底移除）。
+# 绝不覆盖命名卷里已存在的显式设置。
 CHANNELS_FILE=/app/data/notify_channels.json
 if [ ! -f "$CHANNELS_FILE" ]; then
-  printf '%s\n' '{"telegram": true, "feishu_app": true, "feishu": false}' > "$CHANNELS_FILE"
+  printf '%s\n' '{"telegram": true}' > "$CHANNELS_FILE"
   echo "=== 已写入默认通道开关 $CHANNELS_FILE（仅首次，后续不覆盖）==="
 fi
 
