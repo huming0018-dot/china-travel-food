@@ -38,6 +38,7 @@ RUN python /app/cloud/fix_paths.py /app/pipeline
 
 # 4) 云端运行代码（通配符复制所有 .py，避免硬编码遗漏新文件）
 COPY *.py /app/cloud/
+COPY external_watchdog/telegram_delivery.py /app/cloud/external_watchdog/telegram_delivery.py
 
 # 5) 定时与启动脚本
 COPY crontab.txt entrypoint.sh /app/cloud/

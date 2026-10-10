@@ -1,56 +1,76 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""wd_notify.py — 外部入站看门狗的独立通知（仅 Telegram；飞书通道已彻底移除）。
-
-凭据来自同目录 notify.env（chmod 600，值不入库/不回显）。
-TG 走 TELEGRAM_API_BASE 反代、失败降级直连。
-"""
+"""Standalone Telegram sender. Private notify.env; failed alerts persist locally."""
+import json
 import os
 import pathlib
-
-import requests
-
+import tempfile
+try:
+    from .telegram_delivery import send_telegram
+except ImportError:
+    from telegram_delivery import send_telegram
 HERE = pathlib.Path(__file__).resolve().parent
+OUTBOX = HERE / 'notify_pending.json'
 
 
 def load_env():
-    f = HERE / "notify.env"
+    f = HERE / 'notify.env'
     if f.exists():
         for line in f.read_text().splitlines():
-            k, _, v = line.strip().partition("=")
-            if k and k not in os.environ:
-                os.environ[k] = v
-
-
-def _post(url, **kw):
-    return requests.post(url, timeout=20, **kw)
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            k, sep, v = line.partition('=')
+            if sep and k.strip() not in os.environ:
+                os.environ[k.strip()] = v.strip().strip('\"\'')
 
 
 def _telegram(title, message):
-    token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
-    chat = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
-    if not token or not chat:
-        return False
-    body = {"chat_id": chat, "text": f"{title}\n{message}",
-            "disable_web_page_preview": True}
-    cfg = (os.environ.get("TELEGRAM_API_BASE") or "").strip().rstrip("/")
-    bases = list(dict.fromkeys([b for b in (cfg, "https://api.telegram.org") if b]))
-    for base in bases:
-        try:
-            r = _post(f"{base}/bot{token}/sendMessage", json=body)
-            if r.status_code == 200 and r.json().get("ok") is True:
-                return True
-        except Exception as e:
-            print("TG fail", base, repr(e)[:100])
-    return False
+    return bool(send_telegram(title, message))
+
+
+def _pending():
+    if not OUTBOX.exists():
+        return []
+    # A corrupt queue is an error, not permission to discard queued alerts.
+    pending = json.loads(OUTBOX.read_text())
+    if not isinstance(pending, list):
+        raise ValueError('invalid notification outbox')
+    return pending
+
+
+def _save(pending):
+    fd, path = tempfile.mkstemp(dir=HERE, prefix='.notify-')
+    try:
+        with os.fdopen(fd, 'w') as f:
+            json.dump(pending, f, ensure_ascii=False)
+        os.replace(path, OUTBOX)
+    finally:
+        if os.path.exists(path):
+            os.unlink(path)
+
+
+def flush_pending():
+    """At most one queued alert per cron run; share cron's flock."""
+    load_env()
+    pending = _pending()
+    if pending and _telegram(*pending[0]):
+        _save(pending[1:])
 
 
 def send(title, message):
     load_env()
     t = _telegram(title, message)
-    print(f"notify tg={t}")
+    pending = _pending()
+    item = [title, message]
+    if t:
+        pending = [p for p in pending if p != item]
+    elif item not in pending:
+        pending.append(item)
+    _save(pending)
+    print(f'notify tg={t} queued={len(pending)}')
     return t
 
 
-if __name__ == "__main__":
-    send("上海美食图鉴·看门狗自检", "通知通道测试：收到说明外部入站看门狗推送正常。无需操作。")
+if __name__ == '__main__':
+    # Execute under cron's flock when self-testing on a server.
+    send('上海美食图鉴·看门狗自检', '通知通道测试：收到说明外部入站看门狗推送正常。无需操作。')
