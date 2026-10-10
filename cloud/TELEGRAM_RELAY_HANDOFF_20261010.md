@@ -33,3 +33,12 @@
 ## 工具限制
 
 Supabase CLI migration new 已生成迁移文件，但附带遥测请求被自动审批拒绝；没有重试该 CLI 请求。隔离测试不依赖 CLI。
+
+## 本轮同步与部署尝试结果
+
+- GitHub PR #6 已合并：https://github.com/huming0018-dot/china-travel-food/pull/6 。
+- main 合并提交：215e18f98045dfa64d3e60eb33c9ca2098f41900；修复提交：6bd31a17e1cc4f59300c428b23bdd4934b44bb3c。
+- Supabase apply_migration 两次返回 Invalid or expired requestState；第一次失败后只读回查 enqueue/receipt/requests 均不存在。数据库迁移未部署，不能以 GitHub 合并代替数据库部署。
+- 未运行真实发送自检；没有 Telegram 送达回执或用户收件确认。
+- 广州与上海服务器均未部署本修复。部署顺序必须先迁移，再服务器代码与配置；不可仅拉 main 即宣告完成。
+- 已知 kimi-cu 终端入口存在于历史记录，但本会话可调用工具中未提供该终端。需恢复已有终端接入后按 README 核查当前配置并部署，不要求重新提供秘密凭证。
