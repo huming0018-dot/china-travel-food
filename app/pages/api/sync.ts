@@ -92,7 +92,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   } catch (error: any) {
     console.error('Sync API error:', error);
-    await finish('failed', null, String(error && error.message ? error.message : error));
-    return res.status(500).json({ success: false, error: error.message });
+    // 错误白名单化：不把内部错误细节回显给客户端（防信息泄漏），detail 只进日志
+    const detail = String(error && error.message ? error.message : error);
+    await finish('failed', null, detail);
+    return res.status(500).json({ success: false, error: 'sync_failed' });
   }
 }

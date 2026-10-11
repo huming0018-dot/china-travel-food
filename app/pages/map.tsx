@@ -13,15 +13,15 @@ const Popup = dynamic(() => import('react-leaflet').then(m => m.Popup), { ssr: f
 // 聚合图层（上千点位必须聚合，否则平移卡顿、远视图重叠）；本地组件，CSS 由 Head CDN 加载
 const ClusterGroup = dynamic(() => import('@/components/ClusterGroup'), { ssr: false });
 
-// 修复 Leaflet 默认图标路径
+// 修复 Leaflet 默认图标路径（资源已本地化到 /leaflet/，不再依赖 cdnjs）
 const fixLeafletIcon = () => {
   if (typeof window === 'undefined') return;
   import('leaflet').then(L => {
     delete (L.Icon.Default.prototype as any)._getIconUrl;
     L.Icon.Default.mergeOptions({
-      iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+      iconRetinaUrl: '/leaflet/marker-icon-2x.png',
+      iconUrl: '/leaflet/marker-icon.png',
+      shadowUrl: '/leaflet/marker-shadow.png',
     });
   });
 };
@@ -82,11 +82,11 @@ export default function MapPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-paper-100">
+    <div className="min-h-screen bg-cream-50">
       <Head>
         <title>地图 · China Travel</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
+        <link rel="stylesheet" href="/leaflet/leaflet.min.css" />
+        <link rel="stylesheet" href="/leaflet/MarkerCluster.css" />
         <style>{`
           .cluster-badge{background:none!important;border:none!important;}
           .cluster-badge .cb{display:flex;align-items:center;justify-content:center;border-radius:50%;
@@ -95,13 +95,13 @@ export default function MapPage() {
         `}</style>
       </Head>
 
-      <header className="border-b hairline sticky top-0 z-[1000] bg-paper-100/90 backdrop-blur-sm">
+      <header className="border-b border-line sticky top-0 z-[1000] bg-cream-50/90 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-ink hover:text-ink-soft transition">
+          <Link href="/" className="flex items-center gap-2 text-mocha hover:text-mocha-soft transition">
             <span>←</span>
             <span className="serif text-base font-medium">首页</span>
           </Link>
-          <span className="kicker text-ink-faint">{points.length} / {activeTotal} 家已定位</span>
+          <span className="kicker text-mocha-faint">{points.length} / {activeTotal} 家已定位</span>
         </div>
       </header>
 
@@ -124,11 +124,11 @@ export default function MapPage() {
                   <Popup>
                     <div className="min-w-[160px]">
                       <h3 className="serif text-sm font-medium">{r.name}</h3>
-                      <p className="text-2xs text-ink-faint mt-1 kicker">
+                      <p className="text-2xs text-mocha-faint mt-1 kicker">
                         {r.price_scene ? `${r.price_scene}` : ''}{r.price_avg ? ` · ¥${r.price_avg}/人` : ''}
                       </p>
-                      {r.address && <p className="text-2xs text-ink-faint mt-1">{r.address}</p>}
-                      <Link href={`/restaurants/${r.id}`} className="text-2xs text-ink hover:underline mt-2 inline-block kicker">
+                      {r.address && <p className="text-2xs text-mocha-faint mt-1">{r.address}</p>}
+                      <Link href={`/restaurants/${r.id}`} className="text-2xs text-mocha hover:underline mt-2 inline-block kicker">
                         查看详情 →
                       </Link>
                     </div>
@@ -138,10 +138,10 @@ export default function MapPage() {
             </ClusterGroup>
           </MapContainer>
         )}
-        {loading && <div className="p-8 text-ink-faint text-center"><div className="spinner mx-auto" /></div>}
+        {loading && <div className="p-8 text-mocha-faint text-center"><div className="spinner mx-auto" /></div>}
       </div>
 
-      <div className="fixed bottom-4 left-4 bg-white/90 backdrop-blur border hairline px-4 py-2.5 text-2xs text-ink-faint z-[1000]">
+      <div className="fixed bottom-4 left-4 bg-white/90 backdrop-blur border border-line px-4 py-2.5 text-2xs text-mocha-faint z-[1000]">
         📍 坐标基于高德/腾讯 GCJ-02，底图为高德道路图
       </div>
     </div>

@@ -27,11 +27,12 @@ export default function AuthCallback() {
           router.replace('/');
         }
       });
-      // 如果没有 code 也没有 session，提示错误
-      setTimeout(() => {
+      // 如果没有 code 也没有 session，提示错误（卸载时清理定时器）
+      const timer = setTimeout(() => {
         setStatus('error');
         setMessage('未收到有效的登录凭证，请重试。');
       }, 5000);
+      return () => clearTimeout(timer);
     }
   }, [router]);
 

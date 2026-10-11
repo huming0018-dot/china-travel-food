@@ -40,7 +40,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const [rest, cuis, links] = await Promise.all([
-        fetchAll<Restaurant>('restaurants', '*', ['status', 'active']),
+        fetchAll<Restaurant>('restaurants', 'id,name,name_en,district,status,price_avg,price_band,price_scene,score_total,signature_dishes,is_curated,curate_score,curate_badge,score_evidence_level,review_count', ['status', 'active']),
         fetchAll<Cuisine>('cuisines', '*'),
         fetchAll<{ restaurant_id: number; cuisine_id: number }>('restaurant_cuisines', 'restaurant_id,cuisine_id', undefined, 'restaurant_id'),
       ]);

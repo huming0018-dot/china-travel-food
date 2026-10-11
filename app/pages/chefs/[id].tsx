@@ -42,7 +42,18 @@ export default function ChefDetail() {
       const rids = mine.map((r) => r.restaurant_id);
       let restMap: Record<number, Restaurant> = {};
       if (rids.length) {
-        const allRest = await fetchAll<Restaurant>('restaurants', 'id,name,district,business_area,status,price_avg,score_total', 'id');
+        // 只按 rids 精确查询（分页规避 PostgREST 单页上限），不再全表拉 restaurants
+        const step = 1000;
+        const allRest: Restaurant[] = [];
+        for (let i = 0; i < rids.length; i += step) {
+          const chunk = rids.slice(i, i + step);
+          const { data, error } = await supabase
+            .from('restaurants')
+            .select('id,name,district,business_area,status,price_avg,score_total')
+            .in('id', chunk);
+          if (error) throw error;
+          allRest.push(...((data as Restaurant[]) || []));
+        }
         allRest.forEach((r) => { restMap[r.id] = r; });
       }
       setChef(c as Chef);
@@ -107,19 +118,19 @@ export default function ChefDetail() {
                 <Link key={l.restaurant_id} href={`/restaurants/${l.restaurant_id}`}
                   className="flex items-center gap-4 p-4 bg-white border border-line rounded-xl hover:border-terracotta transition group">
                   <div className="flex-1 min-w-0">
-                    <h3 className="serif text-base font-medium group-hover:italic truncate">{l.restaurant!.name}</h3>
+                    <h3 className="serif text-base font-medium group-hover:italic truncate">{l.restaurant?.name}</h3>
                     <div className="flex items-center gap-2 mt-1">
                       {l.role && <span className="kicker text-mocha-faint">{l.role}</span>}
-                      {(l.restaurant!.business_area || l.restaurant!.district) && (
-                        <span className="kicker text-mocha-mute">· {[safeText(l.restaurant!.business_area), l.restaurant!.district].filter(Boolean).join(' · ')}</span>
+                      {(l.restaurant?.business_area || l.restaurant?.district) && (
+                        <span className="kicker text-mocha-mute">· {[safeText(l.restaurant?.business_area), l.restaurant?.district].filter(Boolean).join(' · ')}</span>
                       )}
                     </div>
                   </div>
-                  {l.restaurant!.price_avg != null && (
-                    <span className="serif text-base font-medium flex-shrink-0">¥{l.restaurant!.price_avg}</span>
+                  {l.restaurant?.price_avg != null && (
+                    <span className="serif text-base font-medium flex-shrink-0">¥{l.restaurant.price_avg}</span>
                   )}
-                  {l.restaurant!.score_total != null && (
-                    <span className="serif text-base font-medium flex-shrink-0 w-12 text-right tabular-nums">{l.restaurant!.score_total.toFixed(1)}</span>
+                  {l.restaurant?.score_total != null && (
+                    <span className="serif text-base font-medium flex-shrink-0 w-12 text-right tabular-nums">{l.restaurant.score_total.toFixed(1)}</span>
                   )}
                 </Link>
               ))}

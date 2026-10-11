@@ -128,7 +128,7 @@ export default function RestaurantsPage() {
   useEffect(() => {
     (async () => {
       const [rest, cuis, links, th] = await Promise.all([
-        fetchAll<Restaurant>('restaurants', '*', 'id'),
+        fetchAll<Restaurant>('restaurants', 'id,name,name_en,address,district,business_area,status,price_avg,price_band,price_scene,score_total,signature_dishes,chain_type,central_kitchen,premade_risk,curate_score,is_curated,curate_badge', 'id'),
         fetchAll<Cuisine>('cuisines', '*', 'id'),
         fetchAll<{ restaurant_id: number; cuisine_id: number }>('restaurant_cuisines', 'restaurant_id,cuisine_id', 'restaurant_id'),
         fetchThresholds(),

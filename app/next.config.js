@@ -16,6 +16,9 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   },
 });
 
+// 本项目 Supabase 实例域（用于 images.domains 与精确白名单，不再用 *.supabase.co 通配）
+const supabaseHost = publicSupabase.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+
 const nextConfig = {
   reactStrictMode: true,
   env: {
@@ -23,7 +26,35 @@ const nextConfig = {
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || publicSupabase.key,
   },
   images: {
-    domains: ['images.unsplash.com', '*.supabase.co'],
+    // 收紧：仅允许本项目 storage 域与图床，不用 *.supabase.co 通配
+    domains: ['images.unsplash.com', supabaseHost],
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: blob: https://images.unsplash.com https://*.supabase.co https://*.autonavi.com https://*.amap.com",
+              "font-src 'self' data: https://fonts.gstatic.com",
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://fonts.googleapis.com https://fonts.gstatic.com",
+              "frame-ancestors 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+            ].join('; '),
+          },
+          { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+        ],
+      },
+    ];
   },
 };
 

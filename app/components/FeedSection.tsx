@@ -144,11 +144,12 @@ export default function FeedSection() {
   useEffect(() => {
     (async () => {
       // 直接查 food_events 以拿到 expires_on / sources（v_feed_recent 视图未暴露）
+      // 只取展示字段（不 select('*')），并用 range 拉到 PostgREST 单页上限，避免静默截断更早事件
       const { data, error } = await supabase
         .from('food_events')
-        .select('*')
+        .select('id,scope,category,title,summary,event_date,expires_on,restaurant_id,related_restaurant_id,chef_id,district,city,confidence,status,sources,registration_url,registration_info,chef_name')
         .order('event_date', { ascending: false })
-        .limit(100);
+        .range(0, 999);
       if (!error && data) {
         const deduped = dedup(data as FeedEvent[]);
         // 批量补餐厅名

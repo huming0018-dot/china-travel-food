@@ -127,15 +127,15 @@ export default function RestaurantDetail() {
     })();
   }, [id]);
 
-  // 修复 Leaflet 默认图标路径
+  // 修复 Leaflet 默认图标路径（资源本地化到 /leaflet/，不再依赖 cdnjs）
   useEffect(() => {
     if (typeof window === 'undefined') return;
     import('leaflet').then((L) => {
       delete (L.Icon.Default.prototype as any)._getIconUrl;
       L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+        iconRetinaUrl: '/leaflet/marker-icon-2x.png',
+        iconUrl: '/leaflet/marker-icon.png',
+        shadowUrl: '/leaflet/marker-shadow.png',
       });
     });
   }, []);
@@ -223,10 +223,19 @@ export default function RestaurantDetail() {
     }
   };
 
-  // 举报评价
+  // 举报评价：优先走服务端 RPC 计数（防前端用 publishable key 任意刷 count）。
+  // 若后端尚未部署 increment_report RPC（PGRST202），降级为原逻辑并告警；
+  // 根治仍需后端补 RPC + 收紧 reviews 表 RLS。
   const handleReport = async (reviewId: string, currentCount: number) => {
-    await supabase.from('reviews').update({ report_count: currentCount + 1 }).eq('id', reviewId);
-    setReviews((prev) => prev.map((rv) => rv.id === reviewId ? { ...rv, report_count: rv.report_count + 1 } : rv));
+    const { error } = await supabase.rpc('increment_report', { review_id: reviewId });
+    if (error && (error as any).code === 'PGRST202') {
+      console.warn('[security] increment_report RPC 未部署，report_count 仍为前端自增；请后端补 RPC 并收紧 RLS。');
+      await supabase.from('reviews').update({ report_count: currentCount + 1 }).eq('id', reviewId);
+    } else if (error) {
+      setFormError('举报提交失败，请稍后再试。');
+      return;
+    }
+    setReviews((prev) => prev.map((rv) => rv.id === reviewId ? { ...rv, report_count: (rv.report_count || 0) + 1 } : rv));
   };
 
   // 删除本人评价
@@ -239,7 +248,7 @@ export default function RestaurantDetail() {
     <div className={`min-h-screen bg-cream-50 ${isClosed ? 'grayscale opacity-70' : ''}`}>
       <Head>
         <title>{r.name} · China Travel</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+        <link rel="stylesheet" href="/leaflet/leaflet.min.css" />
       </Head>
 
       <header className="border-b border-line sticky top-0 z-50 bg-cream-50/90 backdrop-blur-sm">
