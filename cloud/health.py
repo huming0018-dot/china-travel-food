@@ -14,7 +14,7 @@
 环境变量：
   TELEGRAM_BOT_TOKEN、TELEGRAM_CHAT_ID
   TELEGRAM_API_BASE（可选，国内服务器用反代；默认 https://api.telegram.org）
-  ALERT_WEBHOOK（可选，Bark / Server酱 / 通用）
+  TELEGRAM_RELAY_URL / TELEGRAM_RELAY_API_KEY / TELEGRAM_RELAY_SECRET（通知中继）
   HTTPS_PROXY / HTTP_PROXY（可选，容器出口代理，requests 自动识别）
   ALERT_COOLDOWN_SEC（默认 21600）
 """
@@ -181,42 +181,11 @@ def _post_with_retry(url, **kw):
 
 
 def _telegram(message, title):
-    """TG：反代(TELEGRAM_API_BASE)失败自动降级直连；每个 base 带退避重试。"""
+    """统一中继→反代→官方出口，收到送达回执后才记冷却。"""
     if not channel_enabled("telegram"):
         return None
-    token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
-    chat = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
-    if not token or not chat:
-        return None
-    body = {"chat_id": chat, "text": f"{title}\n{message}",
-            "disable_web_page_preview": True}
-    # 2026-10-06 Supabase RPC relay first (pg_net from DB reaches TG; deno relay suspended, direct TG blocked from CN)
-    sb_url = (os.environ.get("NEXT_PUBLIC_SUPABASE_URL") or "").strip().rstrip("/")
-    sb_key = (os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or "").strip()
-    ops_secret = (os.environ.get("CROWD_OPS_SECRET") or "").strip()
-    if sb_url and sb_key and ops_secret:
-        try:
-            r = _post_with_retry(sb_url + "/rest/v1/rpc/crowd_notify_tg",
-                                 json={"p_text": body["text"], "p_secret": ops_secret},
-                                 headers={"apikey": sb_key,
-                                          "Authorization": "Bearer " + sb_key})
-            if r.status_code == 200 and r.json().get("ok") is True:
-                return True
-            print("TG supabase-relay bad", r.status_code, r.text[:120])
-        except Exception as e:
-            print("TG supabase-relay fail", repr(e)[:120])
-    cfg = (os.environ.get("TELEGRAM_API_BASE") or "").strip().rstrip("/")
-    bases = [b for b in (cfg, "https://api.telegram.org") if b]
-    bases = list(dict.fromkeys(bases))   # 配置在前、直连兜底在后；去重
-    for base in bases:
-        try:
-            r = _post_with_retry(f"{base}/bot{token}/sendMessage", json=body)
-            if r.status_code == 200 and r.json().get("ok") is True:
-                return True
-            print("TG", base, "异常响应", r.status_code, r.text[:120])
-        except Exception as e:
-            print("TG", base, "失败", repr(e)[:120])
-    return False
+    from external_watchdog.telegram_delivery import send_telegram
+    return send_telegram(title, message, main_app=True)
 
 
 # ------------------------------------------------ 统一入口
@@ -240,4 +209,3 @@ if __name__ == "__main__":
     # 手动自检：python3 health.py
     print("DATA_DIR", DATA_DIR)
     print("Telegram:", "已配置" if os.environ.get("TELEGRAM_BOT_TOKEN") else "未配置")
-    print("ALERT_WEBHOOK:", "已配置" if os.environ.get("ALERT_WEBHOOK") else "未配置")

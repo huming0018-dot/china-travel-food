@@ -7,7 +7,7 @@
   - 不可达且 Lighthouse DescribeInstances 显示非 RUNNING：属正常关机/开机/重启窗口，不动作。
   - 不可达且实例 RUNNING：这是“公网 NAT 映射陈旧”的特征（Reboot 无效），
     满足【连续 N 个周期失败 + 距上次重启已过冷却】后自动 Stop→Start 重建公网绑定，
-    轮询至 RUNNING 且 22 恢复；触发与恢复均推 Telegram + 飞书。
+    轮询至 RUNNING 且 22 恢复；触发与恢复均推 Telegram。
 
 状态持久化在 wd_state.json（连续失败数、上次重启时间、是否已通告），防 flapping。
 cron 用 flock 包裹，保证同一时刻只有一个实例。
@@ -130,6 +130,7 @@ def save_state(st):
 
 
 def main():
+    N.flush_pending()
     st = load_state()
     healthy = False
     for i in range(ATTEMPTS):
