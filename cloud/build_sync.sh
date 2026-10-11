@@ -28,6 +28,12 @@ echo "==> [2/4] rsync cloud/*.py -> $BUILD_DIR/（--delete 清残留，仅删多
 mkdir -p "$BUILD_DIR"
 rsync -a --delete --include='*.py' --exclude='*' "$SRC_DIR/cloud/" "$BUILD_DIR/"
 
+# Dockerfile 引用 external_watchdog/*.py（telegram_delivery.py 等），必须一并同步进构建上下文，
+# 否则重建时 COPY 失败（历史：曾用 docker cp 手工补文件绕过，重建即丢）。
+echo "==> [2b/4] rsync cloud/external_watchdog/*.py -> $BUILD_DIR/external_watchdog/"
+mkdir -p "$BUILD_DIR/external_watchdog"
+rsync -a --delete --include='*.py' --exclude='*' "$SRC_DIR/cloud/external_watchdog/" "$BUILD_DIR/external_watchdog/" 2>/dev/null || true
+
 echo "==> [3/4] rsync pipeline/*.py -> $BUILD_DIR/vendor/pipeline/（--delete 清手工cp残留）"
 mkdir -p "$BUILD_DIR/vendor/pipeline"
 rsync -a --delete --include='*.py' --exclude='*' "$SRC_DIR/cloud/vendor/pipeline/" "$BUILD_DIR/vendor/pipeline/" 2>/dev/null || true
