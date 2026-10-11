@@ -375,7 +375,7 @@ def build_plan():
             grouped[(rid, fld)].append(d)
 
     rests = core.fetch_all("restaurants",
-        "id,name,status,is_curated,chain_type,central_kitchen,premade_risk,production_model,price_avg,investor_info")
+        "id,name,status,is_curated,chain_type,central_kitchen,premade_risk,production_model,price_avg,investor_info,fact_claims")
     cur = {r["id"]: r for r in rests}
     P = core.pipeline_common()
     brand_index = build_brand_index(rests, P)
@@ -433,6 +433,29 @@ def build_plan():
             elif nowv is not None and price_implausible(dec["value"], nowv):
                 dec = {"action": "hold", "value": None,
                        "why": f"price {dec['value']} 相对存量 {nowv} 极端偏离，疑似错挂"}
+
+        # 防错三（北极星 A2 宁空不假，lesson #77/#93）：负面事实轴硬标签
+        # （央厨确认/预制高/食安问题）的【唯一合法晋升路径】是 claims_seed→fact_verify
+        # 写入带 source_url 的同 type fact_claim。gate_apply 手里的 findings 账本（ARK 探针
+        # 网络取证）只是候选，可能 LLM 误判相关性（Jean Georges/甬府曾被误标央厨确认），
+        # 不得仅凭账本域名数直接硬升——否则绕过 fact_verify 的 URL+quote 核验。
+        # 无同 type 带 URL 的 fact_claim：硬值一律封顶“疑似”，进 reverify 补权威证据。
+        # （production_model 六档属 LLM 推断轴，不受此限，照常写。）
+        NEG_HARD = {"central_kitchen": {"确认"}, "premade_risk": {"高"},
+                    "food_safety": {"问题", "确认"}}
+        if dec.get("action") == "apply_hard" and fld in NEG_HARD \
+                and dec.get("value") in NEG_HARD[fld]:
+            _fc = (cur.get(rid) or {}).get("fact_claims") or []
+            _evidenced = {c.get("type") for c in _fc
+                          if c.get("source_url") and c.get("type")}
+            if fld not in _evidenced:
+                hard_v = dec.get("value")
+                dec = {"action": "apply", "value": "疑似",
+                       "why": f"硬标 {hard_v} 无同type带URL的fact_claim（账本候选未经fact_verify"
+                              "核验），按宁空不假封顶疑似，补权威URL证据后再确认"}
+                reverify.append({"rid": rid, "name": (cur.get(rid) or {}).get("name"),
+                                 "field": fld, "hard_value": hard_v,
+                                 "reason": dec["why"]})
 
         rec = {"rid": rid, "field": fld, "decision": dec["action"],
                "value": dec.get("value"), "current": nowv, "why": dec.get("why"),
