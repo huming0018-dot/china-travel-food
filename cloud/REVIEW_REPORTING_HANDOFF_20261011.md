@@ -21,9 +21,10 @@
 - 迁移前后 reviews=2643，举报合计=0，按 id 排序的计数指纹 `f0f28ffaa801c5deecd0a337c7f3b684` 一致；举报记录0条。
 - 已跑 Supabase security advisors：新私有表 RLS 无 policy 属有意拒绝直接访问，且撤回普通角色表权限；既有其他告警不作为本次新发现的可利用漏洞。参考 https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy 。
 
+## 并发与发布证据
+- 真正多连接并发已在隔离 PostgreSQL 17.6 / GitHub Actions 执行通过：32个不同账户无丢失增量、32次同账户重复仅一次增量、25条跨评价请求20成功/5限流。19项隔离检查同轮复跑通过。证据：https://github.com/huming0018-dot/china-travel-food/actions/runs/38147081404 。已增加路径限定CI，固定actions提交和测试依赖，无生产凭据。
+- PR #7 已合并 main，提交 `5bbc4de7410760ed445ce37a8a927efa321d3b12`。该提交的 Vercel Git 集成部署状态已为 success / Deployment has completed：https://vercel.com/haha-hunter/app/4wmH49Mg4BbYZZjBCzpzABCsLcYr 。团队接口403不阻断已验证的自动发布，但无法从该接口读取生产日志；预览URL受到Vercel登录保护。
 ## 尚未验收
-- 真正多连接并发：脚本 `cloud/tests/review-reporting-concurrency.mjs` 已发布，覆盖32不同用户、32同用户重试、25跨评价并发限流；当前无可用隔离 PostgreSQL，尚未执行。PGlite单会话通过不代表多会话并发通过。
-- 当前 Vercel 团队接口返回403，现有连接不能直接发布/读取该团队部署。GitHub main 已有 Vercel自动构建状态，可以通过提交状态跟踪自动发布；不能把本地build当作生产部署成功。
 - 真实登录用户浏览器端举报/网络失败视觉验收未完成，生产SQL模拟身份与匿名REST不等于该验收。
 
 ## 复跑
