@@ -24,6 +24,29 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 📅 2026-10-12 02:00 自进化复盘 · 硬标签证据门战役（存量清零 + 生产者根治）
+> 主线＝守护北极星 A2「真实可溯、宁空不假」：清掉无证据的中央厨房/预制硬标签污染，并在写入侧根治，使硬标签只能经 fact_verify 落 fact_claim 后才成立。
+
+**A. 存量污染清零（确定性、可逆、已执行）**
+- `cloud/vendor/pipeline/fact_evidence_gap.py` 升级支持 `--apply`：无「同 type 且 source_url 非空」fact_claim 的 `central_kitchen=确认 / premade_risk=高 / food_safety=确认` 一律降「疑似」，追加治理留痕（source_url 空、不构成证据）、审计落 `fact_evidence_downgrade.jsonl`、PATCH 后回读、幂等。
+- 实跑结果：**降级 122 店 / 124 个字段，降级后剩余缺口 = 0，PASS**。误标含 Jean Georges、甬府、雍颐庭、平川·程玉平川菜、江南晓宴、裕莲茶楼、东来顺，及鮨水月/鮨大山/吉兆/宫鸠等高端寿司被误标 premade_risk=高。
+- 提交：`4580145`（升级 --apply，含一处 headers 重复传参 bug，**首次运行即报错、零写入**）→ `ddd2738`（修复，C.req 内部已设 headers、调用禁再传 headers）。
+
+**B. 生产者根治（gate_apply，commit `94a255b`，已部署容器）**
+- 根因：`cloud/gate_apply.py` 读 ARK production_model_probe 的 findings 账本，`resolve_enum` 在 `n_independent(rows)≥2` 即 apply_hard 并直接 PATCH 硬标签；而 n_independent 会把 reason 文本里的「注册/分店/新闻」关键词当独立证据类、缺 URL 时域名记「?」，导致**无可溯源 URL、未经 fact_verify 核验的 LLM 推断被写成硬标签**（绕过 claims_seed→fact_verify→fact_claims 唯一晋升路径）。
+- 修复：三个负面事实轴（central_kitchen=确认 / premade_risk=高 / food_safety=问题·确认）apply 前必须在该店 fact_claims 中存在同 type 带 source_url 证据，否则封顶「疑似」并进 reverify 取证窗口；build_plan select 增加 fact_claims。production_model 六档属 LLM 推断轴，不受影响照常写。
+- 容器内 build_plan 断言：**待写负面硬值 patch = 0**（修复前 99），cap 进 reverify 124 项，stores_to_patch=4、curated_off=0（无误下架）。
+- 部署：scp + `docker cp ... food-cloud:/app/cloud/gate_apply.py` 与 `/app/pipeline/fact_evidence_gap.py`，容器 py_compile 通过。03:14 是 `docker restart`（保留可写层，cp 跨 restart 存活）；durable 副本已进 git，下次 `bash ~/food-cloud/build_sync.sh` 烘焙进镜像。
+
+**C. 当日采集与三闸状态**
+- 覆盖率（active 1517 / total 1523）：电话 87.5%(1352)、坐标 99.9%(1516)、营业时间 66.1%、score_taste 30.2%。production_model 已标 657（门店现制368/现炒148/央厨加工133/预制复热8），None 860；runner state_done=432，偶数点 cron 滚动、零成本。
+- **G2 口味评论停摆**：reviews 2643，latest=2026-09-26，其后零新增。三闸：付费闸 Apify 余额 $0.022（月硬顶 $90）；登录闸 account_a=ahuhu=dead（web_session 过期）、account_b=猪蛤蛤=parked（短信日配额超额）；配额闸腾讯地图 search/geocode 全尽（**解封 10-13 00:00**），高德 geocode 2/2、search 1/2。不硬刷、不造数。
+- 看门狗语义判定：今日「account_a/b=unknown、pool_alive=True、OK」是已知双出口探测噪声（lesson #82/#92），权威状态以 _cookie_pool_state 为准、router 判定正确，**非真故障**。
+
+**D. 新沉淀教训**：#95 gate_apply 硬标签只认 fact_claims；#96 release_audit 每检查只留 stdout 末 22 行、把 121 缺口截断显示成 20（待修，报告须显式 n_gap 计数）；#97 amap_fill 命中单个失效 key 即早退、未故障转移（84/5000 却报超限、候选积压 1193，待修）。
+
+**待人工/待办**：①G2 口味评论待健康小红书账号或 Apify 充值决策；②修 release_audit 截断展示与 amap 跨 key/跨源故障转移；③production_model 仍 860 None，靠免费 cron 滚动；④深覆盖/is-vs-serves/私房菜会所分流/主厨 profile 等长期诉求继续。
+
 ### 📅 2026-10-03 当日总览（按工作线归类；细节见下方各条目）
 > 主线＝让「发现→建店」在云端 24/7 闭环，并把评分/去软广建立在真实食客证据上。全部经 build_sync 烘焙。
 
