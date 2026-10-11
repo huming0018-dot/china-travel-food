@@ -1,0 +1,17 @@
+# Regression expectations (software-releases pack 0.3.1). Data-driven checks.
+cases:
+  - id: "official-json-shape"
+    expectation: "RAW payload is the official JSON; name/tag_name/published_at/html_url resolvable"
+    fixture: "official-release-json"
+  - id: "pointer-evidence-verify"
+    expectation: "evidence pointers re-resolve from RAW to the original node values"
+    fixture: "official-release-json"
+  - id: "payload-hash"
+    expectation: "sha256(payload) == source_payload_sha256"
+    fixture: "official-release-json"
+  - id: "no-asset-scope"
+    expectation: "no release assets downloaded; no vulnerability/security conclusion"
+    fixture: "official-release-json"
+  - id: "two-real-sources"
+    expectation: "2 real official sources (codex + n8n releases/latest) from RAW to ODS->DW->APP audit readable"
+    fixture: "official-release-json"

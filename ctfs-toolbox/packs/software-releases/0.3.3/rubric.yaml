@@ -1,0 +1,49 @@
+# Admission + scoring rubric (software-releases pack 0.3.1). Pure data.
+# Admission rules reference ONLY booleans the M2 Cleaner actually emits and
+# the M3 scorer permits: {coverage_ok, quote_ok, hash_ok, classification_ok,
+# pointer_ok}. Unknown gates fail closed, so no rule may name a boolean the
+# Cleaner does not produce.
+admission:
+  rules:
+    - id: "payload-hash"
+      description: "payload hash equals digest of the actual RAW JSON bytes (hash_ok)"
+      pass: "hash_ok"
+    - id: "pointer-evidence"
+      description: "every fact field is backed by a source JSON pointer + original node value (pointer_ok)"
+      pass: "pointer_ok"
+    - id: "fact-coverage"
+      description: "the four release fact fields are present and nonempty (coverage_ok)"
+      pass: "coverage_ok"
+scoring:
+  weights:
+    sources: 1.0
+    refs: 2.0
+    coverage: 2.0
+    recency: 1.0
+  threshold: 3.0
+  hard_blocks:
+    - "sources"
+  parts:
+    - name: "sources"
+      weight: 1.0
+      min: 1
+      hard: true
+      reason: "at least one official-api source"
+    - name: "refs"
+      weight: 2.0
+      min: 0
+      hard: false
+      reason: "number of pointer-backed evidence entries"
+    - name: "coverage"
+      weight: 2.0
+      min: 0
+      hard: false
+      reason: "fraction of nonempty release fact fields with evidence coverage"
+    - name: "recency"
+      weight: 1.0
+      min: 0
+      hard: false
+      horizon_days: 365
+      default: 0.0
+      reason: "recency vs fixed as_of"
+  note: "single official publisher rule; taste/eaten concepts do not apply"

@@ -1,0 +1,28 @@
+pack:
+  schemaVersion: 0.1.0
+  pack_id: cuisines
+  version: 0.3.3
+  domain: food
+  note: 'P2-REPAIR-03 immutable pack. Fixes 0.3.0: identity is pack-configured (candidate_id_pointer=/id,
+    candidate_revision_path=/revision, title_field=title); cleaner consumes RAW bytes
+    directly (strict JSON, no duplicate keys / NaN / Infinity); sources metadata carries
+    {version_id, source_id, url, retrieved_at, canonical_body_sha256} without repeating
+    bodies; validation emits strict booleans + fact/classification field pointers;
+    optional unknown fields (hours/menu/price/business_relation/ taste/published_at)
+    default to "unknown"; machine scope discovery_candidate/private_lead and editorial-source
+    semantics are declared here for downstream admission. Old 0.3.0 remains installed;
+    rollback keeps it.
+
+    '
+  contract:
+    fields:
+      file: fields.yaml
+      minEntries: 1
+    pointers:
+      file: pointers.json
+    validation:
+      file: validation.yaml
+    rubric:
+      file: rubric.yaml
+    expectations:
+      file: expectations.yaml

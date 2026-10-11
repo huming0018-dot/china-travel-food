@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctfs-toolbox"
+version = "0.5.0"
+description = "CTFS modular data toolbox: Manifest + layered Storage + Crawler connectors + Ontology packs"
+requires-python = ">=3.12"
+dependencies = ["PyYAML==6.0.1", "jsonschema==4.23.0", "rfc3339-validator==0.1.4"]
+license = { text = "MIT" }
+
+[project.optional-dependencies]
+postgres = ["psycopg[binary]==3.2.3"]
+
+[project.scripts]
+toolbox = "toolbox.cli:main"
+
+[project.entry-points."ctfs.connectors"]
+http-public = "toolbox.connector_http:HttpPublicConnector"
+snapshot-file = "toolbox.connector_snapshot:SnapshotFileConnector"
+
+[tool.setuptools]
+packages = ["toolbox"]
+
+[tool.setuptools.package-data]
+toolbox = ["schemas/*.json", "schemas/*/*.json"]

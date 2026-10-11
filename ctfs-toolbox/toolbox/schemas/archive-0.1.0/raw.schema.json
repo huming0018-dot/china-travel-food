@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ctfs.toolbox/schemas/raw/0.1.0",
+  "title": "CTFS Toolbox RAW record",
+  "version": "0.1.0",
+  "description": "Immutable RAW layer record. content_hash derived from content; receipts are appended separately.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project_id", "source_url", "source_hash", "batch", "captured_at", "content"],
+  "properties": {
+    "schemaVersion": { "type": "string", "enum": ["0.1.0"] },
+    "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "source_url": { "type": "string", "minLength": 1 },
+    "source_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "batch": { "type": "string", "minLength": 1 },
+    "captured_at": { "type": "string", "minLength": 1 },
+    "content_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "content": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "lineage": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

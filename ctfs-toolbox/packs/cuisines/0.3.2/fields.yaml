@@ -1,0 +1,89 @@
+identity:
+  candidate_id_pointer: /id
+  candidate_revision_path: /revision
+  title_field: title
+source_contract:
+  source_versions_path: /source_versions
+  source_id_field: source_id
+  version_id_field: version_id
+  body_field: canonical_body
+  hash_field: canonical_body_sha256
+  retrieved_at_field: retrieved_at
+  evidence_source_key: source_version_id
+  candidates_path: /candidates
+  candidate_draft_path: /draft
+  candidate_evidence_path: /evidence
+  candidate_revision_path: /revision
+  publisher_id_field: source_id
+  source_url_field:
+  - url
+  - source_url
+  candidate_metadata:
+    city_id:
+      pointer: /city_id
+      optional: true
+    feed_id:
+      pointer: /feed_id
+      optional: true
+mapping:
+  draft_title:
+    field: title
+    pointer: /title
+    schema_ref: /draft/title
+  draft_summary:
+    field: summary
+    pointer: /summary
+    schema_ref: /draft/summary
+  draft_entity_type:
+    field: entity_type
+    pointer: /entity_type
+    schema_ref: /draft/entity_type
+  draft_subject_name:
+    field: subject_name
+    pointer: /subject_name
+    schema_ref: /draft/subject_name
+  draft_feature_keys:
+    field: feature_keys
+    pointer: /feature_keys
+    schema_ref: /draft/feature_keys
+  draft_published_at:
+    field: published_at
+    pointer: /published_at
+    optional: true
+    default: unknown
+  draft_hours:
+    field: hours
+    pointer: /hours
+    optional: true
+    default: unknown
+  draft_menu:
+    field: menu
+    pointer: /menu
+    optional: true
+    default: unknown
+  draft_price:
+    field: price
+    pointer: /price
+    optional: true
+    default: unknown
+  draft_business_relation:
+    field: business_relation
+    pointer: /business_relation
+    optional: true
+    default: unknown
+  draft_taste:
+    field: taste
+    pointer: /taste
+    optional: true
+    default: unknown
+source_plan:
+- source_kind: ugc
+  notes: real-diner evidence with exact quote slices; editorial sources are discovery
+    only
+- source_kind: official-guide
+  notes: discovery entry only; never a diner voice
+- source_kind: media-opening-news
+  notes: opening/roundup articles; canonical body retained; original HTTP bytes not
+    retained
+- source_kind: media-roundup
+  notes: roundup articles; canonical body retained; original HTTP bytes not retained

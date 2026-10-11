@@ -1,0 +1,42 @@
+unicode_quote:
+  enabled: true
+  body_field: canonical_body
+  start_field: start
+  end_field: end
+  quote_field: quote
+  note: 'exact Unicode slice check: body[start:end] == quote; offsets bounded by len(body)'
+hash:
+  algorithm: sha256
+  canonical_field: canonical_body_sha256
+  body_field: canonical_body
+  note: declared canonical hash must equal digest of actual canonical body
+  raw_hash_scope: snapshot_file_bytes
+  raw_retained: false
+coverage:
+  evidence_fields:
+  - title
+  - summary
+  - subject_name
+  - feature_keys
+classification:
+  fields:
+  - entity_type
+  enum:
+    entity_type:
+    - venue
+    - item
+    - event
+    - article_claim
+  note: classification is provenance/normalization only, not a source verbatim fact
+machine_scope:
+  candidate_scope_path: /scope
+  allowed:
+  - discovery_candidate
+  - private_lead
+  default: discovery_candidate
+evidence_semantics:
+  independent_sources: distinct_source_id
+  editorial_source_never_diner: true
+  same_source_quotes_dedup: true
+unknown_fields:
+  default: unknown

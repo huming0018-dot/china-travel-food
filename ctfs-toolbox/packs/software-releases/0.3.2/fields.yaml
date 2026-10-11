@@ -1,0 +1,53 @@
+identity:
+  candidate_id_pointer: null
+  candidate_revision_path: null
+  title_field: name
+source_contract:
+  mode: json_pointer_evidence
+  candidates_path: /
+  candidate_draft_path: /
+  candidate_evidence_path: null
+  candidate_revision_path: null
+  raw_envelope:
+    source_url_field: /source_url
+    captured_at_field: /captured_at
+    content_hash_field: /content_hash
+    record_id_field: /record_id
+  source_id_mode: from_source_url
+  publisher_source_id: null
+mapping:
+  release_name:
+    field: name
+    pointer: /name
+    schema_ref: /name
+  release_tag:
+    field: tag_name
+    pointer: /tag_name
+    schema_ref: /tag_name
+  release_published_at:
+    field: published_at
+    pointer: /published_at
+    schema_ref: /published_at
+  release_html_url:
+    field: html_url
+    pointer: /html_url
+    schema_ref: /html_url
+  unknown_compatibility:
+    field: compatibility
+    pointer: /unverified/compatibility
+    optional: true
+    default: unknown
+  unknown_security_assessment:
+    field: security_assessment
+    pointer: /unverified/security_assessment
+    optional: true
+    default: unknown
+  unknown_asset_contents:
+    field: asset_contents
+    pointer: /unverified/asset_contents
+    optional: true
+    default: unknown
+source_plan:
+- source_kind: official-api
+  notes: public official GitHub releases/latest endpoint; JSON body retained; no asset
+    download

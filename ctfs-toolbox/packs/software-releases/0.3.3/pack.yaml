@@ -1,0 +1,27 @@
+pack:
+  schemaVersion: 0.1.0
+  pack_id: software-releases
+  version: 0.3.3
+  domain: software
+  note: 'P2-REPAIR-03 immutable pack: official release fact sources (GitHub releases/latest).
+    identity.title_field=name (core never hard-codes title/name/published_at); RAW
+    bytes hash is verified directly (never a re-serialized JSON pretending to be the
+    HTTP hash); fields name/tag_name/published_at/html_url are pulled by JSON pointer
+    and each pointer evidence re-resolves to its real node; publisher source id comes
+    from the pack (official). Official release facts are never turned into vulnerability/security-upgrade
+    conclusions; no executables are downloaded. Single official publisher rule differs
+    from restaurant taste. Old 0.3.0 remains installed; rollback keeps it.
+
+    '
+  contract:
+    fields:
+      file: fields.yaml
+      minEntries: 1
+    pointers:
+      file: pointers.json
+    validation:
+      file: validation.yaml
+    rubric:
+      file: rubric.yaml
+    expectations:
+      file: expectations.yaml
