@@ -39,8 +39,13 @@ try {
     alter table public.reviews enable row level security;
     create policy visible on public.reviews for select using(is_hidden=false);
     grant all on public.reviews to authenticated,anon;
+    create function public.recalc_taste_for(integer) returns void language plpgsql as $$ begin return; end $$;
+    alter table public.reviews add column restaurant_id integer default 1;
+    create function public.trg_reviews_taste() returns trigger language plpgsql as $$ begin perform recalc_taste_for(NEW.restaurant_id); return null; end $$;
+    create trigger taste after insert or update or delete on public.reviews for each row execute function public.trg_reviews_taste();
   `);
   await admin.query(migration);
+  await admin.query(readFileSync(new URL('../supabase/migrations/20261011141825_report_count_skip_taste_recalc.sql',import.meta.url),'utf8'));
   for(let i=1;i<=30;i++) await admin.query('insert into public.reviews(id,report_count) values($1,7)',[uid(i)]);
   const distinct=await Promise.all(Array.from({length:32},(_,i)=>call(100+i,1)));
   assert.equal(distinct.filter(x=>x.accepted).length,32);
