@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -8,6 +8,7 @@ import { parseLngLat, parseLatLng } from '@/lib/geo';
 import { safeText } from '@/lib/format';
 import { useFavorites } from '@/lib/favorites';
 import { useAuth } from '@/lib/auth';
+import { submitReport } from '@/lib/report';
 
 // 内嵌小地图（Leaflet 依赖 window，禁用 SSR）
 const MapContainer = dynamic(() => import('react-leaflet').then((m) => m.MapContainer), { ssr: false });
@@ -80,6 +81,9 @@ export default function RestaurantDetail() {
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [formSuccess, setFormSuccess] = useState(false);
+  const reportInFlight = useRef(new Set<string>());
+  const [reportPending, setReportPending] = useState<string[]>([]);
+  const [reportMessages, setReportMessages] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (!id) return;
@@ -223,19 +227,26 @@ export default function RestaurantDetail() {
     }
   };
 
-  // 举报评价：优先走服务端 RPC 计数（防前端用 publishable key 任意刷 count）。
-  // 若后端尚未部署 increment_report RPC（PGRST202），降级为原逻辑并告警；
-  // 根治仍需后端补 RPC + 收紧 reviews 表 RLS。
-  const handleReport = async (reviewId: string, currentCount: number) => {
-    const { error } = await supabase.rpc('increment_report', { review_id: reviewId });
-    if (error && (error as any).code === 'PGRST202') {
-      console.warn('[security] increment_report RPC 未部署，report_count 仍为前端自增；请后端补 RPC 并收紧 RLS。');
-      await supabase.from('reviews').update({ report_count: currentCount + 1 }).eq('id', reviewId);
-    } else if (error) {
-      setFormError('举报提交失败，请稍后再试。');
+  const handleReport = async (reviewId: string) => {
+    if (!user) {
+      setReportMessages((prev) => ({ ...prev, [reviewId]: '请先登录后举报。' }));
       return;
     }
-    setReviews((prev) => prev.map((rv) => rv.id === reviewId ? { ...rv, report_count: (rv.report_count || 0) + 1 } : rv));
+    if (reportInFlight.current.has(reviewId)) return;
+    reportInFlight.current.add(reviewId);
+    setReportPending((prev) => [...prev, reviewId]);
+    setReportMessages((prev) => ({ ...prev, [reviewId]: '' }));
+    try {
+      const result = await submitReport((name, args) => supabase.rpc(name, args), reviewId);
+      setReviews((prev) => prev.map((rv) => rv.id === reviewId
+        ? { ...rv, report_count: Math.max(rv.report_count || 0, result.report_count) } : rv));
+      setReportMessages((prev) => ({ ...prev, [reviewId]: result.accepted ? '举报已提交。' : '你已举报过这条评价。' }));
+    } catch {
+      setReportMessages((prev) => ({ ...prev, [reviewId]: '举报提交失败，请稍后再试。' }));
+    } finally {
+      reportInFlight.current.delete(reviewId);
+      setReportPending((prev) => prev.filter((id) => id !== reviewId));
+    }
   };
 
   // 删除本人评价
@@ -518,9 +529,12 @@ export default function RestaurantDetail() {
                       {user?.id === rv.user_id ? (
                         <button onClick={() => handleDelete(rv.id)} className="text-terracotta hover:underline">删除</button>
                       ) : (
-                        <button onClick={() => handleReport(rv.id, rv.report_count)} className="hover:text-terracotta">
-                          举报{rv.report_count > 0 ? ` (${rv.report_count})` : ''}
+                        <>
+                        <button onClick={() => handleReport(rv.id)} disabled={reportPending.includes(rv.id)} className="hover:text-terracotta disabled:opacity-50">
+                          {reportPending.includes(rv.id) ? '提交中…' : '举报'}{rv.report_count > 0 ? ` (${rv.report_count})` : ''}
                         </button>
+                        {reportMessages[rv.id] && <span role="status">{reportMessages[rv.id]}</span>}
+                        </>
                       )}
                     </div>
                   </div>
