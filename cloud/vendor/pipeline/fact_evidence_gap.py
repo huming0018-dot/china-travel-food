@@ -96,8 +96,7 @@ def apply_downgrades(gaps, rests_by_id, ledger):
             })
             fields += 1
         patch["fact_claims"] = claims
-        resp = C.req("PATCH", f"/restaurants?id=eq.{rid}", json=patch,
-                    headers={**C.headers(), "Prefer": "return=minimal"})
+        resp = C.req("PATCH", f"/restaurants?id=eq.{rid}", json=patch)
         if resp.status_code not in (200, 204):
             print(f"  [FAIL] id={rid} {g['name'][:24]} PATCH {resp.status_code}: "
                   f"{resp.text[:160]}")
