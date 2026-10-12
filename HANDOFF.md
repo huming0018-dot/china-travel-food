@@ -29,7 +29,15 @@
 
 - **deuce 本地通道（agent 定时任务/看门狗/告警，主通道）**：`ops/tg_send.py`（纯标准库）。凭据读取＝环境变量 `TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID` → `cloud/deploy.env` → `~/.config/food-atlas/tg.env` → 脚本同目录 `.tg_env`；网络＝HTTPS_PROXY → 直连 → 本地代理 `http://127.0.0.1:7897` 兜底。用法 `python3 ops/tg_send.py "正文"`，成功回 `message_id`。token 仅在 gitignored `cloud/deploy.env`(600)/`.tg_env`(600)，**不入库**。deuce 实测 sendMessage 200（message_id=1573，direct）。
 - 已把 4 个美食图鉴定时任务（录后校验 07:20、02:00 自进化复盘、夜间执行报告 06点、夜间盘点 02点）的推送指令统一改为 deuce 本地 `tg_send.py`；06点任务同时删去残留"飞书"。**仅推 TG，严禁飞书。**
-- **容器侧无人值守作业**（/usr/sbin/cron，不经 agent）仍需 Deno 反代：旧 `dirty-stingray-4216.food-atlas-hb.deno.net` 503 USAGE_EXCEEDED 已暂停；反代源码 `cloud/telegram_proxy/main.ts`（仅放行 `/bot<token>/<method>` 透传）。重建后的新反代地址见下文（部署后回填），容器 `deploy.env` 的 `TELEGRAM_API_BASE` 随之更新并 recreate 生效。
+- **容器侧无人值守作业**（/usr/sbin/cron，不经 agent）仍需 Deno 反代：旧 `dirty-stingray-4216.food-atlas-hb.deno.net` 503 USAGE_EXCEEDED 已暂停；反代源码 `cloud/telegram_proxy/main.ts`（仅放行 `/bot<token>/<method>` 透传）。**已完成（Supabase Edge 反代上线）**：新反代 `https://bdwrhshgdeghgyzwpxnl.supabase.co/functions/v1/tg-relay`，
+源码 `cloud/supabase/functions/tg-relay/index.ts`（Deno.serve，正则门兼容 `/functions/v1/tg-relay`、`/tg-relay`、根三种路径前缀，
+仅放行 `GET/POST /bot<token>/<method>` 透传 api.telegram.org，非法 403、方法错 405、上游异常 502，verify_jwt=false）。
+- 部署方式：Management API 手工 multipart zip 反复 400（entrypoint 解析问题），改用 **Supabase CLI**
+  `npx supabase functions deploy tg-relay --project-ref bdwrhshgdeghgyzwpxnl --no-verify-jwt`（SUPABASE_ACCESS_TOKEN 用 legacy 全权限 PAT）成功。
+- 主机 `~/food-cloud/deploy.env` 与 `~/food-cloud-v2/.env` 的 `TELEGRAM_API_BASE` 已改指新反代（去尾斜杠），`docker compose up -d` recreate 生效；
+  容器内 getMe=ok、无人值守 sendMessage 成功（message_id 1599）。旧 Deno 反代弃用。
+- 仅推 TG；飞书通道已彻底移除。管理令牌 legacy `food-edge-deploy-legacy`（90天）存主机 `~/.config/food-atlas/sbp_edge.env`(0600)；
+  两枚细粒度令牌 food-edge-deploy / food-edge-deploy2 权限不足（缺 project_admin_read，部署 403），应在 Dashboard 吊销。
 
 
 ### 📅 2026-10-12 录后校验增量 + post_audit「假成功」根治（commit d8d214a / 288c9a3）
