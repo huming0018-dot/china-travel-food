@@ -24,6 +24,14 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 📅 2026-10-12 TG 通知通道：deuce 本地直发 + Deno 反代重建
+> 用户拍板「之后先换成 deuce 本地来发」，并要求重建反代。
+
+- **deuce 本地通道（agent 定时任务/看门狗/告警，主通道）**：`ops/tg_send.py`（纯标准库）。凭据读取＝环境变量 `TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID` → `cloud/deploy.env` → `~/.config/food-atlas/tg.env` → 脚本同目录 `.tg_env`；网络＝HTTPS_PROXY → 直连 → 本地代理 `http://127.0.0.1:7897` 兜底。用法 `python3 ops/tg_send.py "正文"`，成功回 `message_id`。token 仅在 gitignored `cloud/deploy.env`(600)/`.tg_env`(600)，**不入库**。deuce 实测 sendMessage 200（message_id=1573，direct）。
+- 已把 4 个美食图鉴定时任务（录后校验 07:20、02:00 自进化复盘、夜间执行报告 06点、夜间盘点 02点）的推送指令统一改为 deuce 本地 `tg_send.py`；06点任务同时删去残留"飞书"。**仅推 TG，严禁飞书。**
+- **容器侧无人值守作业**（/usr/sbin/cron，不经 agent）仍需 Deno 反代：旧 `dirty-stingray-4216.food-atlas-hb.deno.net` 503 USAGE_EXCEEDED 已暂停；反代源码 `cloud/telegram_proxy/main.ts`（仅放行 `/bot<token>/<method>` 透传）。重建后的新反代地址见下文（部署后回填），容器 `deploy.env` 的 `TELEGRAM_API_BASE` 随之更新并 recreate 生效。
+
+
 ### 📅 2026-10-12 录后校验增量 + post_audit「假成功」根治（commit d8d214a / 288c9a3）
 > 周一增量录后校验；过程中发现并修复一个会让录后校验长期"显示 APPLY 实际没写"的严重写库缺陷。
 
