@@ -24,6 +24,22 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 📅 2026-10-12 录后校验增量 + post_audit「假成功」根治（commit d8d214a / 288c9a3）
+> 周一增量录后校验；过程中发现并修复一个会让录后校验长期"显示 APPLY 实际没写"的严重写库缺陷。
+
+- **门控升级（d8d214a，findings_ingest.py，已 build_sync 进容器）**：可信源分级白名单（官方/政府/工商档/央媒/财经）+ 硬负面（central=确认 / premade=高 / fs=问题）须官方源或 ≥2 独立可信域名互证；NOISY 硬杀（百家号/知乎问答/小红书搜索页/抖音/携程/职友集/水滴/smzdm/bilibili/klook/中华网 等）。今日候选 42 行/20 rid 全 KEEP。
+- **post_audit 假成功根治（288c9a3，已部署）**：
+  - 根因 1：审计词表 food_safety 用「无/疑似/**问题**」，但 restaurants 表 Postgres CHECK 只允许「无/疑似/**确认**」（写"问题"报 **HTTP 400 / 23514 check_violation**，实测 failing row）。
+  - 根因 2：post_audit 把同一 rid 多列打成**一个原子 PATCH**，任一列 400 → 整店回滚；旧代码**不检查 HTTP 响应**，照样打印"已写"并写 readback，造成假成功（点都德 chain/investor、云海肴 chain/investor 均曾因此未落库）。
+  - 修复：新增 `DB_VALUE_MAP`（canonical"问题"→DB"确认"）；整店 PATCH 非 2xx 自动**降级逐列 PATCH** 隔离坏列；逐字段记录 HTTP 状态 + readback，末尾汇总失败字段；`load_rows` 兼容 JSON 数组(candidates)与 JSONL。
+  - **教训沉淀**：今后所有写库脚本必须检查响应状态并写后回读；canonical 业务词表与 DB CHECK 须在脚本内显式映射，禁止假设一致。
+- **重跑入库结果（20 店 / 41 字段全部 204，独立回读一致）**：chain_type 15（点都德3店/大董/巴国布衣/有喜屋3店=大型连锁；老吉士/莱莱/徽廷宴3店/百丘2店=小型连锁；云海肴=资本化连锁）、central_kitchen 3（云海肴=确认 36kr+云南网双源；百丘2店=疑似）、food_safety 3（点都德3店=确认，市场监管总局通报/经济参考报）、investor_info 20（甬府/新荣记-荣府宴/大董/点都德/云海肴-红杉/有喜屋-商务部备案/徽廷宴/百丘/老吉士/莱莱/巴国布衣工商主体）；price_avg 本轮 0 新增。电话/坐标/营业时间/精选/评分一律未动。
+- scan_ledger 已回写该 20 rid（备份 `.bak_20261012`），周一增量**不改** last_full_date（保持 2026-10-02）。
+- 点评 cookie 底册日更正常：dianping_daily active=1517/done=1517/0 新增；dianping_enrich processed=0，无鉴权报错。
+- **历史弱源体检（只读，未自动改）**：findings.jsonl 10297 行按新门控从零重判，仅约 3483 达标；不达标 6814 中 2204 为 `production_model` 他域字段（非本门控 6 列，不算污染），真实弱源 noisy≈4577（amap/smzdm/163/bilibili/cnblogs/sogou/抖音/水滴/qq/youtube 等）、单源硬负面 29。新门控不溯及既往；**是否跑回溯净化（仓内 cleanup_findings.py）待拍板**——post_audit 旧版长期不校验响应，历史"已 APPLY"可能本就未落库，DB 现值多来自 chain_audit/dianping/prefill/production_model_probe，净化前须逐列核对来源。
+- **TG 通知通道故障（待修）**：容器直连 api.telegram.org 被墙（ConnectionError）；Deno 反代 `dirty-stingray-4216.food-atlas-hb.deno.net` 免费额度耗尽 **503 USAGE_EXCEEDED 已暂停**。本轮报告由 deuce 本地直连 TG 代发成功（message_id 1549）。后续需升级/重建 Deno 反代或在容器配可用出口代理，否则看门狗/告警在容器侧发不出。
+- 部署：正规走宿主 `~/food-cloud/build_sync.sh`（ubuntu、禁 sudo），现网版本 288c9a3；数据卷 `fooddata:/app/data` 重建不丢。
+
 ### 📅 2026-10-12 02:00 自进化复盘 · 硬标签证据门战役（存量清零 + 生产者根治）
 > 主线＝守护北极星 A2「真实可溯、宁空不假」：清掉无证据的中央厨房/预制硬标签污染，并在写入侧根治，使硬标签只能经 fact_verify 落 fact_claim 后才成立。
 
