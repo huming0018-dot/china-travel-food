@@ -158,18 +158,11 @@ def pick_best(results, db_name, db_address="", name_thresh=0.85):
 def _map_call(provider, path, params, interface, consumer, timeout=15):
     """逐把 key 尝试：某 key rate/error 自动换下一把；全 dead/无预算 → quota。
     返回 (json_or_None, "ok"/"quota"/"error")。"""
-    pool = MQ.MapQuota()
-    n = max(1, len(pool.keys[provider]))
-    last = (None, "error")
-    for _ in range(n):
-        j, st = MQ.call(provider, path, params, interface, consumer, timeout=timeout)
-        last = (j, st)
-        if st == "ok":
-            return j, "ok"
-        if st in ("no_budget", "reserved"):
-            return None, "quota"
-        # rate / error / sign_error：换下一把 key 重试
-    return (last[0], "quota" if last[1] == "rate" else "error")
+    # Key 切换由 MQ.call 统一执行，避免外层循环将最大请求数放大为 N×4。
+    j, st = MQ.call(provider, path, params, interface, consumer, timeout=timeout)
+    if st == "ok":
+        return j, "ok"
+    return j, "quota" if st in ("no_budget", "reserved") else "error"
 
 
 # ────────────────────── 腾讯 API ──────────────────────
