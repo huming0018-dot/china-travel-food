@@ -1,0 +1,26 @@
+[
+  {
+    "directory": "archive-0.1.0",
+    "source_commit": "d69be914c657cf0e8764a26dc1d7b5e5b65064b9",
+    "files": {
+      "audit.schema.json": "ffc13dd213bc914cd95c4983d842ad2af69eced807b3131586d09eb969e2465b",
+      "scored.schema.json": "83774c1aea40b3c470e06d9daa0a9baae63f8cfed281840cd1322633eed3cb3b",
+      "raw.schema.json": "fb03989c3c7d587a3648dfb4918e4f1ee98c757950c56312bb90bc7e0c94023f",
+      "clean.schema.json": "9cc644e041ee413b82f452a6ca48f66a36ba0eee9e3b0e6ffa5f4bde7d053859",
+      "manifest.schema.json": "6e8a6ceeb36ddeee587d685aa107c19652525472a54a9a689f6679326c3e9b0e"
+    }
+  },
+  {
+    "directory": "archive-bba6ad2-0.1.0",
+    "source_commit": "bba6ad298bcb58268994cd6642ca696645351819",
+    "files": {
+      "audit.schema.json": "0f433015bed5147042dcaddcff5f5e2eb7bf66195ca545fe9488ade329e6816f",
+      "scored.schema.json": "47d5d3cf273b60e6a30899787d2cd181e2f8baf2191d229c28797206f9f302b2",
+      "raw.schema.json": "49d2d894cb50661e1c4bf9d88801c93566987cd93b39f269032e5c8e286f984b",
+      "clean.schema.json": "bc13454b8a238146b17031388e4aa50afb1089601697c350a4e3d214d64229f1",
+      "view-previously-mislabelled.schema.json": "2fdb956618f81433c53c77566ba19d31f8e628eb66dd7c31c45a991aa46326be",
+      "manifest.schema.json": "6e8a6ceeb36ddeee587d685aa107c19652525472a54a9a689f6679326c3e9b0e",
+      "view.schema.json": "2fdb956618f81433c53c77566ba19d31f8e628eb66dd7c31c45a991aa46326be"
+    }
+  }
+]

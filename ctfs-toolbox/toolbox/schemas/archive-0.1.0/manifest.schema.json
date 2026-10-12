@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ctfs.toolbox/schemas/manifest/0.1.0",
+  "title": "CTFS Toolbox Project Manifest",
+  "version": "0.1.0",
+  "description": "Versioned project manifest. additionalProperties=false everywhere: unknown fields are rejected. No dynamic execution keys allowed.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project", "storage", "pipelines"],
+  "properties": {
+    "schemaVersion": { "type": "string", "enum": ["0.1.0"] },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project_id", "name", "domain", "region"],
+      "properties": {
+        "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+        "name": { "type": "string", "minLength": 1 },
+        "domain": { "type": "string", "minLength": 1 },
+        "region": { "type": "string", "pattern": "^[A-Za-z0-9-]+$" }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["backend", "path"],
+      "properties": {
+        "backend": { "type": "string", "enum": ["sqlite"] },
+        "path": { "type": "string", "minLength": 1 },
+        "postgres": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "pipelines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["raw", "clean", "scored", "audit"],
+      "properties": {
+        "raw": { "$ref": "#/definitions/pipelineLayer" },
+        "clean": { "$ref": "#/definitions/pipelineLayer" },
+        "scored": { "$ref": "#/definitions/pipelineLayer" },
+        "audit": { "$ref": "#/definitions/pipelineLayer" }
+      }
+    },
+    "raw": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources"],
+      "properties": {
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source_id", "kind", "url"],
+            "properties": {
+              "source_id": { "type": "string", "minLength": 1 },
+              "kind": { "type": "string", "minLength": 1 },
+              "url": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "pipelineLayer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion"],
+      "properties": {
+        "schemaVersion": { "type": "string", "enum": ["0.1.0"] },
+        "target": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

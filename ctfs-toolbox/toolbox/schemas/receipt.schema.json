@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Acquisition receipt values",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "code",
+    "at"
+  ],
+  "properties": {
+    "code": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "note": {
+      "type": [
+        "string",
+        "object"
+      ]
+    }
+  }
+}

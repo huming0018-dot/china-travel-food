@@ -1,0 +1,37 @@
+# Validation parameters (software-releases pack 0.3.1). Pure data.
+unicode_quote:
+  enabled: false
+  note: "official JSON API: evidence = source JSON pointer + original node value, not prose quotes"
+hash:
+  algorithm: "sha256"
+  canonical_field: "source_payload_sha256"
+  body_field: "source_payload"
+  note: "RAW bytes hash verified directly (never a re-serialized JSON hash); assets never downloaded"
+  raw_hash_scope: "http_response_bytes"
+  raw_retained: true
+coverage:
+  evidence_fields:
+    - "name"
+    - "tag_name"
+    - "published_at"
+    - "html_url"
+  note: "each release fact field is backed by an evidence entry carrying its JSON pointer + node value"
+classification:
+  fields: []
+  note: "no classification fields; official release facts are singular-publisher facts"
+json_pointer_evidence:
+  enabled: true
+  note: "evidence entries store pointer (e.g. /tag_name) and the original node value; re-parse from RAW to verify per field"
+machine_scope:
+  candidate_scope_path: null
+  allowed: []
+  default: "official_release"
+evidence_semantics:
+  independent_sources: "single_official_publisher"
+  editorial_source_never_diner: false
+  official_fact: true
+unknown_fields:
+  default: "unknown"
+fact_kind:
+  official_release_fact: true
+  note: "official release facts are not vulnerability/security-upgrade conclusions; assets are never downloaded"

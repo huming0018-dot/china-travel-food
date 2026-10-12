@@ -1,0 +1,49 @@
+admission:
+  rules:
+  - id: evidence-bound
+    description: every nonempty FACT field has at least one exact evidence quote
+    pass: coverage_ok
+  - id: quote-exact
+    description: evidence quotes are exact Unicode slices of the pinned source version
+    pass: quote_ok
+  - id: hash-pinned
+    description: source canonical hash matches the actual canonical body bytes
+    pass: hash_ok
+  - id: classification-enum
+    description: entity_type is enum-checked + provenance normalized; never quoted
+    pass: classification_ok
+scoring:
+  weights:
+    sources: 1.0
+    refs: 1.0
+    coverage: 2.0
+    recency: 1.0
+  threshold: 3.0
+  hard_blocks:
+  - sources
+  parts:
+  - name: sources
+    weight: 1.0
+    min: 1
+    hard: true
+    reason: at least one independent source-backed candidate
+  - name: refs
+    weight: 1.0
+    min: 0
+    hard: false
+    reason: number of exact evidence references
+  - name: coverage
+    weight: 2.0
+    min: 0
+    hard: false
+    reason: fraction of nonempty fact fields with evidence coverage
+  - name: recency
+    weight: 1.0
+    min: 0
+    hard: false
+    horizon_days: 180
+    default: 0.0
+    reason: recency vs fixed as_of
+  note: Shanghai scope is source-bound discovery_candidate / private_lead only. Unknowns
+    (hours/menu/price/business relation/taste) stay unknown; an editorial source never
+    counts as an independent diner voice or an eaten experience.

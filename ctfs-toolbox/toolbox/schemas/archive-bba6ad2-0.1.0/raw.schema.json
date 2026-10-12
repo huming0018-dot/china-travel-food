@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RAW layer record (immutable, payload-verified)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project_id", "layer", "payload", "source_url", "source_hash", "batch", "captured_at", "lineage"],
+  "properties": {
+    "schemaVersion": { "type": "string", "const": "0.1.0" },
+    "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "layer": { "type": "string", "const": "RAW" },
+    "payload": { "description": "real captured payload: text string, bytes or structured object" },
+    "content_hash": { "description": "optional; storage recomputes from actual payload bytes and rejects mismatch", "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "source_url": { "type": "string", "minLength": 1 },
+    "source_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "batch": { "type": "string", "minLength": 1 },
+    "captured_at": { "type": "string", "minLength": 1 },
+    "lineage": { "$ref": "#/definitions/lineage" }
+  },
+  "definitions": {
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project", "source_url", "source_hash", "batch", "captured_at"],
+      "properties": {
+        "project": { "type": "string" },
+        "source_url": { "type": "string", "minLength": 1 },
+        "source_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "batch": { "type": "string", "minLength": 1 },
+        "captured_at": { "type": "string", "minLength": 1 },
+        "steps": { "type": "array", "items": { "type": "string" } },
+        "tool_versions": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

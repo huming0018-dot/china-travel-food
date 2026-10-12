@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "APP layer record - view (append-only, pinned parent version)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project_id", "layer", "schema_kind", "record_id", "parent_ref", "content"],
+  "properties": {
+    "schemaVersion": { "type": "string", "const": "0.1.0" },
+    "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "layer": { "type": "string", "const": "APP" },
+    "schema_kind": { "type": "string", "const": "view" },
+    "record_id": { "type": "string", "minLength": 1 },
+    "parent_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["layer", "project_id", "record_id", "version"],
+      "properties": {
+        "layer": { "type": "string", "const": "DW" },
+        "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+        "record_id": { "type": "string", "minLength": 1 },
+        "version": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "content": { "type": "object", "additionalProperties": true }
+  }
+}
