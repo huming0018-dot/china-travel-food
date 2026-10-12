@@ -1,0 +1,386 @@
+{
+  "schema_version": 1,
+  "github": {
+    "repository": "huming0018-dot/china-travel-food",
+    "branch": "codex/ctfs-m7-pg-readonly-051-20261013",
+    "base_commit": "4052e10e3e2af3fffe345354443ca2165f86128e",
+    "source_prefix": "ctfs-toolbox/"
+  },
+  "tool_version": "0.5.1",
+  "manifest_version": "0.4.0",
+  "data_version": "0.2.0",
+  "active_pack_version": "0.3.3",
+  "cloud_source_base_commit": "8171a3f0fba13a4c91b6f2e29b50ed876e4e8bb1",
+  "candidate_wheel_sha256": "41c2776a3ac49e0f0c034b57685422c23baef93049bc5f09afbadb3cacc40e9e",
+  "source_files": [
+    {
+      "path": "packs/cuisines/0.3.2/expectations.yaml",
+      "sha256": "5984cdaa07824c190032d85fe8cff33b4ea4bcfef363ed0272ba6b29394e8c89"
+    },
+    {
+      "path": "packs/cuisines/0.3.2/fields.yaml",
+      "sha256": "28bf004ba8372cd31e80365e85cc5538c791dc35327c9a78dbbdcc012eeed4a0"
+    },
+    {
+      "path": "packs/cuisines/0.3.2/pack.yaml",
+      "sha256": "650cf698e6325f6287073f91119e5207fd2735e33a046f5fa55144176358d8bd"
+    },
+    {
+      "path": "packs/cuisines/0.3.2/pointers.json",
+      "sha256": "81ad114b62d63e245effe9fca52af86ecbcfaed3c5a76bdf6f571ec3a2496e47"
+    },
+    {
+      "path": "packs/cuisines/0.3.2/rubric.yaml",
+      "sha256": "26d67dfcfddbb927161e1f18c801eceb62fdc3d74dba0d349f5dbaf90c687e66"
+    },
+    {
+      "path": "packs/cuisines/0.3.2/validation.yaml",
+      "sha256": "24876ef08f59f9b9e4c2712ff7d95d9ba41d53deb0f2b0c57339baaa92c80e22"
+    },
+    {
+      "path": "packs/cuisines/0.3.3/expectations.yaml",
+      "sha256": "5984cdaa07824c190032d85fe8cff33b4ea4bcfef363ed0272ba6b29394e8c89"
+    },
+    {
+      "path": "packs/cuisines/0.3.3/fields.yaml",
+      "sha256": "ab51efc1128fea0d58984940e734bde81cc3ec32228b16955372079a4a47aed2"
+    },
+    {
+      "path": "packs/cuisines/0.3.3/pack.yaml",
+      "sha256": "0e18eb93472880ebcec8a432957f053fd0d0870f4a86d20bc5dc56570b4ca486"
+    },
+    {
+      "path": "packs/cuisines/0.3.3/pointers.json",
+      "sha256": "81ad114b62d63e245effe9fca52af86ecbcfaed3c5a76bdf6f571ec3a2496e47"
+    },
+    {
+      "path": "packs/cuisines/0.3.3/rubric.yaml",
+      "sha256": "26d67dfcfddbb927161e1f18c801eceb62fdc3d74dba0d349f5dbaf90c687e66"
+    },
+    {
+      "path": "packs/cuisines/0.3.3/validation.yaml",
+      "sha256": "24876ef08f59f9b9e4c2712ff7d95d9ba41d53deb0f2b0c57339baaa92c80e22"
+    },
+    {
+      "path": "packs/software-releases/0.3.2/expectations.yaml",
+      "sha256": "28f4b1deced1eb4c95833aefbaab8624081d2125e6650ae2e92bace4dd19ae95"
+    },
+    {
+      "path": "packs/software-releases/0.3.2/fields.yaml",
+      "sha256": "10c8830d09078936c8487ecb2ccfd193e53f1ce7a00f32126bf9236a8cc4d3c4"
+    },
+    {
+      "path": "packs/software-releases/0.3.2/pack.yaml",
+      "sha256": "8f1fb46a68ba14ba744a3efa213c2fefa5304469969881accd4e81a63aad5c5b"
+    },
+    {
+      "path": "packs/software-releases/0.3.2/pointers.json",
+      "sha256": "77cf7e2892e8ba99b90d4bd23114aac401f5eabc4f88f0feba05c6eae8cb09f9"
+    },
+    {
+      "path": "packs/software-releases/0.3.2/rubric.yaml",
+      "sha256": "f439c64838a40420736c441331ecad5b0ee3abaea578ddb411e2e60520115bce"
+    },
+    {
+      "path": "packs/software-releases/0.3.2/validation.yaml",
+      "sha256": "7a297d6e5be768d8d0336d450db51bd858a2ba4bad8fd76ad0037a9c0af1aae7"
+    },
+    {
+      "path": "packs/software-releases/0.3.3/expectations.yaml",
+      "sha256": "28f4b1deced1eb4c95833aefbaab8624081d2125e6650ae2e92bace4dd19ae95"
+    },
+    {
+      "path": "packs/software-releases/0.3.3/fields.yaml",
+      "sha256": "3e48a2bf72d23e554c147f341a81fb1508fa21e52d54e56717dd730a60f89d61"
+    },
+    {
+      "path": "packs/software-releases/0.3.3/pack.yaml",
+      "sha256": "167640c735e28af164ddfce9d70c3bd47f6be187aa11c6a6f3d198f61ad8ada8"
+    },
+    {
+      "path": "packs/software-releases/0.3.3/pointers.json",
+      "sha256": "77cf7e2892e8ba99b90d4bd23114aac401f5eabc4f88f0feba05c6eae8cb09f9"
+    },
+    {
+      "path": "packs/software-releases/0.3.3/rubric.yaml",
+      "sha256": "f439c64838a40420736c441331ecad5b0ee3abaea578ddb411e2e60520115bce"
+    },
+    {
+      "path": "packs/software-releases/0.3.3/validation.yaml",
+      "sha256": "7a297d6e5be768d8d0336d450db51bd858a2ba4bad8fd76ad0037a9c0af1aae7"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "e6b684a18e3ca8a2266ed9f989c3a33753d8885cd5d16fbc5057f0faebdcb0da"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7b5fcbec5395300805d0f12cc75530e46dfee735214ba81dc29c11b20d88dbdc"
+    },
+    {
+      "path": "tests/test_connector.py",
+      "sha256": "16a81c16d0f974bc06edc9d46bd9e9af180166fc51590f81fb38a3abd7e2abfd"
+    },
+    {
+      "path": "tests/test_crawler_p1.py",
+      "sha256": "038a57313f267bab14701f3ec7151c006a1f48f667c419e62adff7ccca0cdebc"
+    },
+    {
+      "path": "tests/test_gate03.py",
+      "sha256": "b7b9bba7e36b0303d7c4e0445f3a9f25e7caa2e3394d7e688747de19a169e637"
+    },
+    {
+      "path": "tests/test_gate03b.py",
+      "sha256": "ec90ac18c92510f936f32b2f3e901393d56e4e32f0bcbadfc7f0dd45bdc647f1"
+    },
+    {
+      "path": "tests/test_manifest_03.py",
+      "sha256": "259e17513c79a3f25fceba9573321c5ee005b39113b7869b576972ba797a3dc8"
+    },
+    {
+      "path": "tests/test_manifest.py",
+      "sha256": "cec5129be87bd81b1ce798334e378017b5c091aa8307e4346100bb06d021f91f"
+    },
+    {
+      "path": "tests/test_ontology_p1.py",
+      "sha256": "3c103a3008f412943fa5b5ae101ea7f3139009cfc9d0d02d95850c1bdea6c7b9"
+    },
+    {
+      "path": "tests/test_p2_contract_strict.py",
+      "sha256": "0d9fe24b70d6ba1944035b49237fe1c175bc8b9393d9bf7047eab58f3cfc1f4a"
+    },
+    {
+      "path": "tests/test_p2_gate.py",
+      "sha256": "ef65de4e0b9d2787ebcd26db511e734aaa44bf420a0f3f7b972409185fa0c251"
+    },
+    {
+      "path": "tests/test_p2_repair03_cleaner.py",
+      "sha256": "ac28cbe14a557364489df165b805c1bada67af648c5674d33ec393a6f4feab47"
+    },
+    {
+      "path": "tests/test_pg_readonly.py",
+      "sha256": "82687b10edfa156d94d8b9ebae99ff3008206c183a3cd437b380af076426e221"
+    },
+    {
+      "path": "tests/test_security.py",
+      "sha256": "9c38c0e060faee67a7fc464fc7b2fad7925d25bcba52aa65356b19ad20a7cec6"
+    },
+    {
+      "path": "tests/test_storage.py",
+      "sha256": "b66f24c7e3c99dd5d8be16eaa897ed9df49c4fb57b51b3a319610a885ad67f82"
+    },
+    {
+      "path": "toolbox/__init__.py",
+      "sha256": "b56530829d5f7b867dee6cedb2c76e41c6d3e0b03112ab052a9f7172d13427a8"
+    },
+    {
+      "path": "toolbox/auditor.py",
+      "sha256": "7f2b33a34842e75728e5c7d7f188c4e8136a14989f28afff6c7618aaa4de78a6"
+    },
+    {
+      "path": "toolbox/bindings.py",
+      "sha256": "16d6956698e6d8b8b761df40021ce15368ec10e6a2857e72e1d6f231d901700a"
+    },
+    {
+      "path": "toolbox/cleaner.py",
+      "sha256": "76d9dddc1698eed5e6c5820651338d003a778afdf2bc412f20128da287e08ea7"
+    },
+    {
+      "path": "toolbox/cli.py",
+      "sha256": "f53a0b8242010311ec1494d78179bd3eaf67ba7002d11a5141578e64a0e67005"
+    },
+    {
+      "path": "toolbox/connector_http.py",
+      "sha256": "f44604dc56ea7c2c96cfc10ab9b654241c083108455f0e47ad8ec9cb11846a77"
+    },
+    {
+      "path": "toolbox/connector_snapshot.py",
+      "sha256": "91ccee982f7ddec5c78e74eecdb528e3c6697099ea1de26008fac1634aa4b53e"
+    },
+    {
+      "path": "toolbox/connector.py",
+      "sha256": "c554b4371254a797bfc80e77c0d6665693646c24634652997820872da8c13dd1"
+    },
+    {
+      "path": "toolbox/consumer.py",
+      "sha256": "8b93feb20ee6f8d6d3ae0cb99dd88c873d65d55fa8af916cd391b295ad18c447"
+    },
+    {
+      "path": "toolbox/crawler.py",
+      "sha256": "035c82f912f03ade8973c8435ada9f4f0ab0383e98191b1a70723d5caa655671"
+    },
+    {
+      "path": "toolbox/jobs.py",
+      "sha256": "2a505386d6dc7f691e0dea45bc47d5baa5b117e68f65477e94d0568e8681e60c"
+    },
+    {
+      "path": "toolbox/manifest.py",
+      "sha256": "edaaa8a7417b6c49c775f402b79552d70e13e7b31dd0b98c11f033f7e508ef11"
+    },
+    {
+      "path": "toolbox/ontology.py",
+      "sha256": "199176125fc5f1411ff6f5fccc6ad9f3b1a76cfdb7c0e843beb0031a5a5eaf78"
+    },
+    {
+      "path": "toolbox/pack_schema.py",
+      "sha256": "cdcab53925f0797bb333ce88060db1d4fe5a906cfddf56eec731fcf5232d911b"
+    },
+    {
+      "path": "toolbox/postgres.py",
+      "sha256": "5088c5c2f13d77fb341d578922c80ef714ca4434ac8c5bfd99ba0b15ff7f2529"
+    },
+    {
+      "path": "toolbox/schema.py",
+      "sha256": "faebbe0bf8e9a246b295e691b8ae1f3e3a92897edfc5114b0a8416fec19472a9"
+    },
+    {
+      "path": "toolbox/schemas/archive-0.1.0/audit.schema.json",
+      "sha256": "ffc13dd213bc914cd95c4983d842ad2af69eced807b3131586d09eb969e2465b"
+    },
+    {
+      "path": "toolbox/schemas/archive-0.1.0/clean.schema.json",
+      "sha256": "9cc644e041ee413b82f452a6ca48f66a36ba0eee9e3b0e6ffa5f4bde7d053859"
+    },
+    {
+      "path": "toolbox/schemas/archive-0.1.0/manifest.schema.json",
+      "sha256": "6e8a6ceeb36ddeee587d685aa107c19652525472a54a9a689f6679326c3e9b0e"
+    },
+    {
+      "path": "toolbox/schemas/archive-0.1.0/raw.schema.json",
+      "sha256": "fb03989c3c7d587a3648dfb4918e4f1ee98c757950c56312bb90bc7e0c94023f"
+    },
+    {
+      "path": "toolbox/schemas/archive-0.1.0/scored.schema.json",
+      "sha256": "83774c1aea40b3c470e06d9daa0a9baae63f8cfed281840cd1322633eed3cb3b"
+    },
+    {
+      "path": "toolbox/schemas/archive-bba6ad2-0.1.0/audit.schema.json",
+      "sha256": "0f433015bed5147042dcaddcff5f5e2eb7bf66195ca545fe9488ade329e6816f"
+    },
+    {
+      "path": "toolbox/schemas/archive-bba6ad2-0.1.0/clean.schema.json",
+      "sha256": "bc13454b8a238146b17031388e4aa50afb1089601697c350a4e3d214d64229f1"
+    },
+    {
+      "path": "toolbox/schemas/archive-bba6ad2-0.1.0/manifest.schema.json",
+      "sha256": "6e8a6ceeb36ddeee587d685aa107c19652525472a54a9a689f6679326c3e9b0e"
+    },
+    {
+      "path": "toolbox/schemas/archive-bba6ad2-0.1.0/raw.schema.json",
+      "sha256": "49d2d894cb50661e1c4bf9d88801c93566987cd93b39f269032e5c8e286f984b"
+    },
+    {
+      "path": "toolbox/schemas/archive-bba6ad2-0.1.0/scored.schema.json",
+      "sha256": "47d5d3cf273b60e6a30899787d2cd181e2f8baf2191d229c28797206f9f302b2"
+    },
+    {
+      "path": "toolbox/schemas/archive-bba6ad2-0.1.0/view-previously-mislabelled.schema.json",
+      "sha256": "2fdb956618f81433c53c77566ba19d31f8e628eb66dd7c31c45a991aa46326be"
+    },
+    {
+      "path": "toolbox/schemas/archive-bba6ad2-0.1.0/view.schema.json",
+      "sha256": "2fdb956618f81433c53c77566ba19d31f8e628eb66dd7c31c45a991aa46326be"
+    },
+    {
+      "path": "toolbox/schemas/archive/manifest.0.2.0.schema.json",
+      "sha256": "c6e78b95fbd1ad1a84fd73db43f61584870007ae2fee7d0a99eb9f826c55cede"
+    },
+    {
+      "path": "toolbox/schemas/archive/manifest.0.3.2.schema.json",
+      "sha256": "e4ecb8b497cb96f44e39e5e30c4b1653d5d23f7d15a56d14e674dc0d3fdc76f8"
+    },
+    {
+      "path": "toolbox/schemas/archive/manifest.0.3.3.schema.json",
+      "sha256": "bcf915d965088d3f72aabc3b063ea4c5d7bb93f5275974824efac12db2593f33"
+    },
+    {
+      "path": "toolbox/schemas/audit.schema.json",
+      "sha256": "38919b8d9cc6302d9ec75c6d23a13206ba366d882c122e89e81f2bc322db7781"
+    },
+    {
+      "path": "toolbox/schemas/clean.schema.json",
+      "sha256": "9e578b71af7386d69df1c9e05179ecce825e86786e2c7a1cc48fc014a624fb95"
+    },
+    {
+      "path": "toolbox/schemas/manifest.schema.json",
+      "sha256": "de197981863b71debf946de0a2b6e1595baca7f0ea567ba704d587636b2c8332"
+    },
+    {
+      "path": "toolbox/schemas/pack.schema.json",
+      "sha256": "da15653d0b6801ea6f686fce090bafc1e78181923094158a11967f9e6fe03e65"
+    },
+    {
+      "path": "toolbox/schemas/raw.schema.json",
+      "sha256": "315960e7a2e0278c05358b06ef648bd897cb26171f7c5db72134f81d0939ac77"
+    },
+    {
+      "path": "toolbox/schemas/receipt.schema.json",
+      "sha256": "63d2be58c96ad6699117dda383754553db52486feb3aead8b501a8ade24b11f0"
+    },
+    {
+      "path": "toolbox/schemas/schema-history.json",
+      "sha256": "a9949f21ffe526db70e3c2ea008faf822d39ddf04e2ddd69763fa06a5dd19cbb"
+    },
+    {
+      "path": "toolbox/schemas/scored.schema.json",
+      "sha256": "ec51976babe61daa6549d636fc8338d5a4d78a1956bf5576b7c0b63f5622227f"
+    },
+    {
+      "path": "toolbox/schemas/view.schema.json",
+      "sha256": "f1dde03b93fb7174eaf3c237c00660147541cd0351e44e7b41f9b7d978a564e1"
+    },
+    {
+      "path": "toolbox/scorer.py",
+      "sha256": "254f9e6c61ec4366f8ebe670d2b6b48191c3c75b543f3a3c34f2e9851a20352d"
+    },
+    {
+      "path": "toolbox/stages.py",
+      "sha256": "ae7824aca21b97c3885b3a76dbb942505c5cc8dbdcd2cdf870cab3143fdfc0a9"
+    },
+    {
+      "path": "toolbox/storage_factory.py",
+      "sha256": "97f68af82f89a2be5476be016aafe941cf46ec73127832b88298e87b2d696632"
+    },
+    {
+      "path": "toolbox/storage.py",
+      "sha256": "96a7bfbd9ac467efa05febdf46af3bd1e1f3b360814d95a7ae946bc007a8125c"
+    },
+    {
+      "path": "toolbox/validators.py",
+      "sha256": "fe3fdd34df0f95f14378b3734090bb681d18082f6ccd663d48cf4d8f564b3ad2"
+    },
+    {
+      "path": "toolbox/writer.py",
+      "sha256": "68e4e9c15ca4f3686827bb56a635e57f66bf313707e2419b9593f35baaba71ef"
+    }
+  ],
+  "source_inventory_scope": "The original 84 public source inputs plus one new test; excludes version maps and change notes.",
+  "dependency_environment": "Frozen 050 environment copied into a new environment; only ctfs-toolbox was reinstalled as 051. Build used existing system setuptools without fetching dependencies.",
+  "validation": {
+    "installed_package_files_compared": 46,
+    "real_projects": [
+      {
+        "domain": "food",
+        "items": 6
+      },
+      {
+        "domain": "software",
+        "items": 2
+      }
+    ],
+    "postgres_raw_records": 3,
+    "postgres_versions": 32,
+    "postgres_receipts": 0,
+    "actual_public_cli_http_responses": 4,
+    "source_fetches": 0,
+    "external_model_calls": 0,
+    "independent_verdict": "SCOPED_PASS_ENGINEERING_POSTGRES_READONLY_CONSUMPTION"
+  },
+  "production": {
+    "tool_version": "0.5.0",
+    "changed_by_candidate": false,
+    "frozen_version_map": "runtime-version-map.json"
+  },
+  "identity_note": "The GitHub base and frozen cloud source have matching exported tool bytes; the candidate applies the reviewed five-file change. Candidate source identities are the individual hashes, not a claimed pre-existing 051 commit. No RAW, private feedback, database, credentials, or diagnostic telemetry is published.",
+  "publication_state": "reviewable_candidate_not_production_deployed"
+}

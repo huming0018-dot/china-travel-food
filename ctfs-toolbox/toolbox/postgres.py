@@ -35,13 +35,18 @@ class _PostgresConnection:
 
 class PostgresStorage(SqliteStorage):
     """Actual PostgreSQL implementation, not a production Supabase acceptance."""
-    def __init__(self,dsn:str,schema:str="ctfs_toolbox"):
+    def __init__(self,dsn:str,schema:str="ctfs_toolbox",*,read_only:bool=False):
+        if type(read_only) is not bool:
+            raise StorageError("read_only must be boolean")
         if not isinstance(schema,str) or not re.fullmatch(r"ctfs_[a-z0-9_]{1,48}",schema):
             raise StorageError("PostgreSQL requires a dedicated ctfs_* schema")
         import psycopg
         from psycopg import sql
         from psycopg.conninfo import conninfo_to_dict
-        options=conninfo_to_dict(dsn)
+        try:
+            options=conninfo_to_dict(dsn)
+        except Exception as exc:
+            raise StorageError("postgres DSN parse failed ("+type(exc).__name__+")") from None
         # libpq also accepts connection hosts via hostaddr, service files and
         # environment. A service is opaque: require certificate validation.
         def value(key,envkey):
@@ -68,9 +73,25 @@ class PostgresStorage(SqliteStorage):
             for key,envkey in (("host","PGHOST"),("hostaddr","PGHOSTADDR")):
                 effective=value(key,envkey)
                 if effective:connection_options[key]=effective
-        conn=psycopg.connect(dsn,**connection_options)
+        try:
+            conn=psycopg.connect(dsn,**connection_options)
+        except Exception as exc:
+            raise StorageError("postgres connection failed ("+type(exc).__name__+")") from None
         key=int.from_bytes(hashlib.sha256(schema.encode()).digest()[:8],"big") & ((1<<63)-1)
         self._conn=_PostgresConnection(conn,key)
+        self._read_only = read_only
+        if read_only:
+            try:
+                self._init_read_only(conn, schema)
+            except StorageError:
+                try: conn.close()
+                except Exception: pass
+                raise
+            except Exception as exc:
+                try: conn.close()
+                except Exception: pass
+                raise StorageError("read-only postgres backend initialization failed ("+type(exc).__name__+")") from None
+            return
         try:
             self._conn.execute("BEGIN IMMEDIATE")
             exists=conn.execute("SELECT EXISTS(SELECT 1 FROM information_schema.schemata WHERE schema_name=%s)",(schema,)).fetchone()[0]
@@ -110,3 +131,52 @@ class PostgresStorage(SqliteStorage):
             try:self._conn.execute("ROLLBACK")
             finally:conn.close()
             raise
+
+    def _init_read_only(self, conn, schema) -> None:
+        """Verify an existing toolbox schema and enforce database-layer read-only.
+
+        Connection-scoped default_transaction_read_only is set and verified via
+        SHOW default and current transaction state. No DDL/DML is attempted;
+        every required relation and the contract marker must already exist.
+        """
+        from psycopg import sql
+        conn.autocommit = True
+        exists=conn.execute("SELECT EXISTS(SELECT 1 FROM information_schema.schemata WHERE schema_name=%s)",(schema,)).fetchone()[0]
+        if not exists:
+            raise StorageError("read-only postgres backend: schema does not exist")
+        rows=conn.execute("SELECT table_name FROM information_schema.tables WHERE table_schema=%s",(schema,)).fetchall()
+        present={r[0] for r in rows}
+        missing={"raw_records","versions","receipts","_toolbox_meta"}-present
+        if missing:
+            raise StorageError("read-only postgres backend: toolbox tables missing: "+",".join(sorted(missing)))
+        cols=conn.execute("SELECT table_name,column_name FROM information_schema.columns WHERE table_schema=%s AND table_name='_toolbox_meta' AND column_name IN ('key','value')",(schema,)).fetchall()
+        colset={(r[0],r[1]) for r in cols}
+        if ("_toolbox_meta","key") not in colset or ("_toolbox_meta","value") not in colset:
+            raise StorageError("read-only postgres backend: _toolbox_meta lacks key/value columns")
+        contract=conn.execute(sql.SQL("SELECT value FROM {}._toolbox_meta WHERE key='contract'").format(sql.Identifier(schema))).fetchone()
+        if not contract or contract[0]!="layered-storage/0.2":
+            raise StorageError("incompatible existing toolbox schema contract")
+        conn.execute("SET default_transaction_read_only = on")
+        row=conn.execute("SHOW default_transaction_read_only").fetchone()
+        if not row or str(row[0]).lower()!="on":
+            raise StorageError("read-only postgres backend: connection read-only not enforced")
+        row=conn.execute("SHOW transaction_read_only").fetchone()
+        if not row or str(row[0]).lower()!="on":
+            raise StorageError("read-only postgres backend: current transaction read-only not enforced")
+        conn.execute(sql.SQL("SET search_path TO {}").format(sql.Identifier(schema)))
+
+    def _guard_writes(self) -> None:
+        if getattr(self, "_read_only", False):
+            raise StorageError("read-only postgres backend rejects writes")
+
+    def write_raw(self, project_id: str, record: dict, record_id: str | None = None) -> str:
+        self._guard_writes()
+        return super().write_raw(project_id, record, record_id)
+
+    def append_receipt(self, project_id: str, raw_id: str, receipt: dict) -> int:
+        self._guard_writes()
+        return super().append_receipt(project_id, raw_id, receipt)
+
+    def append_version(self, project_id: str, layer: str, record: dict, expected_version: int | None = None) -> int:
+        self._guard_writes()
+        return super().append_version(project_id, layer, record, expected_version)

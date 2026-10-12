@@ -9,4 +9,4 @@ P0 backend: SQLite (isolated). PRD production acceptance requires Postgres;
 the Storage interface leaves a Postgres adapter slot (not a fake stub).
 """
 
-__version__ = "0.5.0"
+__version__ = "0.5.1"
