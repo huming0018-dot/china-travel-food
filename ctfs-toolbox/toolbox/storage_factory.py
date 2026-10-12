@@ -17,6 +17,8 @@ from toolbox.storage import SqliteStorage, StorageError
 
 
 def make_storage(manifest: dict, project_root: pathlib.Path, *, read_only: bool = False):
+    if type(read_only) is not bool:
+        raise StorageError("read_only must be boolean")
     storage = manifest.get("storage")
     if not isinstance(storage, dict):
         raise StorageError("manifest storage section missing")
@@ -51,12 +53,11 @@ def make_storage(manifest: dict, project_root: pathlib.Path, *, read_only: bool 
         if not read_only:db_path.parent.mkdir(parents=True, exist_ok=True)
         return SqliteStorage(db_path,read_only=read_only)
     if backend == "postgres":
-        if read_only:raise StorageError("read-only HTTP consumer currently requires sqlite backend")
-        return _make_postgres(storage)
+        return _make_postgres(storage, read_only=read_only)
     raise StorageError(f"unsupported storage backend {backend!r} (only sqlite|postgres)")
 
 
-def _make_postgres(storage: dict):
+def _make_postgres(storage: dict, *, read_only: bool = False):
     pg = storage.get("postgres")
     if not isinstance(pg, dict):
         raise StorageError("postgres backend requires storage.postgres object")
@@ -70,4 +71,4 @@ def _make_postgres(storage: dict):
     if not dsn:
         raise StorageError(f"postgres DSN env {dsn_env!r} is not set in this process")
     from toolbox.postgres import PostgresStorage  # deferred optional dependency
-    return PostgresStorage(dsn=dsn, schema=schema)
+    return PostgresStorage(dsn=dsn, schema=schema, read_only=read_only)
