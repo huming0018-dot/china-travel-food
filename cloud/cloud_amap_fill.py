@@ -174,22 +174,32 @@ def is_dining_poi(poi):
 def amap_text(name, offset=8):
     """place/text extensions=all，经 map_quota 池（consumer=full，多 key/签名/月配额）。
     返回 [餐饮poi...] / [] / 'QUOTA'（真耗尽）/ 'YIELD'（给电话预留让路，安静停）。
-    限流空 pois 重试 1 次；其它错误指数退避。"""
+    关键（lesson #97）：某把 key 返回 rate/auth/error 时，MQ.call 已在账本把该 key 标记
+    停用，必须【换池内下一把 key 重试】，绝不能因第一把 key 报 10044 就整体判 QUOTA；
+    只有 acquire 返回 no_budget（池内全部 key 真耗尽）才判 QUOTA。
+    限流空 pois 重试 1 次；error/sign_error 指数退避后继续轮转。"""
     params = {"keywords": name, "city": "上海", "citylimit": "true",
               "offset": offset, "extensions": "all"}
-    for attempt in range(4):
+    n_keys = max(1, len(MQ.load_provider_keys("amap")))
+    # 每把 key 至少 1 次，另给 1 次空结果重试与 1 次瞬时错误冗余
+    max_attempts = n_keys + 2
+    empty_retry = 0
+    for attempt in range(max_attempts):
         j, st = MQ.call("amap", "/v3/place/text", params, "search", "full", timeout=15)
-        if st in ("rate", "no_budget"):
-            return "QUOTA"
+        if st == "no_budget":
+            return "QUOTA"          # 池内全部 key 耗尽/越上限，才是真 QUOTA
         if st == "reserved":
-            return "YIELD"
+            return "YIELD"         # 给电话预留让路
         if st == "ok":
             raw = (j or {}).get("pois", [])
-            if not raw and attempt < 1:    # 空结果可能是限流，重试 1 次
+            if not raw and empty_retry < 1:    # 空结果可能是限流，换轮重试 1 次
+                empty_retry += 1
                 time.sleep(1.2)
                 continue
             return [_parse_poi(p) for p in raw]
-        time.sleep(1.2 * (attempt + 1))    # error/sign_error：退避后换下一把 key
+        # rate(10044/10003)/auth(10007)/error/sign_error：本 key 已在账本停用，
+        # 下次 MQ.call 重新 acquire 会自动跳过它、选中健康 key（如 key0 月尽→key1）。
+        time.sleep(0.6 if st in ("rate", "auth") else 1.2 * (attempt + 1))
     return []
 
 
@@ -624,9 +634,10 @@ def main():
     )
 
     def missing_count(r):
+        # 只统计本脚本（地图 POI）真正能补的【事实字段】：电话/人均/营业时间/坐标。
+        # review_count（口味评论数）不是地图能补的——那是 G2 食客口味管线（xhs/Apify）的目标，
+        # 若计入会让"仅缺口味评论"的店永久滞留在地图队列、每天空跑（lesson #97）。
         n = 0
-        if not (r.get("review_count") or 0):
-            n += 1
         if not (r.get("phone") or "").strip():
             n += 1
         if r.get("price_avg") is None:
@@ -637,7 +648,7 @@ def main():
             n += 1
         return n
 
-    # 缺字段越多越优先；当天已缓存的不重新调用
+    # 仅缺口味评论、不缺任何地图事实字段的店，不进本脚本队列
     rows = [r for r in rows if missing_count(r) > 0]
 
     def fail_bucket(r):
@@ -658,7 +669,10 @@ def main():
         return c
 
     def resolve(name, addr):
-        """主搜 → match_poi → 三级降级模糊召回；返回 (poi|None, quota_bool)。"""
+        """主搜 → match_poi → 三级降级模糊召回；返回 (poi|None, quota_bool)。
+        quota=True 仅当【高德主通道真耗尽】且腾讯兜底也无配额（双源全尽）；
+        高德本就正常返回、只是本店没匹配上（或仅腾讯兜底配额尽）时，按 no_match
+        返回 (None, False)，绝不能因腾讯 fallback 配额而误停整轮（lesson #97）。"""
         c = call_amap(name)
         if c == "QUOTA":
             tp, tq = _tencent_poi(name, addr)
@@ -688,20 +702,20 @@ def main():
                 return None, False
             c2 = call_amap(t)
             if c2 == "QUOTA":
-                tp, tq = _tencent_poi(name, addr)
-                if tp:
-                    return tp, False
-                return (None, True) if tq else (None, False)
+                # 模糊召回时高德恰好耗尽：本店按 no_match 处理，由下一家主搜检测真耗尽
+                break
             if c2 == "YIELD":
                 return None, "yield"
             p2, _s = match_poi(c2, name, addr)
             if p2:
                 return p2, False
             time.sleep(0.3)
-        tp, tq = _tencent_poi(name, addr)
+        # 高德主通道全程健康（本店只是没匹配），腾讯兜底仅补充；
+        # 即便腾讯此刻配额尽，也属正常 no_match，绝不能停整轮。
+        tp, _tq = _tencent_poi(name, addr)
         if tp:
             return tp, False
-        return (None, True) if tq else (None, False)
+        return None, False
 
     for rest in rows:
         rid = rest["id"]

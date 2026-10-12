@@ -24,6 +24,7 @@ sys.path.insert(0, PIPE)
 import common as C
 import health
 import ingest
+import map_quota as MQ
 from map_helpers import resolve_poi, tencent_suggestion, tencent_search, amap_search, pick_best
 
 STATE_F = pathlib.Path(DATA) / "_phone_fill_state.json"
@@ -94,8 +95,10 @@ def lookup_phone(name, address, state):
 
 
 def main():
-    has_tencent = bool(os.environ.get("TENCENT_MAP_KEY", "").strip())
-    has_amap = bool(os.environ.get("AMAP_KEY", "").strip())
+    # 以配额池实际装载的 key 为准（支持 AMAP_KEYS/TENCENT_MAP_KEYS 复数与腾讯内置 fallback），
+    # 避免只检查单数环境变量而误判"未配置"（lesson #97）。
+    has_tencent = bool(MQ.load_provider_keys("tencent"))
+    has_amap = bool(MQ.load_provider_keys("amap"))
     if not has_tencent and not has_amap:
         msg = "电话补齐脚本启动：地图API未配置，本轮跳过。"
         print(msg)

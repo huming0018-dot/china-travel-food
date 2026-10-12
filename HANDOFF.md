@@ -24,6 +24,38 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 📅 2026-10-13 02:00 自进化复盘 · 地图配额早退根治（lesson #97）+ 三闸现状
+> 主线＝修复「地图 fill 每天空跑、回填 0、误报配额耗尽」的确定性故障，让健康 key1 真正被使用；同时守住 10-12 硬标签证据门。
+
+**A. 采集/覆盖率现状（容器/DB/日志实测，10-13）**
+- 容器 `food-cloud` Up 9h、`searxng` Up 23h；cron daemon 存活、gap_pool 进程=3（/proc 扫描）。
+- DB（active 1517 / total 1523）：电话 **87.5%**、坐标 **99.9%**、营业时间 **66.1%**、score_taste **30.2%**（与 10-12 持平）。
+- production_model 已标 **680**（门店现制·标准化 392 / 现炒现做 145 / 中央厨房·门店加工 135 / 预制料理包·复热 8），None **837**；较 10-12（657/860）净增 +23（免费 ARK 偶数点 cron 零成本滚动）。
+- 硬标签：central_kitchen＝无1318/疑似165/**确认14**/None20；premade_risk＝无1355/疑似129/低12/None21（无高）。`fact_evidence_gap.py` 重跑＝**0 家硬标签缺证据、PASS**（14 家确认均有同 type 带 source_url fact_claim，v3 闸门 94a255b 生产过夜有效）。
+- reviews 总数 **2643**，但 max(created_at)=**2026-10-10**；**今日无实时新增**（router 每 20min ready=0）。G2 三闸仍闭合：Apify 月免费 search 耗尽、account_a=dead（ahuhu web_session 过期）、account_b=parked（猪蛤蛤短信日配额超额）。
+
+**B. 地图配额早退——三层根因确证 + 四处修复（核心成果，已部署验证）**
+- live 逐 key 探测：高德 key0(head 1f319f15) **10044 USER_DAILY_QUERY_OVER_LIMIT、月桶 4500 顶 cap**；高德 key1(head 0e28d256) **10000 OK、月桶 2822、余约 1678、健康**；腾讯唯一内置 fallback key(head 7PQBZ-7I) **status=121 日调用已达上限**（账本日计数仅 456 即被限，真实日配额远低于名义 9000，午夜重置）。
+- 根因①**不轮转**：`cloud_amap_fill.py::amap_text` 直调单次 `MQ.call`，首个 key 返回 rate 即 `return QUOTA`，不重新 acquire 轮转（对比 map_helpers._map_call 会循环）。key0 月桶尚余 1 次算术额度被选中、真实调用 10044 后当场 bail → 腾讯兜底 121 → 每轮只烧那 1 次注定失败的 key0、回填 0、从不试健康 key1。
+- 根因②**fallback 误停整轮**：`resolve()` 末尾高德主通道本就正常返回、只是本店没匹配，仍调腾讯兜底；腾讯 121 即被判 quota_stopped → 整轮 break。
+- 根因③**队列注水**：missing_count 把 review_count 计入待补，但地图补不了口味评论；1193 候选 = **644 仅缺 review_count（永久滞留空跑）+ 549 真缺地图事实字段**（多为营业时间）。
+- 修复（均已 docker cp 进容器、py_compile、dry-run/apply 验证）：
+  1. `amap_text` 多 key 轮转：max_attempts=n_keys+2；rate/auth/error 不 bail、sleep 后 continue（MQ.call 已标死该 key，下次 acquire 自动选健康 key1）；仅 no_budget 才 QUOTA、reserved 才 YIELD。
+  2. `resolve()` 仅当【高德主通道真耗尽】且腾讯兜底也无配额才停；高德健康仅本店未匹配（含模糊 c2 恰好 QUOTA）一律按 no_match 继续下一家。
+  3. `missing_count` 只统计电话/人均/营业时间/坐标，队列 1193→549；仅缺口味评论店归 G2 管线。
+  4. `cloud_phone_fill.py` 门禁改为 `MQ.load_provider_keys("tencent"/"amap")`（支持复数 key/内置 fallback）。
+- 验证：apply --limit 30 = **新调用 30（跑满、无提前终止）、回填字段 5、评分评价 5、未匹配 8**；phone_fill PHONE_FILL_BATCH=12 = 查询 12 全部处理完（不再第 1 家即停），成功 0 为外国菜 POI 无 tel（宁空不假）。修复前是新调用 1、回填 0、必停。
+- 未决（保守不改）：10044 文案 DAILY 但代码按 monthly 死到月初（key0 月桶已顶 cap，待 10-14 午夜后确证 key0 是否自恢复再定）；549 家绝大多数缺营业时间，高德 POI 多无 open_time，hours 缺口需官方/美团等替代源（高德数据源覆盖率天花板）。
+
+**C. 看门狗告警语义判定（10-13）**
+- 真故障：无（管线/cron/进程全活）。
+- 软限流/配额：腾讯 search/geocode 全尽（解封 10-14 00:00）、高德 key0 月尽（key1 健康）；router ready=0 是三闸闭合下的正确空转，非故障。
+- 已知噪声：watchdog `account_a/b=unknown、pool_alive=True` 是双出口探测噪声（lesson #82/#92），真实状态以 _cookie_pool_state 为准（a dead / b parked）。
+
+**D. 部署/持久化**
+- 本轮改 `cloud/cloud_amap_fill.py`、`cloud/cloud_phone_fill.py` 已 docker cp 进容器、跨 restart 存活，**尚未 build_sync 烘焙进镜像**（gate_apply v3、fact_evidence_gap 同待择机 `bash ~/food-cloud/build_sync.sh`，避让 dev 临时库与偶数点批次）。
+- 容器内 TG 常驻告警（watchdog 20min）仍无出口（Deno 反代 503、容器直连被墙）；agent 发起的复盘摘要走本地 `scripts/tg_send.py`（本轮已用）。
+
 ### 📅 2026-10-12 TG 通知通道：deuce 本地直发 + Deno 反代重建
 > 用户拍板「之后先换成 deuce 本地来发」，并要求重建反代。
 
@@ -55,6 +87,7 @@
 - **历史弱源体检（只读，未自动改）**：findings.jsonl 10297 行按新门控从零重判，仅约 3483 达标；不达标 6814 中 2204 为 `production_model` 他域字段（非本门控 6 列，不算污染），真实弱源 noisy≈4577（amap/smzdm/163/bilibili/cnblogs/sogou/抖音/水滴/qq/youtube 等）、单源硬负面 29。新门控不溯及既往；**是否跑回溯净化（仓内 cleanup_findings.py）待拍板**——post_audit 旧版长期不校验响应，历史"已 APPLY"可能本就未落库，DB 现值多来自 chain_audit/dianping/prefill/production_model_probe，净化前须逐列核对来源。
 - **TG 通知通道故障（待修）**：容器直连 api.telegram.org 被墙（ConnectionError）；Deno 反代 `dirty-stingray-4216.food-atlas-hb.deno.net` 免费额度耗尽 **503 USAGE_EXCEEDED 已暂停**。本轮报告由 deuce 本地直连 TG 代发成功（message_id 1549）。后续需升级/重建 Deno 反代或在容器配可用出口代理，否则看门狗/告警在容器侧发不出。
 - 部署：正规走宿主 `~/food-cloud/build_sync.sh`（ubuntu、禁 sudo），现网版本 288c9a3；数据卷 `fooddata:/app/data` 重建不丢。
+
 
 ### 📅 2026-10-12 02:00 自进化复盘 · 硬标签证据门战役（存量清零 + 生产者根治）
 > 主线＝守护北极星 A2「真实可溯、宁空不假」：清掉无证据的中央厨房/预制硬标签污染，并在写入侧根治，使硬标签只能经 fact_verify 落 fact_claim 后才成立。
