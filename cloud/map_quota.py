@@ -3,7 +3,7 @@
 """map_quota.py — 地图 API 配额仲裁 / 持久账本 / 统一 key 池 / POI 缓存（P1 核心）。
 
 为什么存在（见 references/map-quota-fix.md）：
-  - 高德「搜索」是【开发者账号·月】配额（个人 5000/月，10044=账号级），同账号多 key 不扩容；
+  - 高德搜索本地预算保留月桶；10044 为账号级日限额，同账号多 key 不扩容；
   - 腾讯是【key·日】配额（个人 10000/日，121=日量）；
   - 旧实现 dead key 只在内存、腾讯单 key、电话被全字段批量饿死、同一 POI 重复调用。
 
@@ -17,6 +17,9 @@
 
 所有写盘原子（tmp+replace），异常一律回退安全值，绝不中断调用方。
 """
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
 import hashlib
 import json
 import os
@@ -81,12 +84,16 @@ def load_provider_keys(provider):
 
 
 # ───────────────────────── 时间窗 ─────────────────────────
+def _now():
+    return datetime.now(ZoneInfo("Asia/Shanghai"))
+
+
 def _today():
-    return time.strftime("%Y-%m-%d", time.localtime())
+    return _now().strftime("%Y-%m-%d")
 
 
 def _month():
-    return time.strftime("%Y-%m", time.localtime())
+    return _now().strftime("%Y-%m")
 
 
 def _new_key_rec(provider):
@@ -172,15 +179,18 @@ class MapQuota:
         return total
 
     # ── 仲裁：领一把可用 key ──
-    def acquire(self, consumer, provider, interface, need=1):
+    def acquire(self, consumer, provider, interface, need=1, exclude=()):
         """返回 {index,key,sk} 或 None（无预算/全 dead）。
         低优先消费者（full/hours）不得侵占电话预留预算。"""
+        self._roll_windows()
         prio = CONSUMER_PRIORITY.get(consumer, 9)
         if prio > CONSUMER_PRIORITY["phone"] and interface == "search":
             reserve = PHONE_RESERVE if provider == "tencent" else AMAP_PHONE_RESERVE
             if self._pool_remaining(provider, interface) <= reserve:
                 return None  # 剩余只够电话预留，低优先任务让路
         for idx, (key, sk) in enumerate(self.keys[provider]):
+            if idx in exclude:
+                continue
             rec = self._rec(provider, idx)
             if self._is_dead(rec):
                 continue
@@ -200,19 +210,21 @@ class MapQuota:
                 if code == 121:
                     rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
                     result = "rate"
-                elif code == 111:
-                    result = "sign_error"  # 签名问题不应 dead，调用方可清洗后重试
+                elif code in (110, 111, 112, 113, 190, 199, 311):
+                    bucket["used"] -= 1
+                    rec.update(dead_until=time.time() + 1800, dead_reason="auth")
+                    result = "auth"
                 else:
                     result = "error"
             else:  # amap
                 ic = str(infocode)
-                if ic == "10044":  # 账号级月配额
-                    rec.update(dead_until=self._next_monthstart(), dead_reason="monthly_quota")
+                if ic == "10044":  # 官方：账号维度日调用量，不等同月配额
+                    rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
                     result = "rate"
                 elif ic == "10003":  # 日配额
                     rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
                     result = "rate"
-                elif ic == "10007":
+                elif ic in ("10001", "10005", "10006", "10007", "10008", "10009", "10012", "10013"):
                     # 签名/鉴权错误（INVALID_USER_SIGNATURE）：不是配额耗尽。
                     # 短时熔断该 key（30min 后看门狗自动重探），且不消耗配额桶计数，
                     # 避免把鉴权错误误记成“月配额耗尽”并触发空转告警。
@@ -221,25 +233,26 @@ class MapQuota:
                     result = "auth"
                 else:
                     result = "error"
+        rec.update(last_status=result, last_code=infocode if provider == "amap" else code,
+                   last_interface=interface, last_receipt_at=_now().isoformat())
         self._save()
         return result
 
     @staticmethod
     def _next_midnight():
-        now = time.localtime()
-        return time.mktime(time.strptime(time.strftime("%Y-%m-%d", now), "%Y-%m-%d")) + 86400
+        return (_now().replace(hour=0, minute=0, second=0, microsecond=0)
+                + timedelta(days=1)).timestamp()
 
     @staticmethod
     def _next_monthstart():
-        y, m = int(time.strftime("%Y")), int(time.strftime("%m"))
-        if m == 12:
-            y, m = y + 1, 1
-        else:
-            m += 1
-        return time.mktime(time.strptime(f"{y:04d}-{m:02d}-01", "%Y-%m-%d"))
+        now = _now()
+        y, m = (now.year + 1, 1) if now.month == 12 else (now.year, now.month + 1)
+        return now.replace(year=y, month=m, day=1, hour=0, minute=0,
+                           second=0, microsecond=0).timestamp()
 
     # ── 快照（供播报）──
     def snapshot(self):
+        self._roll_windows()
         out = {}
         for provider in ("tencent", "amap"):
             rows = []
@@ -250,6 +263,9 @@ class MapQuota:
                     "monthly_used": rec["monthly"]["used"],
                     "dead": self._is_dead(rec),
                     "reason": rec.get("dead_reason"),
+                    "last_status": rec.get("last_status"),
+                    "last_code": rec.get("last_code"),
+                    "last_receipt_at": rec.get("last_receipt_at"),
                 })
             out[provider] = {"keys": rows,
                              "search_remaining": self._pool_remaining(provider, "search")}
@@ -292,33 +308,61 @@ def amap_signed_url(path, params, key, sk):
 
 # ───────────────────────── 统一调用（计数/池化/签名）─────────────────────────
 def call(provider, path, params, interface, consumer, timeout=15, method="GET"):
-    """经仲裁器发起一次地图调用。
-    返回 (json_or_None, status: ok/rate/error/no_budget)。自动计数、轮换、dead 标记。"""
+    """每次调用最多尝试四把不同 Key；每次请求仍经预算仲裁和持久账本。
+
+    ok 包括正常空结果；no_budget 仅配额耗尽；reserved 为电话保护；
+    auth 为鉴权熔断；network/error 为暂时故障；retry_limit 为仍有 Key 未尝试。
+    rate 是单 Key 回执，仅在内部处理，不能代表整个池耗尽。
+    """
     import requests
     pool = MapQuota()
-    cred = pool.acquire(consumer, provider, interface)
-    if cred is None:
-        # 可能是低优先让路；若整池确有剩余则属预留，否则真耗尽
-        return None, ("no_budget" if pool._pool_remaining(provider, interface) <= 0 else "reserved")
-    url = (tencent_signed_url if provider == "tencent" else amap_signed_url)(
-        path, params, cred["key"], cred["sk"])
-    try:
-        r = requests.request(method, url, timeout=timeout)
-        j = r.json()
-    except Exception as e:
-        print(f"[map_quota] {provider} 请求异常: {e}")
-        pool.report(provider, cred["index"], interface, False)
-        return None, "error"
+    if not pool.keys[provider]:
+        return None, "unconfigured"
+    attempted = set()
+    last = (None, "error")
+    for attempt in range(min(4, len(pool.keys[provider]))):
+        cred = pool.acquire(consumer, provider, interface, exclude=attempted)
+        if cred is None:
+            break
+        attempted.add(cred["index"])
+        url = (tencent_signed_url if provider == "tencent" else amap_signed_url)(
+            path, params, cred["key"], cred["sk"])
+        try:
+            r = requests.request(method, url, timeout=timeout)
+            r.raise_for_status()
+            j = r.json()
+            if not isinstance(j, dict):
+                raise ValueError("invalid map response")
+        except (requests.RequestException, ValueError):
+            # 不输出异常 URL（其中含 Key/SK 签名）。请求是否被计费未知，保守记一次。
+            pool.report(provider, cred["index"], interface, False)
+            last = (None, "network")
+        else:
+            if provider == "tencent":
+                st = pool.report(provider, cred["index"], interface,
+                                 j.get("status") in (0, 347), code=j.get("status"))
+            else:
+                st = pool.report(provider, cred["index"], interface,
+                                 j.get("status") == "1", infocode=j.get("infocode"))
+            last = (j, st)
+            if st == "ok":
+                return last
+        if last[1] in ("network", "error") and attempt + 1 < min(4, len(pool.keys[provider])):
+            time.sleep(min(0.25 * 2 ** attempt, 1.0))
 
-    if provider == "tencent":
-        code = j.get("status")
-        ok = (code == 0)
-        st = pool.report(provider, cred["index"], interface, ok, code=code)
-        return j, st
-    else:
-        ok = (j.get("status") == "1")
-        st = pool.report(provider, cred["index"], interface, ok, infocode=j.get("infocode"))
-        return j, st
+    # 重新仲裁区分保护额度、整池配额与未尝试 Key，绝不将暂时错误包装为耗尽。
+    if pool.acquire(consumer, provider, interface) is not None:
+        return (None, "retry_limit") if pool.acquire(
+            consumer, provider, interface, exclude=attempted) else (
+                (None, "error") if last[1] == "rate" else last)
+    remaining = pool._pool_remaining(provider, interface)
+    if remaining > 0:
+        return None, "reserved"
+    if any(pool._is_dead(pool._rec(provider, i)) and
+           pool._rec(provider, i).get("dead_reason") == "auth"
+           for i in range(len(pool.keys[provider]))):
+        return None, "auth"
+    return None, "no_budget"
 
 
 # ───────────────────────── 持久 POI 缓存 ─────────────────────────

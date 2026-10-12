@@ -174,68 +174,61 @@ def is_dining_poi(poi):
 def amap_text(name, offset=8):
     """place/text extensions=all，经 map_quota 池（consumer=full，多 key/签名/月配额）。
     返回 [餐饮poi...] / [] / 'QUOTA'（真耗尽）/ 'YIELD'（给电话预留让路，安静停）。
-    限流空 pois 重试 1 次；其它错误指数退避。"""
+    Key 切换及短退避由 map_quota 执行；正常空结果不重试。"""
     params = {"keywords": name, "city": "上海", "citylimit": "true",
               "offset": offset, "extensions": "all"}
-    for attempt in range(4):
-        j, st = MQ.call("amap", "/v3/place/text", params, "search", "full", timeout=15)
-        if st in ("rate", "no_budget"):
-            return "QUOTA"
-        if st == "reserved":
-            return "YIELD"
-        if st == "ok":
-            raw = (j or {}).get("pois", [])
-            if not raw and attempt < 1:    # 空结果可能是限流，重试 1 次
-                time.sleep(1.2)
-                continue
-            return [_parse_poi(p) for p in raw]
-        time.sleep(1.2 * (attempt + 1))    # error/sign_error：退避后换下一把 key
-    return []
+    j, st = MQ.call("amap", "/v3/place/text", params, "search", "full", timeout=15)
+    if st == "no_budget":
+        return "QUOTA"
+    if st == "reserved":
+        return "YIELD"
+    if st != "ok":
+        return st.upper()
+    return [_parse_poi(p) for p in (j or {}).get("pois", [])]
 
 
 def _tencent_poi(name, addr):
-    """高德全不可用时的腾讯兜底：补 phone / 坐标（腾讯 search 链路实测正常）。
-
-    返回 (poi|None, quota_bool)：
-      - poi dict：命中高置信同店（补 phone/location）；
-      - quota=True：腾讯通道本身无预算（该整轮才可停）；
-      - 其余 (None, False)：腾讯正常但本店无高置信匹配，调用方应继续下一家。
-    宁空不假：店名相似度 <0.85 或综合分 <0.6 不回填。
-    """
-    def _try(fn, kw):
-        try:
-            res = fn(kw)
-        except Exception:
-            return None, False
-        if res == "QUOTA_EXCEEDED":
-            return None, True
-        if not isinstance(res, list) or not res:
-            return None, False
+    """全字段兜底使用 full 预算，保留同店匹配门；返回 (poi, 状态)。"""
+    kw = f"{name} {C.addr_core(addr)}" if addr else name
+    searches = [
+        ("/ws/place/v1/suggestion", {"keyword": kw, "region": "上海",
+                                   "region_fix": 1, "page_size": 10}),
+        ("/ws/place/v1/search", {"keyword": name, "boundary": "region(上海)",
+                               "page_size": 10}),
+    ]
+    failure = False
+    for path, params in searches:
+        j, st = MQ.call("tencent", path, params, "search", "full", timeout=15)
+        if st in ("no_budget", "reserved"):
+            return None, "QUOTA" if st == "no_budget" else "YIELD"
+        if st != "ok":
+            failure = "ERROR"
+            continue
+        res = []
+        for item in (j or {}).get("data", []):
+            loc = item.get("location") or {}
+            res.append({"title": item.get("title", ""), "address": item.get("address", ""),
+                        "tel": item.get("tel") or item.get("phone") or "",
+                        "lng": loc.get("lng"), "lat": loc.get("lat")})
         best, score = M.pick_best(res, name, addr, name_thresh=0.85)
-        if not best or score < 0.6:
-            return None, False
-        if not (best.get("tel") or best.get("lng") is not None):
-            return None, False
-        return ({"poi_id": "", "title": best.get("title", ""),
-                 "address": best.get("address", ""), "tel": best.get("tel", "") or "",
-                 "lng": best.get("lng"), "lat": best.get("lat"),
-                 "rating": None, "cost": None, "hours": "",
-                 "keytag": "", "tag": "", "typecode": "", "biz_type": "",
-                 "source": "tencent"}, False)
+        if best and score >= 0.6 and (best.get("tel") or best.get("lng") is not None):
+            return {"poi_id": "", "title": best.get("title", ""),
+                    "address": best.get("address", ""), "tel": best.get("tel", ""),
+                    "lng": best.get("lng"), "lat": best.get("lat"),
+                    "rating": None, "cost": None, "hours": "", "keytag": "",
+                    "tag": "", "typecode": "", "biz_type": "", "source": "tencent"}, False
+    return None, failure
 
-    kw = name
-    if addr:
-        kw = f"{name} {C.addr_core(addr)}"
-    tp, q = _try(M.tencent_suggestion, kw)
-    if tp:
-        return tp, False
-    if q:
-        return None, True
-    tp, q = _try(M.tencent_search, name)
-    if tp:
-        return tp, False
-    if q:
-        return None, True
+
+def _fallback(name, addr, primary_status):
+    poi, secondary_status = _tencent_poi(name, addr)
+    if poi:
+        return poi, False
+    blocked = {"QUOTA", "YIELD"}
+    if primary_status in blocked and secondary_status in blocked:
+        return None, "yield" if "YIELD" in (primary_status, secondary_status) else "quota"
+    if primary_status not in blocked or secondary_status == "ERROR":
+        return None, "error"
     return None, False
 
 
@@ -577,6 +570,8 @@ def build_patch(rest, poi):
 
 
 def _poi_source(poi, name):
+    if poi.get("source") == "tencent":
+        return "https://map.qq.com/?keyword=" + quote(f"{name} 上海")
     if poi.get("poi_id"):
         return f"https://www.amap.com/detail/{poi['poi_id']}"
     return "https://www.amap.com/search?query=" + quote(f"{name} 上海")
@@ -585,12 +580,13 @@ def _poi_source(poi, name):
 def ingest_patch(rid, name, addr, poi, patch):
     """把全字段 patch 逐字段写 findings（统一门收口），不直写 restaurants。"""
     src = _poi_source(poi, name)
-    reason = f"高德POI全字段核验：{name} {addr}".strip()
+    provider = "tencent" if poi.get("source") == "tencent" else "amap"
+    reason = f"{provider} POI全字段核验：{name} {addr}".strip()
     conf_map = {"price_avg": 0.85, "phone": 0.9, "location": 0.9, "opening_hours": 0.85}
     for fld, val in patch.items():
         ingest.append_finding(rid, fld, val, confidence=conf_map.get(fld, 0.85),
                               reason=reason, source_url=src,
-                              source_platform="amap_poi")
+                              source_platform=f"{provider}_poi")
     return True
 
 
@@ -603,8 +599,8 @@ def main():
         limit = int(sys.argv[i + 1])
 
     # key 现由 map_quota 池提供（AMAP_KEYS 多账号，回退 AMAP_KEY）
-    if not MQ.load_provider_keys("amap"):
-        print("高德 key 未配置（deploy.env 配 AMAP_KEYS/AMAP_KEY），本轮跳过。")
+    if not any(MQ.load_provider_keys(p) for p in ("amap", "tencent")):
+        print("地图 Key 未配置，本轮跳过。")
         return 0
 
     today = C.today()
@@ -649,7 +645,7 @@ def main():
 
     stats = {"candidates": len(rows), "called": 0, "from_cache": 0,
              "fields": 0, "reviews": 0, "no_match": 0,
-             "quota_stopped": False, "yield_stopped": False}
+             "quota_stopped": False, "yield_stopped": False, "service_errors": 0}
 
     def call_amap(kw):
         c = amap_text(kw)
@@ -658,15 +654,10 @@ def main():
         return c
 
     def resolve(name, addr):
-        """主搜 → match_poi → 三级降级模糊召回；返回 (poi|None, quota_bool)。"""
+        """主搜 → match_poi → 三级降级模糊召回；返回 (poi|None, False/quota/yield/error)。"""
         c = call_amap(name)
-        if c == "QUOTA":
-            tp, tq = _tencent_poi(name, addr)
-            if tp:
-                return tp, False
-            return (None, True) if tq else (None, False)
-        if c == "YIELD":
-            return None, "yield"
+        if isinstance(c, str):
+            return _fallback(name, addr, c)
         poi, _s = match_poi(c, name, addr)
         if poi:
             return poi, False
@@ -687,13 +678,8 @@ def main():
             if stats["called"] >= limit or state.get("amap_used", 0) >= AMAP_DAILY_QUOTA:
                 return None, False
             c2 = call_amap(t)
-            if c2 == "QUOTA":
-                tp, tq = _tencent_poi(name, addr)
-                if tp:
-                    return tp, False
-                return (None, True) if tq else (None, False)
-            if c2 == "YIELD":
-                return None, "yield"
+            if isinstance(c2, str):
+                return _fallback(name, addr, c2)
             p2, _s = match_poi(c2, name, addr)
             if p2:
                 return p2, False
@@ -701,7 +687,8 @@ def main():
         tp, tq = _tencent_poi(name, addr)
         if tp:
             return tp, False
-        return (None, True) if tq else (None, False)
+        # 腾讯耗尽不能覆盖高德刚刚成功返回的正常无匹配。
+        return None, "error" if tq == "ERROR" else False
 
     for rest in rows:
         rid = rest["id"]
@@ -720,9 +707,12 @@ def main():
             if quota == "yield":
                 stats["yield_stopped"] = True
                 break  # 给电话预留让路：安静停、不告警
-            if quota:
+            if quota == "error":
+                stats["service_errors"] += 1
+                continue  # 服务失败不计门店匹配失败
+            if quota == "quota":
                 stats["quota_stopped"] = True
-                health.alert("高德搜索月配额耗尽，全字段采集暂停（月初重置）。",
+                health.alert("高德与腾讯搜索池均无可用配额，全字段采集暂停；以各供应商真实回执及账本窗口为准。",
                              title="上海美食图鉴·配额告警", key="amap_quota")
                 break
             if not poi:
@@ -764,6 +754,8 @@ def main():
     existing["amap_fill"] = {"last_run": time.strftime("%Y-%m-%d %H:%M:%S"),
                              "mode": "apply" if apply else "dry-run", **stats,
                              "amap_used": state.get("amap_used", 0)}
+    # 只读账本快照，无额外 API 请求；不包含 Key 或签名。
+    existing["amap_fill"]["quota_snapshot"] = MQ.MapQuota().snapshot()
     STATS_F.write_text(json.dumps(existing, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print("\n=== 高德全字段采集本轮统计 ===")
