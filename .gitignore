@@ -130,3 +130,22 @@ crowd_extension/mobile/**/build/
 crowd_extension/mobile/**/.gradle/
 crowd-test-harness/results/
 cloud/supabase/.temp/
+
+# === 构建缓存（带后缀的旧/锁定 .next，next build 可再生）===
+app/.next_old_*/
+app/.next_locked_*/
+
+# === 采集/清洗运行时产物（可再生，不入库）===
+cloud/merge_report.json
+cloud/vendor/pipeline/*_report.json
+cloud/vendor/pipeline/*_plan.json
+cloud/vendor/pipeline/raw_*.jsonl
+cloud/vendor/pipeline/*_rejected.jsonl
+cloud/vendor/pipeline/*_valid.jsonl
+research/_patrol_local/
+research/atlas/cuisines_dump.json
+research/atlas/*_verdict.json
+research/atlas/residual*.json
+
+# === 登录二维码（敏感，禁止入库）===
+research/atlas/qr/
