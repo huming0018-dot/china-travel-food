@@ -194,10 +194,11 @@ if command -v gh >/dev/null 2>&1 && gh auth token >/dev/null 2>&1; then
   TMP_GH=$(mktemp -d)
   cp "$OUT/updates.xml" "$TMP_GH/updates.xml"
   cp "$CRX" "$TMP_GH/crowd-extension-v$VER.crx"
+  cp "$ZIP" "$TMP_GH/crowd-extension-latest.zip"
   # codebase 指向 Pages 上的 crx
   sed -i '' "s|https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v$VER.crx|https://huming0018-dot.github.io/crowd-pages/crowd-extension-v$VER.crx|g" "$TMP_GH/updates.xml"
   GHT=$(gh auth token)
-  for F in updates.xml "crowd-extension-v$VER.crx"; do
+  for F in "crowd-extension-v$VER.crx" crowd-extension-latest.zip updates.xml; do
     SHA=$(curl -s -H "Authorization: token $GHT" "https://api.github.com/repos/huming0018-dot/crowd-pages/contents/$F" | python3 -c "import json,sys; print(json.load(sys.stdin).get('sha',''))" 2>/dev/null)
     python3 - "$GHT" "$TMP_GH/$F" "$F" "$SHA" <<'PYEOF'
 import json, sys, base64, urllib.request
