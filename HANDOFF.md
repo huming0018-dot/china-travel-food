@@ -1,3 +1,5 @@
+> **v3.5.1 发布链路复核（2026-10-13 取证／10-14 北京时间修复）**：签名CRX与ID通过独立验签，发布源码对应主仓库crowd_extension；latest ZIP旧3.4.14造成Mac遥测反复“发现3.5.1→应用3.4.14”，已通过[crowd-pages PR #3](https://github.com/huming0018-dot/crowd-pages/pull/3)修复。生产RPC回读及重复/满笔记配额评分回滚验证通过；task15仍61，10月13日仅原4.5分验收样本，未证持续评分。公开地址访问、实际设备3.5.1加载仍待证。canonical crawler-extension版本仍1.0.0，源码收敛和已发客户端评分确认/历史补评分/本地计数局限另列待办。详见[发布核验](cloud/CROWD_V351_RELEASE_AUDIT.md)。本条覆盖下文旧待push/重签待办。
+
 > **2026-10-13 旧实体删除器安全封锁**：`cloud_patrol --apply` 不再调用 `merge_duplicates --commit`；旧删除器 CLI 在任何数据读取前拒绝 --commit，`migrate/fill_master` 无条件抛错，非事务 REST 写入代码已移除。只读检测保留；巡逻输出 `patrol/entity_review.json`，旧 CLI 输出 `--report`，均标 REVIEW_ONLY / executable=false，旧距离规则不能裁决实体或历史 keep。隔离 unittest 29/29 通过（新增4项），无生产数据读取、合并或删除。仓库 crontab 每4小时带 --apply，可触发旧路径；生产已加载的 cron/容器版本与日志未核实。DevSpace 连接返回 Internal error，**未部署生产、未完成线上数据审计**。本条覆盖下文旧操作说明，禁止按历史说明恢复删除器。详情见 `cloud/LEGACY_MERGE_SAFETY_20261013.md`。
 
 > **2026-10-08 PR #4 已审查并合入 main**：合并提交 `077e8ac21cd605f88f97b6855c39482aefefc651`，核验 head `b16eef2`，与 main `8eac200` 无冲突。唯一匹配、重名候选、评分门槛、证据撤回/别名冲突、后台 ACL/RLS、旧库升级、独立全新安装及迁移重复应用的隔离回归通过；合并前 Vercel 检查成功。两项已部署的 `20261007065208` / `20261007065442` 迁移已原文归档 main；安装 SQL 同步更新。**新增 `20261008134109_crowd_ingest_current_safe_scores` 尚未部署生产**，现网尚未启用新增评分保护，后续须独立部署并只读回验；本次未执行生产迁移、入库 RPC、评分/候选修改。10 月 7 日的 31/26/0 是历史验收，26 为候选 upsert 影响行数。其他 v4 迁移历史归档及客户端采集验收仍属后续工作。详见 [审查记录](cloud/PR4_PREMERGE_REVIEW_20261008.md) 和 [PR #4](https://github.com/huming0018-dot/china-travel-food/pull/4)。
@@ -34,13 +36,13 @@
 - 11 处补丁：v_rated / v_rating_only / v_owns_task；日配额只计 note（批前+逐条两处跳过 rating）；循环内任务闸门对 rating+fulfilled+本人持有放行；note_id 对两类均必填但 note_url/URL 正则/URL↔ID/标题正文仅对 note；R6 锚定通过后回填锚点 note_url（满足 NOT NULL）；rating 计 v_rated 不写 keyword_progress、不冲 progress/fulfilled；回执新增 `rated`。
 - **2026-10-13 已在 Supabase 生产库执行**（走 GitHub 登录接管通道，deuce 无直连凭据；Google OAuth 被墙→GitHub 可达）：编辑器 `Success. No rows returned`。
 - **端到端验收通过**：对 fulfilled 任务 15（认领者 P-E3NXWZ6H）以本人发 rating-only 信封 → 回执 `ok:true, rated:1, results[0].gate=accepted, rejected:[]`，`new_progress=61` 不变（rating 不冲 KPI）；`crowd_proofs` 落库 `kind='rating' rating=4.5 note_url 已回填（NOT NULL 通过）`。
-- 提交：`e3f7a7e`（4 文件 913 行）。**待 push**：deuce 无 GitHub 凭据，需在本地 Mac 环境 `git push origin main`。
+- 提交：`e3f7a7e`（4 文件 913 行）。本次已核验修复 SQL 与 v3.5.1 源码存在 GitHub main；该项不再要求重复 push。生产函数已直接回读，详情见最新发布核验记录。
 
 **B. owner-rate 恢复（用户此前反馈 404）**
 - 被 commit `218ca19` 误删的 `crowd_extension/owner-rate.html` 已重建；线上 `https://huming0018-dot.github.io/crowd-pages/owner-rate.html` 无头实测 263 门店 option、`crowd_fetch_stores` RPC 200；已进扩展包，publish.sh 补传 owner-rate/status.html。
 
 **C. 仍待人工/环境项**
-- `git push`（deuce 无 GitHub 凭据）；扩展 v3.5.1 zip 重打包上传（publish.sh 已改、未跑上传）；后续客户端插件升级为 v3.5.1。
+- 已核验 GitHub main 中源码、updates.xml及签名CRX存在；latest ZIP原为3.4.14，现通过 crowd-pages PR #3（merge `0394843`）修复为已验签3.5.1 CRX的payload，无需重复重签或上传CRX。公开地址与实际Chrome加载版本仍待验收；设备遥测此前发现3.5.1但应用3.4.14，不能标作升级完成。
 
 ### 📅 2026-10-13 02:00 自进化复盘 · 地图配额早退根治（lesson #97）+ 三闸现状
 > 主线＝修复「地图 fill 每天空跑、回填 0、误报配额耗尽」的确定性故障，让健康 key1 真正被使用；同时守住 10-12 硬标签证据门。
