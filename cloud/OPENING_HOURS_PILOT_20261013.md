@@ -21,7 +21,7 @@ HANDOFF 记录 active=1517、地图队列549、营业时间覆盖66.1%；均为�
 
 官方样例：https://www.marriott.com/en-us/hotels/shamc-shanghai-marriott-marquis-city-centre/dining/ 。同页多个餐厅时间不同；另一个Shanghai City Bistro位于333 Guang Zhong Road West，与市中心店不同，不可按英文同名合并。本次只确认公开源存在，未确认样例属于缺口池。
 
-API依据：https://developer.amap.com/api/webservice/guide/api-advanced/newpoisearch ，https://lbs.qq.com/webservice_v1/guide-search.html 。费用、商业数据留存许可和源站更新时间不作未经核实的承诺。
+API依据：https://developer.amap.com/api/webservice/guide/api-advanced/newpoisearch ，https://lbs.qq.com/webservice_v1/guide-search.html 。费用、商业数据留存许可和源站更新时间不作未经核实的承诺。高德服务协议 https://developer.amap.com/pages/terms/ 的4.12及7.3限制超授权抓取/存储/缓存与独立展示，不能将有API key视为自由入库许可；需要核查项目实际合同。美团官方门店映射文档明确商家选择门店并授权数据，不能视为全市场公开查询接口。
 
 ## 本补丁
 
@@ -38,7 +38,7 @@ API依据：https://developer.amap.com/api/webservice/guide/api-advanced/newpois
 2. 在实际缺口池中选择20店：有官方源的精选10店、严重缺口5店、随机对照5店（对照仅审计，不能为无源店造manifest）；人工核查URL归属与访问/留存条件。当前代码自动挑选有审核源候选，分层名额须用来源manifest控制。
 3. 先 `--collect --sources /app/data/hours_sources.json --limit 20 --max-requests 40`。逐条复核同店、区间、时区、周休/节假日是否遗漏；若hold则保留原始来源供扩展解析，不转成模型补值。
 4. dry-run会消耗请求并设置冷却。通过证据复核后，用单独试点状态目录重取、追加findings（显式设置FOOD_DATA_DIR，仍复用同一个findings账本）；不要把默认状态清空后每天重复抓取。更优后续版本可支持已验证候选重放，当前不自动重放。
-5. gate默认全库其他标签流程仍在：本任务上线前应审核 `gate_apply.py` dry-run，确认其余patch不混入本次发布；建议先小时字段隔离验收，再走既有唯一writer。本次未自动触发全库gate。
+5. 运行 `python3 /app/cloud/gate_apply.py --hours-only` 审查营业时间计划，通过后加 `--apply`；此模式只写hours、使用独立worklist，不执行其他标签/精选写入。本次未触发生产gate。
 6. 复查成功rid当前hours、NULL数量和active分母，报告实际净增、覆盖百分点、同店正确率、冲突/hold数、每条有效写入请求数、API账本增量、HTTP墙钟。candidate_hours是证据候选数，绝非数据库回填数。
 7. 扩大条件（提议，尚非实测结果）：试点全部写入独立回读一致、抽查零错店/零人工覆盖、预算未超、净改善且有足够来源；未通过不加批量、不装cron。没有源的店NULL保留。
 
@@ -47,3 +47,5 @@ API依据：https://developer.amap.com/api/webservice/guide/api-advanced/newpois
 ## 测试记录
 
 14项隔离回归通过：每日/跨夜、非法/模糊时间、冲突、过期、旧raw、解析篡改、评论队列隔离、默认访问闸、请求预算、条件写入、并发人工事实保护及失败回读。生产请求0、生产写入0、真实覆盖改善待验收。
+
+公开源补充抽查：LES NUAGES官网 https://www.yongfugroup.com/lesnuages 有具体上海地址和午晚餐分段时间，但没有明确星期范围，当前保守解析应hold。甬府小鲜 https://www.yongfugroup.com/yfxx 列多城市门店而页尾放通用营业时间，不能自动继承给所有分店。这两项验证了来源筛选的重要性，并非生产回填验收。
