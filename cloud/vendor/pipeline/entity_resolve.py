@@ -3,18 +3,19 @@
 """
 entity_resolve.py — 多信号实体归并（默认 dry-run），LLM+代码有序结合。
 三桶：
-  AUTO   品牌相关 + (同固话/同完整门牌/同铺位/坐标<25m) 等强信号
+  AUTO   品牌相关 + 完整门牌/同铺位（每对均有强证据，无 keep 冲突）
   REVIEW 品牌相关 + 同商场/坐标<120m 但缺强信号；或同铺位不同牌（疑似更名）
   PHONE  同号但品牌无关（酒店总机/错号），不合并
 注意：商场共用中心坐标 ≠ 同店；无匹配铺位号禁止合并（教训#28）。
 
 用法:
   python3 entity_resolve.py --plan /app/data/entity_plan.json
-  python3 entity_resolve.py --apply verdicts.json
-verdicts: {"merge":{"<sig>":{"action":"merge|keep","keeper":id}},
-           "phone":{"<sig>":{"action":"keep|null_one|null_both","keep_id":id}}}
+  --apply 暂停：旧 REST 多步执行器缺事务/关系完整性保护。
+计划只供人工审阅，AUTO 是证据桶而非写入授权；所有 action 均为 review。
 """
-import argparse, json, math, os, re, sys, time
+import argparse, json, math, re
+from itertools import combinations
+from pathlib import Path
 from collections import defaultdict
 import common as C
 import merge_duplicates as M
@@ -94,10 +95,10 @@ def mall_unit(s):
     t = str(s or "")
     if PLACEHOLDER_RE.search(t):
         return None
-    fl = re.search(r"[LB]?(\d+)层", t)
+    fl = re.search(r"([LB]?)(\d+)层", t)
     tail = re.search(r"层.*?(\d{2,4})", t)
     if fl and tail:
-        return (fl.group(1), tail.group(1))
+        return (fl.group(1), fl.group(2), tail.group(1))
     return None
 
 def ll(r):
@@ -158,21 +159,24 @@ def build(rests):
             near = d is not None and d < 120
             why = []
             if related:
-                strong = bool(land_share) or full_same or unit_same
-                mobile_strong = bool(mob_share) and (full_same or unit_same or mall_same or very_close)
+                # 电话、商场中心坐标和无铺位的商场地址均不能证明同店。
+                conflict = (d is not None and d >= 120) or (
+                    mall_same and A["unit"] and B["unit"] and A["unit"] != B["unit"])
+                address_strong = bool(full_same) and bool(re.search(r"\d+号", str(A["r"].get("address") or ""))) and not (A["mall"] or B["mall"])
+                strong = not conflict and bool(address_strong or unit_same)
                 if land_share: why.append("landline")
                 if mob_share: why.append("mobile")
                 if full_same: why.append("fulladdr")
                 if unit_same: why.append("unit")
                 if d is not None: why.append(f"{int(d)}m")
-                if strong or mobile_strong:
+                if strong:
                     auto.append((i, j, why))
-                elif very_close or mob_share or mall_same or near:
+                elif very_close or land_share or mob_share or full_same or mall_same or near:
                     review.append((i, j, why))
             else:
                 if unit_same or (full_same and (d is None or d < 60)):
                     review.append((i, j, ["sameunit_rename"] + ([f"{int(d)}m"] if d is not None else [])))
-                elif land_share or mob_share:
+                if land_share or mob_share:
                     phone.append((i, j, "landline" if land_share else "mobile"))
     return R, auto, review, phone
 
@@ -197,88 +201,79 @@ def print_group(idxs, R, tag):
         print(f"        addr={r.get('address')} ph={r.get('phone')} ll={R[k]['ll']} unit={R[k]['unit']}")
     return [R[k] for k in ranked]
 
+def load_keep():
+    """Fail closed on malformed history; include the canonical adjacent file."""
+    keep = set()
+    for path in (Path(KEEP_FILE), Path("/app/pipeline/entity_keep_pairs.json"),
+                 Path(__file__).with_name("entity_keep_pairs.json")):
+        if path.exists():
+            with path.open(encoding="utf-8") as fh:
+                entries = json.load(fh)
+            if not isinstance(entries, list):
+                raise ValueError("keep history must be a list")
+            for sig in entries:
+                if not isinstance(sig, str):
+                    raise ValueError("invalid keep signature")
+                ids = sig.split("|")
+                if len(ids) < 2 or any(not i.isdigit() for i in ids) or len(set(ids)) != len(ids):
+                    raise ValueError("invalid keep signature")
+                keep.add(frozenset(int(i) for i in ids))
+    return keep
+
+
+def candidate_groups(R, auto, review, keep):
+    """One disjoint partition. Strong chains require review, not transitive AUTO.
+
+    A historical keep cluster forbids every internal pair from merging, even
+    when the current component grows or shrinks. This is deliberately conservative.
+    """
+    strong = {frozenset((a, b)) for a, b, *_ in auto}
+    auto_groups, review_groups = [], []
+    for group in components(list(auto) + list(review), len(R)):
+        ids = {R[k]["id"] for k in group}
+        conflict = any(len(ids & old) >= 2 for old in keep)
+        complete = all(frozenset(pair) in strong for pair in combinations(group, 2))
+        (auto_groups if complete and not conflict else review_groups).append(group)
+    return auto_groups, review_groups
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply"); ap.add_argument("--plan")
     args = ap.parse_args()
+    if args.apply is not None:
+        ap.error("--apply disabled: requires an audited transactional executor, "
+                 "fresh human verdicts, verified backup, FK inventory and durable receipts; no data read or written")
+    keep = load_keep()
     rests = C.fetch_all("restaurants", "*", order_col="id")
-    by_id = {r["id"]: r for r in rests}
+    if len({r["id"] for r in rests}) != len(rests):
+        raise ValueError("duplicate restaurant IDs")
     R, auto, review, phone = build(rests)
-    n = len(R)
-
-    auto_groups = components(auto, n)
-    all_groups = components(auto + review, n)
-    auto_sigs = {sig_of(g, R) for g in auto_groups}
-    review_groups = [g for g in all_groups if sig_of(g, R) not in auto_sigs]
-
-    keep = set()
-    for kf in (KEEP_FILE, "/app/pipeline/entity_keep_pairs.json"):
-        if os.path.exists(kf):
-            keep |= set(json.load(open(kf, encoding="utf-8")))
-    auto_groups = [g for g in auto_groups if sig_of(g, R) not in keep]
-    review_groups = [g for g in review_groups if sig_of(g, R) not in keep]
-    phone = [p for p in phone
-             if "|".join(str(R[k]["id"]) for k in
-                         sorted((p[0], p[1]), key=lambda x: R[x]["id"])) not in keep]
-
+    auto_groups, review_groups = candidate_groups(R, auto, review, keep)
     plan_merge = {}
-    print(f"==== AUTO 合并簇 {len(auto_groups)} ====")
-    for g in auto_groups:
-        ranked = print_group(g, R, "AUTO")
-        plan_merge[sig_of(g, R)] = {"action": "merge", "keeper": ranked[0]["id"],
-                                    "drop": [k["id"] for k in ranked[1:]]}
-    print(f"\n==== REVIEW 待裁决簇 {len(review_groups)} ====")
-    for g in review_groups:
-        ranked = print_group(g, R, "REVIEW")
-        plan_merge[sig_of(g, R)] = {"action": "review", "keeper": ranked[0]["id"],
-                                    "drop": [k["id"] for k in ranked[1:]]}
-
-    print(f"\n==== PHONE 电话问题对 {len(phone)} ====")
+    for tag, groups in (("AUTO", auto_groups), ("REVIEW", review_groups)):
+        print(f"==== {tag} 候选簇 {len(groups)} ==== ")
+        for group in groups:
+            ranked = print_group(group, R, tag)
+            ids = {R[k]["id"] for k in group}
+            plan_merge[sig_of(group, R)] = {
+                "action": "review", "bucket": tag, "keeper": ranked[0]["id"],
+                "drop": [k["id"] for k in ranked[1:]],
+                "keep_constraints": [sorted(ids & old) for old in sorted(keep, key=lambda x: sorted(x))
+                                     if len(ids & old) >= 2]}
     plan_phone = {}
     for a, b, kind in phone:
-        sig = "|".join(str(R[k]["id"]) for k in sorted((a, b), key=lambda x: R[x]["id"]))
+        sig = sig_of([a, b], R)
         print_group([a, b], R, f"PHONE({kind})")
         plan_phone[sig] = {"action": "review", "kind": kind,
                            "ids": [R[a]["id"], R[b]["id"]]}
-
     if args.plan:
-        json.dump({"merge": plan_merge, "phone": plan_phone},
-                  open(args.plan, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-        print(f"\n计划写 {args.plan}：AUTO {len(auto_groups)} / REVIEW {len(review_groups)} / PHONE {len(phone)}")
+        with open(args.plan, "w", encoding="utf-8") as fh:
+            json.dump({"dry_run": True, "apply_enabled": False,
+                       "merge": plan_merge, "phone": plan_phone},
+                      fh, ensure_ascii=False, indent=2)
+    print("DRY-RUN only: no restaurant or relationship writes")
 
-    if args.apply:
-        V = json.load(open(args.apply, encoding="utf-8"))
-        log = []
-        for sig, v in V.get("merge", {}).items():
-            if v.get("action") != "merge":
-                continue
-            keeper = v["keeper"]; drops = [i for i in (v.get("drop") or []) if i != keeper]
-            master = by_id[keeper]; dups = [by_id[i] for i in drops]
-            M.fill_master(master, dups, log)
-            for d in dups:
-                M.migrate(d["id"], keeper, log)
-                C.req("DELETE", f"/restaurant_cuisines?restaurant_id=eq.{d['id']}")
-                r = C.req("DELETE", f"/restaurants?id=eq.{d['id']}")
-                log.append(f"DELETE {d['id']}:{r.status_code}")
-                if r.status_code not in (200, 201, 204):
-                    sys.exit(f"删除 {d['id']} 失败: {r.text[:200]}")
-                time.sleep(0.1)
-            print(f"✓ merge -> {keeper} {by_id[keeper]['name']}")
-        # 电话纠正
-        for sig, v in V.get("phone", {}).items():
-            act = v.get("action")
-            ids = v.get("ids")
-            if act == "null_one":
-                bad = [i for i in ids if i != v.get("keep_id")]
-                for i in bad:
-                    C.req("PATCH", f"/restaurants?id=eq.{i}", json={"phone": None})
-                    log.append(f"phone null {i}")
-            elif act == "null_both":
-                for i in ids:
-                    C.req("PATCH", f"/restaurants?id=eq.{i}", json={"phone": None})
-                    log.append(f"phone null {i}")
-        json.dump(log, open("/app/data/entity_merge_log.json", "w"), ensure_ascii=False, indent=2)
-        print("\n应用完成。")
 
 if __name__ == "__main__":
     main()
