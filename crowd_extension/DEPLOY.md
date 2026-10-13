@@ -171,6 +171,7 @@ update crowd_participants set quota_day=50 where participant_id='P-XXXXXX';
 | v3.4.12 | 信封 6→12 + 服务端已见库(known_note_ids)客户端预过滤（同页多榨 2-3 倍，crowd_fix_v3412_envelope12.sql） |
 | v3.4.13 | 作者昵称日期剥离（content.js 净化 + 服务端存量清洗） |
 | v3.4.14 | **口味评分阶段一**：弹窗评分入口（1-5 星+理由）+ owner-rate.html（M0 owner 标尺端）+ crowd_score.py（S3：Beta 后验+BT 排名+CI，cloud/crowd_score.py）+ crowd_fix_v350_owner_taste.sql |
+| v3.5.1 热修 | **修复 v3.4.14 弹窗评分服务端 100% 死路**（crowd_fix_v351_rating_gate.sql，基线 v3411）：note_id 对 note/rating 均必填、note_url/URL 正则/URL↔ID/标题正文校验仅对 note；rating 锚定通过后回填 note_url（满足 NOT NULL）；rating-only 信封可命中已 fulfilled 且本人持有的任务；日配额只计笔记；rating 计 `rated` 不冲 KPI/进度。另：恢复被 218ca19 误删的 owner-rate.html（进扩展包）；publish.sh 补传 owner-rate/status.html。**【2026-10-13 已在 Supabase 生产库执行并端到端验收通过】**：对 fulfilled 任务 15（认领者 P-E3NXWZ6H）以 P-E3NXWZ6H 发送 rating-only 信封 → 回执 `ok:true, rated:1, gate:accepted, rejected:[]`，任务 progress 保持 61 不变（rating 不冲 KPI）；crowd_proofs 落库 `kind='rating' rating=4.5 note_url 已回填 NOT NULL 通过` |
 | 安装器 v5 | **零管理员零密码**：手动挂载引导 + 自更新 LaunchAgent/任务计划（Chrome 策略通道被官方封死后唯一稳定通道） |
 | v7（沙盒中） | PM 后台自定义模糊关键词——`sandbox/v7-fuzzy-keywords` 分支，**未发布** |
 | Firefox 通道 | AMO 非公开签名（账号 huming0018@gmail.com，凭据在 ~/.food_atlas_credentials.md：AMO_PASSWORD / AMO_TOTP_SECRET / 恢复码）；签名包 crowd-extension-vX-firefox-signed.xpi 上传 bucket；Firefox 自动更新用 Mozilla 格式 update manifest（待做，当前 Firefox 端手动更新） |

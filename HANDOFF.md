@@ -24,6 +24,22 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 📅 2026-10-13 修复「众包采集器 v3.4.14 弹窗评分服务端 100% 被拒」+ owner-rate 恢复
+> 用户报障「采集器 3.4.14 报错」。根因：v3.4.14 的 M1 弹窗评分把 `kind='rating'` 信封推进与笔记完全相同的 proof_queue，但服务端 `crowd_submit_proof` 仍是笔记专用闸门 → 评分信封 100% 误拒（note_url 空/URL 正则/标题正文/任务闸门/配额统计/KPI 污染四类）。
+
+**A. 服务端修复（已生产执行 + 端到端验收通过）**
+- 产物：`cloud/sql/crowd_fix_v351_rating_gate.sql`（**基线 v3411**，单条 `CREATE OR REPLACE crowd_submit_proof`，pglast 双层校验 PASS）。
+- 11 处补丁：v_rated / v_rating_only / v_owns_task；日配额只计 note（批前+逐条两处跳过 rating）；循环内任务闸门对 rating+fulfilled+本人持有放行；note_id 对两类均必填但 note_url/URL 正则/URL↔ID/标题正文仅对 note；R6 锚定通过后回填锚点 note_url（满足 NOT NULL）；rating 计 v_rated 不写 keyword_progress、不冲 progress/fulfilled；回执新增 `rated`。
+- **2026-10-13 已在 Supabase 生产库执行**（走 GitHub 登录接管通道，deuce 无直连凭据；Google OAuth 被墙→GitHub 可达）：编辑器 `Success. No rows returned`。
+- **端到端验收通过**：对 fulfilled 任务 15（认领者 P-E3NXWZ6H）以本人发 rating-only 信封 → 回执 `ok:true, rated:1, results[0].gate=accepted, rejected:[]`，`new_progress=61` 不变（rating 不冲 KPI）；`crowd_proofs` 落库 `kind='rating' rating=4.5 note_url 已回填（NOT NULL 通过）`。
+- 提交：`e3f7a7e`（4 文件 913 行）。**待 push**：deuce 无 GitHub 凭据，需在本地 Mac 环境 `git push origin main`。
+
+**B. owner-rate 恢复（用户此前反馈 404）**
+- 被 commit `218ca19` 误删的 `crowd_extension/owner-rate.html` 已重建；线上 `https://huming0018-dot.github.io/crowd-pages/owner-rate.html` 无头实测 263 门店 option、`crowd_fetch_stores` RPC 200；已进扩展包，publish.sh 补传 owner-rate/status.html。
+
+**C. 仍待人工/环境项**
+- `git push`（deuce 无 GitHub 凭据）；扩展 v3.5.1 zip 重打包上传（publish.sh 已改、未跑上传）；后续客户端插件升级为 v3.5.1。
+
 ### 📅 2026-10-13 02:00 自进化复盘 · 地图配额早退根治（lesson #97）+ 三闸现状
 > 主线＝修复「地图 fill 每天空跑、回填 0、误报配额耗尽」的确定性故障，让健康 key1 真正被使用；同时守住 10-12 硬标签证据门。
 

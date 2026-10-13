@@ -27,10 +27,18 @@ OUT="dist-release"
 NO_UPLOAD=0
 [ "${1:-}" = "--no-upload" ] && NO_UPLOAD=1
 
-VER=$(sed -n 's/.*"version": *"\([0-9.]*\)".*/\1/p' manifest.json | head -1)
+VER=""
+if command -v python3 >/dev/null 2>&1; then
+  VER=$(python3 -c "import json;print(json.load(open('manifest.json'))['version'])" 2>/dev/null) || VER=""
+fi
+if [ -z "$VER" ]; then
+  VER=$(sed -n 's/.*"version": *"\([0-9.]*\)".*/\1/p' manifest.json | head -1)
+fi
+VER=${VER:-""}
 
 # Chrome 打包用单形态 manifest（service_worker only）：manifest.json 里的双形态是给 Firefox 的，
 # Chrome <121 不认 MV3 里的 background.scripts 键会拒装。打包时临时摘掉，打完恢复。
+mkdir -p "$OUT"
 cp manifest.json "$OUT/manifest.with-scripts.bak"
 python3 - "$OUT/manifest.with-scripts.bak" <<'PYEOF'
 import json, sys
@@ -41,7 +49,7 @@ json.dump(m, open("manifest.json","w"), ensure_ascii=False, indent=2)
 PYEOF
 trap 'cp "$OUT/manifest.with-scripts.bak" manifest.json' EXIT
 [ -n "$VER" ] || { echo "❌ 读不到 manifest 版本号"; exit 1; }
-echo "== 发布众包美食家 v$VER（扩展 ID $EXT_ID）"
+echo "== 发布众包美食家 v${VER}（扩展 ID ${EXT_ID}）"
 
 # ---- 1. 密钥：第一次发布生成；之后必须复用，丢了 = 扩展 ID 变 = 全员升级链断 ----
 if [ ! -f key.pem ]; then
@@ -57,7 +65,7 @@ openssl rsa -in key.pem -pubout -outform DER 2>/dev/null > "$OUT.tmp.der" || { e
 DERIVED_ID=$(shasum -a 256 "$OUT.tmp.der" | cut -c1-32 | tr '0-9a-f' 'a-p')
 DERIVED_KEY=$(base64 -i "$OUT.tmp.der" | tr -d '\n')
 rm -f "$OUT.tmp.der"
-[ "$DERIVED_ID" = "$EXT_ID" ] || { echo "❌ key.pem 与固定扩展 ID 不符（$DERIVED_ID ≠ $EXT_ID），会断升级链，中止"; exit 1; }
+[ "$DERIVED_ID" = "$EXT_ID" ] || { echo "❌ key.pem 与固定扩展 ID 不符（${DERIVED_ID} ≠ ${EXT_ID}），会断升级链，中止"; exit 1; }
 grep -q "$DERIVED_KEY" manifest.json || { echo "❌ manifest.json 的 key 与 key.pem 不一致，中止"; exit 1; }
 echo "== 密钥校验通过"
 
@@ -72,7 +80,7 @@ CRX="$OUT/$CRX_NAME"
 rm -f "$ZIP" "$CRX"
 rsync -a --exclude "key.pem" --exclude "dist-release" --exclude ".DS_Store" --exclude "*.zip" --exclude "*.crx" ./ "$STAGE/"
 (cd "$STAGE" && zip -qr "$OLDPWD/$ZIP" .)
-echo "== zip 完成：$ZIP（$(du -h "$ZIP" | cut -f1)）"
+echo "== zip 完成：${ZIP}（$(du -h "$ZIP" | cut -f1)）"
 
 # ---- 3. crx（Chrome 打包，自动升级主通道）----
 if [ -x "$CHROME" ]; then
@@ -82,7 +90,7 @@ if [ -x "$CHROME" ]; then
   [ -f "$STAGE_CRX" ] && mv "$STAGE_CRX" "$CRX"
 fi
 if [ -f "$CRX" ]; then
-  echo "== crx 完成：$CRX（$(du -h "$CRX" | cut -f1)）"
+  echo "== crx 完成：${CRX}（$(du -h "$CRX" | cut -f1)）"
 else
   echo "⚠️  未能生成 crx（需要本机装 Chrome）。zip 不受影响，但自动升级通道缺 crx。"
 fi
@@ -117,7 +125,7 @@ XPI="$OUT/$XPI_NAME"
 rm -f "$XPI"
 (cd "$FF_STAGE" && zip -qr "$OLDPWD/$XPI" .)
 rm -rf "$FF_STAGE"
-echo "== Firefox xpi 完成：$XPI（$(du -h "$XPI" | cut -f1)）"
+echo "== Firefox xpi 完成：${XPI}（$(du -h "$XPI" | cut -f1)）"
 
 # ---- 4.6 updates-firefox.json（Mozilla 格式更新清单，gecko.update_url 指向它）----
 # 注意：update_link 指向 AMO 签名后的 -firefox-signed.xpi（未签名包在正式版 Firefox 装不上）。
@@ -138,7 +146,7 @@ cat > "$OUT/updates-firefox.json" <<JSON
   }
 }
 JSON
-echo "== updates-firefox.json 完成（gecko id $GECKO_ID）"
+echo "== updates-firefox.json 完成（gecko id ${GECKO_ID}）"
 
 # ---- 5. 上传 ----
 if [ "$NO_UPLOAD" = "1" ]; then
@@ -171,6 +179,8 @@ upload apply.html apply.html "text/html"
 upload install.html install.html "text/html"
 upload install-mobile.html install-mobile.html "text/html"
 upload submit.html submit.html "text/html"
+upload owner-rate.html owner-rate.html "text/html"
+upload status.html status.html "text/html"
 upload sw.js sw.js "text/javascript"
 upload app-manifest.json app-manifest.json "application/json"
 upload icons/icon192.png icon192.png "image/png"
@@ -206,4 +216,4 @@ else
   echo "⚠️ 未检测到 gh 登录：updates.xml/crx 未同步到 Pages（Chrome 安装通道不会更新）"
 fi
 
-echo "== 发布完成：v$VER 已上线，已装插件的参与者将在 Chrome 下次检查更新时自动升级" || { echo "❌ 部分上传失败"; exit 1; }
+echo "== 发布完成：v${VER} 已上线，已装插件的参与者将在 Chrome 下次检查更新时自动升级" || { echo "❌ 部分上传失败"; exit 1; }
