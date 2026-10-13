@@ -573,7 +573,7 @@ def apply_plan(plan):
             # Hours use a separate atomic conditional update. Never overwrite concurrent facts.
             if "opening_hours" in patch:
                 hours = patch.pop("opening_hours")
-                dec = hours_evidence.resolve([{ "value": hours, "source_url": hours.get("source_url"), "confidence": .9}])
+                dec = hours_evidence.resolve([{ "value": hours, "source_url": hours.get("source_url") if isinstance(hours, dict) else None, "confidence": .9}])
                 if dec["action"] == "apply":
                     hr = core.req("PATCH", f"/restaurants?id=eq.{rid}&opening_hours=is.null&status=eq.active", json={"opening_hours": hours})
                     hb = core.fetch_all("restaurants", "id,opening_hours", extra=f"id=eq.{rid}")
@@ -603,15 +603,23 @@ def apply_plan(plan):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--hours-only", action="store_true", help="isolate hours pilot from label/curation writes")
     a = ap.parse_args()
     t0 = time.time()
     plan = build_plan()
+    if a.hours_only:
+        plan["label_patches"] = {rid: {"opening_hours": p["opening_hours"]}
+                                 for rid, p in plan["label_patches"].items() if "opening_hours" in p}
+        plan["curated_off"] = []
+        plan["chain_review"] = []
+        plan["reverify"] = [r for r in plan["reverify"] if r.get("field") == "opening_hours"]
+        plan["decisions"] = [r for r in plan["decisions"] if r.get("field") == "opening_hours"]
 
     # 始终刷新 worklist（最新全量快照）
-    (LEDGER / "reverify_worklist.json").write_text(
+    (LEDGER / ("hours_reverify_worklist.json" if a.hours_only else "reverify_worklist.json")).write_text(
         json.dumps({"generated_at": datetime.datetime.utcnow().isoformat() + "Z",
                     "items": plan["reverify"]}, ensure_ascii=False, indent=1), encoding="utf-8")
-    (LEDGER / "chain_review_worklist.json").write_text(
+    (LEDGER / ("hours_chain_review_worklist.json" if a.hours_only else "chain_review_worklist.json")).write_text(
         json.dumps({"generated_at": datetime.datetime.utcnow().isoformat() + "Z",
                     "items": plan["chain_review"]}, ensure_ascii=False, indent=1), encoding="utf-8")
 
