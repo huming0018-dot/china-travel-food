@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-merge_duplicates.py — 写库前/保鲜期实体去重合并（默认 dry-run，绝不默认改库）
+merge_duplicates.py — 旧规则只读候选检测（所有写入入口已禁用）
 
-规则：
+以下旧规则仅供人工复核，不能证明同一实体，也不裁决历史 keep：
 - 按品牌核心名分组，同品牌内用坐标距离单链聚类（默认 <100m 视为同一物理店）；
   同品牌、坐标明显分开 → 连锁异址分店，保留（用户定调）。
-- 每个重复簇选信息最全的为 master，其余 duplicate：
-  1) 迁移 5 张引用子表（RC / reviews / favorites / negotiations / price_benchmarks）并按业务键去重；
-  2) 用 duplicate 补 master 为空的字段（coalesce，不覆盖已有值）；
-  3) 删除 duplicate 的标签关联，最后 DELETE duplicate 实体。
+- 完整度排名仅是建议，不是 keep/merge 裁决；不得执行。
 
 用法：
   python3 merge_duplicates.py [-i 不适用，自动扫库]            # dry-run，打印合并计划
-  python3 merge_duplicates.py --commit                        # 真正执行
+  python3 merge_duplicates.py --commit                        # 已禁用，立即失败
   python3 merge_duplicates.py --threshold 80                 # 调整坐标聚类阈值(米)
 """
 import argparse
@@ -134,101 +131,16 @@ def child_rows(table, rid):
     return C.req("GET", f"/{table}?restaurant_id=eq.{rid}").json()
 
 
+WRITE_DISABLED = "Legacy entity merge writes disabled: use read-only review plans until a transactional executor and human adjudication exist."
+
+
 def migrate(duplicate_id, master_id, commit_log):
-    # 1) restaurant_cuisines：master 缺的 cid 补挂
-    for rc in child_rows("restaurant_cuisines", duplicate_id):
-        cid = rc["cuisine_id"]
-        have = C.req("GET", f"/restaurant_cuisines?restaurant_id=eq.{master_id}"
-                            f"&cuisine_id=eq.{cid}").json()
-        if not have:
-            r = C.req("POST", "/restaurant_cuisines",
-                      json={"restaurant_id": master_id, "cuisine_id": cid,
-                            "is_primary": rc.get("is_primary")})
-            commit_log.append(f"RC +{cid} -> {master_id}: {r.status_code}")
-        time.sleep(0.03)
-
-    # 2) reviews：同 user 在 master 已评 → 删重复；否则改挂
-    for rv in child_rows("reviews", duplicate_id):
-        uid = rv.get("user_id")
-        clash = C.req("GET", f"/reviews?restaurant_id=eq.{master_id}"
-                             f"&user_id=eq.{uid}").json() if uid else []
-        if clash:
-            r = C.req("DELETE", f"/reviews?id=eq.{rv['id']}")
-            commit_log.append(f"reviews dup del {rv['id']}: {r.status_code}")
-        else:
-            r = C.req("PATCH", f"/reviews?id=eq.{rv['id']}",
-                      json={"restaurant_id": master_id})
-            commit_log.append(f"reviews {rv['id']} -> {master_id}: {r.status_code}")
-        time.sleep(0.03)
-
-    # 3) favorites：同 user 去重，否则改挂
-    for fv in child_rows("favorites", duplicate_id):
-        uid = fv.get("user_id")
-        clash = C.req("GET", f"/favorites?restaurant_id=eq.{master_id}"
-                             f"&user_id=eq.{uid}").json() if uid else []
-        if clash:
-            r = C.req("DELETE", f"/favorites?id=eq.{fv['id']}")
-            commit_log.append(f"favorites dup del {fv['id']}: {r.status_code}")
-        else:
-            r = C.req("PATCH", f"/favorites?id=eq.{fv['id']}",
-                      json={"restaurant_id": master_id})
-            commit_log.append(f"favorites {fv['id']} -> {master_id}: {r.status_code}")
-        time.sleep(0.03)
-
-    # 4) negotiations：同 channel+status 在 master 已有 → 删重复；否则改挂
-    for ng in child_rows("negotiations", duplicate_id):
-        ch = ng.get("channel")
-        clash = C.req("GET", f"/negotiations?restaurant_id=eq.{master_id}"
-                             f"&channel=eq.{ch}").json() if ch else []
-        if clash:
-            r = C.req("DELETE", f"/negotiations?id=eq.{ng['id']}")
-            commit_log.append(f"negotiations dup del {ng['id']}: {r.status_code}")
-        else:
-            r = C.req("PATCH", f"/negotiations?id=eq.{ng['id']}",
-                      json={"restaurant_id": master_id})
-            commit_log.append(f"negotiations {ng['id']} -> {master_id}: {r.status_code}")
-        time.sleep(0.03)
-
-    # 5) price_benchmarks：同 dish_name 在 master 已有 → 删重复；否则改挂
-    for pb in child_rows("price_benchmarks", duplicate_id):
-        dish = pb.get("dish_name")
-        clash = C.req("GET", f"/price_benchmarks?restaurant_id=eq.{master_id}"
-                             f"&dish_name=eq.{dish}").json() if dish else []
-        if clash:
-            r = C.req("DELETE", f"/price_benchmarks?id=eq.{pb['id']}")
-            commit_log.append(f"benchmarks dup del {pb['id']}: {r.status_code}")
-        else:
-            r = C.req("PATCH", f"/price_benchmarks?id=eq.{pb['id']}",
-                      json={"restaurant_id": master_id})
-            commit_log.append(f"benchmarks {pb['id']} -> {master_id}: {r.status_code}")
-        time.sleep(0.03)
+    """Compatibility boundary: never read or mutate child tables."""
+    raise RuntimeError(WRITE_DISABLED)
 
 
 def fill_master(master, dups, commit_log):
-    fill = {}
-    for k in FILL_KEYS:
-        if not master.get(k):
-            for d in dups:
-                if d.get(k):
-                    fill[k] = d[k]
-                    break
-    for k in SCORE_KEYS:
-        if master.get(k) is None:
-            for d in dups:
-                if d.get(k) is not None:
-                    fill[k] = d[k]
-                    break
-    if not master.get("location"):
-        for d in dups:
-            p = ll(d)
-            if p:
-                fill["location"] = C.point_ewkt(*p)
-                break
-    if fill:
-        r = C.req("PATCH", f"/restaurants?id=eq.{master['id']}", json=fill)
-        commit_log.append(f"master {master['id']} fill {list(fill)}: {r.status_code}")
-        if r.status_code not in (200, 201, 204):
-            sys.exit(f"补全 master 失败: {r.text[:200]}")
+    raise RuntimeError(WRITE_DISABLED)
 
 
 def main():
@@ -237,6 +149,9 @@ def main():
     ap.add_argument("--threshold", type=float, default=100)
     ap.add_argument("--report", default="merge_report.json")
     args = ap.parse_args()
+
+    if args.commit:
+        ap.error(WRITE_DISABLED)
 
     rests = C.fetch_all("restaurants", "*", order_col="id")
     by_id = {r["id"]: r for r in rests}
@@ -260,37 +175,18 @@ def main():
                      "dup_names": [d["name"] for d in dups],
                      "child_rows": counts})
         print(f"CORE {c}")
-        print(f"  KEEP  {master['id']} {master['name']} (完整度 {completeness(master)})")
+        print(f"  SUGGESTED MASTER  {master['id']} {master['name']} (完整度 {completeness(master)})")
         for d in dups:
-            print(f"  MERGE {d['id']} {d['name']} (完整度 {completeness(d)})")
+            print(f"  REVIEW {d['id']} {d['name']} (完整度 {completeness(d)})")
         print(f"        待迁移子表: {counts or '无'}")
 
-    if not args.commit:
-        print(f"\n【DRY-RUN】将合并 {len(plan)} 簇、删除实体 "
-              f"{sum(len(p['dup_ids']) for p in plan)} 个。确认后加 --commit。")
-        return
-
     import json
-    log = []
-    for p in plan:
-        master = by_id[p["master_id"]]
-        dups = [by_id[i] for i in p["dup_ids"]]
-        fill_master(master, dups, log)
-        for d in dups:
-            migrate(d["id"], master["id"], log)
-            # 删除 duplicate 的 RC 关联
-            C.req("DELETE", f"/restaurant_cuisines?restaurant_id=eq.{d['id']}")
-            r = C.req("DELETE", f"/restaurants?id=eq.{d['id']}")
-            log.append(f"DELETE restaurant {d['id']}: {r.status_code}")
-            if r.status_code not in (200, 201, 204):
-                sys.exit(f"删除重复实体 {d['id']} 失败: {r.text[:200]}")
-            time.sleep(0.1)
-        rb = C.req("GET", f"/restaurants?id=eq.{master['id']}").json()
-        print(f"✓ {p['core']} -> master {master['id']} 回读 {'ok' if rb else 'MISSING'}")
-
     with open(args.report, "w", encoding="utf-8") as fh:
-        json.dump({"plan": plan, "log": log}, fh, ensure_ascii=False, indent=2)
-    print(f"\n合并完成 {len(plan)} 簇；明细 {args.report}")
+        json.dump({"status": "REVIEW_ONLY", "executable": False,
+                   "warning": WRITE_DISABLED,
+                   "candidate_rule": "legacy brand/proximity heuristic; not identity proof; keep not adjudicated",
+                   "plan": plan}, fh, ensure_ascii=False, indent=2)
+    print(f"\n【REVIEW ONLY】{len(plan)} candidate clusters; no writes; report {args.report}")
 
 
 if __name__ == "__main__":
