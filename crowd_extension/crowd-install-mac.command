@@ -117,6 +117,15 @@ fi
 unzip -qo "$TMP/ext.zip" -d "$TMP/x" || { log "解压失败"; report upd_fail "unzip"; rm -rf "$TMP"; exit 0; }
 [ -f "$TMP/x/manifest.json" ] || { log "包内容不对"; report upd_fail "bad content"; rm -rf "$TMP"; exit 0; }
 
+# Refuse stale/mismatched ZIPs before touching the installed directory.
+PACKAGE_VER=$(sed -n 's/.*"version": *"\([0-9.]*\)".*/\1/p' "$TMP/x/manifest.json" | head -1)
+if [ "$PACKAGE_VER" != "$REMOTE_VER" ]; then
+  log "包版本与清单不一致：$PACKAGE_VER != $REMOTE_VER"
+  report upd_fail "package_version_mismatch:$PACKAGE_VER!=$REMOTE_VER"
+  rm -rf "$TMP"; exit 0
+fi
+
+
 mkdir -p "$EXT_DIR"
 rsync -a --delete "$TMP/x/" "$EXT_DIR/"
 rm -rf "$TMP"
