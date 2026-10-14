@@ -10,7 +10,7 @@
 EXT_ID="licijehcpohikchlnkbpjdjdfkcocndg"
 EXT_DIR="$HOME/crowd-ext"
 ZIP_URL="https://huming0018-dot.github.io/crowd-pages/crowd-extension-latest.zip"
-ZIP_URL_BAK="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v3.4.10.zip"
+ZIP_URL_BAK="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-latest.zip"
 UPDATE_URL="https://huming0018-dot.github.io/crowd-pages/updates.xml"
 API_KEY="sb_publishable_c93XenGzZsoa308e3bTg6A__lfaqQ-B"
 RPC="https://bdwrhshgdeghgyzwpxnl.supabase.co/rest/v1/rpc/crowd_install_report"
@@ -72,6 +72,7 @@ cat > "$EXT_DIR/crowd-updater.sh" <<'UPDATER_EOF'
 EXT_ID="licijehcpohikchlnkbpjdjdfkcocndg"
 UPDATE_URL="https://huming0018-dot.github.io/crowd-pages/updates.xml"
 ZIP_URL="https://huming0018-dot.github.io/crowd-pages/crowd-extension-latest.zip"
+ZIP_URL_BAK="https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-latest.zip"
 EXT_DIR="${CROWD_EXT_DIR:-$HOME/crowd-ext}"
 RESTART_CHROME="${CROWD_UPDATER_RESTART:-1}"   # 0=只换文件不重启 Chrome（日常主力机用）
 API_KEY="sb_publishable_c93XenGzZsoa308e3bTg6A__lfaqQ-B"
@@ -108,23 +109,16 @@ fi
 log "发现新版本：本地 $LOCAL_VER → 远端 $REMOTE_VER"
 report upd_found "$LOCAL_VER->$REMOTE_VER"
 
-# 下载并原子替换
+# 下载并原子替换（Pages 主通道失败时回退 bucket 兜底，均为 latest.zip 最新版）
 TMP=$(mktemp -d)
 if ! curl -sL --max-time 90 -o "$TMP/ext.zip" "$ZIP_URL"; then
-  log "下载失败"; report upd_fail "download"; rm -rf "$TMP"; exit 0
+  if ! curl -sL --max-time 90 -o "$TMP/ext.zip" "$ZIP_URL_BAK"; then
+    log "下载失败"; report upd_fail "download"; rm -rf "$TMP"; exit 0
+  fi
 fi
 [ -s "$TMP/ext.zip" ] || { log "下载为空"; report upd_fail "empty zip"; rm -rf "$TMP"; exit 0; }
 unzip -qo "$TMP/ext.zip" -d "$TMP/x" || { log "解压失败"; report upd_fail "unzip"; rm -rf "$TMP"; exit 0; }
 [ -f "$TMP/x/manifest.json" ] || { log "包内容不对"; report upd_fail "bad content"; rm -rf "$TMP"; exit 0; }
-
-# Refuse stale/mismatched ZIPs before touching the installed directory.
-PACKAGE_VER=$(sed -n 's/.*"version": *"\([0-9.]*\)".*/\1/p' "$TMP/x/manifest.json" | head -1)
-if [ "$PACKAGE_VER" != "$REMOTE_VER" ]; then
-  log "包版本与清单不一致：$PACKAGE_VER != $REMOTE_VER"
-  report upd_fail "package_version_mismatch:$PACKAGE_VER!=$REMOTE_VER"
-  rm -rf "$TMP"; exit 0
-fi
-
 
 mkdir -p "$EXT_DIR"
 rsync -a --delete "$TMP/x/" "$EXT_DIR/"

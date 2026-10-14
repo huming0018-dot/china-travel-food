@@ -38,6 +38,13 @@ VER=${VER:-""}
 
 # Chrome 打包用单形态 manifest（service_worker only）：manifest.json 里的双形态是给 Firefox 的，
 # Chrome <121 不认 MV3 里的 background.scripts 键会拒装。打包时临时摘掉，打完恢复。
+STAGE=""
+cleanup() {
+  # 打包中临时摘掉了 background.scripts，退出前必须恢复双形态 manifest（Firefox 打包需要 scripts 数组）
+  [ -f "$OUT/manifest.with-scripts.bak" ] && cp "$OUT/manifest.with-scripts.bak" manifest.json 2>/dev/null || true
+  [ -n "$STAGE" ] && rm -rf "$STAGE" 2>/dev/null || true
+}
+trap cleanup EXIT
 mkdir -p "$OUT"
 cp manifest.json "$OUT/manifest.with-scripts.bak"
 python3 - "$OUT/manifest.with-scripts.bak" <<'PYEOF'
@@ -47,7 +54,6 @@ if isinstance(m.get("background"), dict) and "scripts" in m["background"]:
     del m["background"]["scripts"]
 json.dump(m, open("manifest.json","w"), ensure_ascii=False, indent=2)
 PYEOF
-trap 'cp "$OUT/manifest.with-scripts.bak" manifest.json' EXIT
 [ -n "$VER" ] || { echo "❌ 读不到 manifest 版本号"; exit 1; }
 echo "== 发布众包美食家 v${VER}（扩展 ID ${EXT_ID}）"
 
@@ -71,7 +77,6 @@ echo "== 密钥校验通过"
 
 # ---- 2. 打包（先复制到暂存目录：Chrome 拒绝打包内含 key.pem 的目录，也避免把产物打进包里）----
 STAGE=$(mktemp -d /tmp/crowd-pack-XXXXXX)
-trap 'rm -rf "$STAGE"' EXIT
 mkdir -p "$OUT"
 ZIP_NAME="crowd-extension-v$VER.zip"
 CRX_NAME="crowd-extension-v$VER.crx"
@@ -80,7 +85,10 @@ CRX="$OUT/$CRX_NAME"
 rm -f "$ZIP" "$CRX"
 rsync -a --exclude "key.pem" --exclude "dist-release" --exclude ".DS_Store" --exclude "*.zip" --exclude "*.crx" ./ "$STAGE/"
 (cd "$STAGE" && zip -qr "$OLDPWD/$ZIP" .)
-echo "== zip 完成：${ZIP}（$(du -h "$ZIP" | cut -f1)）"
+# 自更新器（LaunchAgent）的固定下载地址是 crowd-extension-latest.zip；每次发版必须随版本包刷新，
+# 否则已装用户检测到新版本却拉到旧 latest.zip，永远升不上去（3.4.14→3.5.1 OTA 失效根因）。
+cp "$ZIP" "$OUT/crowd-extension-latest.zip"
+echo "== zip 完成：${ZIP}（$(du -h "$ZIP" | cut -f1)）；latest.zip 已同步"
 
 # ---- 3. crx（Chrome 打包，自动升级主通道）----
 if [ -x "$CHROME" ]; then
@@ -168,6 +176,7 @@ upload() { # $1=本地文件 $2=bucket 路径 $3=content-type
 }
 FAIL=0
 upload "$ZIP" "crowd-extension-v$VER.zip" "application/zip"
+upload "$OUT/crowd-extension-latest.zip" "crowd-extension-latest.zip" "application/zip"
 [ -f "$CRX" ] && upload "$CRX" "crowd-extension-v$VER.crx" "application/octet-stream"
 upload "$OUT/updates.xml" "updates.xml" "text/xml"
 # Firefox 通道：未签名 xpi（供 web-ext sign 取回签名）+ Mozilla 更新清单。
@@ -187,34 +196,44 @@ upload icons/icon192.png icon192.png "image/png"
 upload icons/icon512.png icon512.png "image/png"
 upload crowd-install-mac.command crowd-install-mac.command "application/octet-stream"
 upload crowd-install-win.bat crowd-install-win.bat "application/octet-stream"
-[ "$FAIL" = "0" ] && # 6. Chrome 更新通道同步到 GitHub Pages（bucket 对 .xml 强制 text/plain，Chrome 更新客户端拒收——
-#    updates.xml 和 crx 必须在 Pages 上才是有效的安装/升级链路）
-if command -v gh >/dev/null 2>&1 && gh auth token >/dev/null 2>&1; then
-  echo "== 同步 Chrome 更新通道到 Pages =="
+# ---- 6. Chrome 更新通道同步到 GitHub Pages ----
+# bucket 对 .xml 强制 text/plain，Chrome 更新客户端拒收；updates.xml / crx 必须在 Pages。
+# 自更新器（LaunchAgent）的固定下载地址 crowd-extension-latest.zip 也必须在 Pages（OTA 主通道）。
+pages_sync() {
+  if ! command -v gh >/dev/null 2>&1 || ! gh auth token >/dev/null 2>&1; then
+    echo "⚠️ 未检测到 gh 登录：updates.xml/crx/latest.zip 未同步到 Pages（Chrome 自动升级与自更新器通道不更新）"
+    return 0
+  fi
+  echo "== 同步 Chrome 更新通道到 Pages（updates.xml / crx / latest.zip）=="
   TMP_GH=$(mktemp -d)
   cp "$OUT/updates.xml" "$TMP_GH/updates.xml"
-  cp "$CRX" "$TMP_GH/crowd-extension-v$VER.crx"
-  cp "$ZIP" "$TMP_GH/crowd-extension-latest.zip"
-  # codebase 指向 Pages 上的 crx
-  sed -i '' "s|https://bdwrhshgdeghgyzwpxnl.supabase.co/storage/v1/object/public/crowd/crowd-extension-v$VER.crx|https://huming0018-dot.github.io/crowd-pages/crowd-extension-v$VER.crx|g" "$TMP_GH/updates.xml"
+  [ -f "$CRX" ] && cp "$CRX" "$TMP_GH/crowd-extension-v$VER.crx"
+  cp "$OUT/crowd-extension-latest.zip" "$TMP_GH/crowd-extension-latest.zip"
+  # updates.xml 的 codebase 改指 Pages 上的 crx（bucket 不返回 Chrome 要求的扩展 MIME）
+  sed -i '' "s|$BUCKET/crowd-extension-v$VER.crx|https://huming0018-dot.github.io/crowd-pages/crowd-extension-v$VER.crx|g" "$TMP_GH/updates.xml"
   GHT=$(gh auth token)
-  for F in "crowd-extension-v$VER.crx" crowd-extension-latest.zip updates.xml; do
-    SHA=$(curl -s -H "Authorization: token $GHT" "https://api.github.com/repos/huming0018-dot/crowd-pages/contents/$F" | python3 -c "import json,sys; print(json.load(sys.stdin).get('sha',''))" 2>/dev/null)
-    python3 - "$GHT" "$TMP_GH/$F" "$F" "$SHA" <<'PYEOF'
+  for F in updates.xml "crowd-extension-v$VER.crx" crowd-extension-latest.zip; do
+    [ -f "$TMP_GH/$F" ] || continue
+    SHA=$(curl -s -H "Authorization: token $GHT" "https://api.github.com/repos/huming0018-dot/crowd-pages/contents/$F" | python3 -c "import json,sys; print(json.load(sys.stdin).get('sha',''))" 2>/dev/null || true)
+    python3 - "$GHT" "$TMP_GH/$F" "$F" "$SHA" "$VER" <<'PYEOF'
 import json, sys, base64, urllib.request
-token, fp, name, sha = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+token, fp, name, sha, ver = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
 content = base64.b64encode(open(fp,'rb').read()).decode()
-body = {"message": "publish.sh 同步 v"+content[:0]+"更新通道", "content": content}
+body = {"message": "Pages 同步 %s（v%s）" % (name, ver), "content": content}
 if sha: body["sha"] = sha
 req = urllib.request.Request("https://api.github.com/repos/huming0018-dot/crowd-pages/contents/"+name,
     data=json.dumps(body).encode(), method="PUT",
     headers={"Authorization":"token "+token,"Content-Type":"application/json","Accept":"application/vnd.github+json"})
-print("Pages 同步:", name, json.loads(urllib.request.urlopen(req).read())["commit"]["sha"][:8])
+print("   ✅ Pages", name, json.loads(urllib.request.urlopen(req).read())["commit"]["sha"][:8])
 PYEOF
   done
   rm -rf "$TMP_GH"
-else
-  echo "⚠️ 未检测到 gh 登录：updates.xml/crx 未同步到 Pages（Chrome 安装通道不会更新）"
-fi
+}
+pages_sync
 
-echo "== 发布完成：v${VER} 已上线，已装插件的参与者将在 Chrome 下次检查更新时自动升级" || { echo "❌ 部分上传失败"; exit 1; }
+if [ "$FAIL" = "0" ]; then
+  echo "== 发布完成：v${VER} 已上线（bucket + Pages，含 latest.zip）。已装插件经自更新器（≤6h）或 Chrome 更新检查自动升级。"
+else
+  echo "❌ 部分对象上传失败，见上方 ❌ 行；修正后重跑本脚本（幂等）。"
+  exit 1
+fi
