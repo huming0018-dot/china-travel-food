@@ -25,6 +25,7 @@ import common as C
 import health
 import ingest
 import map_quota as MQ
+import secret_redact as SR
 from map_helpers import resolve_poi, tencent_suggestion, tencent_search, amap_search, pick_best
 
 STATE_F = pathlib.Path(DATA) / "_phone_fill_state.json"
@@ -174,7 +175,8 @@ def main():
                   + ("" if ok else "（已存在）"))
         except Exception as e:
             stats["skipped"] += 1
-            print(f"  [{rid}] {name} → 写入异常: {e}")
+            # F15：异常对象/响应可能含 apikey/token，统一脱敏后再打印
+            print(f"  [{rid}] {name} → 写入异常: {SR.redact_str(str(e))}")
 
         time.sleep(0.3)
 

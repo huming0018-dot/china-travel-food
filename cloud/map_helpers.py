@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 """map_helpers.py — 云端补齐脚本共享的地图API查询与结果匹配助手。
 
-统一复用 tencent_sig.signed_get（腾讯SK签名），避免各脚本各写一份签名导致漂移。
+腾讯路径经 map_quota 仲裁池（MQ.tencent_signed_url，SK 签名），避免各脚本各写一份签名导致漂移。
 提供：腾讯 suggestion/search/geocoder、高德 search/geocode、上海bbox校验、
 店名+地址相似度匹配、地址补上海市前缀。
 
-所有函数在API失败/配额超限时返回安全值，绝不抛异常中断主流程。
+所有函数在API失败/配额超限/通道未配置时返回安全值，绝不抛异常中断主流程。
 """
 import hashlib
 import os
@@ -25,7 +25,6 @@ sys.path.insert(0, HERE)
 
 import common as C
 import map_quota as MQ
-from tencent_sig import signed_get as tencent_signed_get
 
 # ── 高德（独立签名，腾讯sig模块不覆盖） ──
 AMAP_KEY = os.environ.get("AMAP_KEY", "").strip()
@@ -156,9 +155,14 @@ def pick_best(results, db_name, db_address="", name_thresh=0.85):
 
 # ────────────────────── 统一配额调用（经 map_quota 池化/仲裁）──────────────────────
 def _map_call(provider, path, params, interface, consumer, timeout=15):
-    """逐把 key 尝试：某 key rate/error 自动换下一把；全 dead/无预算 → quota。
-    返回 (json_or_None, "ok"/"quota"/"error")。"""
+    """逐把 key 尝试：某 key rate/error 自动换下一把；全 dead/无预算/未配置 → quota。
+    返回 (json_or_None, "ok"/"quota"/"error")。
+    no_credentials=该 provider 未配置密钥（F14），视为通道停用（quota），
+    由上层回退到其它 provider / L0，不影响无关通道。"""
     pool = MQ.MapQuota()
+    if not pool.keys.get(provider):
+        print(f"  [{provider} 未配置密钥，通道停用]", file=sys.stderr)
+        return None, "quota"
     n = max(1, len(pool.keys[provider]))
     last = (None, "error")
     for _ in range(n):
@@ -166,7 +170,7 @@ def _map_call(provider, path, params, interface, consumer, timeout=15):
         last = (j, st)
         if st == "ok":
             return j, "ok"
-        if st in ("no_budget", "reserved"):
+        if st in ("no_budget", "reserved", "no_credentials"):
             return None, "quota"
         # rate / error / sign_error：换下一把 key 重试
     return (last[0], "quota" if last[1] == "rate" else "error")

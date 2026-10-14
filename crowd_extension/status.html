@@ -60,6 +60,11 @@
 const API_BASE = "https://bdwrhshgdeghgyzwpxnl.supabase.co";
 const API_KEY = "sb_publishable_c93XenGzZsoa308e3bTg6A__lfaqQ-B";
 const $ = (id) => document.getElementById(id);
+// F27：所有来自服务端/数据库的文本进入 HTML 前统一转义（防注入）。
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
+    ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
 
 async function load() {
   try {
@@ -88,8 +93,8 @@ async function load() {
       const tag = r.gate_status === "accepted" ? '<span class="tag a">收录</span>'
         : r.gate_status === "rejected" ? '<span class="tag r">拒收</span>'
         : '<span class="tag d">重复</span>';
-      return "<tr><td>" + hh + "</td><td>" + (r.matched_store || "—") + "</td><td>" +
-        (r.participant_id || "").slice(0, 9) + "</td><td>" + tag + "</td></tr>";
+      return "<tr><td>" + hh + "</td><td>" + esc(r.matched_store || "—") + "</td><td>" +
+        esc((r.participant_id || "").slice(0, 9)) + "</td><td>" + tag + "</td></tr>";
     });
     $("recentRows").innerHTML = rows.length ? rows.join("") : '<tr><td colspan="4" class="muted">还没有提交</td></tr>';
   } catch (e) {

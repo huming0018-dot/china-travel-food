@@ -65,6 +65,11 @@
 const API_BASE = "https://bdwrhshgdeghgyzwpxnl.supabase.co";
 const API_KEY = "sb_publishable_c93XenGzZsoa308e3bTg6A__lfaqQ-B";
 const $ = (id) => document.getElementById(id);
+// F27：所有来自服务端/数据库的文本进入 HTML 前统一转义（防注入）。
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
+    ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
 
 // 与服务端 regexp_replace(s,'[\s[:punct:]]','','g') 同口径：去空白+ASCII标点，中文标点计长
 function reasonLen(s){ return String(s||"").replace(/[\s\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]/g,"").length; }
@@ -117,16 +122,20 @@ async function rpc(fn, body) {
   return r.json();
 }
 
-// 门店候选下拉（只读 RPC；失败不阻塞手输）
+// 门店候选下拉（只读 RPC；失败不阻塞手输）。店名是服务端文本，用 DOM 构建
+// （value/textContent 自动转义），不再拼 innerHTML/outerHTML（F27）。
 (async function loadStores(){
   try {
     const d = await rpc("crowd_fetch_stores", {});
     if (Array.isArray(d)) {
-      $("storeList").innerHTML = d.map(s => {
+      const sel = $("storeList");
+      sel.textContent = "";
+      d.forEach(s => {
         const opt = document.createElement("option");
-        opt.value = s;
-        return opt.outerHTML;
-      }).join("");
+        opt.value = String(s);          // 属性赋值，自动转义
+        opt.textContent = String(s);   // 文本节点，不解析 HTML
+        sel.appendChild(opt);
+      });
     }
   } catch (e) { /* 候选加载失败仍可手动输入 */ }
 })();

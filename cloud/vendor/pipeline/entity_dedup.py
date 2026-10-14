@@ -25,9 +25,16 @@ entity_dedup.py — Phase 0-A 实体解析去重 + 名称交叉验证（确定�
   food_kol_mentions        restaurant_id SET NULL                  （改指保留 id，不置空）
 
 用法：
-  python3 entity_dedup.py                     # dry-run，打印逐簇报告 + 名称修正清单
-  python3 entity_dedup.py --apply             # 自检全绿后才真正合并（仍逐簇回读）
+  python3 entity_dedup.py                     # 只读，打印逐簇报告 + 名称修正清单
+  python3 entity_dedup.py --apply             # 已禁用：任何读取/网络/写盘前立即失败
   python3 entity_dedup.py --plan /app/data/entity_dedup_plan.json
+                                                # 只读计划（status=REVIEW_ONLY, executable=false）
+
+安全边界（2026-10-14 修复 F01/F02）：
+  本文件是“候选检测 + 人工复核计划”，不再是合并执行器。
+  - CLI --apply 在任何数据库读取/网络请求/文件写入前拒绝（非零退出）；
+  - migrate_child_row / migrate_children 即使被 import 也无条件抛错（无环境开关、无默认 dry-run）；
+  - 任何真实合并都必须等“数据库事务 + 人工裁决 keep/merge”执行器就位后另行实现。
 """
 import argparse
 import json
@@ -44,6 +51,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.environ.get("FOOD_DATA_DIR", "/app/data")
 KEEP_FILES = [os.path.join(DATA, "entity_keep_pairs.json"),
               os.path.join(HERE, "entity_keep_pairs.json")]
+
+# 实体写入口统一拒绝（F01/F02）。CLI 与 import 两条路径都不允许绕过；
+# 不设环境开关、不设“默认 dry-run”兜底——任何迁移/删除/合并一律拒绝。
+WRITE_DISABLED = (
+    "Legacy entity merge writes disabled: entity_dedup only emits read-only review plans; "
+    "use a transactional executor with human keep/merge adjudication to merge entities."
+)
+
+
+class EntityWriteDisabled(RuntimeError):
+    """实体写入口被关闭：迁移/删除/合并一律拒绝。"""
 
 # ---------------------------------------------------------------------------
 # 子表迁移注册表：(表, fk列, 业务键函数(除restaurant_id外的去重键), 有无独立id)
@@ -281,39 +299,12 @@ def fetch_rows(table, fk, rid):
 
 
 def migrate_child_row(table, fk, biz_key, comp_pk, dup_row, keeper_id, log):
-    """把 dup_row 迁到 keeper。业务键已存在于 keeper → 删 dup 行；否则改指/复制。"""
-    kp = biz_key(dup_row)
-    # keeper 是否已存在同业务键
-    keeper_rows = fetch_rows(table, fk, keeper_id)
-    exists = any(biz_key(k) == kp for k in keeper_rows)
-    if exists:
-        if "id" in dup_row:
-            r = C.req("DELETE", f"/{table}?id=eq.{dup_row['id']}")
-            log.append(f"{table} dup-row del {dup_row.get('id')}: {r.status_code}")
-        else:
-            # 复合 PK：按 fk+业务键过滤删
-            flt = composite_filter(table, fk, dup_row)
-            r = C.req("DELETE", f"/{table}?{flt}")
-            log.append(f"{table} dup-row del({flt}): {r.status_code}")
-        return "dedup_del"
-    # 改指 / 复制
-    if not comp_pk and "id" in dup_row:
-        r = C.req("PATCH", f"/{table}?id=eq.{dup_row['id']}", json={fk: keeper_id})
-        log.append(f"{table} {dup_row.get('id')} {fk}->{keeper_id}: {r.status_code}")
-        return "repoint"
-    # 复合 PK：POST 新行（keeper），删 dup 行
-    body = {k: v for k, v in dup_row.items() if k not in ("id", fk)}
-    body[fk] = keeper_id
-    r = C.req("POST", f"/{table}", json=body)
-    log.append(f"{table} +{kp}->{keeper_id}: {r.status_code}")
-    if r.status_code not in (200, 201):
-        log.append(f"  POST FAIL body={body} resp={r.text[:200]}")
-    # 删 dup 行
-    if "id" in dup_row:
-        C.req("DELETE", f"/{table}?id=eq.{dup_row['id']}")
-    else:
-        C.req("DELETE", f"/{table}?{composite_filter(table, fk, dup_row)}")
-    return "copy_del"
+    """[已禁用 F01/F02] 历史上会把 dup 行改指/复制并删除，现一律拒绝。
+
+    无论以何种参数、环境或“默认 dry-run”方式调用，都立即抛错，
+    不做任何数据库读取/网络请求。真实迁移必须由带事务的新执行器实现。
+    """
+    raise EntityWriteDisabled(WRITE_DISABLED)
 
 
 def composite_filter(table, fk, row):
@@ -328,30 +319,12 @@ def composite_filter(table, fk, row):
 
 
 def migrate_children(dup_id, keeper_id, log):
-    """迁移指向 dup_id 的所有子表行到 keeper_id。返回迁移条数。"""
-    moved = 0
-    for table, fk, biz_key, comp_pk in FK_TABLES:
-        rows = fetch_rows(table, fk, dup_id)
-        for row in rows:
-            migrate_child_row(table, fk, biz_key, comp_pk, row, keeper_id, log)
-            moved += 1
-            time.sleep(0.04)
-    # food_events.related_restaurant_id 单独处理（SET NULL → 主动改指）
-    for row in fetch_rows("food_events", "related_restaurant_id", dup_id):
-        # keeper 是否已有同 event 业务键
-        kp = _event_key(row)
-        keeper_rows = fetch_rows("food_events", "related_restaurant_id", keeper_id)
-        if not any(_event_key(k) == kp for k in keeper_rows):
-            r = C.req("PATCH", f"/food_events?id=eq.{row['id']}",
-                      json={"related_restaurant_id": keeper_id})
-            log.append(f"food_events.related {row['id']}->{keeper_id}: {r.status_code}")
-            moved += 1
-        else:
-            r = C.req("PATCH", f"/food_events?id=eq.{row['id']}",
-                      json={"related_restaurant_id": None})
-            log.append(f"food_events.related dup {row['id']}->null: {r.status_code}")
-        time.sleep(0.04)
-    return moved
+    """[已禁用 F01/F02] 历史上会迁移全部子表并删除父实体，现一律拒绝。
+
+    即使被其它模块 import 调用（如 closed_relocate）也立即抛错，
+    保证没有任何绕过 CLI 的写入路径。
+    """
+    raise EntityWriteDisabled(WRITE_DISABLED)
 
 
 # ---------------------------------------------------------------------------
@@ -433,13 +406,27 @@ def name_audit(rests):
 # 主流程
 # ---------------------------------------------------------------------------
 def load_keep_pairs():
+    """读取人工 keep 裁决。缺失文件=没有裁决（可选），静默跳过；
+    但文件存在却无法解析/形状非法时【fail closed】——明确报错停止检测，
+    绝不静默吞掉人工裁决（历史上 except: pass 会让坏 keep 被当“没有裁决”，
+    导致候选被自动裁决，属于 F01/F02 同类风险）。"""
     keep = []
     for kf in KEEP_FILES:
-        if os.path.exists(kf):
-            try:
-                keep += json.load(open(kf, encoding="utf-8"))
-            except Exception:
-                pass
+        if not os.path.exists(kf):
+            continue
+        try:
+            data = json.load(open(kf, encoding="utf-8"))
+        except Exception as e:
+            raise ValueError(f"keep 文件无法解析（拒绝继续，防止漏读人工裁决）: {kf}: {e}")
+        if not isinstance(data, list):
+            raise ValueError(f"keep 文件必须是签名列表（拒绝继续）: {kf}")
+        for sig in data:
+            if not isinstance(sig, str) or "|" not in sig:
+                raise ValueError(f"keep 签名格式非法，应为 'id|id[|id...]' 字符串: {kf}: {sig!r}")
+            parts = [p.strip() for p in sig.split("|")]
+            if len(parts) < 2 or not all(p.isdigit() for p in parts):
+                raise ValueError(f"keep 签名必须是 ≥2 个整数 id（同簇 keep 可多于 2 个）: {kf}: {sig!r}")
+        keep += data
     return keep
 
 
@@ -527,6 +514,11 @@ def main():
     ap.add_argument("--report", default=os.path.join(DATA, "entity_dedup_report.json"))
     args = ap.parse_args()
 
+    # F01/F02：任何写/合并/删除入口在【任何数据库读取/网络/文件写入之前】无条件拒绝。
+    # 不依赖环境开关、不靠默认 dry-run；CLI 与 import 两条路径都封死。
+    if args.apply:
+        ap.error(WRITE_DISABLED)  # SystemExit code 2
+
     rests = C.fetch_all("restaurants", "*", order_col="id")
     # 附带 RC 计数用于完整度
     rc = C.fetch_all("restaurant_cuisines", "restaurant_id", order_col="restaurant_id")
@@ -591,78 +583,18 @@ def main():
         print(f"   ! id={f['id']} {f['wrong']!r} -> {f['correct']!r} | {f['reason']}")
 
     if args.plan:
-        out = {"clusters": plan, "review_pairs":
+        out = {"status": "REVIEW_ONLY", "executable": False,
+               "write_disabled": WRITE_DISABLED,
+               "clusters": plan, "review_pairs":
                [{"a": a, "b": b, "why": w, "key": k} for a, b, w, k in review_pairs],
                "name_fixes": name_fixes}
         json.dump(out, open(args.plan, "w", encoding="utf-8"),
                   ensure_ascii=False, indent=2)
-        print(f"\n计划写 {args.plan}")
+        print(f"\n只读计划写 {args.plan}（REVIEW_ONLY，不可直接执行；需人工裁决 + 事务执行器）")
 
-    if not args.apply:
-        print(f"\n【DRY-RUN】将合并 {len(plan)} 簇、删除实体 "
-              f"{sum(len(p['drop_ids']) for p in plan)} 个。确认后加 --apply。")
-        return
-
-    # ---- APPLY（逐簇：重新快照 → 字段合并 → 子表迁移 → 删行 → 回读）----
-    log = []
-    merged_restaurants = 0
-    for p in plan:
-        keeper_id = p["keeper_id"]
-        # 并发安全：apply 前重新快照
-        fresh = snapshot_members(p["member_ids"])
-        if keeper_id not in fresh:
-            log.append(f"!! keeper {keeper_id} 在计划后消失，跳过该簇")
-            continue
-        keeper = fresh[keeper_id]
-        dups = [fresh[i] for i in p["drop_ids"] if i in fresh]
-        if not dups:
-            continue
-        # 重新计算字段合并（基于最新快照，不覆盖他人刚写）
-        fill = plan_field_merge(keeper, dups)
-        if fill:
-            r = C.req("PATCH", f"/restaurants?id=eq.{keeper_id}", json=fill)
-            log.append(f"PATCH keeper {keeper_id} fill {list(fill)}: {r.status_code}")
-        # 迁移子表
-        for d in dups:
-            migrate_children(d["id"], keeper_id, log)
-            time.sleep(0.1)
-        # 回读确认 keeper 还在
-        rb = C.req("GET", f"/restaurants?id=eq.{keeper_id}").json()
-        # 删被合并行（此时所有 FK 已迁走，CASCADE 不会再丢业务数据）
-        for d in dups:
-            r = C.req("DELETE", f"/restaurants?id=eq.{d['id']}")
-            log.append(f"DELETE restaurant {d['id']}: {r.status_code}")
-            if r.status_code not in (200, 204):
-                log.append(f"!! 删除 {d['id']} 失败: {r.text[:200]}")
-            merged_restaurants += 1
-            time.sleep(0.1)
-        print(f"✓ 簇 -> keeper {keeper_id} {keeper.get('name')} 回读={'ok' if rb else 'MISSING'}")
-
-    # 名称修正（保守：只改已核实登记表，且需 authority_urls）
-    name_applied = 0
-    for f in name_fixes:
-        if f["level"].startswith("L") and f["authority_urls"]:
-            r = C.req("PATCH", f"/restaurants?id=eq.{f['id']}",
-                      json={"name": f["correct"]})
-            log.append(f"NAMEFIX {f['id']} {f['wrong']}->{f['correct']}: {r.status_code}")
-            name_applied += 1
-
-    # ---- 自检 ----
-    after = C.fetch_all("restaurants", "id,name,phone,location", order_col="id")
-    after_ids = {r["id"] for r in after}
-    selfcheck = {
-        "keeper_rows_exist": all(p["keeper_id"] in after_ids for p in plan),
-        "dropped_gone": all(not any(did in after_ids for did in p["drop_ids"])
-                            for p in plan),
-        "merged_restaurants": merged_restaurants,
-        "name_fixes_applied": name_applied,
-        "total_after": len(after),
-    }
-    print(f"\n自检: {json.dumps(selfcheck, ensure_ascii=False)}")
-    json.dump({"plan": plan, "log": log, "selfcheck": selfcheck,
-               "name_fixes": name_fixes}, open(args.report, "w", encoding="utf-8"),
-              ensure_ascii=False, indent=2)
-    print(f"报告写 {args.report}")
+    print(f"\n【REVIEW_ONLY】将合并 {len(plan)} 簇、删除实体 "
+          f"{sum(len(p['drop_ids']) for p in plan)} 个——仅为候选，不做任何写入。")
+    print(f"历史 --apply 已禁用（F01/F02）：请人工裁决 keep/merge，并由带数据库事务的执行器执行。")
 
 
 if __name__ == "__main__":

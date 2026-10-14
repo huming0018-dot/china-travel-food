@@ -10,7 +10,8 @@
 本模块：
   1. 持久账本（/app/data/map_quota_ledger.json）：按 provider:key×接口 记日/月用量，
      本地日 0 点 / 月初自动滚动重置；真实返回码（腾讯121/111、高德10003/10044）驱动 dead；
-  2. 统一 key 池（腾讯也支持多 key，默认回退 tencent_sig 的硬编码 key）；
+  2. 统一 key 池（腾讯也支持多 key）；密钥只从明确配置读取（TENCENT_MAP_KEYS/SKS），
+     不内置任何 fallback；缺配置时该通道结构化停用（no_credentials），不影响其它通道；
   3. acquire(consumer, provider, interface) 预算仲裁：电话为最高优先并预留预算，
      全字段批量只花剩余预算，饿不死电话；
   4. 持久 POI 缓存：一次 extensions=all，电话/坐标/营业时间/全字段共享，命中不调用。
@@ -23,6 +24,8 @@ import os
 import re
 import time
 from urllib.parse import quote
+
+import secret_redact as SR
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.environ.get("FOOD_DATA_DIR", "/app/data")
@@ -44,10 +47,8 @@ AMAP_PHONE_RESERVE = int(os.environ.get("AMAP_PHONE_RESERVE", 800))
 # 消费者优先级：数字越小优先级越高
 CONSUMER_PRIORITY = {"phone": 0, "coord": 1, "chain": 2, "hours": 3, "full": 4}
 
-# 腾讯默认 key/SK（与 tencent_sig 保持一致；可用 TENCENT_MAP_KEYS/SKS 覆盖）
-TENCENT_FALLBACK_KEY = "7PQBZ-7IDKZ-YUHXF-7V2GG-M2B3O-4OBT6"
-TENCENT_FALLBACK_SK = "4ibuevVyzenm3Xcz3X6b4rljRlhZHlZo"
-
+# 腾讯 key/SK 只从明确配置读取（TENCENT_MAP_KEYS/SKS，逗号分隔；或单值 TENCENT_MAP_KEY/SK）。
+# F14：不再内置任何硬编码 fallback；缺失时腾讯通道结构化停用（no_credentials），不影响高德。
 AMAP_HTTP_BASE = "https://restapi.amap.com"
 TENCENT_HTTP_BASE = "https://apis.map.qq.com"
 
@@ -58,13 +59,19 @@ def _split_csv(raw):
 
 
 def load_provider_keys(provider):
-    """返回 [(key, sk)]；保留位置，缺 sk 补空串。空串条目须保留位置（IP白名单key无SK）。"""
+    """返回 [(key, sk)]；保留位置，缺 sk 补空串。空串条目须保留位置（IP白名单key无SK）。
+    未配置密钥的 provider 返回空列表（不做任何硬编码 fallback）。"""
     if provider == "tencent":
         keys = [k for k in _split_csv(os.environ.get("TENCENT_MAP_KEYS")) if k]
         if not keys:
-            keys = [TENCENT_FALLBACK_KEY]
+            single = os.environ.get("TENCENT_MAP_KEY", "").strip()
+            keys = [single] if single else []
         sks_raw = _split_csv(os.environ.get("TENCENT_MAP_SKS"))
-        sks = sks_raw if any(s for s in sks_raw) else [TENCENT_FALLBACK_SK]
+        if any(s for s in sks_raw):
+            sks = sks_raw  # 保留位置，空串=IP白名单key无SK
+        else:
+            single_sk = os.environ.get("TENCENT_MAP_SK", "").strip()
+            sks = [single_sk] if single_sk else []
     else:  # amap
         keys = [k for k in _split_csv(os.environ.get("AMAP_KEYS")) if k]
         if not keys:
@@ -293,9 +300,14 @@ def amap_signed_url(path, params, key, sk):
 # ───────────────────────── 统一调用（计数/池化/签名）─────────────────────────
 def call(provider, path, params, interface, consumer, timeout=15, method="GET"):
     """经仲裁器发起一次地图调用。
-    返回 (json_or_None, status: ok/rate/error/no_budget)。自动计数、轮换、dead 标记。"""
+    返回 (json_or_None, status: ok/rate/error/no_budget/reserved/no_credentials)。
+    自动计数、轮换、dead 标记；任何异常日志都经脱敏（URL 中 key/sig 不落盘）。"""
     import requests
     pool = MapQuota()
+    # F14：该 provider 未配置任何 key → 结构化停用本通道（不回退硬编码、不影响其它通道）
+    if not pool.keys.get(provider):
+        print(f"[map_quota] {provider} 未配置密钥（no_credentials），本通道停用。")
+        return None, "no_credentials"
     cred = pool.acquire(consumer, provider, interface)
     if cred is None:
         # 可能是低优先让路；若整池确有剩余则属预留，否则真耗尽
@@ -306,7 +318,8 @@ def call(provider, path, params, interface, consumer, timeout=15, method="GET"):
         r = requests.request(method, url, timeout=timeout)
         j = r.json()
     except Exception as e:
-        print(f"[map_quota] {provider} 请求异常: {e}")
+        # F15：requests 异常字符串可能含完整带 key/sig 的 URL，必须脱敏后再打印
+        print(f"[map_quota] {provider} 请求异常: {SR.redact_str(str(e), extra_secrets=[cred['key'], cred['sk']])}")
         pool.report(provider, cred["index"], interface, False)
         return None, "error"
 

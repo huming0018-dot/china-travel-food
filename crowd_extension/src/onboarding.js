@@ -13,6 +13,11 @@ const API_KEY = (self.CROWD_CONFIG && self.CROWD_CONFIG.API_KEY) || "";
 const PID_RE = /^P-[A-Z0-9]{6,12}$/;
 
 const $ = (id) => document.getElementById(id);
+// F27：服务端文本进入 HTML 前统一转义（防注入）。
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
+    ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
 
 // F6 合规修复：participant_id 只能在「同意并开始使用」点击后落盘。
 // 注册成功只回填输入框（暂存页面变量），不写 storage、不启动采集。
@@ -22,7 +27,7 @@ function savePid(pid) {
   // 点「同意」才走到这里：落盘编号+签署时间，并显式启动采集调度（CROWD_START 建 alarm + collector_running）
   chrome.storage.local.set({ participant_id: pid, agreed_at: new Date().toISOString() }, () => {
     chrome.runtime.sendMessage({ type: "CROWD_START" }, () => {
-      document.body.innerHTML = "<h1>✅ 已同意</h1><p>参与协议已签署。你的参与编号：<b>" + pid +
+      document.body.innerHTML = "<h1>✅ 已同意</h1><p>参与协议已签署。你的参与编号：<b>" + esc(pid) +
         "</b></p><p>返回小红书页面，插件将自动开始拉取任务并采集。</p>";
     });
   });

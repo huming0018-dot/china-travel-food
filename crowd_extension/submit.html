@@ -96,6 +96,11 @@
 const API_BASE = "https://bdwrhshgdeghgyzwpxnl.supabase.co";
 const API_KEY = "sb_publishable_c93XenGzZsoa308e3bTg6A__lfaqQ-B";
 const $ = (id) => document.getElementById(id);
+// F27：所有来自服务端/数据库/用户输入的文本进入 HTML 前统一转义（防注入）。
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
+    ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
 const PID_RE = /^P-[A-Z0-9]{6,12}$/;
 
 // H2 防护：localStorage 在某些浏览器（Safari「阻止所有 Cookie」/部分 App 内置 WebView）会抛异常。
@@ -272,7 +277,7 @@ async function loadTarget() {
     if (d.reason === "participant_unavailable") {
       // 编号在服务端不存在/被停用（如被清理）→ 给出重新注册出口
       $("targetBox").textContent = "编号已失效";
-      $("taskMeta").innerHTML = "当前编号（" + pid + "）在服务端不存在。" +
+      $("taskMeta").innerHTML = "当前编号（" + esc(pid) + "）在服务端不存在。" +
         '<a href="#" id="rejoin" style="color:var(--brand);font-weight:600">点这里重新获取编号</a>';
       document.getElementById("rejoin").onclick = (e) => {
         e.preventDefault();
@@ -288,7 +293,7 @@ async function loadTarget() {
     return;
   }
   target = d;
-  $("targetBox").innerHTML = "🎯 " + d.keyword +
+  $("targetBox").innerHTML = "🎯 " + esc(d.keyword) +
     '<span class="pct">已收录 ' + (d.accepted || 0) + "/" + d.kpi_min + " 条 · 做完自动换下一家</span>";
   $("taskMeta").textContent = "任务 #" + d.task_id + " · 目标有效期至 " +
     (d.lease_until ? new Date(d.lease_until).toLocaleString() : "-") + (d.reused ? " · 续上次的进度" : " · 新分配");
@@ -315,7 +320,7 @@ async function autoResolve() {
     }
     const nid = direct.toLowerCase();
     resolved = { note_id: nid, canonical_url: normalizeNoteUrl(nid) };
-    $("parseStatus").innerHTML = "✅ 已识别笔记 <code>" + nid + "</code>";
+    $("parseStatus").innerHTML = "✅ 已识别笔记 <code>" + esc(nid) + "</code>";
     return;
   }
   if (/^https?:\/\/(www\.)?xhslink\.(com|cn)\//.test(url)) {
@@ -326,11 +331,11 @@ async function autoResolve() {
       const nid = String(d.note_id).toLowerCase();
       resolved = { note_id: nid, canonical_url: normalizeNoteUrl(nid) };
       $("noteUrl").value = resolved.canonical_url;
-      $("parseStatus").innerHTML = "✅ 已解析笔记 <code>" + nid + "</code>";
+      $("parseStatus").innerHTML = "✅ 已解析笔记 <code>" + esc(nid) + "</code>";
     } else {
       // 自动解析失败 → 给一键降级路径：新标签页打开短链，落地后复制地址栏回来粘贴
-      $("parseStatus").innerHTML = "❌ 自动解析失败（" + (d.reason || "网络") + "）。" +
-        '<br><a href="' + url + '" target="_blank" rel="noopener" style="color:var(--brand);font-weight:600">👉 点我打开这条分享链接</a>' +
+      $("parseStatus").innerHTML = "❌ 自动解析失败（" + esc(d.reason || "网络") + "）。" +
+        '<br><a href="' + esc(url) + '" target="_blank" rel="noopener" style="color:var(--brand);font-weight:600">👉 点我打开这条分享链接</a>' +
         "：新标签页里等它跳转完，<b>复制地址栏网址</b>回这里粘贴即可（本页进度都在）。";
     }
     return;
@@ -390,20 +395,20 @@ $("submit").onclick = async () => {
       $("myProgress").textContent = kp || ("任务进度 " + (d.new_progress != null ? d.new_progress : "?"));
       // H5：按条目级 gate 分流——拒收绝不显示成绿色"已确认"
       if (gate === "rejected" || gate === "error") {
-        toast($("result"), "err-note", "❌ " + (cnReason(v.reason) || ("未收录：" + (v.reason || gate))) +
+        toast($("result"), "err-note", "❌ " + esc(cnReason(v.reason) || ("未收录：" + (v.reason || gate))) +
           "<br>可修正后重试，不会重复计酬。");
         return; // 保留已填内容便于修改重试；不换目标
       }
       toast($("result"), "ok-note",
         (gate === "accepted"
-          ? "✅ 已收录！" + (v.reason ? "（" + (cnReason(v.reason) || v.reason) + "）" : "")
+          ? "✅ 已收录！" + (v.reason ? "（" + esc(cnReason(v.reason) || v.reason) + "）" : "")
           : "🔁 这条已收录过（去重），不重复计酬。") +
-        "<br>" + kp);
+        "<br>" + esc(kp));
       $("noteUrl").value = ""; $("noteTitle").value = ""; $("noteExcerpt").value = "";
       $("parseStatus").innerHTML = ""; resolved = null;
       loadTarget(); // 自动问中枢要下一个目标
     } else {
-      toast($("result"), "err-note", "❌ " + failText(r, "未入库") + "<br>可稍后重试，不会重复计酬。");
+      toast($("result"), "err-note", "❌ " + esc(failText(r, "未入库")) + "<br>可稍后重试，不会重复计酬。");
     }
   } finally { btn.disabled = false; btn.textContent = "提交这条笔记"; }
 };

@@ -1,4 +1,9 @@
 const $ = (id) => document.getElementById(id);
+// F27：服务端/数据库文本进入 HTML 前统一转义（防注入）。
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
+    ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
 function render(status) {
   $("s_state").textContent = "运行中";
   $("s_state").className = "val status-ok";
@@ -28,7 +33,7 @@ function render(status) {
       bar.style.cssText = "margin:3px 0;font-size:12px;";
       const pct = Math.min(100, Math.round((p.accepted / status.activeTask.kpi_min) * 100));
       const color = p.done ? "#059669" : (pct > 0 ? "#b45309" : "#e5e7eb");
-      bar.innerHTML = '<span style="color:#6b7280">' + (i + 1) + ".</span> <span style='max-width:130px;display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle'>" + p.kw + "</span> " +
+      bar.innerHTML = '<span style="color:#6b7280">' + (i + 1) + ".</span> <span style='max-width:130px;display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle'>" + esc(p.kw) + "</span> " +
         '<span style="float:right;color:' + color + '">' + p.accepted + "/" + status.activeTask.kpi_min + (p.done ? " ✓" : "") + "</span>" +
         '<div style="height:4px;background:#f0f0f0;border-radius:2px;margin-top:2px"><div style="height:100%;width:' + pct + '%;background:' + color + ';border-radius:2px"></div></div>';
       kwBox.appendChild(bar);
