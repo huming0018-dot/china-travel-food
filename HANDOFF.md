@@ -1,3 +1,5 @@
+> **2026-10-14 全仓冲突修复 A 批（止损及保密）已完成代码、测试并推送分支（未部署、未开 PR）**：按《repair_plan_20261014》第 10 节第一轮只做 A 批：**A1** 实体写入口统一拒绝（`entity_dedup`/`closed_relocate` 的 `--apply` 在任何 IO 前 exit 2，`migrate_*` 无条件抛 `EntityWriteDisabled`，import 也无法绕过，仅产出 `REVIEW_ONLY/executable=false`，保留只读巡检路径）；**A2** 删除腾讯 key/SK 硬编码与 fallback，缺配置结构化停用（`MapCredentialUnavailable`/`no_credentials`，不影响高德），新增 `cloud/secret_redact.py` 对异常/日志全量脱敏；**A3** crowd_extension 5 个页面/脚本的服务端文本统一 `esc()` 或 DOM 构建（存储型 XSS 注入点 6 处）。新增 `tests/test_security_batch_a.py` 17 项，全量 **46 passed**（无网络/无凭据/无生产数据；node 桥接测 esc 注入载荷）。分支 `fix/security-batch-a-20261014`（基线 `08e90e1`），13 文件；**未部署、未跑生产迁移、未归并/删除实体、未重算评分、未轮换凭据**。账本见 `cloud/SECURITY_BATCH_A_LEDGER_20261014.json`，**轮换清单见 `cloud/CREDENTIAL_ROTATION_LIST_20261014.md`（腾讯 key/SK 已在 git 历史必须作废重发；city-food-guide skill 副本 `tencent_sig.py` 第 21–22 行仍有明文，轮换后同步改）**。B/C/D/E 批、其余 4 仓（kimi-workspace、crawler-extension、crowd-kol、crowd-pages）待后续独立分支/小 PR。
+
 > **2026-10-14 众包评分保护已部署生产**：已通过 Supabase 管理入口回读旧函数及迁移历史，确认 `20261008134109` 确未部署后，复核当前 schema/v3.5.1 协议，单事务部署原文函数与权限并登记原版本。两项 20261007 迁移未重放。部署后函数正文与 main 原文一致，MD5 `120e486d665b0a53ce57d0105c61b030`，空 search_path，anon/authenticated 实测无执行权限、service_role dry-run 成功（90家聚合，评分/候选改动0）。部署前后1523家餐厅 score_diner 摘要一致，事务内全行摘要亦未变。临时表有界回归覆盖撤回、别名冲突、唯一/重名、3条门槛、拒收、dry-run、重复执行并全部回滚；**未调用正式入库 false、未重算或覆盖历史评分；当前 accepted rating 仅1条，真实评分回写业务尚未验收**。后续 `20261008183356` 旧聚合刷新迁移仍未部署，不将综合测试/旧聚合清理标作已完成。本条覆盖下文旧的“评分保护未部署”状态。详见 [生产验收](cloud/CROWD_SAFE_SCORES_PRODUCTION_20261014.md)、[函数回读](cloud/verification/crowd_ingest_stores_20261014.sql)、[有界测试](cloud/tests/crowd-safe-scores-bounded-20261014.sql)。
 
 > **v3.5.1 发布链路复核（2026-10-13 取证／10-14 北京时间修复）**：签名CRX与ID通过独立验签，发布源码对应主仓库crowd_extension；latest ZIP旧3.4.14造成Mac遥测反复“发现3.5.1→应用3.4.14”，GitHub Pages部署run `38428951733`已success（对应merge `0394843`，仍不等于公开下载实测），已通过[crowd-pages PR #3](https://github.com/huming0018-dot/crowd-pages/pull/3)修复。生产RPC回读及重复/满笔记配额评分回滚验证通过；task15仍61，10月13日仅原4.5分验收样本，未证持续评分。公开地址访问、实际设备3.5.1加载仍待证。canonical crawler-extension版本仍1.0.0，源码收敛和已发客户端评分确认/历史补评分/本地计数局限另列待办。详见[发布核验](cloud/CROWD_V351_RELEASE_AUDIT.md)。本条覆盖下文旧待push/重签待办。
@@ -29,6 +31,22 @@
 ---
 
 ## 🆕 更新日志（最新在最上）
+
+### 2026-10-14（周三）全仓冲突修复 · A 批止损与保密（F01/F02/F14/F15/F27）
+- 范围：仅 A 批（第 10 节第一轮），只读复核 + 代码/测试；不部署、不动生产数据、不轮换凭据、不做 B–E 批。
+- 分支：`fix/security-batch-a-20261014`（基线 main `08e90e1`）；账本 `cloud/SECURITY_BATCH_A_LEDGER_20261014.json`；轮换清单 `cloud/CREDENTIAL_ROTATION_LIST_20261014.md`。
+- A1 实体写入口（F01/F02）：
+  - `cloud/vendor/pipeline/entity_dedup.py`：`--apply` 在任何 IO 前 `ap.error`（exit 2）；`migrate_child_row`/`migrate_children` 无条件抛 `EntityWriteDisabled`；删 APPLY 写块；`--plan` 只出 `REVIEW_ONLY/executable=false`；`load_keep_pairs` fail closed（缺文件静默跳过，坏 JSON/非 list/非法签名 raise）；保留 `composite_filter` 与只读 `fetch_rows`（GET），`cloud_patrol` 只读巡检不受影响。
+  - `cloud/vendor/pipeline/closed_relocate.py`：整文件重写为只读复核计划；`--apply` 在任何读取/网络前拒绝；EHB(id=1262) 补 closed_source 标 `PROPOSED_SEPARATE_COMMAND_ONLY`；Nuits 1967→1978 迁址只做只读子表计数、标 `PROPOSED_NEEDS_TRANSACTIONAL_EXECUTOR`；全文件无 PATCH/DELETE/POST。
+- A2 凭据/日志（F14/F15）：
+  - 新增 `cloud/secret_redact.py`（纯函数无网络）：递归脱敏 dict/list/str/Exception，覆盖敏感键、URL 查询串、Bearer、JWT、腾讯 key 形态与运行时 extra_secrets。
+  - `tencent_sig.py` 删硬编码 key/SK，改 `_configured_key_sk()`（单值/池，仅环境变量），缺失抛 `MapCredentialUnavailable`；保留 `_clean_value`（修 111）。
+  - `map_quota.py` `load_provider_keys` 仅读环境变量、未配置返回 []；`call()` 无 key 时 `no_credentials` 停用（在 acquire 前，不影响其它 provider）；请求异常经 `redact_str` 脱敏。
+  - `map_helpers.py` 删死导入；`no_credentials` 映射为 quota 回退高德/L0；`cloud_phone_fill.py` 写异常脱敏。
+- A3 XSS（F27）：`crowd_extension` 的 owner-rate/status/submit.html、popup.js、onboarding.js 定义统一 `esc()`（`& < > " '`）；owner-rate 门店下拉改 DOM 构建（`textContent`/`appendChild`），其余服务端文本（matched_store/participant_id/keyword/pid/nid/reason/url）均经 `esc()`。
+- 测试：`tests/test_security_batch_a.py` 17 项（node 桥接测 esc 注入载荷；结构正则检测密钥形状，**不内嵌真实密钥**）；`python3 -m pytest tests/ -q` = 46 passed。
+- 安全处置：测试一度误用真实腾讯 key 字面量，已改为合成假值并结构性断言；即便如此旧 key 仍在更早 git 历史，**必须按轮换清单作废重发**。
+- 未做（后续批次/独立窗口）：build_sync 部署与线上验证、生产实体归并/删除、评分重算、凭据轮换、草稿自动合并、渠道发布；其余 4 仓映射（kimi-workspace F02/F24、crawler-extension canonical、crowd-kol、crowd-pages 的 F27）；27 项审计原包（findings.json/inventory.json）本地未找到，A 批按 plan 正文 F 编号源码复核。
 
 ### 2026-10-14（周三）录后校验·搜索引擎校准 —— 增量（cron 07:20）
 - 模式：增量。findings_planner --batch 40 生成 batch.json（cursor last_id 0→580，未回卷）；40 店逐店取证（每店2条合并查询），高价值店实查约13家。

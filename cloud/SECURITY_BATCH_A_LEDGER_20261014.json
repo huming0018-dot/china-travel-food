@@ -1,0 +1,105 @@
+{
+  "schema_version": "security_repair_ledger_v1",
+  "project": "china-travel-food (上海美食图鉴)",
+  "plan": "全仓冲突修复方案与执行交接（repair_plan_20261014.md），第10节第一轮仅做 A 批",
+  "round": "A（止损及保密）",
+  "baseline_sha": "08e90e1",
+  "code_commit_sha": "7943d39",
+  "branch": "fix/security-batch-a-20261014",
+  "created_date": "2026-10-14",
+  "owner": "ctfs-bot",
+  "hard_bounds": {
+    "deployed": false,
+    "production_data_changed": false,
+    "credentials_rotated": false,
+    "entity_merge_or_delete": false,
+    "fact_bulk_edit": false,
+    "score_recompute": false,
+    "draft_auto_merge": false,
+    "channel_publish": false
+  },
+  "tests": {
+    "command": "python3 -m pytest tests/ -q",
+    "total": 46,
+    "passed": 46,
+    "failed": 0,
+    "new_file": "tests/test_security_batch_a.py",
+    "new_passed": 17,
+    "network": "none",
+    "credentials": "none",
+    "production_data": "none",
+    "frontend_checks": "node v22.23.2 --check + 内联脚本 new Function 解析 + esc 注入载荷断言"
+  },
+  "items": [
+    {
+      "id": "F01",
+      "title": "entity_dedup 实体写入口可被触发（CLI/import 合并删除 restaurants）",
+      "files": ["cloud/vendor/pipeline/entity_dedup.py"],
+      "change": "新增 EntityWriteDisabled 与 WRITE_DISABLED；--apply 在任何 IO 前 ap.error(exit 2)；migrate_child_row/migrate_children 无条件抛错（import 也无法绕过）；删除整段 APPLY 写块；--plan 仅产出 REVIEW_ONLY/executable=false；load_keep_pairs 改 fail closed；保留纯函数 composite_filter 与只读 fetch_rows。",
+      "test_refs": ["test_ed_apply_rejected_before_any_io", "test_ed_migrate_functions_raise_on_import_path_and_never_write", "test_ed_readonly_plan_is_review_only", "test_keep_file_fail_closed", "test_no_entity_delete_in_source"],
+      "status": "code_done_review_only",
+      "migration": "none_read_only",
+      "deployment_digest": null,
+      "online_audit": "not_performed",
+      "remaining_gap": "生产已加载 cron/容器版本未核实；真实迁移需带事务的新执行器（属后续批次）。"
+    },
+    {
+      "id": "F02",
+      "title": "closed_relocate 迁址合并/补来源会 DELETE restaurants 与 PATCH",
+      "files": ["cloud/vendor/pipeline/closed_relocate.py"],
+      "change": "整文件重写为只读复核计划；--apply 在任何读取/网络/写盘前拒绝；EHB 补 closed_source 与 Nuits 1967→1978 迁址仅生成提案（PROPOSED_SEPARATE_COMMAND_ONLY / PROPOSED_NEEDS_TRANSACTIONAL_EXECUTOR）；全文件无 PATCH/DELETE/POST。",
+      "test_refs": ["test_cr_apply_rejected_before_any_io", "test_cr_readonly_plan_is_review_only", "test_no_entity_delete_in_source"],
+      "status": "code_done_review_only",
+      "migration": "none_read_only",
+      "deployment_digest": null,
+      "online_audit": "not_performed",
+      "remaining_gap": "EHB 补来源若保留须独立明确命令；迁址合并须事务执行器；本轮不执行。"
+    },
+    {
+      "id": "F14",
+      "title": "腾讯地图 key/SK 硬编码在 tencent_sig.py 与 map_quota.py",
+      "files": ["cloud/vendor/pipeline/tencent_sig.py", "cloud/map_quota.py", "cloud/map_helpers.py"],
+      "change": "删除硬编码 key/SK 与 TENCENT_FALLBACK；tencent_sig 新增 MapCredentialUnavailable 与 _configured_key_sk（仅从 TENCENT_MAP_KEY(S)/TENCENT_MAP_SK(S) 读取）；map_quota 未配置返回 []，call() 结构化停用 no_credentials；map_helpers 删除死导入并把 no_credentials 映射为 quota（回退高德/L0）。",
+      "test_refs": ["test_tencent_no_env_raises_structured_unavailable", "test_tencent_signing_with_explicit_cred_never_embeds_sk", "test_map_quota_tencent_no_credentials_channel_stops", "test_map_quota_amap_unaffected_by_tencent_missing", "test_no_hardcoded_secret_literals"],
+      "status": "code_done_credential_rotation_required",
+      "migration": "none",
+      "deployment_digest": null,
+      "online_audit": "not_performed",
+      "remaining_gap": "已入 git 历史的密钥必须轮换；skill 副本仍含明文（见 cloud/CREDENTIAL_ROTATION_LIST_20261014.md）；运行环境需在 deploy.env 配置 TENCENT_MAP_KEY(S)/TENCENT_MAP_SK(S)。"
+    },
+    {
+      "id": "F15",
+      "title": "地图请求异常日志可能泄露带 key/sig 的完整 URL",
+      "files": ["cloud/secret_redact.py", "cloud/map_quota.py", "cloud/cloud_phone_fill.py"],
+      "change": "新增纯函数 secret_redact（递归脱敏 dict/list/str/Exception，覆盖敏感键、URL 查询串、Bearer、JWT、腾讯 key 形态、extra_secrets）；map_quota.call 与 cloud_phone_fill 写异常统一脱敏后再打印。",
+      "test_refs": ["test_redact_jwt_key_url_bearer_and_containers", "test_redact_extra_secret_full_and_suffix_gone"],
+      "status": "code_done",
+      "migration": "none",
+      "deployment_digest": null,
+      "online_audit": "not_performed",
+      "remaining_gap": "其余打印面（如其它 fill/巡检脚本）若新增请求异常，需统一走 secret_redact；未做全仓逐行日志审计（属后续批次）。"
+    },
+    {
+      "id": "F27",
+      "title": "crowd_extension 静态页用 innerHTML/outerHTML 拼接服务端文本（存储型 XSS）",
+      "files": ["crowd_extension/owner-rate.html", "crowd_extension/status.html", "crowd_extension/submit.html", "crowd_extension/src/popup.js", "crowd_extension/src/onboarding.js"],
+      "change": "每个脚本定义统一 esc()（& < > \" '）；owner-rate 门店下拉改 DOM 构建（option.value/textContent/appendChild）；status/submit/popup/onboarding 所有 DB/服务端文本（matched_store/participant_id/keyword/pid/nid/reason/url 等）经 esc() 或 textContent。",
+      "test_refs": ["test_esc_defined_everywhere", "test_esc_neutralizes_payloads", "test_static_sinks_wrapped"],
+      "status": "code_done",
+      "migration": "none",
+      "deployment_digest": null,
+      "online_audit": "not_performed",
+      "remaining_gap": "crowd-pages（分发页）等其它仓可能也有 F27 sink，需逐仓独立分支处理；本轮只改本仓 crowd_extension。"
+    }
+  ],
+  "not_in_scope_this_round": [
+    "B/C/D/E 批（生产实体归并/删除、批量改事实、评分重算、凭据轮换、草稿自动合并、渠道发布）",
+    "其它 4 仓：kimi-workspace、crawler-extension、crowd-kol、crowd-pages",
+    "27 项审计原包 findings.json/inventory.json/reproduce_conflicts.py（本地未找到，按 plan 正文 F 编号源码复核）",
+    "部署/烘焙（build_sync）、线上数据审计、地图多 key 根治的 P2/P3"
+  ],
+  "followups": [
+    "见 cloud/CREDENTIAL_ROTATION_LIST_20261014.md（仅列清单，本轮不轮换、不重写历史）",
+    "本 PR 合入后由独立窗口/批次安排 build_sync 烘焙与线上验证，不与本止损 PR 混做"
+  ]
+}
