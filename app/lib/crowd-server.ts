@@ -20,7 +20,14 @@ export function releases(): Partial<Record<Platform, Release>> {
     const u = new URL(r.url); if (u.protocol !== 'https:' || u.username || u.password) continue;
     if (['desktop','apk'].includes(r.channel) && (u.search || u.hash)) continue;
     const desktop = ['windows', 'macos'].includes(platform), extension = desktop && r.channel === 'extension';
-    if (extension && (!/^[a-p]{32}$/.test(r.extension_id || '') || !['chromewebstore.google.com', 'microsoftedge.microsoft.com'].includes(u.hostname))) continue;
+    if (extension) {
+      const store = ['chromewebstore.google.com', 'microsoftedge.microsoft.com'].includes(u.hostname);
+      const archive = platform === 'macos' && r.extension_id === 'licijehcpohikchlnkbpjdjdfkcocndg' && /^[a-f0-9]{64}$/.test(r.sha256 || '') &&
+        u.origin === 'https://raw.githubusercontent.com' && !u.search && !u.hash &&
+        /^\/huming0018-dot\/crowd-pages\/[a-f0-9]{40}\/v4\/releases\/participants\//.test(u.pathname) &&
+        u.pathname.split('/').pop() === 'crowd-v' + r.version + '-mac.zip' && u.pathname.split('/').length === 8;
+      if (!/^[a-p]{32}$/.test(r.extension_id || '') || (!store && !archive)) continue;
+    }
     if (desktop && !extension && (r.channel !== 'desktop' || u.origin !== origin() || !u.pathname.startsWith('/crowd/releases/') || !/^[a-f0-9]{64}$/.test(r.sha256 || ''))) continue;
     if (platform === 'ios' && !((r.channel === 'testflight' && u.hostname === 'testflight.apple.com') || (r.channel === 'appstore' && u.hostname === 'apps.apple.com'))) continue;
     if (platform === 'android' && (r.channel !== 'apk' || u.origin !== origin() || u.pathname !== '/crowd/releases/crowd-android-v' + r.version + '-debug.apk' || !/^[a-f0-9]{64}$/.test(r.sha256 || ''))) continue;

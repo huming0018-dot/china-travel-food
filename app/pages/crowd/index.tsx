@@ -21,6 +21,8 @@ export default function CrowdJoinPage() {
     return () => { ++sequence; window.removeEventListener('hashchange', sync); window.removeEventListener('focus', sync); document.removeEventListener('visibilitychange', sync); };
   }, []);
   const release = manifest?.ready ? manifest.releases[os as Platform] : undefined;
+  const installedDesktop = os === 'macos' || os === 'windows';
+  const extensionArchive = release?.channel === 'extension' && new URL(release.url).hostname === 'raw.githubusercontent.com';
   useEffect(() => { setDownloaded(false); }, [os, release?.url]);
   const deepLink = 'foodcrowd://join#invite=' + invite;
   function detect() { setHelpers(true); setOS(current => current && current !== 'unsupported' ? current : (window as any).CrowdJoin.platform()); setEmbedded(/MicroMessenger|AlipayClient|QQ\//i.test(navigator.userAgent)); }
@@ -32,11 +34,11 @@ export default function CrowdJoinPage() {
     finally { setDownloading(false); }
   }
   function connect() {
-    if (!invite || !release) return;
-    if (release.channel !== 'extension') { setMessage('请在系统提示中选择打开众包采集。没有弹出客户端？先完成安装，再点一次继续参与。'); location.href = deepLink; return; }
+    if (!invite || (!release && !installedDesktop)) return;
+    if (release && release.channel !== 'extension') { setMessage('请在系统提示中选择打开众包采集。没有弹出客户端？先完成安装，再点一次继续参与。'); location.href = deepLink; return; }
     const runtime = (window as any).chrome?.runtime;
     if (!runtime?.sendMessage) { setMessage('请在安装扩展的 Chrome / Edge 中打开这个邀请链接。'); return; }
-    runtime.sendMessage(release.extension_id, { type: 'connect', invite }, (reply: { ok?: boolean }) => {
+    runtime.sendMessage(release?.extension_id || 'licijehcpohikchlnkbpjdjdfkcocndg', { type: 'connect', invite }, (reply: { ok?: boolean }) => {
       setMessage(reply?.ok ? '邀请已接续，请在打开的客户端里确认参与。' : '还没有连接到扩展。安装完成后，再点“继续参与”。');
       void runtime.lastError;
     });
@@ -50,16 +52,21 @@ export default function CrowdJoinPage() {
     <section className="my-6 rounded-2xl border bg-white p-5">
       <p className="font-medium">{names[os as Platform] ? '已识别：' + names[os as Platform] : '请选择你的设备'}</p>
       <details className="my-3" open={!os || os === 'unsupported'}><summary className="cursor-pointer text-sm text-gray-600">设备识别有误？点这里切换</summary><label className="sr-only" htmlFor="device">你的设备</label><select id="device" value={os} onChange={e => setOS(e.target.value)} className="my-3 w-full rounded border p-3"><option value="">请选择设备</option>{Object.entries(names).map(([key, name]) => <option key={key} value={key}>{name}</option>)}</select><p className="text-sm text-gray-600">华为手机能安装 APK 时选安卓；原生鸿蒙使用鸿蒙渠道。</p></details>
-      {!invite ? <p>请打开邀请人发来的完整链接或扫描二维码。</p> : release ? <>
+      {!invite ? <p>请打开邀请人发来的完整链接或扫描二维码。</p> : <>
+        {release ? <>
         <h2 className="mb-3 text-lg font-semibold">① 安装到这台设备</h2>
         {release.channel === 'desktop' ? <button disabled={downloading || !helpers || embedded} onClick={download} className="w-full rounded-xl bg-red-600 p-4 text-center font-semibold text-white disabled:opacity-50">{downloading ? '正在下载安装包…' : downloaded ? '重新下载安装包' : '首次参与：安装客户端'}</button> : <a href={release.url} onClick={e => { if (embedded) { e.preventDefault(); setMessage('请先用系统浏览器打开邀请链接。'); } }} rel="noreferrer" className="block rounded-xl bg-red-600 p-4 text-center font-semibold text-white">首次参与：安装客户端</a>}
-        <p className="my-3 text-sm">{os === 'android' ? '下载后打开安装包，按系统提示确认安装。如果要求允许此浏览器安装应用，请确认来源是邀请人提供的本系统。' : os === 'windows' && release.url.endsWith('.exe') ? '下载后打开安装程序，自动安装并创建桌面图标，无需解压或输入命令。若系统拦截，请联系邀请人核对发布签名。' : release.channel === 'desktop' ? '下载后解压，打开里面的众包采集程序。Mac 请把应用移到应用程序文件夹；若系统拦截，请联系邀请人核对签名。' : '按应用商店或 TestFlight 的提示安装。'}</p>
-        <h2 className="mb-3 mt-6 text-lg font-semibold">② 安装后，回这里打开</h2>
+        <p className="my-3 text-sm">{os === 'android' ? '下载后打开安装包，按系统提示确认安装。如果要求允许此浏览器安装应用，请确认来源是邀请人提供的本系统。' : os === 'windows' && release.url.endsWith('.exe') ? '下载后打开安装程序，自动安装并创建桌面图标，无需解压或输入命令。若系统拦截，请联系邀请人核对发布签名。' : release.channel === 'desktop' ? '下载后解压，打开里面的众包采集程序。Mac 请把应用移到应用程序文件夹；若系统拦截，请联系邀请人核对签名。' : extensionArchive ? '下载后解压，双击 开始安装.command，按包内说明安装到 Chrome。已安装用户请保留原扩展和原采集身份，不要卸载重装。' : '按应用商店或 TestFlight 的提示安装。'}</p>
+        {extensionArchive && <details className="my-3 text-xs break-all"><summary>安装包校验值（SHA256）</summary>{release.sha256}</details>}
+        </> : <p>{message && !manifest ? '新安装渠道暂时无法检查。已安装用户可继续连接。' : os ? '这类设备的新安装渠道尚未开放。已安装用户可继续连接。' : '正在识别设备，或手动选择上方设备。'}</p>}
+        {(release || installedDesktop) && <>
+        <h2 className="mb-3 mt-6 text-lg font-semibold">② 已安装，直接继续</h2>
         <button disabled={embedded || downloading} onClick={connect} className="w-full rounded-xl border p-4 font-semibold disabled:opacity-50">已安装，继续参与</button>
-        <p className="my-3 text-sm">已安装的参与者直接点这个按钮。系统询问时，选择打开众包采集。</p>
+        <p className="my-3 text-sm">{release && release.channel !== 'extension' ? '已安装的参与者直接点这个按钮。系统询问时，选择打开众包采集。' : '请在已安装本系统 4.x 参与者扩展的 Chrome / Edge 中打开邀请。原采集身份和待回传记录会保留；无需重新安装。'}</p>
         <h2 className="mb-3 mt-6 text-lg font-semibold">③ 同意参与，首次登录</h2>
         <p className="text-sm">在客户端勾选自愿参与，点同意并开始，再按提示登录小红书。自动接入研究身份，无需填服务器或注册邮箱。</p>
-      </> : <p>{message && !manifest ? '参与入口还没有准备好，请联系邀请人，暂时不要下载安装包。' : os ? '这类设备的安装渠道尚未开放。请保留邀请链接，开放后可继续使用。' : '正在识别设备，或手动选择上方设备。'}</p>}
+        </>}
+      </>}
     </section>
     <p role="status" aria-live="polite" className="my-4 text-amber-800">{message}</p>
     <p>客户端里勾选同意并开始；首次按提示登录小红书。之后自动执行，遇到验证或限流会暂停并保留进度。</p>
