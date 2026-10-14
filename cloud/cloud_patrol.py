@@ -79,7 +79,7 @@ def check_entities(rests):
                     "core": core,
                     "master": ranked[0]["id"],
                     "dups": [x["id"] for x in ranked[1:]],
-                    "label": f"{core}: keep {ranked[0]['id']}, merge {[x['id'] for x in ranked[1:]]}"})
+                    "label": f"{core}: REVIEW ONLY master? {ranked[0]['id']}, candidates {[x['id'] for x in ranked[1:]]}"})
     return out
 
 
@@ -210,6 +210,13 @@ def main():
     new = [k for k in current if k not in state]
     fixed = [k for k in state if k not in current]
 
+    # Entity candidates remain non-executable even during --apply.
+    PATROL_DIR.mkdir(parents=True, exist_ok=True)
+    (PATROL_DIR / "entity_review.json").write_text(
+        json.dumps({"status": "REVIEW_ONLY", "executable": False,
+                    "keep_adjudicated": False, "candidates": entities},
+                   ensure_ascii=False, indent=2), encoding="utf-8")
+
     # 落保鲜/复检清单
     PATROL_DIR.mkdir(parents=True, exist_ok=True)
     (PATROL_DIR / "stale_reverify.json").write_text(
@@ -247,7 +254,7 @@ def main():
     # ---- APPLY ----
     applied_log = []
     if entities:
-        applied_log.append("merge: " + run_script([str(PIPE / "merge_duplicates.py"), "--commit"])[:400])
+        applied_log.append("entity merge BLOCKED: review-only candidates; no writes")
     classify_apply = PC.run(apply=True)
     applied_log.append(f"classify applied findings={len(classify_apply)}")
     applied_log.append("price: " + run_script([str(PIPE / "price_realign.py"), "--apply"])[:400])

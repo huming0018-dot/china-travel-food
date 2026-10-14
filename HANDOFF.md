@@ -1,4 +1,10 @@
-> **2026-10-08 PR #4 已审查并合入 main**：合并提交 `077e8ac21cd605f88f97b6855c39482aefefc651`，核验 head `b16eef2`，与 main `8eac200` 无冲突。唯一匹配、重名候选、评分门槛、证据撤回/别名冲突、后台 ACL/RLS、旧库升级、独立全新安装及迁移重复应用的隔离回归通过；合并前 Vercel 检查成功。两项已部署的 `20261007065208` / `20261007065442` 迁移已原文归档 main；安装 SQL 同步更新。**新增 `20261008134109_crowd_ingest_current_safe_scores` 尚未部署生产**，现网尚未启用新增评分保护，后续须独立部署并只读回验；本次未执行生产迁移、入库 RPC、评分/候选修改。10 月 7 日的 31/26/0 是历史验收，26 为候选 upsert 影响行数。其他 v4 迁移历史归档及客户端采集验收仍属后续工作。详见 [审查记录](cloud/PR4_PREMERGE_REVIEW_20261008.md) 和 [PR #4](https://github.com/huming0018-dot/china-travel-food/pull/4)。
+> **2026-10-14 众包评分保护已部署生产**：已通过 Supabase 管理入口回读旧函数及迁移历史，确认 `20261008134109` 确未部署后，复核当前 schema/v3.5.1 协议，单事务部署原文函数与权限并登记原版本。两项 20261007 迁移未重放。部署后函数正文与 main 原文一致，MD5 `120e486d665b0a53ce57d0105c61b030`，空 search_path，anon/authenticated 实测无执行权限、service_role dry-run 成功（90家聚合，评分/候选改动0）。部署前后1523家餐厅 score_diner 摘要一致，事务内全行摘要亦未变。临时表有界回归覆盖撤回、别名冲突、唯一/重名、3条门槛、拒收、dry-run、重复执行并全部回滚；**未调用正式入库 false、未重算或覆盖历史评分；当前 accepted rating 仅1条，真实评分回写业务尚未验收**。后续 `20261008183356` 旧聚合刷新迁移仍未部署，不将综合测试/旧聚合清理标作已完成。本条覆盖下文旧的“评分保护未部署”状态。详见 [生产验收](cloud/CROWD_SAFE_SCORES_PRODUCTION_20261014.md)、[函数回读](cloud/verification/crowd_ingest_stores_20261014.sql)、[有界测试](cloud/tests/crowd-safe-scores-bounded-20261014.sql)。
+
+> **v3.5.1 发布链路复核（2026-10-13 取证／10-14 北京时间修复）**：签名CRX与ID通过独立验签，发布源码对应主仓库crowd_extension；latest ZIP旧3.4.14造成Mac遥测反复“发现3.5.1→应用3.4.14”，GitHub Pages部署run `38428951733`已success（对应merge `0394843`，仍不等于公开下载实测），已通过[crowd-pages PR #3](https://github.com/huming0018-dot/crowd-pages/pull/3)修复。生产RPC回读及重复/满笔记配额评分回滚验证通过；task15仍61，10月13日仅原4.5分验收样本，未证持续评分。公开地址访问、实际设备3.5.1加载仍待证。canonical crawler-extension版本仍1.0.0，源码收敛和已发客户端评分确认/历史补评分/本地计数局限另列待办。详见[发布核验](cloud/CROWD_V351_RELEASE_AUDIT.md)。本条覆盖下文旧待push/重签待办。
+
+> **2026-10-13 旧实体删除器安全封锁**：`cloud_patrol --apply` 不再调用 `merge_duplicates --commit`；旧删除器 CLI 在任何数据读取前拒绝 --commit，`migrate/fill_master` 无条件抛错，非事务 REST 写入代码已移除。只读检测保留；巡逻输出 `patrol/entity_review.json`，旧 CLI 输出 `--report`，均标 REVIEW_ONLY / executable=false，旧距离规则不能裁决实体或历史 keep。隔离 unittest 29/29 通过（新增4项），无生产数据读取、合并或删除。仓库 crontab 每4小时带 --apply，可触发旧路径；生产已加载的 cron/容器版本与日志未核实。DevSpace 连接返回 Internal error，**未部署生产、未完成线上数据审计**。本条覆盖下文旧操作说明，禁止按历史说明恢复删除器。详情见 `cloud/LEGACY_MERGE_SAFETY_20261013.md`。
+
+> **2026-10-08 PR #4 已审查并合入 main**：合并提交 `077e8ac21cd605f88f97b6855c39482aefefc651`，核验 head `b16eef2`，与 main `8eac200` 无冲突。唯一匹配、重名候选、评分门槛、证据撤回/别名冲突、后台 ACL/RLS、旧库升级、独立全新安装及迁移重复应用的隔离回归通过；合并前 Vercel 检查成功。两项已部署的 `20261007065208` / `20261007065442` 迁移已原文归档 main；安装 SQL 同步更新。**新增 `20261008134109_crowd_ingest_current_safe_scores` 在10月8日合并时尚未部署；已于2026-10-14独立部署并回验，详见顶部生产验收**。10月8日审查未执行生产迁移、入库 RPC、评分/候选修改。10 月 7 日的 31/26/0 是历史验收，26 为候选 upsert 影响行数。其他 v4 迁移历史归档及客户端采集验收仍属后续工作。详见 [审查记录](cloud/PR4_PREMERGE_REVIEW_20261008.md) 和 [PR #4](https://github.com/huming0018-dot/china-travel-food/pull/4)。
 
 > **2026-10-07 正式网页已发布**：PR #1 已合并，Vercel 正式部署 `3bBqSP5GeS7sWM88HSjzdnnw1oSF` / 提交 `adce116` 为 Ready。正式域名 `https://app-lyart-eta-22.vercel.app` 的管理页和 manifest 实际返回 200；匿名回收 403、发布身份查看/导出 200。当前安装渠道为空，邀请返回 release_not_ready，尚不能声明可开工分发。三条真实试点任务 open，参与者/回传为 0；设备问题等待用户回复，Docker 入库流水线未启用。以下历史快照不能代替这一状态。
 
@@ -24,6 +30,23 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 2026-10-14（周三）录后校验·搜索引擎校准 —— 增量（cron 07:20）
+- 模式：增量。findings_planner --batch 40 生成 batch.json（cursor last_id 0→580，未回卷）；40 店逐店取证（每店2条合并查询），高价值店实查约13家。
+- 新增 findings 18 条（chain_type 9 / investor_info 9），post_audit PATCH **9 店 / 15 字段**（全 204、逐店回读）。
+- 连锁/集团变更（独立→连锁）：
+  - id48 大志/king大志 → **大型连锁** + 沈阳山本为人（外商投资，91210100569444239P，启信宝集团16成员含9分支；上海长宁区市监局官方处罚PDF坐实第二分公司店招KING大志）。
+  - id482 食川非川(静安嘉里) / id553 湘翁(北外滩) → **小型连锁** + 甬府集团（上海甬府餐饮，翁拥军，91310105090020610E；官网12品牌）。
+  - id510 食庐NOBLE(港汇) → **小型连锁** + 食兆集团（上海食庐餐饮，朱俊，食兆实业100%持股，4店）。
+  - id541 南麓·浙里(外滩) → **小型连锁** + 上海福致（富惟丰集团，米其林一星，约8店）。
+  - id45 一滨炸猪排 → **小型连锁**（上海一滨，陈风莲，已登记花木路分公司）。
+- 仅补主体（维持独立）：id478 南兴园 / id481 邓记食园（邓华东，南堂川菜荣字派，央广网）；id52 铁屋（上海铁屋餐饮，2006）。
+- 0 findings（保守）：id580 本甄（仅剩1店、主体仅水滴）、id506 时知味（2025新主体缺分支互证）、id461 传熹（全国首店单店）、id454 融智坊（无连锁主体）；其余批次小馆无证据。
+- 门控：甬府官网/行业协会srca/红餐网 未在可信域名白名单，对应6行 DROP（每店仍有 qcc/qixin/cnr 可信源 ≥1 落地，缺的 investor 已用 qcc 实体补回）。
+- 账本：findings.jsonl +18；audit_2026-10-14.jsonl 9店15字段；scan_ledger 40 批次 rid 记账、last_incremental_date=2026-10-14（last_full=2026-10-02）。
+- 点评 cookie 日更：active=1517 done=1517 todo=0，cookie 有效。
+- 网络：rule 模式下 SSH ProxyCommand(7897) 可直连，未切 global；TG 报告由 deuce 本地 tg_send.py 直发（message_id=1761，direct）。
+- 候选文件：容器 /app/data/post_record/candidates_2026-10-14.json（24 行，门控收18）。
+
 ### 📅 2026-10-13 修复「众包采集器 v3.4.14 弹窗评分服务端 100% 被拒」+ owner-rate 恢复
 > 用户报障「采集器 3.4.14 报错」。根因：v3.4.14 的 M1 弹窗评分把 `kind='rating'` 信封推进与笔记完全相同的 proof_queue，但服务端 `crowd_submit_proof` 仍是笔记专用闸门 → 评分信封 100% 误拒（note_url 空/URL 正则/标题正文/任务闸门/配额统计/KPI 污染四类）。
 
@@ -32,13 +55,13 @@
 - 11 处补丁：v_rated / v_rating_only / v_owns_task；日配额只计 note（批前+逐条两处跳过 rating）；循环内任务闸门对 rating+fulfilled+本人持有放行；note_id 对两类均必填但 note_url/URL 正则/URL↔ID/标题正文仅对 note；R6 锚定通过后回填锚点 note_url（满足 NOT NULL）；rating 计 v_rated 不写 keyword_progress、不冲 progress/fulfilled；回执新增 `rated`。
 - **2026-10-13 已在 Supabase 生产库执行**（走 GitHub 登录接管通道，deuce 无直连凭据；Google OAuth 被墙→GitHub 可达）：编辑器 `Success. No rows returned`。
 - **端到端验收通过**：对 fulfilled 任务 15（认领者 P-E3NXWZ6H）以本人发 rating-only 信封 → 回执 `ok:true, rated:1, results[0].gate=accepted, rejected:[]`，`new_progress=61` 不变（rating 不冲 KPI）；`crowd_proofs` 落库 `kind='rating' rating=4.5 note_url 已回填（NOT NULL 通过）`。
-- 提交：`e3f7a7e`（4 文件 913 行）。**待 push**：deuce 无 GitHub 凭据，需在本地 Mac 环境 `git push origin main`。
+- 提交：`e3f7a7e`（4 文件 913 行）。本次已核验修复 SQL 与 v3.5.1 源码存在 GitHub main；该项不再要求重复 push。生产函数已直接回读，详情见最新发布核验记录。
 
 **B. owner-rate 恢复（用户此前反馈 404）**
 - 被 commit `218ca19` 误删的 `crowd_extension/owner-rate.html` 已重建；线上 `https://huming0018-dot.github.io/crowd-pages/owner-rate.html` 无头实测 263 门店 option、`crowd_fetch_stores` RPC 200；已进扩展包，publish.sh 补传 owner-rate/status.html。
 
 **C. 仍待人工/环境项**
-- `git push`（deuce 无 GitHub 凭据）；扩展 v3.5.1 zip 重打包上传（publish.sh 已改、未跑上传）；后续客户端插件升级为 v3.5.1。
+- 已核验 GitHub main 中源码、updates.xml及签名CRX存在；latest ZIP原为3.4.14，现通过 crowd-pages PR #3（merge `0394843`）修复为已验签3.5.1 CRX的payload，无需重复重签或上传CRX。公开地址与实际Chrome加载版本仍待验收；设备遥测此前发现3.5.1但应用3.4.14，不能标作升级完成。
 
 ### 📅 2026-10-13 02:00 自进化复盘 · 地图配额早退根治（lesson #97）+ 三闸现状
 > 主线＝修复「地图 fill 每天空跑、回填 0、误报配额耗尽」的确定性故障，让健康 key1 真正被使用；同时守住 10-12 硬标签证据门。
