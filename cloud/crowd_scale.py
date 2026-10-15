@@ -12,9 +12,9 @@ crowd_scale.py — 众包任务包扩容工具（PM窗口，2026-10-02 新增）
   3. 待补字段池 —— 口味分空 / 营业时间空 / 评论不足的店铺优先补采
 
 用法：
-  python3 cloud/crowd_scale.py --source seed --pack-size 6 --kpi 5 --quota 20 [--limit 60]
-  python3 cloud/crowd_scale.py --source db   --pack-size 6 --kpi 5 --quota 20 [--district 静安] [--tier 高端]
-  python3 cloud/crowd_scale.py --source fill --pack-size 6 --kpi 5 --quota 20 [--field taste_score_empty]
+  python3 cloud/crowd_scale.py --source seed --pack-size 6 --kpi 5 --quota 40 [--limit 60]
+  python3 cloud/crowd_scale.py --source db   --pack-size 6 --kpi 5 --quota 40 [--district 静安] [--tier 高端]
+  python3 cloud/crowd_scale.py --source fill --pack-size 6 --kpi 5 --quota 40 [--field taste_score_empty]
 
 安全：
   - 只发布未覆盖店铺（对 restaurants.name + 已发布 pack 双重去重）
@@ -113,7 +113,9 @@ def main():
     ap.add_argument("--seed-file", default="cloud/dianping_seed.json")
     ap.add_argument("--pack-size", type=int, default=6)
     ap.add_argument("--kpi", type=int, default=5)
-    ap.add_argument("--quota", type=int, default=20)
+    # v3.5.2 提产：单页多榨后单 SERP 出 2–4 条，日配额默认 20→40（一个 6 店×5KPI=30 条
+    # 的包可在一天内采完，留 10 条余量）；距 300 验证码红线仍有 7 倍余量。
+    ap.add_argument("--quota", type=int, default=40)
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--district", default=None)
     ap.add_argument("--tier", default=None)

@@ -54,8 +54,8 @@ const CONFIG = {
   RETRY_DEAD_AFTER: 8,               // 条目级未知/error gate 重试上限：达到后整封转死信（retry_exhausted），防僵尸信封
   MAX_INLINE_WAIT_MS: 25 * 1000,     // F7：canSearch waitMs 超过此值则推迟到下个心跳；必须低于 MV3 SW 30s 空闲杀死线
   RPC_TIMEOUT_MS: 15 * 1000,         // callRpc 单次 RPC 超时（AbortController 中断挂起的 fetch）
-  CONTENT_TIMEOUT_MS: 15 * 1000,     // CROWD_SEARCH content 响应超时（超时按 content_unavailable 处理）
-  COLLECT_WATCHDOG_MS: 90 * 1000,    // doCollectOnce 看门狗：超时只返回状态，_running 锁由 inner settle 后释放（F2）
+  CONTENT_TIMEOUT_MS: 20 * 1000,     // CROWD_SEARCH content 响应超时（v3.5.2 含温和下划 2 屏，15s→20s；超时按 content_unavailable）
+  COLLECT_WATCHDOG_MS: 120 * 1000,   // doCollectOnce 看门狗（v3.5.2 单页滚动+停留，90s→120s；超时只返回状态，锁由 inner settle 释放）
   DONE_TASKS_MAX: 200,               // F16：done_task_ids 滚动上限（长期运行防存储膨胀）
   AUTH_FAIL_BREAKER: 3,              // F12：连续认证失败次数熔断阈值
   SYNC_VERSION: 3,                   // 契约 v3：crowd_submit_proof 要求 sync_version=3
@@ -396,12 +396,13 @@ async function _collectOnceInner() {
     // 服务端必拒（item_content_empty 且 counts_for_reject=true），客户端直接丢弃不送上去，
     // 避免 selector 脆弱时全量拒收把 reject_rate 打爆触发自动 suspended
     const stripPunct = (s) => String(s || "").replace(/[\p{P}\p{S}\s]/gu, "");
-    // v3.4.12 信封榨取率提升：① 服务端已见库预过滤（跳过已收录，不占槽位）② 槽位 6→12
-    // ——同一页 SERP（同样 25 次浏览）多榨 2-3 倍有效条目，浏览量零增加
+    // v3.5.2 「少搜多榨」：① 服务端已见库预过滤（跳过已收录，不占槽位）
+    // ② content.js 温和下划 2 屏后单页 ~40 张卡片，槽位 12→30 吃满两屏
+    // ——同样的浏览次数、不新增搜索，单信封有效条目翻倍，单位浏览的风控暴露反而下降。
     const knownSet = new Set((task.known_note_ids || []).map(String));
     const preItems = (search.items || [])
       .filter((it) => it && it.note_id && !knownSet.has(String(it.note_id)))
-      .slice(0, 12);
+      .slice(0, 30);
     const usable = preItems.filter((it) => stripPunct(it.title).length >= 2 || String(it.excerpt || "").trim().length >= 10);
     const droppedBad = (search.items || []).length - usable.length;
     if (droppedBad) console.warn("[crowd] F14 预检丢弃必拒条目 x" + droppedBad);

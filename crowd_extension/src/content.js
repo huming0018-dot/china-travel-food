@@ -55,6 +55,34 @@
       .toLowerCase();
   }
 
+  const _sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  /**
+   * 搜索结果页温和拟态滚动（v3.5.2 提产「少搜多榨」）：
+   * 真实用户看搜索结果几乎都会向下划一下。平缓下划 2 次（约 0.85 视口/次）、
+   * 每次停顿 2–4s 等待瀑布流加载下一批卡片，把单页可提取卡片从首屏 ~20 张
+   * 提升到 ~40 张。只在同一 SERP 内做、不发起新搜索、不访问笔记详情，
+   * 风控增量远低于新开搜索；停留、下划反而更像真人浏览。
+   * 仅搜索结果页生效；详情页/其他页面直接返回。滚动失败不阻断采集。
+   */
+  async function gentleScrollForMore() {
+    try {
+      if (!location.pathname.startsWith("/search_result")) return;
+      const vh = window.innerHeight || 800;
+      for (let i = 0; i < 2; i++) {
+        try {
+          window.scrollBy({ top: Math.round(vh * 0.85), behavior: "smooth" });
+        } catch (_) {
+          window.scrollBy(0, Math.round(vh * 0.85));
+        }
+        await _sleep(2000 + Math.random() * 2000); // 每屏停顿 2–4s
+      }
+      await _sleep(1000); // 末屏再等 1s 让懒加载卡片就位
+    } catch (_) {
+      /* 按首屏提取兜底 */
+    }
+  }
+
   /**
    * 读取当前页面的实际搜索词。
    * 优先取搜索页 URL 的 keyword 参数（自动 URL 解码）；
@@ -145,12 +173,24 @@
     }
   }
 
+  // v3.5.2：温和滚动需要异步等待，listener 走 async 主流程 + return true 保持消息通道。
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    if (!msg || msg.type !== "CROWD_SEARCH") return;
+    if (!msg || msg.type !== "CROWD_SEARCH") return undefined;
+    handleSearch(msg)
+      .then(sendResponse)
+      .catch((e) => sendResponse({
+        ok: false,
+        error: "EXTRACT_FAILED",
+        reason: e && e.message ? e.message : String(e),
+        items: [],
+        rateLimited: detectRateLimited(),
+      }));
+    return true; // 异步 sendResponse
+  });
 
+  async function handleSearch(msg) {
     if (!location.hostname.includes(XHS_DOMAIN)) {
-      sendResponse({ ok: false, error: "NOT_ON_XHS", reason: "not_on_xhs", items: [], rateLimited: detectRateLimited() });
-      return;
+      return { ok: false, error: "NOT_ON_XHS", reason: "not_on_xhs", items: [], rateLimited: detectRateLimited() };
     }
 
     // 任务上下文：keyword 必填；task_id/target 可选（支持 msg.task 打包传入）
@@ -160,14 +200,13 @@
     const target = msg.target || taskCtx.target || null;
 
     if (!keyword) {
-      sendResponse({ ok: false, error: "MISSING_KEYWORD", reason: "missing_keyword", items: [], rateLimited: detectRateLimited() });
-      return;
+      return { ok: false, error: "MISSING_KEYWORD", reason: "missing_keyword", items: [], rateLimited: detectRateLimited() };
     }
 
     // 采集前校验：当前页面搜索词必须与任务关键词一致，不一致一条都不采
     const page_keyword = getPageKeyword();
     if (page_keyword === null || normKw(page_keyword) !== normKw(keyword)) {
-      sendResponse({
+      return {
         ok: false,
         error: "PAGE_MISMATCH",
         reason: "page_mismatch",
@@ -177,41 +216,38 @@
         target,
         items: [],
         rateLimited: detectRateLimited(),
-      });
-      return;
+      };
     }
 
-    try {
-      const isNotePage = NOTE_ID_RE.test(location.pathname);
-      const cards = extractNoteCards();
-      const page_type = cards.length ? "search" : isNotePage ? "note" : "unknown";
-      const rateLimited = detectRateLimited();
-      if (page_type === "unknown") {
-        sendResponse({
-          ok: false,
-          error: "UNSUPPORTED_PAGE",
-          reason: "unsupported_page",
-          keyword,
-          page_keyword,
-          items: [],
-          rateLimited,
-        });
-        return;
-      }
-      // 列表页逐卡片独立数据；详情页仅当前笔记自身数据
-      const items = cards.length ? cards : [extractNoteDetail()];
-      sendResponse({
-        ok: true,
+    // 搜索结果页：提取前先温和下划加载更多瀑布流卡片（少搜多榨，不发起新搜索）。
+    await gentleScrollForMore();
+
+    const isNotePage = NOTE_ID_RE.test(location.pathname);
+    const cards = extractNoteCards();
+    const page_type = cards.length ? "search" : isNotePage ? "note" : "unknown";
+    const rateLimited = detectRateLimited();
+    if (page_type === "unknown") {
+      return {
+        ok: false,
+        error: "UNSUPPORTED_PAGE",
+        reason: "unsupported_page",
         keyword,
         page_keyword,
-        page_type,
-        task_id,
-        target,
-        items,
+        items: [],
         rateLimited,
-      });
-    } catch (e) {
-      sendResponse({ ok: false, error: "EXTRACT_FAILED", reason: e.message, items: [], rateLimited: detectRateLimited() });
+      };
     }
-  });
+    // 列表页逐卡片独立数据；详情页仅当前笔记自身数据
+    const items = cards.length ? cards : [extractNoteDetail()];
+    return {
+      ok: true,
+      keyword,
+      page_keyword,
+      page_type,
+      task_id,
+      target,
+      items,
+      rateLimited,
+    };
+  }
 })();

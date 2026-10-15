@@ -49,11 +49,17 @@
  *    频次异常类次日配额减半；连续 3 次空结果 → 暂停会话 + 长冷却。
  * 所有 v2 新参数同样服从「远程只紧不松」：间隔/冷却类下限远程只能抬高，配额/上限类只能压低。
  */
-const SAFETY_VERSION = 3;
+// v4（v3.5.2）：DAILY_SEARCH_MAX 30→60（配合单页多榨 + 服务端配额上调；实际日产仍由服务端
+// accepted 条数闸门封顶，本地值仅兜底）。搜索间隔 / 会话模型 / 冷却 / 风控 / hard_cap 均不变。
+const SAFETY_VERSION = 4;
 
 const SAFETY_LIMITS = Object.freeze({
   // 日搜索上限（次数类：取更严格的最小值）
-  DAILY_SEARCH_MAX: 30,
+  // v3.5.2「少搜多榨」：单页温和下划 2 屏 + 槽位 30 后单 SERP 产出翻倍，配合服务端
+  // accepted 日配额上调（40–50）；本地 30 会先于服务端配额封死搜索次数，提到 60 作兜底。
+  // 真正的日产仍由服务端 accepted 条数闸门（min(task.quota_day, participant.quota_day)）封顶，
+  // 且 60 ≪ HARD_CAP 200 ≪ 社区实测 300 验证码线，安全余量充足。
+  DAILY_SEARCH_MAX: 60,
   // 动作间隔（秒）（间隔类：取更严格的最大值）
   SEARCH_GAP_MIN: 60,
   SEARCH_GAP_MAX: 120,
