@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/huming0018-dot/china-travel-food/blob/prd/phase0-toolbox-skeleton/toolbox/schemas/audit.schema.json",
+  "title": "APP 层契约（PRD §5.1/§6.3）· M6 审计 / M7 交付视图",
+  "version": "0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project_id", "record_id", "layer", "audit", "lineage"],
+  "properties": {
+    "schemaVersion": { "const": "0.1.0" },
+    "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "record_id": { "type": "string", "minLength": 1 },
+    "layer": { "const": "APP" },
+    "audit": {
+      "type": "object",
+      "required": ["coverage", "regression", "evidence", "gate"],
+      "properties": {
+        "coverage": { "type": "object" },
+        "regression": { "type": "object" },
+        "evidence": { "type": "object" },
+        "gate": { "enum": ["PASS", "FAIL"] }
+      }
+    },
+    "view": { "type": "object" },
+    "lineage": { "type": "object" }
+  }
+}

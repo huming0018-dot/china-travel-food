@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/huming0018-dot/china-travel-food/blob/prd/phase0-toolbox-skeleton/toolbox/schemas/raw.schema.json",
+  "title": "RAW 层契约（PRD §5.1/§6.3）· M1 写 / M2 读",
+  "version": "0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project_id", "record_id", "layer", "source_url", "source_kind", "source_hash", "content_hash", "payload_bytes", "batch", "captured_at", "lineage"],
+  "properties": {
+    "schemaVersion": { "const": "0.1.0" },
+    "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "record_id": { "type": "string", "minLength": 1 },
+    "layer": { "const": "RAW" },
+    "source_url": { "type": "string", "minLength": 1 },
+    "source_kind": { "enum": ["ugc", "official_guide", "map", "media", "brand", "ocr", "software"] },
+    "source_hash": { "type": "string", "minLength": 32 },
+    "content_hash": { "type": "string", "minLength": 32 },
+    "payload_bytes": { "type": "integer", "minimum": 0 },
+    "batch": { "type": "string", "minLength": 1 },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "captured_by"],
+      "properties": {
+        "origin": { "type": "string" },
+        "captured_by": { "type": "string" }
+      }
+    },
+    "content": {}
+  }
+}

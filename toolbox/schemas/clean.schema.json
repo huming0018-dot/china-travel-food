@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/huming0018-dot/china-travel-food/blob/prd/phase0-toolbox-skeleton/toolbox/schemas/clean.schema.json",
+  "title": "ODS 层契约（PRD §5.1/§6.3）· M2 写 / M3 读 · parent 必须 RAW",
+  "version": "0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project_id", "record_id", "layer", "parent_ref", "content", "content_hash", "version", "lineage"],
+  "properties": {
+    "schemaVersion": { "const": "0.1.0" },
+    "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "record_id": { "type": "string", "minLength": 1 },
+    "layer": { "const": "ODS" },
+    "parent_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project_id", "layer", "record_id", "hash"],
+      "properties": {
+        "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+        "layer": { "const": "RAW" },
+        "record_id": { "type": "string", "minLength": 1 },
+        "hash": { "type": "string", "minLength": 32 }
+      }
+    },
+    "content": {
+      "type": "object",
+      "description": "标准化实体（对齐 M3-B4 normalized 输出结构）。",
+      "required": ["identity", "draft", "classification", "validation", "scope", "unknowns", "provenance", "evidence", "sources", "as_of"],
+      "properties": {
+        "identity": { "type": "object" },
+        "draft": { "type": "object" },
+        "classification": { "type": "object" },
+        "validation": {
+          "type": "object",
+          "properties": {
+            "status": { "enum": ["PASS", "REVIEW", "BLOCKED"] },
+            "reasons": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "scope": { "type": "object" },
+        "unknowns": { "type": "array", "items": { "type": "string" } },
+        "provenance": { "type": "object" },
+        "evidence": { "type": "array", "items": { "type": "object" } },
+        "sources": { "type": "array", "items": { "type": "object" } },
+        "as_of": { "type": "string", "format": "date-time" }
+      }
+    },
+    "content_hash": { "type": "string", "minLength": 32 },
+    "version": { "type": "integer", "minimum": 1 },
+    "lineage": {
+      "type": "object",
+      "properties": {
+        "parent": { "type": "string" },
+        "produced_by": { "type": "string" }
+      }
+    }
+  }
+}

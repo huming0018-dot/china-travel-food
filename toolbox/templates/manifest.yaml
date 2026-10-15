@@ -1,0 +1,33 @@
+# toolbox init 项目 Manifest 模板（PRD §6.1/§6.2 示例骨架）
+# 用法：toolbox init --domain <food|housing> --city <shanghai|nj|...> --output <dir>
+# 复制后按项目实际修改 pipeline/delivery 字段；工具代码零改动。
+
+schemaVersion: 0.4.0
+project: shanghai-food
+domain: food
+city: shanghai
+ontology: food-cn-v2
+storage:
+  type: sqlite
+  table_prefix: sh_
+pipeline:
+  crawl:
+    frames: [F1, F2, F3, F4, F5, F6]
+    keywords: [老饕私藏, 锅气小店, 主厨传承, 自然流量, 反向排雷]
+  clean:
+    schema: raw_place
+    geocode: gcj02
+    dedupe: strict
+  score:
+    rubric: food-v3
+    admission:
+      min_voices: 2
+      min_score: 3.5
+  audit:
+    coverage:
+      no_empty: true
+      thin_lt: 0.2
+    regression: 100%
+delivery:
+  feishu_tables: [01推荐, 02候选池, 03执行]
+  refresh_days: 90

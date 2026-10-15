@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/huming0018-dot/china-travel-food/blob/prd/phase0-toolbox-skeleton/toolbox/schemas/manifest.schema.json",
+  "title": "Manifest 规范（PRD §6.1）",
+  "version": "0.4.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project", "domain", "city", "ontology", "storage", "pipeline", "delivery"],
+  "properties": {
+    "schemaVersion": { "enum": ["0.2.0", "0.3.2", "0.3.3", "0.4.0"] },
+    "project": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "domain": { "type": "string", "minLength": 1 },
+    "city": { "type": "string", "minLength": 1 },
+    "ontology": { "type": "string", "minLength": 1 },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "table_prefix"],
+      "properties": {
+        "type": { "enum": ["sqlite", "postgres"] },
+        "table_prefix": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,15}_$" }
+      }
+    },
+    "pipeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["crawl", "clean", "score", "audit"],
+      "properties": {
+        "crawl": { "type": "object" },
+        "clean": { "type": "object" },
+        "score": { "type": "object" },
+        "audit": { "type": "object" }
+      }
+    },
+    "delivery": { "type": "object" }
+  }
+}

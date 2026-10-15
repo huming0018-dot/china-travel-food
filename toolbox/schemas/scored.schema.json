@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/huming0018-dot/china-travel-food/blob/prd/phase0-toolbox-skeleton/toolbox/schemas/scored.schema.json",
+  "title": "DW 层契约（PRD §5.1/§6.3）· M3 写 / M6·M7 读 · parent 必须 ODS(version>=1+hash)",
+  "version": "0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project_id", "record_id", "layer", "parent_ref", "content", "content_hash", "version", "lineage"],
+  "properties": {
+    "schemaVersion": { "const": "0.1.0" },
+    "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "record_id": { "type": "string", "minLength": 1 },
+    "layer": { "const": "DW" },
+    "parent_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project_id", "layer", "record_id", "version", "hash"],
+      "properties": {
+        "project_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+        "layer": { "const": "ODS" },
+        "record_id": { "type": "string", "minLength": 1 },
+        "version": { "type": "integer", "minimum": 1 },
+        "hash": { "type": "string", "minLength": 32 }
+      }
+    },
+    "content": {
+      "type": "object",
+      "required": ["score", "verdict", "reasons", "as_of"],
+      "properties": {
+        "score": { "type": "number" },
+        "verdict": { "enum": ["PASS", "REVIEW", "BLOCKED"] },
+        "reasons": { "type": "array", "items": { "type": "string" } },
+        "as_of": { "type": "string", "format": "date-time" }
+      }
+    },
+    "content_hash": { "type": "string", "minLength": 32 },
+    "version": { "type": "integer", "minimum": 1 },
+    "lineage": { "type": "object" }
+  }
+}
