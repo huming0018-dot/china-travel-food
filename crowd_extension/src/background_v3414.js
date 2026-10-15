@@ -151,6 +151,46 @@ async function reportRiskToServer(signal, detail) {
   } catch (e) { await logError("report_risk", e); }
 }
 
+// v3.5.3：账号级风险本地弹通知（manifest 已加 notifications 权限，MV3 无需用户授权弹窗）
+function notifyRisk(title, message) {
+  try {
+    if (chrome.notifications && chrome.notifications.create) {
+      chrome.notifications.create("crowd-risk-" + Date.now(), {
+        type: "basic",
+        iconUrl: "icons/icon128.png",
+        title,
+        message,
+        priority: 2,
+      });
+    }
+  } catch (_) { /* 通知失败不影响主流程 */ }
+}
+
+// v3.5.3：按 content 检测到的 riskKind 分类处置（旧版只认 rateLimited，账号处罚/登录失效全漏）
+// account_penalty / auth_lost：跨天持续停采（处罚 7 天 / 登录失效 2 天）+ 上云 + 本地通知；
+// captcha / rate_limited：按访问频率风控冷却 24–72h（沿用 onRateLimited）。
+async function handleRiskKind(kind, matched) {
+  if (!kind) return false;
+  try {
+    if (kind === "account_penalty" || kind === "auth_lost") {
+      await safety.onAccountPenalty(kind);
+      await reportRiskToServer(kind, matched || "");
+      if (kind === "auth_lost") {
+        notifyRisk("小红书登录态已失效", "已自动停止采集，请在网页重新登录后到选项页确认恢复");
+      } else {
+        notifyRisk("小红书账号被处罚/限流", "检测到账号处罚（模拟浏览/AI 不规范），已自动停止采集 7 天");
+      }
+      await logError("risk_" + kind, new Error("账号风险 " + kind + " " + (matched || "")));
+    } else {
+      // captcha / rate_limited
+      await safety.onRateLimited(kind);
+      await reportRiskToServer(kind, matched || "");
+      notifyRisk("小红书访问验证/频繁", "已自动进入冷却，停止采集 24–72 小时");
+    }
+  } catch (e) { await logError("handle_risk", e); }
+  return true;
+}
+
 // ---------------------------------------------------------------- 参与者管控
 // F6（v3.4.7）：注册 ≠ 同意。participantGate 必须同时查 agreed_at——
 // onboarding refuse 分支已清除 participant_id/agreed_at，但 v3.4.6 之前的老安装
@@ -369,20 +409,29 @@ async function _collectOnceInner() {
     try { chrome.tabs.remove(tab.id).catch(() => {}); } catch (_) {}
 
     if (!search.ok) {
-      // F5：风控信号优先于解析成败——页面触发「访问频繁」时即使没解析出卡片（UNSUPPORTED_PAGE
-      // 等 ok:false 分支），也必须先把 rateLimited 送进风控状态机，否则会顶着风控持续采集
-      if (search.rateLimited) {
+      // F5：风控信号优先于解析成败。v3.5.3 起优先按 riskKind 分类（账号处罚/登录失效/验证码/频繁），
+      // 即使没解析出卡片（UNSUPPORTED_PAGE 等 ok:false 分支）也必须先送进风控状态机，
+      // 否则会顶着处罚持续空跑（ahuhu 被限流后仍被当成「空结果」继续开页的问题）。
+      if (search.riskKind) {
+        await handleRiskKind(search.riskKind, search.riskMatched || search.reason || search.error || "");
+      } else if (search.rateLimited) {
         await safety.onRateLimited("rate_limited");
         await reportRiskToServer("rate_limited", search.reason || search.error || "");
       }
-      return { status: "search_failed", reason: search.error || search.reason, rateLimited: !!search.rateLimited };
+      return { status: "search_failed", reason: search.error || search.reason, rateLimited: !!search.rateLimited, riskKind: search.riskKind || null };
     }
 
     await safety.markSearch();
     // 安全线 v2：记入会话动作数；动作预算耗尽 → 结束会话并按冷却分布睡（下个心跳起被 canStartSession 拦）
     await safety.markSessionAction();
 
-    if (search.rateLimited) {
+    if (search.riskKind) {
+      const stopped = await handleRiskKind(search.riskKind, search.riskMatched || search.reason || "");
+      // 账号处罚/登录失效：即使页面解析出了卡片，也立即停止本轮、不提交任何数据，避免顶着处罚继续暴露
+      if (stopped && (search.riskKind === "account_penalty" || search.riskKind === "auth_lost")) {
+        return { status: "account_paused", riskKind: search.riskKind, reason: search.riskMatched || search.riskKind };
+      }
+    } else if (search.rateLimited) {
       // 风控状态机（§4）：访问频繁/验证码 → 当日停止 + 冷却 24–72h 采样
       await safety.onRateLimited("rate_limited");
       await reportRiskToServer("rate_limited", search.reason || "");
@@ -396,13 +445,12 @@ async function _collectOnceInner() {
     // 服务端必拒（item_content_empty 且 counts_for_reject=true），客户端直接丢弃不送上去，
     // 避免 selector 脆弱时全量拒收把 reject_rate 打爆触发自动 suspended
     const stripPunct = (s) => String(s || "").replace(/[\p{P}\p{S}\s]/gu, "");
-    // v3.5.2 「少搜多榨」：① 服务端已见库预过滤（跳过已收录，不占槽位）
-    // ② content.js 温和下划 2 屏后单页 ~40 张卡片，槽位 12→30 吃满两屏
-    // ——同样的浏览次数、不新增搜索，单信封有效条目翻倍，单位浏览的风控暴露反而下降。
+    // v3.5.3 稳妥降风险：槽位 30→12（配合关闭程序化滚动，单页只取首屏自然加载的 ~20 卡）。
+    // 服务端已见库预过滤仍保留（跳过已收录、不占槽位）。
     const knownSet = new Set((task.known_note_ids || []).map(String));
     const preItems = (search.items || [])
       .filter((it) => it && it.note_id && !knownSet.has(String(it.note_id)))
-      .slice(0, 30);
+      .slice(0, 12);
     const usable = preItems.filter((it) => stripPunct(it.title).length >= 2 || String(it.excerpt || "").trim().length >= 10);
     const droppedBad = (search.items || []).length - usable.length;
     if (droppedBad) console.warn("[crowd] F14 预检丢弃必拒条目 x" + droppedBad);

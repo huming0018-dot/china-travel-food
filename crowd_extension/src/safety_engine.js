@@ -49,17 +49,16 @@
  *    频次异常类次日配额减半；连续 3 次空结果 → 暂停会话 + 长冷却。
  * 所有 v2 新参数同样服从「远程只紧不松」：间隔/冷却类下限远程只能抬高，配额/上限类只能压低。
  */
-// v4（v3.5.2）：DAILY_SEARCH_MAX 30→60（配合单页多榨 + 服务端配额上调；实际日产仍由服务端
-// accepted 条数闸门封顶，本地值仅兜底）。搜索间隔 / 会话模型 / 冷却 / 风控 / hard_cap 均不变。
-const SAFETY_VERSION = 4;
+// v5（v3.5.3）：风控事件后回调稳妥档——DAILY_SEARCH_MAX 60→30、单页多榨关闭（见 content.js）。
+// 根因：v3.5.2 的程序化平滑滚动 + 槽位 30 + 日上限 60 叠加，被判为「AI 模拟浏览」限流（ahuhu 事件）。
+// 处罚依据是行为指纹而非访问次数，故先把单页自动化痕迹与日搜索次数同时压回，配额 30 ≪ 300 验证码线。
+const SAFETY_VERSION = 5;
 
 const SAFETY_LIMITS = Object.freeze({
   // 日搜索上限（次数类：取更严格的最小值）
-  // v3.5.2「少搜多榨」：单页温和下划 2 屏 + 槽位 30 后单 SERP 产出翻倍，配合服务端
-  // accepted 日配额上调（40–50）；本地 30 会先于服务端配额封死搜索次数，提到 60 作兜底。
-  // 真正的日产仍由服务端 accepted 条数闸门（min(task.quota_day, participant.quota_day)）封顶，
-  // 且 60 ≪ HARD_CAP 200 ≪ 社区实测 300 验证码线，安全余量充足。
-  DAILY_SEARCH_MAX: 60,
+  // v3.5.3 回稳：单页只取首屏 ~20 卡、槽位 12、服务端配额 30，本地日上限同步回 30。
+  // 真正的日产仍由服务端 accepted 条数闸门（min(task.quota_day, participant.quota_day)）封顶。
+  DAILY_SEARCH_MAX: 30,
   // 动作间隔（秒）（间隔类：取更严格的最大值）
   SEARCH_GAP_MIN: 60,
   SEARCH_GAP_MAX: 120,
@@ -321,6 +320,12 @@ class SafetyEngine {
     // 2. 风控状态机（v2 §4）：触发过风控信号当日停止一切采集
     const st = await this._dayState();
     const risk = await this._get("risk_state", null);
+    // v3.5.3：账号处罚/登录失效是跨天持续状态（默认 7 天），不能像「访问频繁」那样只停当日
+    if (risk && risk.penalty_until && Date.now() < risk.penalty_until) {
+      const days = Math.ceil((risk.penalty_until - Date.now()) / 86400000);
+      const label = risk.kind === "auth_lost" ? "登录失效" : "被处罚/限流";
+      return { ok: false, reason: `账号${label}，停止采集约 ${days} 天` };
+    }
     if (risk && risk.stop_date === st.date) {
       return { ok: false, reason: "风控信号：当日停止采集" };
     }
@@ -417,6 +422,48 @@ class SafetyEngine {
   }
 
   /**
+   * 账号处罚 / 登录失效（v3.5.3）：比「访问频繁」更严重的跨天状态。
+   *  - "account_penalty"：页面出现账号处罚/限流/AI 不规范（如「流量曝光限制」「模拟浏览」）
+   *  - "auth_lost"：登录态失效 / 被重定向到登录页
+   * 账号处罚默认 7 天（与小红书限流口径一致），期间 penalty_until 未过，canSearch/canStartSession
+   * 一律拒绝，即使跨自然日也不自动恢复；登录失效默认 2 天，重新登录后可在选项页手动解除。
+   * 结束当前会话、对齐冷却；不自动解封、不做任何规避。
+   */
+  async onAccountPenalty(kind, days) {
+    const k = kind === "auth_lost" ? "auth_lost" : "account_penalty";
+    const d = days || (k === "auth_lost" ? 2 : 7);
+    const now = Date.now();
+    const until = now + d * 86400000;
+    const today = new Date().toISOString().slice(0, 10);
+    const risk = {
+      kind: k,
+      at: now,
+      stop_date: today,
+      penalty_until: until, // 跨天持续处罚，未到点不自动恢复
+      cooldown_until: until,
+      quota_scale_date: null,
+    };
+    const ss = await this._get("session_v2", null);
+    if (ss) {
+      ss.active = false;
+      ss.actionsLeft = 0;
+      ss.cooldownUntil = Math.max(ss.cooldownUntil || 0, until);
+      await this._set({ session_v2: ss });
+    }
+    await this._set({ risk_state: risk, cooldown_until: until });
+    return until;
+  }
+
+  /** 用户重新登录 / 确认账号正常后，手动解除账号处罚态（v3.5.3）。 */
+  async clearAccountPenalty() {
+    const risk = await this._get("risk_state", null);
+    if (risk && risk.penalty_until) {
+      await this._set({ risk_state: null, cooldown_until: 0 });
+    }
+    return true;
+  }
+
+  /**
    * 搜索结果计数接风控状态机（v2 §4）：itemCount>0 清空计数；
    * 连续 3 次空结果/异常响应 → 暂停本轮会话，进入长冷却采样（lognormal [30min,12h]）。
    */
@@ -462,6 +509,12 @@ class SafetyEngine {
     if (cd.active) return { ok: false, reason: `冷却中，剩余 ${cd.leftMin}min`, waitMs: cd.until - Date.now() };
     const today = new Date().toISOString().slice(0, 10);
     const risk = await this._get("risk_state", null);
+    // v3.5.3：账号处罚/登录失效跨天持续，未到点不允许开启新会话
+    if (risk && risk.penalty_until && Date.now() < risk.penalty_until) {
+      const days = Math.ceil((risk.penalty_until - Date.now()) / 86400000);
+      const label = risk.kind === "auth_lost" ? "登录失效" : "被处罚/限流";
+      return { ok: false, reason: `账号${label}，停止采集约 ${days} 天`, waitMs: risk.penalty_until - Date.now() };
+    }
     if (risk && risk.stop_date === today) return { ok: false, reason: "风控信号：当日停止采集" };
 
     const S = _mods().sampler;

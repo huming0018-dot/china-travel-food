@@ -27,7 +27,7 @@ crowd_autoscale.py — 众包采集器「去重扩容」自动看护（定时任
 环境变量（均有默认值）：
   SUPABASE_SERVICE_ROLE_KEY / NEXT_PUBLIC_SUPABASE_URL
   CROWD_AUTO_MIN_OPEN(20) CROWD_AUTO_TARGET_OPEN(30)
-  CROWD_AUTO_MAX_NEW_PACKS(10) CROWD_AUTO_PACK_SIZE(6) CROWD_AUTO_QUOTA(50)
+  CROWD_AUTO_MAX_NEW_PACKS(10) CROWD_AUTO_PACK_SIZE(6) CROWD_AUTO_QUOTA(30)
 """
 import argparse
 import json
@@ -47,7 +47,7 @@ PACK_SIZE = int(os.environ.get("CROWD_AUTO_PACK_SIZE", "6"))
 MIN_OPEN_PACKS = int(os.environ.get("CROWD_AUTO_MIN_OPEN", "20"))
 TARGET_OPEN_PACKS = int(os.environ.get("CROWD_AUTO_TARGET_OPEN", "30"))
 MAX_NEW_PACKS_PER_RUN = int(os.environ.get("CROWD_AUTO_MAX_NEW_PACKS", "10"))
-QUOTA = int(os.environ.get("CROWD_AUTO_QUOTA", "50"))
+QUOTA = int(os.environ.get("CROWD_AUTO_QUOTA", "30"))
 KPI = 5
 SOURCE = "autoscale"
 

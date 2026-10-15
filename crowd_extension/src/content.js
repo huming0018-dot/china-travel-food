@@ -66,21 +66,12 @@
    * 仅搜索结果页生效；详情页/其他页面直接返回。滚动失败不阻断采集。
    */
   async function gentleScrollForMore() {
-    try {
-      if (!location.pathname.startsWith("/search_result")) return;
-      const vh = window.innerHeight || 800;
-      for (let i = 0; i < 2; i++) {
-        try {
-          window.scrollBy({ top: Math.round(vh * 0.85), behavior: "smooth" });
-        } catch (_) {
-          window.scrollBy(0, Math.round(vh * 0.85));
-        }
-        await _sleep(2000 + Math.random() * 2000); // 每屏停顿 2–4s
-      }
-      await _sleep(1000); // 末屏再等 1s 让懒加载卡片就位
-    } catch (_) {
-      /* 按首屏提取兜底 */
-    }
+    // v3.5.3 稳妥降风险：禁用程序化平滑滚动。
+    // v3.5.2「每个搜索页固定 smooth 滚动 2 次、幅度/次数/停顿完全一致」是典型机器特征，
+    // 已被小红书判定为「AI 不规范使用 / 模拟浏览」并对账号限流 7 天（ahuhu 事件）。
+    // 现在单页只取首屏自然加载的卡片（~20 张），宁可单页少榨，也不做无人值守的合成滚动。
+    // 真正的「真人前台浏览时辅助」应在真实用户手势（wheel/触摸）下触发，不能在后台标签页自动执行。
+    return;
   }
 
   /**
@@ -165,26 +156,82 @@
 
   // F5 修复：风控检测独立成函数并透传到所有返回路径（含 ok:false 分支）。
   // 原来只在成功分支带 rateLimited，页面触发风控又没解析出卡片时信号丢失，SW 会顶着风控继续采。
-  function detectRateLimited() {
+  // ── 风控/账号状态检测（v3.5.3）：从只认「访问频繁」扩展为四类信号 ──
+  // 旧版只认「访问频繁」四个字，对账号处罚/限流（「AI 不规范使用」「流量曝光限制」）、
+  // 登录态失效、验证码/滑块完全识别不到，导致账号被限流后仍在后台空跑、系统无感知（ahuhu 事件）。
+  // 词表优先选用处罚页专有词，尽量避免普通笔记正文误报；命中即按最严重一类上报。
+  const RISK_PATTERNS = [
+    {
+      kind: "account_penalty", // 账号处罚/限流/封禁/AI 不规范
+      re: /流量曝光|商业权益|处置结果|不规范|模拟浏览|浏览行为异常|用户状态异常|功能受限|被限流|账号的流量|账号.{0,12}(异常|违规|封禁|处罚|受限|被限制|已被封)|限制.{0,6}(曝光|使用|商业|账号|功能)/,
+    },
+    {
+      kind: "captcha", // 验证码 / 滑块 / 人机验证（强组合，避免普通笔记误报）
+      re: /安全验证|人机验证|滑块验证|拖动.{0,6}(完成|验证|拼图)|完成.{0,3}验证|访问验证|captcha|verifycaptcha/i,
+    },
+    {
+      kind: "auth_lost", // 登录态失效 / 未登录 / 登录页
+      re: /扫码登录|请先登录|登录后(查看|继续|浏览)|登录失效|登录过期|登录已过期|请登录|账号密码登录|手机验证码登录/,
+    },
+    {
+      kind: "rate_limited", // 访问频繁
+      re: /访问频繁|操作频繁|请求频繁|过于频繁|频率过快|频繁/,
+    },
+  ];
+
+  function detectRisk() {
     try {
-      return /访问频繁|频繁/.test((document.body && document.body.innerText ? document.body.innerText : "").slice(0, 500));
+      // 1) URL 被重定向到登录 / passport 页（强信号；搜索页自身不算）
+      const u = (location.pathname || "") + (location.search || "");
+      if (/\/login|\/signin|passport|loginredirect/i.test(u) && !/search_result/.test(u)) {
+        return { kind: "auth_lost", matched: "login_redirect" };
+      }
+      // 2) 页面文案（前 3000 字足够覆盖整页处罚/验证提示）
+      const txt = (document.body && document.body.innerText ? document.body.innerText : "").slice(0, 3000);
+      for (const p of RISK_PATTERNS) {
+        const m = txt.match(p.re);
+        if (m) return { kind: p.kind, matched: m[0].slice(0, 24) };
+      }
+      // 3) 验证组件 DOM 兜底（小红书滑块/验证码容器）
+      const box = document.querySelector(
+        '[id*="captcha" i],[class*="captcha" i],[class*="slider" i],[class*="verify-slider" i]'
+      );
+      if (box) return { kind: "captcha", matched: "captcha_dom" };
+      return { kind: null, matched: null };
     } catch (_) {
-      return false;
+      return { kind: null, matched: null };
     }
   }
 
+  // 向后兼容：是否处于任一风控态（旧调用方仍用布尔）
+  function detectRateLimited() {
+    return !!detectRisk().kind;
+  }
+
   // v3.5.2：温和滚动需要异步等待，listener 走 async 主流程 + return true 保持消息通道。
+  // 在最终结果上统一注入最新风险信号（成功/失败路径都覆盖，避免风险信号被 ok:false 分支吞掉）
+  function attachRisk(res) {
+    try {
+      if (res && typeof res === "object") {
+        const r = detectRisk();
+        res.riskKind = r.kind; // account_penalty | auth_lost | captcha | rate_limited | null
+        res.riskMatched = r.matched;
+        res.rateLimited = !!res.rateLimited || !!r.kind;
+      }
+    } catch (_) { /* 风险检测失败不阻断采集 */ }
+    return res;
+  }
+
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (!msg || msg.type !== "CROWD_SEARCH") return undefined;
     handleSearch(msg)
-      .then(sendResponse)
-      .catch((e) => sendResponse({
+      .then((res) => sendResponse(attachRisk(res)))
+      .catch((e) => sendResponse(attachRisk({
         ok: false,
         error: "EXTRACT_FAILED",
         reason: e && e.message ? e.message : String(e),
         items: [],
-        rateLimited: detectRateLimited(),
-      }));
+      })));
     return true; // 异步 sendResponse
   });
 

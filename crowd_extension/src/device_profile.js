@@ -129,6 +129,9 @@
     const today = now.toISOString().slice(0, 10);
     const r = await storage.get("warmup_state");
     let w = r.warmup_state;
+    // v3.5.3 风控回稳：升级到该版本当天强制从 D1 重新爬坡（D1 20%→D7 100%），
+    // 避免发版后设备立刻满产、放大「模拟浏览」指纹（ahuhu 事件当日升级即满产）。
+    const WARMUP_RESET_VERSION = "3.5.3";
     if (!w || !w.first_run_date) {
       // 老设备豁免（v3.4.1）：首次初始化时若当天已有采集记录（v2 上线前就在跑的设备），
       // 直接视为已过爬坡期（回溯 6 天 → fraction=1.0），避免误伤存量活跃设备
@@ -136,6 +139,11 @@
       const hasActivity = !!(ds && ds.day_state && ds.day_state.date === today && (ds.day_state.searches || 0) > 0);
       const d0 = new Date(Date.parse(today + "T00:00:00Z") - (hasActivity ? 6 : 0) * 86400000);
       w = { first_run_date: d0.toISOString().slice(0, 10) };
+      await storage.set({ warmup_state: w });
+    }
+    // 版本升级重置：到回稳版本当天，无视老设备豁免，直接把爬坡起点重置为今天（D1=20%）
+    if (w.reset_version !== WARMUP_RESET_VERSION) {
+      w = { first_run_date: today, reset_version: WARMUP_RESET_VERSION };
       await storage.set({ warmup_state: w });
     }
     // F13（v3.4.7）：first_run_date 被写坏时 Date.parse=NaN → day=NaN → fraction=NaN →

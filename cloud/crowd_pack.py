@@ -6,7 +6,7 @@ from pathlib import Path
 from crowd_v4 import tasks, rpc
 
 
-def publish(pack_items, pack_size=6, target='notes', kpi_min=5, quota_day=50, source='qa', pack_type=None):
+def publish(pack_items, pack_size=6, target='notes', kpi_min=5, quota_day=30, source='qa', pack_type=None):
     if target == 'review': raise ValueError('Participant ratings were removed in v4')
     created = []
     for payload in tasks(pack_items, target=kpi_min):

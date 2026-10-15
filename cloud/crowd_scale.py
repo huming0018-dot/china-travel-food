@@ -137,10 +137,10 @@ def main():
     ap.add_argument("--seed-file", default="cloud/dianping_seed.json")
     ap.add_argument("--pack-size", type=int, default=6)
     ap.add_argument("--kpi", type=int, default=5)
-    # v3.5.2 提产：单页多榨后单 SERP 出 2–4 条，日配额默认 20→50（与设备全天总闸
-    # crowd_participants.quota_day=50 对齐；一个 6 店×5KPI=30 条的包当天采完，留 20 余量）。
-    # 爬坡比例/会话模型/风控冷却一律不动；距 300 验证码红线约 6 倍余量。
-    ap.add_argument("--quota", type=int, default=50)
+    # v3.5.3 风控回稳：单页多榨/程序化滚动已关闭、槽位 30→12，日配额默认 50→30（与设备全天总闸
+    # crowd_participants.quota_day=30 对齐；一个 6 店×5KPI=30 条的包当天可采完）。
+    # 处罚依据是行为指纹而非次数，先稳妥降额、重新爬坡保号；30 ≪ 300 验证码红线。
+    ap.add_argument("--quota", type=int, default=30)
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--district", default=None)
     ap.add_argument("--tier", default=None)
