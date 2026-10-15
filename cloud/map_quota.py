@@ -171,6 +171,25 @@ class MapQuota:
             total += max(0, self._cap(provider, interface) - bucket["used"])
         return total
 
+    def block_reason(self, provider, interface):
+        """acquire 已返回 None 且 _pool_remaining<=0（no_budget）后，区分硬耗尽与临时熔断。
+        'exhausted'：本窗口桶全部用满、或仅剩的 key 因本窗口配额 dead（真耗尽，到窗口边界恢复）；
+        'transient'：存在本窗口桶仍有余量、却被 auth 熔断(10007)/别窗口配额临时 dead 拦住的 key。
+        高德 search 走月桶，10044=monthly_quota 才是真月耗尽；10007 熔断30min、10003 日配额均临时。"""
+        cap = self._cap(provider, interface)
+        window_dead = ("monthly_quota" if (provider == "amap" and interface == "search")
+                       else "daily_quota")
+        for idx in range(len(self.keys[provider])):
+            rec = self._rec(provider, idx)
+            bucket = self._used_bucket(rec, interface)
+            if bucket["used"] >= cap:
+                continue
+            if not self._is_dead(rec):
+                return "transient"
+            if rec.get("dead_reason") != window_dead:
+                return "transient"
+        return "exhausted"
+
     # ── 仲裁：领一把可用 key ──
     def acquire(self, consumer, provider, interface, need=1):
         """返回 {index,key,sk} 或 None（无预算/全 dead）。

@@ -187,7 +187,11 @@ def amap_text(name, offset=8):
     for attempt in range(max_attempts):
         j, st = MQ.call("amap", "/v3/place/text", params, "search", "full", timeout=15)
         if st == "no_budget":
-            return "QUOTA"          # 池内全部 key 耗尽/越上限，才是真 QUOTA
+            # 真月耗尽才 QUOTA；某 key 10007熔断/日配额临时 dead（月桶仍有余量）时按 YIELD
+            # 安静停、下轮重试，不刷"月配额耗尽"误导告警（lesson #97）。
+            if MQ.MapQuota().block_reason("amap", "search") == "transient":
+                return "YIELD"
+            return "QUOTA"
         if st == "reserved":
             return "YIELD"         # 给电话预留让路
         if st == "ok":

@@ -33,6 +33,8 @@ STATS_F = pathlib.Path(DATA) / "fill_stats.json"
 BATCH_LIMIT = int(os.environ.get("PHONE_FILL_BATCH", "100"))
 TENCENT_DAILY_QUOTA = 10000
 AMAP_DAILY_QUOTA = 5000
+# 单家店地图通道瞬时失败（10007熔断/并发QPS/网络）的同店退避重试次数（lesson #97）。
+TRANSIENT_RETRY = int(os.environ.get("PHONE_TRANSIENT_RETRY", "3"))
 
 
 def _read_state():
@@ -131,8 +133,18 @@ def main():
         print("无待补电话的餐厅。")
         return 0
 
-    stats = {"checked": 0, "filled": 0, "skipped": 0, "quota_stopped": False}
-    quota_hit = False
+    stats = {"checked": 0, "filled": 0, "skipped": 0,
+             "quota_stopped": False, "transient": 0}
+
+    def _pool_remaining():
+        # 池级真实余量：权威停轮判据，避免单家店瞬时 QUOTA 误判整轮耗尽（lesson #97）。
+        q = MQ.MapQuota()
+        def rem(provider):
+            try:
+                return q._pool_remaining(provider, "search")
+            except Exception:
+                return 0
+        return rem("tencent"), rem("amap")
 
     for t in targets:
         rid = t["id"]
@@ -141,11 +153,32 @@ def main():
         stats["checked"] += 1
 
         raw_tel, quota_hit = lookup_phone(name, addr, state)
+        retry = 0
+        while quota_hit:
+            t_rem, a_rem = _pool_remaining()
+            if t_rem <= 0 and a_rem <= 0:
+                break  # 两源池真实耗尽 → 整轮停
+            if retry >= TRANSIENT_RETRY:
+                break  # 瞬时故障持续 → 让出本轮，断点不推进
+            retry += 1
+            stats["transient"] += 1
+            time.sleep(min(2.0 * retry, 6.0))
+            raw_tel, quota_hit = lookup_phone(name, addr, state)
 
         if quota_hit:
+            t_rem, a_rem = _pool_remaining()
             stats["quota_stopped"] = True
-            health.alert("地图日配额耗尽，电话补齐暂停至明天。",
-                         title="上海美食图鉴·配额告警", key="phone_quota")
+            if t_rem <= 0 and a_rem <= 0:
+                q = MQ.MapQuota()
+                if (q.block_reason("amap", "search") == "exhausted"
+                        and q.block_reason("tencent", "search") == "exhausted"):
+                    health.alert("地图两源配额均耗尽，电话补齐暂停至解封。",
+                                 title="上海美食图鉴·配额告警", key="phone_quota")
+                else:
+                    print("  地图 key 临时熔断/日配额（非真耗尽），本轮让出、断点不推进，下轮重试")
+            else:
+                print(f"  地图通道瞬时不可用（池余量 腾讯{t_rem}/高德{a_rem}），本轮让出、"
+                      f"断点不推进（下轮从本家重试），不判真耗尽")
             break
 
         if not raw_tel:
@@ -183,6 +216,7 @@ def main():
 
     print(f"\n=== 电话补齐本轮统计 ===")
     print(f"  查询: {stats['checked']}  成功: {stats['filled']}  跳过: {stats['skipped']}")
+    print(f"  瞬时退避重试: {stats.get('transient', 0)} 次")
     print(f"  腾讯已用: {state['tencent_used']}/{TENCENT_DAILY_QUOTA}  "
           f"高德已用: {state['amap_used']}/{AMAP_DAILY_QUOTA}")
     if stats["quota_stopped"]:
