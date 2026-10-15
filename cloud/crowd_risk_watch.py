@@ -100,10 +100,11 @@ def request(method, path, body=None, extra_headers=None, retries=4):
 
 
 def count(path):
-    """PostgREST 精确计数：Prefer count=exact + Range 0-0，读 content-range '*/N'。"""
+    """PostgREST 精确计数：Prefer count=exact + Range 0-0，读 content-range '*/N'。
+    带 Range 的计数响应状态码是 206（Partial Content），不是 200。"""
     st, _, hdr = request("GET", path + "&limit=1",
                          extra_headers={"Prefer": "count=exact", "Range": "0-0"})
-    if st != 200:
+    if st not in (200, 206):
         return None
     cr = hdr.get("Content-Range") or hdr.get("content-range") or ""
     if "/" in cr:
@@ -256,10 +257,11 @@ def day_bounds_bj(day_offset):
 
 
 def proofs_in(start_iso, end_iso):
-    # PostgREST 同列范围用 and=(created_at.gte.s,created_at.lt.e)；时间戳做 URL 编码
+    # PostgREST 同列范围用 and=(created_at.gte.s,created_at.lt.e)；时间戳做 URL 编码；
+    # count 用一定存在的 participant_id 列（crowd_proofs 无独立 id 列）。
     s = urllib.parse.quote(start_iso, safe="")
     e = urllib.parse.quote(end_iso, safe="")
-    return count(f"/crowd_proofs?select=id&and=(created_at.gte.{s},created_at.lt.{e})")
+    return count(f"/crowd_proofs?select=participant_id&and=(created_at.gte.{s},created_at.lt.{e})")
 
 
 def check_output_drop(w):
