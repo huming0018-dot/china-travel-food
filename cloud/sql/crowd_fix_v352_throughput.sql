@@ -5,25 +5,33 @@
 --      浏览/搜索节奏不变（搜索间隔仍 90s、风控冷却/hard_cap 不动）。原服务端日配额
 --      participants=20–25、tasks=20 会先于新产能封顶，需上调。
 --
--- 安全线：社区实测 300 条/号/日触发验证码；本调整 participants 上限 50（≈红线 1/6），
---        tasks 上限 40（一个 6 店×5KPI=30 条的包可一天采完 + 10 条余量）。
+-- 配额口径（三层取 min，爬坡只调上限、不改进度比例/会话模型/风控）：
+--      · 本地 DAILY_SEARCH_MAX=60（兜底，防失控）
+--      · 单任务包 crowd_tasks.quota_day=50（本文件；包目标 6 店×kpi5=30，留 20 余量）
+--      · 设备全天 crowd_participants.quota_day=50（跨包总闸，见第 3 段）
+--      · hard_cap_day=200、风控验证码线≈300 均不动；50 距红线约 6 倍余量。
+--
+-- 安全线：社区实测 300 条/号/日触发验证码。爬坡 WARMUP_TABLE（D1 20%→D7 100%）
+--        与会话节奏/风控冷却全部不变；活跃老设备 warmup fraction 已=1，提额当天到顶。
+--
 -- 幂等：所有 UPDATE 均为幂等条件更新，可重复执行；不触碰 fulfilled/closed 任务、
 --      新号（eff<30）、高拒回率/近期风控设备，让它们继续走爬坡与观察。
 --
 -- 执行：Supabase SQL Editor（DDL ALTER 必须走 SQL；下方两条 UPDATE 也可由
---      容器内 service role 经 PostgREST PATCH 完成，逻辑等价）。
+--      容器内 service role 经 PostgREST PATCH 完成，逻辑等价，已先在线 PATCH 生效）。
 
 BEGIN;
 
--- 1) 新任务包默认日配额 20→40（对所有 publish 通道生效，含 crowd_v4_admin / edge publish）。
+-- 1) 新任务包默认日配额 20→50（对所有直接 INSERT crowd_tasks / 发布通道生效）。
 --    参与者表默认保持 20：新号仍需经 7 天爬坡与观察，不默认高配额。
-ALTER TABLE crowd_tasks ALTER COLUMN quota_day SET DEFAULT 40;
+ALTER TABLE crowd_tasks ALTER COLUMN quota_day SET DEFAULT 50;
 
--- 2) 现有未完成任务包（open/in_progress）日配额提到 40，当天即可采完一个 6 店包。
+-- 2) 现有未完成任务包（open/in_progress）日配额提到 50，与设备全天总闸对齐。
+--    单包目标 6 店×kpi5=30 条，50 留 20 余量；采完自动续领下一个包。
 UPDATE crowd_tasks t
-SET quota_day = 40
+SET quota_day = 50
 WHERE t.status IN ('open', 'in_progress')
-  AND t.quota_day < 40;
+  AND t.quota_day < 50;
 
 -- 3) 活跃低风险参与者日配额提到 50（机制化条件，非点名）：
 --    · 已通过审核或在审（pending/approved）
@@ -60,14 +68,14 @@ FROM crowd_participants
 WHERE quota_day = 50
 ORDER BY total_effective DESC;
 
--- 3.3 未完成任务的配额（应全部为 40）
+-- 3.3 未完成任务的配额（应全部为 50）
 SELECT status, quota_day, COUNT(*) AS n
 FROM crowd_tasks
 WHERE status IN ('open', 'in_progress')
 GROUP BY status, quota_day
 ORDER BY status, quota_day;
 
--- 3.4 确认表默认值已变为 40
+-- 3.4 确认表默认值已变为 50
 SELECT column_name, column_default
 FROM information_schema.columns
 WHERE table_name = 'crowd_tasks' AND column_name = 'quota_day';

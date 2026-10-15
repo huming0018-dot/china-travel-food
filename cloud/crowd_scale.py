@@ -12,9 +12,15 @@ crowd_scale.py — 众包任务包扩容工具（PM窗口，2026-10-02 新增）
   3. 待补字段池 —— 口味分空 / 营业时间空 / 评论不足的店铺优先补采
 
 用法：
-  python3 cloud/crowd_scale.py --source seed --pack-size 6 --kpi 5 --quota 40 [--limit 60]
-  python3 cloud/crowd_scale.py --source db   --pack-size 6 --kpi 5 --quota 40 [--district 静安] [--tier 高端]
-  python3 cloud/crowd_scale.py --source fill --pack-size 6 --kpi 5 --quota 40 [--field taste_score_empty]
+  python3 cloud/crowd_scale.py --source seed --pack-size 6 --kpi 5 --quota 50 [--limit 60]
+  python3 cloud/crowd_scale.py --source db   --pack-size 6 --kpi 5 --quota 50 [--district 静安] [--tier 高端]
+  python3 cloud/crowd_scale.py --source fill --pack-size 6 --kpi 5 --quota 50 [--field taste_score_empty]
+
+发布通道（重要）：
+  本工具直接 POST /crowd_tasks（public.crowd_tasks，6 店 pack 数组）——这是 Chrome
+  扩展采集器 crowd_fetch_tasks 实际读取的表。不要再用 crowd_pack.publish：那条通道经
+  crowd_v4_admin 写进【移动端】crowd_v4.tasks（一店一任务、无 pack、pack_size 不生效），
+  扩展采集器领不到。定时自动看护见 crowd_autoscale.py（带水位护栏，直接发同一 public 表）。
 
 安全：
   - 只发布未覆盖店铺（对 restaurants.name + 已发布 pack 双重去重）
@@ -31,7 +37,25 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE / "vendor" / "pipeline"))
 
 import common as C  # noqa: E402
-import crowd_pack  # noqa: E402
+
+
+def publish_packs(fresh, pack_size, kpi, quota, source='qa'):
+    """直接 POST public.crowd_tasks（扩展采集器读的 6 店 pack 表）。
+    每 pack_size 家切一个包；返回成功发布的包数。
+    切勿改用 crowd_pack.publish（那是 crowd_v4 移动端一店一任务通道）。"""
+    packs = [fresh[i:i + pack_size] for i in range(0, len(fresh), pack_size)]
+    created = 0
+    for pack in packs:
+        if not pack:
+            continue
+        body = {"pack_type": "store", "pack": pack, "target": "both",
+                "kpi_min": kpi, "quota_day": quota, "status": "open", "source": source}
+        r = C.req("POST", "/crowd_tasks", json=body)
+        if r.status_code not in (200, 201):
+            sys.exit(f"发布失败: {r.status_code} {r.text[:200]}")
+        created += 1
+        print(f"  ✅ 已发包（{len(pack)} 店）: {pack}")
+    return created
 
 
 def load_covered():
@@ -113,9 +137,10 @@ def main():
     ap.add_argument("--seed-file", default="cloud/dianping_seed.json")
     ap.add_argument("--pack-size", type=int, default=6)
     ap.add_argument("--kpi", type=int, default=5)
-    # v3.5.2 提产：单页多榨后单 SERP 出 2–4 条，日配额默认 20→40（一个 6 店×5KPI=30 条
-    # 的包可在一天内采完，留 10 条余量）；距 300 验证码红线仍有 7 倍余量。
-    ap.add_argument("--quota", type=int, default=40)
+    # v3.5.2 提产：单页多榨后单 SERP 出 2–4 条，日配额默认 20→50（与设备全天总闸
+    # crowd_participants.quota_day=50 对齐；一个 6 店×5KPI=30 条的包当天采完，留 20 余量）。
+    # 爬坡比例/会话模型/风控冷却一律不动；距 300 验证码红线约 6 倍余量。
+    ap.add_argument("--quota", type=int, default=50)
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--district", default=None)
     ap.add_argument("--tier", default=None)
@@ -144,9 +169,9 @@ def main():
         print("全部已覆盖，无需扩容。")
         return
 
-    # 发布
-    created = crowd_pack.publish(fresh, a.pack_size, "both", a.kpi, a.quota, pack_type="store")
-    print(f"\n✅ 扩容完成：新发布 {len(created)} 个任务包（{len(fresh)} 家店铺）")
+    # 发布：直接 POST public.crowd_tasks（6 店 pack），扩展采集器可领取
+    created = publish_packs(fresh, a.pack_size, a.kpi, a.quota, source='qa')
+    print(f"\n✅ 扩容完成：新发布 {created} 个任务包（{len(fresh)} 家店铺）")
 
 
 if __name__ == "__main__":
