@@ -1,0 +1,42 @@
+# food-cn 评分规则（Scoring Rubric）骨架
+# 维度权重取自 PRD v2.1 §5.4（美食：客观 40 / 食客 30 / 口味 20 / 背书 10）；
+# 证据硬门与反软广结构演化自 research/category/菜市场/03_scoring_rubric.md。
+# 评分引擎零领域假设：维度名只是 rubric 配置。
+
+version: v1
+domain: food
+
+dimensions:
+  - name: 客观分
+    weight: 40
+    description: 平台分/评论量级/权威收录（米其林/黑珍珠）
+    evidence: 平台 + 官方索引
+  - name: 受众实证分
+    weight: 30
+    description: 真实食客具体描述（点了什么、什么价、什么体验）
+    evidence: ">=2 条原话 + URL + 日期"
+  - name: 口味分
+    weight: 20
+    description: 口味为主、背书其次；负面做方面甄别（服务/情绪不扣口味）
+    evidence: 行家横向比较依据
+  - name: 背书分
+    weight: 10
+    description: 权威指南/媒体背书
+    evidence: 官方/媒体来源
+
+admission:
+  min_voices: 2        # 独立声音 >=2（>=1 独立食客）
+  min_score: 3.5       # 口味均分门槛（<3.3 reject，3.3-3.5 hold）
+  all_praise_penalty: admit-star  # 全好评降置信
+
+anti_softad:
+  signals:
+    - 文案模板化但无具体出品/价格细节
+    - 短时集中、图文雷同/盗图、账号历史专发种草
+    - 平台广告/赞助标识、团购引流、MCN/达人合作
+    - 评论数与评分背离、差评压制、评分突跳
+  note: 高概率软广评论不计口味证据但留痕；店铺级 soft_ad_penalty 参与准入
+
+confidence:
+  bayesian: "BR=(C*m+n*avg)/(C+n)"   # 贝叶斯平均，小样本不虚高（v2.2 §4 借鉴）
+  time_decay: 近期证据权重略高（参数可调）

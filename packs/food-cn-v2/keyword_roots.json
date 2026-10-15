@@ -1,0 +1,32 @@
+{
+  "domain": "food",
+  "version": "v0.1",
+  "note": "关键词词根（结构演化自 research/category/菜市场/02_keyword_roots.json）：每个叶子 name + aliases + tails + platforms。查询自生成 = 叶子 × aliases × tails；新增叶子只加配置不改代码。",
+  "global_tails": ["宝藏", "私藏", "本地人", "小众", "烟火气", "天花板", "绝绝子", "攻略", "推荐", "踩雷", "排雷", "老店"],
+  "leaves": [
+    {
+      "name": "本帮菜",
+      "aliases": ["上海菜", "沪菜", "浓油赤酱"],
+      "tails": ["老字号", "本帮", "家常", "弄堂", "怀旧"],
+      "platforms": ["web", "map", "xiaohongshu", "douyin"]
+    },
+    {
+      "name": "日料",
+      "aliases": ["日本料理", "omakase", "板前", "寿司"],
+      "tails": ["预约制", "omakase", "板前", "超难约", "主厨"],
+      "platforms": ["web", "map", "xiaohongshu", "douyin"]
+    },
+    {
+      "name": "精品咖啡",
+      "aliases": ["手冲", "特调", "咖啡店", "cafe"],
+      "tails": ["自烘", "豆单", "soe", "拉花", "安静"],
+      "platforms": ["xiaohongshu", "douyin", "web"]
+    },
+    {
+      "name": "Bistro餐酒",
+      "aliases": ["bistro", "餐酒馆", "自然酒", "wine bar"],
+      "tails": ["自然酒", "主厨", "意面", "下酒菜", "氛围"],
+      "platforms": ["xiaohongshu", "douyin", "web"]
+    }
+  ]
+}

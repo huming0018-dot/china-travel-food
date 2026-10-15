@@ -32,7 +32,7 @@
 | **M1 采集器** | §5.2 | `toolbox/toolbox/crawler/` | 🟡 Phase 0 骨架 | 连接器插件化（entry_points）+ 信源注册表 + 召回引擎，Phase 1 开发 |
 | **M2 清洗器** | §5.3 | `toolbox/toolbox/cleaner/` | 🟡 Phase 0 骨架 | 实体解析/字段校验/去重；`entity_align.py` 已验证件待迁入 |
 | **M3 评分器** | §5.4 | `toolbox/toolbox/scorer/` | 🟡 Phase 0 骨架 | 多维评分/污染检测/准入；scorer/ods_evidence/normalize_ocr 已验证件待迁入 |
-| **M4 本体库** | §5.5 | `toolbox/toolbox/ontology/` + `packs/` | 🟡 Phase 0 骨架 | food-cn-v2 / housing-sh-v1 本体包骨架待建（含评分 rubric） |
+| **M4 本体库** | §5.5 | `toolbox/toolbox/ontology/` + `packs/` | ✅ Phase 0 完成 | food-cn-v2 六件套已建（taxonomy/词根/评分/回归集/源矩阵/schema）+ verify/install/ledger；housing 待建 |
 | **M5 编排器** | §5.6 | `toolbox/toolbox/orchestrator/` | 🟡 Phase 0 骨架 | DAG 编排/断点续跑/定时（cron+CLI 起步，Prefect 后置） |
 | **M6 审计器** | §5.7 | `toolbox/toolbox/auditor/` | 🟡 Phase 0 骨架 | 只读体检/覆盖审计/回归集/发布闸门 |
 | **M7 交付器** | §5.8 | `toolbox/toolbox/deliverer/` | 🟡 Phase 0 骨架 | 只读回环 HTTP + 前端/飞书消费；m7-pg-readonly 已验证修复可继承 |

@@ -1,0 +1,38 @@
+# food-cn 源覆盖矩阵（Source Plan）骨架
+# 结构演化自 research/category/菜市场/04_source_plan.md；内容按 PRD v2.1 §5.1 信源分类。
+# 权威底册/名单全量索引是分母，不靠平台打分。
+
+version: v0.1
+domain: food
+
+sources:
+  - category: 权威底册
+    items:
+      - name: 米其林指南（guide.michelin.com 上海页）
+        take: 全量索引（三星/二星/一星/必比登/入选）
+        mode: web.fetch 静态解析，已脚本化进 authority_recall
+        quota: 免费公开
+      - name: 黑珍珠餐厅指南
+        take: 全量钻级榜单
+        mode: web.fetch
+        quota: 免费公开
+  - category: UGC 社区
+    items:
+      - name: 小红书/抖音
+        take: 老饕私藏、锅气小店、评论区交叉提及
+        mode: 签名/匿名只读（不硬刷）
+        quota: 需登录占比逐版本下降
+  - category: 地图 POI
+    items:
+      - name: 高德/腾讯
+        take: 坐标、电话、营业时间、人均
+        mode: map_quota 配额门 + 多 key 池化
+        quota: 免费额度用尽即停
+  - category: 媒体/垂直
+    items:
+      - name: 上观/澎湃/本地宝/TimeOut
+        take: 榜单、专题、到访报道
+        mode: web.fetch
+        quota: 免费
+
+coverage_note: 源 × 关键词笛卡尔积逐格留痕（网格叶子 × 源 × 关键词组 → frontier/ledger）；回归集 100% 命中是机制断言。

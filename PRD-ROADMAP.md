@@ -7,8 +7,8 @@
 
 | # | 模块 | 任务 | 状态 | 备注 |
 |---|---|---|---|---|
-| 1 | — | **Phase 0：toolbox 包骨架 + 四层契约 + Manifest 规范 + CLI 脚手架 + 导航地图**（本分支） | 🟡 交付中 | 仓库结构见 `MODULES-NAV.md` §三 |
-| 2 | M4 | Phase 0b：`packs/food-cn-v2` 本体包骨架（taxonomy/词根/评分 rubric 占位） | ⬜ | 与任务 1 同属 Phase 0，待队首完成 |
+| 1 | — | **Phase 0：toolbox 包骨架 + 四层契约 + Manifest 规范 + CLI 脚手架 + 导航地图**（本分支） | ✅ 完成 | commit e5acb0b + 本 commit；仓库结构见 `MODULES-NAV.md` §三 |
+| 2 | M4 | Phase 0b：`packs/food-cn-v2` 本体包骨架（taxonomy/词根/评分/回归集/源矩阵/schema 六件套）+ ontology verify/install/ledger | ✅ 完成 | 本体包允许业务词；toolbox 代码业务词零命中（v2.2 §5 CI 红线） |
 | 3 | M1 | Phase 1a：crawler 连接器插件化骨架（entry_points 注册 + 源注册表 schema） | ⬜ | |
 | 4 | M2 | Phase 1b：cleaner 骨架 + 迁入已验证 `entity_align.py`（契约对齐 clean.schema） | ⬜ | 已验证件：ctfs-m2-entity-align/ |
 | 5 | M3 | Phase 1c：scorer 骨架 + 迁入已验证 scorer/ods_evidence/normalize_ocr（契约对齐 scored.schema） | ⬜ | 已验证件：ROOT04R1 + M3-B4-NORMALIZED-01 |

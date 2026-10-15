@@ -5,6 +5,9 @@ Phase 0 命令：
 - manifest validate  校验 Manifest
 - schema list        列出四层 + manifest 契约
 - schema validate    按契约校验数据文件
+- ontology verify    校验本体包（pack.yaml + 六件套）
+- ontology install   登记本体包到 ledger（幂等）
+- ontology list      列出已安装本体包
 """
 
 from __future__ import annotations
@@ -17,13 +20,17 @@ from typing import Optional
 import typer
 
 from .manifest import load_manifest, validate_manifest
+from .ontology import list_packs, verify_pack, install_pack
 from .schema import SCHEMA_NAMES, load_schema, validate_data
 
 app = typer.Typer(help="CTFS 模块化数据中台 toolbox（PRD v2.1 Phase 0）")
 schema_app = typer.Typer(help="数据契约操作")
 app.add_typer(schema_app, name="schema")
+ontology_app = typer.Typer(help="本体包操作")
+app.add_typer(ontology_app, name="ontology")
 
 TEMPLATES_DIR = Path(__file__).resolve().parent.parent / "templates"
+DEFAULT_LEDGER = Path("packs/ledger.json")
 
 
 def _load_manifest_schema() -> dict:
@@ -102,6 +109,52 @@ def schema_validate(
             typer.echo(f"FAIL: {e}", err=True)
         raise typer.Exit(1)
     typer.echo(f"PASS: {data} 符合 {schema}.schema.json")
+
+
+@ontology_app.command("verify")
+def ontology_verify(
+    pack: Path = typer.Option(..., "--pack", help="本体包目录（含 pack.yaml）"),
+) -> None:
+    """校验本体包：pack.yaml 契约 + 六件套存在 + YAML/JSON 可解析。"""
+    errors = verify_pack(pack)
+    if errors:
+        for e in errors:
+            typer.echo(f"FAIL: {e}", err=True)
+        raise typer.Exit(1)
+    typer.echo(f"PASS: {pack} 本体包合法")
+
+
+@ontology_app.command("install")
+def ontology_install(
+    pack: Path = typer.Option(..., "--pack", help="本体包目录"),
+    ledger: Path = typer.Option(DEFAULT_LEDGER, "--ledger", help="包注册表 ledger 路径"),
+) -> None:
+    """登记本体包到 ledger（幂等：同 name@version 拒绝重复）。"""
+    try:
+        entry = install_pack(pack, ledger)
+    except Exception as exc:
+        typer.echo(f"FAIL: {exc}", err=True)
+        raise typer.Exit(1) from exc
+    typer.echo(
+        f"INSTALLED: {entry.name}@{entry.version} sha256={entry.sha256} ledger={ledger}"
+    )
+
+
+@ontology_app.command("list")
+def ontology_list(
+    ledger: Path = typer.Option(DEFAULT_LEDGER, "--ledger", help="包注册表 ledger 路径"),
+) -> None:
+    """列出已安装本体包。"""
+    try:
+        records = list_packs(ledger)
+    except Exception as exc:
+        typer.echo(f"FAIL: {exc}", err=True)
+        raise typer.Exit(1) from exc
+    if not records:
+        typer.echo("(空)")
+        return
+    for r in records:
+        typer.echo(f"{r['name']}@{r['version']}\tsha256={r['sha256']}\t{r['installed_at']}")
 
 
 if __name__ == "__main__":  # pragma: no cover

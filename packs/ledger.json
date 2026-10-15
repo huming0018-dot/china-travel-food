@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "0.1.0",
+  "installed": [
+    {
+      "name": "food-cn",
+      "version": "2.0.0",
+      "sha256": "0ccaed59b6dc5cf409f07997067a4a0a6743f38db42f672c75826223121059ae",
+      "installed_at": "2026-10-15T10:12:25Z",
+      "source": "../packs/food-cn-v2"
+    }
+  ]
+}

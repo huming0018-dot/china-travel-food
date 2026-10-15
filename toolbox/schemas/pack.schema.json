@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/huming0018-dot/china-travel-food/blob/prd/phase0-toolbox-skeleton/toolbox/schemas/pack.schema.json",
+  "title": "本体包结构契约（PRD v2.2 §5 M4）· pack.yaml 的合法性校验",
+  "version": "0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "version", "domain", "files"],
+  "properties": {
+    "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]{0,63}$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "domain": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["taxonomy", "keyword_roots", "scoring_rules", "regression_set", "source_plan", "schemas"],
+      "properties": {
+        "taxonomy": { "type": "string" },
+        "keyword_roots": { "type": "string" },
+        "scoring_rules": { "type": "string" },
+        "regression_set": { "type": "string" },
+        "source_plan": { "type": "string" },
+        "schemas": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    }
+  }
+}

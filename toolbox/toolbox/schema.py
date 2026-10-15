@@ -18,7 +18,7 @@ from typing import Any, Iterable
 from jsonschema import Draft202012Validator
 
 SCHEMA_DIR = Path(__file__).resolve().parent.parent / "schemas"
-SCHEMA_NAMES = ("raw", "clean", "scored", "audit", "manifest")
+SCHEMA_NAMES = ("raw", "clean", "scored", "audit", "manifest", "pack")
 
 # 血缘约束：目标层 → 允许的 parent 层
 PARENT_RULES = {"clean": "RAW", "scored": "ODS"}

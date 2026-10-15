@@ -1,0 +1,32 @@
+# food-cn 分类法（Taxonomy）骨架
+# 结构演化自 research/category/菜市场/01_taxonomy.md（v0.1）；内容为 food 领域骨架占位。
+# 完整叶子枚举（expected_supply/target_n）由上海美食 skill templates/ 演化补充（PENDING）。
+
+domain: food
+root: 美食
+version: v0.1
+
+dimensions:
+  - name: 菜系
+    description: 主维度单一归根（一道菜只归一个菜系叶；地域根唯一，豁免：融合/咖啡甜品/酒吧）
+    leaves: [本帮菜, 粤菜, 川菜, 江浙菜, 日料, 西餐, 东南亚菜, 云贵菜, 西北菜, 湘鄂菜]
+    note: 日料归亚洲菜；客家/潮汕/港式/广府/顺德归粤菜；川菜按地域子流派（自贡盐帮/宜宾/乐山）
+
+  - name: 场景
+    description: 正交维度（可多挂），不参与主根
+    leaves: [正餐, 小吃简餐, 精品咖啡, 甜品烘焙, Brunch, Bistro餐酒, 自然酒吧, 下午茶, 夜宵, 私宴会所]
+
+  - name: 形式
+    description: 独立维度，不与菜系混（FineDining/Bistro 是形式不是菜系）
+    leaves: [Finedining, Casual Dining, Bistro, 快餐简餐, Brunch, 下午茶, 私宴会所, 自助放题, 酒吧清吧, 夜宵]
+
+  - name: 食材垂直
+    description: 正交标签（0-3 个）
+    leaves: [海鲜, 肉禽, 面, 饭, 甜品点心, 面包烘焙, 蔬菜素食, 火锅锅物, 烧烤烤串]
+
+mutex_rules:
+  - 主营 vs 含有：is=主营决定菜系叶；serves=含有仅标签
+  - 单一正餐根压过 minority
+  - 形式不越档：Fine Dining 仅人均>=250 套餐制
+
+expected_supply_note: 每叶子 expected_supply(rich/normal/scarce) 与 target_n 待完整枚举补充（PENDING）

@@ -1,0 +1,16 @@
+# food-cn 本体包元信息（PRD v2.2 §5 M4）
+# 六件套：taxonomy / keyword_roots / scoring_rules / regression_set / source_plan / schema
+# 本体包是唯一允许业务词的地方；包外代码 grep 业务词不得命中。
+
+name: food-cn
+version: 2.0.0
+domain: food
+description: 中国美食领域本体包（由 city-food-guide 调研资产演化：research/category 模板 + research/regression_set.json + cloud/vendor/pipeline/raw_place.schema.json）
+files:
+  taxonomy: taxonomy.yaml
+  keyword_roots: keyword_roots.json
+  scoring_rules: scoring_rules.yaml
+  regression_set: regression_set.json
+  source_plan: source_plan.yaml
+  schemas:
+    - schema/raw_place.schema.json
