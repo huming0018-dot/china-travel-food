@@ -30,6 +30,19 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 2026-10-16（周五）02:00 自进化复盘 · 地图配额早退二次加固（commit dc5ace5，lesson#97/#99）
+- 采集/覆盖：active 1517 / total 1523，连续无新增店（最后新店 10-03）；电话 87.5%(1327) / 坐标 99.9%(1516) / 营业时间 66.3%(1006) / score_taste 30.2%(458)；reviews 2648、当日 0（10-13/14/15 均 0，登录闸+付费闸闭合）；production_model 仍 820 None；updated_at 10-14 更新 1126 店、10-15 更新 391 店（字段填充非新增）。
+- 进程：cron(PID99)、gap_pool(PID136/137，6 槽) 存活，36 条 crontab 齐全；watchdog 每轮 pool_alive、无新错误；unknown=双出口探测噪声（lesson#82/92），router 读 cookie_pool_state 不受影响。
+- 三闸：登录闸 account_a=dead(web_session 过期) / account_b=parked(短信日配额超额，非 cookie 失效)，router 空转符合预期、不硬刷；付费闸 Apify 余额 $0.022；配额闸腾讯单 fallback key 日 dead（~440 次即 121，解封 10-17）、高德 idx0 月满 4500、idx1 健康(2908/4500，search 余约 1389)。
+- 根因（lesson#97 残留两处缺陷）：①cloud_phone_fill 主循环"单家店单次 QUOTA 即整轮 break"（腾讯 daily dead 时这一家高德瞬时 QUOTA 就整轮只查 1 家）；②高德 idx1 被 10007 熔断 30min 时 acquire None→no_budget，被 amap_fill 一律报"月配额耗尽（月初重置）"，临时熔断误报月耗尽。
+- 修复（dc5ace5，map_quota/cloud_phone_fill/cloud_amap_fill，已 push origin main + 同步构建上下文 ~/food-cloud，容器已生效，待下次 build_sync 烘焙）：
+  - `map_quota.MapQuota.block_reason(provider,interface)`：no_budget 后区分 **exhausted**（本窗口桶用满 / 本窗口配额 dead）与 **transient**（桶有余量但被 auth 熔断 10007/日配额 10003 临时拦）；高德 search 月桶以 monthly_quota(10044) 为硬耗尽。
+  - `cloud_phone_fill`：单家 QUOTA 不再 break；池余量>0 判瞬时→同店退避重试（PHONE_TRANSIENT_RETRY 默认 3，sleep 2/4/6s），**不推进 last_processed_id 防漏店**；双源余量都=0 再用 block_reason，仅双源 exhausted 才 alert(phone_quota)。
+  - `cloud_amap_fill.amap_text`：no_budget 且 transient 按 YIELD 安静停（等同给电话让路），仅 exhausted 才报月耗尽。
+- 验证：phone_fill 小批量跑满（20/20、8/8 无提前终止，断点 813→1827），amap_fill dry-run 正常（新调用 15/回填 0 是高德数据源天花板）；合成账本四场景（10007 熔断→transient、10044 月耗尽→exhausted、10003 日配额→transient、双 key 月满→exhausted）判定全对。
+- 业务边界（非本机制）：amap_fill 546 候选主要缺营业时间，高德 text(extensions=all) 给不出，属数据源覆盖率天花板，归 G2 需官方/美团替代源，不造数。
+- 待办：G2 待健康小红书账号/Apify 充值；高德 idx1 月底真满需加 key/替代源；腾讯单 fallback key 建议补 key；hours 替代源；Supabase 免费额度 11-11 受限、腾讯云搬家方案待出。
+
 ### 2026-10-14（周三）录后校验·搜索引擎校准 —— 增量（cron 07:20）
 - 模式：增量。findings_planner --batch 40 生成 batch.json（cursor last_id 0→580，未回卷）；40 店逐店取证（每店2条合并查询），高价值店实查约13家。
 - 新增 findings 18 条（chain_type 9 / investor_info 9），post_audit PATCH **9 店 / 15 字段**（全 204、逐店回读）。
