@@ -55,9 +55,11 @@ description: 本地新品/热门餐饮情报雷达。当用户想了解某城市
 | 抖音 | media-crawler / agent-reach | web_search |
 | B站 | agent-reach | web_search |
 | 微博 | media-crawler / agent-reach | web_search |
-| 微信公众号 | wechat-article-search | web_search |
+| 微信公众号 | wechat-article-search（独立 skill） | web_search |
 | 新闻/政府/行业媒体 | web_search + web_fetch | — |
 | 榜单官网 | web_fetch（米其林/黑珍珠/必吃榜） | web_search |
+
+> 依赖说明：`wechat-article-search` 为同机独立 skill（`~/.codebuddy/skills/wechat-article-search/`）；media-crawler / agent-reach / dianping-crawler 需按 `references/toolchain.md` 自行克隆安装，本仓库不含 tools/。
 
 ## 红线
 

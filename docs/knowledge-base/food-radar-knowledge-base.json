@@ -1,0 +1,127 @@
+{
+  "knowledge_id": "food-radar",
+  "version": "1.0",
+  "created_at": "2026-10-16",
+  "title": "本地新品餐饮情报雷达（food-radar）方法论与规范",
+  "type": "methodology",
+  "summary": "对标解码→关键词矩阵→多通路分级检索→时效与信源校验→结构化输出的五步法；含工具链、三条校验铁律、字段schema、prompt模板与检索checklist；源于2026-10上海餐厅情报实战及攏好粤菜误判踩坑复盘。",
+  "skill": {
+    "name": "food-radar",
+    "github_url": "https://github.com/huming0018-dot/china-travel-food/tree/main/skills/food-radar",
+    "local_path": "~/.codebuddy/skills/food-radar/",
+    "files": [
+      "SKILL.md",
+      "references/methodology.md",
+      "references/toolchain.md",
+      "references/field-spec.md",
+      "references/validation.md",
+      "references/prompt-template.md",
+      "references/checklist.md",
+      "references/corrected-findings.md",
+      "scripts/keyword-matrix.yaml"
+    ]
+  },
+  "methodology": {
+    "steps": [
+      {"step": 1, "name": "对标解码", "desc": "拆解对标物的菜系/主厨/价位/荣誉/玩法/稀缺性，无法确认的对标物必须显式声明假设"},
+      {"step": 2, "name": "关键词矩阵", "desc": "城市×品类×时间×事件类型四维组合，≥6组查询"},
+      {"step": 3, "name": "多通路分级检索", "desc": "S(官方/官媒/榜单)>A(行业媒体/KOL)>B(UGC)>C(软文仅线索)；顺序：S定事实→A补故事→B验口碑"},
+      {"step": 4, "name": "时效与信源校验", "desc": "执行三条铁律，违反即返工"},
+      {"step": 5, "name": "结构化输出与沉淀", "desc": "按字段规范输出，带sources与confidence；沉淀信源与踩坑"}
+    ],
+    "source_tiers": {
+      "S": "官方公告、政府/官媒、榜单官网",
+      "A": "行业媒体、KOL长文/视频",
+      "B": "大众点评、小红书、抖音等UGC",
+      "C": "百家号等聚合软文（仅线索）"
+    }
+  },
+  "toolchain": {
+    "platforms": {
+      "大众点评": ["dianping-crawler", "agent-browser"],
+      "小红书": ["media-crawler", "agent-reach"],
+      "抖音": ["media-crawler", "agent-reach"],
+      "B站": ["agent-reach"],
+      "微博": ["media-crawler", "agent-reach"],
+      "微信公众号": ["wechat-article-search"],
+      "新闻媒体": ["web_search", "web_fetch"],
+      "榜单官网": ["web_fetch"]
+    },
+    "install": {
+      "agent-reach": "对agent说：帮我安装 Agent Reach：https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/install.md",
+      "media-crawler": "git clone https://github.com/NanmiCoder/MediaCrawler.git && pip install -r requirements.txt && playwright install",
+      "dianping-crawler": "git clone https://github.com/wongben/dianping-crawler.git"
+    },
+    "tech_rules": [
+      "同平台请求间隔≥3s，单任务≤50页，失败退避30s×3",
+      "登录态cookie只存本地，不进仓库",
+      "仅学习研究用途，不商用不大规模爬取",
+      "原始数据与清洗结果分离落盘，可追溯",
+      "单通路失败降级备选并在notes记录"
+    ]
+  },
+  "validation_rules": {
+    "iron_rules": [
+      {"id": 1, "rule": "双信源+日期：新开/在营结论必须两个独立信源且均带当年日期，否则confidence降medium并标注待核实"},
+      {"id": 2, "rule": "发布日期核对：引用文章前必须核对并记录发布日期，禁止凭内容语感判断新旧"},
+      {"id": 3, "rule": "在营核查：上榜≠在营，交付前必须检索店名+闭店/停业/退出，有信号移入excluded"}
+    ],
+    "conflict_resolution": "S>A>B>C；同级别取日期新者；仍冲突双方入notes并降一级",
+    "numeric_rules": "评分/人均/榜单必须带来源平台+抓取日期，拿不到填null禁止编造；荣誉必须带年份"
+  },
+  "field_spec": {
+    "top_level": ["query_context", "items", "excluded"],
+    "item_fields": {
+      "name": "string 必填",
+      "type": "new_opening|collab_event|closure_alert 必填",
+      "status": "open|closed|upcoming|unknown 必填",
+      "cuisine": "string 必填",
+      "city": "string", "district": "string", "address": "string",
+      "opened_date": "YYYY-MM-DD或null禁止猜",
+      "closed_date": "closure_alert必填",
+      "chef": {"name": "string", "title": "string", "background": "string"},
+      "price_per_head": "number或null",
+      "honors": [{"award": "string", "year": "number"}],
+      "kol_mentions": [{"platform": "string", "account": "string", "url": "string", "date": "YYYY-MM-DD", "summary": "string"}],
+      "platform_signals": {"dianping": {"rating": "number", "review_count": "number", "fetched_at": "date"}, "xhs": {"note_count": "number", "fetched_at": "date"}},
+      "collaboration_angle": "string",
+      "sources": [{"url": "string", "publisher": "string", "date": "YYYY-MM-DD", "tier": "S|A|B|C"}],
+      "confidence": "high|medium|low 必填",
+      "verified_at": "YYYY-MM-DD 必填",
+      "notes": "string"
+    },
+    "hard_constraints": [
+      "closure_alert必须status=closed且closed_date必填",
+      "sources为空或confidence=low禁止进正式推荐位",
+      "日期一律ISO格式",
+      "拿不到的数据填null并说明，禁止编造"
+    ]
+  },
+  "prompt_templates": {
+    "main": "你是本地餐饮情报分析师。【城市】{city}【时间窗】{time_window}【品类】{categories}【对标物】{benchmarks}（无法确认先声明假设）。输出分两类：新开/在营商户、联弹/客座/快闪事件；每条带信源(url+发布方+日期+级别)和confidence；交付前完成在营核查；精确数据标注来源与抓取时间，拿不到填null禁止编造；口碑多通路交叉。",
+    "daily": "每日增量扫描：关键词矩阵跑web_search→在营与日期校验→与昨日去重→只输出新增/状态变化/口碑异动三类→≤20条精简日报",
+    "system": "调研类任务遵守food-radar规范：双信源+当年日期；核对发布日期；上榜≠在营须核查闭店；信源分级S>A>B>C；拿不到填null禁止编造；输出必带sources与confidence"
+  },
+  "checklist_summary": [
+    "准备：城市/时间窗/品类确认；对标解码；node/python自检；关键词矩阵≥6组",
+    "检索：web_search≥8组；高价值页fetch读原文记日期；微信检索≥2组；deep模式加agent-reach/media-crawler/agent-browser",
+    "校验：日期显式；双信源；在营核查；数值带来源；软文未直接引用",
+    "输出：JSON必填齐全；分两类+口碑证据+合作切入点；已剔除区；假设声明",
+    "沉淀：新信源入清单；新踩坑入案例表；用户偏好入长期记忆"
+  ],
+  "lessons_learned": [
+    {
+      "date": "2026-10-16",
+      "case": "攏好粵菜被误列为2026年10月新开",
+      "root_cause": "未核对文章发布日期（实为2024-10-31），且未做在营核查（该店2024年已退出上海）",
+      "fix": "移出推荐位移入excluded；沉淀为铁律2、铁律3",
+      "corrected_recommendations": ["潮玖（上海首店，虹口新建路200号）", "头家夜粥（外滩大来大楼，2026-06-18试营业）", "Club Bâtard上海（2026年11月揭幕）", "Le Bec Bund", "西里尔KIRILLITSA", "Le Reflet", "Nous", "席上·福建料理", "Kylin麒麟"]
+    },
+    {
+      "date": "2026-10-16",
+      "case": "对标物'永和遇外滩'公开渠道检索不到",
+      "fix": "显式声明假设并请用户确认，不得默认"
+    }
+  ],
+  "reuse_guide": "换城市/品类：复制skill目录→改keyword-matrix.yaml变量→按城市替换信源清单→首跑standard深度建基线→之后走每日增量模式→每次实战后追加信源与踩坑"
+}

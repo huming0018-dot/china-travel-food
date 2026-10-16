@@ -1,5 +1,8 @@
 # food-radar 工具调用流程与技术规范
 
+> 依赖说明：本仓库（GitHub）**不包含** `tools/` 下的第三方克隆仓库（体积大且有各自许可），请按第 3 节命令自行克隆。
+> `wechat-article-search` 为同机独立 skill（`~/.codebuddy/skills/wechat-article-search/`），不在本仓库内，需另行安装。
+
 ## 一、工具调用流程（按序执行）
 
 ```
