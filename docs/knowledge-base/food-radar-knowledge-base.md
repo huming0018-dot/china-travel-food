@@ -77,6 +77,8 @@ Step5 结构化输出      → JSON+摘要，知识沉淀
 | 榜单官网 | web_fetch | web_search |
 
 ### 2.3 安装命令
+> 说明：GitHub 仓库不包含 tools/ 下的第三方克隆（体积大且各自有许可），`wechat-article-search` 为同机独立 skill，需按下列命令自行安装。
+
 ```bash
 # Agent-Reach（对agent说）：帮我安装 Agent Reach：https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/install.md
 # MediaCrawler：
