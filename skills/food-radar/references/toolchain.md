@@ -2,6 +2,7 @@
 
 > 依赖说明：本仓库（GitHub）**不包含** `tools/` 下的第三方克隆仓库（体积大且有各自许可），请按第 3 节命令自行克隆。
 > `wechat-article-search` 为同机独立 skill（`~/.codebuddy/skills/wechat-article-search/`），不在本仓库内，需另行安装。
+> **已实测的安装状态与踩坑见 `environment.md`；开工前请先跑 `bash scripts/preflight.sh`。**
 
 ## 一、工具调用流程（按序执行）
 
@@ -32,30 +33,41 @@ Step5 结构化输出      → 按 field-spec.md 生成 JSON/Markdown + 知识�
 
 ## 三、安装命令
 
+### 通用前置
+```bash
+export PATH="/Users/deuce/.local/bin:$PATH"   # uv 与 python3.12 所在目录
+bash scripts/preflight.sh                     # 开工自检，优先于下面任何安装步骤
+```
+
 ### Agent-Reach（推荐先装）
 ```bash
-# 对 agent 说一句话即可安装：
-# 帮我安装 Agent Reach：https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/install.md
-# 本 skill 已浅克隆至 tools/agent-reach，可按其 docs/install.md 完成安装
+cd tools/agent-reach
+uv tool install .                # 产出 /Users/deuce/.local/bin/agent-reach
+agent-reach doctor               # 通路自检（实测基线：4/16）
+agent-reach skill --install      # 注册 skill 到 ~/.agents/skills/agent-reach
 ```
+小红书通路需手动 Cookie：浏览器装 Cookie-Editor 导出后 `agent-reach configure xhs-cookies "<json>"`。
+抖音不在agent-reach 覆盖范围，须走 MediaCrawler 的 `dy` 平台。
 
 ### MediaCrawler
 ```bash
 cd tools/media-crawler
-pip install -r requirements.txt
-playwright install
-# 首次使用需用 Playwright 登录各平台保存登录态（cookie），详见其 README
+uv venv --python 3.12 .venv       # 必须 3.11+；系统 python3.9 会装失败
+uv pip install --python .venv/bin/python -r requirements.txt
+.venv/bin/playwright install chromium
+# 首次使用需用 Playwright 登录各平台保存登录态（cookie），详见其README
 ```
+支持平台：`xhs` `dy` `ks` `bili` `wb` `tieba` `zhihu`。
 
 ### 点评爬虫（竞品全量盘点用）
 ```bash
-git clone https://github.com/wongben/dianping-crawler.git   # Java，全上海餐饮店铺
+git clone --depth 1 https://github.com/wongben/dianping-crawler.git tools/dianping-crawler
 ```
+Java + Maven 工程，**需本机有 JDK 与 mvn**；未满足时点评数据走降级方案（见 `environment.md` 第五节）。
 
 ### 环境依赖检查（每次开工先跑）
 ```bash
-node -v 2>/dev/null || echo "需要 Node（wechat-article-search 依赖）"
-python3 -v 2>/dev/null || echo "需要 Python3（MediaCrawler 依赖）"
+bash scripts/preflight.sh
 ```
 
 ## 四、技术规范

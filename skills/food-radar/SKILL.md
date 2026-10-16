@@ -26,15 +26,19 @@ description: 本地新品/热门餐饮情报雷达。当用户想了解某城市
 - 事件：新开、首店、试营业、联弹、客座、快闪、晚宴、闭店、停业、退出
 - 品类：用户指定 + 对标物同类 + 当前热门（潮汕菜、福建菜、法餐、bistro 等）
 
+### Step 0 环境自检（不可跳过）
+先跑 `bash scripts/preflight.sh`。有阻塞项先补齐，**不要在依赖缺失时静默降级而不告知用户**。
+实测安装状态与踩坑见 `references/environment.md`。
+
 ### Step 3 多通路检索（按优先级）
 1. **web_search / web_fetch**：官方媒体、政府号、行业媒体（开业事实最快最可靠）
-2. **wechat-article-search**：KOL 长文（周末做啥、食在十三等）
-3. **agent-reach CLI**：小红书、抖音、B站、微博、YouTube、Twitter、Reddit、GitHub 搜索
-4. **media-crawler**：小红书/抖音/B站/微博/知乎批量抓取（需登录态）
+2. **wechat-article-search**：KOL 长文（周末做啥、食在十三等）— 依赖 Node
+3. **agent-reach CLI**：小红书、B站、微博、Reddit、Twitter、GitHub 搜索（**不含抖音**；小红书需手动导 Cookie）
+4. **media-crawler**：小红书(`xhs`)/抖音(`dy`)/B站/微博/知乎批量抓取（需登录态）— **抖音唯一主通路**
 5. **agent-browser / playwright**：大众点评店铺页、小红书详情页
-6. **dianping-crawler**：全量餐饮店铺库（竞品盘点用）
+6. **dianping-crawler**：全量餐饮店铺库（竞品盘点用，需 JDK+Maven；否则走5 的降级方案）
 
-各工具安装与用法见 `references/toolchain.md`。
+各工具安装与用法见 `references/toolchain.md`；已验证的安装状态见 `references/environment.md`。
 
 ### Step 4 时效与信源校验（铁律，违反即返工）
 - **任何"新开"结论必须有两个独立信源，且都带明确的当年日期。**

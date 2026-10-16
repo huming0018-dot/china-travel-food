@@ -1,6 +1,6 @@
 # food-radar 知识库文档：本地新品餐饮情报雷达
 
-> 版本 v1.0 ｜ 沉淀日期 2026-10-16 ｜ 来源：上海餐厅情报调研实战 + 踩坑复盘
+> 版本 v1.1 ｜ 沉淀日期 2026-10-16 ｜ 来源：上海餐厅情报调研实战 + 踩坑复盘 + 工具链实测安装
 > 用途：灌入知识体作为长期记忆，供任意 agent 复用
 
 ---
@@ -8,13 +8,18 @@
 ## 0. TL;DR
 
 - **Skill 地址**：https://github.com/huming0018-dot/china-travel-food/tree/main/skills/food-radar （本地副本：~/.codebuddy/skills/food-radar/）
-- **一句话方法论**：对标解码 → 关键词矩阵 → 多通路分级检索（S/A/B/C）→ 时效与信源校验（三条铁律）→ 结构化输出与沉淀。
+- **一句话方法论**：环境自检 → 对标解码 → 关键词矩阵 → 多通路分级检索（S/A/B/C）→ 时效与信源校验（三条铁律）→ 结构化输出与沉淀。
 - **三条铁律**：①"新开/在营"必须双独立信源且均带当年日期；②引用文章前必须核对发布日期；③上榜≠在营，交付前必须做闭店/退出核查。
 - **已修正错误**：攏好粤菜并非 2026 年 10 月新开——其信息源自 2024-10 文章，且该店 2024 年已退出上海，已从推荐位移除。
+- **开工必做**：`bash scripts/preflight.sh`。工具"已克隆"≠"可用"，依赖缺失必须显式告知降级方案。
 
 ---
 
-## 1. 方法论（五步工作流）
+## 1. 方法论（六步工作流）
+
+### Step 0 环境自检（v1.1 新增，不可跳过）
+先跑 `bash scripts/preflight.sh`。有阻塞项先补齐；补不齐必须明确告知用户降级方案，**禁止静默降级**。
+实测安装状态见第 2.6 节与 `references/environment.md`。
 
 ### Step 1 对标解码
 用户给的对标物是最高价值输入。拆解维度：菜系路线、主厨履历、价位带、荣誉（米其林/黑珍珠/亚洲50佳/必吃榜）、玩法（omakase/联弹/会员制）、稀缺性、可合作性。
@@ -51,6 +56,7 @@
 
 ### 2.1 调用流程
 ```
+Step0 环境自检        → bash scripts/preflight.sh，阻塞项先补齐或告知降级
 Step1 对标解码        → 纯推理，产出筛选标准
 Step2 关键词矩阵      → 产出 6-10 组查询
 Step3 多通路检索      → web_search/web_fetch（S级事实）
@@ -67,27 +73,40 @@ Step5 结构化输出      → JSON+摘要，知识沉淀
 
 | 平台 | 首选工具 | 备选 |
 |---|---|---|
-| 大众点评 | dianping-crawler + agent-browser | web_search 拿 UGC 摘要 |
-| 小红书 | media-crawler / agent-reach | web_search |
-| 抖音 | media-crawler / agent-reach | web_search |
+| 大众点评 | dianping-crawler（需 JDK+Maven） | agent-browser / web_search 拿 UGC 摘要 |
+| 小红书 | media-crawler `xhs` | agent-reach（需手动导 Cookie）、web_search |
+| 抖音 | media-crawler `dy`（**唯一主通路**） | web_search |
 | B站 | agent-reach | web_search |
-| 微博 | media-crawler / agent-reach | web_search |
-| 微信公众号 | wechat-article-search | web_search |
+| 微博 | media-crawler `wb` / agent-reach | web_search |
+| 微信公众号 | wechat-article-search（需 Node） | web_search |
 | 新闻/政府/行业媒体 | web_search + web_fetch | — |
 | 榜单官网 | web_fetch | web_search |
 
-### 2.3 安装命令
-> 说明：GitHub 仓库不包含 tools/ 下的第三方克隆（体积大且各自有许可），`wechat-article-search` 为同机独立 skill，需按下列命令自行安装。
+### 2.3 安装命令（v1.1 实测可用版）
+> 说明：GitHub 仓库不包含 tools/ 下的第三方克隆（体积大且各自有许可），需按下列命令自行安装。
+> ⚠️ **必须用 uv + python3.12**：系统 python3 为 3.9.6，不满足 MediaCrawler 的 `requires-python>=3.11`。
 
 ```bash
-# Agent-Reach（对agent说）：帮我安装 Agent Reach：https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/install.md
-# MediaCrawler：
-git clone --depth 1 https://github.com/NanmiCoder/MediaCrawler.git
-cd MediaCrawler && pip install -r requirements.txt && playwright install
-# 点评爬虫：
-git clone https://github.com/wongben/dianping-crawler.git
-# 环境自检（每次开工先跑）：
-node -v; python3 -v
+# 前置：uv 与 python3.12 在此目录
+export PATH="/Users/deuce/.local/bin:$PATH"
+
+# 开工自检（每次必跑）
+bash scripts/preflight.sh
+
+# Agent-Reach
+cd tools/agent-reach && uv tool install .
+agent-reach doctor          # 通路自检
+agent-reach skill --install # 注册 skill 到 ~/.agents/skills/agent-reach
+
+# MediaCrawler
+cd tools/media-crawler
+uv venv --python 3.12 .venv
+uv pip install --python .venv/bin/python -r requirements.txt
+.venv/bin/playwright install chromium
+# 支持 xhs(小红书) dy(抖音) ks(快手) bili(B站) wb(微博) tieba(贴吧) zhihu(知乎)
+
+# 点评爬虫（Java + Maven 工程，需本机有 JDK 与 mvn）
+git clone --depth 1 https://github.com/wongben/dianping-crawler.git tools/dianping-crawler
 ```
 
 ### 2.4 技术规范
@@ -102,6 +121,24 @@ node -v; python3 -v
 - A 级：搜狐吃喝、网易、新浪、澎湃、界面；KOL：B站"特厨隋坡"、微博@卡米camille、公众号"食在十三""周末做啥""槟客文化"
 - B 级：大众点评、小红书、Trip.com 游记
 - C 级：百家号种草（仅线索）
+
+### 2.6 环境实测基线（2026-10-16，macOS）
+
+| 组件 | 状态 | 阻塞项 / 说明 |
+|---|---|---|
+| MediaCrawler | ✅ 可运行 | venv(py3.12) + 依赖完整 + chromium 已落地；**仍需人工扫码登录存 cookie** |
+| Agent-Reach v1.5.0 | ⚠️ 4/16 通路 | 实测可用：B站、Jina Reader 任意网页、V2EX、RSS |
+| dianping-crawler | ❌ 不可构建 | 已克隆但无 Java / 无 Maven |
+| wechat-article-search | ❌ 不可运行 | 无 Node |
+| gh CLI | ❌ 未安装 | 推送走 SSH（`~/.ssh/ctfs_github`，账号 `huming0018-dot`） |
+
+运行时：系统 python3 = 3.9.6（**不可用于 MediaCrawler**）；可用 python3.12 在 `/Users/deuce/.local/bin/`；uv 0.12.23。
+
+**四个必须记住的通路事实**：
+1. **抖音不在 agent-reach 覆盖范围**，只能走 MediaCrawler 的 `dy` 平台。
+2. **小红书**双通路：MediaCrawler `xhs`（主）+ agent-reach（需Cookie-Editor 手动导出 `xhs` cookie，无法自动完成）。
+3. **点评**因缺 JDK/Maven 暂不可构建，降级方案 = `agent-browser` / `playwright-cli` 打开店铺页 + `web_search` 取 UGC 摘要，取到的评分/人均必须标注来源与抓取时间。
+4. **Node 缺失**导致微信公众号通路不可用，需先装 Node 才能补上。
 
 ---
 
@@ -151,6 +188,8 @@ node -v; python3 -v
 | 日期 | 案例 | 违反规则 | 后果 |
 |---|---|---|---|
 | 2026-10-16 | 攏好粤菜误列"2026年10月新开" | 铁律2（2024-10文章误判）+铁律3（未做在营核查，实际2024年已退出上海） | 用户纠正后移出推荐位，沉淀为本规范 |
+| 2026-10-16 | tools/ 下三工具"已克隆"但均不可运行 | 缺少开工环境自检；把"已克隆"误当"可用" | 新增 Step 0 + `preflight.sh` + `environment.md` |
+| 2026-10-16 | `preflight.sh` 用 `command -v java` 判定 JDK | macOS `/usr/bin/java` 存根无 JRE 时仍返回 0，误报 OK | 改为匹配 `java -version` 输出中的版本号 |
 
 ---
 
@@ -180,7 +219,7 @@ node -v; python3 -v
 ```
 
 ### 5.3 检索 Checklist（摘要）
-- 准备：城市/时间窗/品类确认；对标解码；运行时自检（node/python）；关键词矩阵≥6组
+- 准备：城市/时间窗/品类确认；对标解码；**已跑 `preflight.sh` 且阻塞项已补齐或已明确告知降级**；关键词矩阵≥6组
 - 检索：web_search≥8组；高价值页 web_fetch 读原文记日期；微信检索≥2组；[deep] agent-reach/media-crawler/agent-browser
 - 校验：日期显式；双信源；在营核查；数值带来源；软文未直接引用
 - 输出：JSON 必填齐全；分两类+口碑证据+合作切入点；已剔除区；假设声明

@@ -1,10 +1,11 @@
 {
   "knowledge_id": "food-radar",
-  "version": "1.0",
+  "version": "1.1",
   "created_at": "2026-10-16",
+  "updated_at": "2026-10-16",
   "title": "本地新品餐饮情报雷达（food-radar）方法论与规范",
   "type": "methodology",
-  "summary": "对标解码→关键词矩阵→多通路分级检索→时效与信源校验→结构化输出的五步法；含工具链、三条校验铁律、字段schema、prompt模板与检索checklist；源于2026-10上海餐厅情报实战及攏好粤菜误判踩坑复盘。",
+  "summary": "对标解码→环境自检→关键词矩阵→多通路分级检索→时效与信源校验→结构化输出的六步法；含工具链实测基线、三条校验铁律、字段schema、prompt模板与检索checklist；源于2026-10上海餐厅情报实战及攏好粤菜误判踩坑复盘。",
   "skill": {
     "name": "food-radar",
     "github_url": "https://github.com/huming0018-dot/china-travel-food/tree/main/skills/food-radar",
@@ -13,16 +14,19 @@
       "SKILL.md",
       "references/methodology.md",
       "references/toolchain.md",
+      "references/environment.md",
       "references/field-spec.md",
       "references/validation.md",
       "references/prompt-template.md",
       "references/checklist.md",
       "references/corrected-findings.md",
-      "scripts/keyword-matrix.yaml"
+      "scripts/keyword-matrix.yaml",
+      "scripts/preflight.sh"
     ]
   },
   "methodology": {
     "steps": [
+      {"step": 0, "name": "环境自检", "desc": "跑scripts/preflight.sh；有阻塞项先补齐或明确告知用户降级方案，禁止静默降级"},
       {"step": 1, "name": "对标解码", "desc": "拆解对标物的菜系/主厨/价位/荣誉/玩法/稀缺性，无法确认的对标物必须显式声明假设"},
       {"step": 2, "name": "关键词矩阵", "desc": "城市×品类×时间×事件类型四维组合，≥6组查询"},
       {"step": 3, "name": "多通路分级检索", "desc": "S(官方/官媒/榜单)>A(行业媒体/KOL)>B(UGC)>C(软文仅线索)；顺序：S定事实→A补故事→B验口碑"},
@@ -37,27 +41,41 @@
     }
   },
   "toolchain": {
+    "preflight": "bash scripts/preflight.sh（开工必跑）",
     "platforms": {
-      "大众点评": ["dianping-crawler", "agent-browser"],
-      "小红书": ["media-crawler", "agent-reach"],
-      "抖音": ["media-crawler", "agent-reach"],
+      "大众点评": ["dianping-crawler(需JDK+Maven)", "agent-browser(降级)"],
+      "小红书": ["media-crawler:xhs", "agent-reach(需手动导Cookie)"],
+      "抖音": ["media-crawler:dy（唯一主通路）"],
       "B站": ["agent-reach"],
-      "微博": ["media-crawler", "agent-reach"],
-      "微信公众号": ["wechat-article-search"],
+      "微博": ["media-crawler:wb", "agent-reach"],
+      "微信公众号": ["wechat-article-search(需Node)"],
       "新闻媒体": ["web_search", "web_fetch"],
       "榜单官网": ["web_fetch"]
     },
     "install": {
-      "agent-reach": "对agent说：帮我安装 Agent Reach：https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/install.md",
-      "media-crawler": "git clone https://github.com/NanmiCoder/MediaCrawler.git && pip install -r requirements.txt && playwright install",
-      "dianping-crawler": "git clone https://github.com/wongben/dianping-crawler.git"
+      "prereq": "export PATH=\"/Users/deuce/.local/bin:$PATH\"（uv 与 python3.12 所在目录）",
+      "agent-reach": "cd tools/agent-reach && uv tool install . && agent-reach doctor && agent-reach skill --install",
+      "media-crawler": "cd tools/media-crawler && uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -r requirements.txt && .venv/bin/playwright install chromium",
+      "dianping-crawler": "git clone --depth 1 https://github.com/wongben/dianping-crawler.git tools/dianping-crawler"
+    },
+    "environment_baseline": {
+      "measured_at": "2026-10-16",
+      "system_python": "3.9.6（不满足 MediaCrawler 的 requires-python>=3.11，勿直接建venv）",
+      "usable_python": "/Users/deuce/.local/bin/python3.12 (3.12.15)",
+      "uv": "0.12.23",
+      "node": "未安装 → wechat-article-search 不可用",
+      "media_crawler": "✅ 已装：venv(py3.12)+依赖完整+chromium已落地；CLI 可运行；支持 xhs/dy/ks/bili/wb/tieba/zhihu；仍需人工扫码登录存 cookie",
+      "agent_reach": "⚠️ v1.5.0 已装于 /Users/deuce/.local/bin；doctor 实测 4/16 通路可用（B站/Jina Reader/V2EX/RSS）；小红书需 Cookie-Editor 手动导出；不含抖音",
+      "dianping_crawler": "❌ 已克隆但无 Java/Maven，不可构建；点评走 agent-browser + web_search 降级",
+      "gh_cli": "未安装；仓库推送走 SSH（~/.ssh/ctfs_github，账号 huming0018-dot）"
     },
     "tech_rules": [
       "同平台请求间隔≥3s，单任务≤50页，失败退避30s×3",
       "登录态cookie只存本地，不进仓库",
       "仅学习研究用途，不商用不大规模爬取",
       "原始数据与清洗结果分离落盘，可追溯",
-      "单通路失败降级备选并在notes记录"
+      "单通路失败降级备选并在notes记录",
+      "依赖缺失时必须显式告知用户降级方案，禁止静默降级"
     ]
   },
   "validation_rules": {
@@ -103,7 +121,7 @@
     "system": "调研类任务遵守food-radar规范：双信源+当年日期；核对发布日期；上榜≠在营须核查闭店；信源分级S>A>B>C；拿不到填null禁止编造；输出必带sources与confidence"
   },
   "checklist_summary": [
-    "准备：城市/时间窗/品类确认；对标解码；node/python自检；关键词矩阵≥6组",
+    "准备：城市/时间窗/品类确认；对标解码；已跑preflight.sh且阻塞项已补齐或已告知降级；关键词矩阵≥6组",
     "检索：web_search≥8组；高价值页fetch读原文记日期；微信检索≥2组；deep模式加agent-reach/media-crawler/agent-browser",
     "校验：日期显式；双信源；在营核查；数值带来源；软文未直接引用",
     "输出：JSON必填齐全；分两类+口碑证据+合作切入点；已剔除区；假设声明",
@@ -121,6 +139,23 @@
       "date": "2026-10-16",
       "case": "对标物'永和遇外滩'公开渠道检索不到",
       "fix": "显式声明假设并请用户确认，不得默认"
+    },
+    {
+      "date": "2026-10-16",
+      "case": "tools/ 下三个工具'已克隆'但均不可运行：MediaCrawler 用系统 python3.9 装不上（需>=3.11）、无 playwright 浏览器；agent-reach 未安装；dianping-crawler 无 Java/Maven",
+      "root_cause": "把'仓库已克隆'误当'工具可用'，缺少开工前的环境自检环节",
+      "fix": "新增 Step 0 环境自检与 references/environment.md 实测基线、scripts/preflight.sh；agent-reach 改用 uv tool install，MediaCrawler 改用 uv venv --python 3.12 + playwright install chromium",
+      "residual_gaps": [
+        "小红书 agent-reach 通路需Cookie-Editor 手动导出 xhs cookie（无法自动完成）",
+        "抖音必须走 MediaCrawler dy 平台，agent-reach 不覆盖",
+        "点评因无 JDK/Maven 暂不可构建，走 agent-browser + web_search 降级",
+        "node 缺失致 wechat-article-search 不可用"
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "case": "preflight.sh 用 command -v java 判定 JDK 存在，macOS 的 /usr/bin/java 存根在无 JRE 时仍返回 0，导致误报 OK",
+      "fix": "改为匹配 java -version 输出中的版本号字符串（grep -qE 'version \"[0-9]'）才判定可用"
     }
   ],
   "reuse_guide": "换城市/品类：复制skill目录→改keyword-matrix.yaml变量→按城市替换信源清单→首跑standard深度建基线→之后走每日增量模式→每次实战后追加信源与踩坑"

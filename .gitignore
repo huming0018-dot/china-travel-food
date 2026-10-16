@@ -149,3 +149,7 @@ research/atlas/residual*.json
 
 # === 登录二维码（敏感，禁止入库）===
 research/atlas/qr/
+
+# === food-radar 第三方工具与虚拟环境（体积大，各自有许可，不入库）===
+skills/food-radar/tools/
+skills/food-radar/data/
