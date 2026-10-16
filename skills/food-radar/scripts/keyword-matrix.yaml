@@ -1,0 +1,24 @@
+# food-radar 关键词矩阵模板
+# 用法：按 city 替换变量，每个 cell 生成至少 1 条查询；time_words 与 event_words 交叉组合。
+# 示例为上海×潮汕菜场景，换城市/品类只改 variables。
+
+variables:
+  city: 上海
+  categories: [潮汕菜, 福建菜, 法餐, bistro, 粤菜]
+  time_words: [2026, 近3个月, 近6个月, 10月, 9月]
+  event_words: [新开, 首店, 试营业, 联弹, 客座, 快闪, 晚宴, 闭店, 停业, 退出上海]
+
+query_templates:
+  - "{city} {category} 新开 首店 {time_word}"
+  - "{city} {category} 主厨 履历 米其林 黑珍珠 {time_word}"
+  - "{city} 餐厅 联弹 客座 快闪 晚宴 {time_word}"
+  - "{city} {category} 闭店 停业 退出"
+  - "{city} {category} 大众点评 必吃榜 2026"
+  - "{city} 黑珍珠 米其林 2026 榜单"
+  - "{category} 上海 小红书 探店 {time_word}"
+  - "{city} {category} 抖音 打卡 {time_word}"
+
+minimum_coverage:
+  web_search_queries: 8
+  wechat_queries: 2
+  deep_channels: [小红书, 抖音, B站, 微博, 大众点评]
