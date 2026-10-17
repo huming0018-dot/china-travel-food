@@ -433,3 +433,63 @@ class MergeAddedTest(unittest.TestCase):
         self.assertEqual(len(out), 1, out)
         self.assertEqual(out[0]["price_cny"], 2980.0)
         self.assertIn("\u5c71\u6c34\u5165\u5e2d", out[0]["set"])
+
+
+class DomStrictParseTest(unittest.TestCase):
+    """DOM 解析必须逐字段校验形状——2026-10-18 实测宽松选择器曾把
+    '38人推荐' 当成评价数，属静默造假。此类值必须被丢弃。"""
+
+    def _page(self, mapping):
+        class N:
+            def __init__(self, v): self.v = v
+            async def inner_text(self): return self.v
+        class P:
+            async def query_selector(self, sel):
+                return N(mapping[sel]) if sel in mapping else None
+        return P()
+
+    def _run(self, page):
+        import asyncio
+        from dianping_fetch import parse_detail_dom
+        return asyncio.run(parse_detail_dom(page))
+
+    def test_rejects_wrong_shape_values(self):
+        r = self._run(self._page({
+            "#comment_score .score": "4.7",
+            "#reviewCount": "38人推荐",          # 形状不符
+            "#addressTxt": "北外滩街道,新建路200号国华金融中心P1-L4",
+            ".avg-price-title": "人均￥388",
+        }))
+        self.assertEqual(r["score"], 4.7)
+        self.assertIsNone(r["review_count"])            # 关键：不能接受 "38人推荐"
+        self.assertIn("新建路200号", r["address"])
+        self.assertEqual(r["price"], 388.0)
+
+    def test_score_range_and_price_bounds(self):
+        r = self._run(self._page({"#comment_score .score": "9.9",
+                                  ".avg-price-title": "人均￥99999999"}))
+        self.assertIsNone(r["score"])                   # >5 丢弃
+        self.assertIsNone(r["price"])                   # 超界丢弃
+
+    def test_address_must_look_like_an_address(self):
+        r = self._run(self._page({"#addressTxt": "查看地图"}))
+        self.assertIsNone(r["address"])
+
+    def test_always_flags_visual_verification(self):
+        r = self._run(self._page({}))
+        self.assertTrue(r["requires_visual_verification"])
+        for k in ("name", "score", "price", "review_count", "address", "open_time"):
+            self.assertIsNone(r[k])
+
+    def test_merge_prefers_dom_then_falls_back(self):
+        from dianping_fetch import merge_detail
+        merged = merge_detail(
+            {"name": None, "score": 4.7, "price": None, "review_count": None,
+             "address": "A", "open_time": None, "parser": "dom-strict-v1"},
+            {"name": "文本名", "score": None, "price": 388.0, "review_count": 98,
+             "address": None, "open_time": "11:30-14:00"})
+        self.assertEqual(merged["score"], 4.7)           # DOM 优先
+        self.assertEqual(merged["price"], 388.0)         # DOM 缺 → 文本兜底
+        self.assertEqual(merged["name"], "文本名")
+        self.assertEqual(merged["address"], "A")
+        self.assertTrue(merged["requires_visual_verification"])

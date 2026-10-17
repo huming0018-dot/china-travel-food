@@ -54,6 +54,85 @@ def parse_detail(text, html=None):
     return result
 
 
+async def parse_detail_dom(page):
+    """DOM 优先解析。**每个字段独立校验形状**，不合形状即丢弃。
+
+    2026-10-18 实测（真实点评页）：DOM 选择器命中 2/5（score、address），
+    文本锚定命中 0/5；而宽松选择器 `[class*=comment]` 曾把"38人推荐"
+    当成评价数——这正是"智能兜底变静默造假"。故：
+      · 数值字段必须有形状校验（分数 0–5、评价数为纯数字）
+      · 形状不符一律丢弃，不"就近取值"
+      · DOM 全失败时由调用方回退 parse_detail(text)
+    返回值固定带 requires_visual_verification=True。
+    """
+    async def pick(sels):
+        for s in sels:
+            try:
+                n = await page.query_selector(s)
+            except Exception:
+                continue
+            if n:
+                try:
+                    v = (await n.inner_text()).strip()
+                except Exception:
+                    continue
+                if v:
+                    return v
+        return None
+
+    out = {}
+
+    raw = await pick(["#comment_score .score", ".comment-score .score", "h1 ~ div [class*=score]"])
+    if raw:
+        m = re.fullmatch(r"([0-5](?:\.\d)?)", raw)
+        if m:                      # 形状不符（如"38人推荐"）直接丢弃
+            out["score"] = float(m.group(1))
+        else:
+            out["score"] = None
+
+    raw = await pick(["#reviewCount", "[class*=comment] .review-num", ".review-num"])
+    if raw:
+        m = re.fullmatch(r"(\d+)\s*条?", raw)
+        if m:
+            out["review_count"] = int(m.group(1))
+        else:
+            out["review_count"] = None
+
+    raw = await pick(["#addressTxt", ".address"])
+    if raw and re.search(r"(路|街|道|大道)\s*\d+\s*[号弄]", raw):
+        out["address"] = raw
+    else:
+        out["address"] = None
+
+    raw = await pick(["[class*=avgPrice]", ".avg-price-title", "[class*=commentMean]"])
+    if raw:
+        m = re.search(r"(\d+(?:\.\d+)?)", raw)
+        if m and 0 < float(m.group(1)) < 100000:
+            out["price"] = float(m.group(1))
+        else:
+            out["price"] = None
+
+    for k in ("name", "score", "price", "review_count", "address", "open_time"):
+        out.setdefault(k, None)
+    out["parser"] = "dom-strict-v1"
+    out["requires_visual_verification"] = True
+    return out
+
+
+def merge_detail(dom, text_parsed):
+    """DOM 优先，缺失字段回退文本锚定解析。两边都没有就留None。"""
+    merged = {}
+    for k in ("name", "score", "price", "review_count", "address", "open_time"):
+        v = dom.get(k)
+        if v is None:
+            v = text_parsed.get(k)
+        merged[k] = v
+    merged["parser"] = dom.get("parser") if any(
+        dom.get(k) is not None for k in ("score", "address", "price")) else text_parsed.get("parser")
+    merged["requires_visual_verification"] = True
+    return merged
+
+
 def parse_recommended(text):
     """解析「网友推荐」菜名与推荐人数。只读可见文本，不扫隐藏内容。
 
@@ -152,7 +231,10 @@ async def run(args):
                     same = False
                 if same:
                     body_text = await page.locator("body").inner_text()
-                    detail = parse_detail(body_text)
+                    dom = await parse_detail_dom(page)
+                    detail = merge_detail(dom, parse_detail(body_text))
+                    detail["dom_fields"] = sorted(k for k in ("name","score","price","review_count","address","open_time")
+                                                 if dom.get(k) is not None)
                     detail["recommended_dishes"] = parse_recommended(body_text)
                     detail["group_buy"] = parse_group_buy(body_text)
                     detail["dish_layout"] = (

@@ -153,3 +153,7 @@ research/atlas/qr/
 # === food-radar 第三方工具与虚拟环境（体积大，各自有许可，不入库）===
 skills/food-radar/tools/
 skills/food-radar/data/
+
+# === food-radar 本地 SQLite 状态（含收藏/反馈/增量游标，不入库）===
+skills/food-radar/evidence/db/
+skills/food-radar/**/*.sqlite
