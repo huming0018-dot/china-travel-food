@@ -30,6 +30,25 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 2026-10-18（周日）02:00 自进化复盘 · 高德配额语义纠错 + ledger 并发锁 + 10021 退避（commit 06a2fd9 + 4a9b27e，lesson#100）
+- 采集/覆盖：active 1517 / total 1523（closed 6），连续无新增店（最后新店 10-03）；电话 87.5%(1328，较 10-16 净 +1) / 坐标 99.9%(1516) / 营业时间 66.3%(1006) / score_taste 30.2%(458)；reviews 2648，**10-16/17/18 三天 reviews 增量均为 0**（登录闸 + Apify 付费闸闭合，符合 lesson#92）；production_model 仍 820 None。
+- 进程：容器 food-cloud Up 23h（10-17 约 03:00 重启过一次，dc5ace5 跨 restart 存活）、searxng Up 23h；cron(PID 99)、gap_pool(PID 137，6 槽) 存活，36 条 crontab 齐全，router/phone_fill/amap_fill/watchdog 日志活跃；coord_fill/hours_fill 每日 03:00/04:00 调度。
+- 三闸：登录闸 account_a=dead（双出口签名探测 -100，web_session 过期，note=LANCE）/ account_b=parked（短信日配额超额，09-30 自动二维码重登，非 cookie 失效勿催），router 空转符合预期、不硬刷；配额闸腾讯单 key 日 dead（state 457，10-19 00:00 解封）、高德 idx0 月满 4500、idx1 健康（本轮末 3442/4500，余 1058）。
+- 告警语义（均真晚高峰 idx1 日限，凌晨自愈，非探测误判）：amap_quota 10-17 22:15、default 21:01、phone_quota 23:45；coord_quota=10-01 等其余均历史键。
+- 根因（三重，官方文档 + 代码逐行 + live 实测坐实）：
+  1. **10044 日级被误判月锁**：高德官方 10044=USER_DAILY_QUERY_OVER_LIMIT 是账号维度【日】调用量超限（阈值内正常、次日自动开启），旧 map_quota 却当 monthly_quota 死到月初。晚高峰唯一健康 idx1 被真 10044 命中后整 key 标死、`_pool_remaining` 立即归 0，lesson#97 同店 while 退避第一次即 break（retry=0）→ phone_fill/amap_fill 断点 1929 起 **162 轮每轮第一家即停并告警**；凌晨日限随滚动解除自愈。
+  2. **ledger 并发 lost-update**：所有 MapQuota 实例临时新建，report 是"读快照→改内存→整文件覆盖"，os.replace 只防半截写、非乐观锁；多进程并发（phone/amap/router/watchdog/evidence）后写者拿旧快照覆盖，把 idx1 短暂 monthly 标记回滚成旧值 0/"" 并丢计数——解释"162 轮空转 + 三告警真实发生"却"事后看 ledger idx1 从未被标死"的矛盾。
+  3. **10021 新认知（修正早期"关键词级"猜测）**：官方 web-service 错误码页未列 10021；间隔 2.5s 查同词 3 次均 10000/0、20 个不同词无 sleep 连发 2.8s 约 50% 触发 10021——坐实它是**账号维度高频 QPS 突发的瞬时软限流**，非固定关键词、非配额。旧代码归 error 白烧月桶（100 家 idx1 +155），且限流空结果被当无匹配跳过（漏数据）。
+- 修复（06a2fd9 核心 + 4a9b27e 10021，已 push origin/main、容器与构建上下文同步、9 场景回归 + 真机端到端）：
+  - report 高德按官方语义重排：**10044/10003→dead_reason=daily_quota（次日 0 点，月桶照常 +1，不锁月初）**；新增 **10004/10021→瞬时 QPS（月桶回退不耗、不标死、rate）**；10007 维持 auth 30min 不耗桶；block_reason(amap/search) 以 monthly_quota 为窗口硬耗尽，daily_quota 自动落 transient。
+  - 新增 `_LedgerLock`（fcntl.flock LOCK_EX，锁文件 ledger.json.lock）：acquire/report 全程持锁、锁内 reload+roll+只 merge 本 key，HTTP 在锁外，根治 lost-update。
+  - `_roll_windows(persist=...)`：日滚清 daily_quota、月滚清 monthly_quota，月桶计数保留（次日自愈、月护栏不丢）。
+  - 失败落盘 `map_quota_failures.jsonl`（每行 {ts,provider,idx,interface,code,infocode,result}），补齐无时间戳日志无法还原失败码的盲区。
+  - call() 对高德 10004/10021 **同 key 递增退避（0.8s/1.6s）后重试**，不重新 acquire（换 key 仍属同账号、不降 QPS 且放大并发）。
+- 验证：合成账本 9 场景全过（10044 日级 transient、10004/10021 不耗桶不标死、idx0 月满选 idx1、腾讯 121、次日 roll 清 daily 保月桶、并发不回滚、fail log、call 退避重试成功月桶只计成功）；真机新代码手跑 phone_fill 100 家（查询 100/跳过 100/0 提前终止，断点 1570）、amap_fill --apply --limit 6（新调用 6/用缓存 65/未匹配 2/0 提前终止；修复前恒"新调用 1、必停"）；20 连发退避后 **20/20 全 10000、月桶恰 +20**（修复前约 50% 10021 白烧）。
+- 业务边界（非本机制，宁空不假）：剩余 id>1938 高端/私房菜（地址"预约后告知"）高德查不到电话；重置后低 id 连锁/小吃店（哲平鳗满、天天天妇罗、丸龟制面低频均 10000/0）高德/腾讯无数据；amap_fill 545 候选主要缺营业时间，高德 text(extensions=all) 给不出，归 G2 需官方/美团替代源。
+- 待办：① 腾讯单 key 日上限 ~440-457 次即 121、唯一内置 fallback key 是单点，待人工加 key；② 高德 idx0 账号 A 月满、idx1 账号 B 月度瓶颈（3442/4500），月底真满需加 key/月初；③ map_helpers._QUOTA_INFOCODES 未含 10004/10021（已在 call() 层退避，极端由 lesson#97 while 兜底，后续可同步）；④ account_a 需扫码重登、account_b 短信配额（非 cookie）；⑤ G2 待健康小红书账号/Apify 充值、hours 替代源；Supabase 免费额度 11-11 受限、腾讯云搬家方案待出。
+
 ### 2026-10-16（周五）02:00 自进化复盘 · 地图配额早退二次加固（commit dc5ace5，lesson#97/#99）
 - 采集/覆盖：active 1517 / total 1523，连续无新增店（最后新店 10-03）；电话 87.5%(1327) / 坐标 99.9%(1516) / 营业时间 66.3%(1006) / score_taste 30.2%(458)；reviews 2648、当日 0（10-13/14/15 均 0，登录闸+付费闸闭合）；production_model 仍 820 None；updated_at 10-14 更新 1126 店、10-15 更新 391 店（字段填充非新增）。
 - 进程：cron(PID99)、gap_pool(PID136/137，6 槽) 存活，36 条 crontab 齐全；watchdog 每轮 pool_alive、无新错误；unknown=双出口探测噪声（lesson#82/92），router 读 cookie_pool_state 不受影响。
