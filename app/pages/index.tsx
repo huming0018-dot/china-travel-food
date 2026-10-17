@@ -154,6 +154,7 @@ export default function Home() {
             <span className="kicker text-mocha-faint hidden sm:block ml-1">FOOD GUIDE</span>
           </Link>
           <nav className="flex items-center gap-7">
+            <Link href="/materials" className="text-sm text-mocha-soft hover:text-terracotta transition">项目资料</Link>
             <Link href="/restaurants" className="text-sm text-mocha-soft hover:text-terracotta transition">全部餐厅</Link>
             <Link href="/chefs" className="text-sm text-mocha-soft hover:text-terracotta transition">主厨</Link>
             <Link href="/groups" className="text-sm text-mocha-soft hover:text-terracotta transition">集团</Link>

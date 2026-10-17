@@ -18,18 +18,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 获取当前会话
+    let active = true;
+    let authEvents = 0;
+    // A newer auth event is authoritative over an earlier getSession result.
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!active || authEvents) return;
+      setUser(session?.user ?? null);
+      setLoading(false);
+    }).catch(() => {
+      if (active && !authEvents) setLoading(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!active) return;
+      authEvents++;
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
-    // 监听认证状态变化
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
+    return () => { active = false; subscription.unsubscribe(); };
   }, []);
 
   const signIn = async (email: string, password: string) => {

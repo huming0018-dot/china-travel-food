@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { supabase } from '@/lib/supabase';
@@ -8,33 +8,48 @@ export default function AuthCallback() {
   const [status, setStatus] = useState<'loading' | 'error'>('loading');
   const [message, setMessage] = useState('正在登录...');
 
+  const redirected = useRef(false);
+  const codeRequest = useRef<{ code: string; promise: ReturnType<typeof supabase.auth.exchangeCodeForSession> } | null>(null);
+
   useEffect(() => {
-    // 处理 ?code=xxx 格式的魔法链接回调
+    if (!router.isReady) return;
+    let active = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const finish = () => {
+      if (!active || redirected.current) return;
+      redirected.current = true;
+      if (timer !== undefined) clearTimeout(timer);
+      void router.replace('/');
+    };
+    const failed = (message: string) => {
+      if (!active || redirected.current) return;
+      setStatus('error'); setMessage(message);
+    };
     const { code } = router.query;
-    if (code && typeof code === 'string') {
-      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
-        if (error) {
-          setStatus('error');
-          setMessage(`登录失败：${error.message}`);
-        } else {
-          router.replace('/');
-        }
-      });
-    } else {
-      // 有些版本会用 #access_token= 格式
-      supabase.auth.onAuthStateChange((event, session) => {
-        if (session) {
-          router.replace('/');
-        }
-      });
-      // 如果没有 code 也没有 session，提示错误（卸载时清理定时器）
-      const timer = setTimeout(() => {
-        setStatus('error');
-        setMessage('未收到有效的登录凭证，请重试。');
-      }, 5000);
-      return () => clearTimeout(timer);
+    if (typeof code === 'string' && code) {
+      // Reuse an in-flight redemption if React restarts this effect.
+      if (!codeRequest.current || codeRequest.current.code !== code) {
+        codeRequest.current = { code, promise: supabase.auth.exchangeCodeForSession(code) };
+      }
+      codeRequest.current.promise.then(({ error }) => {
+        if (error) failed(`登录失败：${error.message}`);
+        else finish();
+      }).catch(() => failed('登录暂时不可用，请重试。'));
+      return () => { active = false; };
     }
-  }, [router]);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) finish();
+    });
+    timer = setTimeout(() => failed('未收到有效的登录凭证，请重试。'), 5000);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) finish();
+    }).catch(() => failed('登录暂时不可用，请重试。'));
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+      if (timer !== undefined) clearTimeout(timer);
+    };
+  }, [router.isReady, router.query.code, router]);
 
   return (
     <div className="min-h-screen bg-cream-50 flex items-center justify-center px-6">
