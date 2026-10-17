@@ -1,105 +1,79 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""大众点评采集器（Playwright 直采）
-
-前置条件
---------
-- 需要 playwright（可复用 media-crawler 的 venv）
-- 需一次人工登录，登录态落盘到<skill>/browser_data/dianping_user_data_dir/
-- 必须 headless=False：无头会被识别并返回 no-result 模板
-- 必须等待 9-11 秒：结果为懒加载
-
-城市 ID
--------
-  1=上海 2=北京 3=广州 10=杭州 16=深圳
-换城市只需 --city 传数字；未收录城市返回 0 个商户属正常。
-
-踩坑记录
---------
-1. wongben/dianping-crawler 的 mapi.dianping.com/searchshop.json 已 403，该
-   2017 年项目彻底失效，不要再用。
-2. curl 直连 www.dianping.com 均 302 跳风控。
-3. .no-result（"商户没有被收录？添加商户"）是常驻模板，永远存在于 DOM，
-   不能用它判断无结果——会误判。正确判据：是否搜到 a[href*='/shop/']。
-4. div.shop-wrap 是已下线的历史类名，真实结果在 a[href*='/shop/'] 所在卡片。
-5. JSHandle.as_element() 是同步方法，返回 ElementHandle|None，不能加 await
-   （加了会抛 "object ElementHandle can't be used in 'await' expression"）。
-6. m.dianping.com 移动端未登录静默跳 /error/error_page，标题仍是"大众点评网"，
-   必须检测最终 URL。
-7. 详情页首屏信息不在 innerText 前段，需截图或正则兜底。
-
-用法
-----
-    python dianping_fetch.py --keyword 当霁 --city 1 --detail --out dp.json
-"""
+#!/usr/bin/env python3
+"""Optional visible-page Dianping adapter; no cookie export or automatic login."""
 import argparse
 import asyncio
+import hashlib
 import json
+import os
 import re
-from datetime import date
+import sys
+from datetime import datetime
 from pathlib import Path
-from urllib.parse import quote
-
-from playwright.async_api import async_playwright
-
-UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36")
-
-# 与 preflight.sh / media-crawler 同一约定：<skill>/browser_data/<平台>_user_data_dir
-PROFILE = Path(__file__).resolve().parent.parent / "browser_data" / "dianping_user_data_dir"
-
-SHOP_HREF = re.compile(r"/shop/([A-Za-z0-9]+)")
-CITY_ID = {"上海": 1, "北京": 2, "广州": 3, "杭州": 10, "深圳": 16}
+from urllib.parse import quote, urljoin, urlsplit
+from zoneinfo import ZoneInfo
 
 
-def parse_detail(text: str, html: str) -> dict:
-    """多级正则兜底，取不到就 None，绝不编造。已解除城市/行政区硬编码。"""
-    flat = re.sub(r"<[^>]+>", " ", html)
+def profile_path(root, surface, actor):
+    if not surface or not actor:
+        raise ValueError("trusted surface and actor are required")
+    key = hashlib.sha256(json.dumps([surface, actor], ensure_ascii=False).encode()).hexdigest()
+    return Path(root) / "profiles" / key / "dianping"
 
-    def g(*pats):
-        for p in pats:
-            m = re.search(p, text) or re.search(p, flat)
-            if m:
-                return (m.group(1) if m.groups() else m.group(0)).strip()
-        return None
 
-    m3 = (re.search(r"口味[:：]?\s*([\d.]+)\s*环境[:：]?\s*([\d.]+)\s*服务[:：]?\s*([\d.]+)", text)
-          or re.search(r"口味[:：]?\s*([\d.]+)\s*环境[:：]?\s*([\d.]+)\s*服务[:：]?\s*([\d.]+)", flat))
-    return {
-        # 评分只认显式"X.X 分数"标记。
-        # 曾尝试用"临近评价数的浮点数"兜底，但会误抓 环境/服务 分项分数，
-        # 按 field-spec"拿不到填 null，禁止估算"原则，宁缺毋滥。
-        "score": g(r"([0-5]\.\d)\s*分数"),
-        "review_count": g(r"(\d+)\s*条评价"),
-        "avg_price": g(r"¥\s*(\d+)\s*/人", r"人均\s*[¥￥]\s*(\d+)"),
-        "taste_env_service": ("口味%s/环境%s/服务%s" % m3.groups() if m3 else None),
-        "honor": g(r"([\u4e00-\u9fa5]{2,8}(?:区|县)[\u4e00-\u9fa5A-Za-z0-9]{0,12}榜[^\n<>]{0,10})"),
-        "open_time": g(r"营业时间[:：]?\s*([\d:]+[-–][^\n<]{2,30})"),
-        # 非贪婪 + 不跨空白/标点，避免吞入相邻字段；号/弄 两种门牌都要覆盖
-        "address": g(r"([^\s\n<>，,]{0,18}?(?:路|街|道|大道)\s*\d+\s*[号弄][^\s\n<>，,]{0,20})"),
-        "metro": g(r"(地铁[^\n<]{2,40}步行[0-9]+m)"),
+def shop_url(value):
+    u = urlsplit(urljoin("https://www.dianping.com", value))
+    if u.scheme != "https" or u.hostname != "www.dianping.com" or u.username or u.password or u.port:
+        raise ValueError("only canonical Dianping shop URLs are accepted")
+    m = re.fullmatch(r"/shop/([A-Za-z0-9]+)/?", u.path)
+    if not m:
+        raise ValueError("not a Dianping shop URL")
+    return "https://www.dianping.com/shop/" + m[1]
+
+
+def parse_detail(text, html=None):
+    # Deliberately do not scan hidden HTML, scripts or unlabeled numbers.
+    patterns = {
+        "score": r"^\s*([0-5]\.\d)\s*分数\s*$",
+        "price": r"^\s*人均\s*[:：]?\s*[¥￥]\s*(\d+(?:\.\d+)?)",
+        "review_count": r"^\s*(\d+)\s*条评价\s*$",
+        "address": r"^\s*地址\s*[:：]\s*([^\n]+)",
+        "open_time": r"^\s*营业时间\s*[:：]\s*([^\n]+)",
     }
+    result = {}
+    for key, pattern in patterns.items():
+        match = re.search(pattern, text, re.M)
+        result[key] = match[1].strip() if match else None
+    for key in ("score", "price"):
+        if result[key] is not None:
+            result[key] = float(result[key])
+    if result["score"] is not None and result["score"] > 5:
+        result["score"] = None
+    if result["review_count"] is not None:
+        result["review_count"] = int(result["review_count"])
+    result.update(parser="visible-labelled-text-v2", requires_visual_verification=True)
+    return result
 
 
-def _parse_dishes(text):
-    """解析「网友推荐」。兼容两列布局（votes 块 + 菜名块）与单列交错布局。
+def parse_recommended(text):
+    """解析「网友推荐」菜名与推荐人数。只读可见文本，不扫隐藏内容。
 
-    注意：配对正则里必须用 [ \\t]* 而非 \\s*，否则 \\s 会吃掉换行，
-    造成「17人推荐」与下一行「16人推荐」跨行误配。
+    点评该区块是两列布局：可见文本会先读完所有"N人推荐"，再读完所有菜名，
+    逐行配对会错位（把"16人推荐"当成菜名）。因此分派三种布局：
+      A1 同行："17人推荐 玛德琳"
+      A2 竖排相邻：votes 在上一行、菜名在下一行
+      B  两列：先全部 votes，再全部菜名
+    注意：配对正则里必须用 [ \\t]* 而非 \\s*，否则 \\s 会吃掉换行造成跨行误配。
     """
-    # 布局A：单列交错（同一行内「N人推荐 菜名」或紧邻下一行）
     paired = re.findall(r"(\d+)\s*人推荐[ \t]*([^\n]{1,20}?)[ \t]*$", text, re.M)
     paired = [(v, n) for v, n in paired if "人推荐" not in n]
     if len(paired) >= 2:
         return [{"name": n.strip(), "votes": int(v)} for v, n in paired]
 
-    # 布局A2：竖排相邻（"17人推荐"在上一行，菜名在下一行）
     stacked = re.findall(r"(\d+)\s*人推荐\n([^\n]{1,24}?)[ \t]*$", text, re.M)
     stacked = [(v, n) for v, n in stacked if "人推荐" not in n]
     if len(stacked) >= 2:
         return [{"name": n.strip(), "votes": int(v)} for v, n in stacked]
 
-    # 布局B：两列（先读完所有"N人推荐"，再读完所有菜名）
     votes = [int(x) for x in re.findall(r"(\d+)\s*人推荐", text)]
     if not votes:
         return []
@@ -110,90 +84,120 @@ def _parse_dishes(text):
     return [{"name": names[i], "votes": votes[i]} for i in range(min(len(names), len(votes)))]
 
 
-async def search(page, kw, city_id):
-    url = "https://www.dianping.com/search/keyword/%d/0_%s" % (city_id, quote(kw))
-    print("[1] 搜索: %s (cityid=%d)" % (kw, city_id))
-    await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-    await page.wait_for_timeout(9000)
-    for _ in range(2):
-        await page.mouse.wheel(0, 300)
-        await page.wait_for_timeout(1000)
-    links = await page.query_selector_all("a[href*='/shop/']")
-    print("[2] 搜到 %d 个商户" % len(links))
+def parse_group_buy(text):
+    """解析团购套餐：名称与到手价。
+
+    套餐名与其价格通常**不在同一行**（中间夹有效期/退款说明），
+    且 ¥ 与数字本身也可能被拆成两行（真实页面："¥\\n2980"）。
+    因此允许跨行但限定 120 字符，¥ 后允许空白，取套餐名后第一个 ¥。
+    只认可见文本中的「【…】」+ ¥数字。
+    """
     out = []
-    for a in links[:10]:
-        name = (await a.inner_text()).strip()
-        href = await a.get_attribute("href")
-        # as_element() 是同步方法，不能 await
-        li = await a.evaluate_handle("e=>e.closest('li')")
-        li = li.as_element()
-        card = (await li.inner_text()).replace("\n", " ").strip() if li else ""
-        m = SHOP_HREF.search(href or "")
-        out.append({"name": name, "shop_id": m.group(1) if m else None,
-                    "url": href, "card_text": card[:160]})
-        print("    -> %s | %s" % (name, card[:80]))
+    pat = r"(【[^】]{2,40}】[^\n]{0,30})[\s\S]{0,120}?¥\s*(\d+(?:\.\d+)?)"
+    for name, price in re.findall(pat, text):
+        out.append({"set": name.strip(), "price_cny": float(price)})
     return out
 
 
-async def detail(page, url):
-    print("[3] 详情页: %s" % url)
-    await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-    await page.wait_for_timeout(11000)
-    text = await page.evaluate("document.body.innerText")
-    html = await page.content()
-    d = parse_detail(text, html)
-    m = SHOP_HREF.search(url)
-    d["shop_id"] = m.group(1) if m else None
-    d["url"] = url
-    d["page_text"] = text[:600]
-    # 点评「网友推荐」是两列布局：innerText 会先读完所有"N人推荐"，
-    # 再读完所有菜名，逐行配对会错位（菜名变成"16人推荐"）。
-    # 因此先分别提取两个列表再按序 zip；若页面为单列交错则走配对正则。
-    d["recommended_dishes"] = _parse_dishes(text)
-    d["group_buy"] = [{"set": a, "price_yuan": int(b)}
-                      for a, b in re.findall(r"(【[^】]+】[^\n]{0,30})[^\n]*?¥(\d+)", text)]
-    await page.screenshot(path="/tmp/dp_detail.png")
-    return d
-
-
-async def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--keyword", required=True)
-    ap.add_argument("--city", default="上海", help="城市名或数字ID")
-    ap.add_argument("--detail", action="store_true")
-    ap.add_argument("--out", default="")
-    ap.add_argument("--shot", default="")
-    a = ap.parse_args()
-
-    city_id = CITY_ID.get(a.city)
-    if city_id is None:
+async def search(page, keyword, city_id, limit=10):
+    if city_id < 1 or not 1 <= limit <= 10:
+        raise ValueError("city_id must be positive and limit 1..10")
+    url = "https://www.dianping.com/search/keyword/%d/0_%s" % (city_id, quote(keyword, safe=""))
+    await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+    links = page.locator('a[href*="/shop/"]')
+    try:
+        await links.first.wait_for(state="attached", timeout=12000)
+        raw = await links.evaluate_all("(els) => els.slice(0,100).map(e => ({name:e.innerText.trim(),url:e.href}))")
+    except Exception:
+        return {"status": "channel_unverified", "reason": "login, challenge, layout or network; not proof of zero shops", "query_url": url, "results": []}
+    result, seen = [], set()
+    for row in raw:
         try:
-            city_id = int(a.city)
+            target = shop_url(row.get("url", ""))
         except ValueError:
-            ap.error("未知城市：%s（内置：%s，或直接传数字ID）"
-                     % (a.city, "/".join(CITY_ID)))
+            continue
+        name = str(row.get("name", "")).strip()
+        if name and target not in seen:
+            result.append({"name": name, "url": target})
+            seen.add(target)
+        if len(result) == limit:
+            break
+    return {"status": "observed" if result else "channel_unverified", "query_url": url, "results": result, "reason": None if result else "no usable visible shop links; not proof of zero shops"}
 
-    PROFILE.mkdir(parents=True, exist_ok=True)
+
+async def run(args):
+    try:
+        from playwright.async_api import async_playwright
+    except ImportError:
+        return {"status": "dependency_missing", "fallback": "use host public search; optional Playwright adapter unavailable"}
+    profile = profile_path(args.data_dir, args.surface, args.actor)
+    profile.mkdir(parents=True, exist_ok=True, mode=0o700)
+    os.chmod(profile, 0o700)
     async with async_playwright() as p:
-        ctx = await p.chromium.launch_persistent_context(
-            str(PROFILE), headless=False, user_agent=UA,
-            viewport={"width": 1440, "height": 900}, locale="zh-CN")
-        page = ctx.pages[0] if ctx.pages else await ctx.new_page()
-        shops = await search(page, a.keyword, city_id)
-        if a.shot:
-            await page.screenshot(path=a.shot)
-        out = {"keyword": a.keyword, "city_id": city_id, "fetched_at": date.today().isoformat(),
-               "source": "dianping.com Playwright 直采（headful + 持久化登录态）",
-               "shops": shops}
-        if a.detail and shops:
-            out["detail"] = await detail(page, shops[0]["url"])
-        print(json.dumps(out, ensure_ascii=False, indent=2))
-        if a.out:
-            Path(a.out).write_text(json.dumps(out, ensure_ascii=False, indent=2),
-                                   encoding="utf-8")
-            print("[saved] %s" % a.out)
-        await ctx.close()
+        context = await p.chromium.launch_persistent_context(str(profile), headless=False, locale="zh-CN", viewport={"width":1280,"height":900})
+        try:
+            page = context.pages[0] if context.pages else await context.new_page()
+            if args.login:
+                await page.goto("https://www.dianping.com", wait_until="domcontentloaded")
+                print("请在独立浏览器窗口手动登录；完成后在此按回车。不会导出 Cookie。", file=sys.stderr)
+                await asyncio.to_thread(input)
+                result = {"status": "login_window_closed", "session_validity": "not_verified"}
+            elif args.shop_url:
+                url = shop_url(args.shop_url)
+                await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+                await page.wait_for_timeout(3000)
+                try:
+                    same = shop_url(page.url) == url
+                except ValueError:
+                    same = False
+                if same:
+                    body_text = await page.locator("body").inner_text()
+                    detail = parse_detail(body_text)
+                    detail["recommended_dishes"] = parse_recommended(body_text)
+                    detail["group_buy"] = parse_group_buy(body_text)
+                    detail["dish_layout"] = (
+                        "two_column" if len(detail["recommended_dishes"]) > 2 else "unknown")
+                    usable = any(detail[k] is not None for k in ("score","price","address","open_time"))
+                    result = {"status": "observed" if usable else "channel_unverified", "url": url, "detail": detail}
+                else:
+                    result = {"status": "channel_unverified", "url": url, "reason": "redirect/login/challenge; not closure evidence"}
+            else:
+                result = await search(page, args.keyword, args.city_id, args.limit)
+            result["observed_at"] = datetime.now(ZoneInfo("Asia/Shanghai")).isoformat()
+            return result
+        finally:
+            await context.close()
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    for key in ("data-dir","surface","actor"):
+        p.add_argument("--"+key, required=True)
+    choice = p.add_mutually_exclusive_group(required=True)
+    choice.add_argument("--keyword")
+    choice.add_argument("--shop-url")
+    choice.add_argument("--login", action="store_true")
+    p.add_argument("--city-id", type=int)
+    p.add_argument("--limit", type=int, default=10)
+    p.add_argument("--out")
+    args = p.parse_args()
+    if args.keyword and (not args.city_id or args.city_id < 1):
+        p.error("search requires a verified positive --city-id; never silently assumes Shanghai")
+    if not 1 <= args.limit <= 10:
+        p.error("--limit must be 1..10")
+    try:
+        result = asyncio.run(run(args))
+    except Exception as e:
+        result = {"status":"channel_unverified","error_type":type(e).__name__,"fallback":"host public search"}
+    output = json.dumps(result, ensure_ascii=False, indent=2)
+    if args.out:
+        path = Path(args.out)
+        with os.fdopen(os.open(path, os.O_WRONLY|os.O_CREAT|os.O_TRUNC, 0o600), "w") as f:
+            f.write(output+"\n")
+        os.chmod(path, 0o600)
+    print(output)
+    return 0 if result["status"] in ("observed","login_window_closed") else 2
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    raise SystemExit(main())

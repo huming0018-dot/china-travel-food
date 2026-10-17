@@ -1,74 +1,60 @@
 ---
 name: food-radar
-description: 本地新品/热门餐饮情报雷达。当用户想了解某城市最近新开的餐厅、主厨联弹晚宴、客座快闪（"飞行厨房"）、闭店预警，或需要做餐饮竞品/合作标的调研时使用。覆盖大众点评、小红书、抖音、B站、微博、微信公众号、新闻媒体等多通路检索，输出经时效与信源校验的结构化情报。触发词：新开餐厅、探店、美食情报、联弹、客座、快闪晚宴、黑珍珠、米其林、必吃榜、餐饮调研。
+description: 懂你口味的找店助手 + 餐饮新鲜事雷达。查新店/首店/联弹客座、按场景给短名单、维护想吃清单与反馈。
+version: v3.0
 ---
 
-# food-radar 本地新品餐饮情报雷达
+# food-radar · 食客助手
 
-## 适用场景
+**执行规程以 [PROPOSAL.md](PROPOSAL.md) 为准**（路由、食客判断、输出格式、安全边界）。本文件只做入口索引与本机环境说明。
 
-- "最近上海有什么新开的餐厅/口碑好"
-- "有没有主厨联弹、客座快闪（飞行厨房）活动"
-- 对标调研（给一个对标物，如"遇外滩的合作""头灶"）
-- 闭店/停业预警核查
-- 每日/每周餐饮情报抓取
+## 先读哪份
 
-## 核心工作流（五步，顺序不可乱）
+| 你要做的事 | 读 |
+|---|---|
+| 怎么判断、怎么输出、什么不做 | **[PROPOSAL.md](PROPOSAL.md)** |
+| 记录格式、字段、过期与冲突 | [references/data-contract.md](references/data-contract.md) |
+| 资深食客判断维度 | [references/diner-rubric.md](references/diner-rubric.md) |
+| 命令怎么敲 | [references/operations.md](references/operations.md) |
+| 校验铁律（含踩坑） | [references/validation.md](references/validation.md) |
+| 本机工具与实测状态 | [references/environment.md](references/environment.md) |
 
-### Step 1 对标解码
-把用户给的对标物翻译成可操作的筛选标准：
-- 拆解对标物的：菜系路线、主厨背景、价位带、荣誉（米其林/黑珍珠/亚洲50佳/必吃榜）、玩法（omakase/联弹/会员制）、稀缺性（预订难度）。
-- 产出筛选标准，写进输出里让用户确认口径。
+## 三层结构
 
-### Step 2 关键词矩阵
-按 `城市 × 品类 × 时间 × 事件类型` 组合，至少覆盖：
-- 时间：当年、近3个月、近6个月、上月
-- 事件：新开、首店、试营业、联弹、客座、快闪、晚宴、闭店、停业、退出
-- 品类：用户指定 + 对标物同类 + 当前热门（潮汕菜、福建菜、法餐、bistro 等）
+```
+Skill 层      PROPOSAL.md                 意图识别、检索编排、输出形态
+数据通路层    scripts/radar.py            记录引擎，纯标准库，零第三方依赖
+              scripts/dianping_fetch.py   点评采集（可选增强）
+              scripts/doctor.py           按需预检
+记录层        radar.py 的 SQLite          餐厅/活动/收藏/反馈，按 surface+actor 隔离
+```
 
-### Step 0 环境自检（不可跳过）
-先跑 `bash scripts/preflight.sh`。有阻塞项先补齐，**不要在依赖缺失时静默降级而不告知用户**。
-实测安装状态与踩坑见 `references/environment.md`。
+**登录采集是可选增强，不阻断主流程。** 公开搜索可用就开工。
 
-### Step 3 多通路检索（按优先级）
-1. **web_search / web_fetch**：官方媒体、政府号、行业媒体（开业事实最快最可靠）
-2. **wechat-article-search**：KOL 长文（周末做啥、食在十三等）— 依赖 Node
-3. **media-crawler**：小红书(`xhs`)/抖音(`dy`)/B站/微博/知乎批量抓取（扫码登录，登录态持久化）— **抖音唯一主通路**
-4. **agent-reach CLI**：B站、微博、Reddit、Twitter、GitHub 搜索；**Jina Reader 抓原文核对发布日期**（**不含抖音**；小红书需手动导 Cookie）
-5. **大众点评**：`scripts/dianping_fetch.py`（Playwright 直采，headful + 持久化登录态）→ 评分/人均/推荐菜/团购
-6. **agent-browser / playwright**：小红书详情页、点评兜底
-7. ~~**dianping-crawler**~~：**已失效**，依赖接口 403，勿再尝试构建
+## 本机三条通路
 
-各工具安装与用法见 `references/toolchain.md`；**已验证的安装状态与踩坑见 `references/environment.md`**。
+```bash
+bash scripts/preflight.sh --channel public     # 只查公开检索（默认，永远最简）
+bash scripts/preflight.sh --channel dianping   # 点评：需 Playwright + chromium
+bash scripts/preflight.sh --channel media      # 小红书/抖音：需 Node + MediaCrawler
+```
 
-### Step 4 时效与信源校验（铁律，违反即返工）
-- **任何"新开"结论必须有两个独立信源，且都带明确的当年日期。**
-- 文章必须核对**发布日期**，不能只看内容像"最近"。
-- 闭店/退出必须单独核查，上榜餐厅≠在营（见 `references/validation.md`）。
-- **否定结论必须有正向证据**：判断"没数据/被拦截/不存在"前，必须先证明采集通道本身是通的（用已知存在的实体做对照实验），且**用户/人工在页面上看到的内容优先级最高**——冲突时先查自己的假设。见 `references/validation.md` 第六节。
+按本次任务只查需要的通道。**缺一个可选工具不会让公开检索停工。**
 
-### Step 5 结构化输出与沉淀
-- 按 `references/field-spec.md` 输出 JSON/Markdown。
-- 通过 `references/validation.md` 全部硬规则后才交付。
-- 用户认可后，把方法论、信源、踩坑沉淀到长期记忆/知识库。
+## 三条不可妥协
 
-## 平台覆盖矩阵（2026-10-17 实测校准）
+1. **采集失败 ≠ 无餐厅 / 已闭店。** 统一返回 `channel_unverified`，并写明 `not proof of zero shops`。
+2. **"正在营业 / 有位 / 不用排队"是三件事**，分别标注；查不到就写 `未确认`，不编。
+3. **组合无解时直接说无解**，不硬凑平庸选项。
 
-| 平台 | 首选工具 | 实测状态 |
-|---|---|---|
-| 大众点评 | `scripts/dianping_fetch.py` | ✅ 评分/人均/推荐菜/团购 |
-| 小红书 | media-crawler `xhs`（扫码） | ✅ 笔记+评论 |
-| 抖音 | media-crawler `dy`（**需 Node**） | ✅ 视频+评论 |
-| B站 | agent-reach | ⚠️ 搜索可用 |
-| B站 | agent-reach | web_search |
-| 微博 | media-crawler / agent-reach | web_search |
-| 微信公众号 | wechat-article-search（独立 skill） | web_search |
-| 新闻/政府/行业媒体 | web_search + web_fetch | — |
-| 榜单官网 | web_fetch（米其林/黑珍珠/必吃榜） | web_search |
+## 本机实测状态（2026-10-18）
 
-> 依赖说明：`wechat-article-search` 为同机独立 skill（`~/.codebuddy/skills/wechat-article-search/`）；media-crawler / agent-reach / dianping-crawler 需按 `references/toolchain.md` 自行克隆安装，本仓库不含 tools/。
+| 通路 | 状态 |
+|---|---|
+| 公开搜索 | ✅ |
+| 大众点评 | ✅ 实测可用（当霁 4.7/98评/¥388、ONCUE 4.8/375评/¥1064 均由此采出） |
+| 抖音 | ✅ 需 Node（**JDK 无效**：Nashorn 已随 JDK 15+ 移除） |
+| 小红书 | ⚠️ 登录态已过期，需重扫 |
+| 定时订阅 | ❌ 未做。`changes` 只是增量日志，**不含调度器** |
 
-## 红线
-
-- 爬虫仅用于学习研究，控制频率，不商用、不大规模爬取（MediaCrawler 许可约束）。
-- 无法验证的信息必须标注 `confidence: low` 并向用户说明，不得装作确认。
+细节与踩坑见 `references/environment.md`。
