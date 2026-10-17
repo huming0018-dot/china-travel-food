@@ -12,7 +12,7 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   extendDefaultRuntimeCaching: true,
   workboxOptions: {
     disableDevLogs: true,
-    runtimeCaching: [{urlPattern: ({url}) => url.pathname === '/materials' || url.pathname.startsWith('/api/publications') || url.pathname.startsWith('/api/crowd/') || url.pathname.startsWith('/crowd/releases/'), handler: 'NetworkOnly', options: {cacheName: 'crowd-network-only'}}],
+    runtimeCaching: [{urlPattern: ({url}) => url.pathname === '/materials' || url.pathname.startsWith('/api/publications') || url.pathname.startsWith('/api/crowd/') || url.pathname.startsWith('/crowd/releases/') || (url.protocol === 'https:' && url.host === 'bdwrhshgdeghgyzwpxnl.supabase.co' && url.pathname.startsWith('/storage/v1/object/sign/crowd-publication-snapshots/')), handler: 'NetworkOnly', options: {cacheName: 'crowd-network-only'}}],
   },
 });
 
@@ -31,6 +31,7 @@ const nextConfig = {
   },
   async headers() {
     return [
+      {source: '/materials', headers: [{key: 'Cache-Control', value: 'private, no-store, max-age=0'}]},
       {
         source: '/:path*',
         headers: [
