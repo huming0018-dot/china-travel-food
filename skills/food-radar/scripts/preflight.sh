@@ -39,7 +39,7 @@ echo "=============================================="
 echo "[1] 运行时"
 command -v uv >/dev/null 2>&1 && ok "uv $(uv --version 2>/dev/null | awk '{print $2}')" || bad "uv 未安装"
 [ -x /Users/deuce/.local/bin/python3.12 ] && ok "python3.12 $(/Users/deuce/.local/bin/python3.12 -V 2>&1 | awk '{print $2}')" || bad "python3.12 缺失（MediaCrawler 需 >=3.11）"
-command -v node >/dev/null 2>&1 && ok "node $(node -v)" || warn "node 未安装 → wechat-article-search 不可用"
+command -v node >/dev/null 2>&1 && ok "node $(node -v) → 抖音签名可用" || bad "node 未装 → 抖音签名将失败（execjs 需 Nashorn，JDK15+ 已移除，装 Java 无效）"
 
 echo "[2] MediaCrawler 运行环境"
 if [ -x "$MC/.venv/bin/python" ]; then
@@ -69,8 +69,17 @@ else
 fi
 
 echo "[5] 大众点评"
-warn "dianping-crawler 已失效（接口 403，见 environment.md 第五节），勿再构建"
-warn "当前方案：Playwright 浏览器访问点评页；精确数值拿不到填 null"
+DP="$SKILL_DIR/browser_data/dianping_user_data_dir"
+if [ -f "$DP/Default/Cookies" ]; then
+  tmp=$(mktemp /tmp/dp.XXXXXX.db); cp "$DP/Default/Cookies" "$tmp" 2>/dev/null
+  n=$(sqlite3 "$tmp" "SELECT COUNT(*) FROM cookies WHERE host_key LIKE '%dianping%' AND (length(value)>0 OR length(encrypted_value)>0);" 2>/dev/null)
+  rm -f "$tmp"
+  if [ "${n:-0}" -gt 0 ]; then ok "点评登录态有效（非空 cookie ${n}）"; else warn "点评登录态为空 → 需重新登录"; fi
+else
+  warn "点评无登录态目录 → 首次需人工登录一次（手机号+验证码）"
+fi
+if [ -f "$SKILL_DIR/scripts/dianping_fetch.py" ]; then ok "点评采集器就位"; else bad "缺少 scripts/dianping_fetch.py"; fi
+warn "注意：必须 headful + 持久化登录；选择器用 a[href*='/shop/']（div.shop-wrap 已失效）"
 
 echo "[6] Java 工具链（备用）"
 T="/Users/deuce/CodeBuddy/Claw/toolchain"

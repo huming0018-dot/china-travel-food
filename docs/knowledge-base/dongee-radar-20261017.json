@@ -92,13 +92,44 @@
             "定位约会餐厅（「约会天花板」「北外滩新晋宝藏dating餐厅」）"
           ]
         },
-        "dianping": null,
-        "note": "点评仍受阻，见 status"
+        "dianping": {
+          "fetched_at": "2026-10-17",
+          "shop_id": "H4GpiV5cA7moLb3r",
+          "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
+          "score": "4.7",
+          "review_count": 98,
+          "avg_price_yuan": 388,
+          "taste_env_service": "口味4.7/环境4.7/服务4.7",
+          "honor": "虹口区江浙菜新店榜·第1名",
+          "open_time": "11:30-14:00, 17:30-21:00",
+          "features": "有包间 · 有支付宝",
+          "address": "北外滩街道,新建路200号国华金融中心P1-L4",
+          "metro": "地铁1号线黄浦国际商厦站1号口步行540m",
+          "group_buy": [
+            {"set": "【四时风物】相遇江南双人宴", "price_yuan": 998, "list_price": 1465.2, "note": "今日可用·随时退·过期自动退"},
+            {"set": "【山水入席】江南相聚六人宴｜包厢可用", "price_yuan": 2980, "list_price": 4241.6, "note": "周一至周日·随时退·过期自动退"}
+          ],
+          "recommended_dishes": [
+            {"name": "杭椒萝卜干牛肉", "votes": 37},
+            {"name": "砂锅油盐焗东海小黄鱼", "votes": 36},
+            {"name": "酱卤酿鸽腿", "votes": 34},
+            {"name": "三伏酱油千刀肉", "votes": 26},
+            {"name": "紫苏话梅醋番茄", "votes": 24},
+            {"name": "当霁牛肉葱包烩", "votes": 18},
+            {"name": "火腿甲鱼烧豆面", "votes": 18},
+            {"name": "鱼子酱豆乳酥盒", "votes": 16},
+            {"name": "手钓墨鱼溏心蛋", "votes": 14},
+            {"name": "番茄蛋丝烧蝤蠓", "votes": 12}
+          ],
+          "recommended_dishes_total": 37,
+          "access_note": "大众点评无障碍登录态 profile 抓取；headful + 持久化登录"
+        },
+        "note": "三平台全覆盖"
       },
       "collection_status": {
-        "xhs": "✅ 扫码登录 + 采集完成（40 笔记 / 133 评论）",
-        "douyin": "✅ 需 Node 运行时生成签名，采集完成（69 条）",
-        "dianping": "❌ 反爬「验证中心」拦截，headless 与 headful 均被拦；需持久化登录态 + 人工过验证"
+        "xhs": "✅ 扫码登录 + 采集完成（40 笔记 / 133 评论 / 互动 11,910）",
+        "douyin": "✅ 需 Node 运行时生成签名，采集完成（69 条 / 互动 92,910）",
+        "dianping": "✅ 直采打通：headful + 持久化登录 + a[href*='/shop/'] 选择器；评分/人均/推荐菜/团购全部拿到"
       },
       "sibling_store": {
         "name": "潮玖（潮州菜 / 黑珍珠一钻 / 上海首店）",

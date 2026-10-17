@@ -35,8 +35,9 @@ description: 本地新品/热门餐饮情报雷达。当用户想了解某城市
 2. **wechat-article-search**：KOL 长文（周末做啥、食在十三等）— 依赖 Node
 3. **media-crawler**：小红书(`xhs`)/抖音(`dy`)/B站/微博/知乎批量抓取（扫码登录，登录态持久化）— **抖音唯一主通路**
 4. **agent-reach CLI**：B站、微博、Reddit、Twitter、GitHub 搜索；**Jina Reader 抓原文核对发布日期**（**不含抖音**；小红书需手动导 Cookie）
-5. **agent-browser / playwright**：大众点评店铺页、小红书详情页（点评无专用爬虫可用，见下）
-6. ~~**dianping-crawler**~~：**已失效**，依赖接口 403，勿再尝试构建
+5. **大众点评**：`scripts/dianping_fetch.py`（Playwright 直采，headful + 持久化登录态）→ 评分/人均/推荐菜/团购
+6. **agent-browser / playwright**：小红书详情页、点评兜底
+7. ~~**dianping-crawler**~~：**已失效**，依赖接口 403，勿再尝试构建
 
 各工具安装与用法见 `references/toolchain.md`；**已验证的安装状态与踩坑见 `references/environment.md`**。
 
@@ -44,19 +45,21 @@ description: 本地新品/热门餐饮情报雷达。当用户想了解某城市
 - **任何"新开"结论必须有两个独立信源，且都带明确的当年日期。**
 - 文章必须核对**发布日期**，不能只看内容像"最近"。
 - 闭店/退出必须单独核查，上榜餐厅≠在营（见 `references/validation.md`）。
+- **否定结论必须有正向证据**：判断"没数据/被拦截/不存在"前，必须先证明采集通道本身是通的（用已知存在的实体做对照实验），且**用户/人工在页面上看到的内容优先级最高**——冲突时先查自己的假设。见 `references/validation.md` 第六节。
 
 ### Step 5 结构化输出与沉淀
 - 按 `references/field-spec.md` 输出 JSON/Markdown。
 - 通过 `references/validation.md` 全部硬规则后才交付。
 - 用户认可后，把方法论、信源、踩坑沉淀到长期记忆/知识库。
 
-## 平台覆盖矩阵
+## 平台覆盖矩阵（2026-10-17 实测校准）
 
-| 平台 | 首选工具 | 备选 |
+| 平台 | 首选工具 | 实测状态 |
 |---|---|---|
-| 大众点评 | dianping-crawler + agent-browser | web_search 拿 UGC 摘要 |
-| 小红书 | media-crawler / agent-reach | web_search |
-| 抖音 | media-crawler / agent-reach | web_search |
+| 大众点评 | `scripts/dianping_fetch.py` | ✅ 评分/人均/推荐菜/团购 |
+| 小红书 | media-crawler `xhs`（扫码） | ✅ 笔记+评论 |
+| 抖音 | media-crawler `dy`（**需 Node**） | ✅ 视频+评论 |
+| B站 | agent-reach | ⚠️ 搜索可用 |
 | B站 | agent-reach | web_search |
 | 微博 | media-crawler / agent-reach | web_search |
 | 微信公众号 | wechat-article-search（独立 skill） | web_search |

@@ -1,6 +1,6 @@
 {
   "knowledge_id": "food-radar",
-  "version": "1.1",
+  "version": "1.2",
   "created_at": "2026-10-16",
   "updated_at": "2026-10-16",
   "title": "本地新品餐饮情报雷达（food-radar）方法论与规范",
@@ -21,7 +21,8 @@
       "references/checklist.md",
       "references/corrected-findings.md",
       "scripts/keyword-matrix.yaml",
-      "scripts/preflight.sh"
+      "scripts/preflight.sh",
+      "scripts/dianping_fetch.py"
     ]
   },
   "methodology": {
@@ -43,12 +44,12 @@
   "toolchain": {
     "preflight": "bash scripts/preflight.sh（开工必跑）",
     "platforms": {
-      "大众点评": ["dianping-crawler(需JDK+Maven)", "agent-browser(降级)"],
-      "小红书": ["media-crawler:xhs", "agent-reach(需手动导Cookie)"],
-      "抖音": ["media-crawler:dy（唯一主通路）"],
+      "大众点评": ["scripts/dianping_fetch.py（Playwright headful+持久化登录）", "web_search"],
+      "小红书": ["media-crawler:xhs（扫码）"],
+      "抖音": ["media-crawler:dy（需 Node 生成签名）"],
       "B站": ["agent-reach"],
       "微博": ["media-crawler:wb", "agent-reach"],
-      "微信公众号": ["wechat-article-search(需Node)"],
+      "微信公众号": ["wechat-article-search"],
       "新闻媒体": ["web_search", "web_fetch"],
       "榜单官网": ["web_fetch"]
     },
@@ -82,7 +83,8 @@
     "iron_rules": [
       {"id": 1, "rule": "双信源+日期：新开/在营结论必须两个独立信源且均带当年日期，否则confidence降medium并标注待核实"},
       {"id": 2, "rule": "发布日期核对：引用文章前必须核对并记录发布日期，禁止凭内容语感判断新旧"},
-      {"id": 3, "rule": "在营核查：上榜≠在营，交付前必须检索店名+闭店/停业/退出，有信号移入excluded"}
+      {"id": 3, "rule": "在营核查：上榜≠在营，交付前必须检索店名+闭店/停业/退出，有信号移入excluded"},
+      {"id": 4, "rule": "否定结论必须有正向证据：判断『没数据/被拦截/不存在』前，必须先证明采集通道本身可用（用已知存在的实体做对照实验），且禁止用『页面提示不存在』作为『数据不存在』的依据。用户/人工在页面上看到的内容优先级最高——与工具结论冲突时先查自己的假设", "added": "2026-10-17"}
     ],
     "conflict_resolution": "S>A>B>C；同级别取日期新者；仍冲突双方入notes并降一级",
     "numeric_rules": "评分/人均/榜单必须带来源平台+抓取日期，拿不到填null禁止编造；荣誉必须带年份"
@@ -146,16 +148,36 @@
       "root_cause": "把'仓库已克隆'误当'工具可用'，缺少开工前的环境自检环节",
       "fix": "新增 Step 0 环境自检与 references/environment.md 实测基线、scripts/preflight.sh；agent-reach 改用 uv tool install，MediaCrawler 改用 uv venv --python 3.12 + playwright install chromium",
       "residual_gaps": [
-        "小红书 agent-reach 通路需Cookie-Editor 手动导出 xhs cookie（无法自动完成）",
+        "小红书 agent-reach 通路需 Cookie-Editor 手动导出 xhs cookie（无法自动完成）",
         "抖音必须走 MediaCrawler dy 平台，agent-reach 不覆盖",
-        "点评因无 JDK/Maven 暂不可构建，走 agent-browser + web_search 降级",
-        "node 缺失致 wechat-article-search 不可用"
+        "点评已于 2026-10-17 改用 scripts/dianping_fetch.py 打通，不再是缺口",
+        "node 缺失致 wechat-article-search 不可用（已于同日装 Node 24.22.0 解决）"
       ]
     },
     {
       "date": "2026-10-16",
       "case": "preflight.sh 用 command -v java 判定 JDK 存在，macOS 的 /usr/bin/java 存根在无 JRE 时仍返回 0，导致误报 OK",
       "fix": "改为匹配 java -version 输出中的版本号字符串（grep -qE 'version \"[0-9]'）才判定可用"
+    },
+    {
+      "date": "2026-10-17",
+      "case": "【代价最大的一次误判】大众点评有结果页面被判定为『降级空壳页』，并据此建议用户放弃",
+      "root_cause": "用 .no-result 元素（文案『商户没有被收录？添加商户』）作为『无结果』判据，而该元素永远存在于 DOM 中；同时选择器 div.shop-wrap 是失效的历史类名，真实结果在 a[href*='/shop/']",
+      "cost": "连续 8 轮排查，错误结论『点评自动化不可行』差点被用户接受；一条实际可用的通路被误标为不可用",
+      "user_correction": "用户反问『我能在页面里看到当霁，你却拿不到数据』——人工观察优先级高于工具结论",
+      "fix": "改选择器为 a[href*='/shop/'] 后首次即通；沉淀为铁律4『否定结论必须有正向证据』+ 工程判据速查表",
+      "generalizable_lesson": "判定『不存在』要用目标内容的正向存在；页面里『无结果提示』常是常驻模板，不能当判据"
+    },
+    {
+      "date": "2026-10-17",
+      "case": "抖音 execjs 报『Unable to locate a Java Runtime』，安装 JDK 21 后依旧失败",
+      "root_cause": "execjs 依赖 Nashorn，而 Nashorn 已随 JDK 15+ 移除；Java 运行时在该链路上本就不可用",
+      "fix": "改装 Node 24.22.0 后 execjs eval 正常（返回 3），抖音采集成功 69 条。教训：按报错字面归因会绕远路，必须验证报错前提本身是否成立"
+    },
+    {
+      "date": "2026-10-17",
+      "case": "点评详情页 innerText 仅 542 字符，但截图完整呈现评分/人均/营业时间/推荐菜",
+      "fix": "改用正则+截图交叉提取。教训：单一通道（innerText）可能不完整，多模态交叉验证更可靠"
     }
   ],
   "reuse_guide": "换城市/品类：复制skill目录→改keyword-matrix.yaml变量→按城市替换信源清单→首跑standard深度建基线→之后走每日增量模式→每次实战后追加信源与踩坑"
