@@ -3,6 +3,46 @@
 > 实测日期：2026-10-17 ｜ 主机：macOS (darwin) ｜ 校验命令：`bash scripts/preflight.sh`
 >
 > 本文件记录**实际跑通过**的工具状态。凡与"应然"不符的，以本文件为准。
+>
+> ⚠️ **仓库不包含 `tools/`**（第三方克隆，体积大且各有许可）。任何 `cd tools/...` 的命令
+> 在全新克隆的仓库里都会失败。**必须先按第 0 节完成工具安装**，再执行后续步骤。
+> 本文件中的路径含作者本机绝对路径，换机器需自行替换（见第 0 节变量约定）。
+
+## 0. 变量约定（换机器先改这里）
+
+本文件以下路径为**作者本机实测值**，换机器请整体替换：
+
+| 变量 | 本机值 | 说明 |
+|---|---|---|
+| `$SKILL_DIR` | `~/.codebuddy/skills/food-radar/` | 技能根目录 |
+| `$TOOLCHAIN` | `~/CodeBuddy/Claw/toolchain/` | 手动安装的 Node/JDK/Maven |
+| `$PW_CACHE` | `~/Library/Caches/ms-playwright/` | Playwright 浏览器缓存 |
+
+> `preflight.sh` 中的 Chromium 检测写死了版本目录 `chromium-1248`。换 Playwright 版本后
+> 该检测会误报，属已知限制——以 `preflight.sh` 输出为准，不要据此判断浏览器未安装。
+
+## 〇、工具安装（仓库不含tools/，必做）
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+cd "$SKILL_DIR"
+
+# 1) MediaCrawler（小红书/抖音采集）
+git clone --depth 1 https://github.com/NanmiCoder/MediaCrawler.git tools/media-crawler
+cd tools/media-crawler
+uv venv --python 3.12 .venv                    # 必须 3.11+
+uv pip install --python .venv/bin/python -r requirements.txt
+.venv/bin/playwright install chromium
+cd ../..
+
+# 2) Agent-Reach（补搜通路）
+git clone --depth 1 https://github.com/Panniantong/agent-reach.git tools/agent-reach
+cd tools/agent-reach && uv tool install . && cd ../..
+
+# 3) 点评（Playwright 复用 media-crawler 的 venv 即可，无需额外装）
+```
+
+**外部依赖**：抖音签名需要 **Node**（见 3.5 节），`wechat-article-search` 需要同一份 Node。
 
 ## 一、总览（2026-10-17 实测）
 

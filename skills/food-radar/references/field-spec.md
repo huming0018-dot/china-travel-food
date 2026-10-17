@@ -40,8 +40,12 @@
 
 ## 三、枚举与硬约束
 
-- `type=closure_alert` 时 `status` 必须为 `closed`，且 `closed_date` 必填。
-- `confidence=high` 必须满足：≥2 个独立信源且均带当年日期，其中至少 1 个 S/A 级。
+- `type=closure_alert` 时**必须区分三种状态**，不得一律当作已关闭：
+  - `status=closed`（**已确认闭店**）：有 S 级或两个独立 A 级信源 → `closed_date` 必填
+  - `status=suspected`（**疑似停业**：长期无更新、仅单条 UGC 提及、员工/店主帖等弱信号）→ `closed_date` 为 `null`，必须写明触发怀疑的具体线索，**不得直接移出推荐位**
+  - `status=upcoming`（**已公告将关闭**：有明确关店时间或房东/官方公告）→ 可标注计划关店日期，与 `closed_date` 区分
+  - 原规范把三者强制合并为 `closed`，会把"疑似"误报成"事实"，已修订。
+- `confidence=high` 必须满足：≥2 个**独立**信源（同一通稿的转载不算独立）且落在查询时间窗内，其中至少 1 个 S/A 级。
 - `sources` 为空或 `confidence=low` 的条目禁止出现在正式推荐位，只能进"待核实"区。
 - 所有日期格式 ISO `YYYY-MM-DD`；抓取时间精确到日。
 - 禁止编造：评分、人均、榜单年份拿不到就 null + notes 说明。

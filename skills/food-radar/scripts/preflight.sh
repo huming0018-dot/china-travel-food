@@ -25,10 +25,12 @@ check_login() {
   cp "$db" "$tmp" 2>/dev/null || { warn "$plat cookie库不可读"; return; }
   n=$(sqlite3 "$tmp" "SELECT COUNT(*) FROM cookies WHERE name='$cookie' AND (length(value)>0 OR length(encrypted_value)>0);" 2>/dev/null)
   rm -f "$tmp"
+  # 注意：cookie 非空只证明"曾登录过且数据还在盘上"，不证明服务端会话仍有效。
+  # 权威判据是实际采一次并检查是否有数据落盘。
   if [ "${n:-0}" -gt 0 ]; then
-    ok "$plat 登录态有效（$cookie）"
+    ok "$plat 存在登录 cookie（$cookie）— 非空≠仍有效，以实采为准"
   else
-    warn "$plat 登录态无效/为空（$cookie）→ 需重新扫码"
+    warn "$plat 无 $cookie → 需重新扫码"
   fi
 }
 
@@ -74,7 +76,11 @@ if [ -f "$DP/Default/Cookies" ]; then
   tmp=$(mktemp /tmp/dp.XXXXXX.db); cp "$DP/Default/Cookies" "$tmp" 2>/dev/null
   n=$(sqlite3 "$tmp" "SELECT COUNT(*) FROM cookies WHERE host_key LIKE '%dianping%' AND (length(value)>0 OR length(encrypted_value)>0);" 2>/dev/null)
   rm -f "$tmp"
-  if [ "${n:-0}" -gt 0 ]; then ok "点评登录态有效（非空 cookie ${n}）"; else warn "点评登录态为空 → 需重新登录"; fi
+  if [ "${n:-0}" -gt 0 ]; then
+    ok "点评存在登录 cookie（${n} 个非空）— 注意：非空≠仍有效，需实采一次确认"
+  else
+    warn "点评无登录 cookie → 需人工登录一次"
+  fi
 else
   warn "点评无登录态目录 → 首次需人工登录一次（手机号+验证码）"
 fi
