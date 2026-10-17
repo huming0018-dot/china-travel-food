@@ -3,7 +3,10 @@
 """map_quota.py — 地图 API 配额仲裁 / 持久账本 / 统一 key 池 / POI 缓存（P1 核心）。
 
 为什么存在（见 references/map-quota-fix.md）：
-  - 高德「搜索」是【开发者账号·月】配额（个人 5000/月，10044=账号级），同账号多 key 不扩容；
+  - 高德「搜索」月桶护栏=个人 5000/月（控制台口径，同账号多 key 不扩容）；
+    但 10044=USER_DAILY_QUERY_OVER_LIMIT 是【账号维度·日】调用量超限（超出部分被拒、限流阈值内仍
+    正常、次日自动开启），10003=接口日配额（次日00:00 恢复），10004=ACCESS_TOO_FREQUENT（1分钟 QPS
+    过频，瞬时）——三者都是日级/瞬时，都不是月锁，绝不死到月初。真月耗尽只看月桶用满。
   - 腾讯是【key·日】配额（个人 10000/日，121=日量）；
   - 旧实现 dead key 只在内存、腾讯单 key、电话被全字段批量饿死、同一 POI 重复调用。
 
@@ -17,6 +20,7 @@
 
 所有写盘原子（tmp+replace），异常一律回退安全值，绝不中断调用方。
 """
+import fcntl
 import hashlib
 import json
 import os
@@ -28,6 +32,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.environ.get("FOOD_DATA_DIR", "/app/data")
 LEDGER_PATH = os.environ.get("MAP_QUOTA_LEDGER", os.path.join(DATA_DIR, "map_quota_ledger.json"))
 POICACHE_PATH = os.environ.get("MAP_POI_CACHE", os.path.join(DATA_DIR, "poi_cache.json"))
+FAIL_LOG_PATH = os.environ.get("MAP_QUOTA_FAIL_LOG", os.path.join(DATA_DIR, "map_quota_failures.jsonl"))
 
 # ── 配额软上限（取官方值的 90%，留安全余量；可被环境覆盖）──
 LIMITS = {
@@ -95,9 +100,35 @@ def _new_key_rec(provider):
             "dead_until": None, "dead_reason": None}
 
 
+class _LedgerLock:
+    """跨进程排他文件锁（fcntl.flock），保护 ledger 的 read-modify-write 临界区。
+
+    多 cron 进程各自 _load→改→整文件 _save 时，后写者会用旧快照覆盖先写者，
+    把刚被 report 标死的 key 回滚成旧值（lost-update）。所有 acquire/report 都在锁内
+    基于最新账本操作，杜绝该回滚。HTTP 调用在锁外，锁内只做内存判定与落盘。"""
+
+    def __init__(self, lock_path):
+        self._path = lock_path
+        self._fh = None
+
+    def __enter__(self):
+        self._fh = open(self._path, "a+")
+        fcntl.flock(self._fh, fcntl.LOCK_EX)
+        return self
+
+    def __exit__(self, *exc):
+        if self._fh is not None:
+            try:
+                fcntl.flock(self._fh, fcntl.LOCK_UN)
+            finally:
+                self._fh.close()
+            self._fh = None
+
+
 class MapQuota:
     def __init__(self, ledger_path=LEDGER_PATH):
         self.ledger_path = ledger_path
+        self._lock = _LedgerLock(ledger_path + ".lock")
         self.keys = {p: load_provider_keys(p) for p in ("tencent", "amap")}
         self.ledger = self._load()
         self._roll_windows()
@@ -131,13 +162,15 @@ class MapQuota:
             self.ledger["keys"][kid] = rec
         return rec
 
-    def _roll_windows(self):
+    def _roll_windows(self, persist=True):
+        """跨日清零日桶、跨月清零月桶，并解除对应窗口的 dead。
+        persist=False 时只改内存不落盘（供已持锁的 acquire/report 调用，落盘交给外层）。"""
         today, month, changed = _today(), _month(), False
         for rec in self.ledger["keys"].values():
             d, m = rec["daily"], rec["monthly"]
             if d["window"] != today:
                 d.update(window=today, used=0)
-                # 日级 dead（腾讯121 / 高德10003）到点清除
+                # 日级 dead（腾讯121 / 高德10003 日配额 / 高德10044 账号日调用量）到点清除
                 if rec.get("dead_reason") in ("daily_quota",):
                     rec.update(dead_until=None, dead_reason=None)
                 changed = True
@@ -146,8 +179,9 @@ class MapQuota:
                 if rec.get("dead_reason") in ("monthly_quota",):
                     rec.update(dead_until=None, dead_reason=None)
                 changed = True
-        if changed:
+        if changed and persist:
             self._save()
+        return changed
 
     # ── 配额读取 ──
     def _used_bucket(self, rec, interface):
@@ -175,7 +209,8 @@ class MapQuota:
         """acquire 已返回 None 且 _pool_remaining<=0（no_budget）后，区分硬耗尽与临时熔断。
         'exhausted'：本窗口桶全部用满、或仅剩的 key 因本窗口配额 dead（真耗尽，到窗口边界恢复）；
         'transient'：存在本窗口桶仍有余量、却被 auth 熔断(10007)/别窗口配额临时 dead 拦住的 key。
-        高德 search 走月桶，10044=monthly_quota 才是真月耗尽；10007 熔断30min、10003 日配额均临时。"""
+        高德 search 走月桶、真月耗尽=月桶用满；10044/10003 均为日级（dead_reason=daily_quota，
+        对月桶接口属"别窗口"，次日0点自愈）、10007 熔断30min，均归 transient 而非月耗尽。"""
         cap = self._cap(provider, interface)
         window_dead = ("monthly_quota" if (provider == "amap" and interface == "search")
                        else "daily_quota")
@@ -193,55 +228,87 @@ class MapQuota:
     # ── 仲裁：领一把可用 key ──
     def acquire(self, consumer, provider, interface, need=1):
         """返回 {index,key,sk} 或 None（无预算/全 dead）。
-        低优先消费者（full/hours）不得侵占电话预留预算。"""
-        prio = CONSUMER_PRIORITY.get(consumer, 9)
-        if prio > CONSUMER_PRIORITY["phone"] and interface == "search":
-            reserve = PHONE_RESERVE if provider == "tencent" else AMAP_PHONE_RESERVE
-            if self._pool_remaining(provider, interface) <= reserve:
-                return None  # 剩余只够电话预留，低优先任务让路
-        for idx, (key, sk) in enumerate(self.keys[provider]):
-            rec = self._rec(provider, idx)
-            if self._is_dead(rec):
-                continue
-            bucket = self._used_bucket(rec, interface)
-            if bucket["used"] + need <= self._cap(provider, interface):
-                return {"index": idx, "key": key, "sk": sk}
-        return None
+        低优先消费者（full/hours）不得侵占电话预留预算。锁内基于最新账本判定，跨天即时解封。"""
+        with self._lock:
+            self.ledger = self._load()
+            if self._roll_windows(persist=False):
+                self._save()  # 跨天/跨月解封即时落盘
+            prio = CONSUMER_PRIORITY.get(consumer, 9)
+            if prio > CONSUMER_PRIORITY["phone"] and interface == "search":
+                reserve = PHONE_RESERVE if provider == "tencent" else AMAP_PHONE_RESERVE
+                if self._pool_remaining(provider, interface) <= reserve:
+                    return None  # 剩余只够电话预留，低优先任务让路
+            for idx, (key, sk) in enumerate(self.keys[provider]):
+                rec = self._rec(provider, idx)
+                if self._is_dead(rec):
+                    continue
+                bucket = self._used_bucket(rec, interface)
+                if bucket["used"] + need <= self._cap(provider, interface):
+                    return {"index": idx, "key": key, "sk": sk}
+            return None
 
     # ── 上报真实结果：计数 + dead 判定 ──
     def report(self, provider, idx, interface, ok, code=None, infocode=None):
-        rec = self._rec(provider, idx)
-        bucket = self._used_bucket(rec, interface)
-        bucket["used"] += 1
-        result = "ok"
-        if not ok:
-            if provider == "tencent":
-                if code == 121:
-                    rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
-                    result = "rate"
-                elif code == 111:
-                    result = "sign_error"  # 签名问题不应 dead，调用方可清洗后重试
-                else:
-                    result = "error"
-            else:  # amap
-                ic = str(infocode)
-                if ic == "10044":  # 账号级月配额
-                    rec.update(dead_until=self._next_monthstart(), dead_reason="monthly_quota")
-                    result = "rate"
-                elif ic == "10003":  # 日配额
-                    rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
-                    result = "rate"
-                elif ic == "10007":
-                    # 签名/鉴权错误（INVALID_USER_SIGNATURE）：不是配额耗尽。
-                    # 短时熔断该 key（30min 后看门狗自动重探），且不消耗配额桶计数，
-                    # 避免把鉴权错误误记成“月配额耗尽”并触发空转告警。
-                    bucket["used"] -= 1
-                    rec.update(dead_until=time.time() + 1800, dead_reason="auth")
-                    result = "auth"
-                else:
-                    result = "error"
-        self._save()
+        """锁内基于最新账本 read-modify-write（只 merge 本 key），避免并发进程整文件覆盖
+        回滚刚标好的 dead/计数（lost-update）。HTTP 已在锁外完成，这里只做内存判定与落盘。"""
+        with self._lock:
+            self.ledger = self._load()
+            self._roll_windows(persist=False)
+            rec = self._rec(provider, idx)
+            bucket = self._used_bucket(rec, interface)
+            bucket["used"] += 1
+            result = "ok"
+            if not ok:
+                if provider == "tencent":
+                    if code == 121:
+                        rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
+                        result = "rate"
+                    elif code == 111:
+                        result = "sign_error"  # 签名问题不应 dead，调用方可清洗后重试
+                    else:
+                        result = "error"
+                else:  # amap
+                    ic = str(infocode)
+                    if ic == "10044":
+                        # USER_DAILY_QUERY_OVER_LIMIT：账号维度【日】调用量超限——超出部分被拒、
+                        # 限流阈值内仍正常、次日自动开启。是日级熔断（次日0点恢复），不是月配额。
+                        # 月桶 used 照常累计（这次搜索确实发生），但 dead 只到次日，不锁到月初。
+                        rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
+                        result = "rate"
+                    elif ic == "10003":  # 接口日配额超限，次日 00:00 恢复
+                        rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
+                        result = "rate"
+                    elif ic == "10004":
+                        # ACCESS_TOO_FREQUENT：单位时间(1分钟) QPS 过频。瞬时、换 key/退避即可，
+                        # 不标死、不消耗配额桶，让调用方轮转下一把健康 key。
+                        bucket["used"] -= 1
+                        result = "rate"
+                    elif ic == "10007":
+                        # 签名/鉴权错误（INVALID_USER_SIGNATURE）：不是配额耗尽。
+                        # 短时熔断该 key（30min 后看门狗自动重探），且不消耗配额桶计数，
+                        # 避免把鉴权错误误记成“月配额耗尽”并触发空转告警。
+                        bucket["used"] -= 1
+                        rec.update(dead_until=time.time() + 1800, dead_reason="auth")
+                        result = "auth"
+                    else:
+                        result = "error"
+                self._log_failure(provider, idx, interface, code, infocode, result)
+            self._save()
         return result
+
+    def _log_failure(self, provider, idx, interface, code, infocode, result):
+        """失败/限流落盘（append-only），供复盘还原高频熔断时的真实 infocode/key/时间。
+        日志无时间戳、账本只留最终状态时，历史失败靠它追溯。失败不影响主流程。"""
+        try:
+            line = json.dumps({
+                "ts": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "provider": provider, "idx": idx, "interface": interface,
+                "code": code, "infocode": str(infocode), "result": result,
+            }, ensure_ascii=False)
+            with open(FAIL_LOG_PATH, "a", encoding="utf-8") as f:
+                f.write(line + "\n")
+        except Exception:
+            pass
 
     @staticmethod
     def _next_midnight():
