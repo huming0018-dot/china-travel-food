@@ -493,3 +493,25 @@ class DomStrictParseTest(unittest.TestCase):
         self.assertEqual(merged["name"], "文本名")
         self.assertEqual(merged["address"], "A")
         self.assertTrue(merged["requires_visual_verification"])
+
+
+    def test_parse_group_buy_no_cross_set_price_borrowing(self):
+        """2026-10-18 审查发现：上一套餐无价格时会吃到下一套餐的价格——
+        把¥2980 安到无价套餐上属于编造数据。价格必须来自本段。"""
+        from dianping_fetch import parse_group_buy
+        text = ("\u3010\u5957\u9910A\u3011\u53cc\u4eba\u5bb4\n\u968f\u65f6\u9000\n\u8fc7\u671f\u81ea\u52a8\u9000\n"
+                "\u3010\u5957\u9910B\u3011\u516d\u4eba\u5bb4\n\u00a5\n2980")
+        out = parse_group_buy(text)
+        self.assertEqual(len(out), 2)
+        self.assertIsNone(out[0]["price_cny"], "无价套餐不得借用下一套餐的价格")
+        self.assertEqual(out[1]["price_cny"], 2980.0)
+        # 单个套餐无任何价格时不应凭空产生条目
+        only_a = parse_group_buy("\u3010\u5957\u9910A\u3011\u53cc\u4eba\u5bb4\n\u968f\u65f6\u9000")
+        self.assertEqual([o["price_cny"] for o in only_a], [None])
+
+    def test_parse_group_buy_real_multi_line_layout(self):
+        from dianping_fetch import parse_group_buy
+        real = ("\u3010\u56db\u65f6\u98ce\u7269\u3011\u76f8\u9047\u6c5f\u5357\u53cc\u4eba\u5bb4\n\u4eca\u65e5\u53ef\u7528\n\u00a5\n998\n"
+                "\u3010\u5c71\u6c34\u5165\u5e2d\u3011\u6c5f\u5357\u76f8\u805a\u516d\u4eba\u5bb4\uff5c\u5305\u53a2\u53ef\u7528\n\u5468\u4e00\u81f3\u5468\u65e5\n\u00a5\n2980")
+        out = parse_group_buy(real)
+        self.assertEqual([o["price_cny"] for o in out], [998.0, 2980.0])

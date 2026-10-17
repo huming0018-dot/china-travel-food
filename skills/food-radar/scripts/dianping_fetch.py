@@ -166,15 +166,22 @@ def parse_recommended(text):
 def parse_group_buy(text):
     """解析团购套餐：名称与到手价。
 
-    套餐名与其价格通常**不在同一行**（中间夹有效期/退款说明），
-    且 ¥ 与数字本身也可能被拆成两行（真实页面："¥\\n2980"）。
-    因此允许跨行但限定 120 字符，¥ 后允许空白，取套餐名后第一个 ¥。
-    只认可见文本中的「【…】」+ ¥数字。
+    关键约束（2026-10-18 修复）：**价格必须来自本套餐自己的段落**。
+    原实现用 `【名】[\\s\\S]{0,120}?¥(\\d+)` 全局匹配，会在上一套餐没有价格时
+    吃到**下一个套餐的价格**——把 ¥2980 安到无价的套餐A 上，属于编造数据。
+
+    现按【…】切段：每个套餐只在自己的段内（到下一个【为止）找 ¥。
+    本段内无价格 → price_cny=None，明确表示"未取到"，不借用他人价格。
     """
+    marks = list(re.finditer(r"【[^】]{2,40}】[^\n]{0,30}", text))
     out = []
-    pat = r"(【[^】]{2,40}】[^\n]{0,30})[\s\S]{0,120}?¥\s*(\d+(?:\.\d+)?)"
-    for name, price in re.findall(pat, text):
-        out.append({"set": name.strip(), "price_cny": float(price)})
+    for i, m in enumerate(marks):
+        end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
+        segment = text[m.start():end]
+        # 本段内的第一个 ¥数字（¥ 与数字可能分两行："¥\n2980"）
+        pm = re.search(r"¥\s*(\d+(?:\.\d+)?)", segment)
+        out.append({"set": m.group(0).strip(),
+                    "price_cny": float(pm.group(1)) if pm else None})
     return out
 
 
