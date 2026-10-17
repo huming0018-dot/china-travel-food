@@ -6,7 +6,9 @@
   - 高德「搜索」月桶护栏=个人 5000/月（控制台口径，同账号多 key 不扩容）；
     但 10044=USER_DAILY_QUERY_OVER_LIMIT 是【账号维度·日】调用量超限（超出部分被拒、限流阈值内仍
     正常、次日自动开启），10003=接口日配额（次日00:00 恢复），10004=ACCESS_TOO_FREQUENT（1分钟 QPS
-    过频，瞬时）——三者都是日级/瞬时，都不是月锁，绝不死到月初。真月耗尽只看月桶用满。
+    过频，瞬时），10021=账号维度突发软限流（官方错误码页未列、高频连发约 50% 触发、间隔>2s 恢复、
+    非固定关键词）——以上日级/瞬时都不是月锁，绝不死到月初；10004/10021 同 key 退避重试、不耗月桶。
+    真月耗尽只看月桶用满。
   - 腾讯是【key·日】配额（个人 10000/日，121=日量）；
   - 旧实现 dead key 只在内存、腾讯单 key、电话被全字段批量饿死、同一 POI 重复调用。
 
@@ -278,9 +280,12 @@ class MapQuota:
                     elif ic == "10003":  # 接口日配额超限，次日 00:00 恢复
                         rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
                         result = "rate"
-                    elif ic == "10004":
-                        # ACCESS_TOO_FREQUENT：单位时间(1分钟) QPS 过频。瞬时、换 key/退避即可，
-                        # 不标死、不消耗配额桶，让调用方轮转下一把健康 key。
+                    elif ic in ("10004", "10021"):
+                        # 10004=ACCESS_TOO_FREQUENT：单位时间(1分钟) QPS 过频。
+                        # 10021=账号维度突发软限流（官方错误码页未列；实测 20 连发 2.8s 内约 50%
+                        #   触发、间隔 >2s 单查即恢复 10000、同账号维度，非固定关键词也非配额）。
+                        # 两者均瞬时：不标死、不消耗月桶（未返回有效数据）；call() 内同 key 退避后
+                        # 重试，避免上层把限流空结果当“无匹配”而漏数据、或立即换 key 连续突发白烧。
                         bucket["used"] -= 1
                         result = "rate"
                     elif ic == "10007":
@@ -403,7 +408,24 @@ def call(provider, path, params, interface, consumer, timeout=15, method="GET"):
         return j, st
     else:
         ok = (j.get("status") == "1")
-        st = pool.report(provider, cred["index"], interface, ok, infocode=j.get("infocode"))
+        ic = str(j.get("infocode"))
+        st = pool.report(provider, cred["index"], interface, ok, infocode=ic)
+        # 高德 QPS 突发（10004 标准 QPS / 10021 账号维度突发软限流）：同一把 key 本身健康、
+        # 限流是临时的，递增退避后用同 key 重试（不重新 acquire——换 key 仍属同账号体系、无益且
+        # 放大并发）。降频后大概率恢复，避免把限流空结果当“无匹配”漏数据。10021/10004 不耗月桶。
+        attempt = 0
+        while (not ok) and ic in ("10004", "10021") and attempt < 2:
+            time.sleep(0.8 * (attempt + 1))   # 0.8s → 1.6s
+            attempt += 1
+            try:
+                r = requests.request(method, url, timeout=timeout)
+                j = r.json()
+            except Exception as e:
+                print(f"[map_quota] {provider} 请求异常: {e}")
+                return None, "error"
+            ok = (j.get("status") == "1")
+            ic = str(j.get("infocode"))
+            st = pool.report(provider, cred["index"], interface, ok, infocode=ic)
         return j, st
 
 
