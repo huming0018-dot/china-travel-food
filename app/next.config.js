@@ -12,7 +12,7 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   extendDefaultRuntimeCaching: true,
   workboxOptions: {
     disableDevLogs: true,
-    runtimeCaching: [{urlPattern: ({url}) => url.pathname.startsWith('/api/crowd/') || url.pathname.startsWith('/crowd/releases/'), handler: 'NetworkOnly', options: {cacheName: 'crowd-network-only'}}],
+    runtimeCaching: [{urlPattern: ({url}) => url.pathname === '/materials' || url.pathname.startsWith('/api/publications') || url.pathname.startsWith('/api/crowd/') || url.pathname.startsWith('/crowd/releases/'), handler: 'NetworkOnly', options: {cacheName: 'crowd-network-only'}}],
   },
 });
 
