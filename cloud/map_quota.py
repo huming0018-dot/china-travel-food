@@ -3,7 +3,7 @@
 """map_quota.py — 地图 API 配额仲裁 / 持久账本 / 统一 key 池 / POI 缓存（P1 核心）。
 
 为什么存在（见 references/map-quota-fix.md）：
-  - 高德「搜索」是【开发者账号·月】配额（个人 5000/月，10044=账号级），同账号多 key 不扩容；
+  - 高德搜索的本地安全预算按月计；供应商 10044 是日限额，次日恢复，二者独立；
   - 腾讯是【key·日】配额（个人 10000/日，121=日量）；
   - 旧实现 dead key 只在内存、腾讯单 key、电话被全字段批量饿死、同一 POI 重复调用。
 
@@ -135,10 +135,15 @@ class MapQuota:
         today, month, changed = _today(), _month(), False
         for rec in self.ledger["keys"].values():
             d, m = rec["daily"], rec["monthly"]
+            # 旧版把高德 10044 持久化为 monthly_quota。升级时将其转为
+            # 日级供应商熔断；本地 monthly.used 不动，仍由 acquire 的月预算硬拦截。
+            if rec.get("provider") == "amap" and rec.get("dead_reason") == "monthly_quota":
+                rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
+                changed = True
             if d["window"] != today:
                 d.update(window=today, used=0)
-                # 日级 dead（腾讯121 / 高德10003）到点清除
-                if rec.get("dead_reason") in ("daily_quota",):
+                # 日级 dead（腾讯121 / 高德10003/10044）到点清除。
+                if rec.get("dead_reason") == "daily_quota":
                     rec.update(dead_until=None, dead_reason=None)
                 changed = True
             if m["window"] != month:
@@ -177,8 +182,9 @@ class MapQuota:
         'transient'：存在本窗口桶仍有余量、却被 auth 熔断(10007)/别窗口配额临时 dead 拦住的 key。
         高德 search 走月桶，10044=monthly_quota 才是真月耗尽；10007 熔断30min、10003 日配额均临时。"""
         cap = self._cap(provider, interface)
-        window_dead = ("monthly_quota" if (provider == "amap" and interface == "search")
-                       else "daily_quota")
+        # Supplier quota blocks are daily even when local Amap search budget is monthly.
+        # A full monthly bucket is handled by bucket["used"] >= cap above.
+        window_dead = "daily_quota"
         for idx in range(len(self.keys[provider])):
             rec = self._rec(provider, idx)
             bucket = self._used_bucket(rec, interface)
@@ -225,8 +231,8 @@ class MapQuota:
                     result = "error"
             else:  # amap
                 ic = str(infocode)
-                if ic == "10044":  # 账号级月配额
-                    rec.update(dead_until=self._next_monthstart(), dead_reason="monthly_quota")
+                if ic == "10044":  # USER_DAILY_QUERY_OVER_LIMIT：供应商日限额
+                    rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
                     result = "rate"
                 elif ic == "10003":  # 日配额
                     rec.update(dead_until=self._next_midnight(), dead_reason="daily_quota")
