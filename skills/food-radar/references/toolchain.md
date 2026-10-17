@@ -28,7 +28,7 @@ Step5 结构化输出      → 按 field-spec.md 生成 JSON/Markdown + 知识�
 | 微信公众号 | wechat-article-search skill | `node scripts/search_wechat.js "关键词" -n 15` | 依赖 Node；结果旧文多，须叠加时间词 |
 | 小红书/抖音/B站/微博/知乎 | MediaCrawler | Playwright + 登录态，见 tools/media-crawler | 批量、结构化落盘 |
 | 小红书/抖音/B站/Twitter/Reddit/YouTube/GitHub | Agent-Reach CLI | 一条命令装好，见 tools/agent-reach | 免 API 费用，适合单点搜索 |
-| 大众点评 | dianping-crawler + agent-browser | `wongben/dianping-crawler`（Java，全上海店铺库） | 精确评分/人均须标注抓取时间 |
+| 大众点评 | Playwright 浏览器方案（原 dianping-crawler 已 403 失效） | web_search 取 UGC 摘要 | 精确评分/人均须标注抓取时间 |
 | 任意复杂页面 | agent-browser / playwright-cli skill | 浏览器自动化 | 兜底方案 |
 
 ## 三、安装命令
@@ -55,15 +55,25 @@ cd tools/media-crawler
 uv venv --python 3.12 .venv       # 必须 3.11+；系统 python3.9 会装失败
 uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/playwright install chromium
-# 首次使用需用 Playwright 登录各平台保存登录态（cookie），详见其README
 ```
 支持平台：`xhs` `dy` `ks` `bili` `wb` `tieba` `zhihu`。
 
-### 点评爬虫（竞品全量盘点用）
+**登录方式（2026-10-17 实测）**：标准模式 + App 扫码。
+首次运行浏览器弹二维码，扫码后登录态写入 `browser_data/<平台>_user_data_dir/`，**后续免扫码**。
+`xhs` 与 `dy` 登录态互相独立，各扫一次；cookie 过期才需重扫。
+搜索词改 `config/base_config.py` 的 `KEYWORDS`。
+
+**CDP 模式已停用**（本机三次尝试均失败，根因见 `environment.md` 3.2）。保持 `ENABLE_CDP_MODE = False`。
+
+### 点评（原爬虫已失效，2026-10-17 实证）
 ```bash
+# 仅作历史留档，勿再尝试构建：
 git clone --depth 1 https://github.com/wongben/dianping-crawler.git tools/dianping-crawler
+# 该项目依赖 mapi.dianping.com/searchshop.json，实测返回 403（加 UA 亦然），
+# 且为 Java 8 + Spring Boot 1.5 的 2017 年项目。编译通过也只会立即报错。
 ```
-Java + Maven 工程，**需本机有 JDK 与 mvn**；未满足时点评数据走降级方案（见 `environment.md` 第五节）。
+**替代方案**：复用 MediaCrawler 的 venv + Playwright chromium，以真实浏览器访问点评页面。
+风控强于小红书，精确数值拿不到一律填 `null` 并注明，**禁止估算**。
 
 ### 环境依赖检查（每次开工先跑）
 ```bash

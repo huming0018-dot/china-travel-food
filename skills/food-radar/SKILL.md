@@ -33,12 +33,12 @@ description: 本地新品/热门餐饮情报雷达。当用户想了解某城市
 ### Step 3 多通路检索（按优先级）
 1. **web_search / web_fetch**：官方媒体、政府号、行业媒体（开业事实最快最可靠）
 2. **wechat-article-search**：KOL 长文（周末做啥、食在十三等）— 依赖 Node
-3. **agent-reach CLI**：小红书、B站、微博、Reddit、Twitter、GitHub 搜索（**不含抖音**；小红书需手动导 Cookie）
-4. **media-crawler**：小红书(`xhs`)/抖音(`dy`)/B站/微博/知乎批量抓取（需登录态）— **抖音唯一主通路**
-5. **agent-browser / playwright**：大众点评店铺页、小红书详情页
-6. **dianping-crawler**：全量餐饮店铺库（竞品盘点用，需 JDK+Maven；否则走5 的降级方案）
+3. **media-crawler**：小红书(`xhs`)/抖音(`dy`)/B站/微博/知乎批量抓取（扫码登录，登录态持久化）— **抖音唯一主通路**
+4. **agent-reach CLI**：B站、微博、Reddit、Twitter、GitHub 搜索；**Jina Reader 抓原文核对发布日期**（**不含抖音**；小红书需手动导 Cookie）
+5. **agent-browser / playwright**：大众点评店铺页、小红书详情页（点评无专用爬虫可用，见下）
+6. ~~**dianping-crawler**~~：**已失效**，依赖接口 403，勿再尝试构建
 
-各工具安装与用法见 `references/toolchain.md`；已验证的安装状态见 `references/environment.md`。
+各工具安装与用法见 `references/toolchain.md`；**已验证的安装状态与踩坑见 `references/environment.md`**。
 
 ### Step 4 时效与信源校验（铁律，违反即返工）
 - **任何"新开"结论必须有两个独立信源，且都带明确的当年日期。**

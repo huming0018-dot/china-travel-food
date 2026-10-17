@@ -1,0 +1,129 @@
+{
+  "query_context": {
+    "city": "上海",
+    "time_window": "2026-10",
+    "benchmarks": ["当霁·四季江南菜（邀请函指定）"],
+    "generated_at": "2026-10-17",
+    "generator": "food-radar v1.1",
+    "depth": "standard（小红书/抖音/点评通路本轮不可用，见 notes）"
+  },
+  "items": [
+    {
+      "name": "当霁·四季江南菜（DONGEE JIANGNAN IN SEASON）",
+      "type": "new_opening",
+      "status": "open",
+      "cuisine": "江南创意菜 / 浙江菜（自述「更年轻化的浙江菜」，味型不过度浓油赤酱，引入发酵与熟成工艺）",
+      "city": "上海",
+      "district": "虹口区（北外滩）",
+      "address": "新建路200号 国华金融中心 P1-L4（停车入口：P1栋-B4）",
+      "opened_date": null,
+      "chef": {
+        "name": "任海鹏",
+        "title": "当霁主理人；解香楼主厨；2025 黑珍珠年轻主厨奖得主",
+        "background": "浙江台州人，2013 年入杭州解香楼学徒，在俞斌引导下完成精致中餐与浙江菜积累，2020 年任解香楼主厨。"
+      },
+      "mentor": {
+        "name": "俞斌",
+        "title": "解香楼主理人；2026 米其林二星；2026 沪苏浙米其林指南导师厨师奖",
+        "note": "有信源提及「米其林导师督战」；师徒二人同出解香楼体系。"
+      },
+      "price_per_head": null,
+      "honors": [
+        {"award": "黑珍珠一钻", "year": 2026, "note": "此荣誉属同址姊妹店「潮玖」，非当霁本体；当霁自身 2026 榜单状态未见公开"}
+      ],
+      "signature_dishes": [
+        "火腿甲鱼煨豆面（试营业期最受关注菜品之一；云南火腿提香 + 台州沙蒜烧豆面做法融合）",
+        "番茄蛋丝烧蝤蠓",
+        "鸽胸肉炒鲍鱼",
+        "杭椒牛肉（解香楼版：自家熟成山东和牛肉包卷杭椒与萧山萝卜）",
+        "杭州九曲红梅茶冰淇淋",
+        "桂花咸蛋黄油糕"
+      ],
+      "environment": "延续江南水乡气质，大量运用金砖与木质元素；北外滩江景位，可远眺陆家嘴天际线",
+      "kol_mentions": [
+        {"platform": "微博", "account": "吃心一片儿", "date": "约2026-10-12", "summary": "「杭州米其林二星餐厅杀入上海，来势汹汹」；提米其林导师督战、选址北外滩、景观视野"}
+      ],
+      "platform_signals": {
+        "dianping": null,
+        "xhs": {
+          "fetched_at": "2026-10-17",
+          "note_count": 35,
+          "total_note_count_fetched": 40,
+          "total_engagement": 11910,
+          "engagement_metric": "点赞+收藏+评论合计",
+          "top_notes": [
+            {"likes": 2617, "saves": 1224, "comments": 44, "title": "上海北外滩新开的！很有sense的约会餐厅"},
+            {"likes": 1044, "saves": 593, "comments": 39, "title": "上海新店🥂北外滩的绝美夜景view"},
+            {"likes": 999, "saves": 521, "comments": 47, "title": "上海新店｜北外滩很有sense的中式美学餐厅"},
+            {"likes": 967, "saves": 445, "comments": 20, "title": "北外滩｜有点小钱有点品位·漂亮约会中餐厅"},
+            {"likes": 648, "saves": 348, "comments": 16, "title": "赴一场江南菜与鱼子酱的鲜味之约"}
+          ],
+          "consensus_dishes": [
+            {"dish": "酱卤酿鸽腿", "mentions": 6},
+            {"dish": "火腿甲鱼煨豆面", "mentions": 5},
+            {"dish": "杭椒萝卜干牛肉（熟成和牛肉）", "mentions": 4},
+            {"dish": "鱼子酱豆乳酥盒（当霁×卡露伽鱼子酱联名）", "mentions": 4},
+            {"dish": "蛋黄融入千层油糕", "mentions": 2},
+            {"dish": "柑橘酱汁沙窝黄鱼", "mentions": 1}
+          ],
+          "sentiment_tags": ["窗景第一卖点", "陆家嘴三件套正对", "约会餐厅定位", "暗调木质江南美学", "茶艺师迎客茶", "90后主厨"],
+          "status_correction": "小红书官方号内容显示「当霁已于上海正式开业」，据此修正此前『试营业期』的表述"
+        },
+        "douyin": {
+          "fetched_at": "2026-10-17",
+          "note_count": 69,
+          "total_engagement": 92910,
+          "engagement_metric": "评论+转发+点赞合计；注意搜索接口未返回点赞数（digg_count 均为 0），故点赞不计入",
+          "top_notes": [
+            {"comments": 34, "title": "当霁四季江南菜#中式美学"},
+            {"comments": 20, "title": "当霁·四季江南菜打卡#江南菜系列"},
+            {"comments": 11, "title": "当霁.江南菜"},
+            {"comments": 7, "title": "从四季时令出发，以克制的料理呈现风物本味"},
+            {"comments": 3, "title": "北外滩新店，当霁·四季江南菜"}
+          ],
+          "consensus_dishes": [
+            {"dish": "番茄蛋丝蝤蠓", "mentions": 10, "note": "小红书与抖音双平台共振"},
+            {"dish": "三伏酱油千刀肉 / 千刀肉裹笋衣", "mentions": 5, "note": "抖音新发现，小红书未见"},
+            {"dish": "酱卤鸽腿", "mentions": 5, "note": "与小红书共识一致"}
+          ],
+          "sentiment_tags": ["约会天花板/dating餐厅", "北外滩夜景", "解香楼任师傅新店", "中式美学空间"],
+          "corroborated_facts": [
+            "主厨为解香楼任海鹏（评论中出现「解香楼的任师傅？」）",
+            "定位约会餐厅（「约会天花板」「北外滩新晋宝藏dating餐厅」）"
+          ]
+        },
+        "dianping": null,
+        "note": "点评仍受阻，见 status"
+      },
+      "collection_status": {
+        "xhs": "✅ 扫码登录 + 采集完成（40 笔记 / 133 评论）",
+        "douyin": "✅ 需 Node 运行时生成签名，采集完成（69 条）",
+        "dianping": "❌ 反爬「验证中心」拦截，headless 与 headful 均被拦；需持久化登录态 + 人工过验证"
+      },
+      "sibling_store": {
+        "name": "潮玖（潮州菜 / 黑珍珠一钻 / 上海首店）",
+        "relationship": "同为任海鹏主理、同在国华金融中心，故当霁包厢名为「潮玖包厢 801 潮安阁」",
+        "relevant_event": "2026-10-24 潮玖×槟客香槟晚宴，5980 元/位限 10 席（用户用餐次日一天，可留意）"
+      },
+      "sources": [
+        {"url": "https://chihe.sohu.com/a/1083279574_122014422", "publisher": "搜狐吃喝·虹口甄选", "date": "2026-10-02", "tier": "A"},
+        {"url": "https://baijiahao.baidu.com/s?id=1877895993674564299", "publisher": "百家号·虹口甄选", "date": "2026-10-02", "tier": "A"},
+        {"url": "https://baike.baidu.com/item/当霁·四季江南菜/69246430", "publisher": "百度百科", "date": "2026-10", "tier": "B"},
+        {"url": "https://weibo.com/1691384315/RmjQJsFcA", "publisher": "微博@吃心一片儿", "date": "2026-10-12", "tier": "A"},
+        {"url": "https://m.jfdaily.com/sgh/detail?id=1422807", "publisher": "上观新闻", "date": "2024-09-14", "tier": "S"},
+        {"url": "https://finance.sina.cn/2024-10-10/detail-incrzuhw9136220.d.html", "publisher": "新浪财经", "date": "2024-10-10", "tier": "A"}
+      ],
+      "confidence": "medium",
+      "verified_at": "2026-10-17",
+      "notes": "① 开业具体日期未在任何信源中明确给出，opened_date 置 null 未猜测。② 搜狐原文经 Jina Reader 返回 Published Time 为 2026-10-13，与百家号/图片 CDN 的 2026-10-02 存在分歧，判定为转载延迟，已按较早的 2026-10-02 取值。③ 在营核查（铁律3）已执行：检索「当霁+闭店/停业/退出」无任何闭店信号，且「试营业期间」表述与 2026-10 多源报道相互印证，判定为在营。④ 人均未披露，按规范置 null，禁止估算。⑤ 小红书/抖音/大众点评三通路本轮不可用（MediaCrawler 无登录态、agent-reach 小红书需手动导 Cookie、点评缺 JDK/Maven），故未做 UGC 口碑交叉验证。"
+    }
+  ],
+  "excluded": [],
+  "corrections_made": [
+    {
+      "date": "2026-10-17",
+      "previous_claim": "我此前提示「潮玖包厢的潮玖与情报库中新建路200号那家潮汕菜店无关，属撞名，别跑错地方」",
+      "corrected": "错误。潮玖与当霁为同一主理人（任海鹏）且同址国华金融中心，属姊妹店而非撞名。已向用户更正。"
+    }
+  ]
+}
