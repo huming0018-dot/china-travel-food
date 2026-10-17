@@ -180,11 +180,13 @@ class MapQuota:
         """acquire 已返回 None 且 _pool_remaining<=0（no_budget）后，区分硬耗尽与临时熔断。
         'exhausted'：本窗口桶全部用满、或仅剩的 key 因本窗口配额 dead（真耗尽，到窗口边界恢复）；
         'transient'：存在本窗口桶仍有余量、却被 auth 熔断(10007)/别窗口配额临时 dead 拦住的 key。
-        高德 search 走月桶，10044=monthly_quota 才是真月耗尽；10007 熔断30min、10003 日配额均临时。"""
+        高德 search 走本地月桶；10044/10003 日限额按临时供应商熔断处理；10007 熔断30min。"""
         cap = self._cap(provider, interface)
-        # Supplier quota blocks are daily even when local Amap search budget is monthly.
-        # A full monthly bucket is handled by bucket["used"] >= cap above.
-        window_dead = "daily_quota"
+        # The hard window must match the bucket tracked as a vendor quota window.
+        # Amap search's daily vendor block is temporary against its separate local month bucket;
+        # local month exhaustion is handled by bucket["used"] >= cap above.
+        window_dead = ("local_monthly_budget" if (provider == "amap" and interface == "search")
+                       else "daily_quota")
         for idx in range(len(self.keys[provider])):
             rec = self._rec(provider, idx)
             bucket = self._used_bucket(rec, interface)
@@ -399,3 +401,4 @@ class PoiCache:
 if __name__ == "__main__":
     p = MapQuota()
     print(json.dumps(p.snapshot(), ensure_ascii=False, indent=1))
+
