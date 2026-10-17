@@ -81,6 +81,35 @@ def parse_detail(text: str, html: str) -> dict:
     }
 
 
+def _parse_dishes(text):
+    """解析「网友推荐」。兼容两列布局（votes 块 + 菜名块）与单列交错布局。
+
+    注意：配对正则里必须用 [ \\t]* 而非 \\s*，否则 \\s 会吃掉换行，
+    造成「17人推荐」与下一行「16人推荐」跨行误配。
+    """
+    # 布局A：单列交错（同一行内「N人推荐 菜名」或紧邻下一行）
+    paired = re.findall(r"(\d+)\s*人推荐[ \t]*([^\n]{1,20}?)[ \t]*$", text, re.M)
+    paired = [(v, n) for v, n in paired if "人推荐" not in n]
+    if len(paired) >= 2:
+        return [{"name": n.strip(), "votes": int(v)} for v, n in paired]
+
+    # 布局A2：竖排相邻（"17人推荐"在上一行，菜名在下一行）
+    stacked = re.findall(r"(\d+)\s*人推荐\n([^\n]{1,24}?)[ \t]*$", text, re.M)
+    stacked = [(v, n) for v, n in stacked if "人推荐" not in n]
+    if len(stacked) >= 2:
+        return [{"name": n.strip(), "votes": int(v)} for v, n in stacked]
+
+    # 布局B：两列（先读完所有"N人推荐"，再读完所有菜名）
+    votes = [int(x) for x in re.findall(r"(\d+)\s*人推荐", text)]
+    if not votes:
+        return []
+    tail = re.split(r"\d+\s*人推荐", text)[-1]
+    tail = re.split(r"(查看全部|去大众点评App|查看更多)", tail)[0]
+    names = [ln.strip() for ln in tail.split("\n") if ln.strip()]
+    names = [n for n in names if 2 <= len(n) <= 24 and not n.isdigit() and "人推荐" not in n]
+    return [{"name": names[i], "votes": votes[i]} for i in range(min(len(names), len(votes)))]
+
+
 async def search(page, kw, city_id):
     url = "https://www.dianping.com/search/keyword/%d/0_%s" % (city_id, quote(kw))
     print("[1] 搜索: %s (cityid=%d)" % (kw, city_id))
@@ -117,8 +146,10 @@ async def detail(page, url):
     d["shop_id"] = m.group(1) if m else None
     d["url"] = url
     d["page_text"] = text[:600]
-    d["recommended_dishes"] = [{"name": n.strip(), "votes": int(v)}
-                               for v, n in re.findall(r"(\d+)人推荐\s*([^\n]{1,20})", text)]
+    # 点评「网友推荐」是两列布局：innerText 会先读完所有"N人推荐"，
+    # 再读完所有菜名，逐行配对会错位（菜名变成"16人推荐"）。
+    # 因此先分别提取两个列表再按序 zip；若页面为单列交错则走配对正则。
+    d["recommended_dishes"] = _parse_dishes(text)
     d["group_buy"] = [{"set": a, "price_yuan": int(b)}
                       for a, b in re.findall(r"(【[^】]+】[^\n]{0,30})[^\n]*?¥(\d+)", text)]
     await page.screenshot(path="/tmp/dp_detail.png")
