@@ -399,6 +399,95 @@ class Radar:
                 "items": candidates[:limit], "excluded": excluded,
                 "note": "候选排序辅助，不是美味评分；未执行实时联网搜索或订位"}
 
+    def calendar(self, city, start=None, end=None, now=None):
+        """未来日历视图：把活动按日期排出来，回答"什么时候会发生什么"。
+
+        与 shortlist(--mode radar) 的区别：
+          · shortlist 是**排序后的候选**，回答"去哪几家"
+          · calendar 是**按日期的时间轴**，回答"哪天有什么"，含取消/延期/已结束
+        取消/延期/已结束的活动**不删除**，放进 unavailable——供知悉，
+        但绝不能被当作可订项呈现（data-contract §过期与冲突）。
+        日期不明的活动进 undated，不进日期轴。
+        """
+        now = now or datetime.now(TZ)
+        start = boundary(start) if start else now
+        end = boundary(end, True) if end else now + timedelta(days=90)
+        if end < start:
+            raise ValueError("invalid query window")
+
+        records = self.records()
+        restaurants = {r["id"]: r for r in records if r["kind"] == "restaurant"}
+        by_date, unavailable, undated = {}, [], []
+
+        for r in records:
+            if r["kind"] != "event" or r.get("city") != city:
+                continue
+            state = event_state(r, now)
+            host = restaurants.get(r.get("restaurant_id"))
+            chef = fact_value(r, "chef", now)
+            booking = fact_value(r, "booking_status", now)
+            opens_at = fact_value(r, "reservation_opens_at", now)
+            entry = {
+                "id": r["id"], "name": r["name"],
+                "event_type": r.get("event_type"),
+                "restaurant": host["name"] if host else None,
+                "restaurant_id": r.get("restaurant_id"),
+                "city": r.get("city"),
+                "chef": chef, "booking_status": booking,
+                "reservation_opens_at": opens_at,
+                "price_per_head": fact_value(r, "price_per_head", now),
+                "sources": [s.get("url") for s in r.get("sources", []) if s.get("url")],
+            }
+
+            if not r.get("starts_at") or not r.get("ends_at"):
+                entry["reason"] = "档期不明"
+                undated.append(entry)
+                continue
+
+            s_at, e_at = boundary(r["starts_at"]), boundary(r["ends_at"], True)
+            if e_at < start or s_at > end:
+                continue                      # 窗口外，不进日历
+            if state in {"cancelled", "postponed", "ended", "unknown"}:
+                entry["event_status"] = state
+                if state == "ended":
+                    entry["reason"] = "已结束——可作情报，不作可订项"
+                elif state == "cancelled":
+                    entry["reason"] = "已取消"
+                elif state == "postponed":
+                    entry["reason"] = "已延期，新日期未确认——维持延期状态，不改announced"
+                else:
+                    entry["reason"] = "档期状态未知——需主办方确认"
+                unavailable.append(entry)
+                continue
+
+            key = s_at.date().isoformat()
+            entry["starts_at"] = r["starts_at"]
+            entry["ends_at"] = r["ends_at"]
+            entry["spans_days"] = (e_at.date() - s_at.date()).days
+            entry["why_now"] = (
+                "预订刚开放" if opens_at else
+                "临近开始" if (s_at.date() - now.date()).days <= 7 else
+                "档期已公布")
+            entry["needs_confirmation"] = (
+                [] if booking == "available" else
+                ["已售罄——保留情报但不可订"] if booking == "sold_out" else
+                ["余位未确认：有预订入口≠有位"])
+            by_date.setdefault(key, []).append(entry)
+
+        for items in by_date.values():
+            items.sort(key=lambda e: (e["starts_at"], e["name"]))
+        return {
+            "city": city, "window": [start.date().isoformat(), end.date().isoformat()],
+            "generated_at": now.isoformat(),
+            "by_date": by_date,
+            "unavailable": unavailable,
+            "undated": undated,
+            "counts": {"scheduled": sum(len(v) for v in by_date.values()),
+                       "unavailable": len(unavailable), "undated": len(undated)},
+            "note": "取消/延期/已结束列入 unavailable 仅供知悉，不得作为可订项；余位为查询时快照，订前须复核。",
+        }
+
+
 def query_plan(city, mode, start, end, categories=None, tags=None):
     require_string(city, "city")
     a, b = boundary(start), boundary(end, True)
@@ -432,7 +521,7 @@ def main(argv=None):
     p.add_argument("--to", dest="end", required=True)
     p.add_argument("--category", action="append", default=[])
     p.add_argument("--tag", action="append", default=[])
-    for name in ("ingest", "profile", "shortlist", "save", "unsave", "wishlist", "feedback", "history", "changes"):
+    for name in ("ingest", "profile", "shortlist", "calendar", "save", "unsave", "wishlist", "feedback", "history", "changes"):
         p = sub.add_parser(name)
         p.add_argument("--db", required=True)
         p.add_argument("--surface", required=True, help="trusted host conversation scope")
@@ -457,6 +546,11 @@ def main(argv=None):
             p.add_argument("--require-tag", action="append", default=[])
         if name == "changes":
             p.add_argument("--after", type=int, default=0)
+        if name == "calendar":
+            p.add_argument("--city", required=True)
+            p.add_argument("--from", dest="start")
+            p.add_argument("--to", dest="end")
+            p.add_argument("--at")
     a = ap.parse_args(argv)
     radar = None
     try:
@@ -480,6 +574,8 @@ def main(argv=None):
             elif a.cmd == "feedback": result = radar.feedback(a.id, a.note, a.verdict, a.eaten_on)
             elif a.cmd == "history": result = radar.history(a.id)
             elif a.cmd == "changes": result = radar.changes(a.after)
+            elif a.cmd == "calendar":
+                result = radar.calendar(a.city, a.start, a.end, instant(a.at) if a.at else None)
         print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
         return 0
     except (ValueError, KeyError, TypeError, OSError, sqlite3.Error) as e:

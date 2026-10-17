@@ -18,63 +18,83 @@
       "business_status": {
         "value": "open",
         "basis": "official",
-        "sources": [{
-          "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
-          "publisher": "大众点评店铺页",
-          "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
-          "observed_at": "2026-10-17T20:30:00+08:00"
-        }]
+        "sources": [
+          {
+            "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
+            "publisher": "大众点评店铺页",
+            "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
+            "observed_at": "2026-10-17T20:30:00+08:00"
+          }
+        ]
       },
       "price_per_head": {
         "value": 388,
         "basis": "ugc",
-        "sources": [{
-          "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
-          "publisher": "大众点评（人均由消费数据聚合）",
-          "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
-          "observed_at": "2026-10-17T20:30:00+08:00"
-        }]
+        "sources": [
+          {
+            "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
+            "publisher": "大众点评（人均由消费数据聚合）",
+            "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
+            "observed_at": "2026-10-17T20:30:00+08:00"
+          }
+        ]
       },
       "address": {
         "value": "新建路200号国华金融中心P1-L4",
         "basis": "official",
-        "sources": [{
-          "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
-          "publisher": "大众点评店铺页",
-          "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
-          "observed_at": "2026-10-17T20:30:00+08:00"
-        }]
+        "sources": [
+          {
+            "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
+            "publisher": "大众点评店铺页",
+            "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
+            "observed_at": "2026-10-17T20:30:00+08:00"
+          }
+        ]
       },
       "hours": {
         "value": "11:30-14:00, 17:30-21:00",
         "basis": "official",
-        "sources": [{
-          "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
-          "publisher": "大众点评店铺页",
-          "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
-          "observed_at": "2026-10-17T20:30:00+08:00"
-        }]
+        "sources": [
+          {
+            "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
+            "publisher": "大众点评店铺页",
+            "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
+            "observed_at": "2026-10-17T20:30:00+08:00"
+          }
+        ]
       },
       "chef": {
         "value": "任海鹏（解香楼主厨，2025黑珍珠年轻主厨奖得主）；导师俞斌（解香楼主理人，2026米其林二星）",
         "basis": "reporting",
-        "sources": [{
-          "url": "https://baijiahao.baidu.com/s?id=1877895993674564299",
-          "publisher": "百家号·虹口甄选",
-          "origin_id": "hongkou-zhenxuan-20261002",
-          "observed_at": "2026-10-17T21:05:00+08:00",
-          "published_at": "2026-10-02"
-        }]
+        "sources": [
+          {
+            "url": "https://baijiahao.baidu.com/s?id=1877895993674564299",
+            "publisher": "百家号·虹口甄选",
+            "origin_id": "hongkou-zhenxuan-20261002",
+            "observed_at": "2026-10-17T21:05:00+08:00",
+            "published_at": "2026-10-02"
+          }
+        ]
       },
       "signature_dishes": {
-        "value": ["杭椒萝卜干牛肉", "砂锅油盐焗东海小黄鱼", "酱卤酿鸽腿", "三伏酱油千刀肉", "火腿甲鱼烧豆面", "鱼子酱豆乳酥盒", "番茄蛋丝烧蝤蠓"],
+        "value": [
+          "杭椒萝卜干牛肉",
+          "砂锅油盐焗东海小黄鱼",
+          "酱卤酿鸽腿",
+          "三伏酱油千刀肉",
+          "火腿甲鱼烧豆面",
+          "鱼子酱豆乳酥盒",
+          "番茄蛋丝烧蝤蠓"
+        ],
         "basis": "ugc",
-        "sources": [{
-          "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
-          "publisher": "大众点评网友推荐（带推荐人数排序）",
-          "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
-          "observed_at": "2026-10-17T20:30:00+08:00"
-        }]
+        "sources": [
+          {
+            "url": "https://www.dianping.com/shop/H4GpiV5cA7moLb3r",
+            "publisher": "大众点评网友推荐（带推荐人数排序）",
+            "origin_id": "dp-shop-H4GpiV5cA7moLb3r",
+            "observed_at": "2026-10-17T20:30:00+08:00"
+          }
+        ]
       }
     }
   },
@@ -97,42 +117,127 @@
       "business_status": {
         "value": "unknown",
         "basis": "official",
-        "sources": [{
-          "url": "https://www.dianping.com/shop/kaAM3IbIEPyD31al",
-          "publisher": "大众点评店铺页（页面显示“暂无营业时间”，不足以判定在营）",
-          "origin_id": "dp-shop-kaAM3IbIEPyD31al",
-          "observed_at": "2026-10-18T00:35:00+08:00"
-        }]
+        "sources": [
+          {
+            "url": "https://www.dianping.com/shop/kaAM3IbIEPyD31al",
+            "publisher": "大众点评店铺页（页面显示“暂无营业时间”，不足以判定在营）",
+            "origin_id": "dp-shop-kaAM3IbIEPyD31al",
+            "observed_at": "2026-10-18T00:35:00+08:00"
+          }
+        ]
       },
       "price_per_head": {
         "value": 1064,
         "basis": "ugc",
-        "sources": [{
-          "url": "https://www.dianping.com/shop/kaAM3IbIEPyD31al",
-          "publisher": "大众点评（人均由消费数据聚合）",
-          "origin_id": "dp-shop-kaAM3IbIEPyD31al",
-          "observed_at": "2026-10-18T00:35:00+08:00"
-        }]
+        "sources": [
+          {
+            "url": "https://www.dianping.com/shop/kaAM3IbIEPyD31al",
+            "publisher": "大众点评（人均由消费数据聚合）",
+            "origin_id": "dp-shop-kaAM3IbIEPyD31al",
+            "observed_at": "2026-10-18T00:35:00+08:00"
+          }
+        ]
       },
       "address": {
         "value": "沙泾路10号1幢105",
         "basis": "official",
-        "sources": [{
-          "url": "https://www.dianping.com/shop/kaAM3IbIEPyD31al",
-          "publisher": "大众点评店铺页",
-          "origin_id": "dp-shop-kaAM3IbIEPyD31al",
-          "observed_at": "2026-10-18T00:35:00+08:00"
-        }]
+        "sources": [
+          {
+            "url": "https://www.dianping.com/shop/kaAM3IbIEPyD31al",
+            "publisher": "大众点评店铺页",
+            "origin_id": "dp-shop-kaAM3IbIEPyD31al",
+            "observed_at": "2026-10-18T00:35:00+08:00"
+          }
+        ]
       },
       "signature_dishes": {
-        "value": ["战斧猪排", "鳌虾配紫苏酱", "羊羔排", "竹蛏王", "烟熏帝王鲑", "鸭肝", "玛德琳", "牛奶雪糕", "鳌虾粉丝"],
+        "value": [
+          "战斧猪排",
+          "鳌虾配紫苏酱",
+          "羊羔排",
+          "竹蛏王",
+          "烟熏帝王鲑",
+          "鸭肝",
+          "玛德琳",
+          "牛奶雪糕",
+          "鳌虾粉丝"
+        ],
         "basis": "ugc",
-        "sources": [{
-          "url": "https://www.dianping.com/shop/kaAM3IbIEPyD31al",
-          "publisher": "大众点评网友推荐（带推荐人数排序）",
-          "origin_id": "dp-shop-kaAM3IbIEPyD31al",
-          "observed_at": "2026-10-18T00:35:00+08:00"
-        }]
+        "sources": [
+          {
+            "url": "https://www.dianping.com/shop/kaAM3IbIEPyD31al",
+            "publisher": "大众点评网友推荐（带推荐人数排序）",
+            "origin_id": "dp-shop-kaAM3IbIEPyD31al",
+            "observed_at": "2026-10-18T00:35:00+08:00"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "schema_version": 2,
+    "id": "prada-ronzuo",
+    "kind": "restaurant",
+    "name": "迷上PRADA荣宅",
+    "city": "上海",
+    "branch": "静安区陕西北路186号",
+    "sources": [
+      {
+        "url": "https://weibo.com/5813211408/RmBNW5FOq",
+        "publisher": "微博@Prada普拉达",
+        "origin_id": "prada-weibo-20261013",
+        "observed_at": "2026-10-17T20:10:00+08:00",
+        "published_at": "2026-10-13"
+      }
+    ]
+  },
+  {
+    "schema_version": 2,
+    "id": "prada-fourhands-20261030",
+    "kind": "event",
+    "name": "迷上PRADA荣宅 四手联弹晚宴",
+    "city": "上海",
+    "restaurant_id": "prada-ronzuo",
+    "event_type": "four_hands",
+    "event_status": "announced",
+    "starts_at": "2026-10-30T18:00:00+08:00",
+    "ends_at": "2026-10-30T22:00:00+08:00",
+    "sources": [
+      {
+        "url": "https://weibo.com/5813211408/RmBNW5FOq",
+        "publisher": "微博@Prada普拉达",
+        "origin_id": "prada-weibo-20261013",
+        "observed_at": "2026-10-17T20:10:00+08:00",
+        "published_at": "2026-10-13"
+      }
+    ],
+    "facts": {
+      "chef": {
+        "value": "四位主厨联袂（官方未在可读信源中列明名单）",
+        "basis": "official",
+        "sources": [
+          {
+            "url": "https://weibo.com/5813211408/RmBNW5FOq",
+            "publisher": "微博@Prada普拉达",
+            "origin_id": "prada-weibo-20261013",
+            "observed_at": "2026-10-17T20:10:00+08:00",
+            "published_at": "2026-10-13"
+          }
+        ]
+      },
+      "booking_status": {
+        "value": "unknown",
+        "basis": "official",
+        "sources": [
+          {
+            "url": "https://weibo.com/5813211408/RmBNW5FOq",
+            "publisher": "微博@Prada普拉达",
+            "origin_id": "prada-weibo-20261013",
+            "observed_at": "2026-10-17T20:10:00+08:00",
+            "published_at": "2026-10-13"
+          }
+        ],
+        "note": "官方预订渠道为微信小程序「迷上PRADA荣宅」与电话 021-22180388；无可公开引用的 URL，故 booking_url 留空"
       }
     }
   }

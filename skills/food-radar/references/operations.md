@@ -38,3 +38,25 @@ media 自检支持 --media-root 显式目录，仅诊断已有外部工具；未
 python3 -m unittest discover -s scripts -p 'test_*.py' -v
 ```
 测试全部合成数据，使用 .example 域名，无真实账号，不代表真实餐厅推荐。真实页面适配需用户有相应环境后单独实机验收。
+
+## 未来日历（radar 的时间轴视图）
+
+```sh
+python3 scripts/radar.py calendar --db /private/data/food.sqlite \
+  --surface TRUSTED_CHAT --actor TRUSTED_USER \
+  --city 上海 --from 2026-10-18 --to 2026-11-30
+```
+
+与 `shortlist --mode radar` 的分工：
+- `shortlist --mode radar` = **排序后的候选**，回答"去哪几家"
+- `calendar` = **按日期的时间轴**，回答"哪天会发生什么"
+
+输出结构：
+- `by_date`：档期内的活动，按日期分组、组内按开始时间排序，带
+  `why_now`（预订刚开放 / 临近开始 / 档期已公布）与 `needs_confirmation`
+- `unavailable`：**已取消 / 已延期 / 已结束 / 状态未知**，仅供知悉，
+  **不带时间轴字段，不得作为可订项呈现**
+- `undated`：档期不明的活动，**不进日期轴**
+
+窗口外的活动（含历史）完全不出现在日历里。日期不明或状态未知的，
+宁可进 `unavailable`/`undated`，也不要凑进推荐位。

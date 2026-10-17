@@ -11,6 +11,8 @@ import tempfile
 import unittest
 from unittest.mock import AsyncMock
 
+_SELF = sys.modules[__name__]
+
 from radar import Radar, TZ, instant, event_state, query_plan, validate_record, fact_value, semantic_hash
 from dianping_fetch import parse_detail, profile_path, search, shop_url
 
@@ -515,3 +517,123 @@ class DomStrictParseTest(unittest.TestCase):
                 "\u3010\u5c71\u6c34\u5165\u5e2d\u3011\u6c5f\u5357\u76f8\u805a\u516d\u4eba\u5bb4\uff5c\u5305\u53a2\u53ef\u7528\n\u5468\u4e00\u81f3\u5468\u65e5\n\u00a5\n2980")
         out = parse_group_buy(real)
         self.assertEqual([o["price_cny"] for o in out], [998.0, 2980.0])
+
+
+class CalendarTest(unittest.TestCase):
+    """未来日历视图：按日期排活动；取消/延期/已结束/档期不明各自归位，
+    且绝不能混入可订项。NOW = 2026-10-18 12:00 +08:00。"""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.dbpath = Path(self.temp.name) / "private" / "radar.sqlite"
+        self.dbpath.parent.mkdir(parents=True, exist_ok=True)
+        self._prev = os.environ.get("FOOD_RADAR_DATA_ROOT")
+        os.environ["FOOD_RADAR_DATA_ROOT"] = str(self.dbpath.parent)
+        # ingest 用真实 now 校验 observed_at，而 NOW=12:00 晚于真实时钟，
+        # 故本类内统一改用"已发生"的观测时间。
+        self._orig_source = _SELF.source
+        _orig = self._orig_source          # 闭包捕获，避免 lambda 递归调用自身
+        _SELF.source = (lambda at=None, origin="fixture-official":
+                        _orig(at=datetime(2026, 10, 18, 1, 30, tzinfo=_SELF.TZ),
+                              origin=origin))
+        self.r = Radar(self.dbpath, "g", "alice")
+
+    def tearDown(self):
+        self.r.close()
+        _SELF.source = self._orig_source
+        if self._prev is None:
+            os.environ.pop("FOOD_RADAR_DATA_ROOT", None)
+        else:
+            os.environ["FOOD_RADAR_DATA_ROOT"] = self._prev
+        self.temp.cleanup()
+
+    CAL_NOW = datetime(2026, 10, 18, 1, 35, tzinfo=TZ)   # 贴近真实时钟
+    WIN_FROM, WIN_TO = "2026-10-17", "2026-11-01"
+
+    @classmethod
+    def past_source(cls):
+        """observed_at 必须 <= 真实 now，且距 CAL_NOW 不超过 booking 的15 分钟 TTL。"""
+        return source(at=datetime(2026, 10, 18, 1, 30, tzinfo=TZ))
+
+    def _ingest(self, recs):
+        self.r.ingest(recs)
+
+    def test_groups_events_by_date_and_orders_within_day(self):
+        self._ingest([
+            restaurant(),
+            event(eid="late", starts_at="2026-10-20T20:00:00+08:00",
+                  ends_at="2026-10-20T22:00:00+08:00", name="晚场"),
+            event(eid="early", starts_at="2026-10-20T18:00:00+08:00",
+                  ends_at="2026-10-20T20:00:00+08:00", name="早场"),
+            event(eid="next", starts_at="2026-10-21T18:00:00+08:00",
+                  ends_at="2026-10-21T20:00:00+08:00", name="次日"),
+        ])
+        cal = self.r.calendar("上海", self.WIN_FROM, self.WIN_TO, self.CAL_NOW)
+        self.assertEqual(list(cal["by_date"]), ["2026-10-20", "2026-10-21"])
+        self.assertEqual([e["name"] for e in cal["by_date"]["2026-10-20"]], ["早场", "晚场"])
+        self.assertEqual(cal["counts"]["scheduled"], 3)
+
+    def test_cancelled_postponed_ended_go_to_unavailable_never_bookable(self):
+        self._ingest([
+            restaurant(),
+            event(eid="cx", event_status="cancelled"),
+            event(eid="pp", event_status="postponed"),
+            # 已结束但落在窗口内（今天凌晨）——窗口外的历史活动不进日历
+            event(eid="en", starts_at="2026-10-17T01:00:00+08:00",
+                  ends_at="2026-10-17T03:00:00+08:00"),
+        ])
+        cal = self.r.calendar("上海", self.WIN_FROM, self.WIN_TO, self.CAL_NOW)
+        self.assertEqual(cal["counts"]["scheduled"], 0)
+        got = {e["id"]: e for e in cal["unavailable"]}
+        self.assertEqual(got["cx"]["event_status"], "cancelled")
+        self.assertEqual(got["pp"]["event_status"], "postponed")
+        self.assertEqual(got["en"]["event_status"], "ended")
+        for e in cal["unavailable"]:
+            # 不可订项**不得**带时间轴字段，避免被误读为"还能订"
+            self.assertIsNone(e.get("starts_at"))
+            self.assertIsNone(e.get("needs_confirmation"))
+            self.assertTrue(e["reason"])
+
+    def test_undated_events_do_not_enter_date_axis(self):
+        self._ingest([restaurant(), event(eid="nd", starts_at=None, ends_at=None)])
+        cal = self.r.calendar("上海", self.WIN_FROM, self.WIN_TO, self.CAL_NOW)
+        self.assertEqual(cal["counts"]["scheduled"], 0)
+        self.assertEqual(cal["undated"][0]["id"], "nd")
+
+    def test_out_of_window_events_absent_entirely(self):
+        self._ingest([restaurant(),
+                      event(eid="far", starts_at="2027-06-01T18:00:00+08:00",
+                            ends_at="2027-06-01T20:00:00+08:00")])
+        cal = self.r.calendar("上海", self.WIN_FROM, self.WIN_TO, self.CAL_NOW)
+        self.assertEqual(cal["counts"]["scheduled"], 0)
+        self.assertEqual(cal["unavailable"], [])
+
+    def test_booking_status_drives_why_now_and_confirmation(self):
+        self._ingest([
+            restaurant(),
+            event(eid="ok", starts_at="2026-10-25T18:00:00+08:00",
+                  ends_at="2026-10-25T20:00:00+08:00",
+                  facts={"booking_status": {"value": "available", "basis": "booking",
+                                            "sources": [self.past_source()],
+                                            "valid_until": "2026-10-19T00:00:00+08:00"}}),
+            event(eid="sold", starts_at="2026-10-26T18:00:00+08:00",
+                  ends_at="2026-10-26T20:00:00+08:00",
+                  facts={"booking_status": {"value": "sold_out", "basis": "booking",
+                                            "sources": [self.past_source()],
+                                            "valid_until": "2026-10-19T00:00:00+08:00"}}),
+        ])
+        cal = self.r.calendar("上海", self.WIN_FROM, self.WIN_TO, self.CAL_NOW)
+        e = {x["id"]: x for v in cal["by_date"].values() for x in v}
+        self.assertEqual(e["ok"]["needs_confirmation"], [])
+        self.assertTrue(e["sold"]["needs_confirmation"])
+        self.assertIn("不可订", e["sold"]["needs_confirmation"][0])
+        # 10-25 距 CAL_NOW(10-18) 恰为 7 天 → 判「临近开始」
+        self.assertEqual(e["ok"]["why_now"], "临近开始")
+
+    def test_multiday_event_reports_span(self):
+        self._ingest([restaurant(),
+                      event(eid="span", starts_at="2026-10-30T18:00:00+08:00",
+                            ends_at="2026-11-02T22:00:00+08:00")])
+        cal = self.r.calendar("上海", self.WIN_FROM, self.WIN_TO, self.CAL_NOW)
+        e = cal["by_date"]["2026-10-30"][0]
+        self.assertEqual(e["spans_days"], 3)
