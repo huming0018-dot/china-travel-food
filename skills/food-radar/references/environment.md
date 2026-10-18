@@ -175,8 +175,17 @@ $ curl "http://mapi.dianping.com/searchshop.json?...&cityid=1&categoryid=147..."
 # 依赖 playwright（复用 media-crawler 的 venv 即可）
 cd tools/media-crawler && uv pip install --python .venv/bin/python playwright
 
-# 使用
-bash scripts/dianping_fetch.py --keyword 当霁 --detail --out dp.json
+# 使用（注意：这是 Python 脚本，不能用 bash 运行；也没有 --detail 参数）
+# 搜索：--keyword 必须配 --city-id，脚本不会自动假定上海
+python3 scripts/dianping_fetch.py --data-dir ./data --surface "<surface>" --actor "<actor>" \
+  --keyword 当霁 --city-id "<城市ID>" --out dp.json
+
+# 详情：用 --shop-url（不是 --detail）
+python3 scripts/dianping_fetch.py --data-dir ./data --surface "<surface>" --actor "<actor>" \
+  --shop-url "https://www.dianping.com/shop/xxxxx" --out dp.json
+
+# 登录（可选）：--login，人工在窗口内完成，不导出 Cookie
+python3 scripts/dianping_fetch.py --data-dir ./data --surface "<surface>" --actor "<actor>" --login
 ```
 
 **四个必须条件**：

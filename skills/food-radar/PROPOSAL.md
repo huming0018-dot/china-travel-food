@@ -1,9 +1,11 @@
 ---
 name: "food-radar"
 description: "Dining assistant: restaurant discovery, guest-chef news, scoped wishlists and feedback."
-status: proposal
-version: "v3"
+status: active
+version: "v3.2"
 date: "2026-10-17T16:18:34.390Z"
+aligned_with: skills/food-radar/SKILL.md
+authority: "本文件是唯一执行规程。references/ 下的历史文档若与本文件冲突，一律以本文件与 SKILL.md 为准；history/ 类文档视为档案，不具执行效力。"
 ---
 
 # Food Radar — 食客助手

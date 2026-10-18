@@ -1,7 +1,7 @@
 ---
 name: food-radar
 description: 懂你口味的找店助手 + 餐饮新鲜事雷达。查新店/首店/联弹客座、按场景给短名单、维护想吃清单与反馈。
-version: v3.0
+version: v3.2
 ---
 
 # food-radar · 食客助手
