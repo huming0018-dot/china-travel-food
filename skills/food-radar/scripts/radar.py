@@ -327,6 +327,9 @@ class Radar:
             opening = fact_value(parent, "opening_date", now)
             if mode == "now" and (status == "planned" or (opening and date.fromisoformat(opening) > now.date())):
                 omit = "not_open_yet"
+            elif mode == "later" and status == "planned" and not opening:
+                # #18 输入A：筹备中但开业日期完全未知，不能算作行程内可用餐的普通候选。
+                needs.append("筹备中，开业日期未知——无法确认能否赶上本次行程")
             elif mode == "later" and opening:
                 # #18 later 允许尚未开业的店，但若开业时间晚于本次行程窗口结束，
                 # 这趟就用不上，不能塞进候选里充数。
@@ -336,6 +339,10 @@ class Radar:
                     opens_on = None
                 if opens_on and opens_on > end.date():
                     omit = "opens_after_window"
+                elif opens_on and opens_on > start.date():
+                    # #18 输入B：窗口内开业，但窗口前半段仍不可用；
+                    # "计划开业"也不能自动当成"已确认营业"。
+                    needs.append("计划 %s 开业——早于该日期不可用，且是否如期开业仍待核实" % opening)
             if not status or status == "unknown":
                 needs.append("营业状态待核实")
             state = event_state(r, now) if r["kind"] == "event" else None
@@ -497,26 +504,41 @@ class Radar:
                 ["余位未确认：有预订入口≠有位"])
 
             # #21 预订尚未开放时，"available" 只是入口存在，不代表现在能订。
-            # 两个信号冲突时必须显式指出，而不是让 available 单独成立。
-            if opens_at and boundary(opens_at) > now:
+            booking_conflict = False
+            opens_dt = None
+            if opens_at:
+                try:
+                    opens_dt = boundary(opens_at)
+                except Exception:
+                    needs.append("开放时间格式非法——需人工核实")
+            if opens_dt and opens_dt > now:
                 needs.append("预订将于 %s 开放——现在的余位状态不可信，届时需重新查询"
-                             % boundary(opens_at).date().isoformat())
+                             % opens_dt.date().isoformat())
+                booking_conflict = True
 
             # #20 主办餐厅的营业状态必须核对：已确认闭店的餐厅不会照常办活动。
             host_biz = fact_value(host, "business_status", now) if host else None
             if host_biz == "closed":
                 needs.append("主办餐厅已确认闭店——活动大概率不会举行，订前必须直接向主办方复核")
                 if booking == "available":
-                    # 显式冲突：不能因为字段写着 available 就当成可订
                     needs.append("余位状态与主办方闭店冲突——按不可订处理")
+                    booking_conflict = True
             elif host_biz == "temporarily_closed":
                 needs.append("主办餐厅暂停营业——恢复时间未确认")
             entry["needs_confirmation"] = needs
+            # #20/#21 结构化状态必须与提示一致：存在冲突时 bookable 必须为 false，
+            # 否则下游只看 booking_status=available 就会把它当成可订项。
+            entry["booking_status"] = booking
+            entry["bookable"] = (booking == "available") and not booking_conflict
+            entry["booking_conflict"] = booking_conflict
 
             by_date.setdefault(key, []).append(entry)
 
         for items in by_date.values():
-            items.sort(key=lambda e: (e["starts_at"], e["name"]))
+            # #22 必须按**解析后的带时区时间**排序。原始 ISO 字符串排序会让
+            # "2026-10-20T02:00:00Z"（上海 10:00）排到
+            # "2026-10-20T09:00:00+08:00"（09:00）前面。
+            items.sort(key=lambda e: (boundary(e["starts_at"]), e["name"]))
         # #22 日期轴必须按日期排序。dict 的插入顺序取决于记录遍历顺序（约等于 ID 序），
         # 直接返回会让日历乱序，因此显式按日期键排序。
         ordered = {k: by_date[k] for k in sorted(by_date)}

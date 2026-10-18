@@ -125,9 +125,11 @@ async def parse_detail_dom(page):
     for raw in await pick_all(["[class*=avgPrice]", ".avg-price-title"]):
         if not re.search(r"(人均|[¥￥])", raw):
             continue
-        m = re.search(r"[¥￥]\s*(\d+(?:\.\d+)?)", raw)
+        # #25 "人均"标签必须优先于裸货币符号：
+        # 文本形如"停车费¥50 人均¥388"时，先抓 ¥ 会误取 50。
+        m = re.search(r"人均[^\d¥￥]{0,6}[¥￥]?\s*(\d+(?:\.\d+)?)", raw)
         if not m:
-            m = re.search(r"人均[^\d]{0,4}(\d+(?:\.\d+)?)", raw)
+            m = re.search(r"[¥￥]\s*(\d+(?:\.\d+)?)", raw)
         if not m:
             continue
         v = float(m.group(1))
@@ -177,23 +179,28 @@ def parse_recommended(text):
       B  两列：先全部 votes，再全部菜名
     注意：配对正则里必须用 [ \\t]* 而非 \\s*，否则 \\s 会吃掉换行造成跨行误配。
     """
+    # #23 元信息判定：只认**真实的地址/字段形态**，不能用单字"街""道"这类
+    # 会误伤菜名的词（"街头炸鸡"曾因此被误删）。
+    meta_re = re.compile(
+        r"(?:路|街|大道|道)\s*\d+\s*[号弄]"      # 建国西路485号 / 南京东路100弄
+        r"|电话\s*[:：]|营业时间\s*[:：]|人均\s*[:：]|地址\s*[:：]"
+        r"|评分|条评价|^\s*\d+号")
+
+    def is_meta(n):
+        return bool(meta_re.search(n))
+
     paired = re.findall(r"(\d+)\s*人推荐[ \t]*([^\n]{1,20}?)[ \t]*$", text, re.M)
-    paired = [(v, n) for v, n in paired if "人推荐" not in n]
+    paired = [(v, n) for v, n in paired if "人推荐" not in n and not is_meta(n)]
     if len(paired) >= 2:
         return [{"name": n.strip(), "votes": int(v)} for v, n in paired]
 
     raw_stacked = re.findall(r"(\d+)\s*人推荐\n([^\n]{1,24}?)[ \t]*$", text, re.M)
-    # #23 竖排分支同样要过滤非菜名行：紧随推荐人数出现的往往就是地址、电话、
-    # 营业时间等元信息，不能因为它们排在"下一行"就被当成菜名。
-    stacked = [(v, n) for v, n in raw_stacked
-               if "人推荐" not in n
-               and not re.search(r"(路|街|道|大道|号|弄|电话|营业时间|人均|地址|评分|条评价)", n)]
+    stacked = [(v, n) for v, n in raw_stacked if "人推荐" not in n and not is_meta(n)]
     if len(stacked) >= 2:
         return [{"name": n.strip(), "votes": int(v)} for v, n in stacked]
-    # 说明：曾尝试在"原始多条、过滤后仅剩一条"时返回单条，但两列布局也会命中
-    # 该形态（其 raw_stacked 同样是多条、过滤后只剩菜名那一条），会截断主路径。
-    # 二者仅靠正则无法区分，因此放弃该降级：竖排残缺布局返回空列表，
-    # 不完整但不造假，交由人工复核。
+    # 说明：竖排被元信息打断、过滤后仅剩 1 条时不降级返回单条——
+    # 该形态与两列布局在正则层面无法区分，强行降级会截断两列主路径。
+    # 返回空列表：不完整但不造假，交人工复核。
 
     votes = [int(x) for x in re.findall(r"(\d+)\s*人推荐", text)]
     if not votes:
@@ -206,12 +213,14 @@ def parse_recommended(text):
         r"(查看全部|去大众点评App|查看更多|地址\s*[:：]|商户地址|电话\s*[:：]|营业时间\s*[:：]"
         r"|人均\s*[:：]?|评分|条评价|商户信息|商家信息|购买须知|推荐理由|附近推荐)", tail)[0]
     names = [ln.strip() for ln in tail.split("\n") if ln.strip()]
-    # #23 B 两列分支同样要过滤：推荐人数之后紧跟的可能是地址/电话等元信息，
-    # 单纯的"\d+人推荐"切分不会把它们排除，必须按内容特征剔除。
-    names = [n for n in names
-             if 2 <= len(n) <= 24 and not n.isdigit() and "人推荐" not in n
-             and not re.search(r"(路|街|道|大道|号|弄|电话|营业时间|人均|地址|评分|条评价)", n)]
-    return [{"name": names[i], "votes": votes[i]} for i in range(min(len(names), len(votes)))]
+    names = [n for n in names if 2 <= len(n) <= 24 and not n.isdigit() and "人推荐" not in n]
+
+    # #23 关键：必须先按位置配对，再整体过滤。
+    # 旧实现先过滤 names 再按索引取 votes，过滤掉一条后票数会整体前移，
+    # 把下一道菜的票数错配给上一道（17/16 串位）。
+    pairs = list(zip(names, votes))[:min(len(names), len(votes))]
+    pairs = [(n, v) for n, v in pairs if not is_meta(n)]
+    return [{"name": n, "votes": int(v)} for n, v in pairs]
 
 
 def parse_group_buy(text):
@@ -239,14 +248,20 @@ def parse_group_buy(text):
             end = m.start() + cut.start() if cut else len(text)
         segment = text[m.start():end]
 
-        # 价格语义分级（#24 反例 2：'订金¥100\n套餐价¥800' 必须取 800）。
-        # 1) 明确标签优先：套餐价/现价/售价/到手价/团购价
+        # 价格语义分级（#24：'订金¥100\n套餐价¥800' 取 800，
+        # '原售价1000／到手价800' 取 800）。
+        # 标签按**特异性降序**匹配：长标签优先，且"售价"必须排除"原售价"。
         price = None
-        for label in ("套餐价", "现价", "售价", "到手价", "团购价"):
+        for label in ("到手价", "套餐价", "团购价", "现价"):
             lm = re.search(label + r"[^\d¥￥]{0,4}[¥￥]?\s*(\d+(?:\.\d+)?)", segment)
             if lm:
                 price = float(lm.group(1))
                 break
+        if price is None:
+            # 单独的"售价"，但不能是"原售价/零售价"
+            sm = re.search(r"(?<![原零])售价[^\d¥￥]{0,4}[¥￥]?\s*(\d+(?:\.\d+)?)", segment)
+            if sm:
+                price = float(sm.group(1))
         # 2) 无明确标签时，取本段内第一个「不带附加费语义前缀」的金额
         if price is None:
             for pm in re.finditer(r"([^\n]{0,10})[¥￥]\s*(\d+(?:\.\d+)?)", segment):

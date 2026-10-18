@@ -637,6 +637,33 @@ class CalendarTest(unittest.TestCase):
         self.assertEqual([e["name"] for e in cal["by_date"]["2026-10-20"]], ["早场", "晚场"])
         self.assertEqual(cal["counts"]["scheduled"], 3)
 
+    def test_later_flags_unknown_opening_date(self):
+        """#18 输入A：planned 且无 opening_date，必须明确提示开业日期未知。"""
+        self._ingest([restaurant(business_status="planned")])
+        res = self.r.shortlist("上海", mode="later", start="2026-10-20",
+                               end="2026-10-21", now=self.CAL_NOW)
+        item = res["items"][0]
+        self.assertTrue(any("开业日期未知" in n for n in item["needs_confirmation"]))
+
+    def test_later_flags_partial_window(self):
+        """#18 输入B：开业日落在窗口内但晚于起始日，必须说明可用日期限制。"""
+        self._ingest([restaurant(business_status="planned", opening_date="2026-10-21")])
+        res = self.r.shortlist("上海", mode="later", start="2026-10-20",
+                               end="2026-10-21", now=self.CAL_NOW)
+        item = res["items"][0]
+        self.assertTrue(any("计划 2026-10-21 开业" in n for n in item["needs_confirmation"]))
+
+    def test_calendar_orders_by_parsed_time_across_timezones(self):
+        """#22 同日组内排序必须按解析后的时间，不能按原始 ISO 字符串。"""
+        early = event(eid="z-early", starts_at="2026-10-20T09:00:00+08:00",
+                      ends_at="2026-10-20T10:00:00+08:00")
+        late = event(eid="a-late", starts_at="2026-10-20T02:00:00Z",
+                     ends_at="2026-10-20T03:00:00Z")
+        self._ingest([restaurant(), early, late])
+        cal = self.r.calendar("上海", self.WIN_FROM, self.WIN_TO, self.CAL_NOW)
+        self.assertEqual([x["id"] for x in cal["by_date"]["2026-10-20"]],
+                         ["z-early", "a-late"])
+
     def test_cancelled_postponed_ended_go_to_unavailable_never_bookable(self):
         self._ingest([
             restaurant(),
