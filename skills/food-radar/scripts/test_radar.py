@@ -442,6 +442,17 @@ class MergeAddedTest(unittest.TestCase):
         self.assertEqual(out[0]["price_cny"], 998.0)
         self.assertIsNone(out[1]["price_cny"])
 
+    def test_group_buy_original_counterexamples(self):
+        """#24 原始反例：末段不得吃进正文金额；订金不得当套餐价。"""
+        from dianping_fetch import parse_group_buy
+        # 反例1：无价套餐 + 网友评论 + 停车费
+        r1 = parse_group_buy("【套餐甲】双人宴\n暂无价格\n网友评论\n停车费¥50")
+        self.assertEqual(len(r1), 1)
+        self.assertIsNone(r1[0]["price_cny"])
+        # 反例2：订金 100、套餐价 800
+        r2 = parse_group_buy("【套餐甲】双人宴\n订金¥100\n套餐价¥800")
+        self.assertEqual(r2[0]["price_cny"], 800.0)
+
     def test_merge_detail_records_conflicts(self):
         """#26 DOM 与文本锚定不一致时必须记录冲突，不能静默采信 DOM。"""
         from dianping_fetch import merge_detail
@@ -504,6 +515,27 @@ class DomStrictParseTest(unittest.TestCase):
     def test_address_must_look_like_an_address(self):
         r = self._run(self._page({"#addressTxt": "查看地图"}))
         self.assertIsNone(r["address"])
+
+    def test_score_over_five_rejected_and_selector_falls_back(self):
+        """#25 反例1与3：5.9 超上限必须拒绝；首个 selector 不合格要继续尝试下一个。"""
+        r = self._run(self._page({
+            "#comment_score .score": "无评分",       # 形状不符 → 继续
+            ".comment-score .score": "4.7",          # 合法 → 采用
+            "[class*=avgPrice]": "38人推荐",         # 无价格语义 → 继续
+            ".avg-price-title": "人均￥388",          # 合法 → 采用
+        }))
+        self.assertEqual(r["score"], 4.7)
+        self.assertEqual(r["price"], 388.0)
+
+        r2 = self._run(self._page({"#comment_score .score": "5.9",
+                                   ".avg-price-title": "38人推荐"}))
+        self.assertIsNone(r2["score"])               # 超满分丢弃
+        self.assertIsNone(r2["price"])               # 人数不是价格
+
+    def test_low_price_with_explicit_semantics_is_kept(self):
+        """#25 反例2：人均￥8 语义明确，不能被数值门槛误杀。"""
+        r = self._run(self._page({".avg-price-title": "人均￥8"}))
+        self.assertEqual(r["price"], 8.0)
 
     def test_always_flags_visual_verification(self):
         r = self._run(self._page({}))

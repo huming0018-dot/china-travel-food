@@ -65,56 +65,75 @@ async def parse_detail_dom(page):
       · DOM 全失败时由调用方回退 parse_detail(text)
     返回值固定带 requires_visual_verification=True。
     """
-    async def pick(sels):
+    async def pick_all(sels):
+        """按 selector 顺序返回**所有**非空文本，供逐个尝试解析。
+
+        #25 旧实现 pick() 只返回第一个非空节点：该节点解析失败就整字段放弃，
+        后续本来合法的 selector 永远不被尝试（反例 3）。
+        """
+        vals = []
         for s in sels:
             try:
                 n = await page.query_selector(s)
             except Exception:
                 continue
-            if n:
-                try:
-                    v = (await n.inner_text()).strip()
-                except Exception:
-                    continue
-                if v:
-                    return v
-        return None
+            if not n:
+                continue
+            try:
+                v = (await n.inner_text()).strip()
+            except Exception:
+                continue
+            if v:
+                vals.append(v)
+        return vals
 
     out = {}
 
-    raw = await pick(["#comment_score .score", ".comment-score .score", "h1 ~ div [class*=score]"])
-    if raw:
-        m = re.fullmatch(r"([0-5](?:\.\d)?)", raw)
-        if m:                      # 形状不符（如"38人推荐"）直接丢弃
-            out["score"] = float(m.group(1))
-        else:
-            out["score"] = None
+    # 评分：必须是纯数字形状，且落在 0..5。
+    # "5.9" 形状合法但超上限 → 拒绝；"无评分" 形状不符 → 换下一个 selector。
+    out["score"] = None
+    for raw in await pick_all(["#comment_score .score", ".comment-score .score",
+                               "h1 ~ div [class*=score]"]):
+        m = re.fullmatch(r"(\d(?:\.\d)?)", raw)
+        if m:
+            v = float(m.group(1))
+            if 0 <= v <= 5:
+                out["score"] = v
+                break
 
-    raw = await pick(["#reviewCount", "[class*=comment] .review-num", ".review-num"])
-    if raw:
+    # 评价数：纯数字或「N条」
+    out["review_count"] = None
+    for raw in await pick_all(["#reviewCount", "[class*=comment] .review-num", ".review-num"]):
         m = re.fullmatch(r"(\d+)\s*条?", raw)
         if m:
             out["review_count"] = int(m.group(1))
-        else:
-            out["review_count"] = None
+            break
 
-    raw = await pick(["#addressTxt", ".address"])
-    if raw and re.search(r"(路|街|道|大道)\s*\d+\s*[号弄]", raw):
-        out["address"] = raw
-    else:
-        out["address"] = None
+    # 地址：必须像地址（含路/街/道 + 门牌）
+    out["address"] = None
+    for raw in await pick_all(["#addressTxt", ".address"]):
+        if re.search(r"(路|街|道|大道)\s*\d+\s*[号弄]", raw):
+            out["address"] = raw
+            break
 
-    # #25 价格必须排除"看起来像评分/人数"的值。
-    #  · 原先宽限 0 < v < 100000，导致 5.9（评分）被当成人均；
-    #  · `[class*=commentMean]` 语义是 comment mean（评分均值），本就不该作价格来源。
-    # 人均合理下限取 10 元：低于 10 的数值必然是评分或推荐人数。
-    raw = await pick(["[class*=avgPrice]", ".avg-price-title"])
-    if raw:
-        m = re.search(r"(\d+(?:\.\d+)?)", raw)
-        if m and 10 <= float(m.group(1)) < 100000:
-            out["price"] = float(m.group(1))
-        else:
-            out["price"] = None
+    # 价格：必须有**明确价格语义**（含「人均」或货币符号），而不是任意数字。
+    #  · "38人推荐" 只是数字 → 拒绝；
+    #  · "人均￥8" 语义明确 → 接受（不能用"下限 10 元"这类门槛代替语义判断，
+    #    那会把合法低价误杀，反例 2）；
+    #  · `commentMean` 是评分均值，本就不作价格来源，已从 selector 列表移除。
+    out["price"] = None
+    for raw in await pick_all(["[class*=avgPrice]", ".avg-price-title"]):
+        if not re.search(r"(人均|[¥￥])", raw):
+            continue
+        m = re.search(r"[¥￥]\s*(\d+(?:\.\d+)?)", raw)
+        if not m:
+            m = re.search(r"人均[^\d]{0,4}(\d+(?:\.\d+)?)", raw)
+        if not m:
+            continue
+        v = float(m.group(1))
+        if 0 < v < 100000:
+            out["price"] = v
+            break
 
     for k in ("name", "score", "price", "review_count", "address", "open_time"):
         out.setdefault(k, None)
@@ -195,19 +214,31 @@ def parse_group_buy(text):
         if i + 1 < len(marks):
             end = marks[i + 1].start()
         else:
-            # #24 最后一段没有"下一个【"作为右界，若直接取到文末，
-            # 会把后面的"人均¥298""网友推荐"等无关金额算进本套餐。
-            # 用正文段落边界截断，保证价格只可能来自本套餐自己那一段。
+            # #24 最后一段没有"下一个【"作右界，若取到文末会把正文金额算进来
+            # （原始反例：'暂无价格\n网友评论\n停车费¥50' → 误得 50）。
             rest = text[m.start():]
             cut = re.search(
                 r"(商家信息|商户信息|地址\s*[:：]|电话\s*[:：]|营业时间\s*[:：]"
-                r"|网友推荐|查看全部|购买须知|人均\s*[:：])", rest)
+                r"|网友推荐|网友评论|查看全部|购买须知|人均\s*[:：]|停车费?)", rest)
             end = m.start() + cut.start() if cut else len(text)
         segment = text[m.start():end]
-        # 本段内的第一个 ¥数字（¥ 与数字可能分两行："¥\n2980"）
-        pm = re.search(r"¥\s*(\d+(?:\.\d+)?)", segment)
-        out.append({"set": m.group(0).strip(),
-                    "price_cny": float(pm.group(1)) if pm else None})
+
+        # 价格语义分级（#24 反例 2：'订金¥100\n套餐价¥800' 必须取 800）。
+        # 1) 明确标签优先：套餐价/现价/售价/到手价/团购价
+        price = None
+        for label in ("套餐价", "现价", "售价", "到手价", "团购价"):
+            lm = re.search(label + r"[^\d¥￥]{0,4}[¥￥]?\s*(\d+(?:\.\d+)?)", segment)
+            if lm:
+                price = float(lm.group(1))
+                break
+        # 2) 无明确标签时，取本段内第一个「不带附加费语义前缀」的金额
+        if price is None:
+            for pm in re.finditer(r"([^\n]{0,10})[¥￥]\s*(\d+(?:\.\d+)?)", segment):
+                if re.search(r"(订金|定金|原价|门市价|停车|押金|服务费|配送|茶位)", pm.group(1)):
+                    continue
+                price = float(pm.group(2))
+                break
+        out.append({"set": m.group(0).strip(), "price_cny": price})
     return out
 
 

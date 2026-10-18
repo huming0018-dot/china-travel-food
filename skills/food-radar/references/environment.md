@@ -176,6 +176,11 @@ $ curl "http://mapi.dianping.com/searchshop.json?...&cityid=1&categoryid=147..."
 cd tools/media-crawler && uv pip install --python .venv/bin/python playwright
 
 # 使用（注意：这是 Python 脚本，不能用 bash 运行；也没有 --detail 参数）
+#
+# 重要：上面的 cd 会进入 tools/media-crawler。执行脚本前必须回到技能根目录，
+# 否则 scripts/dianping_fetch.py 这个相对路径指向不存在的文件。
+cd "$(git rev-parse --show-toplevel 2>/dev/null || pwd)/skills/food-radar"   # 或技能安装根目录
+
 # 搜索：--keyword 必须配 --city-id，脚本不会自动假定上海
 python3 scripts/dianping_fetch.py --data-dir ./data --surface "<surface>" --actor "<actor>" \
   --keyword 当霁 --city-id "<城市ID>" --out dp.json
@@ -186,6 +191,9 @@ python3 scripts/dianping_fetch.py --data-dir ./data --surface "<surface>" --acto
 
 # 登录（可选）：--login，人工在窗口内完成，不导出 Cookie
 python3 scripts/dianping_fetch.py --data-dir ./data --surface "<surface>" --actor "<actor>" --login
+
+# 自检：不跑真机也能验证参数形状与解析函数（离线）
+python3 scripts/test_radar.py
 ```
 
 **四个必须条件**：

@@ -2,7 +2,7 @@
 
 规范见 [`../references/knowledge-cards.md`](../references/knowledge-cards.md)，追查方法见 [`../references/knowledge-graph-method.md`](../references/knowledge-graph-method.md)，股权推演见 [`../references/business-registry-method.md`](../references/business-registry-method.md)。
 
-**共 32 张实体卡**：餐厅 12 / 主厨 13 / 关系网 7。
+**共 32 张实体卡**：餐厅 12 / 主厨 12 / 关系网 8（由 `ls knowledge/{r,c,n}-*.md` 生成核对，不手写）。
 
 ---
 
