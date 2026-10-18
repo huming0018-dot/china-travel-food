@@ -461,9 +461,13 @@ class MergeAddedTest(unittest.TestCase):
         txt = {"score": 4.5, "price": None, "address": None, "name": None,
                "review_count": None, "open_time": None, "parser": "visible-labelled-text-v2"}
         m = merge_detail(dom, txt)
-        self.assertEqual(m["score"], 4.8)
+        # 冲突时保守留空：DOM 并非可信一方（它也曾把"38人推荐"当价格），
+        # 给一个可能错的值比留空更危险。
+        self.assertIsNone(m["score"])
         self.assertIn("score", m["conflicts"])
+        self.assertEqual(m["conflicts"]["score"]["dom"], 4.8)
         self.assertEqual(m["conflicts"]["score"]["text"], 4.5)
+        self.assertIsNone(m["conflicts"]["score"]["taken"])
 
     def test_parse_group_buy_real_page_layout(self):
         """真实点评页面：套餐名、有效期、¥符号、数字分散在多行。"""

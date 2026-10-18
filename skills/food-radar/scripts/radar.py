@@ -496,10 +496,19 @@ class Radar:
                 ["已售罄——保留情报但不可订"] if booking == "sold_out" else
                 ["余位未确认：有预订入口≠有位"])
 
+            # #21 预订尚未开放时，"available" 只是入口存在，不代表现在能订。
+            # 两个信号冲突时必须显式指出，而不是让 available 单独成立。
+            if opens_at and boundary(opens_at) > now:
+                needs.append("预订将于 %s 开放——现在的余位状态不可信，届时需重新查询"
+                             % boundary(opens_at).date().isoformat())
+
             # #20 主办餐厅的营业状态必须核对：已确认闭店的餐厅不会照常办活动。
             host_biz = fact_value(host, "business_status", now) if host else None
             if host_biz == "closed":
                 needs.append("主办餐厅已确认闭店——活动大概率不会举行，订前必须直接向主办方复核")
+                if booking == "available":
+                    # 显式冲突：不能因为字段写着 available 就当成可订
+                    needs.append("余位状态与主办方闭店冲突——按不可订处理")
             elif host_biz == "temporarily_closed":
                 needs.append("主办餐厅暂停营业——恢复时间未确认")
             entry["needs_confirmation"] = needs

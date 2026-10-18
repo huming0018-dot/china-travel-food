@@ -154,7 +154,11 @@ def merge_detail(dom, text_parsed):
     for k in ("name", "score", "price", "review_count", "address", "open_time"):
         dv, tv = dom.get(k), text_parsed.get(k)
         if dv is not None and tv is not None and dv != tv:
-            conflicts[k] = {"dom": dv, "text": tv, "taken": dv}
+            # #26 冲突不能默认采信 DOM（DOM 也曾把"38人推荐"当价格）。
+            # 数值字段冲突时宁可留空交给可视化复核，也不给一个可能错的值。
+            conflicts[k] = {"dom": dv, "text": tv, "taken": None}
+            merged[k] = None
+            continue
         merged[k] = dv if dv is not None else tv
     merged["conflicts"] = conflicts
     merged["parser"] = dom.get("parser") if any(
@@ -178,10 +182,18 @@ def parse_recommended(text):
     if len(paired) >= 2:
         return [{"name": n.strip(), "votes": int(v)} for v, n in paired]
 
-    stacked = re.findall(r"(\d+)\s*人推荐\n([^\n]{1,24}?)[ \t]*$", text, re.M)
-    stacked = [(v, n) for v, n in stacked if "人推荐" not in n]
+    raw_stacked = re.findall(r"(\d+)\s*人推荐\n([^\n]{1,24}?)[ \t]*$", text, re.M)
+    # #23 竖排分支同样要过滤非菜名行：紧随推荐人数出现的往往就是地址、电话、
+    # 营业时间等元信息，不能因为它们排在"下一行"就被当成菜名。
+    stacked = [(v, n) for v, n in raw_stacked
+               if "人推荐" not in n
+               and not re.search(r"(路|街|道|大道|号|弄|电话|营业时间|人均|地址|评分|条评价)", n)]
     if len(stacked) >= 2:
         return [{"name": n.strip(), "votes": int(v)} for v, n in stacked]
+    # 说明：曾尝试在"原始多条、过滤后仅剩一条"时返回单条，但两列布局也会命中
+    # 该形态（其 raw_stacked 同样是多条、过滤后只剩菜名那一条），会截断主路径。
+    # 二者仅靠正则无法区分，因此放弃该降级：竖排残缺布局返回空列表，
+    # 不完整但不造假，交由人工复核。
 
     votes = [int(x) for x in re.findall(r"(\d+)\s*人推荐", text)]
     if not votes:
@@ -194,7 +206,11 @@ def parse_recommended(text):
         r"(查看全部|去大众点评App|查看更多|地址\s*[:：]|商户地址|电话\s*[:：]|营业时间\s*[:：]"
         r"|人均\s*[:：]?|评分|条评价|商户信息|商家信息|购买须知|推荐理由|附近推荐)", tail)[0]
     names = [ln.strip() for ln in tail.split("\n") if ln.strip()]
-    names = [n for n in names if 2 <= len(n) <= 24 and not n.isdigit() and "人推荐" not in n]
+    # #23 B 两列分支同样要过滤：推荐人数之后紧跟的可能是地址/电话等元信息，
+    # 单纯的"\d+人推荐"切分不会把它们排除，必须按内容特征剔除。
+    names = [n for n in names
+             if 2 <= len(n) <= 24 and not n.isdigit() and "人推荐" not in n
+             and not re.search(r"(路|街|道|大道|号|弄|电话|营业时间|人均|地址|评分|条评价)", n)]
     return [{"name": names[i], "votes": votes[i]} for i in range(min(len(names), len(votes)))]
 
 
