@@ -160,10 +160,13 @@ def fact_value(r, key, now):
     observed = max(instant(s["observed_at"]) for s in src)
     if observed > now + timedelta(minutes=5):
         return None
+    # 永久闭店是终态：不受 valid_until 与服务商 TTL 影响（#19）。
+    # 必须放在 valid_until 检查之前，否则带 valid_until 的闭店记录到期后会返回 None，
+    # 让已确认闭店的餐厅重新变回候选。
+    if key == "business_status" and f["value"] == "closed":
+        return "closed"
     if f.get("valid_until") and now > instant(f["valid_until"]):
         return None
-    if key == "business_status" and f["value"] == "closed":
-        return "closed"  # Confirmed closure does not become a candidate just because time passed.
     if key in TTL and now - observed > TTL[key]:
         return None
     return f["value"]
@@ -324,6 +327,15 @@ class Radar:
             opening = fact_value(parent, "opening_date", now)
             if mode == "now" and (status == "planned" or (opening and date.fromisoformat(opening) > now.date())):
                 omit = "not_open_yet"
+            elif mode == "later" and opening:
+                # #18 later 允许尚未开业的店，但若开业时间晚于本次行程窗口结束，
+                # 这趟就用不上，不能塞进候选里充数。
+                try:
+                    opens_on = date.fromisoformat(opening)
+                except ValueError:
+                    opens_on = None
+                if opens_on and opens_on > end.date():
+                    omit = "opens_after_window"
             if not status or status == "unknown":
                 needs.append("营业状态待核实")
             state = event_state(r, now) if r["kind"] == "event" else None
@@ -464,22 +476,45 @@ class Radar:
             entry["starts_at"] = r["starts_at"]
             entry["ends_at"] = r["ends_at"]
             entry["spans_days"] = (e_at.date() - s_at.date()).days
-            entry["why_now"] = (
-                "预订刚开放" if opens_at else
-                "临近开始" if (s_at.date() - now.date()).days <= 7 else
-                "档期已公布")
-            entry["needs_confirmation"] = (
+
+            # #21 预订开放时间必须区分"已开放"与"将开放"。
+            # 旧实现只要 reservation_opens_at 有值就写"预订刚开放"，
+            # 未来时间也被说成已经开放，属于事实错误。
+            if opens_at:
+                o_at = boundary(opens_at)
+                if o_at <= now:
+                    entry["why_now"] = "预订已开放"
+                else:
+                    entry["why_now"] = "预订将于 %s 开放" % o_at.date().isoformat()
+            elif (s_at.date() - now.date()).days <= 7:
+                entry["why_now"] = "临近开始"
+            else:
+                entry["why_now"] = "档期已公布"
+
+            needs = (
                 [] if booking == "available" else
                 ["已售罄——保留情报但不可订"] if booking == "sold_out" else
                 ["余位未确认：有预订入口≠有位"])
+
+            # #20 主办餐厅的营业状态必须核对：已确认闭店的餐厅不会照常办活动。
+            host_biz = fact_value(host, "business_status", now) if host else None
+            if host_biz == "closed":
+                needs.append("主办餐厅已确认闭店——活动大概率不会举行，订前必须直接向主办方复核")
+            elif host_biz == "temporarily_closed":
+                needs.append("主办餐厅暂停营业——恢复时间未确认")
+            entry["needs_confirmation"] = needs
+
             by_date.setdefault(key, []).append(entry)
 
         for items in by_date.values():
             items.sort(key=lambda e: (e["starts_at"], e["name"]))
+        # #22 日期轴必须按日期排序。dict 的插入顺序取决于记录遍历顺序（约等于 ID 序），
+        # 直接返回会让日历乱序，因此显式按日期键排序。
+        ordered = {k: by_date[k] for k in sorted(by_date)}
         return {
             "city": city, "window": [start.date().isoformat(), end.date().isoformat()],
             "generated_at": now.isoformat(),
-            "by_date": by_date,
+            "by_date": ordered,
             "unavailable": unavailable,
             "undated": undated,
             "counts": {"scheduled": sum(len(v) for v in by_date.values()),

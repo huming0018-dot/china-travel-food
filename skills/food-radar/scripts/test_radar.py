@@ -369,10 +369,6 @@ class CLITest(unittest.TestCase):
             self.assertEqual(len(call("changes")),1)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class MergeAddedTest(unittest.TestCase):
     """合并新增行为的回归：db 路径守卫 + 推荐菜/团购解析。"""
 
@@ -425,6 +421,38 @@ class MergeAddedTest(unittest.TestCase):
                          [("【四时风物】相遇江南双人宴", 998.0),
                           ("【山水入席】江南相聚六人宴｜包厢可用", 2980.0)])
         self.assertEqual(parse_group_buy("无团购信息"), [])
+
+    def test_recommended_stops_at_address_block(self):
+        """#23 两列布局遇到地址段必须截断，不能把门牌号当成菜名。"""
+        from dianping_fetch import parse_recommended
+        text = ("网友推荐(2)\n17人推荐\n16人推荐\n"
+                "玛德琳\n战斧猪排\n"
+                "地址：建国西路485-1号\n电话：021-1234\n")
+        out = parse_recommended(text)
+        self.assertEqual([d["name"] for d in out], ["玛德琳", "战斧猪排"])
+        self.assertTrue(all("地址" not in d["name"] for d in out))
+
+    def test_group_buy_last_set_stops_at_body_boundary(self):
+        """#24 最后一个套餐没有下一个【作右界时，不能借用正文后面的人均金额。"""
+        from dianping_fetch import parse_group_buy
+        text = ("【双人宴】江南风味\n¥998\n"
+                "【六人宴】包厢可用\n无标价\n"
+                "人均：¥298\n网友推荐(10)\n")
+        out = parse_group_buy(text)
+        self.assertEqual(out[0]["price_cny"], 998.0)
+        self.assertIsNone(out[1]["price_cny"])
+
+    def test_merge_detail_records_conflicts(self):
+        """#26 DOM 与文本锚定不一致时必须记录冲突，不能静默采信 DOM。"""
+        from dianping_fetch import merge_detail
+        dom = {"score": 4.8, "price": None, "address": None, "name": None,
+               "review_count": None, "open_time": None, "parser": "dom-strict-v1"}
+        txt = {"score": 4.5, "price": None, "address": None, "name": None,
+               "review_count": None, "open_time": None, "parser": "visible-labelled-text-v2"}
+        m = merge_detail(dom, txt)
+        self.assertEqual(m["score"], 4.8)
+        self.assertIn("score", m["conflicts"])
+        self.assertEqual(m["conflicts"]["score"]["text"], 4.5)
 
     def test_parse_group_buy_real_page_layout(self):
         """真实点评页面：套餐名、有效期、¥符号、数字分散在多行。"""
@@ -637,3 +665,7 @@ class CalendarTest(unittest.TestCase):
         cal = self.r.calendar("上海", self.WIN_FROM, self.WIN_TO, self.CAL_NOW)
         e = cal["by_date"]["2026-10-30"][0]
         self.assertEqual(e["spans_days"], 3)
+
+
+if __name__ == "__main__":
+    unittest.main()

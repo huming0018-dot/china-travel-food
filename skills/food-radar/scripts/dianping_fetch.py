@@ -104,10 +104,14 @@ async def parse_detail_dom(page):
     else:
         out["address"] = None
 
-    raw = await pick(["[class*=avgPrice]", ".avg-price-title", "[class*=commentMean]"])
+    # #25 价格必须排除"看起来像评分/人数"的值。
+    #  · 原先宽限 0 < v < 100000，导致 5.9（评分）被当成人均；
+    #  · `[class*=commentMean]` 语义是 comment mean（评分均值），本就不该作价格来源。
+    # 人均合理下限取 10 元：低于 10 的数值必然是评分或推荐人数。
+    raw = await pick(["[class*=avgPrice]", ".avg-price-title"])
     if raw:
         m = re.search(r"(\d+(?:\.\d+)?)", raw)
-        if m and 0 < float(m.group(1)) < 100000:
+        if m and 10 <= float(m.group(1)) < 100000:
             out["price"] = float(m.group(1))
         else:
             out["price"] = None
@@ -120,13 +124,20 @@ async def parse_detail_dom(page):
 
 
 def merge_detail(dom, text_parsed):
-    """DOM 优先，缺失字段回退文本锚定解析。两边都没有就留None。"""
+    """DOM 优先，缺失字段回退文本锚定解析。两边都没有就留None。
+
+    #26 旧实现只在 DOM 缺失时回退，**两边都有值但不一致时静默采信 DOM**，
+    冲突被吞掉。现在把冲突显式记录进 `conflicts`，保留双方原值，
+    让调用方知道这个字段存在歧义、需要人工/截图复核。
+    """
     merged = {}
+    conflicts = {}
     for k in ("name", "score", "price", "review_count", "address", "open_time"):
-        v = dom.get(k)
-        if v is None:
-            v = text_parsed.get(k)
-        merged[k] = v
+        dv, tv = dom.get(k), text_parsed.get(k)
+        if dv is not None and tv is not None and dv != tv:
+            conflicts[k] = {"dom": dv, "text": tv, "taken": dv}
+        merged[k] = dv if dv is not None else tv
+    merged["conflicts"] = conflicts
     merged["parser"] = dom.get("parser") if any(
         dom.get(k) is not None for k in ("score", "address", "price")) else text_parsed.get("parser")
     merged["requires_visual_verification"] = True
@@ -157,7 +168,12 @@ def parse_recommended(text):
     if not votes:
         return []
     tail = re.split(r"\d+\s*人推荐", text)[-1]
-    tail = re.split(r"(查看全部|去大众点评App|查看更多)", tail)[0]
+    # #23 两列布局的 tail 会一直延伸到文末，若"网友推荐"区块后面紧跟地址、电话、
+    # 营业时间等段落，这些行会被当成菜名（典型症状：菜名里出现"建国西路485号"）。
+    # 因此必须在区块边界处截断，而不只是截在"查看全部"。
+    tail = re.split(
+        r"(查看全部|去大众点评App|查看更多|地址\s*[:：]|商户地址|电话\s*[:：]|营业时间\s*[:：]"
+        r"|人均\s*[:：]?|评分|条评价|商户信息|商家信息|购买须知|推荐理由|附近推荐)", tail)[0]
     names = [ln.strip() for ln in tail.split("\n") if ln.strip()]
     names = [n for n in names if 2 <= len(n) <= 24 and not n.isdigit() and "人推荐" not in n]
     return [{"name": names[i], "votes": votes[i]} for i in range(min(len(names), len(votes)))]
@@ -176,7 +192,17 @@ def parse_group_buy(text):
     marks = list(re.finditer(r"【[^】]{2,40}】[^\n]{0,30}", text))
     out = []
     for i, m in enumerate(marks):
-        end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
+        if i + 1 < len(marks):
+            end = marks[i + 1].start()
+        else:
+            # #24 最后一段没有"下一个【"作为右界，若直接取到文末，
+            # 会把后面的"人均¥298""网友推荐"等无关金额算进本套餐。
+            # 用正文段落边界截断，保证价格只可能来自本套餐自己那一段。
+            rest = text[m.start():]
+            cut = re.search(
+                r"(商家信息|商户信息|地址\s*[:：]|电话\s*[:：]|营业时间\s*[:：]"
+                r"|网友推荐|查看全部|购买须知|人均\s*[:：])", rest)
+            end = m.start() + cut.start() if cut else len(text)
         segment = text[m.start():end]
         # 本段内的第一个 ¥数字（¥ 与数字可能分两行："¥\n2980"）
         pm = re.search(r"¥\s*(\d+(?:\.\d+)?)", segment)
