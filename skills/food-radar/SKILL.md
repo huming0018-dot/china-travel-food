@@ -18,6 +18,10 @@ version: v3.0
 | 命令怎么敲 | [references/operations.md](references/operations.md) |
 | 校验铁律（含踩坑） | [references/validation.md](references/validation.md) |
 | 本机工具与实测状态 | [references/environment.md](references/environment.md) |
+| **餐厅/主厨/关系网百科卡** | **[references/knowledge-cards.md](references/knowledge-cards.md)** + [knowledge/](knowledge/) |
+| **餐饮模式公式（推荐 + 爬虫信号）** | **[references/restaurant-patterns.md](references/restaurant-patterns.md)** |
+| **关系图递归法（每次预约如何长图）** | **[references/knowledge-graph-method.md](references/knowledge-graph-method.md)** |
+| **工商信息推演（股权→人员变动→开张关张）** | **[references/business-registry-method.md](references/business-registry-method.md)** |
 
 ## 三层结构
 

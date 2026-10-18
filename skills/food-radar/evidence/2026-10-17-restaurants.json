@@ -117,6 +117,12 @@
         "publisher": "小红书搜索「oncue」20篇笔记+110条评论",
         "origin_id": "xhs-search-oncue-20261018",
         "observed_at": "2026-10-18T14:02:00+08:00"
+      },
+      {
+        "url": "https://www.smartshanghai.com/venue/34089/oncue",
+        "publisher": "微信小程序「oncue」一手实测（短链 token ikIagtrsnDXtHBB）：预约未开放，仅小程序为预订入口，服务商 Tablera",
+        "origin_id": "wx-miniprogram-oncue-20261018",
+        "observed_at": "2026-10-18T17:35:00+08:00"
       }
     ],
     "facts": {
@@ -203,7 +209,7 @@
         "note": "小红书20篇笔记零篇提及顺德/鱼生/虾生；证据为玛德琳、野生鲳鱼、牛膝骨、羊排、孔泰无花果、炸猪排。公开搜索曾称其为顺德菜，与两平台实测均不符，判定为错误信息"
       },
       "booking_status": {
-        "value": "unknown",
+        "value": "not_open",
         "basis": "booking",
         "sources": [
           {
@@ -211,9 +217,41 @@
             "publisher": "小红书搜索「oncue」20篇笔记+110条评论",
             "origin_id": "xhs-search-oncue-20261018",
             "observed_at": "2026-10-18T14:02:00+08:00"
+          },
+          {
+            "url": "https://www.smartshanghai.com/venue/34089/oncue",
+            "publisher": "微信小程序「oncue」一手实测（短链 token ikIagtrsnDXtHBB，截图存档 /tmp/wechat_probe/oncue7.png）：预约页为「敬请期待」占位，无日历/无时段/无候补；「≡」菜单显示已登录为「微信用户」、「即将到店」为空，页脚标注「由 Tablera.com 提供预订服务」",
+            "origin_id": "wx-miniprogram-oncue-20261018",
+            "observed_at": "2026-10-18T17:35:00+08:00"
           }
         ],
-        "note": "小红书评论高频显示小程序定时放位、秒光、需反复刷；点评显示可预订=有入口而非有位。实际余位无公开接口，无法核实"
+        "note": "2026-10-18 实测=预约功能未上线（not_open），不是已约满。与小红书 UGC「小程序定时放位、秒光、需反复刷」直接冲突，UGC 可能指同名前店或为已收回的历史状态，存疑待访。唯一预订入口为微信小程序，服务商 Tablera（沪ICP备2021034572号，To B 模式，可配独立预订网站但本站未开）；SmartShanghai 亦仅写 visit their mini-program to book。短链为 weixin:// scheme，契约要求 http(s) 故不入 booking_url，token 见 publisher 字段。2026-10-18 一手补充：用户经 ONCUE 微信号人工预订成功（10/29 17:30，2 位），对方明确称「目前尚未对外开放预约」，并约定用餐日 4 天前微信确认菜单、由该微信号联系收款 —— 说明 not_open 仅指线上小程序未上线，人工渠道仍在接单，二者需分开理解"
+      },
+      "chef": {
+        "value": "Johnston Teo",
+        "basis": "official",
+        "sources": [
+          {
+            "url": "https://news.cafa.edu.cn/MobileNews/independenWeixinContent?contentId=225471197",
+            "publisher": "中央美术学院转载「2025魔都8大超难约餐厅」，载明 oncue by Johnston Teo；小程序页面脚亦标注 oncue by Johnston Teo",
+            "origin_id": "cafa-2025-hard-to-book",
+            "observed_at": "2026-10-18T17:35:00+08:00"
+          }
+        ],
+        "note": "据公开报道为新加坡米其林三星 Odette 前研发主厨，此前松涧/Lunar；2026-10-18 小程序页脚二次确认 by Johnston Teo"
+      },
+      "hours": {
+        "value": "周四至周一 17:30-21:30",
+        "basis": "reporting",
+        "sources": [
+          {
+            "url": "https://www.smartshanghai.com/venue/34089/oncue",
+            "publisher": "SmartShanghai 场地页（标注 Last verified: Not verified，需复核）",
+            "origin_id": "smartshanghai-venue-34089",
+            "observed_at": "2026-10-18T17:35:00+08:00"
+          }
+        ],
+        "note": "Trip.com 显示 09:00-22:00 属平台通用营业时段，与之矛盾；以 SmartShanghai 为准但未经验证"
       }
     }
   },
