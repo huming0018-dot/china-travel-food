@@ -111,6 +111,12 @@
         "publisher": "大众点评店铺页",
         "origin_id": "dp-shop-kaAM3IbIEPyD31al",
         "observed_at": "2026-10-18T00:35:00+08:00"
+      },
+      {
+        "url": "https://www.xiaohongshu.com/search_result?keyword=oncue",
+        "publisher": "小红书搜索「oncue」20篇笔记+110条评论",
+        "origin_id": "xhs-search-oncue-20261018",
+        "observed_at": "2026-10-18T14:02:00+08:00"
       }
     ],
     "facts": {
@@ -124,7 +130,8 @@
             "origin_id": "dp-shop-kaAM3IbIEPyD31al",
             "observed_at": "2026-10-18T00:35:00+08:00"
           }
-        ]
+        ],
+        "note": "小红书110条评论无闭店信号；但存在标题「上海｜Oncue 永别了」内容不可读，需人工核实。维持 unknown 不改判"
       },
       "price_per_head": {
         "value": 1064,
@@ -169,8 +176,44 @@
             "publisher": "大众点评网友推荐（带推荐人数排序）",
             "origin_id": "dp-shop-kaAM3IbIEPyD31al",
             "observed_at": "2026-10-18T00:35:00+08:00"
+          },
+          {
+            "url": "https://www.xiaohongshu.com/search_result?keyword=oncue",
+            "publisher": "小红书搜索「oncue」20篇笔记+110条评论",
+            "origin_id": "xhs-search-oncue-20261018",
+            "observed_at": "2026-10-18T14:02:00+08:00"
           }
         ]
+      },
+      "technique_tags": {
+        "value": [
+          "西餐",
+          "法式甜点",
+          "干式熟成排餐"
+        ],
+        "basis": "ugc",
+        "sources": [
+          {
+            "url": "https://www.xiaohongshu.com/search_result?keyword=oncue",
+            "publisher": "小红书搜索「oncue」20篇笔记+110条评论",
+            "origin_id": "xhs-search-oncue-20261018",
+            "observed_at": "2026-10-18T14:02:00+08:00"
+          }
+        ],
+        "note": "小红书20篇笔记零篇提及顺德/鱼生/虾生；证据为玛德琳、野生鲳鱼、牛膝骨、羊排、孔泰无花果、炸猪排。公开搜索曾称其为顺德菜，与两平台实测均不符，判定为错误信息"
+      },
+      "booking_status": {
+        "value": "unknown",
+        "basis": "booking",
+        "sources": [
+          {
+            "url": "https://www.xiaohongshu.com/search_result?keyword=oncue",
+            "publisher": "小红书搜索「oncue」20篇笔记+110条评论",
+            "origin_id": "xhs-search-oncue-20261018",
+            "observed_at": "2026-10-18T14:02:00+08:00"
+          }
+        ],
+        "note": "小红书评论高频显示小程序定时放位、秒光、需反复刷；点评显示可预订=有入口而非有位。实际余位无公开接口，无法核实"
       }
     }
   },
