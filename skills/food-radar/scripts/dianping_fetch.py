@@ -195,7 +195,9 @@ def parse_recommended(text):
 
     votes_only = [re.fullmatch(r"(\d+)\s*人推荐", line) for line in lines]
     # Alternating layout: each vote line must be followed by exactly one name.
-    if len(lines) % 2 == 0 and all(votes_only[i] for i in range(0, len(lines), 2)):
+    if (len(lines) % 2 == 0
+            and all(votes_only[i] for i in range(0, len(lines), 2))
+            and all(not votes_only[i] for i in range(1, len(lines), 2))):
         pairs = []
         for i in range(0, len(lines), 2):
             if votes_only[i + 1]:
