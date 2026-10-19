@@ -179,7 +179,7 @@ def parse_recommended(text):
     boundary = re.search(
         r"(?:^|\n)\s*(?:查看全部|去大众点评App|查看更多|地址\s*[:：]|商户地址|"
         r"电话\s*[:：]|营业时间\s*[:：]|人均\s*[:：]?|评分|\d+\s*条评价|"
-        r"商户信息|商家信息|购买须知|团购|附近推荐)\b?",
+        r"商户信息|商家信息|购买须知|团购|附近推荐)",
         section)
     if boundary:
         section = section[:boundary.start()]
