@@ -586,13 +586,13 @@ class DomStrictParseTest(unittest.TestCase):
 class DianpingBoundaryRegressionTest(unittest.TestCase):
     def test_issue23_partial_two_column_section_stays_unknown(self):
         from dianping_fetch import parse_recommended
-        text = "网友推荐\\n17人推荐\\n16人推荐\\n玛德琳\\n地址：测试路1号"
+        text = "网友推荐\n17人推荐\n16人推荐\n玛德琳\n地址：测试路1号"
         self.assertEqual(parse_recommended(text), [])
 
     def test_recommendation_does_not_cross_layout_footer_or_address(self):
         from dianping_fetch import parse_recommended
-        text = ("网友推荐(2)\\n17人推荐\\n16人推荐\\n玛德琳\\n战斧猪排\\n"
-                "地址：测试路1号\\n电话：021-1234")
+        text = ("网友推荐(2)\n17人推荐\n16人推荐\n玛德琳\n战斧猪排\n"
+                "地址：测试路1号\n电话：021-1234")
         self.assertEqual(parse_recommended(text), [
             {"name": "玛德琳", "votes": 17},
             {"name": "战斧猪排", "votes": 16},
@@ -600,7 +600,7 @@ class DianpingBoundaryRegressionTest(unittest.TestCase):
 
     def test_issue24_last_package_does_not_use_parking_price(self):
         from dianping_fetch import parse_group_buy
-        rows = parse_group_buy("【套餐甲】双人宴\\n暂无价格\\n网友评论\\n停车费¥50")
+        rows = parse_group_buy("【套餐甲】双人宴\n暂无价格\n网友评论\n停车费¥50")
         self.assertEqual(len(rows), 1)
         self.assertIsNone(rows[0]["price_cny"])
 
