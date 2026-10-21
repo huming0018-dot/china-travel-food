@@ -27,7 +27,7 @@
 - **TRUSTED 放行**：meituan.com、dianping.com、michelin.、blackpearl、timeout、smartshanghai、official、weixin、mp.weixin、.gov.cn、.gov.、**qcc.com / qixin.com / tianyancha.com / aiqicha.com**、news.cn、xinhuanet、xinhua、people.com、chinanews.com、gmw.cn、cnr.cn、jjckb.cn、ce.cn、zgswcn.com、bjd.com.cn、bjnews.com.cn、xinmin.cn、xinminweekly.com.cn、yunnan.cn、tmtpost.com、thepaper、jiemian、36kr、yicai、stcn
 - **OFFICIAL 硬负面（单源即可）**：.gov.cn、.gov.、news.cn、xinhuanet、xinhua、people.com、chinanews.com、gmw.cn、cnr.cn、jjckb.cn、ce.cn、samr
 - **实测不放行（勿再用）**：diningcity.cn、rednet.cn（moment.rednet.cn）、hilton.com / hilton.com.cn / waldorfastoriahotels.com.cn / stories.hilton.com、huanqiu.com（环球网）、eastday.com（东方网）、shobserver.com（上观）、h5.ifeng.com（凤凰）、stheadline.com（星岛）、news.qq.com / view.inews.qq.com（腾讯）、sina.com.cn / finance.sina、shinkong-place.com、meet-in-shanghai.net、fznews.com.cn、flyert.com.cn、cncn.com、cafa.edu.cn（.edu.cn 非 .gov）
-- **food_safety 注意**：ingest 接受「问题」，但 post_audit 入库 CHECK 只认 无/疑似/确认，写「问题」必 400；本字段宁缺勿错。
+- **food_safety 注意**：ingest 接受「问题」；post_audit 入库时 to_db_value 自动映射 DB「确认」落库 204（DB CHECK 只认 无/疑似/确认，见 §4.7）；禁止手写 PATCH 直传「问题」。
 
 ---
 
@@ -64,8 +64,10 @@
 3. **ingest --apply**：校验枚举/可信源/conf≥0.8/按 rid+field+url 去重，append findings.jsonl（同 URL 挂不同 field 或不同 rid 不冲突，key 含 field/rid）。
 4. **post_audit --apply**：**只喂本次 candidates_<date>.json，绝不喂全量 findings.jsonl**（防重放历史弱源）；只改 chain_type/central_kitchen/premade_risk/investor_info/price_avg/food_safety 六列；`is_chain_standardized` 是 generated 列不能 PATCH（428C9）。
 5. **DB 回读**：`sys.path.insert(0,"/app/pipeline"); import common as C; C.fetch_all(table, select=..., extra="&id=in.(...)")`（容器有两套 common，必须用 /app/pipeline 的）。
-6. **scan_ledger**：逐 rid 写 `{date, n_results, n_kept, provenance}`；有候选=incremental:general_search，无=incremental:general_search:zero；周日置 last_full_date。**n_kept 是最近一次扫描采纳字段数快照、非累计**，覆盖旧值属正常（5284→5146 即此因，非丢数据）。
-7. **点评日更核查**：`stat -c %y /app/data/dianping_daily.log`（当日 06:40 mtime + active=1517 done=1517 todo=0 = 成功）。
+6. **price_avg 必须整型（DB 列 integer）**：post_audit 对候选数字序列化 `88.0` → PATCH 批量 400 `invalid input syntax for type integer`。修复：容器脚本 `fix_price_avg_1018.py` 读 audit 账本 `field=price_avg and http!=204` 行 → `int(float(value))` 重 PATCH → 追加 204 账本行 + readback（10-18 全量批 20 行 + 早间增量/自动流水线 dianping 行共 136 店，OK=136 FAIL=0）。**候选侧写整数、无小数点**可根治。
+7. **food_safety「问题」落库映射**：ingest 接受「问题」；post_audit 的 to_db_value 自动映射 DB「确认」落库 204（DB CHECK 只认 无/疑似/确认）——10-18 实测 6 店（有喜屋/段氏龙虾/一绪/小菜园/云海肴/When Pigs Fly）全部 204 且回读=确认，无需放弃；仅当手写 PATCH 直传「问题」才会 400。
+8. **scan_ledger**：逐 rid 写 `{date, n_results, n_kept, provenance}`；有候选=incremental:general_search，无=incremental:general_search:zero；周日置 last_full_date。**n_kept 是最近一次扫描采纳字段数快照、非累计**，覆盖旧值属正常（5284→5146 即此因，非丢数据）。
+9. **点评日更核查**：`stat -c %y /app/data/dianping_daily.log`（当日 06:40 mtime + active=1517 done=1517 todo=0 = 成功）。
 
 ---
 
