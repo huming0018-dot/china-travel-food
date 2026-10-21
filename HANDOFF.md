@@ -5035,3 +5035,17 @@ food_kol_watchlist 126、identity 78、posts 493、mentions 410；chefs 60、res
 1. **交付量提升**：每日增量批大小 40→120 店（planner --batch 120），目标每日候选 ≥60 行；已更新定时任务 13364749493762 query（10-22 起生效）。
 2. **10-18 全量复扫重跑**：委派 OrganizerAgent o_000EySpZxQ6（12 片/3-4 并发/每片完成即 flush/逐片核对），复用 active_full_20261018.json + shards/；收齐后走 ingest→post_audit（显式）→ledger（last_full=2026-10-18）→TG。
 3. **经验沉淀**：新增 research/post_audit_process_v2.md（门控实测白名单/源替换速查/流水线坑/TG 纪律/全量运维/验收），本记录与文档已 commit+push main。
+
+## 2026-10-18 全量复扫重跑闭环（10-21 收尾，全量 1517 店）
+
+- 委派 OrganizerAgent o_000EySpZxQ6：12 片/3-4 并发/每 ~10 店即 append+flush/逐片核对打回（未重派整片）；48 单元 0 产出根因=过度并发 8 线程被杀 137+攒批落盘，本次根治。
+- 候选：1517 店全覆盖，**579 行候选**（456 店有产出/1061 零发现）；12 片 shard_01..12.jsonl+_zero.txt 全闭环、零越界零重叠；硬负面均满足双源/官方铁律（央厨确认 6、食安问题 6 均官方源）；执行中定向修复 5 处（thepaper baijiahao 2、shobserver 1、单源硬负面 3、越界 id 3、qixin007 1）。
+- ingest：dry-run 两轮（725 丰茂央厨先单源 36kr 被拦，补界面新闻第二源放行）→ **566 KEEP/14 dup**，findings **11070→11636**（+566：investor 389/chain 155/price 20/ck 9/food_safety 6）。
+- post_audit：456 店全落库（312+144 续跑+2 补 chain），六字段 DB 回读一致（chain_type 455/central_kitchen 446/premade_risk 445/investor_info 424/price_avg 452/food_safety 456；2063 无术无证据保持空）。
+- 补录 2 行：2062 宝泰面馆=独立店（澎湃"只此一家"）、2072 甬府=大型连锁（中新网多城出海），ingest+post_audit 单独闭环。
+- **price_avg 浮点 400 修复**：DB price_avg 为 integer，post_audit 序列化 `88.0` 批量 400 → 容器 fix_price_avg_1018.py 读账本 http!=204 行整型重 PATCH，**OK=136 FAIL=0**（覆盖全量批 20 + 早间增量批及自动流水线 dianping 行），每行补记 204 账本+readback；抽查 1798/2003/2073/747/725 全对。
+- food_safety=问题：ingest 接受「问题」，post_audit to_db_value 映射 DB「确认」落库 204（DB CHECK 只认 无/疑似/确认）；6 店（有喜屋/段氏龙虾/一绪/小菜园/云海肴/When Pigs Fly）官方源。
+- ledger：1517 店逐 rid 记账（456 候选+1061 zero，provenance full:general_search[:zero]），**last_full_date=2026-10-18**，last_inc 仍 10-21，rids 1519；备份 /tmp/scan_ledger.bak.20261018。
+- TG：message_id=2526（direct，deuce 本地 tg_send，单次无重复）。
+- 点评日更：10-21 06:40 DONE 1517/1517（cookie 正常）。
+- 产物：deuce /tmp/ctfs/fullscan/（candidates_2026-10-18.json 582 行、SUMMARY.json、verify_merge.py、EXPERIENCE_2026-10-21.md、fix_price_avg_1018.py）；容器 /app/data/post_record/ + /app/cloud/fix_price_avg_1018.py。
