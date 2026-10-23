@@ -141,3 +141,9 @@ HAE_GRID_SLICE=20
 0 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/pmwatch.lock /usr/local/bin/python pm_night_watch.py snapshot --tag 06 >> /app/data/pm_watch.log 2>&1
 # 31c) 早间简报：07:30 经 tg-relay 推一条机械夜间简报（TG 有界，每天一条；不发飞书）
 30 7 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/pmwatch.lock /usr/local/bin/python pm_night_watch.py morning >> /app/data/pm_watch.log 2>&1
+
+# 32) 采集产出停滞确定性闸门（2026-10-23）：只读 restaurants/reviews 最新 created_at，
+#     新评价连续3天/新店连续10天 0 新增 → notifier(tg-relay) 有界 WARN（每天一条），
+#     恢复自动 RESOLVED；让"源头枯竭"可观测，区别于"收口故障"。只报告不写库。
+#     08:07 错峰（早间简报 07:30、reconcile 07:47 之后）。
+7 8 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/stall.lock /usr/local/bin/python intake_stall_watch.py --apply >> /app/data/intake_stall.log 2>&1

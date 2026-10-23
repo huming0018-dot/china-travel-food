@@ -153,7 +153,7 @@ def main():
     cuisine_ids = load_cuisine_ids()
 
     stats = {"admit_new": 0, "inserted": 0, "tagged": 0, "ambig": 0,
-             "no_poi": 0, "exists": 0, "errors": 0}
+             "no_poi": 0, "exists": 0, "errors": 0, "no_diner_skip": 0}
     for cf in candidate_files(args.category):
         cat = cf.name.replace("candidates_", "").replace(".jsonl", "")
         root_name = K.CUISINE_ROOT.get(cat)
@@ -163,6 +163,15 @@ def main():
                 continue
             p = json.loads(line)
             if not p.get("verdict", "").startswith("admit") or p.get("in_db"):
+                continue
+            # [2026-10-23] 收口硬闸（与 admission_gate 双保险）：库外新店必须有真实食客
+            # 到店声音（diner_voices>=1）。纯整理/营销号即便旧裁决误判为 admit，也一律不收，
+            # 防止聚合营销号搬运洗稿产生的"上海探店/馄饨店"假店名锁店入库。
+            n_diner = len(p.get("diner_voices") or {})
+            if n_diner < 1:
+                stats["no_diner_skip"] += 1
+                print(f"  [无食客证据·hold] {p.get('brand')}（食客0/独立"
+                      f"{p.get('independent_sources')}，营销号洗稿不收）")
                 continue
             if stats["admit_new"] >= args.limit:
                 break

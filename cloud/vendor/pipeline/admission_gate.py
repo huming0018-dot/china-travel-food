@@ -527,8 +527,13 @@ def main():
         if not is_cat:
             return "reject", "非本品类（排除跨品类噪声）", independent_sources, avg, items
         if independent_sources >= 2 and items >= 1 and avg is not None and avg >= 3.5:
-            if n_diner == 0 and len(comp_authors) == 1:
-                return "hold", "仅单一博主整理、无独立食客交叉", independent_sources, avg, items
+            # [2026-10-23] 真实食客硬闸：库外新店 admit 必须有 >=1 个真实食客到店声音。
+            # 整理/营销号会互相搬运洗稿，多个 compiler 不构成独立到店证据（小红书账号失效后
+            # 曾出现纯营销号 >=2 即误判 admit*、混入"上海探店/馄饨店/年老店"等假店名）。
+            # 收紧：n_diner==0 一律 hold，无论整理号几个。
+            if n_diner == 0:
+                return "hold", (f"无真实食客交叉（{len(comp_authors)}个整理/营销号不采信为"
+                                f"独立到店证据），需真实食客UGC"), independent_sources, avg, items
             tag = "admit" if p["has_negative"] else "admit*"
             tail = "" if p["has_negative"] else "（无差评交叉,全好评置信略降）"
             return tag, (f"独立声音{independent_sources}(整理{len(comp_authors)}/食客{n_diner})、"
