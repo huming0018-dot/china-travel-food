@@ -30,6 +30,24 @@
 
 ## 🆕 更新日志（最新在最上）
 
+### 2026-10-23（周五）补跑 10-22/10-23 自进化复盘 · 修复任务桥常驻(#51) + 账号看门狗探测死锁(#54，commit eea216d，lesson#106)
+- **背景**：10-22、10-23 两个 02:00 周期连续因 Doubao 主进程凌晨未运行，平台"本地任务派发桥"（内建于 Doubao.app）离线，Bash/桌面/Read 三通道全超时，六步复盘一步未做。
+- **数据快照（10-23 13:00 CST 对 Supabase 实测）**：
+  - active 1517 / total 1523（closed 6），10-22/23 无新增店（最后新店 10-03）；电话 87.5%(1328) / 坐标 99.9%(1516) / 营业时间 66.3%(1006) / score_taste 30.2%(458)。
+  - reviews 2648（is_fake_suspect 10）：服务器 XHS UGC 自 10-10(88 条) 后连续 10 天 0 新增（10-13 仅 5）。**众包通道仍活**：crowd_submissions 10-23 提交 3 包/60 条/验收 30，10-22 为 23 包/286 条/验收 60；活跃设备 P-W5ZV6E3N、P-LU72E3TD、P-E3NXWZ6H、P-PX5S24GZ；历史 stale_client 拒单 820（旧版本客户端，近 12 天清零）。
+  - coverage ledger 347 叶子：met 53 / NOT_MET 294，gap 671；status {shallow103, rich62, thin59, ok48, empty20, parent55}；n_real 2085 / n_verified 1535。
+  - 全量 `updated_at=1517` 定位：`curate_score.py` 05:52 `--apply` 对全量 PATCH 1517/1517（幂等重算刷 updated_at，数据未损坏，非异常）。
+- **根因与修复 #54（核心）**：
+  - 死锁链：`account_repair.probe()` 复用 `XhsApi(pin=account)`，其 `__init__` 读 `_cookie_pool_state.json` 把 dead/parked 账号在构造期预过滤 → `api.accounts=[]` → probe **未发任何请求即 return None** → reconcile 归"双出口网络均失败(unknown)" → 告警只在 verdict=dead 时触发 R3 扫码、unknown 不告警 → 看门狗每轮 OK，静默账号池 10 天零产出。
+  - 强制加载（绕过 state）权威复核坐实：account_a/account_b 默认出口 `GET /api/sns/web/v2/user/me` 均 HTTP 200 但 `code=-100`（**两个 web_session 都过期，真死号，网络正常**）；配置的广州代理 139.199.90.169:18080 两账号均 `ProxyError Connection refused`（代理服务已挂，独立故障，仅影响 R2 IP 轮换）。
+  - 修复（`cloud/account_repair.py` 179→269 行，只改健康复核路径、不碰采集主路径）：新增 `_load_force_ck()` 直接读 `/secrets/xhs_accounts/{account}.json` 强制加载、`XhsApi(pin=None)` 仅借签名器；probe 返回细化为 5 类 `0 / -100 / 其它 int / no_cookie / (NETERR,reason)`，不再裸 except 吞成 None；两出口都 NETERR 才判 unknown，且连续 9 轮（≈3h）升级基础设施告警（写 `_unknown_incident.json`，cooldown 6h），有明确结论即清零。热验证 + build_sync 重建镜像 + 生产 watchdog 端到端复测：两账号正确判 dead、各发真实 Chrome 重登工单（TG route=proxy delivered=true）。
+- **进程**：容器 03:14 Recreated Up（RestartCount=0 / ExitCode=0 / OOMKilled=false，非崩溃非 OOM，疑 10-22 晚手动 build_sync，非核心）；#54 部署后再次重建（based on eea216d），cron_refs=4、gap_pool_refs=5（@reboot sleep 25/90 已拉起）。
+- **修复 #51（deuce 本地）**：机器本身不睡眠（pmset sleep=0、standby=0、uptime 24 天），根因是 Doubao.app 主进程凌晨未运行（进程当天 11:58 才启动）；已部署常驻 LaunchAgent `com.deuce.doubao-keepalive`（RunAtLoad + 每 300s 检查，缺失即 `open -a Doubao.app`，手动跑 exit=0），并把 Doubao 加入登录项（现「豆包, 千问」）。
+- **待人工（唯一阻塞，无法自治）**：① account_a/account_b 需走 `xhs-login-runbook.md` 在本机真实 Chrome 扫码重登（扫码须用户本人，禁微信 GUI、禁云端 headless，数据中心 IP 手机确认必 fail）；② 广州代理 139.199.90.169:18080 需确认续费/重启；③ deuce 开机"自动登录"需在系统设置→用户与群组确认（否则重启停登录窗时用户级 LaunchAgent 不自启）。
+- **机制增强（后续）**：可再加独立产出停滞闸门（reviews 连续 N 天 0 即告警，与账号 verdict 解耦，防御深度）；可选把容器内复盘做成腾讯云 cron 自治，deuce 只做"拉结果+幂等补 TG"，彻底摆脱凌晨任务桥依赖。
+- 教训：**lesson#106**（健康检查必须独立于被测状态；unknown 不是 OK，需独立停滞闸门；平台任务桥宿主进程与 XHS 登录态两个常驻前置都要看门狗）。
+
+
 ### 2026-10-18（周日）02:00 自进化复盘 · 高德配额语义纠错 + ledger 并发锁 + 10021 退避（commit 06a2fd9 + 4a9b27e，lesson#100）
 - 采集/覆盖：active 1517 / total 1523（closed 6），连续无新增店（最后新店 10-03）；电话 87.5%(1328，较 10-16 净 +1) / 坐标 99.9%(1516) / 营业时间 66.3%(1006) / score_taste 30.2%(458)；reviews 2648，**10-16/17/18 三天 reviews 增量均为 0**（登录闸 + Apify 付费闸闭合，符合 lesson#92）；production_model 仍 820 None。
 - 进程：容器 food-cloud Up 23h（10-17 约 03:00 重启过一次，dc5ace5 跨 restart 存活）、searxng Up 23h；cron(PID 99)、gap_pool(PID 137，6 槽) 存活，36 条 crontab 齐全，router/phone_fill/amap_fill/watchdog 日志活跃；coord_fill/hours_fill 每日 03:00/04:00 调度。
