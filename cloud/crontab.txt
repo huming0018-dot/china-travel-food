@@ -131,3 +131,13 @@ HAE_GRID_SLICE=20
 
 # 30) v4 need_ugc -> lease pool -> verified evidence -> build_bridge. Off until migration/acceptance.
 11,41 * * * * cd /app/cloud && . /app/cloud/env.sh && [ "${CROWD_V4_ENABLED:-0}" = "1" ] && flock -n /tmp/crowd-v4.lock /usr/local/bin/python crowd_v4.py cycle --apply >> /app/data/crowd_v4.log 2>&1
+
+# 31) PM 夜间确定性监控（方案C·2026-10-23，常驻腾讯云，替代 Deuce 本机 agent 定时任务）
+#     tick：每 20 分钟（错峰 :03/:23/:43）盘点 task_queue + 新认领 + 有界 nudge（复用 pm_dispatch）
+#           + 采集管线活性元检查（独立看门狗兜底 watchdog 自身停摆）+ 硬异常 WARN，写 latest/history
+3,23,43 * * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/pmwatch.lock /usr/local/bin/python pm_night_watch.py tick >> /app/data/pm_watch.log 2>&1
+# 31b) 夜间快照：02:00 / 06:00 落结构化快照（供开会话时智能复盘/深度报告/录后分片引用）
+0 2 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/pmwatch.lock /usr/local/bin/python pm_night_watch.py snapshot --tag 02 >> /app/data/pm_watch.log 2>&1
+0 6 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/pmwatch.lock /usr/local/bin/python pm_night_watch.py snapshot --tag 06 >> /app/data/pm_watch.log 2>&1
+# 31c) 早间简报：07:30 经 tg-relay 推一条机械夜间简报（TG 有界，每天一条；不发飞书）
+30 7 * * * cd /app/cloud && . /app/cloud/env.sh && flock -n /tmp/pmwatch.lock /usr/local/bin/python pm_night_watch.py morning >> /app/data/pm_watch.log 2>&1

@@ -63,8 +63,15 @@ def _save_ledger(L):
 def get_task_queue():
     """读 task_queue（Supabase）。复用 vendor 直连+代理环境。"""
     try:
-        PIPE = HERE / "vendor" / "pipeline"
+        # 容器内 common 位于 /app/pipeline（env FOOD_PIPELINE_DIR）；本地开发回退 vendor 布局
+        PIPE = pathlib.Path(os.environ.get("FOOD_PIPELINE_DIR",
+                                           str(HERE / "vendor" / "pipeline")))
         sys.path.insert(0, str(PIPE))
+        if not (PIPE / "common.py").exists():
+            for cand in (HERE.parent / "pipeline", HERE.parent / "vendor" / "pipeline"):
+                if (cand / "common.py").exists():
+                    sys.path.insert(0, str(cand))
+                    break
         import common as C
         r = C.req("GET", "/task_queue?select=id,title,status,priority,assignee,source&order=id")
         rows = r.json()
