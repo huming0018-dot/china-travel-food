@@ -324,19 +324,27 @@ def cmd_morning(_args):
         lines.append("  ⚠️ " + msg)
     if health["degraded"]:
         lines.append("已知降级（非新增）：" + "；".join(health["degraded"]))
-    lines.append("智能环节（自进化复盘 / 深度报告 / 录后搜索分片）开会话时基于快照生成。")
+    # 今日待补的智能环节（不在无人值守脚本执行，开会话时基于快照/账本生成）
+    weekday = datetime.datetime.fromtimestamp(now()).weekday()  # 周一=0，周日=6
+    post_audit = ("录后校验·周日全量（约1517店，开会话委派 OrganizerAgent 12分片）"
+                  if weekday == 6 else
+                  "录后校验·工作日增量（planner --batch 120，开会话跑搜索取证+post_audit）")
+    lines.append("今日待补（会话内）：02点自进化复盘回看（容器 self_evolve 01:00 已产确定性部分）；"
+                 "06点深度报告（基于本目录 06 快照）；" + post_audit)
     text = "\n".join(lines)
 
-    # 每天一个唯一 key，确保每日首条必推；cadence=1 秒（同 key 不重复）
+    # key 按天唯一（天然每天一条）；cadence=86400 双保险，防止当天内手动重跑/重复调度刷屏
+    pushed = False
     try:
-        notifier.info(text, key=f"morning:{today()}", cadence=1)
+        pushed = bool(notifier.info(text, key=f"morning:{today()}", cadence=86400))
     except Exception as e:
         print("[nightwatch] morning push fail:", repr(e)[:100])
     state["morning_brief"] = text
+    state["morning_pushed"] = pushed
     save_state(state)
     WATCH_DIR.mkdir(parents=True, exist_ok=True)
     (WATCH_DIR / f"morning_{today()}.txt").write_text(text, encoding="utf-8")
-    print("[nightwatch] morning brief 已生成/推送")
+    print(f"[nightwatch] morning brief 已生成（TG 推送={'是' if pushed else '否：窗口内折叠或失败'}）")
     print(text)
     return 0
 
