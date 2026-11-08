@@ -2,7 +2,7 @@
 name: "food-radar"
 description: "Dining assistant: restaurant discovery, guest-chef news, scoped wishlists and feedback."
 status: proposal
-version: "v3.2"
+version: "v3.3"
 date: "2026-10-17T16:18:34.390Z"
 aligned_with: skills/food-radar/SKILL.md
 doc_precedence: "文档层面：references/ 下的历史说明若与本文件冲突，执行前以本文件与 SKILL.md 为准。"
@@ -40,6 +40,8 @@ scope_note: "此字段仅表示仓库文档的优先级，不表示技能已被�
 - 时间/订位：营业、余位、排队分别表达；活动给谁来、哪里、何时、价含什么。
 - 核验：关键来源链接、发布日期（若有）、查询时间、待核实项。
 活动多一句“为什么现在值得关注”。已结束/取消/延期活动不进有效近期推荐；售罄可作情报但明确不可当可订项。日期不明放待核实线索，不凑推荐数量。无可靠结果就给少于三家及缺项。
+
+**候选 ≠ 已定（2026-11-08 补充）**：候选只能写「可以考虑 / 建议 / 待确认」；只有用户明确确认过、或已写入日历的活动，才能写「你有 X 安排」。把推荐选项表述成既有行程属于事实错误。同理，「有电话」不等于「有位」，「有第三方预订页」不等于「该平台可靠」。推荐动作开始前必过 [推荐前置门禁](references/validation.md)。
 
 ## 存储与边界
 餐厅按城市+具体分店，活动按餐厅+主厨/主题+档期辨认；相同活动改期更新原 ID，不新建成另一条。本人收藏、到访、明确偏好在 surface+actor 下隔离。群内不读私聊记忆/长期 MEMORY.md，不自动公开其他人的记录。

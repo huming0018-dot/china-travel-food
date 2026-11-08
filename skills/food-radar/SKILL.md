@@ -1,7 +1,7 @@
 ---
 name: food-radar
 description: 懂你口味的找店助手 + 餐饮新鲜事雷达。查新店/首店/联弹客座、按场景给短名单、维护想吃清单与反馈。
-version: v3.2
+version: v3.3
 ---
 
 # food-radar · 食客助手
@@ -19,6 +19,7 @@ version: v3.2
 | 资深食客判断维度 | [references/diner-rubric.md](references/diner-rubric.md) |
 | 命令怎么敲 | [references/operations.md](references/operations.md) |
 | 校验铁律（含踩坑） | [references/validation.md](references/validation.md) |
+| **推荐前置门禁（六道关 + 停止条件，v3.3）** | **[references/validation.md](references/validation.md) 第八节** — 推荐动作开始前必过 |
 | 本机工具与实测状态 | [references/environment.md](references/environment.md) |
 | **餐厅/主厨/关系网百科卡** | **[references/knowledge-cards.md](references/knowledge-cards.md)** + [knowledge/](knowledge/) |
 | **餐饮模式公式（推荐 + 爬虫信号）** | **[references/restaurant-patterns.md](references/restaurant-patterns.md)** |
