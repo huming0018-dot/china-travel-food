@@ -1,138 +1,206 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""Align active restaurant prices to approved, fixed scene thresholds.
+
+price_band_thresholds is the sole range authority (lo inclusive, hi exclusive).
+price_position is the corresponding 经济/平价/中端/高端/奢华 label, NOT a
+second percentile calculation. Recalibration must be separately reviewed and
+applied atomically with affected rows; this script never writes configuration.
+
+Default: read-only. --apply also requires FOOD_PRICE_ALIGNMENT_WRITES_ENABLED=1
+after separate approval of the production data changes. It changes only price_band/price_position, guarded by
+the original price inputs and values, and verifies every write. A failed or
+uncertain write stops with exit 1; earlier verified rows may have committed.
+Never automatically retry an uncertain PATCH. Database UPDATE triggers still
+run (including updated_at); they are not disabled here.
+
+REST cannot lock threshold reads and restaurant writes in one transaction.
+Configuration MUST stay frozen while this runs. Before recalibrating, stop all
+price writers and drain in-flight runs; keep them stopped through verification.
+Per-row config checks detect drift but are not an atomic concurrency guarantee.
 """
-price_realign.py — 1B-1 定价双轨重设（确定性 / 幂等）
+import argparse
+import collections
+import json
+import os
+from pathlib import Path
+import re
+import sys
+from urllib.parse import urlencode
 
-双轨：
-  ① 绝对带 price_band（分场景 price_scene）：边界取该场景 active 店 price_avg 真实
-     P25/P50/P75/P90（取整到 5），写入 price_band_thresholds 配置表；restaurant.price_band=1..5。
-  ② 相对档 price_position（场景内分位）：P20/P40/P60/P80 切 入门/主流/进阶/高端/旗舰，
-     每个标签绑定该场景的真实数值区间（不再是小菜系组内 PERCENT_RANK 通胀）。
-  · 非正餐（快餐小吃/咖啡茶饮/面包/甜品/酒吧）各用各自分布，不套正餐。
-  · tier（全局 tier_for_price）由 DB 触发器独占，本脚本不碰 price_avg/tier。
-
-只动：price_band_thresholds 配置行 + restaurants.price_band / price_position。
-不碰 phone/location/菜系/score_*/price_avg/tier 等其余字段。
-
-用法：
-  python3 price_realign.py           # dry-run：阈值表 + 受影响店 before→after，不写
-  python3 price_realign.py --apply    # 写阈值表 + PATCH 变更行（幂等，复跑 0）
-"""
-import argparse, collections, json
-import common as C
+# Offline plans and --help must not load credentials or HTTP dependencies.
+C = None
 
 SCENES = ["正餐", "快餐小吃", "咖啡茶饮", "面包", "甜品", "酒吧"]
-POS_LABELS = ["入门", "主流", "进阶", "高端", "旗舰"]
+POS_LABELS = ["经济", "平价", "中端", "高端", "奢华"]
+FIELDS = "id,name,status,price_avg,price_scene,price_band,price_position"
+GUARDS = ("id", "status", "price_avg", "price_scene", "price_band", "price_position")
 
 
-def pct(xs, q):
-    xs = sorted(xs); n = len(xs)
-    if n == 1: return float(xs[0])
-    k = (n - 1) * q; lo = int(k); frac = k - lo
-    return xs[lo] * (1 - frac) + xs[min(lo + 1, n - 1)] * frac
+class AlignmentError(ValueError):
+    """A safe, contextual error suitable for the scheduler log."""
 
 
-def r5(x):
-    return int(round(x / 5.0) * 5)
+def validate_thresholds(rows):
+    """Require all six scenes, five non-overlapping contiguous bands each."""
+    by_scene = {scene: {} for scene in SCENES}
+    for row in rows:
+        scene, band = row.get("scene"), row.get("band")
+        if scene not in by_scene or type(band) is not int or band not in range(1, 6):
+            raise AlignmentError("thresholds: unknown scene or invalid band")
+        if band in by_scene[scene]:
+            raise AlignmentError(f"thresholds: duplicate {scene} band={band}")
+        if "lo" not in row or "hi" not in row:
+            raise AlignmentError(f"thresholds: missing bound {scene} band={band}")
+        for key in ("lo", "hi"):
+            value = row[key]
+            if value is not None and (type(value) is not int or not 0 <= value <= 100000):
+                raise AlignmentError(f"thresholds: invalid {key} {scene} band={band}")
+        by_scene[scene][band] = {k: row[k] for k in ("scene", "band", "lo", "hi")}
+    normalized = []
+    for scene in SCENES:
+        bands = by_scene[scene]
+        if set(bands) != set(range(1, 6)):
+            raise AlignmentError(f"thresholds: missing bands for {scene}")
+        previous_hi = None
+        for band in range(1, 6):
+            row = bands[band]
+            lo, hi = row["lo"], row["hi"]
+            if lo != previous_hi or (band > 1 and lo is None):
+                raise AlignmentError(f"thresholds: gap/overlap {scene} band={band}")
+            if (band == 5) != (hi is None):
+                raise AlignmentError(f"thresholds: invalid open bound {scene} band={band}")
+            if hi is not None and hi <= (lo if lo is not None else 0):
+                raise AlignmentError(f"thresholds: empty range {scene} band={band}")
+            previous_hi = hi
+            normalized.append(row)
+    return normalized
 
 
-def build():
-    rs = C.fetch_all("restaurants",
-                     "id,name,status,price_avg,price_scene,price_band,price_position",
-                     order_col="id")
-    active = [r for r in rs if r["status"] == "active" and r["price_avg"] is not None
-              and r["price_scene"] in SCENES]
-    scene_xs = {s: sorted(r["price_avg"] for r in active if r["price_scene"] == s)
-                for s in SCENES}
-    thr = {}
-    for s in SCENES:
-        xs = scene_xs[s]
-        thr[s] = {q: pct(xs, q) for q in (.2, .25, .4, .5, .6, .75, .8, .9)}
+def build(restaurants=None, thresholds=None):
+    global C
+    if C is None and (restaurants is None or thresholds is None):
+        import common as C
+    if restaurants is None:
+        restaurants = C.fetch_all("restaurants", FIELDS, order_col="id")
+    if thresholds is None:
+        thresholds = C.fetch_all("price_band_thresholds", "scene,band,lo,hi", order_col="scene,band")
+    thresholds = validate_thresholds(thresholds)
+    changes, skipped, targets, seen = [], [], [], set()
+    for row in restaurants:
+        if any(key not in row for key in FIELDS.split(",")):
+            raise AlignmentError("restaurants: missing required fields")
+        rid = row["id"]
+        if type(rid) is not int or rid <= 0 or rid in seen:
+            raise AlignmentError("restaurants: invalid or duplicate id")
+        seen.add(rid)
+        if row["status"] != "active":
+            continue
+        price, scene = row["price_avg"], row["price_scene"]
+        if price is None:
+            skipped.append({"id": rid, "reason": "missing_price"})
+            continue
+        if type(price) is not int or not 0 <= price <= 99999:
+            raise AlignmentError(f"restaurants: invalid price_avg id={rid}")
+        if scene not in SCENES:
+            skipped.append({"id": rid, "reason": "unknown_scene"})
+            continue
+        band = next(t["band"] for t in thresholds if t["scene"] == scene
+                    and (t["lo"] is None or price >= t["lo"])
+                    and (t["hi"] is None or price < t["hi"]))
+        after = {"price_band": band, "price_position": POS_LABELS[band - 1]}
+        targets.append({"id": rid, **after})
+        if any(row[k] != v for k, v in after.items()):
+            changes.append({"id": rid, "name": row["name"],
+                            "before": {k: row[k] for k in GUARDS}, "after": after})
+    return {"thresholds": thresholds, "changes": changes, "skipped": skipped, "targets": targets}
 
-    def band_of(s, price):
-        b = [r5(thr[s][.25]), r5(thr[s][.5]), r5(thr[s][.75]), r5(thr[s][.9])]
-        for i, hi in enumerate(b, 1):
-            if price < hi: return i
-        return 5
 
-    def pos_of(s, price):
-        cuts = [r5(thr[s][.2]), r5(thr[s][.4]), r5(thr[s][.6]), r5(thr[s][.8])]
-        for i, c in enumerate(cuts):
-            if price < c: return POS_LABELS[i]
-        return POS_LABELS[4]
+def check_response(response, stage, rid):
+    if response.status_code not in (200, 204):
+        code = "unknown"
+        try:
+            candidate = response.json().get("code", "")
+            if isinstance(candidate, str) and re.fullmatch(r"[A-Z0-9]{5,10}", candidate):
+                code = candidate
+        except (ValueError, AttributeError, TypeError):
+            pass
+        # Never echo raw response bodies or exception URLs (may contain secrets).
+        raise AlignmentError(f"{stage} id={rid}: HTTP {response.status_code} code={code}")
 
-    plan = {}  # rid -> {price_band, price_position}
-    for r in active:
-        s = r["price_scene"]; p = r["price_avg"]
-        plan[r["id"]] = {"price_band": band_of(s, p), "price_position": pos_of(s, p),
-                         "scene": s, "price": p}
-    return rs, active, thr, scene_xs, plan
+
+def apply(plan):
+    if os.environ.get("FOOD_PRICE_ALIGNMENT_WRITES_ENABLED") != "1":
+        raise AlignmentError("WRITE BLOCKED: FOOD_PRICE_ALIGNMENT_WRITES_ENABLED must be explicitly enabled")
+    checked = 0
+    try:
+        for change in plan["changes"]:
+            current = C.fetch_all("price_band_thresholds", "scene,band,lo,hi", order_col="scene,band")
+            if validate_thresholds(current) != plan["thresholds"]:
+                raise AlignmentError("thresholds changed since planning; rerun dry-run")
+            rid, before, after = change["id"], change["before"], change["after"]
+            query = urlencode({k: "is.null" if v is None else f"eq.{v}" for k, v in before.items()})
+            try:
+                # common.req otherwise retries writes on 5xx or network failures.
+                response = C.req("PATCH", "/restaurants?" + query, json=after, retries=1)
+            except Exception as exc:
+                raise AlignmentError(f"PATCH id={rid}: uncertain outcome ({type(exc).__name__}); read before retry") from None
+            check_response(response, "PATCH", rid)
+            response = C.req("GET", f"/restaurants?id=eq.{rid}&select={FIELDS}")
+            check_response(response, "readback", rid)
+            rows = response.json()
+            expected = {**before, **after}
+            if not isinstance(rows, list) or len(rows) != 1 or any(rows[0].get(k) != v for k, v in expected.items()):
+                raise AlignmentError(f"readback id={rid}: mismatch/missing row; possible concurrent update")
+            checked += 1
+        verification = build()
+        if verification["thresholds"] != plan["thresholds"]:
+            raise AlignmentError("thresholds changed during apply; rerun dry-run before further writes")
+        if verification["changes"]:
+            raise AlignmentError(f"final readback: {len(verification['changes'])} mismatches remain")
+    except Exception:
+        print(f"[apply ERROR] verified={checked}/{len(plan['changes'])}; stopped, earlier rows may have committed")
+        raise
+    print(f"[apply OK] verified={checked}/{len(plan['changes'])}; thresholds unchanged")
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--apply", action="store_true")
-    args = ap.parse_args()
-    rs, active, thr, scene_xs, plan = build()
-
-    print("=== 分场景真实分位与档级定义（active, n=%d）===" % len(active))
-    for s in SCENES:
-        p = thr[s]; n = len(scene_xs[s])
-        b = [r5(p[.25]), r5(p[.5]), r5(p[.75]), r5(p[.9])]
-        c = [r5(p[.2]), r5(p[.4]), r5(p[.6]), r5(p[.8])]
-        print(f"\n[{s}] n={n}  raw P25={p[.25]:.0f} P50={p[.5]:.0f} P75={p[.75]:.0f} P90={p[.9]:.0f}")
-        print(f"  绝对带 band: <{b[0]}/<{b[1]}/<{b[2]}/<{b[3]}/>={b[3]}")
-        print(f"  相对档 position: <{c[0]}入门/{c[0]}-{c[1]}主流/{c[1]}-{c[2]}进阶/{c[2]}-{c[3]}高端/>={c[3]}旗舰")
-
-    # diff
-    changed = []
-    for r in rs:
-        if r["id"] not in plan: continue
-        p = plan[r["id"]]
-        f = {}
-        if r["price_band"] != p["price_band"]: f["price_band"] = p["price_band"]
-        if r["price_position"] != p["price_position"]: f["price_position"] = p["price_position"]
-        if f: changed.append((r["id"], r["name"], f))
-    print(f"\n=== 受影响店（price_band/price_position 变更）: {len(changed)} / {len(active)} ===")
-    print("position 分布 after:", dict(collections.Counter(v["price_position"] for v in plan.values())))
-    print("band 分布 after:", dict(collections.Counter(v["price_band"] for v in plan.values())))
-    for rid, name, f in changed[:25]:
-        print(f"  id{rid:<6} {str(name)[:24]:<26} {f}")
-
-    # rasa/nick
-    for rid in (1110, 1308):
-        if rid in plan:
-            p = plan[rid]
-            cur = next(r for r in rs if r["id"] == rid)
-            print(f"  RASA/NICK id{rid}: band {cur['price_band']}->{p['price_band']} "
-                  f"position {cur['price_position']}->{p['price_position']} (¥{p['price']})")
-
-    if not args.apply:
-        print("\n[dry-run] 未写库。加 --apply 写阈值表 + PATCH 变更行。")
-        return
-
-    # 1) 写阈值配置表
-    for s in SCENES:
-        p = thr[s]
-        bounds = [r5(p[.25]), r5(p[.5]), r5(p[.75]), r5(p[.9])]
-        rows = [(1, None, bounds[0]), (2, bounds[0], bounds[1]), (3, bounds[1], bounds[2]),
-                (4, bounds[2], bounds[3]), (5, bounds[3], None)]
-        for band, lo, hi in rows:
-            body = {"lo": lo, "hi": hi}
-            r = C.req("PATCH", f"/price_band_thresholds?scene=eq.{s}&band=eq.{band}", json=body)
-            if r.status_code not in (200, 204):
-                print(f"  [THR FAIL] {s} band{band}: {r.status_code} {r.text[:120]}")
-    print("阈值表已更新。")
-
-    # 2) PATCH restaurants
-    ok = 0
-    for rid, name, f in changed:
-        r = C.req("PATCH", f"/restaurants?id=eq.{rid}", json=f)
-        if r.status_code not in (200, 204):
-            print(f"  [FAIL] id{rid}: {r.status_code} {r.text[:120]}"); continue
-        ok += 1
-    print(f"[apply] PATCH 完成 {ok}/{len(changed)} 行。")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--snapshot", type=Path, help="Offline JSON containing restaurants and thresholds; cannot apply")
+    parser.add_argument("--report", type=Path, help="Write a reviewable JSON plan locally")
+    args = parser.parse_args()
+    if args.apply and args.snapshot:
+        parser.error("--snapshot cannot be combined with --apply")
+    if args.apply and os.environ.get("FOOD_PRICE_ALIGNMENT_WRITES_ENABLED") != "1":
+        print("[WRITE BLOCKED] 价格写入默认关闭；确认数据变更范围后，才可单独启用 FOOD_PRICE_ALIGNMENT_WRITES_ENABLED=1。")
+        return 2
+    try:
+        if args.snapshot:
+            snapshot = json.loads(args.snapshot.read_text(encoding="utf-8"))
+            plan = build(snapshot["restaurants"], snapshot["thresholds"])
+        else:
+            plan = build()
+        print(f"price alignment: eligible={len(plan['targets'])} changed={len(plan['changes'])} skipped={len(plan['skipped'])}")
+        print("position after:", dict(collections.Counter(r["price_position"] for r in plan["targets"])))
+        for change in plan["changes"][:25]:
+            print(f"  id={change['id']} {change['name']}: {change['after']}")
+        for row in plan["skipped"]:
+            print(f"  [skip] id={row['id']} {row['reason']}")
+        if args.report:
+            args.report.write_text(json.dumps(plan, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        if not args.apply:
+            print("[dry-run] 未写库；阈值配置只读。--apply 仅对齐餐厅档位。")
+            return 0
+        print("[apply prerequisite] 阈值须冻结；禁止与阈值重标定并发运行。")
+        apply(plan)
+        return 0
+    except AlignmentError as exc:
+        print(f"[ERROR] {exc}")
+    except Exception as exc:
+        print(f"[ERROR] {type(exc).__name__}: failed; no success claimed (inspect sanitized service logs)")
+    return 1
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -36,16 +36,26 @@
 | restaurants.premade_risk | 无 / 低 / 疑似 / 高 |
 | restaurants.food_safety | 无 / 疑似 / 确认 |
 | restaurants.tier（全局，触发器据 price_avg 派生） | 经济 / 平价 / 中档 / 高档 / 奢华 |
-| restaurants.price_band（场景内绝对 1–5，边界 P25/50/75/90） | 1 / 2 / 3 / 4 / 5 |
-| restaurants.price_position（场景内相对分位，P20/40/60/80） | 入门 / 主流 / 进阶 / 高端 / 旗舰 |
+| restaurants.price_band（场景内 1–5，由已批准阈值配置派生） | 1 / 2 / 3 / 4 / 5 |
+| restaurants.price_position（price_band 对应标签，不另算分位） | 经济 / 平价 / 中端 / 高端 / 奢华 |
 | restaurants.status | active / closed / relocated |
 | diner_seed_labels.tier | must_eat / worth_eating / average |
 
-价位三字段定义（回答「何为旗舰/进阶」，均绑定该场景真实数值，非主观）：
+价位三字段定义（2026-09-30 五档标准；旧双轨定义停用）：
 - `tier`＝跨场景全局档，由触发器按 price_avg 全局分布派生（经济≈≤45 / 平价 / 中档 / 高档 / 奢华≥≈500）；
-- `price_band`＝同场景内绝对档，边界取该场景 price_avg 的 P25/P50/P75/P90（取整 5）；
-- `price_position`＝同场景内相对位置，P20/40/60/80 切 入门/主流/进阶/高端/旗舰；
-  非正餐（快餐小吃/咖啡茶饮/面包/甜品/酒吧）各用各自分布，不套正餐。
+- `price_band`＝同场景内档位，以 `price_band_thresholds` 的 lo 含、hi 不含区间为唯一运行时权威；
+- `price_position`＝band 1–5 对应 经济/平价/中端/高端/奢华，与 band 同口径；
+- 重新标定按各场景 active 且有效整数 price_avg 的 P20/P40/P70/P90，等于分位值留在较低档。
+  整数价格用 `floor(分位值)+1` 表示 hi 不含边界，不再取整到 5。非正餐各算各自分布。
+- 日常 `price_realign.py` 只读阈值，不自动重算/改写配置。阈值重标定必须独立审阅，
+  与受影响餐厅在同一个数据库事务提交；不能先 PATCH 阈值、再逐店 PATCH。
+- 重标定前必须停掉所有价格写入任务并等在途运行退出，完成事务及回读后再恢复。
+  REST 的阈值检查与餐厅 PATCH 不是原子操作；仅靠行原值条件和最终回读不能消除该并发窗口。
+- 默认 dry-run，巡逻也默认只检测价格。`--apply` 还必须在数据变更单独获批后设置
+  `FOOD_PRICE_ALIGNMENT_WRITES_ENABLED=1` 才可写入；代码发布不代表允许修正生产数据。
+  `--apply` 只对齐 active 且价格/场景有效的餐厅。未知场景/缺价列出并保留，
+  无效阈值/价格中止。逐行带原值条件更新并回读，失败非零退出，先前成功行可能已提交。
+  `--snapshot FILE --report FILE` 支持离线审阅，`--snapshot` 与 `--apply` 互斥。
 
 禁临时字符串；新增枚举走迁移 + CHECK。
 
@@ -57,7 +67,7 @@
 |---|---|---|
 | chain_type / central_kitchen / production_model / is_reheat_served | production_model_probe → gate_apply | 出餐方式链 |
 | premade_risk / food_safety / soft_ad_flag / soft_ad_penalty | gate_apply（findings 门） | 风险/软广 |
-| price_band / price_position | price_realign | 双轨价位 |
+| price_band / price_position | price_realign | 已批准阈值对应的统一五档 |
 | tier | DB 触发器 tier_for_price | 脚本不写 |
 | score_taste / score_diner / score_endorsement / score_objective | scoring_engine | 组件分 |
 | score_total / score_evidence_level | DB 触发器 trg_restaurants_derive | 组件 blend |
