@@ -23,7 +23,7 @@ PIPE = os.environ.get("FOOD_PIPELINE_DIR", "/app/pipeline")
 sys.path.insert(0, PIPE)
 sys.path.insert(0, HERE)
 
-import common as C
+from text_normalization import cjk_norm, addr_core
 import map_quota as MQ
 from tencent_sig import signed_get as tencent_signed_get
 
@@ -73,8 +73,8 @@ def ensure_shanghai_prefix(address, district=""):
 
 def cjk_sim(a, b):
     """CJK归一化后字符序列相似度 0~1。"""
-    na = C.cjk_norm(a or "")
-    nb = C.cjk_norm(b or "")
+    na = cjk_norm(a or "")
+    nb = cjk_norm(b or "")
     if not na or not nb:
         return 0.0
     if na in nb or nb in na:
@@ -84,8 +84,8 @@ def cjk_sim(a, b):
 
 def addr_core_sim(a, b):
     """地址核心（路+号）相似度 0~1。"""
-    ca = C.addr_core(a or "")
-    cb = C.addr_core(b or "")
+    ca = addr_core(a or "")
+    cb = addr_core(b or "")
     if not ca or not cb:
         return 0.0
     if ca == cb:
@@ -357,7 +357,7 @@ def resolve_poi(db_name, db_address="", db_district="", want_phone=False, want_c
         # ① 腾讯 suggestion（店名+地址地标，最精确）
         kw = db_name
         if db_address and not is_fake_address(db_address):
-            kw = f"{db_name} {C.addr_core(db_address)}"
+            kw = f"{db_name} {addr_core(db_address)}"
         res = tencent_suggestion(kw)
         if res == "QUOTA_EXCEEDED":
             quota_tencent = True          # 同一把腾讯 key，search/geocode 大概率也耗尽
@@ -413,3 +413,4 @@ def resolve_poi(db_name, db_address="", db_district="", want_phone=False, want_c
         out["found"] = True
         pc.put(cache_key, out)   # 只正缓存，quota/未找到不缓存
     return out
+
