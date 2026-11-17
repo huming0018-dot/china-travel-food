@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 # build_on_server.sh — 在服务器（amd64）原生构建，全国内源；省掉跨架构编译与 974MB 镜像上传。可重复执行。
+# Legacy remote flow stopped/deleted the running image before building and does
+# not carry the private wheel context. Reject before any SSH or service changes.
+echo "This legacy deployment entry is disabled: it cannot supply the private model dependency safely." >&2
+echo "Build and validate a candidate with cloud/build_model_image.sh first; then use the documented release/image transfer procedure." >&2
+exit 2
+
 set -uo pipefail
 export COPYFILE_DISABLE=1   # macOS tar 不生成 ._ AppleDouble（否则在 Linux 上变成非 UTF-8 的 ._*.py）
 cd "$(dirname "$0")"
@@ -39,3 +45,4 @@ SSH "cd $RDIR && sudo docker build -t food-cloud:local ."
 echo "==> [6/6] 启动并验证"
 SSH "cd $RDIR && sudo docker compose up -d && sleep 8 && sudo docker compose ps"
 echo "BUILD_ON_SERVER_DONE"
+

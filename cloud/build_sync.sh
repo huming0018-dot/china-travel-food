@@ -37,7 +37,7 @@ rsync -a --delete --include='*.py' --exclude='*' "$SRC_DIR/cloud/external_watchd
 echo "==> [3/4] rsync pipeline/*.py -> $BUILD_DIR/vendor/pipeline/（--delete 清手工cp残留）"
 mkdir -p "$BUILD_DIR/vendor/pipeline"
 rsync -a --delete --include='*.py' --exclude='*' "$SRC_DIR/cloud/vendor/pipeline/" "$BUILD_DIR/vendor/pipeline/" 2>/dev/null || true
-for f in build_sync.sh Dockerfile crontab.txt entrypoint.sh requirements.txt docker-compose.yml; do
+for f in build_sync.sh build_model_image.sh install_model_access.sh Dockerfile crontab.txt entrypoint.sh requirements.txt docker-compose.yml; do
   [ -f "$SRC_DIR/cloud/$f" ] && cp -f "$SRC_DIR/cloud/$f" "$BUILD_DIR/$f"
 done
 echo "    cloud/*.py=$(ls "$BUILD_DIR"/*.py | wc -l)  pipeline/*.py=$(ls "$BUILD_DIR"/vendor/pipeline/*.py | wc -l)"
@@ -45,9 +45,15 @@ echo "    cloud/*.py=$(ls "$BUILD_DIR"/*.py | wc -l)  pipeline/*.py=$(ls "$BUILD
 if [ "${1:-}" != "--no-build" ]; then
   echo "==> [4/4] docker build + compose up"
   cd "$BUILD_DIR"
-  sudo docker build -t food-cloud:local .
+  # Build must succeed before compose can replace the running service.
+  : "${MODEL_WHEELHOUSE:?Set the absolute private wheelhouse for this build}"
+  : "${MODEL_ACCESS_WHEEL_SHA256:?Set the recorded private wheel SHA256}"
+  sudo env "MODEL_WHEELHOUSE=$MODEL_WHEELHOUSE" \
+    "MODEL_ACCESS_WHEEL_SHA256=$MODEL_ACCESS_WHEEL_SHA256" \
+    MODEL_IMAGE_TAG=food-cloud:local bash ./build_model_image.sh
   sudo docker compose up -d
   sleep 3
   sudo docker compose ps
   echo "BUILD_SYNC_DONE based on $HEAD"
 fi
+
