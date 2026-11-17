@@ -19,7 +19,7 @@ if [ -f food-cloud-image.tgz ]; then
   docker load -i food-cloud-image.tgz
 elif ! docker image inspect food-cloud:local >/dev/null 2>&1; then
   echo "无镜像包且本机无镜像，现场构建（服务器需能拉取基础镜像）..."
-  docker build -t food-cloud:local .
+  MODEL_IMAGE_TAG=food-cloud:local bash ./build_model_image.sh
 fi
 
 echo "==> [3/5] 准备配置"
@@ -33,3 +33,4 @@ echo "==> [5/5] 状态"
 sleep 3
 docker compose ps
 echo "DEPLOY_DONE — 查看实时日志: docker compose logs -f"
+
