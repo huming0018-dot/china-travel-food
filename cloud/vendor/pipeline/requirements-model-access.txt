@@ -1,0 +1,2 @@
+# Private dependency: requires authorized SSH access. No token in URL.
+agent-model-access @ git+ssh://git@github.com/huming0018-dot/agent-model-access.git@0d9dd8d7ad5f65f85a2d057b58accb9f5122e38a
