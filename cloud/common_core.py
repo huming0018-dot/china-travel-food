@@ -27,6 +27,7 @@ import sys as _sys
 import time as _time
 
 import requests as _requests
+import postgrest_access as _db
 
 # ---------------------------------------------------------------- 路径
 # cloud/common_core.py → HERE=cloud/，REPO_ROOT=仓库根
@@ -131,51 +132,20 @@ def log(level: str, msg: str, **fields):
 def headers(use_service: bool = True) -> dict:
     k = _api_key(use_service)
     if not k:
-        raise RuntimeError(
-            "缺少密钥：配置 SUPABASE_SERVICE_ROLE_KEY（或 cloud/env.sh、app/.env.local）")
-    return {"apikey": k, "Authorization": f"Bearer {k}",
-            "Content-Type": "application/json"}
+        raise RuntimeError("缺少密钥：配置 SUPABASE_SERVICE_ROLE_KEY（或 cloud/env.sh、app/.env.local）")
+    return _db.headers(k)
 
 
 def req(method: str, path: str, use_service: bool = True, retries: int = 6, **kw):
-    """PostgREST 调用，429/5xx 指数退避重试。path 以 '/' 开头（如 '/restaurants?select=id'）。
-    返回 requests.Response（调用方自行判状态）。"""
-    url = _supabase_base() + path
-    last = None
-    for i in range(retries):
-        try:
-            r = _requests.request(method, url, headers=headers(use_service),
-                                  timeout=kw.pop("timeout", 45), **kw)
-            if r.status_code in (429, 500, 502, 503, 504):
-                last = r
-                _time.sleep(min(2 ** i, 15))
-                continue
-            return r
-        except _requests.RequestException as e:
-            last = e
-            _time.sleep(min(2 ** i, 15))
-    raise RuntimeError(f"{method} {path} 连续失败: {last}")
+    return _db.request(method, path, base_url=_supabase_base(),
+                       get_headers=lambda: headers(use_service),
+                       send=_requests.request, sleep=_time.sleep, retries=retries, **kw)
 
 
 def fetch_all(table: str, select: str = "*", page: int = 1000,
               use_service: bool = True, order_col: str = "id", extra: str = "") -> list:
-    """分页拉全表（PostgREST 单页上限 1000）。"""
-    out, off = [], 0
-    while True:
-        path = f"/{table}?select={select}&limit={page}&offset={off}&order={order_col}"
-        if extra:
-            path += "&" + extra
-        r = req("GET", path, use_service=use_service)
-        r.raise_for_status()
-        rows = r.json()
-        if not rows:
-            break
-        out.extend(rows)
-        if len(rows) < page:
-            break
-        off += page
-        _time.sleep(0.12)
-    return out
+    return _db.fetch_all(table, select, page, use_service, order_col, extra,
+                         request=req, sleep=_time.sleep)
 
 
 # ---------------------------------------------------------------- 通知
@@ -256,3 +226,4 @@ def selfcheck() -> dict:
 
 if __name__ == "__main__":
     print(_json.dumps(selfcheck(), ensure_ascii=False, indent=1))
+
