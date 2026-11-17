@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """raw_xhs.jsonl -> raw_reviews.jsonl  (v6：实体匹配统一复用 entity_match)。
 
-v6：品牌匹配 / 分店消歧 / 合集判定 / 口味与疑问 / 正文清洗全部来自 entity_match，
+v6：品牌匹配 / 分店消歧 / 合集判定 / 口味与疑问 / 正文清洗纯计算来自 entity_matching，默认读库索引来自 entity_match，
 本脚本只保留「读 raw_xhs → 锚定 → 过滤 → 生成 raw_reviews」的管线逻辑，
 不再各写一套匹配（也修掉旧版 NEG["油腻"] 符号错误）。
 """
@@ -17,7 +17,8 @@ import fcntl
 PIPE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(PIPE))
 import common as C          # noqa: E402
-import entity_match as EM  # noqa: E402
+import entity_matching as EM
+from entity_match import get_index  # noqa: E402
 
 # 单实例锁
 _lk = open("/tmp/xhs_to_reviews.lock", "w")
@@ -75,7 +76,7 @@ def parse_note_date(d):
 
 
 def main():
-    idx = EM.get_index()
+    idx = get_index()
     reviews, unmatched = [], []
     for line in open(raw_p, encoding="utf-8"):
         line = line.strip()
