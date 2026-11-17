@@ -41,6 +41,7 @@ import time
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import health  # noqa: E402
+from notification_policy import NotificationPolicy
 
 DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
 LEDGER_F = DATA / "notifier_ledger.json"
@@ -126,90 +127,31 @@ def _deliver(header, full):
     return bool(r)
 
 
-def _record(L, key, level, full, **extra):
-    rec = L.get(key, {})
-    rec.update({"level": level, "last_ts": int(time.time()),
-                "last_hash": _h(full), "count": rec.get("count", 0) + 1})
-    rec.update(extra)
-    L[key] = rec
-    return rec
+def _render_nudge(full, ordinal, total):
+    return full + f"\n\n（提醒 {ordinal}/{total}：仍待处理）"
 
 
-# ────────────────────── 对外 API ──────────────────────
+def _policy():
+    # Construct per call so existing runtime/test overrides remain effective.
+    return NotificationPolicy(load=_load, save=_save, deliver=_deliver,
+                              render=format, render_nudge=_render_nudge,
+                              clock=time.time, digest=_h)
+
+
 def info(body, key="heartbeat", cadence=DEFAULT_CADENCE, footer=None):
-    """例行心跳：仅当距上次 ≥ cadence 才推。"""
-    header, full = format(INFO, body, footer=footer)
-    L = _load()
-    rec = L.get(key)
-    if rec and int(time.time()) - int(rec.get("last_ts", 0)) < cadence:
-        return False
-    ok = _deliver(header, full)
-    if ok:
-        _record(L, key, INFO, full)
-        _save(L)
-    return ok
+    return _policy().info(body, key, cadence, footer)
 
 
 def warn(body, key, cooldown=WARN_COOLDOWN, header_title=None):
-    """自动处理中的问题：同 key 按 cooldown 折叠，不重复刷屏。
-    内容变化也不再触发新告警，避免动态数字导致冷却失效。"""
-    header, full = format(WARN, body)
-    L = _load()
-    rec = L.get(key)
-    # 只要key相同且在冷却期内，不管内容怎么变都不发
-    if rec and int(time.time()) - int(rec.get("last_ts", 0)) < cooldown:
-        return False
-    ok = _deliver(header, full)
-    if ok:
-        _record(L, key, WARN, full, state="open")
-        _save(L)
-    return ok
+    return _policy().warn(body, key, cooldown, header_title)
 
 
 def action(body, key, action_text, nudge_schedule=ACTION_NUDGE, footer=None):
-    """需要用户处理：首次立即推；之后按 nudge_schedule 有界提醒；用尽不刷屏。
-    若用户已处理（调用方应改走 resolve），不重复。"""
-    header, full = format(ACTION, body, action=action_text, footer=footer)
-    L = _load()
-    rec = L.get(key)
-    now_i = int(time.time())
-    if rec and rec.get("state") == "resolved":
-        return False
-    if not rec:
-        ok = _deliver(header, full)
-        if ok:
-            _record(L, key, ACTION, full, state="open", nudges=0, opened=now_i)
-            _save(L)
-        return ok
-    # 已开过单：按计划决定是否提醒
-    nudges = int(rec.get("nudges", 0))
-    if nudges >= len(nudge_schedule):
-        return False
-    due_at = int(rec.get("last_ts", 0)) + int(nudge_schedule[nudges])
-    if now_i < due_at:
-        return False
-    ok = _deliver(header, full + f"\n\n（提醒 {nudges+1}/{len(nudge_schedule)}：仍待处理）")
-    if ok:
-        rec.update({"last_ts": now_i, "nudges": nudges + 1, "last_hash": _h(full)})
-        L[key] = rec
-        _save(L)
-    return ok
+    return _policy().action(body, key, action_text, nudge_schedule, footer)
 
 
 def resolve(body, key, footer=None):
-    """问题解决：每个 key 只推一条收尾；未开过单不推。"""
-    L = _load()
-    rec = L.get(key)
-    if not rec or rec.get("state") == "resolved":
-        return False
-    header, full = format(RESOLVED, body, footer=footer)
-    ok = _deliver(header, full)
-    if ok:
-        rec.update({"state": "resolved", "level": RESOLVED,
-                    "last_ts": int(time.time()), "last_hash": _h(full)})
-        L[key] = rec
-        _save(L)
-    return ok
+    return _policy().resolve(body, key, footer)
 
 
 if __name__ == "__main__":
