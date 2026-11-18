@@ -20,7 +20,6 @@
 | cloud_bili_collect | cron 6h | collector |
 | cloud_blackpearl_collect | cron 6:20 | collector |
 | cloud_michelin_collect | router兜底 | collector |
-| run_batch | router/entrypoint | collector |
 | gap_runner | router | collector |
 | cloud_discover | router | collector |
 | comention_probe | cron 每小时 | collector |

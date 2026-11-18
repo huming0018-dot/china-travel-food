@@ -1,15 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""progress_broadcast.py v2 — 每 10 分钟进度播报（实时计数 + 停滞检测）。
+"""实时计数与周期心跳。保留账号状态和费用显示。
 
-v2 修复"播报冻结、看起来像停采"：
-  - 旧版用静态 coverage/ledger.json（不随 deuce 采集更新）+ 坏掉的 HEAD 计数（返回空）
-    + 冻结的 work_progress 文字，导致连续数小时发同一句话、真实增长（reviews 1199→1445）看不见。
-  - v2 每次直接从库实时统计（在营/评价总数/小红书/真实食客覆盖店/≥2），并显示"近 Xmin +Δ"。
-  - 停滞检测：评价数连续 STALL_MIN 不增长 → 自动判因（上游 deuce/中继未送 raw，还是
-    raw 在涨但评论被合集/匹配丢弃的低产）→ notifier.action 有界提醒；恢复流动自动 resolve。
-
-只读 + 计数，不触发采集、不占浏览器；离线由容器 cron 保证。
+旧 reviews 自动认证链已退出；计数不增长不再自动归因为采集故障，
+不催修旧采集器、匹配器或中继，也不把数值增长称为旧故障恢复。
+本脚本仍读取统计并发送心跳；源码整理不等于线上已停用旧告警。
 """
 import datetime
 import json
@@ -24,9 +19,7 @@ sys.path.insert(0, "/app/pipeline")
 import notifier  # noqa: E402
 
 DATA = pathlib.Path(os.environ.get("FOOD_DATA_DIR", "/app/data"))
-RAW_XHS = DATA / "research/atlas/xhs/raw_xhs.jsonl"
 STATE_P = DATA / "progress_state.json"
-STALL_MIN = 60          # 评价数 60min 不增长才判停滞（原30min，减少误报）
 CADENCE = 3600           # 心跳节奏 60 分钟（原10分钟，柔和模式）
 
 
@@ -74,16 +67,8 @@ def account_line():
     return "账号：" + ("，".join(bits) if bits else "状态缺失")
 
 
-def raw_idle_min():
-    try:
-        return (time.time() - RAW_XHS.stat().st_mtime) / 60.0
-    except Exception:
-        return 9999.0
-
-
 def load_state():
-    return load_json(STATE_P, {"rev": None, "ts": 0, "last_growth_ts": time.time(),
-                               "stall_open": False})
+    return load_json(STATE_P, {"rev": None, "ts": 0})
 
 
 def apify_cost_line():
@@ -122,23 +107,6 @@ def heartbeat_body(c, delta, mins):
     return "\n".join(lines)
 
 
-def stall_body(c, mins, raw_idle):
-    if raw_idle > STALL_MIN:
-        cause = ("上游未送新数据：raw_xhs 已 %.0fmin 未增长 → 检查 deuce 采集器 / 网络 / rsync / 云端relay"
-                 % raw_idle)
-        action_text = "请检查 deuce 采集器、网络或云端中继"
-    else:
-        cause = ("raw 在涨但评论 %.0fmin 0 新增 → 笔记被『合集/分店名匹配』丢弃（低产），需修锚定逻辑"
-                 % mins)
-        action_text = "需修 xhs 锚定/合集判定（机制侧）"
-    body = "\n".join([
-        f"口味覆盖：{c['ver_stores']} 店（≥2 {c['ge2']}）｜评价 {c['rev']} 条",
-        account_line(),
-        "判定：采集疑似停滞 —— " + cause,
-    ])
-    return body, action_text
-
-
 def main():
     c = live_counts()
     st = load_state()
@@ -147,29 +115,13 @@ def main():
     prev_ts = st.get("ts") or nowt
     mins = max(1, round((nowt - prev_ts) / 60))
     delta = c["rev"] - prev_rev if prev_rev is not None else 0
-    moving = delta > 0
-
-    if moving:
-        st["last_growth_ts"] = nowt
-    stall_min = (nowt - float(st.get("last_growth_ts", nowt))) / 60.0
-    was_stall = bool(st.get("stall_open"))
-
-    if stall_min >= STALL_MIN:
-        # 真停滞：判因并 ACTION 有界提醒（notifier 内部去重/nudge，不刷屏）
-        body, action_text = stall_body(c, stall_min, raw_idle_min())
-        ok = notifier.action(body, key="collect_stall", action_text=action_text)
-        st["stall_open"] = True
-        print(body)
-        print("停滞升级推送：", ok)
-    else:
-        body = heartbeat_body(c, delta, mins)
-        ok = notifier.info(body, key="heartbeat", cadence=CADENCE)
-        if was_stall:
-            # 恢复流动：收尾旧停滞单
-            notifier.resolve("采集已恢复流动（评价重新增长）", key="collect_stall")
-        st["stall_open"] = False
-        print(body)
-        print("推送结果：", ok)
+    body = heartbeat_body(c, delta, mins)
+    ok = notifier.info(body, key="heartbeat", cadence=CADENCE)
+    # 仅清理本地旧状态字段；不发送“故障恢复”或操作历史通知工单。
+    st.pop("last_growth_ts", None)
+    st.pop("stall_open", None)
+    print(body)
+    print("推送结果：", ok)
 
     st["rev"] = c["rev"]
     st["ts"] = nowt

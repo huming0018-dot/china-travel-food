@@ -1,5 +1,5 @@
 #!/bin/bash
-# entrypoint.sh — 容器入口：固化环境变量供 cron 使用、安装并启动 cron、可选立即跑一轮
+# entrypoint.sh — 容器入口：固化环境变量供 cron 使用、安装并启动 cron
 set -e
 
 ENVF=/app/cloud/env.sh
@@ -38,12 +38,7 @@ crontab /app/cloud/crontab.txt
 cron
 echo "=== 云端采集服务已启动：cron 每 20 分钟一轮，数据写 /app/data ==="
 
-# RUN_ON_START=1 时容器一起就先跑一轮
-if [ "$RUN_ON_START" = "1" ]; then
-  . "$ENVF"
-  cd /app/cloud
-  flock -n /tmp/xhs.lock /usr/local/bin/python run_batch.py || true
-fi
+# 旧 RUN_ON_START 批采已退出；保留环境、通道与 cron 初始化，不自动认证/写入 reviews。
 
 # 容器常驻
 exec tail -f /dev/null

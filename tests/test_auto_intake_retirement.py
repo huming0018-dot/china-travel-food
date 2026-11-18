@@ -52,8 +52,7 @@ class AutoIntakeRetirement(unittest.TestCase):
 
     def test_router_does_not_dispatch_gap_worker(self):
         with tempfile.TemporaryDirectory() as d, patch.object(R,'DATA',Path(d)), \
-                patch.object(R,'xhs_usable_accounts',return_value=(1,{})), patch.object(R,'next_tick',return_value=2), \
-                patch.object(R,'reviews_done',return_value=True), contextlib.redirect_stdout(io.StringIO()):
+                patch.object(R,'xhs_usable_accounts',return_value=(1,{})), contextlib.redirect_stdout(io.StringIO()):
             target,why=R.decide()
         self.assertEqual(target,'');self.assertIn('已暂停',why)
 

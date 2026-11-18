@@ -1,3 +1,5 @@
+> 小红书 reviews 自动认证批采入口已退出；原始提取参考、实体匹配和显式多域写入器保留。见 [退出边界](docs/xhs-auto-review-retirement.md)。历史手册中的旧批采命令不再适用；不代表线上已停用。
+
 # China Travel · 上海美食地图
 
 基于 Next.js + Supabase + 飞书表格的城市美食地图应用。
