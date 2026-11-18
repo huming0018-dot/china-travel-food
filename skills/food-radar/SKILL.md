@@ -6,7 +6,7 @@ version: v3.3
 
 # food-radar · 食客助手
 
-**执行规程以 [PROPOSAL.md](PROPOSAL.md) 为依据**（路由、食客判断、输出格式、安全边界）。本文件只做入口索引与本机环境说明。
+**执行规程以 [PROPOSAL.md](PROPOSAL.md) 为依据**（路由、食客判断、输出格式、安全边界）。本文件只做入口索引与环境说明。
 
 > 本目录为**待采纳候选**；审阅与沙盒验证以 PROPOSAL.md 为依据。该引用仅定义**文档优先级**，不代表已批准、安装或启用。
 
@@ -20,7 +20,7 @@ version: v3.3
 | 命令怎么敲 | [references/operations.md](references/operations.md) |
 | 校验铁律（含踩坑） | [references/validation.md](references/validation.md) |
 | **推荐前置门禁（六道关 + 停止条件，v3.3）** | **[references/validation.md](references/validation.md) 第八节** — 推荐动作开始前必过 |
-| 本机工具与实测状态 | [references/environment.md](references/environment.md) |
+| 工具依赖与历史实测记录 | [references/environment.md](references/environment.md) |
 | **餐厅/主厨/关系网百科卡** | **[references/knowledge-cards.md](references/knowledge-cards.md)** + [knowledge/](knowledge/) |
 | **餐饮模式公式（推荐 + 爬虫信号）** | **[references/restaurant-patterns.md](references/restaurant-patterns.md)** |
 | **关系图递归法（每次预约如何长图）** | **[references/knowledge-graph-method.md](references/knowledge-graph-method.md)** |
@@ -38,7 +38,7 @@ Skill 层      PROPOSAL.md                 意图识别、检索编排、输出�
 
 **登录采集是可选增强，不阻断主流程。** 公开搜索可用就开工。
 
-## 本机三条通路
+## 按需检查本地依赖
 
 ```bash
 bash scripts/preflight.sh --channel public     # 只查公开检索（默认，永远最简）
@@ -46,7 +46,7 @@ bash scripts/preflight.sh --channel dianping   # 点评：需 Playwright + chrom
 bash scripts/preflight.sh --channel media      # 小红书/抖音：需 Node + MediaCrawler
 ```
 
-按本次任务只查需要的通道。**缺一个可选工具不会让公开检索停工。**
+preflight 仅检查本地依赖，不证明搜索、页面解析或登录当前可用。按本次任务只查需要的通道。**缺一个可选工具不会让公开检索停工。**
 
 ## 三条不可妥协
 
@@ -54,14 +54,16 @@ bash scripts/preflight.sh --channel media      # 小红书/抖音：需 Node + M
 2. **"正在营业 / 有位 / 不用排队"是三件事**，分别标注；查不到就写 `未确认`，不编。
 3. **组合无解时直接说无解**，不硬凑平庸选项。
 
-## 本机实测状态（2026-10-18）
+## 历史实测记录（2026-10-17 至 18）
 
-| 通路 | 状态 |
+以下是原主机当时的记录，不是当前通道状态。2026-11-18 整理未验证外部服务、页面或登录态；离线记录引擎测试不证明采集可用。
+
+| 通路 | 当时记录及当前边界 |
 |---|---|
-| 公开搜索 | ✅ |
-| 大众点评 | ✅ 实测可用（当霁 4.7/98评/¥388、ONCUE 4.8/375评/¥1064 均由此采出） |
-| 抖音 | ✅ 需 Node（**JDK 无效**：Nashorn 已随 JDK 15+ 移除） |
-| 小红书 | ⚠️ 登录态已过期，需重扫 |
-| 定时订阅 | ❌ 未做。`changes` 只是增量日志，**不含调度器** |
+| 公开搜索 | 当时可用；当前须由宿主确认搜索/读取能力 |
+| 大众点评 | 当时取得过字段，但同店跨次加载也出现缺失/错配，见 HANDOFF；不能据历史成功宣称当前解析稳定 |
+| 抖音 | 当时使用 Node 跑通过；外部工具、登录及当前采集均未验证 |
+| 小红书 | 2026-10-18 记录登录态过期；当前未验证，不据旧记录要求重扫 |
+| 定时订阅 | `changes` 只有增量日志，不含调度器 |
 
-细节与踩坑见 `references/environment.md`。
+当前命令见 [references/operations.md](references/operations.md)；历史环境与踩坑见 [references/environment.md](references/environment.md)。

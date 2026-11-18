@@ -1,11 +1,11 @@
-# food-radar 环境依赖与安装状态（实测基线）
+# food-radar 历史环境与安装记录
 
 > 实测日期：2026-10-17 ｜ 主机：macOS (darwin) ｜ 校验命令：`bash scripts/preflight.sh`
 >
-> 本文件记录**实际跑通过**的工具状态。凡与"应然"不符的，以本文件为准。
+> 以下为 2026-10-17 原主机记录。2026-11-18 整理未重验外部工具、登录或页面；“已跑通/可用/失效”均指当时，不是当前能力承诺。当前命令以 `operations.md` 与现行脚本为准；点评后续不稳定结果见 `../HANDOFF.md`。
 >
 > ⚠️ **仓库不包含 `tools/`**（第三方克隆，体积大且各有许可）。任何 `cd tools/...` 的命令
-> 在全新克隆的仓库里都会失败。**必须先按第 0 节完成工具安装**，再执行后续步骤。
+> 在全新克隆的仓库里都会失败。仅确需对应外部通道时评估安装；记录引擎和宿主公开检索不要求安装这些工具。以下安装/采集命令仅留历史参考，不是本次整理的执行任务。
 > 本文件中的路径含作者本机绝对路径，换机器需自行替换（见第 0 节变量约定）。
 
 ## 0. 变量约定（换机器先改这里）
@@ -18,10 +18,9 @@
 | `$TOOLCHAIN` | `~/CodeBuddy/Claw/toolchain/` | 手动安装的 Node/JDK/Maven |
 | `$PW_CACHE` | `~/Library/Caches/ms-playwright/` | Playwright 浏览器缓存 |
 
-> `preflight.sh` 中的 Chromium 检测写死了版本目录 `chromium-1248`。换 Playwright 版本后
-> 该检测会误报，属已知限制——以 `preflight.sh` 输出为准，不要据此判断浏览器未安装。
+> 当前 `preflight.sh` 转交 `doctor.py`；点评检查读取 Playwright 的 `chromium.executable_path`，不再写死 `chromium-1248`。它只查本地依赖，不验证页面和登录可用。
 
-## 〇、工具安装（仓库不含tools/，必做）
+## 〇、历史可选工具安装（仓库不含 tools/）
 
 ```bash
 export PATH="$HOME/.local/bin:$PATH"
@@ -169,7 +168,7 @@ $ curl "http://mapi.dianping.com/searchshop.json?...&cityid=1&categoryid=147..."
 
 **编译成功也只会立即报错。**
 
-### 5.2 可用方案：Playwright 直采
+### 5.2 当时尝试：Playwright 直采（后续发现跨次加载不稳定）
 
 ```bash
 # 依赖 playwright（复用 media-crawler 的 venv 即可）
@@ -217,10 +216,10 @@ shop_id H4GpiV5cA7moLb3r | 4.7分 | 98评价 | 人均¥388
 
 `m.dianping.com` 搜索未登录静默跳 `/error/error_page`，**且标题仍是「大众点评网」**，靠标题判断会误判为成功。必须检测最终 URL。
 
-## 六、开工自检
+## 六、当前按需预检
 
 ```bash
-bash scripts/preflight.sh
+bash scripts/preflight.sh --channel public
 ```
 
-自检不通过时按本文件对应章节补齐，**不要在依赖缺失时静默降级而不告知用户**。
+只检查任务所需通道；可选依赖缺失不阻断宿主公开检索。此检查不证明外部服务可用，不依据旧安装记录自动安装或采集。
