@@ -14,7 +14,7 @@
 
 用法（容器内）：
   python3 evidence_pool.py                 # 产出 /app/data/evidence/pool.jsonl + 汇总
-  python3 evidence_pool.py --commit        # 对跨源够格的【新品牌】走 candidate_apply（默认 dry）
+  仅生成本地证据账本；不写数据库、不收录新品牌，无提交模式。
 """
 import argparse
 import json
@@ -109,9 +109,8 @@ def recency_w(iso):
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--commit", action="store_true")
-    args = ap.parse_args()
+    ap = argparse.ArgumentParser(description="生成本地证据账本；不写数据库或收录新品牌。")
+    ap.parse_args()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     rests = C.fetch_all(
@@ -246,8 +245,7 @@ def main():
         print(f"  {x['name'][:24]:<26} KOL{x['n_kol']} 口味(综合){x['taste_all']} "
               f"权威{'Y' if x['authority'] else '-'}")
     print(f"\n输出：{OUT_DIR/'pool.jsonl'}")
-    if not args.commit:
-        print("（dry-run；--commit 才会对跨源够格新品牌走 candidate_apply）")
+    print("（仅生成本地证据账本；不写数据库或收录新品牌）")
 
 
 if __name__ == "__main__":
