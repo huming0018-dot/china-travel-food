@@ -23,7 +23,7 @@ HOST_ENTRIES = [
     "signature_cuisine_link", "name_cuisine_link", "curate_gate",
     "gate_apify_brief", "cuisine_plane_audit", "probe_parallel", "production_runner",
     # 宿主 crontab 5 sh / food_production / boundary / relay
-    "candidate_verify", "xhs_to_reviews", "atlas_write", "boundary_revalidate",
+    "candidate_verify", "atlas_write", "boundary_revalidate",
     "review_apify_fill", "ab_compare", "crowd_tracking", "crowd_settlement",
     "crowd_store_ingest", "notify_cli",
     # 人工管理/运维工具（不在 cron 但属活工具，保守纳入）

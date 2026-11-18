@@ -8,8 +8,7 @@ services:
     env_file: ./deploy.env
     environment:
       - TZ=Asia/Shanghai
-      - RUN_ON_START=1        # 容器启动立即先跑一轮
-      - BATCH=15              # 每轮采集店数（300031零触发后从10提至15，小批量仍稳）
+      - BATCH=15              # production_runner 等现行消费者仍使用的批量设置
     volumes:
       - fooddata:/app/data                                  # 采集断点/日志持久化
       - ./xhs_accounts:/secrets/xhs_accounts:ro             # 多账号 cookie 池（加号=丢文件）

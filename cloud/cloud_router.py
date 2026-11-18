@@ -11,8 +11,7 @@
 资源模型：
   R1 浏览器（本路由串行占用 /tmp/browser.lock）：
       P1 XHS 账号体检/告警（health.alert）——异常直接短路
-      P2 小红书开放式发现 cloud_discover.py（找宝藏店主力）——需健康账号
-      P3 小红书 reviews 取证 run_batch.py（519 家已采完时自空转）——需健康账号
+      P2/P3 自动发现与 reviews 自动认证批采已退出；不派发旧入口
       P4 米其林榜单抓取 michelin_collect.py（不依赖 XHS 登录）——账号全冷却时顶上
   R2 HTTP API（无浏览器）：B站 cloud_bili_collect.py，独立 cron 每 6h。
   R3 高德日配额：回填任务 + 未来枚举，夜间预算制，不在此路由。
@@ -91,26 +90,6 @@ def run_script(script: str, timeout: int = 25 * 60):
         log(f"!! 异常 {script}: {e}")
 
 
-def reviews_done():
-    return (DATA / "ALL_REVIEWS_DONE").exists()
-
-
-def next_tick():
-    """简单轮次计数（持久化），用于 discover / reviews 交替占用同一浏览器。"""
-    f = DATA / "router_tick.txt"
-    n = 0
-    try:
-        n = int(f.read_text(encoding="utf-8").strip() or "0")
-    except Exception:
-        n = 0
-    n += 1
-    try:
-        f.write_text(str(n), encoding="utf-8")
-    except Exception:
-        pass
-    return n
-
-
 def decide():
     """返回 (脚本, 理由)。优先级从高到低。"""
     ready, s = xhs_usable_accounts()
@@ -142,12 +121,7 @@ def decide():
                 return ("", f"所有XHS账号冷却，米其林数据{age_hours:.1f}小时前已采过（<24h），浏览器空闲")
         return ("cloud_michelin_collect.py", "所有XHS账号冷却/POOL空转，浏览器让给米其林榜单")
 
-    # 有可用 XHS 账号：discover（找宝藏店主力）与 run_batch（reviews 取证）轮替，
-    # 共用同一浏览器锁，避免旧 cron 手动错峰。reviews 全部采完后只跑 discover。
-    tick = next_tick()
-    if not reviews_done() and tick % 2 == 1:
-        return ("run_batch.py", f"tick={tick} 奇数轮，跑 reviews 取证（519 未采完）")
-    return ("", "自动缺口补齐已暂停；本轮不派发gap_runner，不把候选当新增供给。")
+    return ("", "自动缺口补齐已暂停；reviews 自动认证批采已退出，不派发旧采集/写入入口。")
 
 
 def main():

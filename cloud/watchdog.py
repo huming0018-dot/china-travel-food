@@ -25,7 +25,7 @@ sys.path.insert(0, str(HERE))
 
 # 被监控的采集/补齐脚本（命令行里出现即纳入）
 WATCH = [
-    "run_batch.py", "xhs_collect", "cloud_phone_fill.py",
+    "xhs_collect", "cloud_phone_fill.py",
     "cloud_coord_fill.py", "cloud_hours_fill.py", "cloud_review_fill.py",
     "stage1_validate",
 ]

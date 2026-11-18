@@ -83,7 +83,6 @@
 | **cloud_bili_collect** | B站探店采集 | cron 6h |
 | **cloud_blackpearl_collect** | 黑珍珠榜单对账 | cron 6:20 |
 | **cloud_michelin_collect** | 米其林榜单 | router兜底 |
-| **run_batch** | 批量取证执行 | router/entrypoint |
 | **comention_probe** | 同文提及探测 | cron 每小时 |
 | **kol_cross** | KOL跨平台采集 | cron 6h |
 | **ugc_longrun** | UGC长跑采集 | cron :39 |
