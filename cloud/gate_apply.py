@@ -37,6 +37,7 @@ sys.path.insert(0, "/app/cloud")
 sys.path.insert(0, "/app/pipeline")
 import common_core as core
 import data_gate as gate
+import hours_evidence
 
 DATA = pathlib.Path("/app/data")
 LEDGER = DATA / "post_record"
@@ -218,6 +219,8 @@ def resolve_info(field, rows):
 
 def resolve_fact(field, rows):
     """客观事实字段：取通过校验的最高置信值；phone/location 须有来源。"""
+    if field == "opening_hours":
+        return hours_evidence.resolve(rows)
     need_src = field in ("phone", "location")
     cand = []
     for r in rows:
@@ -375,7 +378,7 @@ def build_plan():
             grouped[(rid, fld)].append(d)
 
     rests = core.fetch_all("restaurants",
-        "id,name,status,is_curated,chain_type,central_kitchen,premade_risk,production_model,price_avg,investor_info,fact_claims")
+        "id,name,status,is_curated,chain_type,central_kitchen,premade_risk,production_model,price_avg,investor_info,fact_claims,opening_hours")
     cur = {r["id"]: r for r in rests}
     P = core.pipeline_common()
     brand_index = build_brand_index(rests, P)
@@ -397,6 +400,8 @@ def build_plan():
         else:
             continue
         nowv = (cur.get(rid) or {}).get(fld)
+        if fld == "opening_hours" and nowv is not None:
+            dec = {"action": "none", "value": None, "why": "已有营业时间事实保持，禁止覆盖"}
         store_name = (cur.get(rid) or {}).get("name", "")
         evidence_text = " ".join((r.get("reason") or "") + " " + str(r.get("value") or "")
                                  for r in rows)
@@ -562,8 +567,25 @@ def apply_plan(plan):
     n_patch = n_err = 0
     decpath = LEDGER / f"gate_decisions_{ts.replace(':', '-').replace('T', '_')}.jsonl"
     with decpath.open("w", encoding="utf-8") as fh:
-        for rid_s, patch in plan["label_patches"].items():
+        for rid_s, original_patch in plan["label_patches"].items():
+            patch = dict(original_patch)
             rid = int(rid_s)
+            # Hours use a separate atomic conditional update. Never overwrite concurrent facts.
+            if "opening_hours" in patch:
+                hours = patch.pop("opening_hours")
+                dec = hours_evidence.resolve([{ "value": hours, "source_url": hours.get("source_url") if isinstance(hours, dict) else None, "confidence": .9}])
+                if dec["action"] == "apply":
+                    hr = core.req("PATCH", f"/restaurants?id=eq.{rid}&opening_hours=is.null&status=eq.active", json={"opening_hours": hours})
+                    hb = core.fetch_all("restaurants", "id,opening_hours", extra=f"id=eq.{rid}")
+                    verified = hr.status_code in (200, 204) and bool(hb) and hb[0].get("opening_hours") == hours
+                    n_patch += int(verified)
+                    n_err += int(not verified)
+                    fh.write(json.dumps({"rid": rid, "field": "opening_hours", "http": hr.status_code, "verified": verified, "readback": hb, "decision": "fill_null_only"}, ensure_ascii=False) + "\n")
+                else:
+                    n_err += 1
+                    fh.write(json.dumps({"rid": rid, "field": "opening_hours", "decision": dec}, ensure_ascii=False) + "\n")
+                if not patch:
+                    continue
             r = core.req("PATCH", f"/restaurants?id=eq.{rid}", json=patch)
             ok = r.status_code in (200, 204)
             n_patch += 1 if ok else 0
@@ -581,15 +603,23 @@ def apply_plan(plan):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--hours-only", action="store_true", help="isolate hours pilot from label/curation writes")
     a = ap.parse_args()
     t0 = time.time()
     plan = build_plan()
+    if a.hours_only:
+        plan["label_patches"] = {rid: {"opening_hours": p["opening_hours"]}
+                                 for rid, p in plan["label_patches"].items() if "opening_hours" in p}
+        plan["curated_off"] = []
+        plan["chain_review"] = []
+        plan["reverify"] = [r for r in plan["reverify"] if r.get("field") == "opening_hours"]
+        plan["decisions"] = [r for r in plan["decisions"] if r.get("field") == "opening_hours"]
 
     # 始终刷新 worklist（最新全量快照）
-    (LEDGER / "reverify_worklist.json").write_text(
+    (LEDGER / ("hours_reverify_worklist.json" if a.hours_only else "reverify_worklist.json")).write_text(
         json.dumps({"generated_at": datetime.datetime.utcnow().isoformat() + "Z",
                     "items": plan["reverify"]}, ensure_ascii=False, indent=1), encoding="utf-8")
-    (LEDGER / "chain_review_worklist.json").write_text(
+    (LEDGER / ("hours_chain_review_worklist.json" if a.hours_only else "chain_review_worklist.json")).write_text(
         json.dumps({"generated_at": datetime.datetime.utcnow().isoformat() + "Z",
                     "items": plan["chain_review"]}, ensure_ascii=False, indent=1), encoding="utf-8")
 
@@ -627,3 +657,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
