@@ -1,7 +1,6 @@
 # 容器重建 RUNBOOK — 上海美食图鉴·云端采集常驻服务
 
-> 目标：任何接手者照本手册，能用**一条命令**把生产容器从 GitHub 权威源码完整重建，
-> 不再依赖 `docker cp` 补脚本（重建即丢）。腾讯云服务器 `49.234.35.92`。
+> 本文记录现存项目重建入口，不是部署授权或本轮构建成功证明。目标是从 GitHub 源码重建，避免 `docker cp` 补脚本后重建丢失。服务器地址为历史配置，本轮未连接核验。
 
 ## 一、架构一图
 
@@ -92,7 +91,17 @@ sudo docker exec food-cloud sh -c 'tail -5 /app/data/*.log 2>/dev/null'  # 有�
 python3 cloud/container_closure_audit.py --json /tmp/closure.json
 ```
 
-- 从全部生产入口递归 import 得"活代码闭包"，列出疑似孤儿；
-- **静态分析会漏动态 import，孤儿必须再做全仓 grep 交叉验证、人工甄别后才能删**；
-- 注意区分三类：① `_archived/_archive` 明确归档→可删；② 已交付但未接线的功能模块
-  （建了没生效）→ 不删，应派工单"接线"；③ 手动运维工具/备用通道→保留。
+- 输出仅是筛选线索，不是完整依赖闭包、删除依据或“已交付”证明；该脚本已有漏相对/包导入、忽略语法错误及 cron 入口误判的已知限制。
+- 结合真实调用、配置、打包与历史核对完整性和价值。归档、未接线、手动运维或备用模块都不凭标签决定保留或删除。
+- 未接线模块先判断是否仍值得保留；不自动派工接线，不以仓库整理恢复产品开发。退出须有明确范围、消费者处置和恢复点。
+
+## 旧本机部署链退出
+
+- 归属：Dockerfile/requirements 是项目环境定义，compose/entrypoint/cron 是美食业务运行编排；保留实际闭包，不包装为独立通用环境工具。
+- 删除 `prepare.sh`：其输入仅是个人 Doubao 技能绝对路径，先删再覆盖整个 vendor/pipeline；GitHub 已持有管线源码，不再接受本机副本覆盖权威源。
+- 删除 `build_on_server.sh`：旧上传式入口会覆盖宿主 Docker daemon 配置并重启 Docker、上传本机凭据覆盖服务器配置、先停服务删镜像再构建。其实际 tar 清单漏掉 Dockerfile 必需的 external_watchdog/telegram_delivery.py，无法完成当前构建闭包。保留这些具体经验，不维护第二套上传部署链。
+- 保留 `build_sync.sh`、Dockerfile、compose、entrypoint、crontab、requirements、fix_paths.py 及 deploy.sh 原内容；fix_paths.py 仍是镜像实际消费者，不能随个人路径入口一起删除。
+- `build_sync.sh` 会 fetch/reset 源码缓存、rsync 清除多余 Python 文件；默认还构建镜像并 compose up。`--no-build` 仅跳过构建启动，仍修改文件。它不会负责迁移本机未提交内容，不是只读同步或通用安装器。
+- 历史 HANDOFF、QUALITY 报告、research/design/ponytail_cutlist.md 及问题汇总中的旧脚本名称仅作历史来源，不能照其命令恢复部署。当前操作规范已改指现存入口。
+- 恢复点：Git 提交 `885d13e2ebed10cf24cfec557b662ee797438eaf` 保有两个旧脚本原文。历史可查，不建议恢复运行。
+- 验证：固定基线离线核对全部仓内引用、当前 Docker COPY/cron 文件目标；按旧命令生成临时 tar，复现缺件。未运行 Docker 构建、SSH、采集或任何部署，不修改宿主配置、凭据和已安装任务。 `build_sync.sh` 的 external_watchdog/pipeline 两段 rsync 仍以 `|| true` 忽略失败；本批未修改该行为，也未验证同步失败时的镜像一致性，文件目标存在不等于实际构建成功。

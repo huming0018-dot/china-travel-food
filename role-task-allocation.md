@@ -40,7 +40,7 @@
 
 **具体任务**：
 1. 数据底座：表/索引/视图/触发器维护、字段保鲜、迁移文件（db/migrations）
-2. 部署一致性：Dockerfile/构建清单、build_on_server.sh、容器内文件同步
+2. 部署一致性：Dockerfile/构建清单、build_sync.sh 与镜像内容一致性（不在容器内补代码）
 3. 算法实现：评分公式 v4 权重、软广概率自学、贝叶斯/时间衰减、价位分位
 4. 三组件实现：account_registry / common_core / data_gate（根治各自为战）
 5. 前端实现：导航/筛选/详情/Feed（当前冻结，恢复由 PM 决定）

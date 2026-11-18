@@ -1,3 +1,5 @@
+> 旧本机部署链已退出：`cloud/prepare.sh`、`cloud/build_on_server.sh` 不再是可执行入口。下文相关部署命令与“本机凭据覆盖服务器”建议全部撤销；历史结果仅供追溯。当前入口、副作用及恢复点见 [容器重建手册](cloud/CONTAINER_REBUILD_RUNBOOK.md#旧本机部署链退出)。本次不修改已部署设备或服务器。
+
 > 当前去向：kol_trust_grade、selling_points_fill/dedupe、menu_traits 已退役；本文相关运行/接线建议撤销，历史结果保留。见[退出说明](docs/historical-fill-retirement.md)。prefill_governance 不在本批退出范围。
 
 > **2026-10-14 众包评分保护已部署生产**：已通过 Supabase 管理入口回读旧函数及迁移历史，确认 `20261008134109` 确未部署后，复核当前 schema/v3.5.1 协议，单事务部署原文函数与权限并登记原版本。两项 20261007 迁移未重放。部署后函数正文与 main 原文一致，MD5 `120e486d665b0a53ce57d0105c61b030`，空 search_path，anon/authenticated 实测无执行权限、service_role dry-run 成功（90家聚合，评分/候选改动0）。部署前后1523家餐厅 score_diner 摘要一致，事务内全行摘要亦未变。临时表有界回归覆盖撤回、别名冲突、唯一/重名、3条门槛、拒收、dry-run、重复执行并全部回滚；**未调用正式入库 false、未重算或覆盖历史评分；当前 accepted rating 仅1条，真实评分回写业务尚未验收**。后续 `20261008183356` 旧聚合刷新迁移仍未部署，不将综合测试/旧聚合清理标作已完成。本条覆盖下文旧的“评分保护未部署”状态。详见 [生产验收](cloud/CROWD_SAFE_SCORES_PRODUCTION_20261014.md)、[函数回读](cloud/verification/crowd_ingest_stores_20261014.sql)、[有界测试](cloud/tests/crowd-safe-scores-bounded-20261014.sql)。

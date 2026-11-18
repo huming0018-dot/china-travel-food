@@ -122,7 +122,7 @@
 | Python 3 / cloud/ | 全部后端模块 | 77个.py，L2/L3/L4归我治理 |
 | Git + GitHub | 版本管理 | 一个任务一个commit |
 | Supabase（PostgREST） | 数据库读写 | 分页查询 |
-| Docker / build_on_server.sh | 部署 | 通配符打包（Q-007教训） |
+| Docker / build_sync.sh | 项目部署 | 宿主 Git 缓存重建；有写入和启动副作用，见 cloud/CONTAINER_REBUILD_RUNBOOK.md |
 | sync.sh / task_helper | 开工/认领/留痕 | 必用 |
 | common_core | 统一req/config/notify/log | 自研自用 |
 | data_gate | 入库验证（含连锁判别/特质提取钩子） | 自研自用 |

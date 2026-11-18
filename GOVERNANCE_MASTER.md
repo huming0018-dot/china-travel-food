@@ -162,8 +162,8 @@ flowchart TD
 ### 4.4 部署流（代码怎么上服务器）
 ```
 dev/collector 本地改 → git commit+push
-  → 服务器 food-cloud 容器 git pull（或 build_on_server.sh）
-  → 重启受影响进程/cron
+  → 经授权由部署负责人在宿主执行 build_sync.sh（不是容器内 git pull）
+  → fetch/reset 缓存、rsync 构建上下文、build 镜像并 compose up
   → 验证：跑一次真实入口（非"应该好了"）
   → sync.sh push "说明" 留痕
 ```

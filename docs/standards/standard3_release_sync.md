@@ -20,9 +20,9 @@
 | 前端 | Next.js 14，**Root Directory = `app/`**，Vercel 托管 | `app/package.json`、`app/vercel.json`、`DEPLOY.md` |
 | 前端定时 | Vercel Cron `/api/sync` 每日 03:00 | `app/vercel.json` |
 | 后端采集容器 | 容器名 **`food-cloud`**，镜像 `food-cloud:local` | `cloud/docker-compose.yml` |
-| 服务器 | `ubuntu@49.234.35.92`，deploy key `~/.ssh/food_cloud_deploy` | `cloud/build_on_server.sh` |
+| 服务器（历史记录，当前可用性未核验） | `ubuntu@49.234.35.92`，deploy key `~/.ssh/food_cloud_deploy` | `cloud/CONTAINER_REBUILD_RUNBOOK.md` |
 | 服务器路径（git 缓存） | `/home/ubuntu/china-travel-food`（`build_sync.sh` 的 `SRC_DIR`，浅克隆 + `reset --hard origin/main`） | `cloud/build_sync.sh` |
-| 服务器路径（构建上下文） | `/home/ubuntu/food-cloud`（`build_sync.sh` 的 `BUILD_DIR`；`build_on_server.sh` 的 `RDIR`） | `cloud/build_sync.sh` / `cloud/build_on_server.sh` |
+| 服务器路径（构建上下文） | `/home/ubuntu/food-cloud`（`build_sync.sh` 的默认 `BUILD_DIR`） | `cloud/build_sync.sh` |
 | 数据库 | Supabase（`restaurants`/`reviews`/…），迁移**人工在 SQL Editor 逐条执行**，仓库无 migration runner | `db/migrations/`、`DEPLOY.md` |
 | 通知出口 | `cloud/notifier.py`（唯一外发口），通道 TG + 飞书自建应用，开关 `/app/data/notify_channels.json` | `cloud/notifier.py`、`cloud/entrypoint.sh` |
 | 自进化对账 | 容器 cron **每天 01:00** 跑 `cloud/self_evolve.py`（只读复盘 + release_audit A–G） | `cloud/crontab.txt` 第 12 条 |
@@ -141,7 +141,8 @@
   # 在服务器上（经代理/可达 49.234.35.92 的通道）：
   bash ~/food-cloud/build_sync.sh          # fetch+reset origin/main → rsync → docker build → compose up
   ```
-  - 备选上传式构建（本机打包上传，少用）：`bash cloud/build_on_server.sh`（见该脚本头注释）。
+  - 旧个人机器导入/上传构建链已退出；不再作为备选。经验与恢复点见 [重建手册](../../cloud/CONTAINER_REBUILD_RUNBOOK.md#旧本机部署链退出)。
+  - `build_sync.sh` 会 reset 源码缓存、rsync 删除多余 Python 文件，默认还会构建并启动服务；`--no-build` 仅跳过最后构建启动，仍会修改缓存和构建目录。仓库整理不授权运行这些命令。
   - 重建前确认：新迁移已在 Supabase 执行（否则容器代码先于 schema 上线）。
   - **不得**用 `docker cp` 临时补脚本后不入库（HANDOFF 2026-09-29 lean 清理已教训）。
 
