@@ -14,3 +14,6 @@ numpy==2.5.3
 scipy==1.18.1
 pandas==3.0.6
 scikit-learn==1.9.1
+
+# Existing SERP HTML parsing, now an explicit dependency (not a new search client).
+beautifulsoup4>=4.12,<5

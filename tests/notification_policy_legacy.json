@@ -1,0 +1,82 @@
+[
+  [
+    true,
+    false,
+    true,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false
+  ],
+  [
+    [
+      "🟢 播报 · 上海美食图鉴 · fixed",
+      "────────────────\nbody\n\n（无需操作）"
+    ],
+    [
+      "🟢 播报 · 上海美食图鉴 · fixed",
+      "────────────────\nbody2\n\n（无需操作）"
+    ],
+    [
+      "🟡 自动处理中 · 上海美食图鉴 · fixed",
+      "────────────────\nwarn\n\n（无需操作）"
+    ],
+    [
+      "🟡 自动处理中 · 上海美食图鉴 · fixed",
+      "────────────────\nfailed\n\n（无需操作）"
+    ],
+    [
+      "🟡 自动处理中 · 上海美食图鉴 · fixed",
+      "────────────────\nretry\n\n（无需操作）"
+    ],
+    [
+      "🔴 需要你操作 · 上海美食图鉴 · fixed",
+      "────────────────\nact\n\n👉 需要你做：do"
+    ],
+    [
+      "🔴 需要你操作 · 上海美食图鉴 · fixed",
+      "────────────────\nact\n\n👉 需要你做：do\n\n（提醒 1/2：仍待处理）"
+    ],
+    [
+      "🔴 需要你操作 · 上海美食图鉴 · fixed",
+      "────────────────\nact\n\n👉 需要你做：do\n\n（提醒 2/2：仍待处理）"
+    ],
+    [
+      "✅ 已解决 · 上海美食图鉴 · fixed",
+      "────────────────\ndone\n\n（无需操作）"
+    ]
+  ],
+  {
+    "heartbeat": {
+      "level": "INFO",
+      "last_ts": 1010,
+      "last_hash": "475bf9c484510cb1",
+      "count": 2
+    },
+    "w": {
+      "level": "WARN",
+      "last_ts": 1020,
+      "last_hash": "c5afcecb4dc4d46a",
+      "count": 2,
+      "state": "open"
+    },
+    "a": {
+      "level": "RESOLVED",
+      "last_ts": 1124,
+      "last_hash": "01a5c9654eeebb0b",
+      "count": 1,
+      "state": "resolved",
+      "nudges": 2,
+      "opened": 1020
+    }
+  }
+]

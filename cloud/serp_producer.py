@@ -6,6 +6,7 @@
 # 红线：只写 chain_type/central_kitchen/premade_risk/investor_info/price_avg/food_safety。
 import argparse, json, pathlib, os, re, sys, time, random, threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from search_result_parsers import parse_bing_html, parse_ddg_html
 
 sys.path.insert(0, "/app/pipeline")
 import common as C
@@ -124,29 +125,13 @@ def search_sogou(q):
 
 def search_bing(q):
     import requests
-    from bs4 import BeautifulSoup
     try:
         url = ("https://www.bing.com/search?q=" + requests.utils.quote(q)
                + "&setlang=zh-CN&cc=CN&ensearch=0")
         r = _get(url)
         if r.status_code != 200:
             return None, f"bing http {r.status_code}"
-        s = BeautifulSoup(r.text, "html.parser")
-        out = []
-        for it in s.select("li.b_algo"):
-            a = it.select_one("h2 a")
-            if not a:
-                continue
-            href = a.get("href", "")
-            if not href.startswith("http"):
-                continue
-            title = a.get_text(" ", strip=True)
-            cap = it.select_one(".b_caption p") or it.select_one("p")
-            snippet = cap.get_text(" ", strip=True) if cap else title
-            host = href.split("://", 1)[-1].split("/", 1)[0]
-            out.append({"source_url": href, "source_title": title[:120],
-                        "snippet": snippet[:400], "source_host": host})
-        return out[:8], None
+        return parse_bing_html(r.text), None
     except Exception as e:
         return None, f"bing err {type(e).__name__}"
 
@@ -201,31 +186,11 @@ def search_baidu(q):
 
 def search_ddg(q):
     import requests
-    from bs4 import BeautifulSoup
-    import urllib.parse as up
     try:
         r = _get("https://html.duckduckgo.com/html/?q=" + requests.utils.quote(q))
         if r.status_code != 200:
             return None, f"ddg http {r.status_code}"
-        s = BeautifulSoup(r.text, "html.parser")
-        out = []
-        for it in s.select("div.result"):
-            a = it.select_one("a.result__a")
-            if not a:
-                continue
-            href = a.get("href", "")
-            m = re.search(r"uddg=([^&]+)", href)
-            if m:
-                href = up.unquote(m.group(1))
-            if not href.startswith("http"):
-                continue
-            sn = it.select_one(".result__snippet")
-            title = a.get_text(" ", strip=True)
-            snippet = sn.get_text(" ", strip=True) if sn else title
-            host = href.split("://", 1)[-1].split("/", 1)[0]
-            out.append({"source_url": href, "source_title": title[:120],
-                        "snippet": snippet[:400], "source_host": host})
-        return out[:8], None
+        return parse_ddg_html(r.text), None
     except Exception as e:
         return None, f"ddg err {type(e).__name__}"
 
@@ -488,3 +453,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
