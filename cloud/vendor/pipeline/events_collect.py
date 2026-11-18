@@ -106,26 +106,3 @@ def run_watch(bu, raw_path, names, notes_per_name=3, city="上海"):
         _append(raw_path, {"kind": "watch", "watch_name": name, "notes": notes})
         ran.append(name)
     return {"ran": len(ran), "names": ran}
-
-
-def run_batch(bu, config_path, raw_path, max_queries=8, roots_per_cat=1,
-              notes_per_query=3, commit=False, categories=None, city="上海"):
-    """定时任务单批一键编排：sweep 采集一批 → events_build 转换 → atlas_write 入库。
-    在 plane=bu cell 内调用（采集需浏览器）；build/write 为纯 python，subprocess 串行。
-    commit=False 仅预演；True 则幂等写库（rumor/verified 都写，feed_view 只显示 verified）。"""
-    import subprocess
-    pipe_dir = str(pathlib.Path(__file__).parent)
-    sweep_res = run_sweep(bu, config_path, raw_path, roots_per_cat=roots_per_cat,
-                          notes_per_query=notes_per_query, max_queries=max_queries,
-                          categories=categories, city=city)
-    b = subprocess.run([sys.executable, "events_build.py"], cwd=pipe_dir,
-                       capture_output=True, text=True)
-    out_events = str(pathlib.Path(raw_path).with_name("raw_events.jsonl"))
-    cmd = [sys.executable, "atlas_write.py", "--domain", "events", "--input", out_events]
-    if commit:
-        cmd.append("--commit")
-    w = subprocess.run(cmd, cwd=pipe_dir, capture_output=True, text=True)
-    return {"sweep": sweep_res,
-            "build": [l for l in (b.stdout or b.stderr).splitlines() if l][:2],
-            "write": [l for l in (w.stdout or w.stderr).splitlines() if l][-2:]}
-
