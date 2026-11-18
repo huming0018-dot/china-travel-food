@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""cloud_discover.py — 云端「开放式发现」总编排（发现 → 离线裁决 → 自动收录）。
+"""cloud_discover.py — 云端「开放式发现」候选编排（发现 → 离线裁决，不自动入库）。
 
 补齐 sourcing 最大断点：旧云端 run_batch 只对已知店名取证，从不"开放式发现"，导致宝藏店
 （平台 SEO 弱、靠食客口碑）系统性缺失。本编排把图遍历发现接入云端 cron：
@@ -10,7 +10,7 @@
     2. 取品类队列当前品类，DiscoveryEngine 跑 QUERIES_PER_RUN 个查询（自动图扩展）；
     3. 未饱和 → 落盘退出，下轮续跑；
     4. 饱和 → admission_gate 离线裁决 candidates_<cat>.jsonl
-             → candidate_apply 把 admit 库外新店自动取证收录并挂菜系标签；
+             → 仅保留候选文件供复核，不调用candidate_apply；
     5. 该品类标记完成、转下一品，双通道告警；全部完成则告警可停用。
 
 容器内：cloud=/app/cloud，pipeline=/app/pipeline，data=/app/data。
@@ -79,9 +79,6 @@ def run_gate(category):
                     "--raw", str(RAW), "--category", category], check=True)
 
 
-def run_apply(category):
-    subprocess.run([sys.executable, str(HERE / "candidate_apply.py"),
-                    "--category", category, "--commit"], check=True)
 
 
 def count_candidates(category):
@@ -109,7 +106,7 @@ def main():
     st = load_state()
     category = next_category(st, args.category or None)
     if category is None:
-        health.alert("上海美食图鉴全品类开放式发现已全部完成，可停用 discover 定时任务。",
+        health.alert("上海美食图鉴全品类开放式发现候选输出已全部完成，可停用 discover 定时任务。",
                      title="上海美食图鉴·发现完成", key="discover_all_done", once=True)
         return 0
     st["current"] = category
@@ -155,9 +152,8 @@ def main():
             print(f"品类 {category} 发现进行中：{rep}")
         return 0
 
-    # 饱和 → 离线裁决 + 自动收录
+    # done仅表示发现/候选输出已完成，不是入库回执；避免对同品类重复重采。
     run_gate(category)
-    run_apply(category)
     admit, new = count_candidates(category)
 
     st["done"].append(category)
@@ -167,10 +163,10 @@ def main():
 
     remaining = len([c for c in st["queue"] if c not in st["done"]])
     health.alert(
-        f"【{category}】开放式发现完成：够格 {admit}（库外新增 {new}），"
+        f"【{category}】开放式发现完成：候选 {admit}（库外待核 {new}，未自动入库），"
         f"剩余 {remaining} 个品类。",
         title="上海美食图鉴·品类发现", key=f"discover_done_{category}")
-    print(f"\n品类 {category} 完成：admit={admit} new={new}；剩余品类 {remaining}")
+    print(f"\n品类 {category} 候选输出完成：admit={admit} pending={new}；未自动入库；剩余品类 {remaining}")
     if remaining == 0:
         health.alert("全品类开放式发现全部完成，可停用 discover 定时任务。",
                      title="上海美食图鉴·发现完成", key="discover_all_done", once=True)

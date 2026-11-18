@@ -11,13 +11,13 @@
       → 从 raw_xhs.jsonl 按 note_url 找回完整笔记（正文+评论）
       → 推断品类（优先按 search_name 在库菜系反查 CUISINE_ROOT；兜底按正文品类词）
       → 去重（note_url 状态文件）后追加进 /app/data/discovery/raw_discovery.jsonl
-      → 对有新证据的品类：admission_gate 离线裁决 → candidate_apply 自动收录
+      → 对有新证据的品类：admission_gate 离线裁决 → 候选输出，不自动收录
 
 为什么「合集」也要回收：xhs_to_reviews 因合集多店不锚单一店而丢弃，但 admission_gate
 的结构化锚点解析（- 店名：/ 📍 / 店名丨 / 编号 店名）正是为合集设计的，合集是新店信号富矿。
 「分店冲突」(mall 冲突) 歧义太大，不回收。
 
-幂等：按 note_url 去重（unmatched_ingested.json）；gate 重算聚合、apply 按 name+address 回查。
+幂等：按 note_url 去重（unmatched_ingested.json）；gate 重算聚合；自动收录已退出。
 容器内：cloud=/app/cloud，pipeline=/app/pipeline，data=/app/data。
 """
 import json
@@ -219,7 +219,7 @@ def main():
     print(f"回收 {recovered} 篇（missing={missing} 无正文={skipped_no_evidence} 已处理={already}）；"
           f"新增 {new_records} 条品类记录。")
 
-    # 对有新证据的品类跑 gate → apply（失败不阻断整体）
+    # 对有新证据的品类仅跑gate，不自动收录
     for cat in sorted(by_cat):
         print(f"\n=== admission_gate: {cat} ===")
         r = subprocess.run([sys.executable, f"{PIPE}/admission_gate.py",
@@ -227,9 +227,7 @@ def main():
         if r.returncode != 0:
             print(f"  gate {cat} 失败 rc={r.returncode}")
             continue
-        print(f"=== candidate_apply: {cat} ===")
-        subprocess.run([sys.executable, str(HERE / "candidate_apply.py"),
-                        "--category", cat, "--commit"])
+        print(f"候选输出完成：{cat}；未自动入库。")
 
     return 0
 

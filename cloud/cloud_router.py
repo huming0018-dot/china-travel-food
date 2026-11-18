@@ -147,8 +147,7 @@ def decide():
     tick = next_tick()
     if not reviews_done() and tick % 2 == 1:
         return ("run_batch.py", f"tick={tick} 奇数轮，跑 reviews 取证（519 未采完）")
-    return ("gap_runner.py --next --queries 8", f"tick={tick} 偶数轮，账本驱动深覆盖"
-            + ("（reviews 已全部采完）" if reviews_done() else ""))
+    return ("", "自动缺口补齐已暂停；本轮不派发gap_runner，不把候选当新增供给。")
 
 
 def main():
