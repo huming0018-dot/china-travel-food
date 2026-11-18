@@ -1,3 +1,5 @@
+> 当前去向：kol_trust_grade、selling_points_fill/dedupe、menu_traits 已退役；本文相关运行/接线建议撤销，历史结果保留。见[退出说明](../docs/historical-fill-retirement.md)。prefill_governance 不在本批退出范围。
+
 # Docker 生产容器治理报告
 
 > 日期：2026-10-03 ｜ 服务器：腾讯云 49.234.35.92 ｜ 治理 commit：791f04c

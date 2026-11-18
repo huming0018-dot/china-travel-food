@@ -1,3 +1,5 @@
+> 当前去向：kol_trust_grade、selling_points_fill/dedupe、menu_traits 已退役；本文相关运行/接线建议撤销，历史结果保留。见[退出说明](docs/historical-fill-retirement.md)。prefill_governance 不在本批退出范围。
+
 > **2026-10-08 PR #4 已审查并合入 main**：合并提交 `077e8ac21cd605f88f97b6855c39482aefefc651`，核验 head `b16eef2`，与 main `8eac200` 无冲突。唯一匹配、重名候选、评分门槛、证据撤回/别名冲突、后台 ACL/RLS、旧库升级、独立全新安装及迁移重复应用的隔离回归通过；合并前 Vercel 检查成功。两项已部署的 `20261007065208` / `20261007065442` 迁移已原文归档 main；安装 SQL 同步更新。**新增 `20261008134109_crowd_ingest_current_safe_scores` 尚未部署生产**，现网尚未启用新增评分保护，后续须独立部署并只读回验；本次未执行生产迁移、入库 RPC、评分/候选修改。10 月 7 日的 31/26/0 是历史验收，26 为候选 upsert 影响行数。其他 v4 迁移历史归档及客户端采集验收仍属后续工作。详见 [审查记录](cloud/PR4_PREMERGE_REVIEW_20261008.md) 和 [PR #4](https://github.com/huming0018-dot/china-travel-food/pull/4)。
 
 > **2026-10-07 正式网页已发布**：PR #1 已合并，Vercel 正式部署 `3bBqSP5GeS7sWM88HSjzdnnw1oSF` / 提交 `adce116` 为 Ready。正式域名 `https://app-lyart-eta-22.vercel.app` 的管理页和 manifest 实际返回 200；匿名回收 403、发布身份查看/导出 200。当前安装渠道为空，邀请返回 release_not_ready，尚不能声明可开工分发。三条真实试点任务 open，参与者/回传为 0；设备问题等待用户回复，Docker 入库流水线未启用。以下历史快照不能代替这一状态。
