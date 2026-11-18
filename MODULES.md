@@ -66,7 +66,7 @@
 | backfill_cuisine | category_resolver | 确认谁在用，留一 | 菜系覆盖100%重验 |
 | cloud_hours_fill2 | cloud_hours_fill | 疑似重复，删除或合并 | 营业时间统计对比 |
 | findings_ingest + findings_planner | 疑似实验脚本 | 确认用途，归档 | - |
-| selling_points_dedupe + selling_points_fill | 疑似未接管线 | 确认用途 | - |
+| selling_points_dedupe + selling_points_fill | 已退役，历史回填 | 不接线；[保留经验](docs/historical-fill-retirement.md) | - |
 | kol_context_backfill + kol_identity | kol_cross附属 | 并入 kol_cross | 功能不变 |
 | classification_intruder_audit | 疑似审计实验 | 确认用途 | - |
 | label_tool | 标注工具 | 保留（PM/qa手动） | - |
