@@ -87,7 +87,7 @@ have db/migrations/024_prior_evidence_separation.sql && ok "024 先验证据分�
 echo "[4] 回归 loop / 质量门脚本就位（只读 A–G 在 cloud/vendor/pipeline）"
 for f in cloud/vendor/pipeline/release_audit.py cloud/vendor/pipeline/regression_check.py \
          cloud/vendor/pipeline/duplicate_audit.py cloud/vendor/pipeline/fact_evidence_gap.py \
-         cloud/reconcile.py cloud/prior_separate.py cloud/apify_ingest.py cloud/code_audit.py; do
+         cloud/reconcile.py cloud/prior_separate.py cloud/apify_collect.py cloud/code_audit.py; do
   have "$f" && ok "$f" || bad "缺 $f"
 done
 echo "  ℹ release_audit A–G 的真跑需在容器内（有 Supabase env）执行："
@@ -133,8 +133,8 @@ else
 fi
 
 # ── G5 Apify 核验 ─────────────────────────────────────────────
-echo "[G5] Apify 采集链路"
-have cloud/apify_ingest.py && ok "cloud/apify_ingest.py 在库" || bad "缺 apify_ingest.py"
+echo "[G5] Apify 入口文件检查（不调用采集、不证明链路通过）"
+have cloud/apify_collect.py && ok "cloud/apify_collect.py 在库（仅存在性）" || bad "缺 apify_collect.py"
 if [ -n "${APIFY_TOKEN:-}" ]; then ok "APIFY_TOKEN 已注入"; else warn "本机未见 APIFY_TOKEN（容器/服务器 env 内是否已配需 owner 确认；不代跑扣费小样）"; fi
 
 # ── 5. 部署指引（只打印，绝不执行）─────────────────────────────
