@@ -123,13 +123,9 @@ async def parse_detail_dom(page):
     #  · `commentMean` 是评分均值，本就不作价格来源，已从 selector 列表移除。
     out["price"] = None
     for raw in await pick_all(["[class*=avgPrice]", ".avg-price-title"]):
-        if not re.search(r"(人均|[¥￥])", raw):
-            continue
-        # #25 "人均"标签必须优先于裸货币符号：
-        # 文本形如"停车费¥50 人均¥388"时，先抓 ¥ 会误取 50。
+        # 价格只接受明确标注为人均的同一节点文本。
+        # 裸货币符号可能属于停车费、订金等其他费用，不能据此补成人均。
         m = re.search(r"人均[^\d¥￥]{0,6}[¥￥]?\s*(\d+(?:\.\d+)?)", raw)
-        if not m:
-            m = re.search(r"[¥￥]\s*(\d+(?:\.\d+)?)", raw)
         if not m:
             continue
         v = float(m.group(1))
@@ -170,57 +166,66 @@ def merge_detail(dom, text_parsed):
 
 
 def parse_recommended(text):
-    """解析「网友推荐」菜名与推荐人数。只读可见文本，不扫隐藏内容。
+    """Parse dishes only inside the visible recommended-dishes section.
 
-    点评该区块是两列布局：可见文本会先读完所有"N人推荐"，再读完所有菜名，
-    逐行配对会错位（把"16人推荐"当成菜名）。因此分派三种布局：
-      A1 同行："17人推荐 玛德琳"
-      A2 竖排相邻：votes 在上一行、菜名在下一行
-      B  两列：先全部 votes，再全部菜名
-    注意：配对正则里必须用 [ \\t]* 而非 \\s*，否则 \\s 会吃掉换行造成跨行误配。
+    Supports inline, alternating vote/name, and two-column layouts. If votes
+    and names cannot be paired completely inside that section, return no
+    inferred pairs rather than reading later page text.
     """
-    # #23 元信息判定：只认**真实的地址/字段形态**，不能用单字"街""道"这类
-    # 会误伤菜名的词（"街头炸鸡"曾因此被误删）。
-    meta_re = re.compile(
-        r"(?:路|街|大道|道)\s*\d+\s*[号弄]"      # 建国西路485号 / 南京东路100弄
-        r"|电话\s*[:：]|营业时间\s*[:：]|人均\s*[:：]|地址\s*[:：]"
-        r"|评分|条评价|^\s*\d+号")
-
-    def is_meta(n):
-        return bool(meta_re.search(n))
-
-    paired = re.findall(r"(\d+)\s*人推荐[ \t]*([^\n]{1,20}?)[ \t]*$", text, re.M)
-    paired = [(v, n) for v, n in paired if "人推荐" not in n and not is_meta(n)]
-    if len(paired) >= 2:
-        return [{"name": n.strip(), "votes": int(v)} for v, n in paired]
-
-    raw_stacked = re.findall(r"(\d+)\s*人推荐\n([^\n]{1,24}?)[ \t]*$", text, re.M)
-    stacked = [(v, n) for v, n in raw_stacked if "人推荐" not in n and not is_meta(n)]
-    if len(stacked) >= 2:
-        return [{"name": n.strip(), "votes": int(v)} for v, n in stacked]
-    # 说明：竖排被元信息打断、过滤后仅剩 1 条时不降级返回单条——
-    # 该形态与两列布局在正则层面无法区分，强行降级会截断两列主路径。
-    # 返回空列表：不完整但不造假，交人工复核。
-
-    votes = [int(x) for x in re.findall(r"(\d+)\s*人推荐", text)]
-    if not votes:
+    heading = re.search(r"网友推荐(?:\s*[（(]\s*\d+\s*[）)])?", text)
+    if not heading:
         return []
-    tail = re.split(r"\d+\s*人推荐", text)[-1]
-    # #23 两列布局的 tail 会一直延伸到文末，若"网友推荐"区块后面紧跟地址、电话、
-    # 营业时间等段落，这些行会被当成菜名（典型症状：菜名里出现"建国西路485号"）。
-    # 因此必须在区块边界处截断，而不只是截在"查看全部"。
-    tail = re.split(
-        r"(查看全部|去大众点评App|查看更多|地址\s*[:：]|商户地址|电话\s*[:：]|营业时间\s*[:：]"
-        r"|人均\s*[:：]?|评分|条评价|商户信息|商家信息|购买须知|推荐理由|附近推荐)", tail)[0]
-    names = [ln.strip() for ln in tail.split("\n") if ln.strip()]
-    names = [n for n in names if 2 <= len(n) <= 24 and not n.isdigit() and "人推荐" not in n]
+    section = text[heading.end():]
+    boundary = re.search(
+        r"(?:^|\n)\s*(?:查看全部|去大众点评App|查看更多|地址\s*[:：]|商户地址|"
+        r"电话\s*[:：]|营业时间\s*[:：]|人均\s*[:：]?|评分|\d+\s*条评价|"
+        r"商户信息|商家信息|购买须知|团购|附近推荐)",
+        section)
+    if boundary:
+        section = section[:boundary.start()]
+    lines = [line.strip() for line in section.splitlines() if line.strip()]
+    if not lines:
+        return []
 
-    # #23 关键：必须先按位置配对，再整体过滤。
-    # 旧实现先过滤 names 再按索引取 votes，过滤掉一条后票数会整体前移，
-    # 把下一道菜的票数错配给上一道（17/16 串位）。
-    pairs = list(zip(names, votes))[:min(len(names), len(votes))]
-    pairs = [(n, v) for n, v in pairs if not is_meta(n)]
-    return [{"name": n, "votes": int(v)} for n, v in pairs]
+    inline = [re.fullmatch(r"(\d+)\s*人推荐[ \t]+([^\n]{1,24}?)", line)
+              for line in lines]
+    if all(inline):
+        pairs = [(m.group(2).strip(), int(m.group(1))) for m in inline]
+        return [{"name": n, "votes": v} for n, v in pairs if _valid_dish_name(n)]
+
+    votes_only = [re.fullmatch(r"(\d+)\s*人推荐", line) for line in lines]
+    # Alternating layout: each vote line must be followed by exactly one name.
+    if (len(lines) % 2 == 0
+            and all(votes_only[i] for i in range(0, len(lines), 2))
+            and all(not votes_only[i] for i in range(1, len(lines), 2))):
+        pairs = []
+        for i in range(0, len(lines), 2):
+            if votes_only[i + 1]:
+                return []
+            pairs.append((lines[i + 1], int(votes_only[i].group(1))))
+        return [{"name": n, "votes": v} for n, v in pairs if _valid_dish_name(n)]
+
+    # Two-column layout: all vote counts followed by all dish names. Counts
+    # must match exactly; a partial list is ambiguous and remains unknown.
+    split = 0
+    while split < len(lines) and votes_only[split]:
+        split += 1
+    if split == 0 or split != len(lines) - split or not all(votes_only[:split]):
+        return []
+    names = lines[split:]
+    if not all(_valid_dish_name(n) for n in names):
+        return []
+    return [{"name": n, "votes": int(votes_only[i].group(1))}
+            for i, n in enumerate(names)]
+
+
+def _valid_dish_name(name):
+    if not 1 <= len(name) <= 24 or "人推荐" in name:
+        return False
+    if re.search(r"(?:路|街|大道|道)\s*\d+\s*[号弄]|地址\s*[:：]|电话\s*[:：]|"
+                 r"营业时间\s*[:：]|人均\s*[:：]|评分|条评价", name):
+        return False
+    return True
 
 
 def parse_group_buy(text):
@@ -244,7 +249,8 @@ def parse_group_buy(text):
             rest = text[m.start():]
             cut = re.search(
                 r"(商家信息|商户信息|地址\s*[:：]|电话\s*[:：]|营业时间\s*[:：]"
-                r"|网友推荐|网友评论|查看全部|购买须知|人均\s*[:：]|停车费?)", rest)
+                r"|网友推荐|网友评论|查看全部|购买须知|人均\s*[:：]|"
+                r"停车费?|停车|服务费|配送费|茶位费|押金|联系电话|地址)", rest)
             end = m.start() + cut.start() if cut else len(text)
         segment = text[m.start():end]
 
