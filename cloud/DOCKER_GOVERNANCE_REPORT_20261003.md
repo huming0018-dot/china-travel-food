@@ -52,7 +52,7 @@ cloud/vendor/pipeline，重建不再丢失。
 - 另删除构建中间容器 `sleepy_carson`（docker build apt 步骤遗留，OOM 停止，非服务）
 
 ### 保留：手动运维工具箱 / 备用通道（零 cron 引用但有存在价值）
-- 运维按需跑：repair_misanchor、replay_anchors、cleanup_findings、recalc_scores、
+- 运维按需跑：cleanup_findings、recalc_scores、
   validate_schema、security_regression、gen_ts_types、apply_sql、inbox、tool_router 等
 - Apify 备用通道：apify_collect/priority、events_apify（review_apify_fill 仍在 cron）
 - 这些不是垃圾，删了会让运维/回退无工具。

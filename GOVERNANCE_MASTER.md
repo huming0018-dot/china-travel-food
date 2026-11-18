@@ -213,7 +213,7 @@ flowchart TB
 **合并清单（精益；按 §6.1 先 dry-run 回归、差异=0 才删，不在本步直接删）**：
 - `national_scale.py` → 已被 `national_count.py` 取代（untracked，可删）。
 - `cloud_phone_fill/cloud_coord_fill/cloud_amap_fill` → 已收口为写 findings；重复的 place/search 逻辑并入 `map_quota.py` + 单一 place 客户端，三个 fill 退化为薄调度。
-- `cleanup_findings.py` + `entity_match.py` 为错挂/去重权威；`repair_misanchor.py`、重复的 `entity_dedup` 折叠之。
+- `cleanup_findings.py` + `entity_match.py` 为错挂/去重权威；repair_misanchor.py 已退役，不再运行；重复的 entity_dedup 另行鉴别。
 - `group_chef_tree`（cloud 与 vendor 各一份）→ vendor/pipeline 留唯一版，cloud 仅 import。
 - 一次性 /tmp 探针脚本不进仓库、不维护。
 

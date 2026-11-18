@@ -152,7 +152,7 @@
 - **F-C 口味/评价**：`review_apify_fill.py`、`apify_collect.py`、`review_ugc_fill.py`、`ugc_longrun.py`、`xhs_api.py`、`cloud_bili_collect.py`、`bili_enrich.py`、`cloud_dianping_phone.py`、`dianping_daily.py`、`dianping_branch_list.py`、`ab_compare.py`；pipeline `xhs_to_reviews.py`、`atlas_write.py`。
 - **F-D 动向/社媒**：`kol_monitor.py`、`kol_identity.py`、`kol_cross.py`、`kol_context_backfill.py`、`wechat_source_registry.py`、`status_events.py`、`findings_extractor.py`、`findings_ingest.py`、`findings_planner.py`、`serp_producer.py`、`cloud_patrol.py`、`patrol_classify.py`、`watchdog.py`、`warning_handler.py`（`external_watchdog/`）。
 - **F-E 分类/语义**：`category_resolver.py`、`subtype_distributor.py`、`signature_cuisine_link.py`、`private_kitchen_club_resolver.py`、`scene_ingredient_coverage.py`、`classification_intruder_audit.py`、`backfill_cuisine.py`、`curate_v4.py`、`reconcile.py`。
-- **F-F 编排/质量门/通知**：`pm_dispatch.py`、`inbox.py`、`task_helper.py`、`gate_apply.py`、`candidate_apply.py`、`repair_misanchor.py`、`data_gate.py`、`apify_fill_controller.sh`、`cloud_router.py`、`notifier.py`、`notify_cli.py`、`progress_broadcast.py`、`qa_broadcast.py`、`self_evolve.py`、`recalc_scores.py`、`account_repair.py`、`account_registry.py`、`xhs_cookie_pool.py`、`xhs_qr_login.py`、`work_progress.py`、`public_status.py`；pipeline `release_audit.py`。
+- **F-F 编排/质量门/通知**：`pm_dispatch.py`、`inbox.py`、`task_helper.py`、`gate_apply.py`、`candidate_apply.py`、`data_gate.py`、`apify_fill_controller.sh`、`cloud_router.py`、`notifier.py`、`notify_cli.py`、`progress_broadcast.py`、`qa_broadcast.py`、`self_evolve.py`、`recalc_scores.py`、`account_repair.py`、`account_registry.py`、`xhs_cookie_pool.py`、`xhs_qr_login.py`、`work_progress.py`、`public_status.py`；pipeline `release_audit.py`。
 
 ---
 
