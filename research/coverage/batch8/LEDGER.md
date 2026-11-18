@@ -1,3 +1,5 @@
+> 历史账本：下述结果是 2026-09-30 记录，未重新验证。固定 3 店写入/核查脚本已退出；不要重放旧 ID 和门店事实。本次未改数据库。
+
 # 批次8 · 覆盖扩容（有界一轮）账本
 日期：2026-09-30 ｜ 范围：数据库/管线层，未碰前端 ｜ 账号 parked，仅用开放平台（B站/公众号/携程/高德POI/公开媒体）
 
@@ -26,7 +28,7 @@
 
 - 硬约束遵守：location/phone/opening_hours 全部留空（宁空不假），未碰 score_total/精选层。
 - 模糊召回§7命中：抖音口述"荞本家/养本家"经 B站(瑞金一路161号)+澎湃+高德三源对齐到本名「立食荞麦东京一味」。
-- 证据URL见 batch8_work/_b8_upsert.py 内 source_urls。
+- 证据URL见 [历史脚本的 source_urls](https://github.com/huming0018-dot/china-travel-food/blob/9a175118a4d6d72dabb2ec92ab5ac5c9d668cef8/research/coverage/batch8/_b8_upsert.py)，仅供追溯，不是现行入口。
 
 ## 3. 点名漏店回归用例（已在库，本轮仅核实，不新增）
 - Ministry of Crab：rid=2002 active，黄浦区南京西路231号人民公园内。命中。
