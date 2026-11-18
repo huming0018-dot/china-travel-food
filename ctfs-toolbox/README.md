@@ -1,39 +1,39 @@
-# CTFS reusable data toolbox 0.5.0
+# CTFS 拆分后的项目配置与待筛选来源
 
-The toolbox executes project Manifests and pure data ontology packs. It preserves original RAW bytes and derives versioned ODS, DW and exact APP audits through public SDK/CLI interfaces. Business field names, pointers, labels, admission rules and scoring parameters live in packs rather than project Python scripts.
+此目录已不是可安装/可运行的 CTFS 包。旧 pyproject、CLI、包入口及重复通用核心已退出；不要运行遗留测试、执行旧安装命令或声称旧流水线仍可用。
 
-## Implemented interfaces
+## 已迁入工具类
 
-- M0: validated Manifest, strict layered Data 0.2 records, SQLite storage and optional isolated PostgreSQL storage.
-- M1: bounded `snapshot-file` and `http-public` acquisition, durable source receipts and request budgets. Failed or unknown acquisition is retained rather than silently repeated.
-- M2/M4: pure configuration driven cleaning for Unicode quotation evidence and official JSON pointer evidence. Exact original candidate identity and revision, source metadata, declared types and unknowns are preserved.
-- M3: deterministic configuration driven score, admission rules, explicit reasons and fixed UTC evaluation time. Caller supplied score or pass values are rejected.
-- M6: independent recomputation from retained RAW through the exact ODS/DW chain. Tool resource bytes, dependency versions, complete Manifest bytes, pack files and evaluation time bind the audit.
+- [证据版本仓](https://github.com/huming0018-dot/agent-data-toolbox/tree/13f2dd650bfa06456dc96754edae2bcbf41297eb/packages/evidence-store)：原始字节、幂等派生版本和精确父链。
+- [证据处理链](https://github.com/huming0018-dot/agent-data-toolbox/tree/13f2dd650bfa06456dc96754edae2bcbf41297eb/packages/evidence-pipeline)：清洗、四算子评分、重演审计及必要配置合同。
 
-M5 implements a durable built-in serial DAG with exact outputs, process locks, pause/resume and retained unknown external attempts. M7 implements independently gated immutable JSON/HTML publications and a read-only loopback HTTP consumer. Stage acceptance and the final second-project proof require the separately recorded fixed-version real execution and independent review receipts.
+使用新包自身 README 和测试。此处不提供旧接口兼容层、不自动迁移旧数据库/审计收据，也未改变生产。
 
-## Install and use
+## 保留的配置和待筛选来源
 
-Python 3.12 or newer is required. Install the frozen wheel; optional PostgreSQL support uses the `postgres` extra. Storage credentials are supplied only through a named environment variable, never a Manifest value.
+- packs/ 下24份领域配置原字节保留：cuisines 与 software-releases，各0.3.2/0.3.3。它们是领域样本，不打包进通用工具；软件发布样本并非美食业务，后续另行归位。
+- toolbox/ 剩余8个模块仅作为**待逐项筛选来源**：connector.py、connector_http.py、connector_snapshot.py、crawler.py、jobs.py、consumer.py、postgres.py、storage_factory.py。分别包含连接器合同、网络/文件读取边界、事务采集记录、持久恢复、交付门、PG适配及存储选择，尚未迁入或验收为独立工具。
+- tests/ 剩余12份历史测试保留反例，不是当前可执行套件；其旧 toolbox 导入已无完整依赖。M7-PG-READONLY-0.5.1.md 是历史验证经验，不是当前能力保证。
 
-Install a pack with `toolbox pack install PATH --dir STORE`. Check `toolbox --help` and each subcommand for the exact required options. The common CLI exposes `crawl`, `clean`, `score` and `audit`. Cleaning, scoring and auditing require the same fixed `--as-of` UTC timestamp and verified pack store `--dir`. Exact ODS/DW versions can be pinned explicitly.
+本轮不为残余模块补兼容层，也不把它们当无价值代码删除。不能据此宣称所有剩余资产已筛选完成。
 
-The public `Stages(manifest, contract, storage, as_of)` adapter writes standards compliant layers for both project domains. `clean(raw_id)`, `score(ods_id, ods_version)` and `audit(raw_id, dw_id, dw_version)` preserve exact parent references. Identical reruns are idempotent. Failed audit produces a retained failure record and cannot become a delivered view.
+## 删除与恢复
 
-## Bounded real validation
+固定完整恢复点：`b870dab6d4b62a50329dae7fadcc1d60cd613fb5`（china-travel-food）。
+42文件退出：12个已迁核心Python副本、旧__init__/CLI/pyproject三个入口、24份schema、两份旧runtime映射及已迁test_storage.py。保留的其他文件不改字节。
+24份schema中，11份现行合同随两个工具包保留；其余13份只保留Git历史，不是待迁实现：
+- schemas/archive-0.1.0/audit.schema.json
+- schemas/archive-0.1.0/clean.schema.json
+- schemas/archive-0.1.0/manifest.schema.json
+- schemas/archive-0.1.0/raw.schema.json
+- schemas/archive-0.1.0/scored.schema.json
+- schemas/archive-bba6ad2-0.1.0/audit.schema.json
+- schemas/archive-bba6ad2-0.1.0/clean.schema.json
+- schemas/archive-bba6ad2-0.1.0/manifest.schema.json
+- schemas/archive-bba6ad2-0.1.0/raw.schema.json
+- schemas/archive-bba6ad2-0.1.0/scored.schema.json
+- schemas/archive-bba6ad2-0.1.0/view-previously-mislabelled.schema.json
+- schemas/archive-bba6ad2-0.1.0/view.schema.json
+- schemas/schema-history.json
 
-This checkpoint reuses retained original bytes without new external requests: six Shanghai discovery candidates with 25 Unicode references across three editorial sources, and two independent official release RAW responses. Both domains pass SQLite RAW/ODS/DW/APP audit persistence and reopening; the two software inputs also pass one new isolated PostgreSQL namespace. Actual run receipts and frozen wheel identity are kept outside source code.
-
-Shanghai entries are discovery leads. Editorial references are not independent diners, and current hours, menus, prices, commercial relationships and personal taste remain unknown. Original HTTP responses of historical editorial sources were not retained; canonical source body hashes and snapshot bytes must not be labeled original HTTP hashes.
-
-The software pack evaluates official release metadata. Compatibility, security assessment and asset contents remain unverified. No release assets are downloaded.
-
-PostgreSQL validation is an isolated loopback engineering fixture with TLS false. It does not establish production Supabase, RLS or TLS acceptance. No original user feedback, production databases, past versions or existing application services are modified by this checkpoint.
-
-## Common durable pipeline and consumer
-
-Install a pure pack with `toolbox pack install PACK_PATH --dir PACK_STORE`. Execute `toolbox run MANIFEST --job-id ID --as-of UTC --dir PACK_STORE`; read durable state with `toolbox job` using the same options. Built-in stages are crawl, clean, score, audit and deliver. `--pause-after clean` pauses after a durable clean stage; rerunning the same job resumes it. Completed outputs are revalidated against exact references. Failed or unknown external acquisition is never automatically resent. A changed Manifest, pack, tool or evaluation time cannot resume an old job.
-
-Use `toolbox serve MANIFEST_A MANIFEST_B --dir PACK_STORE --port 18790` to serve each latest independently gated publication. Omit `--as-of` to use the per-project fixed evaluation time retained in its publication receipt. The service binds only 127.0.0.1. Every report request reloads configuration and verifies RAW/DW/audit/view references and immutable report bytes. HTTP reading uses SQLite mode=ro and never creates missing databases; this consumer version explicitly rejects PostgreSQL reads rather than falling back. Earlier PostgreSQL storage verification is a separate capability.
-
-Historical publications and exact job attempts are retained independently of the latest report pointer. Projects introduce only Manifests and pure six-file ontology packs; no per-project Python transformations or templates are loaded.
+恢复单个历史文件可用 `git show b870dab6d4b62a50329dae7fadcc1d60cd613fb5:ctfs-toolbox/相对路径`。不要将恢复历史当生产部署。删除仅涉及仓库活动树。
