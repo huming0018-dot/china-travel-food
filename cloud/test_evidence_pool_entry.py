@@ -1,4 +1,4 @@
-"""Offline CLI contract; fixture DB reads, real pure text normalization, no collector."""
+"""Offline CLI contract; minimal common fixture, no collector or normalization coverage."""
 import contextlib
 import importlib.util
 import io
@@ -11,7 +11,7 @@ import unittest
 from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parent
-PIPE = HERE if (HERE / 'evidence_pool.py').exists() else HERE / 'vendor' / 'pipeline'
+PIPE = HERE / 'vendor' / 'pipeline'
 
 
 def load(name):
@@ -35,7 +35,8 @@ class EvidencePoolEntry(unittest.TestCase):
             self.reads.append(table)
             return self.tables[table]
         common = types.ModuleType('common')
-        common.cjk_norm = load('text_normalization').cjk_norm
+        # Fixture names contain no punctuation/case variants; normalization is not under test.
+        common.cjk_norm = lambda value: str(value)
         common.fetch_all = fetch
         # No database writer or network API is supplied.
         with patch.dict(sys.modules, {'common': common}):
@@ -52,7 +53,7 @@ class EvidencePoolEntry(unittest.TestCase):
             self.assertIn('不写数据库或收录新品牌', output.getvalue())
             self.assertNotIn('--commit', output.getvalue())
 
-    def test_removed_commit_fails_before_io(self):
+    def test_removed_commit_fails_before_database_reads_and_report_creation(self):
         with tempfile.TemporaryDirectory() as td:
             target = Path(td) / 'not-created'
             with patch.object(self.module, 'OUT_DIR', target), patch.object(sys, 'argv', ['evidence_pool.py', '--commit']), \
