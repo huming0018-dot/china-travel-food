@@ -7,7 +7,7 @@
         后续长期监控其新视频作探店线索。
   通道② 餐厅候选：从搜索到的视频 title+简介产出 kind=discover 原始证据（每个视频一条 note），
         落盘 /app/data/discovery/raw_bili_<cat>.jsonl → admission_gate 离线裁决
-        → candidate_apply --commit 收录。标题/简介只是线索不是证据：单条视频只算一条声音，
+        → 候选输出，不自动收录。标题/简介只是线索不是证据：单条视频只算一条声音，
         独立声音≥2（≥2 个不同 UP主 提及同店）、口味均分≥3.5 才 admit，阈值与现有管线一致。
 
 采集源（双通道）：
@@ -409,7 +409,7 @@ def main():
     st["runs"] = st.get("runs", 0) + 1
     save_state(st)
 
-    # 对本轮触及的品类跑裁决 + 收录（标题只是线索，阈值不变）
+    # 对本轮触及的品类仅跑候选裁决（标题只是线索，不自动收录）
     admitted_total = 0
     for cat in sorted(touched_cats):
         rp = DISC_DIR / f"raw_bili_{cat}.jsonl"
@@ -423,14 +423,8 @@ def main():
         if g.returncode != 0:
             print("  gate stderr:", g.stderr[-800:])
             continue
-        # 产出 candidates_<cat>.jsonl（gate 默认写 raw 同目录）→ candidate_apply 收录
-        print(f"=== candidate_apply 收录 {cat} ===")
-        a = subprocess.run([sys.executable, str(HERE / "candidate_apply.py"),
-                            "--category", cat, "--commit"],
-                           capture_output=True, text=True)
-        print(a.stdout[-1200:])
-        if a.returncode != 0:
-            print("  apply stderr:", a.stderr[-500:])
+        # gate只产候选，保留供复核；不自动创建餐厅。
+        print(f"候选输出完成：{cat}；未自动入库。")
         cf = DISC_DIR / f"candidates_{cat}.jsonl"
         if cf.exists():
             for line in cf.read_text(encoding="utf-8").splitlines():

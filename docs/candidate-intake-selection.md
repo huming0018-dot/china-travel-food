@@ -1,3 +1,15 @@
+## 当前处置：自动提交已退出
+
+以下旧鉴别结果以恢复点 `a241b7e670460764af68e3e8e3e7d35ee9e32795` 为准。本轮真实改代码，不仅撤销承诺：
+- cloud_discover、cloud_bili_collect、unmatched_bridge移除candidate_apply调用，保留原文→gate→候选输出。cloud_discover的done只表示候选阶段结束，不是入库回执，不因停止写入而重复跑同品类。
+- gap_runner删除认领、worker循环、加深重采、自动gate/apply；保留map_category/category_worklist/_frontier_names/_ancestor_chain/category_supply五函数原AST。subtype_distributor仍可调用规划及供给读取；没有新造review协议。
+- gap_pool停用，CLI明确输出“已暂停”并退出2，不探测、不启动worker、不写presence。gap_runner CLI同样明示停止；这不是任务完成状态。
+- 仓内crontab的pool reboot行、router的gap派发、account_repair的自动拉起均撤销；pm_night_watch不再要求暂停的gap_pool存活，其余故障检查不变。账号复核、其他router分支未改；未停真实进程、未改线上cron/compose。因此不宣称生产已暂停，外部守护配置不在本仓也未检查。
+- candidate_apply显式CLI/字段与写入适配原字节保留，已有歧义/YIELD/半完成重试缺陷仍在，不能当自动收口保证。
+- B站KOL处理是原有另一业务通道，本批不改其数据库动作；“仅候选输出”专指餐厅候选收录，不宣称整个脚本全只读。
+
+验证：7项停用/规划测试通过（含正常LCA、无共同祖先时CUISINE_ROOT兜底、夜间监控保留cron/日志真实故障告警）；原入库测试调整为5项正常通过、3项expectedFailure（原自动提交失效场景已不存在，不伪报修复）。五保留函数AST一致；显式candidate_apply整文件一致；实际运行cloud_discover.main确认不再调用apply，其余两消费者使用源码调用检查，未跑采集主流程。没有部署、采集、外部数据库或生产操作。
+
 # 候选到写库：能力有价值，自动收口不完整
 
 固定基线/恢复点：`3e7bdc2b93edab2da3c261ae4709877110edfbdc`。接续发现核心PR66，不重复审核已验词矩阵、原文提取、gate。只进行隔离鉴别，未改生产实现、未联网、未写真实数据库。

@@ -6,7 +6,7 @@
 签名直连通道(xhs_api，采集池实际使用)却常 code=0；二者无人对账，导致「其实在干活却报死号」，
 而真·采集池挂掉也没人拉起。本模块做确定性修复阶梯：
 
-  R0 守护采集池：gap_pool 进程/presence 缺失 → 自动拉起（不重复拉起）。
+  R0 自动拉起采集池已暂停；不再恢复旧缺口执行入口。
   R1 签名通道复核（权威）：逐账号 pin 探测；浏览器标 dead/restricted 但签名 code=0 → 改判 ok。
   R2 换出口 IP：默认出口软封/网络失败/共享 IP 限流 → 经广州代理(IP 轮换)再探一次。
   R3 真失效才叫人：双出口都 -100（web_session 过期，无法自愈）→ 保持 dead 并一次性告警扫码。
@@ -46,24 +46,6 @@ def _find_proc(needle):
     return pids
 
 
-def ensure_pool():
-    """gap_pool 不在则拉起（与 @reboot 同命令）；返回 (started:bool, alive:bool)。"""
-    alive = bool(_find_proc("gap_pool.py"))
-    if alive:
-        return False, True
-    log("gap_pool 未运行，自动拉起…")
-    cmd = ("cd /app/cloud && . /app/cloud/env.sh && "
-           "nohup /usr/local/bin/python gap_pool.py 6 >> /app/data/pool.log 2>&1 &")
-    try:
-        subprocess.Popen(["bash", "-lc", cmd], start_new_session=True,
-                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        time.sleep(8)
-    except Exception as e:
-        log(f"拉起 gap_pool 失败：{e}")
-        return False, False
-    ok = bool(_find_proc("gap_pool.py"))
-    log(f"gap_pool 拉起{'成功' if ok else '失败'}")
-    return ok, ok
 
 
 # ------------------------------------------------ R1/R2 账号复核
@@ -241,7 +223,8 @@ def human_alert_if_needed(results):
 
 # ------------------------------------------------ 主入口
 def run():
-    started, alive = ensure_pool()
+    alive = bool(_find_proc('gap_pool.py'))
+    log('gap_pool 自动拉起已暂停；本轮只做账号复核，不启动采集池。')
     accounts = []
     if ACCT_DIR.exists():
         accounts = sorted(p.stem for p in ACCT_DIR.glob("*.json"))
@@ -255,11 +238,6 @@ def run():
 
     human_alert_if_needed(results)
     escalate_unknown_if_needed(results)
-    if started:
-        import health
-        health.alert("检测到采集池未运行，已自动拉起。",
-                     title="🍜 采集池自动恢复", key="pool_autostart", once=True)
-
     summary = {a: v for a, (v, _) in results.items()}
     log(f"汇总：pool_alive={alive} accounts={summary}")
     return results, alive

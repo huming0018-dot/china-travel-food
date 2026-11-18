@@ -51,7 +51,8 @@ LOG_STALE = {
     "phone_fill.log": 180, # 电话 :05/:25/:45（每小时约 3 次）
 }
 # 必须存活的进程（/proc 扫描，容器内无 ps 依赖）
-PROC_MUST = ["cron", "gap_pool"]
+# gap_pool自动缺口执行已暂停，不再作为必备进程；其他活性检查不变。
+PROC_MUST = ["cron"]
 
 WARN_COOLDOWN = 3600  # 同一硬告警 key 1 小时内不重复
 

@@ -104,24 +104,10 @@ class CandidateIntakeSelection(unittest.TestCase):
         self.post_status=500; self.apply()
         self.assertEqual(len(self.posts),1)
 
-    def test_normal_consumer_closure(self):
+    def test_consumer_only_outputs_candidates_without_auto_writes(self):
         state=self.discover()
-        self.assertIn('bread',state['done']); self.assertEqual(len(self.posts),2)
-
-    @unittest.expectedFailure
-    def test_failed_insert_must_not_complete_category(self):
-        self.post_status=500
-        self.assertNotIn('bread',self.discover()['done'])
-
-    @unittest.expectedFailure
-    def test_missing_key_must_not_complete_category(self):
-        with patch.object(A.AF,'AMAP_KEY',''):
-            self.assertNotIn('bread',self.discover()['done'])
-
-    @unittest.expectedFailure
-    def test_failed_tag_must_not_complete_category(self):
-        self.tag_status=500
-        self.assertNotIn('bread',self.discover()['done'])
+        self.assertIn('bread',state['done'])
+        self.assertEqual(self.posts,[])
 
     @unittest.expectedFailure
     def test_retry_after_failed_tag_repairs_the_missing_tag(self):

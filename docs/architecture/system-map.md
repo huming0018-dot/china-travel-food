@@ -45,9 +45,9 @@ flowchart LR
   ROUTER[cloud_router 每20min] --> ORCH[任务编排]
   WD[watchdog 看门狗] --> HEALTH[health 健康探测]
   HEALTH --> NOTIFY[notifier TG+飞书]
-  POOL[gap_pool 常驻] --> RUNNER[gap_runner worker]
+  POOL[gap_pool 已暂停] -. 不启动worker .-> RUNNER[gap_runner 仅保留只读规划]
   QR[xhs_qr_login / 本机真实 Chrome] --> POOL
-  RUNNER --> XHS[xhs_api per-account flock 串行]
+  XHS[xhs_api 独立适配，非暂停RUNNER的下游]
   subgraph EXIT[独立出口]
     A["account_a LANCE · 直连"]
     B["account_b 猪蛤蛤 · 广州代理"]

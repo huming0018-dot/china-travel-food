@@ -1,3 +1,5 @@
+> 当前代码口径：自动候选收录已退出；三个发现入口仅产候选，gap_runner/gap_pool执行暂停，router/reboot/账号修复不再拉起。candidate_apply仅保留显式适配，不代表可靠自动入库。仅GitHub整理，未改部署。见docs/candidate-intake-selection.md。
+
 > 当前整理覆盖历史说明：`entity_dedup.py --apply` 与一次性 `closed_relocate.py` 已退役；下文旧迁移记录不是现行执行指令。只读巡检保留，不代表旧合并候选可靠。
 
 > 旧本机部署链已退出：`cloud/prepare.sh`、`cloud/build_on_server.sh` 不再是可执行入口。下文相关部署命令与“本机凭据覆盖服务器”建议全部撤销；历史结果仅供追溯。当前入口、副作用及恢复点见 [容器重建手册](cloud/CONTAINER_REBUILD_RUNBOOK.md#旧本机部署链退出)。本次不修改已部署设备或服务器。
