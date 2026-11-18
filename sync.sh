@@ -1,243 +1,161 @@
-#!/bin/bash
-# sync.sh — 跨窗口自动同步（v2）
-#
-# 用法：
-#   开始工作:  bash sync.sh <角色>
-#   结束工作:  bash sync.sh push "提交说明"
-#
-# 角色注册在 ROLES.md，新增窗口直接添加即可。
-# 运行前自动校验：git对齐、环境配置、角色边界。
+#!/usr/bin/env bash
+# Safe multi-agent repository entry point. Default operation is read-only.
+set -Eeuo pipefail
+ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT"
 
-set -e
-cd "$(dirname "$0")"
+usage() {
+  cat <<'USAGE'
+Usage:
+  bash sync.sh [status <role>]               Read-only checks and task query (default)
+  bash sync.sh sync                           Explicit git pull --rebase
+  bash sync.sh task-list [role]               Explicit read-only task list
+  bash sync.sh task-claim <id>                 Explicit task claim (remote write)
+  bash sync.sh task-unblock                   Explicit task unlock (remote write)
+  bash sync.sh commit --branch <branch> --files <path...> --message <text> --owner <name>
+  bash sync.sh publish --branch <branch> --owner <name>
 
-ROLE="${1:-}"
+Commit stages only listed paths and requires a non-protected task branch and a
+release-owner identity. Publish pushes only that branch and is owner-only.
+Set SYNC_RELEASE_OWNER to the designated release owner's identity.
+USAGE
+}
 
-# ────────────────────── push模式 ──────────────────────
-if [ "$ROLE" = "push" ]; then
-  MSG="${2:-更新状态 $(date '+%H:%M')}"
-  git add -A
-  git commit -m "$MSG" --allow-empty
-  git push
-  echo "✅ 已push: $MSG"
-  exit 0
-fi
+fail() { echo "ERROR: $*" >&2; exit 1; }
 
-# ────────────────────── 校验：角色名 ──────────────────────
-if [ -z "$ROLE" ]; then
-  echo "❌ 用法: bash sync.sh <角色名>"
-  echo ""
-  echo "已注册角色（见 ROLES.md）:"
-  grep "^### " ROLES.md 2>/dev/null | sed 's/### /  - /' || echo "  (ROLES.md不存在)"
-  exit 1
-fi
+repo_branch() { git symbolic-ref --quiet --short HEAD || fail "detached HEAD is not allowed"; }
 
-# ────────────────────── 运行前校验 ──────────────────────
-echo "════════════════════════════════════════"
-echo "  CTFS 同步 · $ROLE 窗口"
-echo "  $(date '+%Y-%m-%d %H:%M:%S')"
-echo "════════════════════════════════════════"
-
-CHECKS_PASS=0
-CHECKS_FAIL=0
-
-check() {
-  local desc="$1"
-  local cmd="$2"
-  if eval "$cmd" >/dev/null 2>&1; then
-    echo "  ✅ $desc"
-    CHECKS_PASS=$((CHECKS_PASS+1))
+query_tasks() {
+  local role="${1:-}"
+  local output rc
+  if output="$(python3 - "$ROOT" "$role" <<'PY'
+import os, pathlib, sys
+root, role = sys.argv[1:]
+sys.path.insert(0, str(pathlib.Path(root, "cloud").resolve()))
+os.environ.setdefault("FOOD_APP_DIR", str(pathlib.Path(root, "app").resolve()))
+import task_helper
+try:
+    import contextlib, io
+    with contextlib.redirect_stdout(io.StringIO()):
+        tasks = task_helper.list_tasks(role or None)
+except Exception as exc:
+    print(f"TASK_QUERY_ERROR: {type(exc).__name__}: {exc}", file=sys.stderr)
+    raise SystemExit(2)
+if tasks is None:
+    print("TASK_QUERY_ERROR: task service returned no result", file=sys.stderr)
+    raise SystemExit(2)
+todo = [t for t in tasks if t.get("status") == "todo"]
+if not tasks:
+    print("TASK_QUERY_OK_EMPTY")
+elif todo:
+    print("TASK_QUERY_OK_HAS_TODO")
+    for t in todo[:5]:
+        print(f"  #{t.get('id','?')} [{t.get('priority','?')}] {t.get('title','')[:40]}")
+else:
+    print("TASK_QUERY_OK_NO_TODO")
+PY
+)"; then
+    :
   else
-    echo "  ❌ $desc"
-    CHECKS_FAIL=$((CHECKS_FAIL+1))
+    rc=$?
+    echo "$output" >&2
+    return "$rc"
   fi
+  case "$output" in
+    *TASK_QUERY_OK_EMPTY*) echo "✅ 任务查询成功：列表为空" ;;
+    *TASK_QUERY_OK_HAS_TODO*) echo "🔴 任务查询成功：存在待认领任务"; printf '%s\n' "$output" | sed -n '/^  #/p' ;;
+    *TASK_QUERY_OK_NO_TODO*) echo "✅ 任务查询成功：当前没有待认领任务（任务列表非空）" ;;
+    *) echo "$output" >&2; echo "ERROR: task query returned an unrecognized result" >&2; return 2 ;;
+  esac
 }
 
-echo ""
-echo "🔍 运行前校验:"
-check "Git仓库已初始化" "git rev-parse --git-dir"
-check "项目根目录正确" "test -f cloud/public_status.py"
-check "ROLES.md存在（角色边界）" "test -f ROLES.md"
-check "STATUS.md存在（状态快照）" "test -f STATUS.md"
-check "task_helper.py存在（任务队列）" "test -f cloud/task_helper.py"
-
-# git对齐检查
-echo "  📥 拉取最新代码..."
-git pull --rebase 2>/dev/null || git pull 2>/dev/null || echo "  ⚠️  pull失败，请手动解决"
-
-# 未commit更改
-if git diff --quiet && git diff --cached --quiet; then
-  echo "  ✅ 工作区干净"
-  CHECKS_PASS=$((CHECKS_PASS+1))
-else
-  UNCOMMITTED=$(git status --short | wc -l | tr -d ' ')
-  echo "  ⚠️  有${UNCOMMITTED}个未commit文件"
-fi
-
-echo ""
-echo "  校验结果: ${CHECKS_PASS}通过 / ${CHECKS_FAIL}失败"
-if [ $CHECKS_FAIL -gt 0 ]; then
-  echo "  ⚠️  有校验未通过，请先修复再工作"
-fi
-
-# ────────────────────── 角色边界提示 ──────────────────────
-echo ""
-echo "📋 角色边界（$ROLE）:"
-if [ -f ROLES.md ]; then
-  awk "/^### $ROLE/,/^### |^## /" ROLES.md 2>/dev/null | head -8 || echo "  (未在ROLES.md注册)"
-fi
-
-# ────────────────────── 角色边界提示 ──────────────────────
-echo ""
-echo "📋 角色边界（$ROLE）:"
-if [ -f ROLES.md ]; then
-  awk "/^### $ROLE/,/^### |^## /" ROLES.md 2>/dev/null | head -8 || echo "  (未在ROLES.md注册)"
-fi
-
-# ────────────────────── 职责通知（必读） ──────────────────────
-if [ -f NOTICE_ROLES.md ]; then
-  echo ""
-  echo "📢 职责通知（NOTICE_ROLES.md，QA发布）:"
-  echo "────────────────────────────────────────"
-  awk "/^## 致 $ROLE 窗口/,/^---/" NOTICE_ROLES.md 2>/dev/null | head -30 || echo "  (本窗口暂无专项通知)"
-fi
-
-# ────────────────────── 信箱（其他窗口留言） ──────────────────────
-echo ""
-echo "📬 信箱（其他窗口留言）:"
-python3 cloud/inbox.py read "$ROLE" 2>/dev/null | head -25 || echo "  (信箱不可用)"
-echo "  回复: python3 cloud/inbox.py post <收件人> \"内容\""
-
-# ────────────────────── 公共状态快照 ──────────────────────
-echo ""
-echo "📊 公共状态:"
-if command -v python3 &>/dev/null; then
-  python3 cloud/public_status.py 2>/dev/null || echo "  (公共状态获取失败)"
-else
-  echo "  (python3不可用)"
-fi
-
-# ────────────────────── 最近状态事件 ──────────────────────
-echo ""
-echo "📡 最近状态事件（其他窗口的动态）:"
-python3 cloud/status_events.py list 10 2>/dev/null | head -10 || echo "  (无新事件)"
-
-# ────────────────────── 自动解锁检查 ──────────────────────
-echo ""
-echo "🔓 自动解锁检查:"
-python3 cloud/task_helper.py unblock 2>/dev/null || echo "  (无阻塞任务)"
-
-# ────────────────────── 任务队列 ──────────────────────
-echo ""
-echo "📌 我的任务（$ROLE）:"
-python3 cloud/task_helper.py list "$ROLE" 2>/dev/null || echo "  (任务队列不可用)"
-
-# ────────────────────── 待认领强制提示 ──────────────────────
-TASKS_PY=$(mktemp)
-python3 - "$ROLE" > "$TASKS_PY" <<'EOF'
-import sys, pathlib
-sys.path.insert(0, str(pathlib.Path('cloud').resolve()))
-import os
-os.environ.setdefault('FOOD_APP_DIR', str(pathlib.Path('app').resolve()))
-try:
-    import task_helper
-    role = sys.argv[1]
-    tasks = task_helper.list_tasks(role) or []
-    todo = [t for t in tasks if t.get('status') == 'todo']
-    if todo:
-        print("HAS_TODO")
-        for t in todo[:5]:
-            print(f"  #{t.get('id','?')} [{t.get('priority','?')}] {t.get('title','')[:40]}")
-except Exception as e:
-    print(f"ERR {e}")
-EOF
-if grep -q "HAS_TODO" "$TASKS_PY" 2>/dev/null; then
-  echo ""
-  echo "🔴🔴 你有 $ROLE 待认领任务！未认领将上报PM："
-  grep -v "HAS_TODO" "$TASKS_PY" | head -6
-  echo "  认领: python3 cloud/task_helper.py claim <id>"
-else
-  echo ""
-  echo "✅ 无待认领任务"
-fi
-rm -f "$TASKS_PY"
-
-# ────────────────────── 过时事实自动校验（PM 2026-10-01） ──────────────────────
-# 防止窗口读到旧状态事实（如"Apify需充值"）而误导工作。
-# 规则：key=<正则> 若匹配到任何工作文档，则判定为过时事实，强制提示。
-echo ""
-echo "🔍 过时事实校验（防止旧状态误导）:"
-STALE_FOUND=0
-check_stale() {
-  local desc="$1" pattern="$2"
-  local hits
-  hits=$(grep -rn "$pattern" HANDOFF.md STATUS.md PM_START_HERE.md ROLE_STANDARD.md 2>/dev/null | grep -v "^Binary" | head -3)
-  if [ -n "$hits" ]; then
-    echo "  ❌ 发现过时事实 [$desc]:"
-    echo "$hits" | sed 's/^/     /'
-    STALE_FOUND=1
-  fi
+require_owner() {
+  local owner="$1"
+  [[ -n "$owner" ]] || fail "--owner is required"
+  [[ -n "${SYNC_RELEASE_OWNER:-}" ]] || fail "SYNC_RELEASE_OWNER must identify the designated release owner"
+  [[ "$owner" == "$SYNC_RELEASE_OWNER" ]] || fail "owner '$owner' does not match designated release owner"
 }
-# 当前已确认的过时事实（随状态变更维护）：
-# Apify已充值Starter(2026-10-01 PM确认)，"首轮$10封顶/等10-28重置"为旧事实
-check_stale "Apify充值已完成,但文档仍写'首轮\$10封顶/等10-28重置'" '首轮 \$10 封顶\|等 10-28 月度重置\|需你本人在 https://console.apify.com/billing 加支付方式'
-if [ $STALE_FOUND -eq 0 ]; then
-  echo "  ✅ 无过时事实"
-else
-  echo "  ⚠️ 存在过时事实！请先修正文档再继续工作（或确认该行是历史日志段，非当前待办）"
-fi
 
-# ────────────────────── 统一状态卡（PM 2026-10-01·方案B） ──────────────────────
-# 三窗口开工强制渲染同一张卡：数据/账号/配额/费用/最新事件。
-# 来源：task_queue（真源）+ status_events + Supabase 计数。看卡才允许干活。
-echo ""
-echo "📊 统一状态卡（三窗口共享，PM维护）:"
-STATUS_CARD=$(mktemp)
-python3 - > "$STATUS_CARD" <<'EOF'
-import sys, pathlib, json
-sys.path.insert(0, str(pathlib.Path('cloud').resolve()))
-os_env = pathlib.Path('app/.env.local')
-import os
-os.environ.setdefault('FOOD_APP_DIR', str(pathlib.Path('app').resolve()))
-os.environ.setdefault('HTTPS_PROXY', 'http://127.0.0.1:7897')
-os.environ.setdefault('HTTP_PROXY', 'http://127.0.0.1:7897')
-try:
-    import cloud.vendor.pipeline.common as C
-    # 数据基线
-    try:
-        rest = C.fetch_all('restaurants', select='id,status', page=1000)
-        active = sum(1 for r in rest if r.get('status')=='active')
-        print(f"  餐厅: {len(rest)} 在营: {active}")
-    except Exception as e:
-        print(f"  餐厅: (查询失败 {str(e)[:40]})")
-    try:
-        cmt = C.fetch_all('reviews', select='id', page=1000)
-        print(f"  评论: {len(cmt)}")
-    except Exception:
-        print("  评论: (查询失败)")
-    # 任务概览
-    try:
-        tq = C.fetch_all('task_queue', select='id,status,priority', page=1000)
-        todo_n = sum(1 for t in tq if t.get('status')=='todo')
-        prog_n = sum(1 for t in tq if t.get('status')=='in_progress')
-        done_n = sum(1 for t in tq if t.get('status')=='done')
-        print(f"  任务: todo={todo_n} 进行中={prog_n} done={done_n}")
-    except Exception as e:
-        print(f"  任务: (查询失败 {str(e)[:40]})")
-except Exception as e:
-    print(f"  (状态卡获取失败: {str(e)[:60]})")
-EOF
-head -8 "$STATUS_CARD"
-rm -f "$STATUS_CARD"
-
-# ────────────────────── 最近commit ──────────────────────
-echo ""
-echo "📝 最近5条commit:"
-git log --oneline -5 2>/dev/null || echo "  (无)"
-
-# ────────────────────── 结束提示 ──────────────────────
-echo ""
-echo "════════════════════════════════════════"
-echo "  完成后: bash sync.sh push \"说明\""
-echo "  任务: python3 cloud/task_helper.py list"
-echo "════════════════════════════════════════"
+cmd="${1:-status}"
+if [[ "$cmd" == "-h" || "$cmd" == "--help" || "$cmd" == "help" ]]; then usage; exit 0; fi
+shift || true
+case "$cmd" in
+  status)
+    role="${1:-}"
+    echo "Read-only status${role:+ for role $role}"
+    git status --short --branch
+    [[ -f ROLES.md ]] && echo "✅ ROLES.md present" || echo "⚠️ ROLES.md missing"
+    [[ -f STATUS.md ]] && echo "✅ STATUS.md present" || echo "⚠️ STATUS.md missing"
+    if [[ -n "$role" && -f ROLES.md ]]; then
+      echo "Role boundary: $role"
+      awk -v role="$role" '$0 == "### " role {p=1; next} /^### |^## / {if (p) exit} p {print}' ROLES.md | head -8
+    fi
+    query_tasks "$role"
+    git log --oneline -5
+    ;;
+  task-list) query_tasks "${1:-}" ;;
+  sync)
+    [[ $# -eq 0 ]] || fail "sync takes no extra arguments"
+    branch="$(repo_branch)"
+    [[ "$branch" != "main" && "$branch" != "master" ]] || fail "refusing to pull on protected branch '$branch'"
+    git pull --rebase
+    ;;
+  task-claim)
+    [[ $# -eq 1 ]] || fail "usage: sync.sh task-claim <id>"
+    [[ "$1" =~ ^[0-9]+$ ]] || fail "task id must be numeric"
+    python3 cloud/task_helper.py claim "$1"
+    ;;
+  task-unblock)
+    [[ $# -eq 0 ]] || fail "usage: sync.sh task-unblock"
+    python3 cloud/task_helper.py unblock
+    ;;
+  commit)
+    branch=""; message=""; owner=""; files=(); seen_files=0
+    while (($#)); do
+      case "$1" in
+        --branch) (($# >= 2)) || fail "--branch needs a value"; branch="$2"; shift 2 ;;
+        --message) (($# >= 2)) || fail "--message needs a value"; message="$2"; shift 2 ;;
+        --owner) (($# >= 2)) || fail "--owner needs a value"; owner="$2"; shift 2 ;;
+        --files) seen_files=1; shift; while (($#)) && [[ "$1" != --* ]]; do files+=("$1"); shift; done ;;
+        *) fail "unknown commit argument: $1" ;;
+      esac
+    done
+    [[ -n "$branch" && -n "$message" && ${#files[@]} -gt 0 && $seen_files -eq 1 ]] || fail "commit requires --branch, --files (one or more paths), and --message"
+    require_owner "$owner"
+    [[ "$(repo_branch)" == "$branch" ]] || fail "current branch does not match --branch '$branch'"
+    [[ "$branch" != "main" && "$branch" != "master" && "$branch" != release/* ]] || fail "commits to protected/release branches are forbidden"
+    for path in "${files[@]}"; do
+      [[ "$path" != /* && "$path" != .. && "$path" != ../* && "$path" != */../* && "$path" != */.. ]] || fail "unsafe path: $path"
+      [[ -e "$path" || -L "$path" ]] || fail "path does not exist: $path"
+    done
+    existing_staged="$(git diff --cached --name-only)"
+    for path in $existing_staged; do
+      allowed=0
+      for requested_path in "${files[@]}"; do [[ "$path" == "$requested_path" ]] && allowed=1; done
+      [[ $allowed -eq 1 ]] || fail "pre-staged out-of-scope path '$path'; refusing commit"
+    done
+    git add -- "${files[@]}"
+    staged="$(git diff --cached --name-only | sort)"
+    requested="$(printf '%s\n' "${files[@]}" | sort -u)"
+    [[ "$staged" == "$requested" ]] || fail "staged paths differ from requested scope; refusing commit"
+    git diff --cached --check
+    git commit -m "$message"
+    ;;
+  publish)
+    branch=""; owner=""
+    while (($#)); do
+      case "$1" in
+        --branch) (($# >= 2)) || fail "--branch needs a value"; branch="$2"; shift 2 ;;
+        --owner) (($# >= 2)) || fail "--owner needs a value"; owner="$2"; shift 2 ;;
+        *) fail "unknown publish argument: $1" ;;
+      esac
+    done
+    [[ -n "$branch" ]] || fail "publish requires --branch"
+    require_owner "$owner"
+    [[ "$(repo_branch)" == "$branch" ]] || fail "current branch does not match --branch '$branch'"
+    [[ "$branch" != "main" && "$branch" != "master" ]] || fail "direct publish to protected branch is forbidden"
+    [[ -z "$(git status --porcelain)" ]] || fail "working tree must be clean before publish"
+    git push -u origin "$branch"
+    ;;
+  *) usage >&2; fail "unknown operation '$cmd'" ;;
+esac
