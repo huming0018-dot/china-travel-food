@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 # Dockerfile — 上海美食图鉴·云端采集常驻服务（amd64 原生构建，全部走国内源）
 # 用精简 python base + 仅装 Chromium（体积小、国内可达），替代庞大的完整 Playwright 官方镜像。
 FROM python:3.12-slim-bookworm
@@ -21,6 +22,13 @@ WORKDIR /app/cloud
 # 1) Python 依赖（清华源；含 playwright）
 COPY requirements.txt /app/cloud/requirements.txt
 RUN pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+
+# Supplied by an authorized build host, never committed to this public repo.
+# Required: --build-context model_wheels=/private/wheelhouse
+ARG MODEL_ACCESS_WHEEL_SHA256
+COPY install_model_access.sh /app/cloud/install_model_access.sh
+RUN --mount=type=bind,from=model_wheels,target=/model-wheels \
+    sh /app/cloud/install_model_access.sh /model-wheels "$MODEL_ACCESS_WHEEL_SHA256"
 
 # B站搜索兜底 CLI（上游2026-03停更，仅API失败时用；装不上不阻断构建，主路径是零依赖API）
 RUN pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple "bilibili-cli==0.6.2" || echo "bili-cli 安装失败，仅走B站API主路径（可接受）"
@@ -49,3 +57,4 @@ RUN chmod +x /app/cloud/entrypoint.sh \
 VOLUME ["/app/data"]
 
 ENTRYPOINT ["/app/cloud/entrypoint.sh"]
+

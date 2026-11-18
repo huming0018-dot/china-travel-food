@@ -34,6 +34,14 @@ from concurrent.futures import ThreadPoolExecutor
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
+from agent_model_access import create_client
+from openai import APIStatusError
+
+FOOD_SYSTEM_PROMPT = (
+    '你是上海城市美食图鉴的事实线索引擎。只输出结构化 JSON 数组，不要客套。'
+    '不知道就显式 null；禁止编造人名/年份/原话。每条 claim 带 '
+    'claim_text/confidence/known_vs_inferred/confirm_queries/falsify_queries。'
+)
 
 DATA = os.environ.get("FOOD_DATA_DIR", "/app/data")
 HAE_DIR = os.path.join(DATA, "hae")
@@ -146,13 +154,36 @@ def api_tasks():
 
 
 def call_one(MP, p, m, prompt):
+    use_web = False
     try:
-        r = MP.chat(p, m, prompt)
+        use_web = bool(p.supports_web and MP.web_search_enabled())
+        extra = MP._web_search_extra(p.spec["web_search_kind"], m) if use_web else {}
+        with create_client(api_key=p.api_key, base_url=p.base_url) as client:
+            response = client.chat.completions.create(
+                model=m, messages=[
+                    {"role": "system", "content": FOOD_SYSTEM_PROMPT},
+                    {"role": "user", "content": prompt}],
+                temperature=0.3, timeout=60, extra_body=extra)
+        data = response.model_dump(exclude_none=True)
+        text = data["choices"][0]["message"].get("content", "")
+        usage = data.get("usage") or {}
+        r = {"ok": True, "text": text, "sources": MP._extract_sources(data, text),
+             "model": m, "provider": p.name, "web": use_web,
+             "usage": {"prompt": usage.get("prompt_tokens", 0),
+                       "completion": usage.get("completion_tokens", 0),
+                       "total": usage.get("total_tokens", 0)}}
         r["identity"] = f"{p.name}/{m}"
         return r
     except Exception as e:
-        return {"ok": False, "text": "", "sources": [], "identity": f"{p.name}/{m}",
-                "error": f"{type(e).__name__}: {e}"}
+        # Preserve the legacy consumer's failure schema and bounded HTTP detail.
+        if isinstance(e, APIStatusError):
+            detail = e.response.content.decode("utf-8", "ignore")[:200]
+            error = f"HTTP {e.status_code}: {detail}"
+        else:
+            error = str(e)[:200]
+        return {"ok": False, "text": "", "sources": [], "model": m,
+                "provider": p.name, "web": use_web, "usage": {},
+                "identity": f"{p.name}/{m}", "error": error}
 
 
 def recall_leaf(leaf):
@@ -477,3 +508,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
