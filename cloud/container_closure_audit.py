@@ -20,7 +20,7 @@ CLOUD = ROOT / "cloud"
 HOST_ENTRIES = [
     # /etc/cron.d food_indep / food_parallel
     "national_count", "brand_chain_normalize", "gate_apply", "chain_review_apply",
-    "signature_cuisine_link", "name_cuisine_link", "dietary_trait_link", "curate_gate",
+    "signature_cuisine_link", "name_cuisine_link", "curate_gate",
     "gate_apify_brief", "cuisine_plane_audit", "probe_parallel", "production_runner",
     # 宿主 crontab 5 sh / food_production / boundary / relay
     "candidate_verify", "xhs_to_reviews", "atlas_write", "boundary_revalidate",
