@@ -1,39 +1,28 @@
-# CTFS 拆分后的项目配置与待筛选来源
+# CTFS 领域配置与整理经验
 
-此目录已不是可安装/可运行的 CTFS 包。旧 pyproject、CLI、包入口及重复通用核心已退出；不要运行遗留测试、执行旧安装命令或声称旧流水线仍可用。
+通用实现已离开美食仓。此目录不是可安装包，不再保留旧框架运行入口、适配层或可执行测试。
 
-## 已迁入工具类
+## 可用实现入口
 
-- [证据版本仓](https://github.com/huming0018-dot/agent-data-toolbox/tree/13f2dd650bfa06456dc96754edae2bcbf41297eb/packages/evidence-store)：原始字节、幂等派生版本和精确父链。
-- [证据处理链](https://github.com/huming0018-dot/agent-data-toolbox/tree/13f2dd650bfa06456dc96754edae2bcbf41297eb/packages/evidence-pipeline)：清洗、四算子评分、重演审计及必要配置合同。
+[agent-data-toolbox](https://github.com/huming0018-dot/agent-data-toolbox/tree/36b2476c6241151225e19c3ef9af9b22bb27d6f5) 分别维护证据版本仓、证据处理链与受限本地快照导入。使用各包自己的安装说明和测试，不运行旧 CTFS 命令。新包不承诺兼容旧数据库/审计收据，本次没有生产迁移。
 
-使用新包自身 README 和测试。此处不提供旧接口兼容层、不自动迁移旧数据库/审计收据，也未改变生产。
+## 保留领域资产
 
-## 保留的配置和待筛选来源
+packs/ 下24份纯配置原字节保留：cuisines 和 software-releases，各0.3.2/0.3.3版本。美食评分、字段与证据语义属于领域配置，不进入通用工具包；软件发布配置是另一领域样本，仍留此作为历史比较资产，未宣称它是美食核心。
 
-- packs/ 下24份领域配置原字节保留：cuisines 与 software-releases，各0.3.2/0.3.3。它们是领域样本，不打包进通用工具；软件发布样本并非美食业务，后续另行归位。
-- toolbox/ 剩余8个模块仅作为**待逐项筛选来源**：connector.py、connector_http.py、connector_snapshot.py、crawler.py、jobs.py、consumer.py、postgres.py、storage_factory.py。分别包含连接器合同、网络/文件读取边界、事务采集记录、持久恢复、交付门、PG适配及存储选择，尚未迁入或验收为独立工具。
-- tests/ 剩余12份历史测试保留反例，不是当前可执行套件；其旧 toolbox 导入已无完整依赖。M7-PG-READONLY-0.5.1.md 是历史验证经验，不是当前能力保证。
+## 取舍及经验
 
-本轮不为残余模块补兼容层，也不把它们当无价值代码删除。不能据此宣称所有剩余资产已筛选完成。
+- SQLite与证据处理链已有独立工具实现，不保留项目内副本。
+- snapshot本地受限导入已独立提取；可复用能力是固定根目录、逐级不跟随符号链接、有界读取、预期哈希核对，不是自动采集。
+- HTTP连接器、预算Crawler、Jobs、Consumer、PG及工厂曾有完整实现；退出理由是这套旧框架的维护价值不足，不是“代码坏了所以删掉”。不为旧链继续运行追加兼容。
+- 未知结果不能当成功或自动重放；来源哈希必须对应真正保存的字节；引用精确不等于事实真实；只读工程验证不等于生产验收。
+- 旧测试随退出的框架离开活动树，其反例可从固定Git历史恢复；不把它们冒充当前可运行验证。
+- M7-PG-READONLY-0.5.1.md仅保留历史经验，不表示当前提供PG服务。
 
-## 删除与恢复
+## 历史恢复与边界
 
-固定完整恢复点：`b870dab6d4b62a50329dae7fadcc1d60cd613fb5`（china-travel-food）。
-42文件退出：12个已迁核心Python副本、旧__init__/CLI/pyproject三个入口、24份schema、两份旧runtime映射及已迁test_storage.py。保留的其他文件不改字节。
-24份schema中，11份现行合同随两个工具包保留；其余13份只保留Git历史，不是待迁实现：
-- schemas/archive-0.1.0/audit.schema.json
-- schemas/archive-0.1.0/clean.schema.json
-- schemas/archive-0.1.0/manifest.schema.json
-- schemas/archive-0.1.0/raw.schema.json
-- schemas/archive-0.1.0/scored.schema.json
-- schemas/archive-bba6ad2-0.1.0/audit.schema.json
-- schemas/archive-bba6ad2-0.1.0/clean.schema.json
-- schemas/archive-bba6ad2-0.1.0/manifest.schema.json
-- schemas/archive-bba6ad2-0.1.0/raw.schema.json
-- schemas/archive-bba6ad2-0.1.0/scored.schema.json
-- schemas/archive-bba6ad2-0.1.0/view-previously-mislabelled.schema.json
-- schemas/archive-bba6ad2-0.1.0/view.schema.json
-- schemas/schema-history.json
+本轮残余20文件的完整恢复点：`1861c97d9d7cc65da9f400b1e02b969f341612ca`。
+更早的完整CTFS包恢复点：`b870dab6d4b62a50329dae7fadcc1d60cd613fb5`。
+例如：`git show 1861c97d9d7cc65da9f400b1e02b969f341612ca:ctfs-toolbox/toolbox/crawler.py`。
 
-恢复单个历史文件可用 `git show b870dab6d4b62a50329dae7fadcc1d60cd613fb5:ctfs-toolbox/相对路径`。不要将恢复历史当生产部署。删除仅涉及仓库活动树。
+只整理GitHub仓库活动树，不删除生产数据、修改部署或恢复众包开发。这不是整个美食项目已经完成整理的声明。
