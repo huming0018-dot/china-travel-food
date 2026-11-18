@@ -1,15 +1,12 @@
-# M7 PostgreSQL read-only consumption · 0.5.1 candidate
+# 历史经验：PostgreSQL 只读验收
 
-The public consumer previously rejected PostgreSQL storage. It now opens an existing compatible `ctfs_` schema with `read_only=True`, checks required relations and the contract marker, enables and verifies database read-only transaction state, and rejects all three writer methods. Opening performs no DDL or migrations. Missing storage fails closed; initialization errors expose only safe error categories and close the connection.
+旧 CTFS PostgreSQL/Consumer 已退出活动树。本文仅保存当时的工程验证记录，不是当前能力、安装或部署说明；完整原文与实现见固定历史 `1861c97d9d7cc65da9f400b1e02b969f341612ca`。
 
-`toolbox serve` takes manifest paths as positional arguments:
+可复用经验：
+- 只读连接应核对事务实际状态和必要表，拒绝写方法；打开只读服务不应偷偷建表或迁移。
+- 初始化失败只报告安全错误类别，关闭连接，不泄露 DSN。
+- 使用命名环境变量提供凭证，远端 PostgreSQL 仍需证书验证。
+- 读前后核对记录数和哈希，用真实写入拒绝测试检验只读承诺。
+- 当时验证的是隔离回环工程数据库，不代表生产 Supabase、公共 PG 或完整产品验收。
 
-```sh
-toolbox serve projects/food/manifest.yaml projects/software/manifest.yaml --dir packs --port 18790
-```
-
-Credentials stay in the named environment variable on the execution host. A remote PostgreSQL connection still requires certificate verification. The existing writer mode and SQLite consumer remain supported.
-
-The candidate was installed as a real wheel in a separate cloud environment. An independent review verified all 46 package files against source and wheel; two real projects (six Shanghai discovery cards and two official software releases) used the same public SDK and CLI. Three original RAW records and their acquisition identity were retained. Database write attempts were rejected; four actual HTML/JSON responses matched an independent read-only SDK derivation, with unchanged record counts and hashes during consumption. Original failed validation receipts remain preserved.
-
-This is engineering PostgreSQL on loopback, not a production Supabase migration, public PG deployment, or completion of the full PRD. The existing 0.5.0 production release stays fixed. `runtime-version-map.json` records that frozen release; `runtime-version-map-0.5.1-candidate.json` records this candidate.
+原运行命令与已退出的 runtime-version-map 不再作为当前入口。退出理由是维护价值不足，不是原实现残缺；没有改动任何生产数据库。
