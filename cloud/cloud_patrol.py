@@ -85,8 +85,8 @@ def check_entities(rests):
 
 # ---------- 1b. Phase 0-A 全子表实体去重 + 名称审计（只读，不自动合并） ----------
 def check_entities_full(rests):
-    """只读扫描：返回 (自动合并簇数, 待复核对数, 名称修正清单)。
-    真正合并由 entity_dedup.py --apply 人工确认后执行，patrol 不自动写。"""
+    """只读扫描：返回 (待复核候选簇数, 待复核对数, 名称修正清单)。
+    旧候选不是合并依据；entity_dedup 写入入口已退役，patrol 不自动写。"""
     try:
         keep = ED.load_keep_pairs()
         clusters, review = ED.build_clusters(rests, keep)
