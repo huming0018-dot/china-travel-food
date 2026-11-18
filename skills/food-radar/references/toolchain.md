@@ -1,8 +1,10 @@
-# food-radar 工具调用流程与技术规范
+# food-radar 工具调用参考
 
-> 依赖说明：本仓库（GitHub）**不包含** `tools/` 下的第三方克隆仓库（体积大且有各自许可），请按第 3 节命令自行克隆。
+> 历史边界：本文安装与通道记录来自 2026-10-17 至 18 原主机；2026-11-18 整理未验证其当前可用性。现行参数见 `operations.md`，按需预检只证明本地依赖，不是采集验收。
+>
+> 依赖说明：本仓库（GitHub）**不包含** `tools/` 下的第三方克隆仓库（体积大且有各自许可），仅在确需对应可选通道时另行评估安装；第 3 节是历史命令参考。
 > `wechat-article-search` 为同机独立 skill（`~/.codebuddy/skills/wechat-article-search/`），不在本仓库内，需另行安装。
-> **已实测的安装状态与踩坑见 `environment.md`；开工前请先跑 `bash scripts/preflight.sh`。**
+> **历史安装记录与踩坑见 `environment.md`，不覆盖现行脚本和后续失败记录。**
 
 ## 一、工具调用流程（按序执行）
 
@@ -11,10 +13,9 @@ Step1 对标解码        → 无需工具，纯推理；产物：筛选标准
 Step2 关键词矩阵      → 产出 6-10 组查询
 Step3 多通路检索      → web_search / web_fetch（S级事实）
                        wechat-article-search（KOL长文）
-                       agent-reach CLI（小红书/抖音/B站/微博/海外平台）
+                       agent-reach CLI（按实际支持通路确认；历史记录不含抖音）
                        media-crawler（批量抓取，需登录态）
                        agent-browser / playwright（点评店铺页、小红书详情页）
-                       dianping-crawler（全量店铺库，竞品盘点）
 Step4 时效与信源校验  → 对每条候选做日期/双信源/在营核查（见 validation.md）
 Step5 结构化输出      → 按 field-spec.md 生成 JSON/Markdown + 知识沉淀
 ```
@@ -27,7 +28,7 @@ Step5 结构化输出      → 按 field-spec.md 生成 JSON/Markdown + 知识�
 | 网页读取 | web_fetch | 直接调用 | 政府/官媒/榜单页 |
 | 微信公众号 | wechat-article-search skill | `node scripts/search_wechat.js "关键词" -n 15` | 依赖 Node；结果旧文多，须叠加时间词 |
 | 小红书/抖音/B站/微博/知乎 | MediaCrawler | Playwright + 登录态，见 tools/media-crawler | 批量、结构化落盘 |
-| 小红书/抖音/B站/Twitter/Reddit/YouTube/GitHub | Agent-Reach CLI | 一条命令装好，见 tools/agent-reach | 免 API 费用，适合单点搜索 |
+| 历史记录为 B站/Jina/V2EX/RSS，其他须确认 | Agent-Reach CLI | 可选外部工具，见 tools/agent-reach | 不含抖音；当前支持范围未验证 |
 | 大众点评 | Playwright 浏览器方案（原 dianping-crawler 已 403 失效） | web_search 取 UGC 摘要 | 精确评分/人均须标注抓取时间 |
 | 任意复杂页面 | agent-browser / playwright-cli skill | 浏览器自动化 | 兜底方案 |
 
@@ -39,7 +40,7 @@ export PATH="/Users/deuce/.local/bin:$PATH"   # uv 与 python3.12 所在目录
 bash scripts/preflight.sh                     # 开工自检，优先于下面任何安装步骤
 ```
 
-### Agent-Reach（推荐先装）
+### Agent-Reach（历史安装参考，非必装）
 ```bash
 cd tools/agent-reach
 uv tool install .                # 产出 /Users/deuce/.local/bin/agent-reach
