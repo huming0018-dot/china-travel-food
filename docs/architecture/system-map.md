@@ -73,7 +73,7 @@ flowchart LR
 | 电话 | cloud_phone_fill、cloud_dianping_phone | :05/:25/:45 | phone（宁空不假） |
 | 营业时间 | cloud_hours_fill、opening_hours_collector | hours 4:00 | business_hours |
 | 定价 | price_realign（patrol 调用） | patrol :42/3h | price_band/position |
-| 关店/迁址 | closed_relocate、closed_watch | 随 patrol | closed 三要素、closed_watch_report |
+| 关店观察 | closed_watch | 随 patrol | closed 三要素、closed_watch_report；一次性 closed_relocate 已退役 |
 | 去软广/负面 | 1b3_anti_softad_expand、chain_audit、phase0c_negative_tagon | softad_distribution **5:37** | soft_ad_flag/penalty、tag258 |
 | 主厨/集团/事件 | build_chefs、chef_tracker、group_chef_tree、events_build | 随管线 | chefs、restaurant_chefs、food_events |
 | 评分 | scoring_engine、recalc_scores、label_weight_learn | 写时触发器 | score_*、diner_expert_labels |
