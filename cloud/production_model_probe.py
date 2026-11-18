@@ -176,28 +176,19 @@ def meter_usage(model, usage):
 
 def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_cap=60,
              max_tokens=None):
-    """OpenAI 兼容 chat completion；使用 SSE 流式累积，避免大输出在读上空闲超时。
-    返回 message 形态 dict（content / tool_calls）。
-    timeout=单次读空闲上限；hard_cap=整次请求墙钟硬上限（服务端挂起不返回时快速失败）。
-    max_tokens=输出上限（封顶计费，防止冗长 JSON 失控）。"""
+    """项目非流式 chat completion，返回 message dict（含 _usage）。
+    timeout 传给 urllib；hard_cap 保留兼容签名但当前不实施总墙钟取消。
+    支持 tools、输出上限、429/网络重试与项目用量记录；不是通用流式 SDK。
+    """
     body = {"model": model, "messages": messages, "temperature": 0.2, "stream": False}
-    if body["stream"]:
-        body["stream_options"] = {"include_usage": True}  # 流式末块才回 usage
     if max_tokens:
         body["max_tokens"] = int(max_tokens)
     if tools:
         body["tools"] = tools
-        body["stream"] = False  # 工具调用路径不流式（当前主流程不用）
-    if body["stream"]:
-        body["stream_options"] = {"include_usage": True}
-    usage = None
     waits = [8, 16, 30, 60]
     net_waits = [10, 20, 30]
     last = None
     for i in range(retries):
-        content_parts, tool_calls = [], []
-        usage = None
-        t_start = time.time()
         try:
             req = urllib.request.Request(
                 provider.base_url + "/chat/completions",
@@ -205,41 +196,11 @@ def chat_raw(provider, model, messages, tools=None, timeout=30, retries=2, hard_
                 headers={"Content-Type": "application/json",
                          "Authorization": f"Bearer {provider.api_key}"}, method="POST")
             with urllib.request.urlopen(req, timeout=timeout) as r:
-                if not body["stream"]:
-                    d = json.loads(r.read().decode("utf-8"))
-                    meter_usage(model, d.get("usage"))
-                    msg = d["choices"][0]["message"]
-                    msg["_usage"] = d.get("usage")
-                    return msg
-                for raw in r:
-                    if time.time() - t_start > hard_cap:
-                        raise TimeoutError("hard_cap")
-                    line = raw.decode("utf-8", "ignore").strip()
-                    if not line or not line.startswith("data:"):
-                        continue
-                    data = line[5:].strip()
-                    if data == "[DONE]":
-                        break
-                    chunk = json.loads(data)
-                    if chunk.get("usage"):
-                        usage = chunk["usage"]
-                    choices = chunk.get("choices") or []
-                    if not choices:
-                        continue
-                    delta = choices[0].get("delta") or {}
-                    if delta.get("content"):
-                        content_parts.append(delta["content"])
-                    if delta.get("tool_calls"):
-                        tool_calls += delta["tool_calls"]
-            meter_usage(model, usage)
-            if not content_parts and not tool_calls:
-                # 模型 200 但空输出：视为"已作答为空"，不就地重试（省一次同模型调用），
-                # 返回空 content，由上层 _parse→None 判定后最多升级到一个兜底模型
-                return {"role": "assistant", "content": "",
-                        "tool_calls": None, "_usage": usage}
-            return {"role": "assistant", "content": "".join(content_parts),
-                    "tool_calls": tool_calls or None,
-                    "_usage": usage}
+                d = json.loads(r.read().decode("utf-8"))
+                meter_usage(model, d.get("usage"))
+                msg = d["choices"][0]["message"]
+                msg["_usage"] = d.get("usage")
+                return msg
         except urllib.error.HTTPError as e:
             last = e
             if e.code == 429:
