@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """map_helpers.py — 云端补齐脚本共享的地图API查询与结果匹配助手。
 
-统一复用 tencent_sig.signed_get（腾讯SK签名），避免各脚本各写一份签名导致漂移。
+地图请求与签名统一经 map_quota。
 提供：腾讯 suggestion/search/geocoder、高德 search/geocode、上海bbox校验、
 店名+地址相似度匹配、地址补上海市前缀。
 
@@ -25,7 +25,6 @@ sys.path.insert(0, HERE)
 
 import common as C
 import map_quota as MQ
-from tencent_sig import signed_get as tencent_signed_get
 
 # ── 高德（独立签名，腾讯sig模块不覆盖） ──
 AMAP_KEY = os.environ.get("AMAP_KEY", "").strip()
@@ -254,38 +253,13 @@ def tencent_place_detail(page_id):
     return {}
 
 
-# ────────────────────── 高德 API（多 key 池，配额耗尽自动轮换）──────────────────────
-# 第二个开发者账号 = 第二份日配额。配置：
-#   AMAP_KEYS=key1,key2   （多 key 逗号分隔；未配则回退单个 AMAP_KEY）
-#   AMAP_SKS=sk1,sk2      （与 keys 一一对应；未配则所有 key 共用 AMAP_SK）
-# 一个 key 撞 10003/10044（日配额）就在本进程内标记停用并切下一个；
-# 全部 key 配额耗尽才返回 QUOTA_EXCEEDED。
-def _load_keys():
-    # 注意：保留每个位置（含空 SK），不能过滤空串，否则 key↔sk 会错位。
-    keys = [k.strip() for k in os.environ.get("AMAP_KEYS", "").split(",")]
-    keys = [k for k in keys if k]
-    if not keys:
-        keys = [k.strip() for k in [AMAP_KEY] if k.strip()]
-    raw_sks = os.environ.get("AMAP_SKS", "")
-    if raw_sks:
-        sks = [s.strip() for s in raw_sks.split(",")]
-    else:
-        sks = [AMAP_SK] * len(keys)
-    # 补齐 / 截断到与 keys 等长（缺位回退共用 AMAP_SK，通常为空=IP白名单）
-    if len(sks) < len(keys):
-        sks += [AMAP_SK] * (len(keys) - len(sks))
-    sks = sks[:len(keys)]
-    return list(zip(keys, sks))
-
-_KEY_POOL = _load_keys()
-AMAP_AVAILABLE = bool(_KEY_POOL)
-_dead_keys = set()
-_QUOTA_INFOCODES = {"10003", "10044"}
+# ────────────────────── 高德 API ──────────────────────
+AMAP_AVAILABLE = bool(MQ.load_provider_keys("amap"))
 
 
 def _amap_get(path, params, interface="search", consumer="phone"):
     """经 map_quota 池请求高德（持久账本/轮换/仲裁）。返回 (json_or_None, ok/quota/error)。"""
-    if not _KEY_POOL:
+    if not AMAP_AVAILABLE:
         return None, "error"
     return _map_call("amap", path, params, interface, consumer, timeout=15)
 
