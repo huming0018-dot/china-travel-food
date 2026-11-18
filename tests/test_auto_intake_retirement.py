@@ -84,8 +84,9 @@ class AutoIntakeRetirement(unittest.TestCase):
         self.assertEqual({k for k,_ in broken['hard']},{'proc:cron','stale:watchdog.log'})
         self.assertEqual({c.kwargs['key'] for c in warn.call_args_list},{'proc:cron','stale:watchdog.log'})
 
-    def test_all_four_consumers_have_no_candidate_apply_execution(self):
-        for name in ['cloud_discover','cloud_bili_collect','unmatched_bridge','gap_runner']:
+    def test_retired_bridge_and_remaining_consumers_do_not_auto_apply(self):
+        self.assertFalse((ROOT/'cloud/unmatched_bridge.py').exists())
+        for name in ['cloud_discover','cloud_bili_collect','gap_runner']:
             tree=ast.parse((ROOT/'cloud'/f'{name}.py').read_text())
             # Check runtime literals, excluding docstrings; no command construction may name the writer.
             for n in ast.walk(tree):
