@@ -217,15 +217,15 @@ export default function Home() {
 
       <FeedSection />
 
-      {/* 新上好店 · 最近通过堂食证据核验的 active 精选（已排除标准化连锁/预制） */}
+      {/* 新上好店：保留原候选池与排序；精选入选不等于证据已核验。 */}
       {!loading && newStores.length > 0 && (
         <section className="max-w-7xl mx-auto px-6 pb-4">
           <div className="flex items-end justify-between mb-5">
             <div>
-              <div className="kicker text-moss mb-2">FRESHLY VERIFIED / 新上好店</div>
+              <div className="kicker text-moss mb-2">SELECTED PICKS / 新上好店</div>
               <h2 className="serif text-3xl font-light">新上<span className="italic text-moss">好店</span></h2>
             </div>
-            <p className="kicker text-mocha-faint hidden sm:block">已通过堂食证据核验 · 共 {verifiedStores.length} 家</p>
+            <p className="kicker text-mocha-faint hidden sm:block">精选与已核验候选 · 共 {verifiedStores.length} 家</p>
           </div>
           <div className="flex gap-4 overflow-x-auto pb-3 -mx-1 px-1 snap-x">
             {newStores.map((r) => {
@@ -234,7 +234,7 @@ export default function Home() {
                 <Link key={r.id} href={`/restaurants/${r.id}`}
                   className="card p-5 flex flex-col w-[260px] flex-shrink-0 snap-start group">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-moss-light text-moss-deep">已核验</span>
+                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-moss-light text-moss-deep">{r.score_evidence_level === 'verified' ? '证据已核验' : '证据待核验'}</span>
                     {r.score_total
                       ? <span className="serif text-xl font-medium text-moss tabular-nums">{r.score_total.toFixed(1)}</span>
                       : <span className="text-mocha-faint text-xs">暂无评分</span>}
