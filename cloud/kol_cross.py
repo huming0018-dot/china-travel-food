@@ -93,26 +93,7 @@ def sogou_wechat(name):
 #  - 抖音：iesdouyin share 页 200 但空壳；www.douyin.com/search 为 JS 渲染壳 → 需后端/扫码。
 # 这三条在 keyless 下【不产内容】，只在 MediaCrawler 后端产出落盘后接入；绝不编造。
 
-_MOBILE_UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) "
-              "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1")
-
-
-def weibo_search(keyword):
-    """微博 keyless 最佳努力：visitor 流程。当前实测被 Visitor System 拦截，返回 ([], 原因)。
-    待 MediaCrawler 后端产出落 /app/data/discovery/weibo/ 后接入。"""
-    return [], "keyless被Sina Visitor System拦截;待MediaCrawler后端/扫码登录态"
-
-
-def zhihu_search(keyword):
-    """知乎 keyless：直连 TLS 重置。待浏览器/后端。返回 ([], 原因)。"""
-    return [], "keyless TLS重置;待MediaCrawler后端/扫码登录态"
-
-
-def douyin_search(keyword):
-    """抖音 keyless：share空壳/搜索JS渲染。待后端/扫码。返回 ([], 原因)。"""
-    return [], "keyless JS壳无数据;待MediaCrawler后端/扫码登录态"
-
-
+# 三个恒定空返回 search 占位已退出；以下仅保留历史说明，不是实时探测。
 def channels_probe():
     """逐条打印三平台 keyless 可达性证据（不写库）。"""
     print("跨平台 keyless 通道自检（2026-09-29 本机 Mac 出口实测）：")
