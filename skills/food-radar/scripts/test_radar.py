@@ -148,6 +148,39 @@ class RadarTest(unittest.TestCase):
         self.put(restaurant(),e)
         self.assertIn("已售罄",self.shortlist(mode="radar")["items"][0]["needs_confirmation"])
 
+    def test_shortlist_future_reservation_with_available_snapshot(self):
+        def booking_event(eid, opens_at, booking="available", **kwargs):
+            r = event(eid, **kwargs)
+            r["facts"]["reservation_opens_at"] = fact(opens_at)
+            r["facts"]["booking_status"] = fact(booking)
+            return r
+
+        closed = restaurant("closed", business_status="closed")
+        closed["facts"]["business_status"]["valid_until"] = "2026-10-17T12:00:00+08:00"
+        self.put(
+            restaurant(), closed,
+            booking_event("current", "2026-10-18T04:00:00Z"),
+            booking_event("future", "2026-10-18T04:01:00Z"),
+            booking_event("sold", "2026-10-18T04:01:00Z", "sold_out"),
+            booking_event("cancelled", "2026-10-18T04:01:00Z", event_status="cancelled"),
+            booking_event("closed_host", "2026-10-18T04:01:00Z", restaurant_id="closed"),
+        )
+        items = self.shortlist(mode="radar")["items"]
+        self.assertEqual([r["id"] for r in items], ["current", "future", "sold"])
+        by_id = {r["id"]: r["needs_confirmation"] for r in items}
+        self.assertIn("余位仅为查询时快照，订前复核", by_id["current"])
+        self.assertIn("预订尚未开放；届时重新查询余位", by_id["future"])
+        self.assertNotIn("余位仅为查询时快照，订前复核", by_id["future"])
+        self.assertIn("已售罄", by_id["sold"])
+        self.assertNotIn("预订尚未开放；届时重新查询余位", by_id["sold"])
+
+        calendar = self.r.calendar("上海", start="2026-10-18", end="2026-10-22", now=NOW)
+        self.assertEqual(
+            {r["id"]: r["bookable"] for day in calendar["by_date"].values() for r in day},
+            {"current": True, "future": False, "sold": False, "closed_host": False},
+        )
+        self.assertEqual([r["id"] for r in calendar["unavailable"]], ["cancelled"])
+
     def test_booking_fifteen_minute_cache(self):
         e=event()
         e["facts"]["booking_status"]=fact("available",NOW-timedelta(minutes=16))
