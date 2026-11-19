@@ -26,7 +26,7 @@ from map_helpers import (
     tencent_suggestion, tencent_search, tencent_place_detail,
     amap_search, pick_best,
 )
-from opening_hours_collector import (
+from opening_hours_parser import (
     parse_evidence_quotes, build_opening_hours, DAYS_CN,
 )
 
