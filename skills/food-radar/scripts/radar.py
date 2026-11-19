@@ -355,7 +355,13 @@ class Radar:
                 if booking != "available":
                     needs.append("已售罄" if booking == "sold_out" else "余位待核实；有链接不代表有位")
                 else:
-                    needs.append("余位仅为查询时快照，订前复核")
+                    opens_at = fact_value(r, "reservation_opens_at", now)
+                    try:
+                        not_open_yet = isinstance(opens_at, str) and boundary(opens_at) > now
+                    except (ValueError, OverflowError):
+                        not_open_yet = False
+                    needs.append("预订尚未开放；届时重新查询余位" if not_open_yet
+                                 else "余位仅为查询时快照，订前复核")
             elif mode == "radar":
                 opening = fact_value(r, "opening_date", now)
                 # Radar = new/upcoming openings in requested window, not every popular restaurant.
